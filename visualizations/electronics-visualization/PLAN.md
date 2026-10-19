@@ -2,7 +2,7 @@
 
 Build `visualizations/electronics-visualization/` as a sibling of
 `visualizations/algorithm-visualization/`, reusing its architecture wholesale.
-Content comes from `scripts/electronics/*.ipynb`, **excluding** `alu.ipynb`,
+Content comes from `notebooks/digital-electronics/*.ipynb`, **excluding** `alu.ipynb`,
 `memory.ipynb`, `msi_combinational.ipynb` and `registers.ipynb`.
 
 Source notebooks in scope (6): `logic_gates`, `combinational_adders`, `latches`,

@@ -4,7 +4,7 @@ Phased-array beam-steering animation in the EW dark style.
 Animates an N-element linear array whose commanded steer angle sweeps from
 -60° to +60°. Each frame renders the dark-theme "instantaneous field" pcolormesh
 on the left and the polar beam pattern on the right, both taken from the
-EW_scenarios notebook palette.
+ew_scenarios notebook palette.
 
 Outputs
 -------
@@ -28,7 +28,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = REPO_ROOT / "doc"
 OUT_DIR.mkdir(exist_ok=True)
 
-# --- dark EW palette (mirrors EW_scenarios cell-1) -----------------------
+# --- dark EW palette (mirrors ew_scenarios cell-1) -----------------------
 BG, PANEL, FG = "#05070b", "#0a0d14", "#c9cfda"
 MUTED, GRIDC = "#6b7280", "#1b2130"
 BLUE, ORANGE, CYAN, RED, GREEN = "#5aa9e6", "#e08a3c", "#3fd0c9", "#e0555c", "#7ddc7d"
