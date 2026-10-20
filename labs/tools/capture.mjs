@@ -13,16 +13,18 @@ const args = process.argv.slice(2), flag = (f) => args.includes(f);
 const theme = args.includes('--theme') ? args[args.indexOf('--theme') + 1] : 'dark';
 const only = args.find((a) => !a.startsWith('--') && a !== theme);
 const web = join(dirname(fileURLToPath(import.meta.url)), '..', 'web');
-const labs = readdirSync(web).filter((f) => f.endsWith('.html') && f !== 'index.html').map((f) => f.slice(0, -5)).filter((id) => !only || id === only);
+// every built lab: web/<topic>/<id>.html
+const labs = readdirSync(web, { recursive: true }).filter((f) => f.endsWith('.html') && f !== 'index.html').map((f) => f.slice(0, -5)).filter((id) => !only || id.endsWith(`/${only}`));
 const browser = await launch();
 if (!browser) { console.log('chrome not found'); process.exit(1); }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-for (const id of labs) {
+for (const path of labs) {
+  const id = path.split('/').pop();
   const p = await browser.newPage();
   await p.setViewport({ width: 1440, height: 900 });
   await p.evaluateOnNewDocument((t) => { try { localStorage.setItem('labs-theme', t); } catch {} }, theme);
-  await p.goto(pathToFileURL(join(web, `${id}.html`)).href, { waitUntil: 'load' });
+  await p.goto(pathToFileURL(join(web, `${path}.html`)).href, { waitUntil: 'load' });
   await p.waitForFunction(() => window.__lab);
   mkdirSync(join(web, 'media', id), { recursive: true });
   const meta = await p.evaluate(() => ({ scenarios: window.__lab.scenarios, gif: window.__lab.gif }));

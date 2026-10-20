@@ -8,8 +8,9 @@ import { PNG } from 'pngjs';
 import { launch } from './browser.mjs';
 
 const web = join(dirname(fileURLToPath(import.meta.url)), '..', 'web');
-const labs = readdirSync(web).filter((f) => f.endsWith('.html') && f !== 'index.html').map((f) => f.slice(0, -5))
-  .filter((id) => !process.argv[2] || id === process.argv[2]);
+// every built lab: web/<topic>/<id>.html
+const labs = readdirSync(web, { recursive: true }).filter((f) => f.endsWith('.html') && f !== 'index.html').map((f) => f.slice(0, -5))
+  .filter((id) => !process.argv[2] || id.endsWith(`/${process.argv[2]}`));
 const browser = await launch();
 if (!browser) { console.log('chrome not found: skipping smoke test'); process.exit(0); }
 
@@ -26,8 +27,10 @@ for (const page of ['index', ...labs]) {
   await p.goto(pathToFileURL(join(web, `${page}.html`)).href, { waitUntil: 'load' });
   if (page === 'index') {
     const cards = await p.$$eval('.card', (c) => c.length);
-    if (cards !== labs.length && !process.argv[2]) fail(`index: ${cards} cards for ${labs.length} labs`);
-    else console.log(`  ok   index (${cards} cards)`);
+    const links = await p.$$eval('a.card', (c) => c.map((a) => a.getAttribute('href')));
+    const missing = labs.filter((l) => !links.includes(`${l}.html`));
+    for (const l of missing) fail(`index: no card links to ${l}`);
+    if (!missing.length) console.log(`  ok   index (${cards} cards, every built lab linked)`);
   } else {
     await p.waitForFunction(() => window.__lab, { timeout: 10000 });
     const gl = await p.evaluate(() => {

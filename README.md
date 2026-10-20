@@ -10,25 +10,42 @@ Lenz's law drawn in the scene and the equations one click away.
 
 ## ▶️ How to open
 
-Clone or download the repository, then double-click **`labs/web/index.html`**. That's all: no install, no
-server, no internet connection. Every lab is a single self-contained HTML file and works offline in Chrome,
-Firefox and Safari.
+Clone or download the repository, then double-click **`index.html`** at the top of the folder (on a Mac
+you can also run `open index.html`). It opens the catalogue: every topic of the original notebooks, each
+with its animations. Click one to launch it.
 
-## 🧪 Labs
+No install, no server, no internet connection. Every animation is a single self-contained HTML file, so
+you can also double-click it directly, e.g. `labs/web/physics/coil-induction.html`.
 
-| Lab | What you do | Open |
-|---|---|---|
-| **Coil: magnetic field and induction** | Drag a bar magnet or a probe ring through a coil. Watch the field lines, the flux, the EMF and the induced current, then drop the magnet and see it braked. | [`labs/web/coil-induction.html`](labs/web/coil-induction.html) |
+## 🧪 Animations, by topic
 
-38 more are planned, from point charges and antennas to orbits, control and ML: see
-[`labs/TOPICS.md`](labs/TOPICS.md).
+Organised exactly like the original notebooks: every notebook gets one animation (some get several).
+Computer science and most of digital electronics are covered by the two step-by-step visualizers below.
+
+| Topic | Notebooks | Animations built | Where |
+|---|---|---|---|
+| Analog electronics | 4 | 0 / 4 | `labs/web/analog-electronics/` |
+| Circuits | 5 | 0 / 5 | `labs/web/circuits/` |
+| Computer science | 11 | Algorithm Visualizer | `visualizations/algorithm-visualization/` |
+| Control systems | 9 | 0 / 9 | `labs/web/control-systems/` |
+| Digital electronics | 10 | Electronics Visualizer (6 of 10) | `visualizations/electronics-visualization/` |
+| Electronic warfare | 5 | 0 / 5 | `labs/web/electronic-warfare/` |
+| Machine learning | 4 | 0 / 4 | `labs/web/machine-learning/` |
+| Maths | 6 | 0 / 6 | `labs/web/maths/` |
+| Physics | 9 | 1 / 13 — [Coil: magnetic field and induction](labs/web/physics/coil-induction.html) | `labs/web/physics/` |
+| Signal theory | 17 | 0 / 17 | `labs/web/signal-theory/` |
+
+The full list, notebook by notebook, is in [`labs/TOPICS.md`](labs/TOPICS.md).
 
 Each lab has scenarios, sliders, draggable objects, linked 2D plots, live readouts with the physical
 invariants that prove the picture honest, an *Explain* drawer with the theory, and a guided tour.
 
 ## 🔨 How to build
 
-Only needed if you change a lab's source. The built pages are committed.
+Only needed if you change an animation's source. The built pages are committed, and everything needed to
+rebuild them is in the repository: the source (`labs/src/<topic>/<animation>/`), the shared library
+(`labs/src/lib/`), the build script and exact dependency versions (`labs/package-lock.json`). A fresh
+clone rebuilds byte-identical pages.
 
 ```bash
 cd labs
@@ -55,7 +72,8 @@ happens in `labs/`.
 
 ## 📂 Repository structure
 
-* `labs/` → the 3D labs: `src/` (source), `web/` (built pages, open these), `tools/` (tests, smoke, capture).
+* `index.html` → the launcher: double-click it.
+* `labs/` → the animations: `catalog.json` (the topic → notebook → animation map), `src/<topic>/` (source), `web/<topic>/` (built pages), `tools/` (tests, smoke, capture).
 * `visualizations/` → the algorithm and electronics visualizers.
 * `legacy/` → the frozen notebooks and their `requirements.txt`.
 * `doc/` → images for this README.

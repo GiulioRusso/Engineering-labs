@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Engineering Labs</title><meta name="description" content="3D interactive physics and engineering labs that run offline in the browser.">
+<title>Engineering Labs</title><meta name="description" content="Interactive animations for every topic, organised like the original notebooks. They run offline.">
 <style>/* Shared lab layout and tokens. Dark-first; light theme via [data-theme="light"].
    Semantic physics colours are shared by every lab: "magnetic" looks the same everywhere. */
 
@@ -73,23 +73,97 @@ button, input, select { font: inherit; color: inherit; }
 
 
 body { overflow: auto; }
-main { max-width: 1100px; margin: 0 auto; padding: 28px 16px 60px; }
-.top { display: flex; align-items: baseline; gap: 12px; }
+main { max-width: 1180px; margin: 0 auto; padding: 28px 16px 60px; }
+.top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 h1 { font-size: 24px; margin: 0; } .top .spacer { flex: 1; }
-.lead { color: var(--ink-dim); max-width: 720px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 22px; }
-.card { display: block; text-decoration: none; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.card:hover { border-color: var(--accent); }
-.card img, .card .ph { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--panel-2); }
-.card .body { padding: 12px 14px 14px; } .card h2 { font-size: 16px; margin: 2px 0 6px; } .card p { margin: 0; color: var(--ink-dim); font-size: 13px; }
-.area { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.lead { color: var(--ink-dim); max-width: 760px; }
+nav { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 6px; }
+nav a { color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 20px; padding: 4px 11px; font-size: 13px; }
+nav a:hover { border-color: var(--accent); }
+section { margin-top: 30px; scroll-margin-top: 12px; } section h2 { font-size: 18px; margin: 0 0 10px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.card { display: block; position: relative; text-decoration: none; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+a.card:hover { border-color: var(--accent); }
+.card img, .card .ph { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--panel-2); }
+.card.planned { opacity: .55; } .card.planned .ph { aspect-ratio: 16 / 4; }
+.card.vis { border-color: var(--accent); grid-column: 1 / -1; }
+.card .body { padding: 10px 12px 12px; } .card h3 { font-size: 15px; margin: 2px 0 4px; } .card p { margin: 0; color: var(--ink-dim); font-size: 13px; }
+.card .todo { margin-top: 6px; font-size: 12px; }
+.nb { font: 11px var(--mono); color: var(--accent); }
+.badge { position: absolute; top: 8px; right: 8px; font: 11px var(--mono); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--ink-dim); }
 .btn { min-height: 34px; padding: 0 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel-2); cursor: pointer; }
 </style></head><body><main>
 <div class="top"><h1>Engineering Labs</h1><span class="spacer"></span><button class="btn" id="theme">Light</button></div>
-<p class="lead">Interactive 3D labs: drag things in the scene and watch the physics respond. Every page works offline, straight from the file.</p>
-<div class="grid">
-<a class="card" href="coil-induction.html"><img src="media/coil-induction.png" alt="" loading="lazy"><div class="body"><div class="area">Electromagnetism</div><h2>Coil: magnetic field and induction</h2><p>Drag a magnet or a probe ring through a coil and watch the flux, the EMF and the induced current respond live, with Lenz's law shown in the scene.</p></div></a>
-</div></main>
+<p class="lead">One interactive animation for every original notebook, organised by topic. Drag things in the scene and watch the
+physics respond. Everything works offline, straight from the file. <b>1</b> built, <b>62</b> planned, and
+<b>17</b> notebooks are covered by the two step-by-step visualizers.</p>
+<nav><a href="#analog-electronics">Analog electronics</a><a href="#circuits">Circuits</a><a href="#computer-science">Computer science</a><a href="#control-systems">Control systems</a><a href="#digital-electronics">Digital electronics</a><a href="#electronic-warfare">Electronic warfare</a><a href="#machine-learning">Machine learning</a><a href="#maths">Maths</a><a href="#physics">Physics</a><a href="#signal-theory">Signal theory</a></nav>
+<section id="analog-electronics"><h2>Analog electronics</h2><div class="grid"><div class="card planned"><div class="ph"></div><div class="body"><div class="nb">electronics_devices</div><h3>Transistors: the device curves</h3><p>Drag the operating point over the 3D I_C(V_BE, V_CE) surface; small-signal gain appears as the slope.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">electronics_amplifiers</div><h3>Amplifier stages</h3><p>Common emitter, emitter follower, differential pair: drag the bias and watch the signal swing, invert and clip.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">electronics_digital</div><h3>The CMOS inverter</h3><p>Sweep the input: both transistors, the transfer curve, noise margins and the crowbar current.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">electronics_opamps</div><h3>Op-amps and the virtual short</h3><p>Drag the open-loop gain from 10 to 10⁶ and watch V+ − V− collapse to zero.</p><span class="badge">planned</span></div></div></div></section>
+<section id="circuits"><h2>Circuits</h2><div class="grid"><div class="card planned"><div class="ph"></div><div class="body"><div class="nb">circuits_components</div><h3>R, C, L and the diode</h3><p>One component at a time: drive it, see voltage and current, and where the energy goes.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">circuits_theory</div><h3>Circuits as a potential landscape</h3><p>Nodes lifted to their potential, carriers flowing downhill: Kirchhoff, Thévenin, superposition.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">circuits_ac</div><h3>RLC resonance with phasors</h3><p>Phasors rotating in 3D and unrolling into waves; drag the frequency through resonance.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">circuits_telecom</div><h3>Transmission lines and the Smith chart</h3><p>Drag the load on a Smith chart; the standing wave on the line follows.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">circuits_antenna</div><h3>From the feed to the antenna</h3><p>Lengthen a line until it radiates: where the circuit stops being a circuit.</p><span class="badge">planned</span></div></div></div></section>
+<section id="computer-science"><h2>Computer science</h2><div class="grid"><a class="card vis" href="../../visualizations/algorithm-visualization/web/index.html"><div class="body"><div class="nb">covers big_o, arrays, stack_queue, linked_lists, trees, bst, heaps, graphs_traversal, graphs_shortest_paths, scheduling, synchronization</div><h3>Algorithm Visualizer →</h3><p>Step forwards and backwards through real C++ runs: arrays, sorting, lists, trees, heaps, graphs, scheduling, synchronization.</p></div></a></div></section>
+<section id="control-systems"><h2>Control systems</h2><div class="grid"><div class="card planned"><div class="ph"></div><div class="body"><div class="nb">response</div><h3>Step response from the poles</h3><p>Drag first- and second-order poles; the step response, overshoot and settling time follow.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">stability</div><h3>The s-plane and the z-plane</h3><p>Poles over a 3D |H(s)| surface; natural modes grow or decay with their position.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">steady_state_error</div><h3>System type and steady-state error</h3><p>Step, ramp and parabola into type 0, 1 and 2 loops: which error survives.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">root_locus</div><h3>Root locus</h3><p>Drag the gain: closed-loop poles slide along the locus over |G(s)|.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">bode</div><h3>Bode diagrams</h3><p>Build a Bode plot pole by pole; asymptotes, corners and margins.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">nyquist</div><h3>The Nyquist criterion</h3><p>The Nyquist curve lifted along log ω in 3D; count the encirclements of −1.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">nichols</div><h3>The Nichols chart</h3><p>Gain vs phase with M-circles; drag the gain and read the margins.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">corrective_network</div><h3>Lead and lag compensators</h3><p>Drop a lead or lag network into the loop; the locus and margins move.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">pid</div><h3>PID on an inverted pendulum</h3><p>Tune Kp, Ki, Kd and push the pendulum; windup and noise included.</p><span class="badge">planned</span></div></div></div></section>
+<section id="digital-electronics"><h2>Digital electronics</h2><div class="grid"><a class="card vis" href="../../visualizations/electronics-visualization/web/index.html"><div class="body"><div class="nb">covers logic_gates, combinational_adders, latches, flipflops, counters, fsm</div><h3>Electronics Visualizer →</h3><p>Digital circuits gate by gate, with timing: gates, adders, latches, flip-flops, counters, state machines.</p><p class="todo">Planned in the visualizer: msi_combinational, registers, alu, memory</p></div></a></div></section>
+<section id="electronic-warfare"><h2>Electronic warfare</h2><div class="grid"><div class="card planned"><div class="ph"></div><div class="body"><div class="nb">radar_pulses</div><h3>Radar pulses and the ambiguity function</h3><p>Plain, chirp and Barker pulses; the matched filter and the 3D ambiguity surface.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">radar_systems</div><h3>Range, Doppler and PRF</h3><p>Targets in 3D airspace; the range–Doppler map and what a PRF folds.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">radar_receivers</div><h3>Radar receiver chain</h3><p>RF to IQ baseband stage by stage, the spectrum at every step.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">radar_visualizations</div><h3>PPI sweep and echoes</h3><p>A rotating beam, echoes on a PPI scope, moving targets.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">ew_scenarios</div><h3>Jamming and burn-through</h3><p>Drag the aircraft, jammer and radar; J/S and burn-through range as live rings.</p><span class="badge">planned</span></div></div></div></section>
+<section id="machine-learning"><h2>Machine learning</h2><div class="grid"><div class="card planned"><div class="ph"></div><div class="body"><div class="nb">ml_basics</div><h3>A neuron is a plane, a layer is a fold</h3><p>Drag a neuron's weights over 2D data lifted to 3D; ReLU layers fold the plane.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">layers_visualized</div><h3>Inside a convolution</h3><p>Slide a filter over an image volume; stride, padding, dilation and channels.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">loss_functions</div><h3>Loss landscapes and optimizers</h3><p>SGD, momentum and Adam racing on a 3D loss surface.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">generalization_and_model_selection</div><h3>Bias, variance and model selection</h3><p>Drag degree and regularization; fits fan out, train and test errors split.</p><span class="badge">planned</span></div></div></div></section>
+<section id="maths"><h2>Maths</h2><div class="grid"><div class="card planned"><div class="ph"></div><div class="body"><div class="nb">functions</div><h3>Functions</h3><p>Linear, quadratic, exponential, logarithmic: drag the parameters, watch the graph and its key points.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">trigonometry</div><h3>The unit circle</h3><p>A point on the circle unrolls into sine, cosine and tangent waves in 3D.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">complex_numbers</div><h3>Complex numbers</h3><p>Drag z and w; sums, products and powers as rotations and scalings.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">calculus</div><h3>Derivative, integral, Taylor</h3><p>A tangent that slides, Riemann sums that converge, Taylor polynomials that hug.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">linear_algebra</div><h3>Linear maps on the unit cube</h3><p>Drag the matrix columns; the cube deforms, eigenvectors light up, det is the volume.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">multivariable_calculus</div><h3>Surfaces, gradient, div and curl</h3><p>Drag a point on z = f(x, y): tangent plane, gradient, level curves.</p><span class="badge">planned</span></div></div></div></section>
+<section id="physics"><h2>Physics</h2><div class="grid"><div class="card planned"><div class="ph"></div><div class="body"><div class="nb">motion</div><h3>Motion, momentum and energy</h3><p>Trajectories with velocity and acceleration vectors, energy bars, circular motion.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">forces</div><h3>Forces and torque</h3><p>Drag forces on a body; resultant, torque, equilibrium and buoyancy.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">vector_operations</div><h3>Vectors and vector fields</h3><p>Dot and cross product in 3D; divergence and curl of a field you can probe.</p><span class="badge">planned</span></div></div>
+<a class="card" href="physics/coil-induction.html"><img src="media/coil-induction.png" alt="" loading="lazy"><div class="body"><div class="nb">electromagnetism</div><h3>Coil: magnetic field and induction</h3><p>Drag a magnet or a probe ring through a coil; flux, EMF and Lenz's law live.</p></div></a>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">electromagnetism</div><h3>Point charges</h3><p>Drag charges in 3D; field lines and equipotential surfaces reshape live.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">electromagnetism</div><h3>Charged particle in E and B</h3><p>Drag E and B; helix, cycloid and E×B drift.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">electromagnetism</div><h3>Electromagnetic wave and reflection</h3><p>E and B travelling together, standing waves, Fresnel and Brewster.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">optics</div><h3>Optics bench</h3><p>Drag lenses and mirrors; rays, images and the double slit.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">thermodynamics</div><h3>Gas in a piston</h3><p>Particles in a 3D box, a P–V diagram linked, Carnot and Otto cycles.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">flight_dynamics</div><h3>Flight: lift, drag, envelope</h3><p>A 3D aircraft with its forces; drag polar, ISA and the V–n diagram.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">orbital_mechanics</div><h3>Orbits and ground tracks</h3><p>Drag i, Ω, ω; the ground track and J2 precession follow.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">orbital_mechanics</div><h3>Lagrange points</h3><p>The rotating-frame potential as a 3D surface, five equilibria.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">rocket_science</div><h3>Transfers and staging</h3><p>Hohmann, bi-elliptic and gravity assists with the Δv budget.</p><span class="badge">planned</span></div></div></div></section>
+<section id="signal-theory"><h2>Signal theory</h2><div class="grid"><div class="card planned"><div class="ph"></div><div class="body"><div class="nb">signals</div><h3>Signals in time and frequency</h3><p>Pulses, sinc, chirp: the signal and its spectrum side by side, time–bandwidth.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">fourier</div><h3>Fourier series as epicycles</h3><p>Harmonics rebuild a waveform; the (t, Re, Im) helix and Gibbs.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">fourier_dft_fft</div><h3>From the Fourier transform to the FFT</h3><p>Winding a signal around the circle; DFT bins and the FFT butterfly.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">sampling</div><h3>Sampling and aliasing</h3><p>The spectrum wrapped on a cylinder of circumference fs: aliasing is literal folding.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">convolution</div><h3>Convolution as a sliding area</h3><p>Drag the shift; the product surface and its area trace the output.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">lti_response</div><h3>LTI systems</h3><p>Impulse response, convolution, poles and the Bode plot of one system.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">signal_filtering</div><h3>Filtering in time and frequency</h3><p>Shape a filter, watch the signal and its spectrum change together.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">signal_analysis</div><h3>Spectrum analysis</h3><p>FFT bins, windows, frequency shifting and resampling.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">signal_modulation</div><h3>AM, FM and PM</h3><p>The carrier as a 3D IQ helix; modulation index and spectra.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">digital_comms</div><h3>Constellations and BER</h3><p>BPSK, QPSK, QAM with noise; eye diagram and BER vs theory.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">iq_demodulation</div><h3>IQ demodulation</h3><p>Quadrature mixing, residual Δf spinning the constellation, FFT bins.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">antenna_propagation</div><h3>Antennas and the link budget</h3><p>Two antennas, Friis and two-ray path loss, planar arrays.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">dipole</div><h3>Dipole antenna</h3><p>3D radiation pattern, near and far field, dipole length.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">phased_array</div><h3>Phased arrays</h3><p>Drag elements and steering; 3D beam, grating lobes, phase vs true time delay.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">vivaldi</div><h3>Vivaldi antenna</h3><p>The tapered slot, its fields and its wideband pattern.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">electromagnetic_polarization</div><h3>Polarization</h3><p>Helix, ellipse and a draggable point on the Poincaré sphere.</p><span class="badge">planned</span></div></div>
+<div class="card planned"><div class="ph"></div><div class="body"><div class="nb">guided_wave_propagation</div><h3>Waveguides and coax</h3><p>Modes in the cross-section, cutoff and dispersion.</p><span class="badge">planned</span></div></div></div></section>
+</main>
 <script>
 const b = document.getElementById('theme'), r = document.documentElement;
 let t = 'dark'; try { t = localStorage.getItem('labs-theme') || t; } catch {}

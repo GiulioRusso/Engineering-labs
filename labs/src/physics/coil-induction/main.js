@@ -1,24 +1,24 @@
 // Coil: magnetic field and induction — scene, controls and plots around model/coil.js.
 import * as THREE from 'three';
-import '../lib/lab.css';
-import { createStage, label } from '../lib/ui/stage.js';
-import { createHandles } from '../lib/ui/handles.js';
-import { createPanel } from '../lib/ui/panel.js';
-import { createPlot } from '../lib/ui/plots.js';
-import { createHud } from '../lib/ui/hud.js';
-import { initExplain } from '../lib/ui/explain.js';
-import { createTour } from '../lib/ui/tour.js';
-import { initTheme, cssVar } from '../lib/ui/theme.js';
-import { readUrl, writeUrl, buildUrl } from '../lib/ui/urlstate.js';
-import { si } from '../lib/ui/format.js';
-import { createFieldLines, traceBoth } from '../lib/viz/fieldlines.js';
-import { createParticles } from '../lib/viz/particles.js';
-import { createArrows } from '../lib/viz/arrows.js';
-import { createSlice } from '../lib/viz/slice.js';
-import { createLegend } from '../lib/viz/legend.js';
-import { logNorm } from '../lib/viz/colormap.js';
-import { sampleStack, addStackField } from '../lib/physics/axisym.js';
-import { MU0 } from '../lib/physics/loop.js';
+import '../../lib/lab.css';
+import { createStage, label } from '../../lib/ui/stage.js';
+import { createHandles } from '../../lib/ui/handles.js';
+import { createPanel } from '../../lib/ui/panel.js';
+import { createPlot } from '../../lib/ui/plots.js';
+import { createHud } from '../../lib/ui/hud.js';
+import { initExplain } from '../../lib/ui/explain.js';
+import { createTour } from '../../lib/ui/tour.js';
+import { initTheme, cssVar } from '../../lib/ui/theme.js';
+import { readUrl, writeUrl, buildUrl } from '../../lib/ui/urlstate.js';
+import { si } from '../../lib/ui/format.js';
+import { createFieldLines, traceBoth } from '../../lib/viz/fieldlines.js';
+import { createParticles } from '../../lib/viz/particles.js';
+import { createArrows } from '../../lib/viz/arrows.js';
+import { createSlice } from '../../lib/viz/slice.js';
+import { createLegend } from '../../lib/viz/legend.js';
+import { logNorm } from '../../lib/viz/colormap.js';
+import { sampleStack, addStackField } from '../../lib/physics/axisym.js';
+import { MU0 } from '../../lib/physics/loop.js';
 import { createModel, scripted, simulateDrop, BOX, DEFAULTS } from './model/coil.js';
 
 const $ = (s) => document.querySelector(s);
@@ -279,7 +279,6 @@ function update(dt) {
 
   // vectors
   const vmag = Math.hypot(...k.vel), fmag = Math.hypot(...s.F);
-  const objTop = [pos[0], pos[1], pos[2] + (state.mode === 'magnet' ? model.p.lm / 2 : 0.01)];
   fArrow.set([pos[0] + 0.03, pos[1], pos[2]], s.F, state.forces ? 0.12 * Math.sqrt(fmag / maxima.F) : 0);
   vArrow.set([pos[0] - 0.03, pos[1], pos[2]], k.vel, state.forces ? 0.12 * Math.sqrt(vmag / maxima.v) : 0);
   // Lenz: at the pickup centre, the flux change and the induced field it causes

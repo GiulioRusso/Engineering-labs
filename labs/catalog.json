@@ -1,0 +1,907 @@
+[
+ {
+  "topic": "analog-electronics",
+  "name": "Analog electronics",
+  "notebooks": [
+   {
+    "notebook": "electronics_devices",
+    "animations": [
+     {
+      "id": "transistor-curves",
+      "title": "Transistors: the device curves",
+      "what": "Drag the operating point over the 3D I_C(V_BE, V_CE) surface; small-signal gain appears as the slope.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "electronics_amplifiers",
+    "animations": [
+     {
+      "id": "amplifier-stages",
+      "title": "Amplifier stages",
+      "what": "Common emitter, emitter follower, differential pair: drag the bias and watch the signal swing, invert and clip.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "electronics_digital",
+    "animations": [
+     {
+      "id": "cmos-inverter",
+      "title": "The CMOS inverter",
+      "what": "Sweep the input: both transistors, the transfer curve, noise margins and the crowbar current.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "electronics_opamps",
+    "animations": [
+     {
+      "id": "opamp-feedback",
+      "title": "Op-amps and the virtual short",
+      "what": "Drag the open-loop gain from 10 to 10⁶ and watch V+ − V− collapse to zero.",
+      "status": "planned"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "topic": "circuits",
+  "name": "Circuits",
+  "notebooks": [
+   {
+    "notebook": "circuits_components",
+    "animations": [
+     {
+      "id": "rlc-components",
+      "title": "R, C, L and the diode",
+      "what": "One component at a time: drive it, see voltage and current, and where the energy goes.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "circuits_theory",
+    "animations": [
+     {
+      "id": "circuit-landscape",
+      "title": "Circuits as a potential landscape",
+      "what": "Nodes lifted to their potential, carriers flowing downhill: Kirchhoff, Thévenin, superposition.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "circuits_ac",
+    "animations": [
+     {
+      "id": "rlc-phasors",
+      "title": "RLC resonance with phasors",
+      "what": "Phasors rotating in 3D and unrolling into waves; drag the frequency through resonance.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "circuits_telecom",
+    "animations": [
+     {
+      "id": "transmission-line",
+      "title": "Transmission lines and the Smith chart",
+      "what": "Drag the load on a Smith chart; the standing wave on the line follows.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "circuits_antenna",
+    "animations": [
+     {
+      "id": "feed-to-antenna",
+      "title": "From the feed to the antenna",
+      "what": "Lengthen a line until it radiates: where the circuit stops being a circuit.",
+      "status": "planned"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "topic": "computer-science",
+  "name": "Computer science",
+  "notebooks": [
+   {
+    "notebook": "big_o",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   },
+   {
+    "notebook": "arrays",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   },
+   {
+    "notebook": "stack_queue",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   },
+   {
+    "notebook": "linked_lists",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   },
+   {
+    "notebook": "trees",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   },
+   {
+    "notebook": "bst",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   },
+   {
+    "notebook": "heaps",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   },
+   {
+    "notebook": "graphs_traversal",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   },
+   {
+    "notebook": "graphs_shortest_paths",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   },
+   {
+    "notebook": "scheduling",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   },
+   {
+    "notebook": "synchronization",
+    "animations": [
+     {
+      "visualizer": "algorithm"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "topic": "control-systems",
+  "name": "Control systems",
+  "notebooks": [
+   {
+    "notebook": "response",
+    "animations": [
+     {
+      "id": "step-response",
+      "title": "Step response from the poles",
+      "what": "Drag first- and second-order poles; the step response, overshoot and settling time follow.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "stability",
+    "animations": [
+     {
+      "id": "s-plane",
+      "title": "The s-plane and the z-plane",
+      "what": "Poles over a 3D |H(s)| surface; natural modes grow or decay with their position.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "steady_state_error",
+    "animations": [
+     {
+      "id": "steady-state-error",
+      "title": "System type and steady-state error",
+      "what": "Step, ramp and parabola into type 0, 1 and 2 loops: which error survives.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "root_locus",
+    "animations": [
+     {
+      "id": "root-locus",
+      "title": "Root locus",
+      "what": "Drag the gain: closed-loop poles slide along the locus over |G(s)|.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "bode",
+    "animations": [
+     {
+      "id": "bode",
+      "title": "Bode diagrams",
+      "what": "Build a Bode plot pole by pole; asymptotes, corners and margins.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "nyquist",
+    "animations": [
+     {
+      "id": "nyquist",
+      "title": "The Nyquist criterion",
+      "what": "The Nyquist curve lifted along log ω in 3D; count the encirclements of −1.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "nichols",
+    "animations": [
+     {
+      "id": "nichols",
+      "title": "The Nichols chart",
+      "what": "Gain vs phase with M-circles; drag the gain and read the margins.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "corrective_network",
+    "animations": [
+     {
+      "id": "lead-lag",
+      "title": "Lead and lag compensators",
+      "what": "Drop a lead or lag network into the loop; the locus and margins move.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "pid",
+    "animations": [
+     {
+      "id": "pid-pendulum",
+      "title": "PID on an inverted pendulum",
+      "what": "Tune Kp, Ki, Kd and push the pendulum; windup and noise included.",
+      "status": "planned"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "topic": "digital-electronics",
+  "name": "Digital electronics",
+  "notebooks": [
+   {
+    "notebook": "logic_gates",
+    "animations": [
+     {
+      "visualizer": "electronics"
+     }
+    ]
+   },
+   {
+    "notebook": "combinational_adders",
+    "animations": [
+     {
+      "visualizer": "electronics"
+     }
+    ]
+   },
+   {
+    "notebook": "latches",
+    "animations": [
+     {
+      "visualizer": "electronics"
+     }
+    ]
+   },
+   {
+    "notebook": "flipflops",
+    "animations": [
+     {
+      "visualizer": "electronics"
+     }
+    ]
+   },
+   {
+    "notebook": "counters",
+    "animations": [
+     {
+      "visualizer": "electronics"
+     }
+    ]
+   },
+   {
+    "notebook": "fsm",
+    "animations": [
+     {
+      "visualizer": "electronics"
+     }
+    ]
+   },
+   {
+    "notebook": "msi_combinational",
+    "animations": [
+     {
+      "visualizer": "electronics",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "registers",
+    "animations": [
+     {
+      "visualizer": "electronics",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "alu",
+    "animations": [
+     {
+      "visualizer": "electronics",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "memory",
+    "animations": [
+     {
+      "visualizer": "electronics",
+      "status": "planned"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "topic": "electronic-warfare",
+  "name": "Electronic warfare",
+  "notebooks": [
+   {
+    "notebook": "radar_pulses",
+    "animations": [
+     {
+      "id": "radar-pulses",
+      "title": "Radar pulses and the ambiguity function",
+      "what": "Plain, chirp and Barker pulses; the matched filter and the 3D ambiguity surface.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "radar_systems",
+    "animations": [
+     {
+      "id": "range-doppler",
+      "title": "Range, Doppler and PRF",
+      "what": "Targets in 3D airspace; the range–Doppler map and what a PRF folds.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "radar_receivers",
+    "animations": [
+     {
+      "id": "radar-receiver",
+      "title": "Radar receiver chain",
+      "what": "RF to IQ baseband stage by stage, the spectrum at every step.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "radar_visualizations",
+    "animations": [
+     {
+      "id": "ppi-scope",
+      "title": "PPI sweep and echoes",
+      "what": "A rotating beam, echoes on a PPI scope, moving targets.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "ew_scenarios",
+    "animations": [
+     {
+      "id": "ew-engagement",
+      "title": "Jamming and burn-through",
+      "what": "Drag the aircraft, jammer and radar; J/S and burn-through range as live rings.",
+      "status": "planned"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "topic": "machine-learning",
+  "name": "Machine learning",
+  "notebooks": [
+   {
+    "notebook": "ml_basics",
+    "animations": [
+     {
+      "id": "neuron-layers",
+      "title": "A neuron is a plane, a layer is a fold",
+      "what": "Drag a neuron's weights over 2D data lifted to 3D; ReLU layers fold the plane.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "layers_visualized",
+    "animations": [
+     {
+      "id": "conv-layers",
+      "title": "Inside a convolution",
+      "what": "Slide a filter over an image volume; stride, padding, dilation and channels.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "loss_functions",
+    "animations": [
+     {
+      "id": "loss-landscapes",
+      "title": "Loss landscapes and optimizers",
+      "what": "SGD, momentum and Adam racing on a 3D loss surface.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "generalization_and_model_selection",
+    "animations": [
+     {
+      "id": "bias-variance",
+      "title": "Bias, variance and model selection",
+      "what": "Drag degree and regularization; fits fan out, train and test errors split.",
+      "status": "planned"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "topic": "maths",
+  "name": "Maths",
+  "notebooks": [
+   {
+    "notebook": "functions",
+    "animations": [
+     {
+      "id": "function-explorer",
+      "title": "Functions",
+      "what": "Linear, quadratic, exponential, logarithmic: drag the parameters, watch the graph and its key points.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "trigonometry",
+    "animations": [
+     {
+      "id": "unit-circle",
+      "title": "The unit circle",
+      "what": "A point on the circle unrolls into sine, cosine and tangent waves in 3D.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "complex_numbers",
+    "animations": [
+     {
+      "id": "complex-plane",
+      "title": "Complex numbers",
+      "what": "Drag z and w; sums, products and powers as rotations and scalings.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "calculus",
+    "animations": [
+     {
+      "id": "calculus",
+      "title": "Derivative, integral, Taylor",
+      "what": "A tangent that slides, Riemann sums that converge, Taylor polynomials that hug.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "linear_algebra",
+    "animations": [
+     {
+      "id": "linear-maps",
+      "title": "Linear maps on the unit cube",
+      "what": "Drag the matrix columns; the cube deforms, eigenvectors light up, det is the volume.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "multivariable_calculus",
+    "animations": [
+     {
+      "id": "surfaces-gradient",
+      "title": "Surfaces, gradient, div and curl",
+      "what": "Drag a point on z = f(x, y): tangent plane, gradient, level curves.",
+      "status": "planned"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "topic": "physics",
+  "name": "Physics",
+  "notebooks": [
+   {
+    "notebook": "motion",
+    "animations": [
+     {
+      "id": "motion-energy",
+      "title": "Motion, momentum and energy",
+      "what": "Trajectories with velocity and acceleration vectors, energy bars, circular motion.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "forces",
+    "animations": [
+     {
+      "id": "forces-torque",
+      "title": "Forces and torque",
+      "what": "Drag forces on a body; resultant, torque, equilibrium and buoyancy.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "vector_operations",
+    "animations": [
+     {
+      "id": "vector-fields",
+      "title": "Vectors and vector fields",
+      "what": "Dot and cross product in 3D; divergence and curl of a field you can probe.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "electromagnetism",
+    "animations": [
+     {
+      "id": "coil-induction",
+      "title": "Coil: magnetic field and induction",
+      "what": "Drag a magnet or a probe ring through a coil; flux, EMF and Lenz's law live.",
+      "status": "done"
+     },
+     {
+      "id": "point-charges",
+      "title": "Point charges",
+      "what": "Drag charges in 3D; field lines and equipotential surfaces reshape live.",
+      "status": "planned"
+     },
+     {
+      "id": "charged-particle",
+      "title": "Charged particle in E and B",
+      "what": "Drag E and B; helix, cycloid and E×B drift.",
+      "status": "planned"
+     },
+     {
+      "id": "em-wave",
+      "title": "Electromagnetic wave and reflection",
+      "what": "E and B travelling together, standing waves, Fresnel and Brewster.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "optics",
+    "animations": [
+     {
+      "id": "optics-bench",
+      "title": "Optics bench",
+      "what": "Drag lenses and mirrors; rays, images and the double slit.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "thermodynamics",
+    "animations": [
+     {
+      "id": "gas-piston",
+      "title": "Gas in a piston",
+      "what": "Particles in a 3D box, a P–V diagram linked, Carnot and Otto cycles.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "flight_dynamics",
+    "animations": [
+     {
+      "id": "flight-envelope",
+      "title": "Flight: lift, drag, envelope",
+      "what": "A 3D aircraft with its forces; drag polar, ISA and the V–n diagram.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "orbital_mechanics",
+    "animations": [
+     {
+      "id": "orbits",
+      "title": "Orbits and ground tracks",
+      "what": "Drag i, Ω, ω; the ground track and J2 precession follow.",
+      "status": "planned"
+     },
+     {
+      "id": "lagrange-points",
+      "title": "Lagrange points",
+      "what": "The rotating-frame potential as a 3D surface, five equilibria.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "rocket_science",
+    "animations": [
+     {
+      "id": "orbital-transfers",
+      "title": "Transfers and staging",
+      "what": "Hohmann, bi-elliptic and gravity assists with the Δv budget.",
+      "status": "planned"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "topic": "signal-theory",
+  "name": "Signal theory",
+  "notebooks": [
+   {
+    "notebook": "signals",
+    "animations": [
+     {
+      "id": "signal-gallery",
+      "title": "Signals in time and frequency",
+      "what": "Pulses, sinc, chirp: the signal and its spectrum side by side, time–bandwidth.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "fourier",
+    "animations": [
+     {
+      "id": "fourier-epicycles",
+      "title": "Fourier series as epicycles",
+      "what": "Harmonics rebuild a waveform; the (t, Re, Im) helix and Gibbs.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "fourier_dft_fft",
+    "animations": [
+     {
+      "id": "dft-fft",
+      "title": "From the Fourier transform to the FFT",
+      "what": "Winding a signal around the circle; DFT bins and the FFT butterfly.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "sampling",
+    "animations": [
+     {
+      "id": "sampling-aliasing",
+      "title": "Sampling and aliasing",
+      "what": "The spectrum wrapped on a cylinder of circumference fs: aliasing is literal folding.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "convolution",
+    "animations": [
+     {
+      "id": "convolution",
+      "title": "Convolution as a sliding area",
+      "what": "Drag the shift; the product surface and its area trace the output.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "lti_response",
+    "animations": [
+     {
+      "id": "lti-system",
+      "title": "LTI systems",
+      "what": "Impulse response, convolution, poles and the Bode plot of one system.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "signal_filtering",
+    "animations": [
+     {
+      "id": "filtering",
+      "title": "Filtering in time and frequency",
+      "what": "Shape a filter, watch the signal and its spectrum change together.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "signal_analysis",
+    "animations": [
+     {
+      "id": "spectrum-analysis",
+      "title": "Spectrum analysis",
+      "what": "FFT bins, windows, frequency shifting and resampling.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "signal_modulation",
+    "animations": [
+     {
+      "id": "modulation",
+      "title": "AM, FM and PM",
+      "what": "The carrier as a 3D IQ helix; modulation index and spectra.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "digital_comms",
+    "animations": [
+     {
+      "id": "constellations-ber",
+      "title": "Constellations and BER",
+      "what": "BPSK, QPSK, QAM with noise; eye diagram and BER vs theory.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "iq_demodulation",
+    "animations": [
+     {
+      "id": "iq-demodulation",
+      "title": "IQ demodulation",
+      "what": "Quadrature mixing, residual Δf spinning the constellation, FFT bins.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "antenna_propagation",
+    "animations": [
+     {
+      "id": "friis-link",
+      "title": "Antennas and the link budget",
+      "what": "Two antennas, Friis and two-ray path loss, planar arrays.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "dipole",
+    "animations": [
+     {
+      "id": "dipole-antenna",
+      "title": "Dipole antenna",
+      "what": "3D radiation pattern, near and far field, dipole length.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "phased_array",
+    "animations": [
+     {
+      "id": "phased-array",
+      "title": "Phased arrays",
+      "what": "Drag elements and steering; 3D beam, grating lobes, phase vs true time delay.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "vivaldi",
+    "animations": [
+     {
+      "id": "vivaldi-antenna",
+      "title": "Vivaldi antenna",
+      "what": "The tapered slot, its fields and its wideband pattern.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "electromagnetic_polarization",
+    "animations": [
+     {
+      "id": "polarization",
+      "title": "Polarization",
+      "what": "Helix, ellipse and a draggable point on the Poincaré sphere.",
+      "status": "planned"
+     }
+    ]
+   },
+   {
+    "notebook": "guided_wave_propagation",
+    "animations": [
+     {
+      "id": "waveguide-modes",
+      "title": "Waveguides and coax",
+      "what": "Modes in the cross-section, cutoff and dispersion.",
+      "status": "planned"
+     }
+    ]
+   }
+  ]
+ }
+]

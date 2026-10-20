@@ -11,8 +11,8 @@
 //   (valid while ωL ≪ R) and the driven coil is an ideal current source.
 // - Fluxes use reciprocity: the flux of source S through circuit C is I_S times their mutual
 //   inductance M, computed as ∮A·dl of the coil's own field around the other circuit.
-import { MU0 } from '../../lib/physics/loop.js';
-import { stackTable, addStackField, fluxThroughLoop } from '../../lib/physics/axisym.js';
+import { MU0 } from '../../../lib/physics/loop.js';
+import { stackTable, addStackField, fluxThroughLoop } from '../../../lib/physics/axisym.js';
 
 export const G = 9.80665; // standard gravity, m/s²
 export const BOX = { rho: 0.3, z: 0.4 }; // scene half-extent, m

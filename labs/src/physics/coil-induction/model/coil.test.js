@@ -1,6 +1,6 @@
-import { MU0 } from '../../lib/physics/loop.js';
+import { MU0 } from '../../../lib/physics/loop.js';
 import { createModel, scripted, simulateDrop, G } from './coil.js';
-import { near, ok, pct } from '../../lib/testing.js';
+import { near, ok, pct } from '../../../lib/testing.js';
 
 const snap = (M, pos, extra = {}) => ({ t: 0, pos, vel: [0, 0, 0], iCoil: 0, iProbe: 0, ...extra });
 const Bz = (M, x, z, s) => M.field(x, 0, z, s, [0, 0, 0])[2];
