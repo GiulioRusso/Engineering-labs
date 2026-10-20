@@ -1,0 +1,137 @@
+# 🧪 Labs — guide
+
+Interactive 3D labs, one self-contained HTML page per topic. You drag something in the scene and the
+physics responds live, with linked plots, readouts and the theory one click away.
+
+<p align="center">
+  <img src="web/media/coil-induction.gif" width="85%" alt="Coil and induction lab">
+</p>
+
+## ▶️ Opening a lab
+
+Double-click **`web/index.html`** (the catalogue) or any `web/<lab>.html`. No server, no install, no
+network: every page carries its own JavaScript, CSS and pre-rendered maths. A fresh clone works offline in
+Chrome, Firefox and Safari.
+
+A view can be linked exactly: `web/coil-induction.html?scenario=drop&Rc=0.2#tour-6`. **Copy link** in the
+header builds that URL.
+
+## 🔨 Building
+
+Only needed when you change `src/`. The built pages in `web/` are committed.
+
+```bash
+cd labs
+npm install                    # build-time tools only: esbuild, three, katex, puppeteer-core, gifenc, pngjs
+npm run build                  # every lab → web/<lab>.html, plus web/index.html
+npm run build coil-induction   # one lab
+npm test                       # model tests (node, no browser)
+npm run smoke                  # headless Chrome from file://: errors, network, blank scene, frame times
+npm run capture                # web/media: one PNG per scenario, catalogue thumbnail, 8 s GIF
+```
+
+`smoke` and `capture` use the Chrome already installed (`CHROME=/path/to/chrome` to override).
+
+## 🧱 Architecture
+
+```
+labs/
+├── TOPICS.md                 # the topic map: every planned lab, its checks, its status
+├── build.mjs                 # esbuild bundle + KaTeX (MathML) → one HTML per lab, and the catalogue
+├── src/
+│   ├── lib/
+│   │   ├── lab.css           # layout + semantic palette, light and dark
+│   │   ├── physics/          # shared pure models (no DOM, no three.js), with their tests
+│   │   │   ├── loop.js       #   exact current-loop field, elliptic integrals, mutual inductance
+│   │   │   └── axisym.js     #   tabulated axisymmetric "stacks" (loop, solenoid, Amperian magnet)
+│   │   ├── ui/               # stage, handles, panel, plots, hud, explain, tour, urlstate, theme, format
+│   │   ├── viz/              # field lines, particles, instanced arrows, slice plane, colormaps, legend
+│   │   └── testing.js
+│   └── <lab>/
+│       ├── index.html        # page skeleton + Explain drawer text, with $$TeX$$ and \(TeX\)
+│       ├── main.js           # scene, controls, plots, tour
+│       ├── meta.json         # catalogue card
+│       └── model/            # the lab's physics (pure) + *.test.js
+├── tools/                    # test.mjs, smoke.mjs (+ smoke.sh), capture.mjs, browser.mjs
+└── web/                      # BUILT, COMMITTED: index.html, <lab>.html, media/
+```
+
+**Physics never touches the DOM.** Every model is a plain ES module that node can import and test. The
+scene reads the model; the model never reads the scene.
+
+**Maths is rendered at build time.** `build.mjs` turns `$$…$$` and `\(…\)` into MathML, which all
+browsers draw natively, with no fonts and no KaTeX at runtime. Symbols are coloured like the scene objects
+they name: `\cB{B}` (magnetic), `\cE{}` (electric), `\cI{}` (current), `\cF{}` (force), `\cv{}`
+(velocity).
+
+**One file per lab.** esbuild inlines everything, and `</script` is escaped. Budget: 2 MB per page
+(the build fails above it). The coil lab is about 850 KB, mostly three.js.
+
+## 🧩 Lab anatomy
+
+Every lab has the same layout, built from `src/lib/ui`:
+
+| Part | Module | What it does |
+|---|---|---|
+| Stage | `stage.js` | z-up scene, damped orbit, axes triad, ground grid, presets front/side/top/iso (eased), perspective/ortho, render on demand, pauses off-screen, frame-time stats |
+| Direct manipulation | `handles.js` | drag scene objects; each handle names its allowed axes; drag plane faces the camera so it never jumps |
+| Control panel | `panel.js` | always Scenarios → Parameters → Layers → Time; sliders with number inputs, units, log scales |
+| Linked plots | `plots.js` | Canvas 2D, SI-prefixed ticks, two y axes, moving time cursor |
+| HUD | `hud.js` | live values with units, plus the invariants that prove the picture honest |
+| Explain drawer | `explain.js` | theory sections; clicking one highlights its objects in the scene |
+| Guided tour | `tour.js` | 4–8 steps, each sets scenario, parameters and camera; next/back/leave |
+| URL state | `urlstate.js` | `?scenario=…&param=…#tour-n` restores the view |
+| Theme | `theme.js` | dark first, light supported, remembered per viewer |
+
+Keyboard: `Space` play/pause, `R` reset, `1`–`4` cameras, `T` tour, `Esc` close. All controls are real
+buttons, inputs and selects, with 44 px scenario targets.
+
+Field visualisation (`src/lib/viz`): RK4 field lines with step-doubling error control, drawn as one
+`LineSegments2`; particles advected along the lines with speed ∝ |B|; instanced arrow grid; a draggable
+slice plane with a colormap; a legend that is always visible. Colormaps are viridis and magma only, on a
+log scale.
+
+## 🎓 Pedagogy contract
+
+- Each lab answers 3–6 questions a student actually asks; every scenario and tour step answers one.
+- Picture first, equation second, numbers third.
+- One scenario provokes the topic's classic misconception, and a tour step resolves it (coil lab: *Magnet
+  held still* has maximum flux and zero EMF).
+- 3D by default, always with the 2D cut or plot an engineer actually reads.
+- Cinematic but honest: motion only where physics moves (particles ∝ |B|, carriers ∝ I), matte materials,
+  no decorative glow.
+
+## ✅ Testing rules
+
+Every model ships node tests (`src/**/*.test.js`, run by `tools/test.mjs`) against:
+
+- **analytic limits** with a stated budget (coil lab: ring on axis < 0.1 %, long solenoid μ0·n·I < 1 %);
+- **independent references**: closed form vs brute-force Biot–Savart on 4000 segments; ∮A·dl vs ∬B·dS;
+- **conservation laws and invariants**: ∇·B ≈ 0, F·v = −I²R, energy over a magnet drop;
+- **signs**: Lenz's law direction, force against velocity.
+
+The page shows the same invariants live in the HUD (✓ in green when they hold). The *About the model*
+section of the Explain drawer states the numerical method and the measured error of each check.
+
+`smoke` must pass with zero failures before committing a built page: no console error, no network
+request, no WebGL context loss, no blank scene, for every scenario.
+
+## ✍️ Adding a lab (7 steps)
+
+1. Pick the next `todo` in `TOPICS.md`; write its spec (questions, model, scenarios, tour) at the top of
+   `src/<id>/main.js`.
+2. Write `src/<id>/model/*.js` (pure) and `model/*.test.js`; run `npm test <id>` until it passes.
+3. Copy `src/coil-induction/index.html` as the skeleton; write the Explain sections and *About the model*.
+4. Write `main.js` from the lib: stage, handles, panel, plots, HUD, tour. Expose `window.__lab` with
+   `scenarios`, `load(id)` and `setPlaying(on)` (smoke and capture drive the page through it).
+5. Add `meta.json`, then `npm run build <id>` and open `web/<id>.html` by double-click.
+6. `npm run smoke` (zero failures) and `npm run capture <id>`.
+7. Mark the lab `done` in `TOPICS.md` and add its row to the root README.
+
+## 📏 Performance notes (coil lab, measured)
+
+Headless Chrome on an Apple M5 (Metal), 1280×800: update + render **1.5 ms median, 7 ms p95** per frame
+while animating (60 fps rAF). Coil table rebuild ≈ 3 ms (strided prefix sums over turns); field lines
+≈ 2 ms. Both run only when a parameter changes, so no Web Worker is needed. The 8 ms worker threshold
+is never reached. The marching-cubes iso-surface from the plan is not in the lib yet. It arrives with
+`point-charges` (equipotentials), its first real user.

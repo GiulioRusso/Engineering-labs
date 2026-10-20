@@ -15,8 +15,8 @@ component a lab introduces; everything else comes from earlier labs.
 
 | # | id | Area | Effort | Adds to lib | Status |
 |---|---|---|---|---|---|
-| 1 | `coil-induction` | Electromagnetism | L | the whole lib: stage, handles, panel, plots, HUD, explain, tour, URL state, theme, worker; field lines, particle advection, arrow grid, slice plane, iso-surface | todo |
-| 2 | `point-charges` | Electromagnetism | M | equipotential iso-surfaces at scale (first heavy marching-cubes use) | todo |
+| 1 | `coil-induction` | Electromagnetism | L | the whole lib: stage, handles, panel, plots, HUD, explain, tour, URL state, theme; field lines, particle advection, arrow grid, slice plane; exact loop / axisymmetric-stack physics | done |
+| 2 | `point-charges` | Electromagnetism | M | marching-cubes iso-surface (equipotentials); Web Worker helper if the 3D potential grid exceeds 8 ms | todo |
 | 3 | `charged-particle-eb` | Electromagnetism | M | `integrators` (RK4, Verlet, Boris), trajectory trail | todo |
 | 4 | `forces-motion` | Mechanics | S | vector-tip handles with snapping | todo |
 | 5 | `orbits` | Space | L | globe + ground track, angle handles (i, Ω, ω) | todo |
