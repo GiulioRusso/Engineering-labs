@@ -26,11 +26,14 @@ for (const page of ['index', ...labs]) {
   p.on('request', (r) => { if (!/^(file|data|blob|about):/.test(r.url())) requests.push(r.url()); });
   await p.goto(pathToFileURL(join(web, `${page}.html`)).href, { waitUntil: 'load' });
   if (page === 'index') {
-    const cards = await p.$$eval('.card', (c) => c.length);
-    const links = await p.$$eval('a.card', (c) => c.map((a) => a.getAttribute('href')));
-    const missing = labs.filter((l) => !links.includes(`${l}.html`));
-    for (const l of missing) fail(`index: no card links to ${l}`);
-    if (!missing.length) console.log(`  ok   index (${cards} cards, every built lab linked)`);
+    // both copies of the catalogue: labs/web/index.html and the repository root index.html
+    for (const [name, url, pre] of [['labs/web/index.html', null, ''], ['root index.html', pathToFileURL(join(web, '..', '..', 'index.html')).href, 'labs/web/']]) {
+      if (url) await p.goto(url, { waitUntil: 'load' });
+      const links = await p.$$eval('a[href]', (c) => c.map((a) => a.getAttribute('href')));
+      const missing = labs.filter((l) => !links.includes(`${pre}${l}.html`));
+      for (const l of missing) fail(`${name}: no link to ${l}`);
+      if (!missing.length) console.log(`  ok   ${name} (every built lab linked)`);
+    }
   } else {
     await p.waitForFunction(() => window.__lab, { timeout: 10000 });
     const gl = await p.evaluate(() => {
