@@ -1,0 +1,16 @@
+<h2>Linear maps on the unit cube</h2>
+<p>A \(3\times3\) matrix moves every point of space. Its columns are where the three unit vectors land, and that is enough to know where everything else goes. Drag the tips of the three coloured arrows.</p>
+<section data-highlight="columns">
+  <h3>Columns are the images of the axes</h3>
+  <div class="eq">$$A\,\mathbf e_1 = \mathbf c_1,\quad A\,\mathbf e_2 = \mathbf c_2,\quad A\,\mathbf e_3 = \mathbf c_3, \qquad A\mathbf x = x_1\mathbf c_1 + x_2\mathbf c_2 + x_3\mathbf c_3$$</div>
+</section>
+<section data-highlight="det">
+  <h3>The determinant is a volume</h3>
+  <p>The unit cube becomes a parallelepiped. Its signed volume is the determinant: negative if the map turns space inside out, zero if it flattens it (then the matrix has no inverse).</p>
+  <div class="eq">$$\det A = \mathbf c_1 \cdot (\mathbf c_2 \times \mathbf c_3)$$</div>
+</section>
+<section data-highlight="eigen">
+  <h3>Eigenvectors keep their direction</h3>
+  <p>Most vectors are turned by the map. An eigenvector is only stretched, by the factor \(\lambda\). A rotation has just one: its axis.</p>
+  <div class="eq">$$A\mathbf v = \lambda \mathbf v, \qquad \det(A - \lambda I) = 0$$</div>
+</section>

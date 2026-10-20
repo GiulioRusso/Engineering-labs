@@ -40,7 +40,9 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
   const stage = createStage(el.stage, { size: def.size ?? 0.5, presets: def.cameras || PRESETS(def.size ?? 0.5) });
   const handles = createHandles(stage, el.hint);
   const state = { scenario: def.scenarios[0].id, ...structuredClone(def.defaults) };
-  const time = { t: 0, D: def.duration || 0, playing: !stage.reducedMotion, speed: def.speed ?? 1, live: false, scrubbable: def.scrub !== false };
+  // time.t is simulated time (shown in the play bar); it advances by dt·speed·scale per frame, so a lab
+  // whose physics lives in µs sets scale = 1e-5 and keeps SI units everywhere.
+  const time = { t: 0, D: def.duration || 0, playing: !stage.reducedMotion, speed: def.speed ?? 1, scale: def.timeScale ?? 1, live: false, scrubbable: def.scrub !== false };
   const plots = Object.fromEntries(plotsDef.map((p) => [p.id, createPlot(q(`[data-plot="${p.id}"]`), p)]));
   const hud = createHud(el.hud, def.hud || []);
   if (!def.hud?.length) el.hud.hidden = true;
@@ -52,6 +54,7 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     timings: {},
     requestUpdate() { if (impl && !time.playing) impl.update(0); stage.requestRender(); bar(); },
     setPlaying, loadScenario,
+    panelSync() { panel?.sync(); writeUrl(); },
     setDuration(D) { time.D = D; if (D && time.t > D) time.t = 0; bar(); },
   };
 
@@ -87,14 +90,14 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
   playbar = createPlaybar(el.playbar, {
     onPlay: () => setPlaying(!time.playing),
     onRestart: () => { time.t = 0; impl.changed?.('restart'); ctx.requestUpdate(); },
-    onStep: () => { setPlaying(false); time.t = Math.min(time.D || Infinity, time.t + (time.D ? time.D / 200 : 1 / 30)); impl.update(1 / 30); stage.requestRender(); bar(); },
+    onStep: () => { setPlaying(false); time.t = Math.min(time.D || Infinity, time.t + (time.D ? time.D / 200 : time.scale / 30)); impl.update(1 / 30); stage.requestRender(); bar(); },
     onScrub: (u) => { if (time.D) { time.t = u * time.D; impl.update(0); stage.requestRender(); bar(); } },
     onSpeed: (v) => { time.speed = v; bar(); writeUrl(); },
   });
 
   stage.setOnFrame((dt) => {
     if (time.playing) {
-      time.t += time.live ? dt : dt * time.speed;
+      time.t += time.live ? dt * time.scale : dt * time.speed * time.scale;
       if (time.D && !time.live && time.t > time.D) time.t = def.loop === false ? time.D : time.t % time.D;
     }
     impl.update(dt);
@@ -119,7 +122,11 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
   }
   loadScenario(url.scenario && def.scenarios.some((s) => s.id === url.scenario) ? url.scenario : def.scenarios[0].id, keep);
   stage.preset((def.scenarios.find((s) => s.id === state.scenario) || {}).cam || def.cam || 'iso', { instant: true });
+  if (def.ortho) stage.toggleOrtho();
+  if (def.plain) { stage.grid.visible = false; stage.axes.visible = false; }
   if (url.tour && tour) tour.show(url.tour - 1);
+  // timeless labs (a graph you shape by hand) have no clock: no play bar, render on demand only
+  if (def.timeless) { el.playbar.hidden = true; time.playing = false; }
   setPlaying(time.playing);
 
   return {
@@ -132,7 +139,7 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     urlParams,
     theme() { stage.setTheme(); impl.theme?.(); for (const p of Object.values(plots)) p.redraw(); ctx.requestUpdate(); },
     key(e) {
-      if (e.key === ' ') { e.preventDefault(); setPlaying(!time.playing); }
+      if (e.key === ' ' && !def.timeless) { e.preventDefault(); setPlaying(!time.playing); }
       else if (e.key === 'r' || e.key === 'R') loadScenario(state.scenario);
       else if ((e.key === 't' || e.key === 'T') && tour) tour.toggle();
       else if (e.key === 'Escape') { tour?.close(); explain.close(); }

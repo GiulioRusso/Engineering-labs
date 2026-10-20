@@ -34,6 +34,7 @@ export function createCurve(stage, { max = 2048, width = 2, color = '--c-B', opa
       const k = Math.min(max, seg.length / 6);
       for (let i = 0; i < 6 * k; i++) a[i] = seg[i];
       g.instanceCount = k; buf.needsUpdate = true;
+      if (dashed) obj.computeLineDistances();
       return api;
     },
     theme() { mat.color.set(cssVar(color)); },

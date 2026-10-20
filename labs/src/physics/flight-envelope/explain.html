@@ -1,0 +1,20 @@
+<h2>Flight: lift, drag and the envelope</h2>
+<section data-highlight="lift">
+  <h3>Lift grows with angle of attack, until it stalls</h3>
+  <p>Tilt the wing into the air and it deflects the flow downward: the reaction is lift. Lift grows almost linearly with the angle of attack, until the flow separates from the upper surface and the wing stalls.</p>
+  <div class="eq">$$L = \tfrac12\rho V^2 S\,C_L, \qquad C_L \approx a(\alpha - \alpha_0), \quad a = \frac{2\pi\,AR}{AR + 2}$$</div>
+</section>
+<section data-highlight="drag">
+  <h3>Drag: friction plus the price of lift</h3>
+  <p>Part of the drag is skin friction and shape, \(C_{D0}\). The rest is induced by the lift itself (wingtip vortices) and grows with \(C_L^2\). The best glide is where the two are equal.</p>
+  <div class="eq">$$C_D = C_{D0} + k C_L^2, \quad k = \frac{1}{\pi e\,AR}, \qquad \left(\frac{L}{D}\right)_{\max} = \frac{1}{2\sqrt{k\,C_{D0}}}$$</div>
+</section>
+<section data-highlight="envelope">
+  <h3>Turns load the wing</h3>
+  <p>In a level turn at bank angle \(\varphi\) the lift must also pull the aircraft round, so it grows by the load factor \(n\). The stall speed grows with \(\sqrt n\): the V–n diagram is the safe region.</p>
+  <div class="eq">$$n = \frac{1}{\cos\varphi}, \qquad V_s = \sqrt{\frac{2 n W}{\rho S\, C_{L\max}}}$$</div>
+</section>
+<section data-highlight="isa">
+  <h3>Thinner air</h3>
+  <p>The International Standard Atmosphere: temperature falls 6.5 K per kilometre up to 11 km, then stays at 216.65 K. Air density drops, so the same lift needs more speed or more angle of attack.</p>
+</section>

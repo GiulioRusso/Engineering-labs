@@ -1,0 +1,15 @@
+<h2>Orbital transfers</h2>
+<section data-highlight="hohmann">
+  <h3>The Hohmann transfer</h3>
+  <p>To climb from one circular orbit to another, burn forward once to stretch the orbit into an ellipse that touches the target, then burn again at the far end to round it off. It is the cheapest two-burn transfer.</p>
+  <div class="eq">$$a_t = \frac{r_1 + r_2}{2}, \quad \Delta v_1 = \sqrt{\frac{\mu}{r_1}}\left(\sqrt{\frac{2r_2}{r_1 + r_2}} - 1\right), \quad t = \pi\sqrt{\frac{a_t^3}{\mu}}$$</div>
+</section>
+<section data-highlight="bielliptic">
+  <h3>Going further to arrive cheaper</h3>
+  <p>The bi-elliptic transfer first overshoots to a distant apoapsis \(r_b\), where the spacecraft is slow and changing the orbit is cheap, then falls back to the target. It saves fuel only when the target is more than about 12 times further out, and it takes much longer.</p>
+</section>
+<section data-highlight="rocket">
+  <h3>The rocket equation</h3>
+  <p>Each burn costs propellant exponentially: the rocket must also accelerate the fuel it has not burned yet.</p>
+  <div class="eq">$$\Delta v = I_{sp}\, g_0 \ln\frac{m_0}{m_f}, \qquad m_\text{prop} = m_\text{dry}\left(e^{\Delta v / I_{sp} g_0} - 1\right)$$</div>
+</section>

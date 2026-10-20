@@ -22,7 +22,8 @@ export function createSlice(stage, { w, h, res = [160, 200] }) {
       else { mesh.position.set(0, 0, offset); mesh.scale.set(w, w, 1); }
     },
     // value(x, y, z) -> magnitude; norm -> [0, 1]
-    compute(value, map, norm) {
+    // shade(x, y, z) -> optional brightness multiplier (e.g. > 1 for bright contour lines)
+    compute(value, map, norm, shade) {
       const [W, H] = api.orientation === 'xz' ? [w, h] : [w, w];
       for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
         const u = (i + 0.5) / nx - 0.5, v = (j + 0.5) / ny - 0.5;
@@ -31,8 +32,9 @@ export function createSlice(stage, { w, h, res = [160, 200] }) {
         cmap(map, norm(val), rgb);
         const o = 4 * (j * nx + i);
         const tt = norm(val);
-        data[o] = rgb[0] * 255; data[o + 1] = rgb[1] * 255; data[o + 2] = rgb[2] * 255;
-        data[o + 3] = 255 * Math.min(1, 0.06 + 1.1 * tt); // weak field fades out: the eye goes where the field is
+        const sh = shade ? (api.orientation === 'xz' ? shade(x, api.offset, b) : shade(x, b, api.offset)) : 1;
+        data[o] = Math.min(255, rgb[0] * 255 * sh); data[o + 1] = Math.min(255, rgb[1] * 255 * sh); data[o + 2] = Math.min(255, rgb[2] * 255 * sh);
+        data[o + 3] = 255 * Math.min(1, (sh > 1 ? 0.7 : 0.06) + 1.1 * tt); // weak field fades out: the eye goes where the field is
       }
       tex.needsUpdate = true;
     },

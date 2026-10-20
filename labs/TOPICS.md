@@ -90,30 +90,30 @@ Every original notebook and its animations, grouped like `legacy/notebooks/`. Ea
 
 | Notebook | Animation | What you do | Status |
 |---|---|---|---|
-| `functions` | Functions | Linear, quadratic, exponential, logarithmic: drag the parameters, watch the graph and its key points. | planned |
-| `trigonometry` | The unit circle | A point on the circle unrolls into sine, cosine and tangent waves in 3D. | planned |
-| `complex_numbers` | Complex numbers | Drag z and w; sums, products and powers as rotations and scalings. | planned |
-| `calculus` | Derivative, integral, Taylor | A tangent that slides, Riemann sums that converge, Taylor polynomials that hug. | planned |
-| `linear_algebra` | Linear maps on the unit cube | Drag the matrix columns; the cube deforms, eigenvectors light up, det is the volume. | planned |
-| `multivariable_calculus` | Surfaces, gradient, div and curl | Drag a point on z = f(x, y): tangent plane, gradient, level curves. | planned |
+| `functions` | [Functions](web/maths.html?lab=function-explorer) | Linear, quadratic, exponential, logarithmic: drag the parameters, watch the graph and its key points. | done |
+| `trigonometry` | [The unit circle](web/maths.html?lab=unit-circle) | A point on the circle unrolls into sine, cosine and tangent waves in 3D. | done |
+| `complex_numbers` | [Complex numbers](web/maths.html?lab=complex-plane) | Drag z and w; sums, products and powers as rotations and scalings. | done |
+| `calculus` | [Derivative, integral, Taylor](web/maths.html?lab=calculus) | A tangent that slides, Riemann sums that converge, Taylor polynomials that hug. | done |
+| `linear_algebra` | [Linear maps on the unit cube](web/maths.html?lab=linear-maps) | Drag the matrix columns; the cube deforms, eigenvectors light up, det is the volume. | done |
+| `multivariable_calculus` | [Surfaces, gradient, div and curl](web/maths.html?lab=surfaces-gradient) | Drag a point on z = f(x, y): tangent plane, gradient, level curves. | done |
 
 ## Physics
 
 | Notebook | Animation | What you do | Status |
 |---|---|---|---|
-| `motion` | Motion, momentum and energy | Trajectories with velocity and acceleration vectors, energy bars, circular motion. | planned |
-| `forces` | Forces and torque | Drag forces on a body; resultant, torque, equilibrium and buoyancy. | planned |
-| `vector_operations` | Vectors and vector fields | Dot and cross product in 3D; divergence and curl of a field you can probe. | planned |
+| `motion` | [Motion, momentum and energy](web/physics.html?lab=motion-energy) | Trajectories with velocity and acceleration vectors, energy bars, circular motion. | done |
+| `forces` | [Forces and torque](web/physics.html?lab=forces-torque) | Drag forces on a body; resultant, torque, equilibrium and buoyancy. | done |
+| `vector_operations` | [Vectors and vector fields](web/physics.html?lab=vector-fields) | Dot and cross product in 3D; divergence and curl of a field you can probe. | done |
 | `electromagnetism` | [Coil: magnetic field and induction](web/physics.html?lab=coil-induction) | Drag a magnet or a probe ring through a coil; flux, EMF and Lenz's law live. | done |
-| `electromagnetism` | Point charges | Drag charges in 3D; field lines and equipotential surfaces reshape live. | planned |
-| `electromagnetism` | Charged particle in E and B | Drag E and B; helix, cycloid and E×B drift. | planned |
-| `electromagnetism` | Electromagnetic wave and reflection | E and B travelling together, standing waves, Fresnel and Brewster. | planned |
-| `optics` | Optics bench | Drag lenses and mirrors; rays, images and the double slit. | planned |
-| `thermodynamics` | Gas in a piston | Particles in a 3D box, a P–V diagram linked, Carnot and Otto cycles. | planned |
-| `flight_dynamics` | Flight: lift, drag, envelope | A 3D aircraft with its forces; drag polar, ISA and the V–n diagram. | planned |
-| `orbital_mechanics` | Orbits and ground tracks | Drag i, Ω, ω; the ground track and J2 precession follow. | planned |
-| `orbital_mechanics` | Lagrange points | The rotating-frame potential as a 3D surface, five equilibria. | planned |
-| `rocket_science` | Transfers and staging | Hohmann, bi-elliptic and gravity assists with the Δv budget. | planned |
+| `electromagnetism` | [Point charges](web/physics.html?lab=point-charges) | Drag charges in 3D; field lines and equipotential surfaces reshape live. | done |
+| `electromagnetism` | [Charged particle in E and B](web/physics.html?lab=charged-particle) | Drag E and B; helix, cycloid and E×B drift. | done |
+| `electromagnetism` | [Electromagnetic wave and reflection](web/physics.html?lab=em-wave) | E and B travelling together, standing waves, Fresnel and Brewster. | done |
+| `optics` | [Optics bench](web/physics.html?lab=optics-bench) | Drag lenses and mirrors; rays, images and the double slit. | done |
+| `thermodynamics` | [Gas in a piston](web/physics.html?lab=gas-piston) | Particles in a 3D box, a P–V diagram linked, Carnot and Otto cycles. | done |
+| `flight_dynamics` | [Flight: lift, drag, envelope](web/physics.html?lab=flight-envelope) | A 3D aircraft with its forces; drag polar, ISA and the V–n diagram. | done |
+| `orbital_mechanics` | [Orbits and ground tracks](web/physics.html?lab=orbits) | Drag i, Ω, ω; the ground track and J2 precession follow. | done |
+| `orbital_mechanics` | [Lagrange points](web/physics.html?lab=lagrange-points) | The rotating-frame potential as a 3D surface, five equilibria. | done |
+| `rocket_science` | [Transfers and staging](web/physics.html?lab=orbital-transfers) | Hohmann, bi-elliptic and gravity assists with the Δv budget. | done |
 
 ## Signal theory
 

@@ -74,6 +74,7 @@ export function createStage(container, { size = 0.5, presets }) {
       camera.position.lerpVectors(tween.p0, tween.p1, e);
       controls.target.lerpVectors(tween.q0, tween.q1, e);
       if (u >= 1) tween = null;
+      if (camera === ortho) fitOrtho();
       dirty = true;
     }
     const moved = controls.update();
@@ -93,13 +94,18 @@ export function createStage(container, { size = 0.5, presets }) {
   document.addEventListener('visibilitychange', onVis);
   renderer.domElement.addEventListener('webglcontextlost', (e) => { e.preventDefault(); window.__labContextLost = true; });
 
+  // the orthographic view frames what the perspective camera would see at the current distance
+  function fitOrtho() {
+    const r = container.getBoundingClientRect(), a = Math.max(1, r.width) / Math.max(1, r.height);
+    const half = Math.tan(THREE.MathUtils.degToRad(persp.fov / 2)) * camera.position.distanceTo(controls.target);
+    ortho.left = -half * a; ortho.right = half * a; ortho.top = half; ortho.bottom = -half;
+    ortho.updateProjectionMatrix();
+  }
   function resize() {
     const r = container.getBoundingClientRect(), w = Math.max(1, r.width), h = Math.max(1, r.height);
     renderer.setSize(w, h); labels.setSize(w, h);
     persp.aspect = w / h; persp.updateProjectionMatrix();
-    const half = Math.tan(THREE.MathUtils.degToRad(persp.fov / 2)) * camera.position.distanceTo(controls.target);
-    ortho.left = -half * w / h; ortho.right = half * w / h; ortho.top = half; ortho.bottom = -half;
-    ortho.updateProjectionMatrix();
+    fitOrtho();
     for (const fn of api.onResize) fn(w, h);
     requestRender();
   }
@@ -127,7 +133,7 @@ export function createStage(container, { size = 0.5, presets }) {
       const p = presets[name];
       if (!p) return;
       const p1 = new THREE.Vector3(...p.pos), q1 = new THREE.Vector3(...(p.target || [0, 0, 0]));
-      if (instant || reduced) { camera.position.copy(p1); controls.target.copy(q1); controls.update(); resize(); return; }
+      if (instant || reduced) { tween = null; camera.position.copy(p1); controls.target.copy(q1); controls.update(); resize(); return; }
       tween = { t0: performance.now(), ms: 650, p0: camera.position.clone(), p1, q0: controls.target.clone(), q1 };
       requestRender();
     },

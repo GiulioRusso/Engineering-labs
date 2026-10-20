@@ -1,0 +1,17 @@
+<h2>Derivative, integral, Taylor</h2>
+<p>Three ideas built on one picture: a smooth curve, looked at very close up (derivative), added up in thin strips (integral), or copied by a polynomial (Taylor).</p>
+<section data-highlight="derivative">
+  <h3>The derivative is a limit of slopes</h3>
+  <p>Draw a secant through \(x_0\) and \(x_0 + h\). As \(h\) shrinks, the secant turns into the tangent and its slope into the derivative.</p>
+  <div class="eq">$$f'(x_0) = \lim_{h\to 0} \frac{f(x_0 + h) - f(x_0)}{h}$$</div>
+</section>
+<section data-highlight="integral">
+  <h3>The integral is a limit of sums</h3>
+  <p>Cut the area into \(n\) strips and add their areas. More strips, smaller error. Taking the height at the strip's midpoint is much better than at its edge: the error falls like \(1/n^2\) instead of \(1/n\).</p>
+  <div class="eq">$$\int_a^b f(x)\,dx = \lim_{n\to\infty} \sum_{i=1}^{n} f(x_i^*)\,\Delta x, \qquad \Delta x = \frac{b-a}{n}$$</div>
+</section>
+<section data-highlight="taylor">
+  <h3>Taylor: a polynomial that copies the curve</h3>
+  <p>Match the value, the slope, the curvature… at one point. Each extra term hugs the curve over a wider range.</p>
+  <div class="eq">$$T_N(x) = \sum_{n=0}^{N} \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n$$</div>
+</section>

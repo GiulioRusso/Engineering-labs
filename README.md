@@ -14,31 +14,34 @@ Clone or download the repository, then double-click **`index.html`** at the top 
 you can also run `open index.html`). It opens the catalogue: every topic of the original notebooks, each
 with its animations. Click one to launch it.
 
-No install, no server, no internet connection. Every animation is a single self-contained HTML file, so
-you can also double-click it directly, e.g. `labs/web/physics/coil-induction.html`.
+**One file per topic.** Each topic is a single self-contained page that holds all of its animations,
+with a sidebar to switch between them (grouped by the original notebook):
 
-## 🧪 Animations, by topic
+| Topic | Open this file | Animations |
+|---|---|---|
+| Physics | [`labs/web/physics.html`](labs/web/physics.html) | 13, covering all 9 physics notebooks |
+| Maths | [`labs/web/maths.html`](labs/web/maths.html) | 6, covering all 6 maths notebooks |
+| Computer science | [`visualizations/algorithm-visualization/web/index.html`](visualizations/algorithm-visualization/web/index.html) | the Algorithm Visualizer |
+| Digital electronics | [`visualizations/electronics-visualization/web/index.html`](visualizations/electronics-visualization/web/index.html) | the Electronics Visualizer |
 
-Organised exactly like the original notebooks: every notebook gets one animation (some get several).
-Computer science and most of digital electronics are covered by the two step-by-step visualizers below.
+The other topics (analog electronics, circuits, control, electronic warfare, machine learning, signal
+theory) are planned; they will appear as `labs/web/<topic>.html` in the same way. No install, no server,
+no internet connection.
 
-| Topic | Notebooks | Animations built | Where |
-|---|---|---|---|
-| Analog electronics | 4 | 0 / 4 | `labs/web/analog-electronics/` |
-| Circuits | 5 | 0 / 5 | `labs/web/circuits/` |
-| Computer science | 11 | Algorithm Visualizer | `visualizations/algorithm-visualization/` |
-| Control systems | 9 | 0 / 9 | `labs/web/control-systems/` |
-| Digital electronics | 10 | Electronics Visualizer (6 of 10) | `visualizations/electronics-visualization/` |
-| Electronic warfare | 5 | 0 / 5 | `labs/web/electronic-warfare/` |
-| Machine learning | 4 | 0 / 4 | `labs/web/machine-learning/` |
-| Maths | 6 | 0 / 6 | `labs/web/maths/` |
-| Physics | 9 | 1 / 13 — [Coil: magnetic field and induction](labs/web/physics/coil-induction.html) | `labs/web/physics/` |
-| Signal theory | 17 | 0 / 17 | `labs/web/signal-theory/` |
+## 🧪 What is in each animation
 
-The full list, notebook by notebook, is in [`labs/TOPICS.md`](labs/TOPICS.md).
+Ready-made **scenarios** (one click sets everything up), **settings** in named groups with a short
+explanation under each control, things you can **drag in the 3D scene**, linked **plots**, live
+**readouts** with the physical checks that prove the picture is right (✓ in green), an **Explain**
+drawer with the theory and the equations, and a **play bar** for anything that moves.
 
-Each lab has scenarios, sliders, draggable objects, linked 2D plots, live readouts with the physical
-invariants that prove the picture honest, an *Explain* drawer with the theory, and a guided tour.
+Physics: motion and energy · forces and torque · vectors and fields · coil and induction · point
+charges · charged particle in E and B · electromagnetic waves · optics bench · gas in a piston · flight ·
+orbits · Lagrange points · orbital transfers.
+Maths: functions · unit circle · complex numbers · derivative/integral/Taylor · linear maps · surfaces and
+the gradient.
+
+The full map, notebook by notebook, is in [`labs/TOPICS.md`](labs/TOPICS.md).
 
 ## 🔨 How to build
 
@@ -73,7 +76,7 @@ happens in `labs/`.
 ## 📂 Repository structure
 
 * `index.html` → the launcher: double-click it.
-* `labs/` → the animations: `catalog.json` (the topic → notebook → animation map), `src/<topic>/` (source), `web/<topic>/` (built pages), `tools/` (tests, smoke, capture).
+* `labs/` → the animations: `catalog.json` (the topic → notebook → animation map), `src/<topic>/<animation>/` (source), `web/<topic>.html` (built pages, one per topic), `tools/` (tests, smoke, capture).
 * `visualizations/` → the algorithm and electronics visualizers.
 * `legacy/` → the frozen notebooks and their `requirements.txt`.
 * `doc/` → images for this README.

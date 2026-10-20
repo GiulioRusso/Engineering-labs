@@ -112,6 +112,7 @@ button, input, select { font: inherit; color: inherit; }
 .legend .swatch { display: inline-block; width: 14px; height: 3px; vertical-align: middle; margin-right: 6px; }
 .hint { position: absolute; z-index: 5; pointer-events: none; font-size: 12px; padding: 3px 8px; border-radius: 5px; background: var(--panel); border: 1px solid var(--line); display: none; white-space: nowrap; }
 
+.playbar[hidden] { display: none; }
 .playbar { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 3; display: flex; align-items: center; gap: 6px;
   width: min(560px, calc(100% - 24px)); padding: 6px 8px; border-radius: 12px; background: color-mix(in srgb, var(--panel) 92%, transparent); border: 1px solid var(--line); }
 .playbar .pb { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); cursor: pointer; font-size: 13px; flex: none; }
@@ -189,3 +190,4 @@ button, input, select { font: inherit; color: inherit; }
   .playbar .t { min-width: 0; font-size: 11px; }
 }
 @media (prefers-reduced-motion: reduce) { .explain { transition: none; } }
+.label3d.tick { background: none; color: var(--ink-dim); font-size: 11px; padding: 0; }

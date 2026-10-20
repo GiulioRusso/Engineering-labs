@@ -62,23 +62,25 @@ export function createPlot(container, opts) {
     }
     // grid + ticks
     ctx.strokeStyle = line; ctx.lineWidth = 1; ctx.fillStyle = dim;
-    const [xf, xp] = prefixFor(Math.max(Math.abs(xl[0]), Math.abs(xl[1])) * (opts.xScale || 1));
+    const [xf, xp] = opts.xUnit ? prefixFor(Math.max(Math.abs(xl[0]), Math.abs(xl[1])) * (opts.xScale || 1)) : [1, ''];
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     for (const t of niceTicks(xl[0], xl[1], Math.max(2, Math.floor(pw / 70)))) {
       const x = X(t); ctx.beginPath(); ctx.moveTo(x, m.t); ctx.lineTo(x, m.t + ph); ctx.stroke();
       ctx.fillText(String(Number((t * (opts.xScale || 1) / xf).toPrecision(3))), x, m.t + ph + 4);
     }
-    ctx.textAlign = 'right'; ctx.fillText(`${opts.xLabel} (${xp}${opts.xUnit})`, m.l + pw, 3);
+    ctx.textAlign = 'right'; ctx.fillText(`${opts.xLabel}${xp || opts.xUnit ? ` (${xp}${opts.xUnit})` : ''}`, m.l + pw, 3);
     const axisLabels = [];
     for (let a = 0; a < (two ? 2 : 1); a++) {
-      const [f, p] = prefixFor(Math.max(Math.abs(yr[a][0]), Math.abs(yr[a][1])));
+      // unitless axes are not prefix-scaled (a bare 'm' would read as a unit)
+      const [f, p] = (a ? opts.y2Unit : opts.yUnit) ? prefixFor(Math.max(Math.abs(yr[a][0]), Math.abs(yr[a][1]))) : [1, ''];
       ctx.textAlign = a ? 'left' : 'right'; ctx.textBaseline = 'middle';
       for (const t of niceTicks(yr[a][0], yr[a][1], Math.max(2, Math.floor(ph / 32)))) {
         const y = Y(t, a);
         if (!a) { ctx.beginPath(); ctx.moveTo(m.l, y); ctx.lineTo(m.l + pw, y); ctx.stroke(); }
         ctx.fillText(String(Number((t / f).toPrecision(3))), a ? m.l + pw + 4 : m.l - 4, y);
       }
-      axisLabels.push(`${p}${a ? opts.y2Unit : opts.yUnit}`);
+      const unit = (a ? opts.y2Unit : opts.yUnit) || '';
+      axisLabels.push(unit ? `${p}${unit}` : '');
     }
     // zero line
     if (yr[0][0] < 0 && yr[0][1] > 0) {
@@ -120,7 +122,7 @@ export function createPlot(container, opts) {
     for (const s of d.series) {
       if (!s.label) continue;
       ctx.fillStyle = cssVar(s.color);
-      const lab = `${s.label} [${axisLabels[s.axis || 0]}]`;
+      const u = axisLabels[s.axis || 0], lab = u ? `${s.label} [${u}]` : s.label;
       if (x + ctx.measureText(lab).width > w - m.r - 90) break;
       ctx.fillText(lab, x, 4); x += ctx.measureText(lab).width + 10;
     }
