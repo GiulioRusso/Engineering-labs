@@ -19,7 +19,7 @@ const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 
 // labsRoot: absolute path of labs/; web: path from the page to labs/web/; repo: path from the page to the repo root.
 export function renderCatalogue({ catalog, labsRoot, web, repo, featured }) {
-  const isBuilt = (topic, id) => existsSync(join(labsRoot, 'src', topic, id, 'main.js'));
+  const isBuilt = (topic, id) => existsSync(join(labsRoot, 'src', topic, id, 'lab.js'));
   const hasMedia = (f) => existsSync(join(labsRoot, 'web', 'media', f));
   let built = 0, planned = 0, viaVis = 0;
 
@@ -39,7 +39,7 @@ export function renderCatalogue({ catalog, labsRoot, web, repo, featured }) {
         if (isBuilt(t.topic, a.id)) {
           built++; tBuilt++;
           const img = hasMedia(`${a.id}.png`) ? `<img src="${web}media/${a.id}.png" alt="" loading="lazy">` : '';
-          items.push(`<a class="anim built" href="${web}${t.topic}/${a.id}.html">${img}<span class="t">${esc(a.title)}</span><span class="d">${esc(a.what)}</span><span class="go">Open →</span></a>`);
+          items.push(`<a class="anim built" href="${web}${t.topic}.html?lab=${a.id}">${img}<span class="t">${esc(a.title)}</span><span class="d">${esc(a.what)}</span><span class="go">Open →</span></a>`);
         } else {
           planned++;
           items.push(`<div class="anim todo"><span class="t">${esc(a.title)}</span><span class="d">${esc(a.what)}</span></div>`);
@@ -51,7 +51,7 @@ export function renderCatalogue({ catalog, labsRoot, web, repo, featured }) {
       <div class="vis-head"><span class="t">${VIS[k].title}</span><span class="go">Open →</span></div>
       <p class="d">${VIS[k].what}</p>
       <div class="chips">${v.covered.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}${v.planned.map((n) => `<span class="chip muted">${esc(n)} · planned</span>`).join('')}</div></a>`);
-    const progress = tTotal ? `<span class="count">${tBuilt} / ${tTotal} built</span><span class="bar"><i style="width:${(100 * tBuilt / tTotal).toFixed(0)}%"></i></span>` : '<span class="count">step-by-step visualizer</span>';
+    const progress = tTotal ? `<span class="count">${tBuilt} / ${tTotal} built</span><span class="bar"><i style="width:${(100 * tBuilt / tTotal).toFixed(0)}%"></i></span>${tBuilt ? `<a class="open" href="${web}${t.topic}.html">Open ${esc(t.name)} →</a>` : ''}` : '<span class="count">step-by-step visualizer</span>';
     return { t, tBuilt, tTotal, html: `<section id="${t.topic}" style="--hue:${HUE[t.topic] ?? 210}">
       <header><h2>${esc(t.name)}</h2><div class="prog">${progress}</div></header>
       <div class="tiles">${visTiles.join('')}${tiles.join('')}</div></section>` };
@@ -59,7 +59,7 @@ export function renderCatalogue({ catalog, labsRoot, web, repo, featured }) {
 
   const nav = sections.map(({ t, tBuilt, tTotal }) => `<a href="#${t.topic}" style="--hue:${HUE[t.topic] ?? 210}"><i></i>${esc(t.name)}${tTotal ? ` <small>${tBuilt}/${tTotal}</small>` : ''}</a>`).join('');
   const f = featured && catalog.flatMap((t) => t.notebooks.flatMap((n) => n.animations.map((a) => ({ ...a, topic: t.topic })))).find((a) => a.id === featured);
-  const hero = f ? `<a class="feature" href="${web}${f.topic}/${f.id}.html">
+  const hero = f ? `<a class="feature" href="${web}${f.topic}.html?lab=${f.id}">
       ${hasMedia(`${f.id}.gif`) ? `<img src="${web}media/${f.id}.gif" alt="${esc(f.title)} animation">` : hasMedia(`${f.id}.png`) ? `<img src="${web}media/${f.id}.png" alt="">` : ''}
       <span class="cap"><b>${esc(f.title)}</b><span>${esc(f.what)}</span><span class="go">Open the animation →</span></span></a>` : '';
 
@@ -109,6 +109,8 @@ section h2 { margin: 0; font-size: 21px; letter-spacing: -.01em; }
 .prog { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--dim); }
 .bar { width: 120px; height: 5px; border-radius: 3px; background: var(--panel2); overflow: hidden; }
 .bar i { display: block; height: 100%; background: hsl(var(--hue) 70% 58%); }
+.prog .open { background: hsl(var(--hue) 65% 50%); color: #fff; border-radius: 8px; padding: 6px 12px; font-weight: 600; font-size: 13px; }
+.prog .open:hover { filter: brightness(1.1); }
 
 .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); gap: 12px; }
 .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 8px; align-content: start; }
@@ -168,7 +170,7 @@ apply();
 export function counts(catalog, labsRoot) {
   let built = 0, planned = 0, viaVis = 0;
   for (const t of catalog) for (const n of t.notebooks) for (const a of n.animations) {
-    if (a.visualizer) { if (a.status !== 'planned') viaVis++; } else if (existsSync(join(labsRoot, 'src', t.topic, a.id, 'main.js'))) built++; else planned++;
+    if (a.visualizer) { if (a.status !== 'planned') viaVis++; } else if (existsSync(join(labsRoot, 'src', t.topic, a.id, 'lab.js'))) built++; else planned++;
   }
   return { built, planned, viaVis };
 }

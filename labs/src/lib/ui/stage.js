@@ -89,7 +89,8 @@ export function createStage(container, { size = 0.5, presets }) {
   controls.addEventListener('start', () => { dirty = true; kick(); });
   const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting && !document.hidden; if (visible) requestRender(); });
   io.observe(container);
-  document.addEventListener('visibilitychange', () => { visible = !document.hidden; if (visible) requestRender(); });
+  const onVis = () => { visible = !document.hidden; if (visible) requestRender(); };
+  document.addEventListener('visibilitychange', onVis);
   renderer.domElement.addEventListener('webglcontextlost', (e) => { e.preventDefault(); window.__labContextLost = true; });
 
   function resize() {
@@ -102,7 +103,8 @@ export function createStage(container, { size = 0.5, presets }) {
     for (const fn of api.onResize) fn(w, h);
     requestRender();
   }
-  new ResizeObserver(resize).observe(container);
+  const ro = new ResizeObserver(resize);
+  ro.observe(container);
 
   function setTheme() {
     const bg = new THREE.Color(cssVar('--scene'));
@@ -128,6 +130,16 @@ export function createStage(container, { size = 0.5, presets }) {
       if (instant || reduced) { camera.position.copy(p1); controls.target.copy(q1); controls.update(); resize(); return; }
       tween = { t0: performance.now(), ms: 650, p0: camera.position.clone(), p1, q0: controls.target.clone(), q1 };
       requestRender();
+    },
+    // Stop everything and free the GPU context (used when the topic page switches animation).
+    dispose() {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0; animating = false; visible = false;
+      ro.disconnect(); io.disconnect(); document.removeEventListener('visibilitychange', onVis);
+      controls.dispose();
+      scene.traverse((o) => { o.geometry?.dispose?.(); const m = o.material; (Array.isArray(m) ? m : m ? [m] : []).forEach((x) => { x.map?.dispose?.(); x.dispose?.(); }); });
+      renderer.dispose();
+      renderer.domElement.remove(); labels.domElement.remove();
     },
     toggleOrtho() {
       const next = camera === persp ? ortho : persp;

@@ -1,48 +1,5 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Coil and Induction</title>
-<meta name="description" content="Interactive 3D lab: the magnetic field of a coil, flux, Faraday's law and Lenz's law.">
-<style>/*{{CSS}}*/</style>
-</head>
-<body>
-<!-- source-only -->
-<div style="font:16px/1.5 system-ui,sans-serif;max-width:640px;margin:60px auto;padding:24px;border:2px solid #6aa8ff;border-radius:12px;background:#0c1016;color:#e6ebf2">
-  <b>This is the source template, not the animation.</b><br>
-  Open <code>labs/web/physics/coil-induction.html</code>, or double-click <code>index.html</code> at the root of the repository.
-</div>
-<!-- /source-only -->
-<div id="app">
-  <header>
-    <h1><a href="../index.html" title="All animations">Labs /</a> Coil: magnetic field and induction</h1>
-    <span class="spacer"></span>
-    <button class="btn" id="b-explain" aria-controls="explain">Explain</button>
-    <button class="btn" id="b-tour" title="Guided tour (T)">Tour</button>
-    <span class="btn-group wide" role="group" aria-label="Camera">
-      <button class="btn" data-cam="front" title="Front view (1)">Front</button>
-      <button class="btn" data-cam="side" title="Side view (2)">Side</button>
-      <button class="btn" data-cam="top" title="Top view (3)">Top</button>
-      <button class="btn" data-cam="iso" title="Iso view (4)">Iso</button>
-    </span>
-    <button class="btn wide" id="b-ortho" aria-pressed="false" title="Orthographic projection">Ortho</button>
-    <button class="btn wide" id="b-reset" title="Reset scenario (R)">Reset</button>
-    <button class="btn wide" id="b-link" title="Copy a link to this exact view">Copy link</button>
-    <button class="btn" id="b-theme"></button>
-    <button class="btn" id="b-panel" aria-controls="panel" aria-expanded="true">Controls</button>
-  </header>
-
-  <main class="viewport">
-    <div id="stage" aria-label="3D scene: a coil with its magnetic field. Drag the probe ring or the magnet." role="application"></div>
-    <div id="hud"></div>
-    <div id="legend"></div>
-    <div id="hint"></div>
-    <div id="tour"></div>
-
-    <aside id="explain" aria-label="Explanation">
-      <button class="btn close" aria-label="Close explanation">Close</button>
-      <h2>How it works</h2>
+<!-- Explain drawer for coil-induction. $$…$$ and \(…\) are rendered to MathML at build time. -->
+<h2>How it works</h2>
       <p>Click a section to highlight what it describes in the scene.</p>
 
       <section data-highlight="coil">
@@ -135,16 +92,3 @@
           <tr><td>Lenz sign, still-magnet EMF = 0, Amperian far field = dipole</td><td>pass</td></tr>
         </table>
       </details>
-    </aside>
-  </main>
-
-  <aside id="panel" aria-label="Controls"></aside>
-  <section id="dock" aria-label="Linked plots">
-    <div class="plot" id="plot-axis"></div>
-    <div class="plot" id="plot-flux"></div>
-    <div class="plot" id="plot-emf"></div>
-  </section>
-</div>
-<script type="module">/*{{JS}}*/</script>
-</body>
-</html>

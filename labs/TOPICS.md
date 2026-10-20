@@ -1,7 +1,7 @@
 # Topic map
 
-One animation (or more) for every original notebook, grouped like `legacy/notebooks/`. Generated from
-`catalog.json` by `build.mjs`: edit the JSON, not this file.
+Every original notebook and its animations, grouped like `legacy/notebooks/`. Each topic is one file,
+`web/<topic>.html`. Generated from `catalog.json` by `build.mjs`: edit the JSON, not this file.
 
 ## Analog electronics
 
@@ -104,7 +104,7 @@ One animation (or more) for every original notebook, grouped like `legacy/notebo
 | `motion` | Motion, momentum and energy | Trajectories with velocity and acceleration vectors, energy bars, circular motion. | planned |
 | `forces` | Forces and torque | Drag forces on a body; resultant, torque, equilibrium and buoyancy. | planned |
 | `vector_operations` | Vectors and vector fields | Dot and cross product in 3D; divergence and curl of a field you can probe. | planned |
-| `electromagnetism` | [Coil: magnetic field and induction](web/physics/coil-induction.html) | Drag a magnet or a probe ring through a coil; flux, EMF and Lenz's law live. | done |
+| `electromagnetism` | [Coil: magnetic field and induction](web/physics.html?lab=coil-induction) | Drag a magnet or a probe ring through a coil; flux, EMF and Lenz's law live. | done |
 | `electromagnetism` | Point charges | Drag charges in 3D; field lines and equipotential surfaces reshape live. | planned |
 | `electromagnetism` | Charged particle in E and B | Drag E and B; helix, cycloid and E×B drift. | planned |
 | `electromagnetism` | Electromagnetic wave and reflection | E and B travelling together, standing waves, Fresnel and Brewster. | planned |

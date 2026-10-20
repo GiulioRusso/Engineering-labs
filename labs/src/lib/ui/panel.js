@@ -1,102 +1,102 @@
-// Control panel, always in the same order: Scenarios, Parameters, Layers, Time.
-// Parameters are stored in SI in `state`; `k` scales them for display (e.g. k = 100 shows metres as cm).
+// Control panel: Scenarios first, then the settings in named, collapsible groups, then Display.
+// Every control has a label, its unit and an optional one-line hint; a hint may be a function of the
+// state, so a mode switch can explain the mode currently selected.
 //
-// spec.params entries:
-//   { id, label, unit, min, max, step, k = 1, log = false, show?: (state) => bool }   slider + number
-//   { id, label, type: 'select', options: [[value, text], …], show? }
-//   { id, label, type: 'check', show? }
-// spec.layers: [{ id, label, color? }] -> boolean state[id]
+// spec = { scenarios: [{ id, label, hint }], onScenario(id), controls: [group], display: [group] }
+// group = { title, hint?, open = true, show?(state), items: [item] }
+// item types:
+//   { id, label, unit, min, max, step?, k = 1, log?, hint?, show? }          slider + number (SI in state, ×k shown)
+//   { id, label, type: 'segmented', options: [[value, text]], hint? }       mode switch (radio group)
+//   { id, label, type: 'select', options: [[value, text]], hint? }
+//   { id, label, type: 'check', color?, hint? }                              toggle
+//   { type: 'readout', label, value: (state) => string }                    computed value, read-only
+const html = (s) => { const t = document.createElement('template'); t.innerHTML = s.trim(); return t.content.firstChild; };
+const text = (v, state) => (typeof v === 'function' ? v(state) : v || '');
+let uid = 0;
+
 export function createPanel(root, spec, state, onChange) {
-  const el = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; };
-  const rows = [];
+  root.innerHTML = '';
+  const syncs = [];
 
-  root.append(el('<h2 id="h-scen">Scenarios</h2>'));
-  const scen = el('<div class="scenarios" role="group" aria-labelledby="h-scen"></div>');
-  const scenBtns = {};
-  for (const s of spec.scenarios) {
-    const b = el(`<button class="btn" aria-pressed="false">${s.label}</button>`);
-    b.addEventListener('click', () => spec.onScenario(s.id));
-    scen.append(b); scenBtns[s.id] = b;
+  // ---- scenarios
+  if (spec.scenarios?.length) {
+    const sec = html('<section class="psec"><h2>Scenarios</h2><p class="ghint">Ready-made experiments. Each one sets everything below.</p><div class="scenarios"></div></section>');
+    const box = sec.querySelector('.scenarios');
+    const btns = spec.scenarios.map((s) => {
+      const b = html(`<button class="scen" aria-pressed="false"><b>${s.label}</b>${s.hint ? `<span>${s.hint}</span>` : ''}</button>`);
+      b.addEventListener('click', () => spec.onScenario(s.id));
+      box.append(b);
+      return [s.id, b];
+    });
+    syncs.push(() => { for (const [id, b] of btns) b.setAttribute('aria-pressed', String(id === state.scenario)); });
+    root.append(sec);
   }
-  root.append(scen);
 
-  root.append(el('<h2>Parameters</h2>'));
-  for (const p of spec.params) {
-    const id = `p-${p.id}`;
-    let row, sync;
-    if (p.type === 'select') {
-      row = el(`<div class="param"><label for="${id}">${p.label}</label><select id="${id}">${p.options.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></div>`);
-      const s = row.querySelector('select');
-      s.addEventListener('change', () => { state[p.id] = typeof p.options[0][0] === 'number' ? Number(s.value) : s.value; onChange(p.id); });
-      sync = () => { s.value = String(state[p.id]); };
-    } else if (p.type === 'check') {
-      row = el(`<label class="toggle param"><input type="checkbox" id="${id}"> ${p.label}</label>`);
-      const c = row.querySelector('input');
-      c.addEventListener('change', () => { state[p.id] = c.checked; onChange(p.id); });
-      sync = () => { c.checked = !!state[p.id]; };
-    } else {
-      const k = p.k ?? 1, lo = p.min, hi = p.max;
-      row = el(`<div class="param"><label for="${id}">${p.label}</label>
-        <span class="num"><input type="number" id="${id}" step="any" min="${lo * k}" max="${hi * k}"
-          aria-label="${p.label} in ${p.unit}"> ${p.unit}</span>
-        <input type="range" min="0" max="1000" step="1" aria-label="${p.label}" aria-describedby="${id}"></div>`);
-      const num = row.querySelector('input[type=number]'), rng = row.querySelector('input[type=range]');
-      const toU = (v) => (p.log ? Math.log(v / lo) / Math.log(hi / lo) : (v - lo) / (hi - lo)) * 1000;
-      const fromU = (u) => (p.log ? lo * Math.pow(hi / lo, u / 1000) : lo + (hi - lo) * u / 1000);
-      const snap = (v) => {
-        v = Math.min(hi, Math.max(lo, v));
-        return p.step ? Math.round(v / p.step) * p.step : Number(v.toPrecision(3));
-      };
-      rng.addEventListener('input', () => { state[p.id] = snap(fromU(Number(rng.value))); num.value = fmt(state[p.id] * k); onChange(p.id); });
-      num.addEventListener('change', () => {
-        const v = Number(num.value) / k;
-        if (Number.isFinite(v)) { state[p.id] = snap(v); onChange(p.id); }
-        sync();
-      });
-      sync = () => { num.value = fmt(state[p.id] * k); rng.value = String(Math.round(toU(state[p.id]))); };
+  const groups = (list, heading, sub) => {
+    if (!list?.length) return;
+    root.append(html(`<h2 class="phead">${heading}</h2>`));
+    if (sub) root.append(html(`<p class="ghint top">${sub}</p>`));
+    for (const g of list) {
+      const d = html(`<details class="group"${g.open === false ? '' : ' open'}><summary>${g.title}</summary></details>`);
+      if (g.hint) d.append(html(`<p class="ghint">${g.hint}</p>`));
+      for (const it of g.items) d.append(item(it));
+      root.append(d);
+      if (g.show) syncs.push(() => d.classList.toggle('hidden', !g.show(state)));
     }
-    root.append(row);
-    rows.push({ p, row, sync });
-  }
-
-  root.append(el('<h2>Layers</h2>'));
-  for (const l of spec.layers) {
-    if (l.options) {
-      const row = el(`<div class="param"><label for="l-${l.id}">${l.label}</label><select id="l-${l.id}">${l.options.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></div>`);
-      const s = row.querySelector('select');
-      s.addEventListener('change', () => { state[l.id] = s.value; onChange(l.id); });
-      root.append(row);
-      rows.push({ p: l, row, sync: () => { s.value = String(state[l.id]); } });
-      continue;
-    }
-    const row = el(`<label class="toggle"><input type="checkbox"> ${l.color ? `<span class="swatch" style="background:var(${l.color})"></span>` : ''}${l.label}</label>`);
-    const c = row.querySelector('input');
-    c.addEventListener('change', () => { state[l.id] = c.checked; onChange(l.id); });
-    root.append(row);
-    rows.push({ p: l, row, sync: () => { c.checked = !!state[l.id]; } });
-  }
-
-  root.append(el('<h2>Time</h2>'));
-  const time = el(`<div>
-    <div class="timebar"><button class="btn" data-a="play" aria-label="Play"></button>
-      <button class="btn" data-a="step" aria-label="Step forward" title="Step">Step</button>
-      <input type="range" min="0" max="1000" value="0" aria-label="Scrub time"><span class="t">0 s</span></div>
-    <div class="param"><label for="p-speed">Speed</label><span class="num"><output id="p-speed-out"></output>×</span>
-      <input id="p-speed" type="range" min="0" max="1000" aria-label="Playback speed"></div></div>`);
-  root.append(time);
-
-  function fmt(v) { return Number(v.toPrecision(4)).toString(); }
-  const api = {
-    sync() {
-      for (const r of rows) { r.sync(); r.row.classList.toggle('hidden', r.p.show ? !r.p.show(state) : false); }
-      for (const [id, b] of Object.entries(scenBtns)) b.setAttribute('aria-pressed', String(id === state.scenario));
-    },
-    time: {
-      play: time.querySelector('[data-a=play]'), step: time.querySelector('[data-a=step]'),
-      scrub: time.querySelector('.timebar input'), label: time.querySelector('.t'),
-      speed: time.querySelector('#p-speed'), speedOut: time.querySelector('#p-speed-out'),
-    },
   };
+
+  function item(it) {
+    const id = `c${++uid}`;
+    let el, sync;
+    const hint = html('<div class="hint"></div>');
+    if (it.type === 'segmented') {
+      el = html(`<div class="item"><div class="lbl" id="${id}">${it.label}</div><div class="seg" role="radiogroup" aria-labelledby="${id}"></div></div>`);
+      const seg = el.querySelector('.seg');
+      const bs = it.options.map(([v, t]) => {
+        const b = html(`<button role="radio" aria-checked="false">${t}</button>`);
+        b.addEventListener('click', () => { state[it.id] = v; onChange(it.id); });
+        seg.append(b);
+        return [v, b];
+      });
+      sync = () => { for (const [v, b] of bs) b.setAttribute('aria-checked', String(v === state[it.id])); };
+    } else if (it.type === 'select') {
+      el = html(`<div class="item"><div class="row"><label for="${id}">${it.label}</label><select id="${id}">${it.options.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></div></div>`);
+      const s = el.querySelector('select');
+      s.addEventListener('change', () => { const o = it.options.find(([v]) => String(v) === s.value); state[it.id] = o ? o[0] : s.value; onChange(it.id); });
+      sync = () => { s.value = String(state[it.id]); };
+    } else if (it.type === 'check') {
+      el = html(`<div class="item"><label class="toggle"><input type="checkbox"> ${it.color ? `<span class="swatch" style="background:var(${it.color})"></span>` : ''}<span>${it.label}</span></label></div>`);
+      const c = el.querySelector('input');
+      c.addEventListener('change', () => { state[it.id] = c.checked; onChange(it.id); });
+      sync = () => { c.checked = !!state[it.id]; };
+    } else if (it.type === 'readout') {
+      el = html(`<div class="item"><div class="row"><span class="lbl">${it.label}</span><output class="ro"></output></div></div>`);
+      const o = el.querySelector('output');
+      sync = () => { o.textContent = it.value(state); };
+    } else {
+      const k = it.k ?? 1, lo = it.min, hi = it.max;
+      el = html(`<div class="item"><div class="row"><label for="${id}">${it.label}</label>
+        <span class="val"><input type="number" id="${id}" step="any" min="${lo * k}" max="${hi * k}"><span class="unit">${it.unit || ''}</span></span></div>
+        <input type="range" min="0" max="1000" step="1" aria-label="${it.label}"></div>`);
+      const num = el.querySelector('input[type=number]'), rng = el.querySelector('input[type=range]');
+      const toU = (v) => (it.log ? Math.log(v / lo) / Math.log(hi / lo) : (v - lo) / (hi - lo)) * 1000;
+      const fromU = (u) => (it.log ? lo * Math.pow(hi / lo, u / 1000) : lo + (hi - lo) * u / 1000);
+      const snap = (v) => { v = Math.min(hi, Math.max(lo, v)); return it.step ? Number((Math.round(v / it.step) * it.step).toPrecision(12)) : Number(v.toPrecision(3)); };
+      const fmt = (v) => String(Number(v.toPrecision(4)));
+      rng.addEventListener('input', () => { state[it.id] = snap(fromU(Number(rng.value))); num.value = fmt(state[it.id] * k); onChange(it.id); });
+      num.addEventListener('change', () => { const v = Number(num.value) / k; if (Number.isFinite(v)) { state[it.id] = snap(v); onChange(it.id); } sync(); });
+      sync = () => { num.value = fmt(state[it.id] * k); rng.value = String(Math.round(toU(state[it.id]))); };
+    }
+    el.append(hint);
+    const full = () => { sync(); const h = text(it.hint, state); hint.textContent = h; hint.hidden = !h; if (it.show) el.classList.toggle('hidden', !it.show(state)); };
+    syncs.push(full);
+    return el;
+  }
+
+  groups(spec.controls, 'Settings');
+  groups(spec.display, 'Display', 'What is drawn in the scene. None of this changes the physics.');
+
+  const api = { sync() { for (const f of syncs) f(); } };
   api.sync();
   return api;
 }
