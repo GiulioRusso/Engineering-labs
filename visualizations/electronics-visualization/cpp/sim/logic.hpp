@@ -1,6 +1,6 @@
 // logic.hpp - the seven gates, as plain functions on 0/1 ints.
 //
-// Same definitions as notebooks/digital-electronics/logic_gates.ipynb. A circuit .cpp
+// Same definitions as legacy/notebooks/digital-electronics/logic_gates.ipynb. A circuit .cpp
 // calls these directly; the tracer only records what they produced.
 #pragma once
 

@@ -2,9 +2,9 @@
 
 ## Adding a notebook
 
-1. Put it in `notebooks/<topic>/`, named in lowercase `snake_case` after its content (no `_01`/`_02` suffixes).
-2. Use only the packages in `requirements.txt`.
-3. Add a row to the topic table in `notebooks/README.md`.
+1. Put it in `legacy/notebooks/<topic>/`, named in lowercase `snake_case` after its content (no `_01`/`_02` suffixes).
+2. Use only the packages in `legacy/requirements.txt`.
+3. Add a row to the topic table in `legacy/notebooks/README.md`.
 
 ## Outputs
 

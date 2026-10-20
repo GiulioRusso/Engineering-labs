@@ -27,7 +27,7 @@ a student should be able to open a link, or double-click a file, and get the ani
 environment, no `pip install`, and no kernel. That rules out notebooks and rules in a static page. The
 deviation is intentional, not accidental.
 
-(`notebooks/computer-science/` covers the same book in notebook form, with matplotlib and ipywidgets. The two
+(`legacy/notebooks/computer-science/` covers the same book in notebook form, with matplotlib and ipywidgets. The two
 are complementary: that one is for experimenting in a kernel, this one is for showing on a projector.)
 
 ## 🧠 Architecture: trace, not re-execution
