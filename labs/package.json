@@ -1,0 +1,19 @@
+{
+  "name": "engineering-labs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node tools/test.mjs",
+    "smoke": "bash tools/smoke.sh",
+    "capture": "node tools/capture.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "gifenc": "1.0.3",
+    "katex": "0.19.0",
+    "pngjs": "7.0.0",
+    "puppeteer-core": "25.15.0",
+    "three": "0.186.1"
+  }
+}
