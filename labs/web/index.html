@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engineering Labs</title><meta name="description" content="3D interactive physics and engineering labs that run offline in the browser.">
+<style>/* Shared lab layout and tokens. Dark-first; light theme via [data-theme="light"].
+   Semantic physics colours are shared by every lab: "magnetic" looks the same everywhere. */
+
+:root {
+  --bg: #0c1016;
+  --scene: #0c1016;
+  --panel: #141a22;
+  --panel-2: #1b222c;
+  --ink: #e6ebf2;
+  --ink-dim: #9aa6b5;
+  --line: #2a333f;
+  --accent: #6aa8ff;
+  --focus: #9cc5ff;
+
+  --c-B: #4fb3ff;   /* magnetic field */
+  --c-E: #f2c14e;   /* electric field */
+  --c-I: #ff8a5c;   /* current */
+  --c-F: #c08cff;   /* force */
+  --c-v: #4cd99a;   /* velocity */
+  --c-x: #ff5c7a;
+  --c-y: #8ee35a;
+  --c-z: #6aa8ff;
+  --c-ref: #8b95a3; /* ghost / reference */
+  --c-north: #e0605a;
+  --c-south: #7d8da3;
+  --copper: #c07a4a;
+
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --panel-w: 320px;
+  --dock-h: 176px;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f5f6f8;
+  --scene: #eef1f5;
+  --panel: #ffffff;
+  --panel-2: #eef1f5;
+  --ink: #141820;
+  --ink-dim: #545e6b;
+  --line: #d3d9e0;
+  --accent: #1d4ed8;
+  --focus: #1d4ed8;
+
+  --c-B: #0b62c4;
+  --c-E: #946200;
+  --c-I: #c2410c;
+  --c-F: #7c3aed;
+  --c-v: #0f7a4b;
+  --c-x: #c81e4a;
+  --c-y: #4a7f12;
+  --c-z: #1d4ed8;
+  --c-ref: #6b7280;
+  --c-north: #b8322b;
+  --c-south: #5b6b80;
+  --copper: #a8602f;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+}
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+
+body { overflow: auto; }
+main { max-width: 1100px; margin: 0 auto; padding: 28px 16px 60px; }
+.top { display: flex; align-items: baseline; gap: 12px; }
+h1 { font-size: 24px; margin: 0; } .top .spacer { flex: 1; }
+.lead { color: var(--ink-dim); max-width: 720px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 22px; }
+.card { display: block; text-decoration: none; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.card:hover { border-color: var(--accent); }
+.card img, .card .ph { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--panel-2); }
+.card .body { padding: 12px 14px 14px; } .card h2 { font-size: 16px; margin: 2px 0 6px; } .card p { margin: 0; color: var(--ink-dim); font-size: 13px; }
+.area { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.btn { min-height: 34px; padding: 0 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel-2); cursor: pointer; }
+</style></head><body><main>
+<div class="top"><h1>Engineering Labs</h1><span class="spacer"></span><button class="btn" id="theme">Light</button></div>
+<p class="lead">Interactive 3D labs: drag things in the scene and watch the physics respond. Every page works offline, straight from the file.</p>
+<div class="grid">
+<a class="card" href="coil-induction.html"><img src="media/coil-induction.png" alt="" loading="lazy"><div class="body"><div class="area">Electromagnetism</div><h2>Coil: magnetic field and induction</h2><p>Drag a magnet or a probe ring through a coil and watch the flux, the EMF and the induced current respond live, with Lenz's law shown in the scene.</p></div></a>
+</div></main>
+<script>
+const b = document.getElementById('theme'), r = document.documentElement;
+let t = 'dark'; try { t = localStorage.getItem('labs-theme') || t; } catch {}
+const apply = () => { r.dataset.theme = t; b.textContent = t === 'light' ? 'Dark' : 'Light'; };
+b.onclick = () => { t = t === 'light' ? 'dark' : 'light'; try { localStorage.setItem('labs-theme', t); } catch {} apply(); };
+apply();
+</script></body></html>

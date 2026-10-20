@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coil and Induction</title>
+<meta name="description" content="Interactive 3D lab: the magnetic field of a coil, flux, Faraday's law and Lenz's law.">
+<style>{{CSS}}</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1><a href="index.html" title="All labs">Labs /</a> Coil: magnetic field and induction</h1>
+    <span class="spacer"></span>
+    <button class="btn" id="b-explain" aria-controls="explain">Explain</button>
+    <button class="btn" id="b-tour" title="Guided tour (T)">Tour</button>
+    <span class="btn-group wide" role="group" aria-label="Camera">
+      <button class="btn" data-cam="front" title="Front view (1)">Front</button>
+      <button class="btn" data-cam="side" title="Side view (2)">Side</button>
+      <button class="btn" data-cam="top" title="Top view (3)">Top</button>
+      <button class="btn" data-cam="iso" title="Iso view (4)">Iso</button>
+    </span>
+    <button class="btn wide" id="b-ortho" aria-pressed="false" title="Orthographic projection">Ortho</button>
+    <button class="btn wide" id="b-reset" title="Reset scenario (R)">Reset</button>
+    <button class="btn wide" id="b-link" title="Copy a link to this exact view">Copy link</button>
+    <button class="btn" id="b-theme"></button>
+    <button class="btn" id="b-panel" aria-controls="panel" aria-expanded="true">Controls</button>
+  </header>
+
+  <main class="viewport">
+    <div id="stage" aria-label="3D scene: a coil with its magnetic field. Drag the probe ring or the magnet." role="application"></div>
+    <div id="hud"></div>
+    <div id="legend"></div>
+    <div id="hint"></div>
+    <div id="tour"></div>
+
+    <aside id="explain" aria-label="Explanation">
+      <button class="btn close" aria-label="Close explanation">Close</button>
+      <h2>How it works</h2>
+      <p>Click a section to highlight what it describes in the scene.</p>
+
+      <section data-highlight="coil">
+        <h3>1 · One loop of current</h3>
+        <p>Every short piece of wire adds a little field, perpendicular to both the wire and the line to the
+          point (Biot–Savart). Summed around a ring, the field threads through the middle along the axis and
+          curls back around the wire outside.</p>
+        <div class="eq">$$\cB{B_z}(z) = \frac{\mu_0 \cI{I} R^2}{2\,(R^2+z^2)^{3/2}}$$</div>
+        <p>Far away the ring looks like a magnetic dipole and its field fades as \(1/r^3\).</p>
+      </section>
+
+      <section data-highlight="lines">
+        <h3>2 · Many loops: the solenoid</h3>
+        <p>Side by side, the rings' fields add up inside and nearly cancel outside. In a long coil the field
+          inside is uniform and depends only on the turns per metre \(n = N/L\), not on the radius.</p>
+        <div class="eq">$$\cB{B} \approx \mu_0\, n\, \cI{I}$$</div>
+        <p>Near the ends the lines spread out (fringing): at an end of a long coil the field is half the
+          central value.</p>
+      </section>
+
+      <section data-highlight="pickup">
+        <h3>3 · Flux through a loop</h3>
+        <p>Flux counts how much field passes through a surface bounded by a loop. It is linear in the source
+          current, with the mutual inductance \(M\) as the constant: a geometric number set by the shapes and
+          the positions.</p>
+        <div class="eq">$$\Phi = \int_S \cB{\mathbf B}\cdot d\mathbf A = \oint \mathbf A\cdot d\boldsymbol\ell = M\,\cI{I}$$</div>
+      </section>
+
+      <section data-highlight="emf">
+        <h3>4 · Faraday: change makes an EMF</h3>
+        <p>A voltage appears around the loop only while the flux changes, because the current changes or the
+          loop moves. A strong but steady field gives nothing.</p>
+        <div class="eq">$$\mathcal E = -\frac{d\Phi}{dt} = -M\frac{d\cI{I}}{dt} - \cI{I}\,\nabla M\cdot\cv{\mathbf v}$$</div>
+        <p>Pushing the same magnet in faster gives a bigger EMF for a shorter time. The area under
+          \(\mathcal E(t)\) is the total change in flux, whatever the speed.</p>
+      </section>
+
+      <section data-highlight="lenz">
+        <h3>5 · Lenz: the induced current pushes back</h3>
+        <p>The EMF drives a current \(\cI{I_\text{ind}} = \mathcal E/R\) through the circuit. The minus sign
+          means its own field opposes the change in flux, so the force on the moving magnet opposes its
+          velocity. The kinetic energy lost becomes heat in the resistance.</p>
+        <div class="eq">$$\cF{\mathbf F} = \cI{I_s}\,\cI{I_\text{ind}}\,\nabla M, \qquad \cF{\mathbf F}\cdot\cv{\mathbf v} = -\cI{I_\text{ind}}^2 R \le 0$$</div>
+      </section>
+
+      <section data-highlight="efield">
+        <h3>6 · The induced electric field</h3>
+        <p>A changing magnetic field is surrounded by a circulating electric field, even in empty space with
+          no wire there. The wire only gives its charges a path to follow.</p>
+        <div class="eq">$$\oint \cE{\mathbf E}\cdot d\boldsymbol\ell = -\frac{d\Phi}{dt}, \qquad \cE{\mathbf E} = -\frac{\partial \mathbf A}{\partial t}$$</div>
+        <p>Switch the slice or the arrows to \(|\mathbf E|\) with an AC coil, or while the magnet moves.</p>
+      </section>
+
+      <details>
+        <summary>About the model</summary>
+        <p><b>Sources.</b> The coil is \(N\) coaxial rings of radius \(R\) over length \(L\). A helix is
+          drawn, but its small axial current component is neglected. The bar magnet is an Amperian
+          cylinder: 12 rings carrying \((B_r/\mu_0)\,l_m/12\) each. The probe is one ring. Every ring stays
+          parallel to the coil.</p>
+        <p><b>Field.</b> Each ring's field and vector potential \(A_\varphi\) are the exact closed-form
+          Biot–Savart result, using complete elliptic integrals computed by the arithmetic–geometric mean.
+          Fields are tabulated on an \((\rho, z)\) grid: 160 asinh-spaced radial nodes, with axial nodes a
+          divisor of the turn pitch, at most 3 mm. A strided prefix sum adds the turns, and bilinear
+          interpolation fills in between nodes.</p>
+        <p><b>Induction.</b> The model is quasi-static and resistive: \(I_\text{ind} = \mathcal E/R\), and
+          self-inductance is neglected (valid while \(\omega L \ll R\)). The driven coil is an ideal current
+          source. The flux uses reciprocity, \(\Phi = M I\), with \(M = \oint \mathbf A\cdot d\boldsymbol\ell\):
+          exact \(2\pi r A_\varphi\) when coaxial, 48-point trapezoid otherwise. \(\nabla M\) is a central
+          difference (\(h = 0.2\) mm).</p>
+        <p><b>Field lines.</b> RK4 on \(\mathbf B/|\mathbf B|\) with step-doubling error control
+          (tolerance 0.2 mm). Seeds sit on rings of equal flux in the source's mid-plane, so line density
+          follows \(|\mathbf B|\). Colours span the 2nd–97th percentile of \(|\mathbf B|\) along the lines. Particles move along the lines with speed \(\propto |\mathbf B|\), capped
+          at 3× the reference value near the wires. Charge carriers drift along the wire with speed
+          \(\propto I\).</p>
+        <p><b>What is drawn.</b> Field lines and particles show the applied field: the driven coil, or the
+          magnet. The induced current's own field is much weaker. It is shown by the induced-B arrow and the
+          moving charge carriers, and it is included in the slice, the arrow grid and every number.</p>
+        <p><b>Magnet drop.</b> \(m\ddot z = -mg + F_z\), integrated by RK4 at \(\Delta t = 0.5\) ms.</p>
+        <table>
+          <tr><th>Check (labs/tools/test.mjs)</th><th>Result</th></tr>
+          <tr><td>Ring on-axis field vs \(\mu_0 I R^2/2(R^2+z^2)^{3/2}\)</td><td>&lt; 0.04 % (budget 0.1 %)</td></tr>
+          <tr><td>Closed form vs Biot–Savart on 4000 segments</td><td>4 × 10⁻⁶</td></tr>
+          <tr><td>Long solenoid centre vs \(\mu_0 n I\)</td><td>0.03 % (budget 1 %)</td></tr>
+          <tr><td>Finite solenoid on axis vs continuous formula</td><td>&lt; 0.1 % (budget 1 %)</td></tr>
+          <tr><td>Table vs exact sum over turns (≥ 5 mm from wire)</td><td>&lt; 0.15 % (budget 1 %)</td></tr>
+          <tr><td>\(\nabla\cdot\mathbf B\) relative residual</td><td>&lt; 0.7 %</td></tr>
+          <tr><td>\(\mathcal E\) vs \(-d\Phi/dt\) finite difference</td><td>&lt; 10⁻⁸</td></tr>
+          <tr><td>\(\mathbf F\cdot\mathbf v = -I^2R\)</td><td>10⁻¹⁶</td></tr>
+          <tr><td>Drop energy: \(mg\Delta h = \tfrac12 mv^2 + \int I^2R\,dt\)</td><td>3 × 10⁻⁶</td></tr>
+          <tr><td>Lenz sign, still-magnet EMF = 0, Amperian far field = dipole</td><td>pass</td></tr>
+        </table>
+      </details>
+    </aside>
+  </main>
+
+  <aside id="panel" aria-label="Controls"></aside>
+  <section id="dock" aria-label="Linked plots">
+    <div class="plot" id="plot-axis"></div>
+    <div class="plot" id="plot-flux"></div>
+    <div class="plot" id="plot-emf"></div>
+  </section>
+</div>
+<script type="module">{{JS}}</script>
+</body>
+</html>
