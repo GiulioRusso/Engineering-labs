@@ -1,0 +1,51 @@
+<section data-case="gallery">
+  <h3>Signals and their spectra</h3>
+  <p>Any signal can be seen in time (top) or in frequency (bottom): which sines, of which amplitude, add up to it. A pure sine is a single line; sharp edges need many high harmonics.</p>
+  <div class="eq">$$x(t) = \sum_k A_k \sin(2\pi f_k t + \varphi_k)$$</div>
+</section>
+<section data-case="gallery" data-example="square"><h3>Square wave</h3><p>Only odd harmonics, with amplitudes \(\frac{4}{\pi n}\): \(f, 3f, 5f, \dots\). The jumps are what needs the high harmonics.</p></section>
+<section data-case="gallery" data-example="saw"><h3>Sawtooth</h3><p>Every harmonic is present, falling as \(1/n\).</p></section>
+<section data-case="gallery" data-example="pulse"><h3>Narrow pulses</h3><p>Short in time, wide in frequency: the spectrum follows a sinc envelope whose first zero is at \(1/\tau\). Time width × bandwidth ≈ 1.</p></section>
+<section data-case="gallery" data-example="chirp"><h3>A chirp</h3><p>The frequency rises linearly from 1 to 30 Hz over the record: the spectrum is a flat band, not a line. Radar uses chirps to get both energy and resolution.</p></section>
+<section data-case="gallery" data-example="noise"><h3>White noise</h3><p>Random samples, every frequency present with the same average power: a flat (but ragged) spectrum.</p></section>
+<section data-case="gallery" data-example="noisy"><h3>A sine in noise</h3><p>In time the sine is hard to see; in frequency it stands out as one line above the noise floor. That is why receivers look at spectra.</p></section>
+
+<section data-case="fourier">
+  <h3>Fourier series</h3>
+  <p>A periodic signal is a sum of sines at multiples of its frequency. Each term is a circle turning \(n\) times per period with radius \(|b_n|\): stack the circles (epicycles) and the tip of the last one traces the signal.</p>
+  <div class="eq">$$x(t) = \sum_{n=1}^{N} b_n \sin(2\pi n f t), \qquad b_n = 2f\int_0^{1/f} x(t)\sin(2\pi n f t)\,dt$$</div>
+</section>
+<section data-case="fourier" data-example="one"><h3>One harmonic</h3><p>The best single sine for a square wave has amplitude \(4/\pi \approx 1.27\): bigger than the square itself.</p></section>
+<section data-case="fourier" data-example="three"><h3>Three harmonics</h3><p>\(\frac4\pi\left(\sin x + \frac{\sin 3x}{3} + \frac{\sin 5x}{5}\right)\): the corners start to form.</p></section>
+<section data-case="fourier" data-example="gibbs"><h3>The Gibbs phenomenon</h3><p>With 50 harmonics the sum is flat almost everywhere, but near each jump it still overshoots by about 9 % of the jump. More terms make the overshoot narrower, never smaller.</p></section>
+<section data-case="fourier" data-example="saw"><h3>Sawtooth</h3><p>All harmonics with alternating signs, \(\frac{2}{\pi n}\). One jump per period, one Gibbs overshoot.</p></section>
+<section data-case="fourier" data-example="triangle"><h3>Triangle</h3><p>No jumps, only corners: coefficients fall as \(1/n^2\), so three harmonics already look right.</p></section>
+
+<section data-case="sampling">
+  <h3>Sampling and aliasing</h3>
+  <p>Sampling keeps only the values at \(t = n/f_s\). If \(f_s > 2f\) (the Nyquist rate) the samples determine the signal. Otherwise a lower frequency fits the same samples exactly: an alias, folded into \([0, f_s/2]\).</p>
+  <div class="eq">$$f_s > 2 f_{\max}, \qquad f_\text{alias} = |f - k f_s| \text{ (nearest)}$$</div>
+</section>
+<section data-case="sampling" data-example="enough"><h3>2.5 samples per period</h3><p>Not pretty, but enough: only \(f\) fits these samples below \(f_s/2\).</p></section>
+<section data-case="sampling" data-example="nyquist"><h3>Exactly 2f</h3><p>Two samples per period: depending on the phase they can all be zero. The Nyquist condition is a strict inequality.</p></section>
+<section data-case="sampling" data-example="alias"><h3>An alias</h3><p>7 Hz sampled at 10 Hz gives the same samples as 3 Hz (\(10 - 7\)). After sampling, nothing can tell them apart: filter before you sample.</p></section>
+<section data-case="sampling" data-example="wheel"><h3>The wagon wheel</h3><p>9.5 Hz at 10 Hz looks like 0.5 Hz: the wheel in a film seems to turn slowly, or backwards.</p></section>
+
+<section data-case="dft">
+  <h3>The DFT</h3>
+  <p>The discrete Fourier transform turns \(N\) samples into \(N\) frequency bins, one cycle per record apart. The FFT computes the same numbers in \(N\log N\) steps instead of \(N^2\).</p>
+  <div class="eq">$$X[k] = \sum_{n=0}^{N-1} x[n]\,e^{-j2\pi kn/N}, \qquad \Delta f = \frac{f_s}{N}$$</div>
+</section>
+<section data-case="dft" data-example="two"><h3>Two tones</h3><p>Each sine lands on its own bin with its amplitude: 1 at bin 8, 0.5 at bin 13.</p></section>
+<section data-case="dft" data-example="between"><h3>Leakage</h3><p>8.5 cycles do not fit the record: the cut ends make the tone spread over many bins, and its peak drops (scalloping).</p></section>
+<section data-case="dft" data-example="close"><h3>Resolution</h3><p>With 16 samples the bins are too coarse: tones 0.6 bins apart merge into one peak.</p></section>
+<section data-case="dft" data-example="longer"><h3>A longer record</h3><p>256 samples of the same signal give bins 16 times finer: the two tones separate. Resolution needs observation time, \(\Delta f \approx 1/T\).</p></section>
+
+<section data-case="spectrum">
+  <h3>Windows</h3>
+  <p>Multiplying the record by a smooth window tapers its ends, so the cut does not throw energy into far bins. The price: a wider main peak. In dB the difference is dramatic.</p>
+  <div class="eq">$$X_w[k] = \sum_n w[n]\,x[n]\,e^{-j2\pi kn/N}$$</div>
+</section>
+<section data-case="spectrum" data-example="hann"><h3>Hann</h3><p>Sidelobes fall from about −13 dB (rectangular) to −31 dB and keep falling fast.</p></section>
+<section data-case="spectrum" data-example="blackman"><h3>Blackman</h3><p>Sidelobes below −58 dB: the −40 dB tone at bin 16, buried in leakage before, is now visible. Window choice sets the dynamic range of a spectrum analyser.</p></section>
+<section data-case="spectrum" data-example="centred"><h3>On a bin</h3><p>A tone with a whole number of cycles has no leakage with any window: the rectangular window is then the sharpest.</p></section>

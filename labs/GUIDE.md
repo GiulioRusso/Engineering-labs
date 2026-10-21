@@ -32,7 +32,7 @@ Only these files are meant to be opened. Each works by double-click, offline, wi
 |---|---|
 | `../index.html` (repository root) | the catalogue: one card per subject |
 | `web/index.html` | the same catalogue, from inside `labs/` |
-| `web/<subject>.html` | **one subject, all its topics**. Today: `maths.html` (11 topics), `physics.html` (19), `control-systems.html` (8) |
+| `web/<subject>.html` | **one subject, all its topics**. Today: `maths.html` (11 topics), `physics.html` (19), `control-systems.html` (8), `signal-theory.html` (16), `electronic-warfare.html` (5) |
 
 The address bar always holds the exact view, e.g. `web/maths.html?lab=vectors&case=dot&ex=perp&ax=1.2`.
 Everything under `src/` is source; it is not opened directly.
@@ -56,7 +56,7 @@ labs/
 │   │   │   ├── panel.js          #   case tabs, examples, controls, View
 │   │   │   ├── explain.js        #   the ? drawer, filtered to case and example
 │   │   │   ├── playbar.js, plots.js, hud.js, handles.js, theme.js, …
-│   │   ├── viz/                  # drawing helpers: curves, vectors, arrows, field lines, particles,
+│   │   ├── viz/                  # drawing helpers: chart (2D plots in the scene), curves, vectors, arrows, field lines, particles,
 │   │   │                         #   slices, surfaces, 2D graphs, knobs, colormaps, legend
 │   │   └── physics/              # shared physics (current loops, axisymmetric fields) + tests
 │   ├── maths/<lab>/              # one folder per lab, e.g. maths/vector-fields:
@@ -64,7 +64,9 @@ labs/
 │   │   ├── explain.html          #   the explanations ($$TeX$$ allowed)
 │   │   └── model.js, *.test.js   #   the maths/physics, pure JS, tested in node
 │   ├── physics/<lab>/            # same pattern
-│   └── control-systems/          # tf.js (transfer functions, tested), splane.js (pole-zero plane), <lab>/
+│   ├── control-systems/          # tf.js (transfer functions, tested), splane.js (pole-zero plane), <lab>/
+│   ├── signal-theory/            # signals, systems, modulation, antennas
+│   └── electronic-warfare/       # radar (pulses, Doppler, detection, PPI, jamming)
 ├── tools/                        # test.mjs, smoke.mjs (+ smoke.sh), capture.mjs, catalogue.mjs
 └── web/                          # BUILT, COMMITTED: <subject>.html, index.html, media/
 ```

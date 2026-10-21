@@ -156,28 +156,53 @@
   "topics": [
    {
     "id": "radar-pulses",
-    "title": "Radar pulses and the ambiguity function",
-    "what": "Plain, chirp and Barker pulses; the matched filter and the 3D ambiguity surface."
+    "title": "Radar pulses",
+    "what": "Pulse length, PRF, echoes, the matched filter and pulse compression; range ambiguity.",
+    "from": "radar",
+    "cases": [
+     "pulses"
+    ],
+    "group": "Radar"
    },
    {
     "id": "range-doppler",
-    "title": "Range, Doppler and PRF",
-    "what": "Targets in 3D airspace; the range–Doppler map and what a PRF folds."
+    "title": "Range and Doppler",
+    "what": "A range–Doppler map: velocity from phase shifts, ground clutter, range and velocity folding.",
+    "from": "radar",
+    "cases": [
+     "doppler"
+    ],
+    "group": "Radar"
    },
    {
-    "id": "radar-receiver",
-    "title": "Radar receiver chain",
-    "what": "RF to IQ baseband stage by stage, the spectrum at every step."
+    "id": "detection",
+    "title": "Detection in noise",
+    "what": "Radar equation, threshold, false alarms and probability of detection on an A-scope.",
+    "from": "radar",
+    "cases": [
+     "detect"
+    ],
+    "group": "Radar"
    },
    {
-    "id": "ppi-scope",
-    "title": "PPI sweep and echoes",
-    "what": "A rotating beam, echoes on a PPI scope, moving targets."
+    "id": "ppi",
+    "title": "The PPI scope",
+    "what": "A rotating beam paints aircraft, ground clutter and rain on a plan display.",
+    "from": "radar",
+    "cases": [
+     "ppi"
+    ],
+    "group": "Radar"
    },
    {
-    "id": "ew-engagement",
+    "id": "jamming",
     "title": "Jamming and burn-through",
-    "what": "Drag the aircraft, jammer and radar; J/S and burn-through range as live rings."
+    "what": "Self-screening and stand-off jammers: S/J against range and the burn-through point.",
+    "from": "radar",
+    "cases": [
+     "jam"
+    ],
+    "group": "Electronic attack"
    }
   ]
  },
@@ -463,89 +488,164 @@
   "name": "Signal theory",
   "topics": [
    {
-    "id": "signal-gallery",
-    "title": "Signals in time and frequency",
-    "what": "Pulses, sinc, chirp: the signal and its spectrum side by side, time–bandwidth."
+    "id": "signals",
+    "title": "Signals and spectra",
+    "what": "Square, sawtooth, pulses, chirps and noise, in time and in frequency.",
+    "from": "signals",
+    "cases": [
+     "gallery"
+    ],
+    "group": "Signals"
    },
    {
-    "id": "fourier-epicycles",
-    "title": "Fourier series as epicycles",
-    "what": "Harmonics rebuild a waveform; the (t, Re, Im) helix and Gibbs."
+    "id": "fourier-series",
+    "title": "Fourier series",
+    "what": "Epicycles: stack rotating circles until they draw a square wave; Gibbs overshoot.",
+    "from": "signals",
+    "cases": [
+     "fourier"
+    ],
+    "group": "Signals"
    },
    {
-    "id": "dft-fft",
-    "title": "From the Fourier transform to the FFT",
-    "what": "Winding a signal around the circle; DFT bins and the FFT butterfly."
-   },
-   {
-    "id": "sampling-aliasing",
+    "id": "sampling",
     "title": "Sampling and aliasing",
-    "what": "The spectrum wrapped on a cylinder of circumference fs: aliasing is literal folding."
+    "what": "Sample a sine faster or slower than 2f and watch an alias appear.",
+    "from": "signals",
+    "cases": [
+     "sampling"
+    ],
+    "group": "Signals"
+   },
+   {
+    "id": "dft",
+    "title": "DFT and FFT",
+    "what": "Samples into frequency bins: resolution, leakage, record length.",
+    "from": "signals",
+    "cases": [
+     "dft"
+    ],
+    "group": "Spectral analysis"
+   },
+   {
+    "id": "windows",
+    "title": "Windows and leakage",
+    "what": "Rectangular, Hann, Blackman: dynamic range of a spectrum.",
+    "from": "signals",
+    "cases": [
+     "spectrum"
+    ],
+    "group": "Spectral analysis"
    },
    {
     "id": "convolution",
-    "title": "Convolution as a sliding area",
-    "what": "Drag the shift; the product surface and its area trace the output."
+    "title": "Convolution",
+    "what": "Flip, slide, multiply, integrate: watch y(t) being built.",
+    "from": "systems",
+    "cases": [
+     "conv"
+    ],
+    "group": "Systems"
    },
    {
-    "id": "lti-system",
+    "id": "lti-systems",
     "title": "LTI systems",
-    "what": "Impulse response, convolution, poles and the Bode plot of one system."
+    "what": "Impulse, step, square and sine through RC filters, an echo and a moving average.",
+    "from": "systems",
+    "cases": [
+     "lti"
+    ],
+    "group": "Systems"
    },
    {
     "id": "filtering",
-    "title": "Filtering in time and frequency",
-    "what": "Shape a filter, watch the signal and its spectrum change together."
-   },
-   {
-    "id": "spectrum-analysis",
-    "title": "Spectrum analysis",
-    "what": "FFT bins, windows, frequency shifting and resampling."
+    "title": "Digital filters",
+    "what": "FIR low-, high- and band-pass on a noisy two-tone signal.",
+    "from": "systems",
+    "cases": [
+     "filter"
+    ],
+    "group": "Systems"
    },
    {
     "id": "modulation",
-    "title": "AM, FM and PM",
-    "what": "The carrier as a 3D IQ helix; modulation index and spectra."
+    "title": "AM and FM",
+    "what": "A message on a carrier: envelope, sidebands, Bessel lines, Carson bandwidth.",
+    "from": "modulation",
+    "cases": [
+     "analog"
+    ],
+    "group": "Communications"
    },
    {
-    "id": "constellations-ber",
-    "title": "Constellations and BER",
-    "what": "BPSK, QPSK, QAM with noise; eye diagram and BER vs theory."
+    "id": "constellations",
+    "title": "Constellations and bit errors",
+    "what": "BPSK, QPSK, 8-PSK, 16-QAM in noise; measured vs theoretical bit error rate.",
+    "from": "modulation",
+    "cases": [
+     "digital"
+    ],
+    "group": "Communications"
    },
    {
     "id": "iq-demodulation",
     "title": "IQ demodulation",
-    "what": "Quadrature mixing, residual Δf spinning the constellation, FFT bins."
+    "what": "Mix down to I and Q; phase and frequency errors rotate and spin the constellation.",
+    "from": "modulation",
+    "cases": [
+     "iq"
+    ],
+    "group": "Communications"
    },
    {
-    "id": "friis-link",
-    "title": "Antennas and the link budget",
-    "what": "Two antennas, Friis and two-ray path loss, planar arrays."
+    "id": "link-budget",
+    "title": "Link budget",
+    "what": "Friis: transmit power, antenna gains and path loss against receiver sensitivity.",
+    "from": "antennas",
+    "cases": [
+     "link"
+    ],
+    "group": "Antennas and propagation"
    },
    {
-    "id": "dipole-antenna",
-    "title": "Dipole antenna",
-    "what": "3D radiation pattern, near and far field, dipole length."
+    "id": "dipole",
+    "title": "Dipole antennas",
+    "what": "Radiation patterns and directivity from short to long dipoles.",
+    "from": "antennas",
+    "cases": [
+     "dipole"
+    ],
+    "group": "Antennas and propagation"
    },
    {
     "id": "phased-array",
     "title": "Phased arrays",
-    "what": "Drag elements and steering; 3D beam, grating lobes, phase vs true time delay."
-   },
-   {
-    "id": "vivaldi-antenna",
-    "title": "Vivaldi antenna",
-    "what": "The tapered slot, its fields and its wideband pattern."
+    "what": "Steer a beam with phase steps; beam width and grating lobes.",
+    "from": "antennas",
+    "cases": [
+     "array"
+    ],
+    "group": "Antennas and propagation"
    },
    {
     "id": "polarization",
     "title": "Polarization",
-    "what": "Helix, ellipse and a draggable point on the Poincaré sphere."
+    "what": "Linear, circular and elliptical fields through a polarizer.",
+    "from": "antennas",
+    "cases": [
+     "polarization"
+    ],
+    "group": "Antennas and propagation"
    },
    {
-    "id": "waveguide-modes",
-    "title": "Waveguides and coax",
-    "what": "Modes in the cross-section, cutoff and dispersion."
+    "id": "waveguide",
+    "title": "Waveguide modes",
+    "what": "TE and TM fields in a rectangular guide; cut-off and guide wavelength.",
+    "from": "antennas",
+    "cases": [
+     "waveguide"
+    ],
+    "group": "Antennas and propagation"
    }
   ]
  }

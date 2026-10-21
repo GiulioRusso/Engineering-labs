@@ -1,0 +1,30 @@
+<section data-case="conv">
+  <h3>Convolution</h3>
+  <p>Flip \(h\), slide it to position \(t\), multiply by \(x\) point by point and take the area: that is \(y(t)\). The orange curve is the flipped, shifted \(h\); the violet one their product; the lower plot collects the areas.</p>
+  <div class="eq">$$y(t) = (x * h)(t) = \int_{-\infty}^{\infty} x(\tau)\,h(t - \tau)\,d\tau$$</div>
+</section>
+<section data-case="conv" data-example="charge"><h3>Charging an RC circuit</h3><p>A rectangular pulse into a system whose impulse response decays: the output rises while the pulse lasts, then decays. Every output is the input smeared by \(h\).</p></section>
+<section data-case="conv" data-example="tri"><h3>Triangle * rectangle</h3><p>Convolution always smooths: the result is smoother than either input, and as long as their lengths added.</p></section>
+<section data-case="conv" data-example="gauss"><h3>Gaussians</h3><p>Two Gaussians give a Gaussian whose variances add: \(\sigma^2 = \sigma_1^2 + \sigma_2^2\). In frequency, convolution is a product.</p><div class="eq">$$\mathcal F\{x * h\} = X(f)\,H(f)$$</div></section>
+
+<section data-case="lti">
+  <h3>Linear time-invariant systems</h3>
+  <p>A system that is linear and does not change in time is completely described by its impulse response \(h(t)\): the output to any input is \(x * h\). Equivalently, each sine passes through scaled by \(|H(f)|\) and delayed by the phase of \(H(f)\).</p>
+  <div class="eq">$$y = x * h, \qquad x = \sin 2\pi f t \;\Rightarrow\; y = |H(f)|\,\sin(2\pi f t + \angle H(f))$$</div>
+</section>
+<section data-case="lti" data-example="square"><h3>Low-pass on a square wave</h3><p>The RC circuit cannot follow the jumps: the high harmonics are cut, the edges become exponential.</p></section>
+<section data-case="lti" data-example="hp"><h3>High-pass on a square wave</h3><p>Only the changes get through: a spike at every edge, decaying with \(\tau\). The constant part (DC) is blocked.</p></section>
+<section data-case="lti" data-example="slow"><h3>A slow sine</h3><p>Far below the corner frequency \(1/2\pi\tau\) the low-pass passes the sine almost unchanged.</p></section>
+<section data-case="lti" data-example="fast"><h3>A fast sine</h3><p>Above the corner the output is smaller and lags behind the input: \(|H| = 1/\sqrt{1 + (2\pi f\tau)^2}\), phase \(-\arctan 2\pi f\tau\).</p></section>
+<section data-case="lti" data-example="echo"><h3>An echo</h3><p>\(h(t) = \delta(t) + a\,\delta(t - T)\): every input comes back once more, weaker. In frequency the echo makes a comb: \(|H|\) ripples with period \(1/T\).</p></section>
+<section data-case="lti" data-example="avg"><h3>Moving average</h3><p>Averaging over a window \(T\) smooths the square wave; frequencies that fit whole periods into \(T\) are cancelled (zeros of the sinc).</p></section>
+
+<section data-case="filter">
+  <h3>Digital filtering</h3>
+  <p>An FIR filter is a convolution with a short list of taps \(h[k]\). A windowed sinc gives a low-pass; subtracting it from an impulse gives a high-pass; the difference of two low-passes, a band-pass. The output (blue) is shifted back by the filter delay of \((M-1)/2\) samples.</p>
+  <div class="eq">$$y[n] = \sum_{k=0}^{M-1} h[k]\,x[n - k], \qquad h[k] = w[k]\,\frac{\sin(2\pi f_c (k - m)/f_s)}{\pi (k - m)}$$</div>
+</section>
+<section data-case="filter" data-example="hp"><h3>High-pass</h3><p>Now the slow 5 Hz wave is removed and the 120 Hz tone (plus the high-frequency noise) remains.</p></section>
+<section data-case="filter" data-example="bp"><h3>Band-pass</h3><p>Only frequencies between 90 and 150 Hz pass: the 120 Hz tone, with a little noise from the same band.</p></section>
+<section data-case="filter" data-example="short"><h3>Few taps</h3><p>A short filter cannot have a sharp edge: the transition band is about \(f_s \cdot 3.3/M\) wide, and the 120 Hz tone is not fully removed.</p></section>
+<section data-case="filter" data-example="noisy"><h3>More noise</h3><p>White noise is spread over all frequencies; the low-pass keeps only the slice below 20 Hz, about 4 % of its power.</p></section>

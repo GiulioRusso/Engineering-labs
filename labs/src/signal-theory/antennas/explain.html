@@ -1,0 +1,44 @@
+<section data-case="link">
+  <h3>The link budget</h3>
+  <p>In free space the power spreads over a sphere, so it falls as \(1/d^2\): 6 dB per doubling of distance. In dB the budget is a simple sum: transmitted power plus both antenna gains, minus the free-space path loss. The link works if the result is above the receiver's sensitivity.</p>
+  <div class="eq">$$P_r = P_t + G_t + G_r - 20\log_{10}\frac{4\pi d}{\lambda} \quad \text{(dB, dBm, dBi)}$$</div>
+</section>
+<section data-case="link" data-example="double"><h3>Twice as far</h3><p>200 m instead of 100 m: 6 dB less, a quarter of the power.</p></section>
+<section data-case="link" data-example="far"><h3>Out of range</h3><p>At 3 km the received power is below the sensitivity: more power, more antenna gain, or a lower frequency would be needed.</p></section>
+<section data-case="link" data-example="freq"><h3>Higher frequency</h3><p>With the same antenna gains, 5 GHz loses 6.4 dB more than 2.4 GHz (\(20\log\frac{5}{2.4}\)): the antennas' effective area shrinks as \(\lambda^2\).</p></section>
+<section data-case="link" data-example="sat"><h3>A satellite link</h3><p>36 000 km at 12 GHz is over 200 dB of loss. Dishes with 35–40 dBi of gain on both ends and a sensitive receiver close the link.</p></section>
+<section data-case="dipole">
+  <h3>The dipole</h3>
+  <p>A straight wire fed in the middle radiates most at right angles to itself and nothing along its axis. The polar plot shows the field strength in dB in a plane containing the wire (vertical, orange); the 3D view revolves it into a doughnut.</p>
+  <div class="eq">$$F(\theta) = \frac{\cos\!\left(\frac{kL}{2}\cos\theta\right) - \cos\frac{kL}{2}}{\sin\theta}, \qquad D = \frac{2}{\int_0^\pi F^2\sin\theta\,d\theta}$$</div>
+</section>
+<section data-case="dipole" data-example="short"><h3>Short dipole</h3><p>Much shorter than λ: the pattern is \(\sin\theta\), directivity 1.5 (1.76 dBi). Short antennas are also hard to feed efficiently.</p></section>
+<section data-case="dipole" data-example="full"><h3>Full-wave</h3><p>The beam narrows and the directivity rises to about 2.4.</p></section>
+<section data-case="dipole" data-example="long"><h3>Side lobes</h3><p>Longer than λ, the currents along the wire are no longer all in phase: the main beam splits and side lobes appear.</p></section>
+<section data-case="array">
+  <h3>Phased arrays</h3>
+  <p>Many small antennas in a row, each fed with a slightly delayed signal. The waves add up in one direction and cancel elsewhere; changing the delays steers the beam with no moving parts. The beam narrows as the array grows.</p>
+  <div class="eq">$$AF(\theta) = \frac{\sin(N\psi/2)}{N\sin(\psi/2)}, \quad \psi = 2\pi\frac{d}{\lambda}(\sin\theta - \sin\theta_0), \qquad \theta_{3\text{dB}} \approx \frac{0.886\,\lambda}{N d\cos\theta_0}$$</div>
+</section>
+<section data-case="array" data-example="two"><h3>Two elements</h3><p>Two sources half a wavelength apart: a broad beam forward and a null along the line of the array.</p></section>
+<section data-case="array" data-example="many"><h3>Sixteen elements</h3><p>Eight times the aperture of two: a beam about 6° wide, with side lobes at −13 dB.</p></section>
+<section data-case="array" data-example="steer"><h3>Steering</h3><p>A phase step of \(-360° \cdot \frac{d}{\lambda}\sin\theta_0\) between neighbours points the beam to 30°. It widens a little as it is steered away from broadside.</p></section>
+<section data-case="array" data-example="grating"><h3>Grating lobes</h3><p>With elements a whole wavelength apart, other directions also see the waves in phase: copies of the main beam appear. Spacing must stay below \(\lambda/(1 + |\sin\theta_0|)\).</p></section>
+<section data-case="polarization">
+  <h3>Polarization</h3>
+  <p>The tip of the electric field traces a line, a circle or an ellipse in the plane across the wave, depending on the amplitudes and the phase between its two components. A polarizer (red) passes only the component along it.</p>
+  <div class="eq">$$\mathbf E = \big(\cos\omega t,\ a\cos(\omega t + \delta)\big), \qquad P_\text{out} = P_\text{in}\cos^2\alpha \text{ (linear: Malus)}$$</div>
+</section>
+<section data-case="polarization" data-example="linear"><h3>Linear</h3><p>In phase (\(\delta = 0\)): the field swings along a fixed line at 45°.</p></section>
+<section data-case="polarization" data-example="circular"><h3>Circular</h3><p>Equal amplitudes, 90° apart: the field turns at constant length. Half the power passes any polarizer; GPS and satellite links use it so the receiver's orientation does not matter.</p></section>
+<section data-case="polarization" data-example="ellipse"><h3>Elliptical</h3><p>The general case: an ellipse, described by its axial ratio and tilt.</p></section>
+<section data-case="polarization" data-example="crossed"><h3>Crossed</h3><p>Horizontal field, vertical polarizer: nothing passes. Two antennas with crossed linear polarizations barely talk to each other.</p></section>
+<section data-case="waveguide">
+  <h3>Waveguide modes</h3>
+  <p>A hollow metal pipe carries microwaves only in certain field patterns (modes). Each has a cut-off frequency below which it cannot propagate. The arrows show the transverse electric field across the guide.</p>
+  <div class="eq">$$f_{c,mn} = \frac{c}{2}\sqrt{\left(\frac{m}{a}\right)^2 + \left(\frac{n}{b}\right)^2}, \qquad \lambda_g = \frac{\lambda}{\sqrt{1 - (f_c/f)^2}}$$</div>
+</section>
+<section data-case="waveguide" data-example="below"><h3>Below cut-off</h3><p>At 6 GHz even the lowest mode (TE₁₀, 6.56 GHz in WR-90) cannot propagate: the field decays exponentially along the guide.</p></section>
+<section data-case="waveguide" data-example="te20"><h3>TE₂₀</h3><p>Two half-waves across the wide side; cut-off 13.1 GHz. Above it, the guide is no longer single-mode.</p></section>
+<section data-case="waveguide" data-example="te11"><h3>TE₁₁</h3><p>Field varying across both sides; cut-off 16.2 GHz.</p></section>
+<section data-case="waveguide" data-example="tm11"><h3>TM₁₁</h3><p>The lowest TM mode: same cut-off as TE₁₁, but with an electric field along the guide too (here only its transverse part is drawn).</p></section>

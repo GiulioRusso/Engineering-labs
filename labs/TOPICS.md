@@ -46,11 +46,11 @@ In the Electronics Visualizer.
 
 | Topic | What you do | Status |
 |---|---|---|
-| Radar pulses and the ambiguity function | Plain, chirp and Barker pulses; the matched filter and the 3D ambiguity surface. | planned |
-| Range, Doppler and PRF | Targets in 3D airspace; the range–Doppler map and what a PRF folds. | planned |
-| Radar receiver chain | RF to IQ baseband stage by stage, the spectrum at every step. | planned |
-| PPI sweep and echoes | A rotating beam, echoes on a PPI scope, moving targets. | planned |
-| Jamming and burn-through | Drag the aircraft, jammer and radar; J/S and burn-through range as live rings. | planned |
+| [Radar pulses](web/electronic-warfare.html?lab=radar-pulses) | Pulse length, PRF, echoes, the matched filter and pulse compression; range ambiguity. | done |
+| [Range and Doppler](web/electronic-warfare.html?lab=range-doppler) | A range–Doppler map: velocity from phase shifts, ground clutter, range and velocity folding. | done |
+| [Detection in noise](web/electronic-warfare.html?lab=detection) | Radar equation, threshold, false alarms and probability of detection on an A-scope. | done |
+| [The PPI scope](web/electronic-warfare.html?lab=ppi) | A rotating beam paints aircraft, ground clutter and rain on a plan display. | done |
+| [Jamming and burn-through](web/electronic-warfare.html?lab=jamming) | Self-screening and stand-off jammers: S/J against range and the burn-through point. | done |
 
 ## Machine learning
 
@@ -105,20 +105,19 @@ In the Electronics Visualizer.
 
 | Topic | What you do | Status |
 |---|---|---|
-| Signals in time and frequency | Pulses, sinc, chirp: the signal and its spectrum side by side, time–bandwidth. | planned |
-| Fourier series as epicycles | Harmonics rebuild a waveform; the (t, Re, Im) helix and Gibbs. | planned |
-| From the Fourier transform to the FFT | Winding a signal around the circle; DFT bins and the FFT butterfly. | planned |
-| Sampling and aliasing | The spectrum wrapped on a cylinder of circumference fs: aliasing is literal folding. | planned |
-| Convolution as a sliding area | Drag the shift; the product surface and its area trace the output. | planned |
-| LTI systems | Impulse response, convolution, poles and the Bode plot of one system. | planned |
-| Filtering in time and frequency | Shape a filter, watch the signal and its spectrum change together. | planned |
-| Spectrum analysis | FFT bins, windows, frequency shifting and resampling. | planned |
-| AM, FM and PM | The carrier as a 3D IQ helix; modulation index and spectra. | planned |
-| Constellations and BER | BPSK, QPSK, QAM with noise; eye diagram and BER vs theory. | planned |
-| IQ demodulation | Quadrature mixing, residual Δf spinning the constellation, FFT bins. | planned |
-| Antennas and the link budget | Two antennas, Friis and two-ray path loss, planar arrays. | planned |
-| Dipole antenna | 3D radiation pattern, near and far field, dipole length. | planned |
-| Phased arrays | Drag elements and steering; 3D beam, grating lobes, phase vs true time delay. | planned |
-| Vivaldi antenna | The tapered slot, its fields and its wideband pattern. | planned |
-| Polarization | Helix, ellipse and a draggable point on the Poincaré sphere. | planned |
-| Waveguides and coax | Modes in the cross-section, cutoff and dispersion. | planned |
+| [Signals and spectra](web/signal-theory.html?lab=signals) | Square, sawtooth, pulses, chirps and noise, in time and in frequency. | done |
+| [Fourier series](web/signal-theory.html?lab=fourier-series) | Epicycles: stack rotating circles until they draw a square wave; Gibbs overshoot. | done |
+| [Sampling and aliasing](web/signal-theory.html?lab=sampling) | Sample a sine faster or slower than 2f and watch an alias appear. | done |
+| [DFT and FFT](web/signal-theory.html?lab=dft) | Samples into frequency bins: resolution, leakage, record length. | done |
+| [Windows and leakage](web/signal-theory.html?lab=windows) | Rectangular, Hann, Blackman: dynamic range of a spectrum. | done |
+| [Convolution](web/signal-theory.html?lab=convolution) | Flip, slide, multiply, integrate: watch y(t) being built. | done |
+| [LTI systems](web/signal-theory.html?lab=lti-systems) | Impulse, step, square and sine through RC filters, an echo and a moving average. | done |
+| [Digital filters](web/signal-theory.html?lab=filtering) | FIR low-, high- and band-pass on a noisy two-tone signal. | done |
+| [AM and FM](web/signal-theory.html?lab=modulation) | A message on a carrier: envelope, sidebands, Bessel lines, Carson bandwidth. | done |
+| [Constellations and bit errors](web/signal-theory.html?lab=constellations) | BPSK, QPSK, 8-PSK, 16-QAM in noise; measured vs theoretical bit error rate. | done |
+| [IQ demodulation](web/signal-theory.html?lab=iq-demodulation) | Mix down to I and Q; phase and frequency errors rotate and spin the constellation. | done |
+| [Link budget](web/signal-theory.html?lab=link-budget) | Friis: transmit power, antenna gains and path loss against receiver sensitivity. | done |
+| [Dipole antennas](web/signal-theory.html?lab=dipole) | Radiation patterns and directivity from short to long dipoles. | done |
+| [Phased arrays](web/signal-theory.html?lab=phased-array) | Steer a beam with phase steps; beam width and grating lobes. | done |
+| [Polarization](web/signal-theory.html?lab=polarization) | Linear, circular and elliptical fields through a polarizer. | done |
+| [Waveguide modes](web/signal-theory.html?lab=waveguide) | TE and TM fields in a rectangular guide; cut-off and guide wavelength. | done |

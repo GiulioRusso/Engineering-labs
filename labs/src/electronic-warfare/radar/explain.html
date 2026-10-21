@@ -1,0 +1,46 @@
+<section data-case="pulses">
+  <h3>Pulse radar</h3>
+  <p>The radar sends a short pulse every PRI \(= 1/\text{PRF}\) and listens. An echo that comes back after \(\Delta t\) is at range \(c\Delta t/2\). Echoes from beyond \(R_u\) arrive after the next pulse has left and are read at the wrong range. The matched filter (bottom) turns each echo into a peak; two targets are separated if they are further apart than the resolution.</p>
+  <div class="eq">$$R = \frac{c\,\Delta t}{2}, \qquad R_u = \frac{c}{2\,\text{PRF}}, \qquad \Delta R = \frac{c\tau}{2} \;\text{ or }\; \frac{c}{2B} \text{ (chirp)}$$</div>
+</section>
+<section data-case="pulses" data-example="resolve"><h3>A shorter pulse</h3><p>0.5 µs gives 75 m resolution: targets 120 m apart become two peaks. But a shorter pulse carries less energy.</p></section>
+<section data-case="pulses" data-example="chirp"><h3>Pulse compression</h3><p>A 10 µs pulse has plenty of energy but on its own would only resolve 1.5 km. Sweeping its frequency over 5 MHz (a chirp) lets the matched filter compress it to the resolution of a 0.2 µs pulse: 30 m.</p></section>
+<section data-case="pulses" data-example="ambig"><h3>Second-time-around echo</h3><p>At 1 kHz, \(R_u = 150\) km. A target at 200 km answers the previous pulse and shows up at 50 km.</p></section>
+<section data-case="pulses" data-example="lowprf"><h3>Lower PRF</h3><p>At 500 Hz, \(R_u = 300\) km: the target is shown at its true range. The price: fewer pulses per second, so less energy and worse Doppler.</p></section>
+
+<section data-case="doppler">
+  <h3>The range–Doppler map</h3>
+  <p>Over a burst of \(N\) pulses a moving target's echo shifts in phase from pulse to pulse at the Doppler frequency \(f_d = 2v/\lambda\). An FFT across the pulses sorts the echoes by velocity, the delay sorts them by range. Ground clutter sits at zero velocity. Both axes are sampled, so both can fold.</p>
+  <div class="eq">$$f_d = \frac{2v}{\lambda}, \qquad v_u = \pm\frac{\lambda\,\text{PRF}}{4}, \qquad \Delta v = \frac{\lambda\,\text{PRF}}{2N}$$</div>
+</section>
+<section data-case="doppler" data-example="fast"><h3>Velocity folding</h3><p>At 10 kHz and 3 cm the unambiguous velocity is ±75 m/s: a target at +100 m/s appears at −50 m/s.</p></section>
+<section data-case="doppler" data-example="far"><h3>Range folding</h3><p>The same high PRF gives only 15 km of unambiguous range: a target at 20 km appears at 5 km. Radars switch between PRFs to resolve both.</p></section>
+<section data-case="doppler" data-example="pulses"><h3>Longer bursts</h3><p>128 pulses instead of 32: the velocity bins are four times finer, the peaks narrower.</p></section>
+<section data-case="doppler" data-example="mti"><h3>Moving-target indication</h3><p>Rejecting the zero-velocity line removes the ground clutter and keeps only what moves.</p></section>
+
+<section data-case="detect">
+  <h3>Detection in noise</h3>
+  <p>The echo competes with receiver noise. The radar equation gives the signal-to-noise ratio; a threshold decides "target". A high threshold rarely fires on noise (low \(P_{fa}\)) but needs more SNR to detect (\(P_d\)).</p>
+  <div class="eq">$$\text{SNR} = \frac{P_t G^2 \lambda^2 \sigma\, n}{(4\pi)^3 R^4\, k T_0 B F}, \qquad P_{fa} = e^{-T^2/2}$$</div>
+</section>
+<section data-case="detect" data-example="far"><h3>Twice as far</h3><p>The echo has to go out and come back: power falls as \(1/R^4\), 12 dB per doubling.</p></section>
+<section data-case="detect" data-example="integrate"><h3>Integration</h3><p>Adding 16 pulses coherently multiplies the SNR by 16 (+12 dB): exactly what was lost by doubling the range.</p></section>
+<section data-case="detect" data-example="pfa"><h3>A lower threshold</h3><p>\(P_{fa} = 10^{-2}\): more detections, but one range cell in a hundred lights up on noise alone.</p></section>
+<section data-case="detect" data-example="stealth"><h3>A small target</h3><p>An RCS of 0.01 m² (20 dB below 1 m²) shrinks the detection range by \(10^{20/40} \approx 3.2\) times.</p></section>
+
+<section data-case="ppi">
+  <h3>The PPI scope</h3>
+  <p>A plan-position indicator draws echoes at their range and bearing as the antenna turns; the sweep line marks where it points now. Each echo glows and fades until the next pass. Clutter close to the radar comes from the ground.</p>
+</section>
+<section data-case="ppi" data-example="jet"><h3>A fast jet</h3><p>Between two sweeps the jet moves several kilometres: the tracker must predict where to look for it next.</p></section>
+<section data-case="ppi" data-example="rain"><h3>Rain</h3><p>Raindrops reflect too: a large patch of weak echoes that can hide targets. Doppler processing and circular polarization help remove it.</p></section>
+<section data-case="ppi" data-example="slow"><h3>Slow scan</h3><p>At 4 rpm each target is seen every 15 s: long range and dwell time, but slow updates.</p></section>
+
+<section data-case="jam">
+  <h3>Jamming and burn-through</h3>
+  <p>A jammer floods the radar's receiver with noise. Its power falls only as \(1/R^2\) (one way), the echo as \(1/R^4\) (two ways): at long range the jammer wins, but as the target gets closer the echo grows faster. The burn-through range is where the signal-to-jamming ratio reaches what the radar needs.</p>
+  <div class="eq">$$\frac{S}{J} = \frac{P_t G \sigma}{4\pi P_j G_j R^2}\,\frac{B_j}{B_r}, \qquad R_{bt} = \sqrt{\frac{P_t G \sigma B_j}{4\pi P_j G_j B_r\,(S/J)_\text{req}}}$$</div>
+</section>
+<section data-case="jam" data-example="power"><h3>A stronger jammer</h3><p>Ten times the jammer power (10 W) pulls the burn-through range in by \(\sqrt{10} \approx 3.2\) times.</p></section>
+<section data-case="jam" data-example="spot"><h3>Spot jamming</h3><p>Concentrating the noise in the radar's own 1 MHz instead of 10 MHz puts ten times more of it where it matters. Radars answer by hopping frequency.</p></section>
+<section data-case="jam" data-example="standoff"><h3>Stand-off jamming</h3><p>A jammer far away, outside the radar's beam, must come in through the sidelobes (here −30 dB). Its power at the radar is constant while the target's echo grows as it approaches.</p></section>

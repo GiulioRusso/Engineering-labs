@@ -1,0 +1,30 @@
+<section data-case="analog">
+  <h3>AM and FM</h3>
+  <p>A message (orange) rides on a fast carrier. <b>AM</b> changes the carrier's amplitude: the spectrum is the carrier plus two sidebands at \(f_c \pm f_m\). <b>FM</b> changes its frequency: the spectrum has many sidebands at \(f_c + n f_m\) with amplitudes \(J_n(\beta)\).</p>
+  <div class="eq">$$s_\text{AM} = \big(1 + m\cos 2\pi f_m t\big)\cos 2\pi f_c t, \qquad s_\text{FM} = \cos\!\big(2\pi f_c t + \beta\sin 2\pi f_m t\big)$$</div>
+</section>
+<section data-case="analog" data-example="full"><h3>m = 1</h3><p>The envelope just touches zero. Even so, only a third of the power is in the sidebands that carry the message.</p></section>
+<section data-case="analog" data-example="over"><h3>Over-modulation</h3><p>With \(m > 1\) the envelope \(1 + m\cos\) goes negative and folds over: a simple envelope detector would distort the message.</p></section>
+<section data-case="analog" data-example="fm"><h3>FM, β = 1</h3><p>The amplitude never changes. Power moves from the carrier (\(J_0^2\)) into a few sidebands; \(\sum J_n^2 = 1\).</p></section>
+<section data-case="analog" data-example="wide"><h3>Wide-band FM</h3><p>Large \(\beta\) spreads the power over many sidebands. Carson's rule: about 98 % of it lies within \(2(\beta + 1)f_m\). Broadcast FM trades bandwidth for noise immunity.</p></section>
+<section data-case="analog" data-example="null"><h3>No carrier</h3><p>At \(\beta = 2.405\), the first zero of \(J_0\), the carrier line vanishes completely: all the power is in the sidebands. Engineers use this to calibrate FM deviation.</p></section>
+
+<section data-case="digital">
+  <h3>Digital constellations</h3>
+  <p>Each symbol is a point in the I–Q plane carrying \(\log_2 M\) bits. Noise spreads the received points into clouds (blue); the receiver picks the nearest ideal point (orange). More points per symbol means more bits but closer neighbours, so more \(E_b/N_0\) is needed for the same bit error rate (right).</p>
+  <div class="eq">$$P_b^\text{BPSK} = P_b^\text{QPSK} = Q\!\left(\sqrt{2E_b/N_0}\right), \qquad Q(x) = \tfrac12\operatorname{erfc}(x/\sqrt2)$$</div>
+</section>
+<section data-case="digital" data-example="bpsk"><h3>BPSK</h3><p>Two points as far apart as possible: one bit per symbol, the lowest error rate for a given energy per bit.</p></section>
+<section data-case="digital" data-example="noisy"><h3>QPSK at 4 dB</h3><p>The clouds touch the decision boundaries (the axes): about 1 bit in 80 is wrong.</p></section>
+<section data-case="digital" data-example="qam"><h3>16-QAM</h3><p>Four bits per symbol, twice QPSK, but the points are much closer: it needs about 4 dB more \(E_b/N_0\) for the same error rate. Wi-Fi and 4G switch between schemes as the signal changes.</p></section>
+<section data-case="digital" data-example="psk8"><h3>8-PSK</h3><p>Eight points on a circle: three bits per symbol, all with the same amplitude (friendly to saturating amplifiers).</p></section>
+
+<section data-case="iq">
+  <h3>IQ demodulation</h3>
+  <p>The receiver multiplies the signal by its own \(\cos\) and \(-\sin\) of the carrier and averages over each symbol: out come the I and Q values. If its oscillator is off by a phase \(\varphi\), every point is rotated by \(-\varphi\); off by a frequency \(\Delta f\), the rotation grows with time and the constellation spins.</p>
+  <div class="eq">$$s = I\cos\omega t - Q\sin\omega t, \qquad \hat I + j\hat Q = (I + jQ)\,e^{-j(\varphi + 2\pi\Delta f\,t)}$$</div>
+</section>
+<section data-case="iq" data-example="phase"><h3>Phase error</h3><p>A 30° phase error rotates the whole constellation by −30°. Points drift towards the decision boundaries: a phase-locked loop must remove it.</p></section>
+<section data-case="iq" data-example="quarter"><h3>90°</h3><p>A quarter turn: what was I is read as −Q. A carrier phase ambiguity of 90° is why QPSK systems use differential coding or pilots.</p></section>
+<section data-case="iq" data-example="spin"><h3>Frequency offset</h3><p>A 0.05 Hz offset adds 4.5° every symbol: the points walk around the circle. Real receivers track it continuously.</p></section>
+<section data-case="iq" data-example="noise"><h3>Noise</h3><p>Thermal noise turns each point into a cloud; averaging over the symbol (a matched filter) keeps the cloud as small as possible.</p></section>
