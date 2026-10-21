@@ -228,14 +228,66 @@
     "group": "Waveforms"
    },
    {
-    "id": "range-doppler",
-    "title": "Range and Doppler",
-    "what": "A range–Doppler map: velocity from phase shifts, ground clutter, range and velocity folding.",
-    "from": "radar",
+    "id": "doppler-effect",
+    "title": "The Doppler effect",
+    "what": "Wavefronts squeeze off an approaching target; transmitted and received waves side by side.",
+    "from": "doppler",
     "cases": [
-     "doppler"
+     "wavefronts"
     ],
-    "group": "Radar"
+    "group": "Doppler"
+   },
+   {
+    "id": "pulse-doppler",
+    "title": "Pulse-Doppler: range and velocity",
+    "what": "Range profile and Doppler spectrum from a burst of pulses; resolution and velocity wrap.",
+    "from": "doppler",
+    "cases": [
+     "dashboard"
+    ],
+    "group": "Doppler"
+   },
+   {
+    "id": "rd-map",
+    "title": "The range–Doppler map",
+    "what": "Place three targets and see the radar image, with folding in both range and velocity.",
+    "from": "doppler",
+    "cases": [
+     "rdmap"
+    ],
+    "group": "Doppler"
+   },
+   {
+    "id": "ambiguity",
+    "title": "The PRF dilemma",
+    "what": "Reported against true range and velocity: raise the PRF and one folds, lower it and the other does.",
+    "from": "doppler",
+    "cases": [
+     "ambiguity"
+    ],
+    "group": "Doppler"
+   },
+   {
+    "id": "receivers",
+    "title": "Receiver architectures",
+    "what": "Follow one pulse through a superheterodyne, a digital-IF and a homodyne receiver, stage by stage.",
+    "from": "receiver",
+    "cases": [
+     "superhet",
+     "digitalif",
+     "homodyne"
+    ],
+    "group": "Receivers"
+   },
+   {
+    "id": "iq-receiver",
+    "title": "IQ demodulation",
+    "what": "RF pulse to I and Q: LO detuning, filter bandwidth and rise time.",
+    "from": "receiver",
+    "cases": [
+     "iqdemod"
+    ],
+    "group": "Receivers"
    },
    {
     "id": "detection",

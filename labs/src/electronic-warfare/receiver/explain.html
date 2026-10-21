@@ -1,0 +1,59 @@
+<section data-case="superhet digitalif homodyne">
+  <h3>From an RF pulse to numbers</h3>
+  <div class="look"><h4>How to use this view</h4>The row of boxes is the receiver. Pick a stage with the slider (the box is outlined): below you see the signal at that point in time (left) and its spectrum (right). Walk through the stages one by one, from the antenna to the ADC.</div>
+  <p>The echo arrives at hundreds of MHz or GHz, as a burst of carrier. Nothing digital can work at that frequency, and only the <b>amplitude</b> and <b>phase</b> of the echo matter (the carrier carries no information). The receiver's job is to bring the echo down to frequencies near zero without losing either — and to throw away everything else the antenna picked up.</p>
+  <h4>Why I and Q?</h4>
+  <p>A single real signal at baseband cannot tell \(+f\) from \(-f\): a target closing and a target opening at the same speed would look identical. Two channels in quadrature (cos and −sin) keep the sign. Together they form one complex number \(z = I + jQ = A e^{j\varphi}\) per sample.</p>
+  <div class="eq">$$I = \text{LPF}\{s\cdot 2\cos 2\pi f_{LO} t\}, \quad Q = \text{LPF}\{-s\cdot 2\sin 2\pi f_{LO} t\}, \quad s = A\cos(2\pi f_c t + \varphi) \Rightarrow z = A e^{j\varphi}$$</div>
+</section>
+<section data-case="superhet">
+  <h3>The superheterodyne receiver</h3>
+  <p>The classic architecture: filter, amplify, shift to a fixed <b>intermediate frequency</b> (IF), filter sharply there, then demodulate into I and Q.</p>
+  <ol class="steps">
+    <li><b>RF band-pass</b>: keep only the radar band (the 650 MHz interferer disappears).</li>
+    <li><b>LNA</b>: amplify with as little added noise as possible — the first amplifier sets the noise of the whole chain.</li>
+    <li><b>Mixer</b>: multiplying by the LO creates \(f_{RF} - f_{LO}\) and \(f_{RF} + f_{LO}\). We keep the difference: 400 − 330 = 70 MHz.</li>
+    <li><b>IF band-pass</b>: easy to make narrow and steep at a fixed, low frequency. It sets the receiver bandwidth.</li>
+    <li><b>IQ demodulator</b>: mix the IF down to 0 Hz in quadrature: I and Q.</li>
+    <li><b>ADC</b>: sample and quantise I and Q.</li>
+  </ol>
+  <div class="worked"><h4>Worked example: the image</h4>The mixer cannot tell above from below: a signal at \(f_{LO} - f_{IF} = 260\) MHz also produces a 70 MHz difference. That is the <b>image frequency</b>, and once it lands on the IF no later filter can separate it. Only the RF filter, <i>before</i> the mixer, can remove it — which is why its bandwidth matters.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the mixer "moves" the signal. It multiplies, so it creates two copies (sum and difference) and folds everything symmetric about the LO onto the same IF.</div>
+  <div class="try"><h4>Try it</h4>At the mixer stage, change the LO and watch the IF line move. Then widen the RF filter and look at the IF stage: the image signal now sits on top of the pulse.</div>
+</section>
+<section data-case="superhet" data-example="mixer"><h3>Sum and difference</h3><p>At the mixer output there are two copies of the pulse: at 70 MHz and at 730 MHz, plus mixed versions of everything else that got through.</p></section>
+<section data-case="superhet" data-example="image"><h3>The image problem</h3><p>With a 200 MHz wide RF filter the 260 MHz image passes, mixes to 70 MHz and adds to our pulse at the IF: a ghost signal that cannot be filtered any more.</p></section>
+<section data-case="superhet" data-example="iq"><h3>The IQ output</h3><p>Flat I and Q during the pulse: a constant complex number whose angle is the echo phase. That phase, compared pulse to pulse, is what gives the Doppler.</p></section>
+<section data-case="superhet" data-example="adc"><h3>Quantisation</h3><p>With 4 bits the I and Q steps are visible and the spectrum's floor rises: each bit is worth about 6 dB of dynamic range.</p></section>
+<section data-case="digitalif">
+  <h3>The digital IF receiver</h3>
+  <p>Do the first mix in analogue, then sample the <b>real IF</b> with one fast ADC and do the IQ demodulation in software. The IQ channels are then perfectly matched (no analogue imbalance).</p>
+  <ol class="steps"><li>ADC at IF: sample the 70 MHz IF at 100 MS/s. Undersampling is fine for a narrow band: it aliases to 30 MHz (bandpass sampling).</li><li>Digital down-conversion (DDC): multiply by \(e^{-j2\pi f n/f_s}\): the spectrum shifts to 0 Hz and becomes one-sided.</li><li>Digital low-pass and decimation: keep only the baseband, then drop samples you no longer need.</li></ol>
+  <div class="worked"><h4>Worked example</h4>70 MHz sampled at 100 MS/s: \(|70 - 100| = 30\) MHz. As long as the IF band (here 20 MHz wide) does not straddle a multiple of \(f_s/2\), sampling it below its frequency loses nothing.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking you must sample above twice the highest frequency. For a band-limited signal you must sample above twice its <b>bandwidth</b> and place it within one Nyquist zone.</div>
+</section>
+<section data-case="digitalif" data-example="adc"><h3>Bandpass sampling</h3><p>The IF appears at 30 MHz in the sampled spectrum. Change the sampling rate and watch it move — and fold over itself near \(f_s/2\).</p></section>
+<section data-case="digitalif" data-example="ddc"><h3>Digital down-conversion</h3><p>After multiplying by the complex exponential the spectrum is no longer mirror-symmetric: the pulse sits at 0 Hz, its mirror at −60 MHz (removed next).</p></section>
+<section data-case="digitalif" data-example="dec"><h3>Decimation</h3><p>Low-pass, then keep one sample in four: 25 MS/s complex is plenty for an 8 MHz baseband.</p></section>
+<section data-case="homodyne">
+  <h3>The homodyne (direct-conversion) receiver</h3>
+  <p>Mix straight from RF to 0 Hz with an LO at the carrier. No IF, no IF filters, no image: small and cheap, which is why phones use it.</p>
+  <p>The price: everything that happens at 0 Hz lands on the signal. LO leakage mixing with itself gives a <b>DC offset</b>; an LO slightly off frequency makes the baseband <b>rotate</b>; any gain or phase mismatch between the I and Q mixers creates a mirror image.</p>
+  <div class="try"><h4>Try it</h4>Add a little LO error at the mixer stage: I and Q oscillate at the error frequency during the pulse. Then add leakage: the whole trace shifts up by a constant.</div>
+</section>
+<section data-case="homodyne" data-example="mix"><h3>Straight to baseband</h3><p>The pulse appears as a flat I and Q directly after the mixer, plus the \(2f_{RF}\) terms that the low-pass removes.</p></section>
+<section data-case="homodyne" data-example="lo"><h3>LO error</h3><p>200 kHz off: during the 1 µs pulse I and Q turn by 72°. In a radar this looks exactly like a Doppler shift.</p></section>
+<section data-case="homodyne" data-example="dc"><h3>DC offset</h3><p>A constant added to I: in the spectrum, a spike at 0 Hz exactly where the zero-Doppler clutter and slow targets live.</p></section>
+<section data-case="iqdemod">
+  <h3>The IQ demodulator, close up</h3>
+  <div class="look"><h4>The four panels</h4>RF pulse at the antenna · its spectrum with the LO marked · I and Q after the low-pass · the envelope \(|I + jQ|^2\).</div>
+  <p>Multiply \(A\cos(2\pi f_c t + \varphi)\) by \(2\cos 2\pi f_{LO} t\): you get a difference term at \(f_c - f_{LO}\) and a sum term at \(f_c + f_{LO}\). The low-pass keeps the difference. With the LO exactly on frequency the difference is at 0 Hz: I and Q are constant, \(|z| = A\) and \(\angle z = \varphi\).</p>
+  <div class="worked"><h4>Worked example</h4>Echo phase 40°: during the pulse \(I = \cos 40° = 0.77\), \(Q = \sin 40° = 0.64\). Detune the LO by 2 MHz and they rotate at exactly 2 MHz.</div>
+  <h4>The filter trade-off</h4>
+  <p>The low-pass must remove the sum term and the noise, but every filter takes time to respond: rise time ≈ \(0.48/B\) here. A 16 MHz filter rises in 30 ns; a 2 MHz filter in 240 ns. When the rise time approaches the pulse length there is no flat top left to measure, and the amplitude reading collapses.</p>
+  <div class="pitfall"><h4>Common mistake</h4>Narrowing the filter "to reduce noise" without checking the pulse: noise goes down as \(\sqrt B\), but so does the pulse's own peak once the filter is too slow.</div>
+</section>
+<section data-case="iqdemod" data-example="detune"><h3>LO detuned</h3><p>I and Q are sines at 2 MHz: the complex value spins. |z| is still right; the phase is not constant any more.</p></section>
+<section data-case="iqdemod" data-example="narrow"><h3>Narrow filter</h3><p>4 MHz: 120 ns edges on a 500 ns pulse. The flat top is shorter but still there.</p></section>
+<section data-case="iqdemod" data-example="tooNarrow"><h3>Too narrow</h3><p>1.5 MHz: the filter is slower than the pulse. The output never reaches the true amplitude.</p></section>
+<section data-case="iqdemod" data-example="phase"><h3>Another phase</h3><p>150°: I negative, Q positive. The magnitude is unchanged; only the angle tells them apart.</p></section>

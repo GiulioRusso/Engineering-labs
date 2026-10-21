@@ -1,0 +1,54 @@
+<section data-case="wavefronts">
+  <h3>The Doppler effect: squeezed wavefronts</h3>
+  <div class="look"><h4>What you are looking at</h4>The radar sends a continuous wave: orange arcs are crests travelling out, blue arcs are crests reflected by the aircraft travelling back. Bottom: the transmitted wave (grey) and the received wave (blue) at the radar. The aircraft's speed is exaggerated enormously so the effect is visible.</div>
+  <p>Each crest meets the approaching aircraft a little sooner than the one before, and the aircraft itself has moved closer when it reflects the next one. So the reflected crests are <span class="key">closer together</span>: shorter wavelength, higher frequency. Moving away, they are stretched.</p>
+  <div class="eq">$$f_r = f_0\,\frac{c + v}{c - v} \;\approx\; f_0\left(1 + \frac{2v}{c}\right) \quad\Rightarrow\quad f_d = f_r - f_0 = \frac{2 v f_0}{c} = \frac{2v}{\lambda}$$</div>
+  <h4>Why the factor 2</h4>
+  <p>The shift happens twice: once when the moving aircraft <i>receives</i> the wave (it runs into the crests), once when it <i>re-transmits</i> it as a moving source. Each contributes \(v/c\).</p>
+  <div class="worked"><h4>Worked example</h4>X-band, \(f_0 = 10\) GHz (λ = 3 cm), aircraft closing at 300 m/s: \(f_d = 2 \cdot 300 / 0.03 = 20\) kHz. A shift of 2 parts per million of the carrier — tiny, but easy to measure because it accumulates phase pulse after pulse. Rule of thumb at X-band: <b>66.7 Hz per m/s</b>.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Only the <b>radial</b> component counts: an aircraft crossing perpendicular to the beam has zero Doppler however fast it flies. And the sign convention: here positive means closing (higher frequency).</div>
+  <div class="try"><h4>Try it</h4>Set the speed to 0: the spacing is the same both ways. Reverse it: the blue arcs spread out and the received wave slows down.</div>
+</section>
+<section data-case="wavefronts" data-example="away"><h3>Moving away</h3><p>Opening at 300 m/s: \(f_d = -20\) kHz, the reflected crests are further apart than the transmitted ones.</p></section>
+<section data-case="wavefronts" data-example="still"><h3>At rest</h3><p>No motion, no shift: the received wave has the transmitted frequency. A stationary building or hill gives exactly this, which is how Doppler radars reject ground clutter.</p></section>
+<section data-case="wavefronts" data-example="fast"><h3>Mach 3</h3><p>1000 m/s → 66.7 kHz at X-band. The shift is still only 7 ppm of the carrier.</p></section>
+
+<section data-case="dashboard">
+  <h3>Pulse-Doppler: range and velocity together</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the scene (radar at the bottom, target and its velocity arrow). Centre: the range profile — a peak at the target's range, as wide as the resolution \(c\tau/2\). Right: the Doppler spectrum — a peak at the target's radial velocity.</div>
+  <p>Range comes from the echo <b>delay</b> within one pulse ("fast time"). Velocity comes from how the echo <b>phase</b> advances from pulse to pulse ("slow time"): over N pulses that is a sampled sine at \(f_d\), and an FFT across the pulses finds it.</p>
+  <div class="eq">$$\Delta R = \frac{c\tau}{2}, \qquad \Delta v = \frac{\lambda\,\text{PRF}}{2N}, \qquad v_u = \pm\frac{\lambda\,\text{PRF}}{4}$$</div>
+  <h4>Step by step</h4>
+  <ol class="steps"><li>Fire N pulses, one every PRI.</li><li>For each range cell, take the N complex samples (one per pulse).</li><li>A target at \(v\) makes them rotate by \(2\pi f_d\,\text{PRI}\) each pulse.</li><li>FFT the N samples: the peak bin gives \(f_d\), hence \(v = \lambda f_d / 2\).</li></ol>
+  <div class="worked"><h4>Worked example</h4>10 GHz, PRF 10 kHz, 64 pulses: \(\Delta v = 0.03 \cdot 10^4 / 128 = 2.3\) m/s, \(v_u = \pm 75\) m/s. A target at 300 m/s exceeds \(v_u\) and wraps to a wrong velocity.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the Doppler spectrum is measured inside one pulse. A 1 µs pulse at 20 kHz Doppler sees only 0.02 of a cycle — the information comes from the sequence of pulses.</div>
+  <div class="try"><h4>Try it</h4>Quadruple N: the Doppler peak gets four times narrower. Push the speed past ±75 m/s and watch the peak reappear at the other side.</div>
+</section>
+<section data-case="dashboard" data-example="more"><h3>More pulses</h3><p>256 pulses: 0.6 m/s resolution — at the cost of 25 ms in one beam direction.</p></section>
+<section data-case="dashboard" data-example="fold"><h3>Velocity wrap</h3><p>120 m/s at ±75 m/s unambiguous: reported at 120 − 150 = −30 m/s. The phase advance per pulse exceeded half a turn, so it looks like a smaller turn the other way.</p></section>
+<section data-case="dashboard" data-example="band"><h3>S-band</h3><p>3 GHz: λ = 10 cm, so the same speed gives a third of the Doppler, but \(v_u\) is three times larger at the same PRF.</p></section>
+
+<section data-case="rdmap">
+  <h3>The range–Doppler map</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the radar's image — apparent range across, radial velocity up, brightness = echo strength (dB). Each target is a spot, its size the resolution cell \(c\tau/2 \times \Delta v\). The thin cross-shaped ripples are the range and Doppler sidelobes. Right: the scene seen from above.</div>
+  <p>Do the FFT over slow time for every range cell and stack the results: a 2-D picture where targets that share a range cell can still be told apart by velocity, and vice versa. The whole picture is periodic: everything is folded into \(0 \ldots R_u\) and \(-v_u \ldots v_u\).</p>
+  <div class="worked"><h4>Worked example</h4>PRF 10 kHz: \(R_u = 15\) km, \(v_u = \pm 75\) m/s. A target at 21 km is drawn at 6 km. A target at −20 m/s sits below the zero-velocity line.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading the map as true range and velocity. It shows <b>apparent</b> ones; resolving the truth needs several PRFs.</div>
+  <div class="try"><h4>Try it</h4>Put two targets at the same range with different speeds: they separate vertically. Lower the PRF and watch the velocity window shrink and the spots wrap around.</div>
+</section>
+<section data-case="rdmap" data-example="close"><h3>One range cell, two speeds</h3><p>A and B both at 8 km but 15 m/s apart: impossible to split by range, obvious by Doppler.</p></section>
+<section data-case="rdmap" data-example="far"><h3>Range folding</h3><p>C at 21 km with \(R_u = 15\) km is drawn at 6 km, right in the middle of the picture.</p></section>
+<section data-case="rdmap" data-example="lowprf"><h3>Low PRF</h3><p>3 kHz: \(R_u = 50\) km (no range folding) but \(v_u = \pm 22\) m/s: A at 40 m/s wraps to −5 m/s.</p></section>
+
+<section data-case="ambiguity">
+  <h3>The PRF dilemma</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: reported range against true range — a sawtooth. Right: reported velocity against true velocity — another sawtooth. The thick green parts are where the radar is honest; the dot is your target.</div>
+  <p>The PRF sets both limits, in opposite directions:</p>
+  <div class="eq">$$R_u = \frac{c}{2\,\text{PRF}}, \qquad v_u = \frac{\lambda\,\text{PRF}}{4}, \qquad R_u\, v_u = \frac{c\lambda}{8} = \text{const}$$</div>
+  <p>Raise the PRF and velocity becomes honest while range folds; lower it and the opposite. You cannot have both large: that is why radars talk of <b>low</b> PRF (range honest), <b>high</b> PRF (velocity honest) and <b>medium</b> PRF (both ambiguous, resolved with several PRFs).</p>
+  <div class="worked"><h4>Worked example</h4>At 10 GHz the product is \(3\times10^8 \cdot 0.03 / 8 \approx 1.1\times10^6\) m²/s: with \(R_u = 15\) km you get \(v_u = 75\) m/s, never both 100 km and 300 m/s.</div>
+  <div class="try"><h4>Try it</h4>Drag the PRF and watch one green segment grow while the other shrinks.</div>
+</section>
+<section data-case="ambiguity" data-example="inside"><h3>Inside both limits</h3><p>10 km and 40 m/s at 10 kHz: both honest.</p></section>
+<section data-case="ambiguity" data-example="raise"><h3>High PRF</h3><p>20 kHz: \(v_u = 150\) m/s (the 100 m/s target is honest) but \(R_u = 7.5\) km: 20 km reads as 5 km.</p></section>
+<section data-case="ambiguity" data-example="lower"><h3>Low PRF</h3><p>4 kHz: \(R_u = 37.5\) km but \(v_u = 30\) m/s: the 100 m/s target wraps.</p></section>

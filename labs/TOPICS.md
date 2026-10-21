@@ -53,7 +53,12 @@ In the Electronics Visualizer.
 | [The plain pulse](web/electronic-warfare.html?lab=plain-pulse) | Pulse, spectrum, echo and matched filter; then two aircraft in formation split by Doppler. | done |
 | [The LFM chirp](web/electronic-warfare.html?lab=chirp) | Bandwidth without a short pulse; compression, weighting, and range–Doppler coupling on a fighter and tanker. | done |
 | [Phase codes](web/electronic-warfare.html?lab=phase-codes) | Barker-13: compression with a sign switch, and the sidelobe floor that hides a small target. | done |
-| [Range and Doppler](web/electronic-warfare.html?lab=range-doppler) | A range–Doppler map: velocity from phase shifts, ground clutter, range and velocity folding. | done |
+| [The Doppler effect](web/electronic-warfare.html?lab=doppler-effect) | Wavefronts squeeze off an approaching target; transmitted and received waves side by side. | done |
+| [Pulse-Doppler: range and velocity](web/electronic-warfare.html?lab=pulse-doppler) | Range profile and Doppler spectrum from a burst of pulses; resolution and velocity wrap. | done |
+| [The range–Doppler map](web/electronic-warfare.html?lab=rd-map) | Place three targets and see the radar image, with folding in both range and velocity. | done |
+| [The PRF dilemma](web/electronic-warfare.html?lab=ambiguity) | Reported against true range and velocity: raise the PRF and one folds, lower it and the other does. | done |
+| [Receiver architectures](web/electronic-warfare.html?lab=receivers) | Follow one pulse through a superheterodyne, a digital-IF and a homodyne receiver, stage by stage. | done |
+| [IQ demodulation](web/electronic-warfare.html?lab=iq-receiver) | RF pulse to I and Q: LO detuning, filter bandwidth and rise time. | done |
 | [Detection in noise](web/electronic-warfare.html?lab=detection) | Radar equation, threshold, false alarms and probability of detection on an A-scope. | done |
 | [The PPI scope](web/electronic-warfare.html?lab=ppi) | A rotating beam paints aircraft, ground clutter and rain on a plan display. | done |
 | [Jamming and burn-through](web/electronic-warfare.html?lab=jamming) | Self-screening and stand-off jammers: S/J against range and the burn-through point. | done |
