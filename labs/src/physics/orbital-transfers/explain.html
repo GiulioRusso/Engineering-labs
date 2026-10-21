@@ -1,7 +1,14 @@
 <section data-case="transfer">
-  <h3>The Hohmann transfer</h3>
-  <p>To climb from one circular orbit to another, burn forward once to stretch the orbit into an ellipse that touches the target, coast half of it, then burn again at the far end to round it off. It is the cheapest two-burn transfer.</p>
-  <div class="eq">$$a_t = \frac{r_1 + r_2}{2}, \quad \Delta v_1 = \sqrt{\frac{\mu}{r_1}}\left(\sqrt{\frac{2r_2}{r_1 + r_2}} - 1\right), \quad t = \pi\sqrt{\frac{a_t^3}{\mu}}$$</div>
+  <h3>Hohmann and bi-elliptic transfers</h3>
+  <div class="look"><h4>What you are looking at</h4>The starting and target circular orbits, the transfer ellipse(s), the burns (Δv arrows), and the fuel needed from the rocket equation.</div>
+  <p>To go to a higher orbit, speed up: that raises the opposite side of the orbit. A Hohmann transfer is an ellipse touching both circles — one burn to enter it, one to leave it at the top. For very distant targets (r₂/r₁ > 11.9) going even further out and coming back (bi-elliptic) can cost less Δv, but takes much longer.</p>
+  <div class="eq">$$\Delta v_1 = \sqrt{\frac{\mu}{r_1}}\left(\sqrt{\frac{2r_2}{r_1 + r_2}} - 1\right), \quad \Delta v_2 = \sqrt{\frac{\mu}{r_2}}\left(1 - \sqrt{\frac{2r_1}{r_1 + r_2}}\right), \qquad \frac{m_0}{m_f} = e^{\Delta v / (I_{sp} g_0)}$$</div>
+  <ol class="steps">
+    <li>Each burn is a change of speed Δv; the total Δv is the mission's price.</li>
+    <li>The rocket equation turns Δv into fuel: the fuel needed grows exponentially with Δv.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>LEO (300 km) to GEO: Δv₁ = 2.43 km/s, Δv₂ = 1.46 km/s, total 3.89 km/s, 5.3 h. With Isp = 320 s, m₀/m_f = e^{3890/3139} = 3.45: 1 t dry needs 2.45 t of propellant.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking higher orbits need more speed: you burn to get there, but you end up slower.</div>
 </section>
 <section data-case="transfer" data-example="small"><h3>A small hop</h3><p>A modest change in radius costs a few hundred m/s.</p></section>
 <section data-case="transfer" data-example="moon"><h3>To the Moon's distance</h3><p>Almost all the Δv is the first burn (escaping low orbit); arriving is cheap because the spacecraft is slow up there. The trip takes about 5 days.</p></section>

@@ -1,7 +1,15 @@
 <section data-case="flight">
-  <h3>Lift grows with angle of attack, until it stalls</h3>
-  <p>Tilt the wing into the air and it deflects the flow downward: the reaction is lift. It grows with the square of the speed and almost linearly with the angle of attack \(\alpha\), until the flow separates from the upper surface.</p>
-  <div class="eq">$$L = \tfrac12\rho V^2 S\,C_L, \qquad C_L \approx a(\alpha - \alpha_0)$$</div>
+  <h3>Lift, drag and the flight envelope</h3>
+  <div class="look"><h4>What you are looking at</h4>An aircraft with airflow around the wing, the four forces (lift, weight, thrust, drag), the angle of attack, and plots of the lift curve and the speed range where flight is possible.</div>
+  <p>A wing turns air downward; the air pushes the wing up. More speed or a steeper angle of attack α gives more lift — until about 15°, where the flow separates from the upper surface and lift collapses: the stall. In level flight lift must equal weight, so slow flight needs a big α. In a banked turn lift tilts, so it must grow by the load factor n = 1/cos(bank).</p>
+  <div class="eq">$$L = \tfrac12\rho V^2 S\,C_L(\alpha), \qquad D = \tfrac12\rho V^2 S\,C_D, \qquad C_D = C_{D0} + kC_L^2, \qquad n = \frac{1}{\cos\phi}, \qquad V_\text{stall} = \sqrt{\frac{2nW}{\rho S C_{L,\max}}}$$</div>
+  <ol class="steps">
+    <li>Half the speed needs four times the lift coefficient.</li>
+    <li>Thin air (altitude) means a higher true speed for the same lift.</li>
+    <li>Turning raises the stall speed by √n: at 60° bank, ×1.41.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A light aircraft stalls at 25 m/s level; in a 60° turn (n = 2) it stalls at 35 m/s. At 4000 m (ρ = 0.82 vs 1.11 at 1000 m) every speed is about 16 % higher.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a stall means the engine stopped: it is the wing, and it happens at an angle, at any speed.</div>
 </section>
 <section data-case="flight"><h3>Level flight</h3><p>Lift equals weight, thrust equals drag. At each speed there is exactly one angle of attack that holds the aircraft up.</p><div class="eq">$$\tfrac12\rho V^2 S\,C_L = W, \qquad C_D = C_{D0} + k\,C_L^2$$</div></section>
 <section data-case="flight" data-example="slow"><h3>Slow flight</h3><p>Half the speed needs four times \(C_L\): the nose comes up, close to the stall. Induced drag (\(\propto C_L^2\)) dominates.</p></section>

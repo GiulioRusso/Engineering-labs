@@ -1,6 +1,15 @@
 <section data-case="orbit">
-  <p>An orbit is an ellipse with the Earth's centre at one focus. The satellite moves along it by Kepler's laws while the Earth turns underneath; the plot shows the ground track.</p>
-  <div class="eq">$$T = 2\pi\sqrt{\frac{a^3}{\mu}}, \qquad v = \sqrt{\mu\left(\frac{2}{r} - \frac{1}{a}\right)}$$</div>
+  <h3>Orbits and ground tracks</h3>
+  <div class="look"><h4>What you are looking at</h4>The Earth, a satellite's orbit (with its nodes) in 3D, and the ground track — the path of the point directly below the satellite — on a map.</div>
+  <p>An orbit is a fall that keeps missing the ground: the satellite moves sideways fast enough that the Earth curves away as quickly as it falls. Higher orbits are slower. The ground track moves west each turn because the Earth rotates underneath; the tilt (inclination) sets how far north and south it reaches.</p>
+  <div class="eq">$$v = \sqrt{\frac{\mu}{r}}, \qquad T = 2\pi\sqrt{\frac{a^3}{\mu}}, \qquad \mu_\oplus = 3.986\cdot10^{14}\ \text{m}^3/\text{s}^2$$</div>
+  <ol class="steps">
+    <li>Inclination i: the track reaches latitudes ±i (or ±(180° − i) if retrograde).</li>
+    <li>Eccentricity e: elliptical orbits are fast at perigee, slow at apogee (Kepler's second law).</li>
+    <li>Earth's equatorial bulge (J2) slowly turns the orbital plane: used for sun-synchronous orbits.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>ISS at 420 km: r = 6791 km, v = 7.66 km/s, T = 92.6 min; each orbit the track shifts 23° west. Geostationary at 35 786 km: T = 23 h 56 min — it stays over one point.</div>
+  <div class="pitfall"><h4>Common mistake</h4>"There is no gravity in orbit": at 400 km gravity is still 89 % of surface gravity — astronauts float because they are falling with the station.</div>
 </section>
 <section data-case="orbit"><h3>Circular orbits</h3><p>Gravity provides exactly the centripetal force: \(v = \sqrt{\mu/r}\). Lower is faster: the ISS does a lap in 93 minutes at 7.7 km/s.</p></section>
 <section data-case="orbit" data-example="high"><h3>Higher</h3><p>Further out, gravity is weaker: slower speed, longer path, a period of several hours (\(T \propto a^{3/2}\)).</p></section>

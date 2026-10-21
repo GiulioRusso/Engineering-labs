@@ -1,7 +1,16 @@
 <section data-case="charges">
-  <h3>Coulomb's law and superposition</h3>
-  <p>Each charge makes a field pointing away from it if positive, towards it if negative, fading as \(1/r^2\). Several charges: add the arrows. Lines start on + and end on −; their number is in proportion to the charge. Drag the charges.</p>
-  <div class="eq">$$\cE{\mathbf E}(\mathbf r) = \sum_i \frac{q_i}{4\pi\varepsilon_0}\frac{\mathbf r - \mathbf r_i}{|\mathbf r - \mathbf r_i|^3}, \qquad \cE{\mathbf E} = -\nabla V$$</div>
+  <h3>Electric fields of point charges</h3>
+  <div class="look"><h4>What you are looking at</h4>Point charges (draggable), electric field lines, a colour slice of the potential with equipotential contours, and optionally a Gauss surface with the flux through it.</div>
+  <p>Each charge pushes a positive test charge away (if positive) or pulls it in (if negative), with a force that weakens as 1/r². Field lines start on positive charges and end on negative ones; where they crowd, the field is strong. Equipotentials cross the field lines at right angles — moving along them costs no work.</p>
+  <div class="eq">$$\mathbf E = \sum_i \frac{q_i}{4\pi\varepsilon_0 r_i^2}\hat{\mathbf r}_i, \qquad V = \sum_i \frac{q_i}{4\pi\varepsilon_0 r_i}, \qquad \oint\mathbf E\cdot d\mathbf A = \frac{Q_\text{inside}}{\varepsilon_0}$$</div>
+  <ol class="steps">
+    <li>Fields of several charges add as vectors (superposition); potentials add as numbers — easier.</li>
+    <li>Number of lines ∝ charge.</li>
+    <li>Gauss's law: the total flux out of a closed surface depends only on the charge inside.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>2 nC at 10 cm: E = 9·10⁹·2·10⁻⁹/0.01 = 1800 V/m, V = 180 V. Two equal like charges: the field is zero exactly midway.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking a field line is the path a charge follows (only if it starts at rest and moves slowly). Adding field magnitudes instead of vectors.</div>
+  <div class="try"><h4>Try it</h4>Enable the Gauss surface and drag a charge in and out: the flux jumps only when the charge crosses the surface.</div>
 </section>
 <section data-case="charges"><h3>One charge</h3><p>Radial lines, spherical equipotentials. The field at distance \(r\) is \(kq/r^2\), the potential \(kq/r\).</p></section>
 <section data-case="charges" data-example="neg"><h3>Negative</h3><p>Same pattern, arrows reversed: the lines come in from far away and end on the charge.</p></section>

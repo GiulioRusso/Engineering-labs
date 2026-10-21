@@ -1,3 +1,17 @@
+<section data-case="field">
+  <h3>The magnetic field of a current</h3>
+  <div class="look"><h4>What you are looking at</h4>A loop or coil carrying current, field lines (and a coloured slice of |B|), and a probe point with its field value.</div>
+  <p>A current makes circles of magnetic field around itself. Bend the wire into a loop and those circles all point the same way through the middle: the field is concentrated there. Stack many loops into a solenoid and inside the field becomes strong and uniform, outside almost nothing — a bar magnet made of current.</p>
+  <div class="eq">$$B_\text{loop centre} = \frac{\mu_0 I}{2R}, \qquad B_\text{solenoid} = \mu_0 n I = \mu_0\frac{N}{L}I, \qquad \mu_0 = 4\pi\cdot10^{-7}\ \text{T·m/A}$$</div>
+  <ol class="steps">
+    <li>B is proportional to the current: double I, double B.</li>
+    <li>In a long solenoid B depends only on turns per metre, not on the radius.</li>
+    <li>Short, wide coils leak: the field fringes out at the ends.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>One loop R = 5 cm, 5 A: B = 4π·10⁻⁷·5/0.1 = 63 µT — about the Earth's field. A solenoid with 150 turns over 0.6 m and 2 A: 0.63 mT.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using the solenoid formula for a short coil: it overestimates the field.</div>
+  <div class="try"><h4>Try it</h4>Move the probe inside and outside the solenoid: almost uniform inside, almost zero beside it.</div>
+</section>
 <section data-case="field" data-highlight="coil">
   <h3>One loop of current</h3>
   <p>Every short piece of wire adds a little field, perpendicular to both the wire and the line to the point (Biot–Savart). Summed around a ring, the field threads through the middle and curls back around the wire outside. Far away the ring is a magnetic dipole: the field fades as \(1/r^3\).</p>
@@ -16,6 +30,20 @@
 <section data-case="field" data-example="radius"><h3>Wider, same n</h3><p>Doubling the radius leaves the inside field unchanged: \(\mu_0 n I\) has no \(R\) in it (as long as the coil stays long compared to its width).</p></section>
 <section data-case="field" data-example="short"><h3>Short and wide</h3><p>When \(L\) is smaller than \(R\) the field is no longer uniform: it peaks in the middle and the lines spread out widely (fringing). The coil behaves more like a single loop.</p></section>
 
+<section data-case="magnet">
+  <h3>A moving magnet induces a voltage</h3>
+  <div class="look"><h4>What you are looking at</h4>A bar magnet moving through a coil; plots show the magnetic flux through the coil, the induced EMF and the current. Arrows show the opposing (Lenz) field and forces.</div>
+  <p>A coil does not care how strong the field is, only how fast the flux through it changes. Push the magnet in: flux rises, a voltage appears. Hold it still: nothing. Pull it out: opposite voltage. The induced current always makes a field that fights the change (Lenz's law) — which is why a magnet falling through a closed coil is braked.</p>
+  <div class="eq">$$\mathcal E = -N\frac{d\Phi}{dt}, \qquad \Phi = \int\mathbf B\cdot d\mathbf A, \qquad I = \frac{\mathcal E}{R}$$</div>
+  <ol class="steps">
+    <li>Faster motion → faster flux change → bigger EMF (but for a shorter time: the area under the EMF curve, NΔΦ, is the same).</li>
+    <li>More turns → more EMF.</li>
+    <li>Open circuit: EMF but no current, no braking.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Flux rising by 0.2 mWb in 0.15 s through 40 turns: EMF ≈ 40·0.2·10⁻³/0.15 = 53 mV. Ten times slower: 5.3 mV.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a strong magnet sitting in a coil gives a voltage. Only change does.</div>
+  <div class="try"><h4>Try it</h4>Drop the magnet with the circuit closed and open: compare the falling speeds.</div>
+</section>
 <section data-case="magnet ac" data-highlight="pickup">
   <h3>Flux through a loop</h3>
   <p>Flux counts how much field passes through the surface bounded by a loop. It is proportional to the source current; the constant \(M\) (mutual inductance) depends only on the shapes and positions.</p>
@@ -40,6 +68,14 @@
 <section data-case="magnet" data-example="drop"><h3>Magnetic braking</h3><p>The induced current pushes back on the falling magnet. It falls more slowly than in free fall, and its lost kinetic energy heats the coil.</p></section>
 <section data-case="magnet" data-example="drop-open"><h3>Open circuit</h3><p>No current, no braking: the magnet falls freely at \(g\).</p></section>
 <section data-case="magnet" data-example="brake"><h3>Lower resistance</h3><p>Five times less resistance, five times the current for the same EMF: the magnet drifts down almost at a constant, slow speed (as in an eddy-current brake).</p></section>
+<section data-case="ac">
+  <h3>An AC coil induces a ring of electric field</h3>
+  <div class="look"><h4>What you are looking at</h4>A coil driven by alternating current, the changing B field, and the induced electric field circling around it; a ring at a distance picks up an EMF.</div>
+  <p>A changing magnetic field creates an electric field that curls around it — even in empty space, with no wire. A ring placed there feels that field all the way round: that is the EMF. Transformers, wireless chargers and induction cookers all work this way.</p>
+  <div class="eq">$$\oint\mathbf E\cdot d\mathbf l = -\frac{d\Phi}{dt}, \qquad \mathcal E_\text{peak} = \omega N\Phi_\text{peak} \propto f$$</div>
+  <div class="worked"><h4>Worked example</h4>Doubling the frequency doubles the EMF: the flux swings at the same amplitude but twice as fast. At DC there is no induced field at all.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Looking for an EMF from a steady current.</div>
+</section>
 <section data-case="ac" data-highlight="efield">
   <h3>The induced electric field</h3>
   <p>An alternating current makes a changing field: nothing moves, yet the ring sees an EMF. The changing magnetic field is surrounded by a circulating electric field, even in empty space; the ring only gives its charges a path. This is how a transformer works.</p>

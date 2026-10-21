@@ -1,7 +1,10 @@
 <section data-case="travel">
-  <h3>A travelling wave</h3>
-  <p>Each bit of the string only moves up and down, yet the shape moves along at speed \(v\). The pattern repeats every wavelength \(\lambda\) in space and every period \(T\) in time; the plot shows one point of the string (the dot) going up and down.</p>
-  <div class="eq">$$y(x, t) = A\sin\!\big(k(x - vt)\big), \qquad k = \frac{2\pi}{\lambda}, \qquad v = f\lambda$$</div>
+  <h3>Travelling waves</h3>
+  <div class="look"><h4>What you are looking at</h4>A wave moving along a string; a marked point bobs up and down while the shape travels.</div>
+  <p>A wave moves a <i>shape</i>, not the material: each point of the string only goes up and down. In one period T the shape advances one wavelength λ, so speed = λ/T = fλ. The speed is set by the medium; change the frequency and the wavelength adjusts.</p>
+  <div class="eq">$$y(x, t) = A\sin\!\left(\frac{2\pi}{\lambda}(x - vt)\right), \qquad v = f\lambda, \qquad k = \frac{2\pi}{\lambda},\; \omega = 2\pi f$$</div>
+  <div class="worked"><h4>Worked example</h4>Sound in air, 343 m/s: 440 Hz has λ = 0.78 m. Light: 3·10⁸ m/s, Wi-Fi at 2.4 GHz has λ = 12.5 cm.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the string moves along with the wave.</div>
 </section>
 <section data-case="travel" data-example="short"><h3>Half the wavelength</h3><p>The speed is set by the string, not by the wave: with \(v\) fixed, halving \(\lambda\) doubles \(f\).</p></section>
 <section data-case="travel" data-example="fast"><h3>A faster wave</h3><p>A tighter or lighter string carries waves faster (\(v = \sqrt{T/\mu}\)). Same \(\lambda\), so each point oscillates faster.</p></section>
@@ -9,17 +12,23 @@
 
 <section data-case="super">
   <h3>Superposition</h3>
-  <p>Where two waves meet, the displacements simply add (dashed: the two waves, blue: the string). Afterwards each wave goes on as if the other had never been there.</p>
-  <div class="eq">$$y = y_1 + y_2$$</div>
+  <div class="look"><h4>What you are looking at</h4>Two waves (thin lines) moving through each other and their sum (thick).</div>
+  <p>Where two waves overlap, the displacements simply add, and afterwards each continues as if the other had never been there. Same sign: they reinforce; opposite: they cancel. This one rule explains interference, beats and standing waves.</p>
+  <div class="eq">$$y = y_1 + y_2, \qquad \text{beats: } f_\text{beat} = |f_1 - f_2|$$</div>
+  <div class="worked"><h4>Worked example</h4>Two tuning forks at 440 and 442 Hz: loudness swells twice a second. Noise-cancelling headphones play the opposite wave.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking cancelled waves are destroyed: they reappear as soon as they separate.</div>
 </section>
 <section data-case="super" data-example="cancel"><h3>Destructive interference</h3><p>An upward and a downward pulse cancel exactly when they overlap: for an instant the string is flat. The energy is still there, as motion of the string.</p></section>
 <section data-case="super" data-example="standing"><h3>A standing wave</h3><p>Two equal sine waves going opposite ways add up to a pattern that does not travel: points that never move (nodes) every \(\lambda/2\).</p><div class="eq">$$A\sin(kx - \omega t) + A\sin(kx + \omega t) = 2A\sin(kx)\cos(\omega t)$$</div></section>
 <section data-case="super" data-example="beats"><h3>Beats</h3><p>Two waves of slightly different frequency drift in and out of step: loud, quiet, loud. The loudness swells at the difference frequency \(|f_1 - f_2|\), which is how musicians tune by ear.</p></section>
 
 <section data-case="standing">
-  <h3>Modes of a string</h3>
-  <p>A string fixed at both ends can only hold standing waves that fit a whole number of half-wavelengths: \(L = n\lambda/2\). Each mode has its own frequency, all multiples of the fundamental: the harmonics of a guitar string.</p>
-  <div class="eq">$$f_n = \frac{n\,v}{2L}, \qquad y_n = A\sin\frac{n\pi x}{L}\cos(2\pi f_n t)$$</div>
+  <h3>Standing waves on a string</h3>
+  <div class="look"><h4>What you are looking at</h4>A string fixed at both ends vibrating in mode n: nodes (still points) and antinodes (largest motion).</div>
+  <p>A wave reflected at the fixed ends meets itself coming back. Only waves that fit a whole number of half-wavelengths between the ends survive: the harmonics. They are what gives an instrument its pitch and timbre.</p>
+  <div class="eq">$$L = n\frac{\lambda_n}{2}, \qquad f_n = n\frac{v}{2L}, \qquad v = \sqrt{\frac{T}{\mu}}$$</div>
+  <div class="worked"><h4>Worked example</h4>A guitar string 65 cm long tuned to 110 Hz: v = 2·0.65·110 = 143 m/s; harmonics at 220, 330, 440 Hz… Touching it lightly at the middle kills the odd harmonics.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking nothing moves at a node "because the wave stopped": two travelling waves cancel there at every instant.</div>
 </section>
 <section data-case="standing" data-example="n2"><h3>Second harmonic</h3><p>One node in the middle, twice the frequency: an octave above the fundamental.</p></section>
 <section data-case="standing" data-example="n3"><h3>Third harmonic</h3><p>Two nodes, three times the frequency: an octave and a fifth.</p></section>
@@ -27,8 +36,11 @@
 
 <section data-case="doppler">
   <h3>The Doppler effect</h3>
-  <p>A moving source emits each wavefront from a new place: in front they bunch up (higher pitch), behind they spread out (lower pitch). The waves themselves always travel at \(c\).</p>
-  <div class="eq">$$f_\text{ahead} = \frac{f\,c}{c - v_s}, \qquad f_\text{behind} = \frac{f\,c}{c + v_s}$$</div>
+  <div class="look"><h4>What you are looking at</h4>A moving source emitting circular wavefronts: bunched up in front, spread out behind.</div>
+  <p>Each crest is emitted from where the source is at that moment. Moving forward, it catches up with its own waves: in front they are closer (higher pitch), behind they are further apart (lower pitch). At the wave speed the crests pile up into a barrier; faster, they form a cone — a sonic boom.</p>
+  <div class="eq">$$f_\text{front} = \frac{f}{1 - v_s/v}, \qquad f_\text{behind} = \frac{f}{1 + v_s/v}, \qquad \sin\alpha = \frac{v}{v_s}$$</div>
+  <div class="worked"><h4>Worked example</h4>An ambulance at 30 m/s with a 700 Hz siren: 767 Hz approaching, 644 Hz going away. A jet at Mach 2: cone half-angle 30°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the pitch keeps rising as the source approaches: it is constant while it approaches and drops suddenly as it passes.</div>
 </section>
 <section data-case="doppler" data-example="rest"><h3>At rest</h3><p>Concentric circles: both observers hear the source frequency.</p></section>
 <section data-case="doppler" data-example="barrier"><h3>At the wave speed</h3><p>The source keeps up with its own wavefronts: they pile up into a wall in front of it, the sound barrier.</p></section>

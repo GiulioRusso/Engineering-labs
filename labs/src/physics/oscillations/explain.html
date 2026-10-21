@@ -1,7 +1,16 @@
 <section data-case="spring">
-  <h3>Simple harmonic motion</h3>
-  <p>The spring pulls back in proportion to the stretch (Hooke's law). The result is a sine wave in time, with a period set only by the mass and the stiffness, not by how far you pull. Energy swaps between the spring and the motion; the total stays fixed.</p>
-  <div class="eq">$$m\ddot x = -k x \;\Rightarrow\; x = x_0\cos\omega_0 t, \qquad \omega_0 = \sqrt{\frac{k}{m}}, \quad T = 2\pi\sqrt{\frac{m}{k}}$$</div>
+  <h3>The mass on a spring</h3>
+  <div class="look"><h4>What you are looking at</h4>A mass on a spring with its position, velocity and acceleration arrows; plots show x(t) and the energy sloshing between kinetic and elastic.</div>
+  <p>The spring pulls back in proportion to how far it is stretched. Pulled out, the mass is pushed back, overshoots, is pushed the other way: a sine wave. Energy moves from spring to motion and back. Damping drains it; a periodic push can pump it in — dramatically, at resonance.</p>
+  <div class="eq">$$m\ddot x = -kx - 2m\gamma\dot x + F_0\cos\omega_d t, \qquad \omega_0 = \sqrt{\frac{k}{m}}, \qquad T = 2\pi\sqrt{\frac{m}{k}}$$</div>
+  <ol class="steps">
+    <li>The period does not depend on the amplitude: big or small swings take the same time.</li>
+    <li>Heavier → slower (√m); stiffer → faster (√k).</li>
+    <li>Driven at ω_d ≈ ω₀ the amplitude grows until damping balances the input.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>m = 1 kg, k = 10 N/m: ω₀ = 3.16 rad/s, T = 1.99 s. 4 kg: T = 3.97 s. Critical damping at γ = ω₀ = 3.16 /s returns fastest without overshoot (car suspensions aim near it).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the force is largest at the centre: there it is zero; the speed is largest there.</div>
+  <div class="try"><h4>Try it</h4>Drive it at resonance, then lower the damping: the peak grows and takes longer to build.</div>
 </section>
 <section data-case="spring" data-example="heavy"><h3>Four times the mass</h3><p>More inertia, same pull: \(T \propto \sqrt m\), so the period doubles.</p></section>
 <section data-case="spring" data-example="stiff"><h3>Four times stiffer</h3><p>\(T \propto 1/\sqrt k\): half the period.</p></section>
@@ -9,8 +18,11 @@
 
 <section data-case="pendulum">
   <h3>The pendulum</h3>
-  <p>Gravity pulls the bob back along its arc with \(mg\sin\theta\). For small angles \(\sin\theta \approx \theta\) and the pendulum is a harmonic oscillator whose period depends only on the length.</p>
-  <div class="eq">$$\ddot\theta = -\frac{g}{L}\sin\theta, \qquad T \approx 2\pi\sqrt{\frac{L}{g}} \quad (\theta_0 \ll 1)$$</div>
+  <div class="look"><h4>What you are looking at</h4>A pendulum of length L, its angle over time, and the period compared with the small-angle formula.</div>
+  <p>Gravity pulls the bob back toward the bottom with a force proportional to sin θ. For small angles sin θ ≈ θ and the pendulum behaves like a spring: the period depends only on the length. At big angles the restoring force grows less than θ and the swing slows down.</p>
+  <div class="eq">$$\ddot\theta = -\frac{g}{L}\sin\theta, \qquad T_0 = 2\pi\sqrt{\frac{L}{g}}, \qquad T \approx T_0\left(1 + \frac{\theta_0^2}{16}\right)$$</div>
+  <div class="worked"><h4>Worked example</h4>L = 1 m: T₀ = 2.01 s. At θ₀ = 2 rad (115°) the period is about 30 % longer. A 4 m pendulum: T = 4 s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>A heavier bob does not swing faster: mass cancels out.</div>
 </section>
 <section data-case="pendulum" data-example="long"><h3>Four times longer</h3><p>\(T \propto \sqrt L\): twice the period. A 1 m pendulum ticks about once a second each way.</p></section>
 <section data-case="pendulum" data-example="heavy"><h3>Heavier bob</h3><p>Weight and inertia both grow with \(m\) and cancel: the period does not depend on the mass (Galileo).</p></section>

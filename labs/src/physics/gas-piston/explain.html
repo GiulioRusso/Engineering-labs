@@ -1,7 +1,16 @@
 <section data-case="gas">
-  <h3>Pressure is momentum delivered</h3>
-  <p>Every dot is an atom of argon. The pressure is not computed from a formula: it is measured from the momentum the atoms deliver when they bounce off the walls. Adding up the bounces gives the ideal gas law.</p>
-  <div class="eq">$$p = \frac{1}{3}\frac{N m \langle v^2\rangle}{V} = \frac{N k_B T}{V}, \qquad \tfrac32 k_B T = \langle \tfrac12 m v^2 \rangle$$</div>
+  <h3>A gas in a cylinder</h3>
+  <div class="look"><h4>What you are looking at</h4>Molecules bouncing inside a cylinder with a piston; their speed sets the colour. The p–V diagram on the right tracks the process; readouts give pressure, volume, temperature, work and heat.</div>
+  <p>Pressure is molecules hitting the walls; temperature is how fast they move. Heat the gas at constant pressure and it expands. Squeeze it slowly while it can exchange heat (isothermal) and the pressure rises as 1/V. Squeeze it fast or insulated (adiabatic) and the work you do heats it up — the pressure rises even more steeply.</p>
+  <div class="eq">$$pV = nRT, \qquad \text{isothermal: } pV = \text{const}, \qquad \text{adiabatic: } pV^\gamma = \text{const},\; TV^{\gamma - 1} = \text{const}$$</div>
+  <ol class="steps">
+    <li>First law: ΔU = Q − W. Heat in raises internal energy or does work.</li>
+    <li>Isothermal: ΔU = 0, all the work becomes heat that leaves.</li>
+    <li>Adiabatic: Q = 0, all the work becomes internal energy (T rises).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Air (γ = 1.4) at 300 K compressed adiabatically to half the volume: T = 300·2^{0.4} = 396 K. To a quarter: 522 K — why diesel engines need no spark plug.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using Celsius in pV = nRT: always kelvin.</div>
+  <div class="try"><h4>Try it</h4>Compare isothermal and adiabatic squeezes to the same volume on the p–V diagram: the adiabatic curve is steeper.</div>
 </section>
 <section data-case="gas"><h3>Heating at fixed volume</h3><p>The hot bottom wall speeds up the atoms that touch it. Faster atoms hit harder and more often: the pressure rises in proportion to the temperature.</p><div class="eq">$$\frac{p}{T} = \frac{N k_B}{V} = \text{const}$$</div></section>
 <section data-case="gas" data-example="more"><h3>Twice the gas</h3><p>Twice the atoms, same temperature: twice the hits, twice the pressure.</p></section>

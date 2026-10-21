@@ -1,7 +1,16 @@
 <section data-case="projectile">
-  <h3>Projectile: two independent motions</h3>
-  <p>Without air, nothing pushes sideways, so the horizontal speed never changes; vertically, gravity removes 9.81 m/s of speed every second. Kinetic energy turns into height and back; their sum stays fixed. Drag the arrow tip to aim.</p>
-  <div class="eq">$$x = v_0\cos\theta\, t, \quad y = h_0 + v_0\sin\theta\, t - \tfrac12 g t^2, \qquad R = \frac{v_0^2\sin 2\theta}{g}$$</div>
+  <h3>Projectile motion</h3>
+  <div class="look"><h4>What you are looking at</h4>A ball thrown at speed v₀ and angle θ, its trail, and its velocity split into a horizontal (constant) and a vertical (changing) part. The readout gives range, peak height and flight time.</div>
+  <p>The trick is to split the motion in two independent problems. Horizontally nothing pushes the ball: it keeps its speed. Vertically gravity takes away 9.81 m/s every second: up, stop, down. Put the two together and you get a parabola.</p>
+  <div class="eq">$$x = v_0\cos\theta\,t, \qquad y = h_0 + v_0\sin\theta\,t - \tfrac12 g t^2, \qquad R = \frac{v_0^2\sin 2\theta}{g}\;(h_0 = 0)$$</div>
+  <ol class="steps">
+    <li>Time to the top: vertical speed reaches zero at t = v₀ sin θ / g.</li>
+    <li>Flight time (level ground): twice that.</li>
+    <li>Range: horizontal speed × flight time.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>v₀ = 15 m/s at 45°: vₓ = v_y = 10.6 m/s. Top after 1.08 s at 5.73 m; lands after 2.16 s, 22.9 m away (= 15²/9.81).</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking the speed is zero at the top: only the vertical part is. Thinking the horizontal motion slows down: without air, nothing pushes it.</div>
+  <div class="try"><h4>Try it</h4>Compare 30° and 60°: same range, different heights — sin 60° = sin 120°.</div>
 </section>
 <section data-case="projectile" data-example="d45"><h3>45°</h3><p>On flat ground the range \(v_0^2\sin 2\theta/g\) is largest when \(\sin 2\theta = 1\): \(\theta = 45°\).</p></section>
 <section data-case="projectile" data-example="d30"><h3>30°</h3><p>A flatter, faster flight. Note the range, then try 60°.</p></section>
@@ -11,17 +20,27 @@
 <section data-case="projectile" data-example="drag"><h3>Air drag</h3><p>Drag pushes against the velocity and grows like \(v^2\). The path is no longer a parabola, it lands short and steep, and the total energy (dashed) goes down: it heats the air.</p></section>
 
 <section data-case="circular">
-  <h3>Circular motion: always falling inward</h3>
-  <p>At constant speed the velocity still changes direction, so there is an acceleration, pointing to the centre. Something must provide the force \(m a\): a string, friction, gravity.</p>
-  <div class="eq">$$v = \omega r, \qquad a = \frac{v^2}{r} = \omega^2 r, \qquad T = \frac{2\pi}{\omega}$$</div>
+  <h3>Circular motion</h3>
+  <div class="look"><h4>What you are looking at</h4>A body going round a circle at constant speed, with its velocity (tangent) and acceleration (toward the centre).</div>
+  <p>Moving at constant speed on a circle is still accelerating: the direction keeps changing. The acceleration points to the centre (centripetal), and something must provide the force — a string, friction, gravity.</p>
+  <div class="eq">$$v = \omega r, \qquad a = \frac{v^2}{r} = \omega^2 r, \qquad F = m\omega^2 r, \qquad T = \frac{2\pi}{\omega}$$</div>
+  <div class="worked"><h4>Worked example</h4>r = 2 m, ω = 1.5 rad/s: v = 3 m/s, a = 4.5 m/s². A car taking a 50 m bend at 20 m/s needs a = 8 m/s² — almost all the grip a tyre has.</div>
+  <div class="pitfall"><h4>Common mistake</h4>"Centrifugal force pushes outward": in the ground frame there is only the inward force; outward is what you feel in the rotating frame.</div>
 </section>
 <section data-case="circular" data-example="fast"><h3>Twice as fast</h3><p>Doubling \(\omega\) doubles the speed and quadruples the acceleration: \(a = \omega^2 r\).</p></section>
 <section data-case="circular" data-example="big"><h3>A bigger circle</h3><p>Same turning rate on twice the radius: twice the speed, twice the acceleration. The period stays the same.</p></section>
 
 <section data-case="collision">
-  <h3>Collisions: momentum always, energy sometimes</h3>
-  <p>During the impact the carts push on each other equally and oppositely (Newton's third law), so the total momentum cannot change. Kinetic energy survives only if the collision is elastic, \(e = 1\).</p>
-  <div class="eq">$$m_1 u_1 + m_2 u_2 = m_1 v_1 + m_2 v_2, \qquad v_2 - v_1 = e\,(u_1 - u_2)$$</div>
+  <h3>Collisions</h3>
+  <div class="look"><h4>What you are looking at</h4>Two carts colliding on a track; bars show momentum and kinetic energy before and after.</div>
+  <p>During the brief collision the carts push each other with equal and opposite forces (Newton's third law), so total momentum is always the same before and after. Kinetic energy is conserved only if the collision is perfectly elastic; the coefficient of restitution e says how much bounce is left.</p>
+  <div class="eq">$$m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2, \qquad v_2 - v_1 = -e\,(u_2 - u_1)$$</div>
+  <ol class="steps">
+    <li>e = 1: elastic — energy kept, they bounce apart.</li>
+    <li>e = 0: perfectly inelastic — they stick and move together; maximum energy lost (to heat, sound, deformation).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Equal masses, one at 2 m/s hits one at rest, e = 1: they swap speeds (Newton's cradle). If they stick: both move at 1 m/s, half the kinetic energy is lost.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Conserving kinetic energy in a crash: only momentum is guaranteed.</div>
 </section>
 <section data-case="collision" data-example="heavy"><h3>Heavy hits light</h3><p>The heavy cart barely slows down; the light one shoots off at almost twice the incoming speed.</p></section>
 <section data-case="collision" data-example="light"><h3>Light hits heavy</h3><p>The light cart bounces back, the heavy one moves off slowly. Like a ball against a wall, when \(m_2 \gg m_1\).</p></section>

@@ -3,7 +3,15 @@
   <p>Ride along with two bodies orbiting each other: in that turning frame they stand still. A small third body feels their gravity plus the centrifugal push outward. The surface shows the combined potential, with five places where the forces balance.</p>
   <div class="eq">$$\Omega(x,y) = \tfrac12(x^2+y^2) + \frac{1-\mu}{r_1} + \frac{\mu}{r_2}, \qquad \ddot x - 2\dot y = \Omega_x,\quad \ddot y + 2\dot x = \Omega_y$$</div>
 </section>
-<section data-case="points"><h3>L4 and L5: stable hilltops</h3><p>They sit at the tips of two equilateral triangles. They are tops of hills, yet stable: the Coriolis force turns a body that rolls downhill back around the point, as long as the small mass is less than about 4 % of the total.</p><div class="eq">$$\mu < \tfrac12\left(1 - \sqrt{23/27}\right) \approx 0.0385$$</div></section>
+<section data-case="points">
+  <h3>The Lagrange points</h3>
+  <div class="look"><h4>What you are looking at</h4>Two bodies (e.g. Earth and Moon) seen in a frame that rotates with them; the surface is the effective potential (gravity + centrifugal), with its five flat points L1–L5. A small body is released near the chosen point and its path traced.</div>
+  <p>In the rotating frame, a small body feels the two gravities and a centrifugal push outward. At five places these three balance: it can stay at rest relative to both bodies. L1, L2, L3 sit on the line through the bodies and are saddles: a nudge and it drifts away. L4 and L5 form equilateral triangles with the bodies; they are hilltops of the potential, yet stable — the Coriolis force bends a drifting body back around (if the small/large mass ratio μ < 0.0385).</p>
+  <div class="eq">$$\Omega(x, y) = \frac{1 - \mu}{r_1} + \frac{\mu}{r_2} + \frac{x^2 + y^2}{2}, \qquad r_{L1,L2} \approx a\left(\frac{\mu}{3}\right)^{1/3}$$</div>
+  <div class="worked"><h4>Worked example</h4>Sun–Earth: L1 and L2 are 1.5 million km from Earth — SOHO watches the Sun from L1, the James Webb telescope sits at L2. Sun–Jupiter L4/L5 hold thousands of Trojan asteroids.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking L4/L5 are stable because they are valleys: they are maxima of the potential; stability comes from the Coriolis force.</div>
+  <div class="try"><h4>Try it</h4>Start near L1 with a tiny offset and watch it leave; start near L4 and watch it circle around (a tadpole orbit).</div>
+</section>
 <section data-case="points" data-example="l5"><h3>L5</h3><p>The mirror image of L4, 60° behind the small body: just as stable.</p></section>
 <section data-case="points" data-example="trojans"><h3>Jupiter Trojans</h3><p>Thousands of asteroids circle the Sun–Jupiter L4 and L5 points, trapped there for billions of years.</p></section>
 <section data-case="points" data-example="routh"><h3>Too heavy</h3><p>With \(\mu = 0.06\), above the Routh limit, the Coriolis force can no longer hold the body: it spirals away.</p></section>

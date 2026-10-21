@@ -1,16 +1,22 @@
 <section data-case="sum">
-  <h3>Forces add as arrows</h3>
-  <p>Several forces on one body act like a single force, their vector sum. Place them tip to tail: the arrow from the first tail to the last tip is the resultant, and it sets the acceleration. Drag the force tips.</p>
-  <div class="eq">$$\cF{\mathbf F_\text{net}} = \sum_i \cF{\mathbf F_i} = m\,\mathbf a$$</div>
+  <h3>Adding forces</h3>
+  <div class="look"><h4>What you are looking at</h4>Three forces on a point (drag their tips), drawn tip to tail to build the resultant, which sets the acceleration.</div>
+  <p>Forces are vectors: direction matters as much as size. The total force is found by placing them tip to tail; the arrow from the first tail to the last tip is the resultant. If they close into a loop, the resultant is zero: equilibrium.</p>
+  <div class="eq">$$\mathbf F = \sum_i \mathbf F_i = \Big(\sum F_{ix},\ \sum F_{iy}\Big), \qquad \mathbf a = \frac{\mathbf F}{m}$$</div>
+  <div class="worked"><h4>Worked example</h4>12 N east and 9 N north: resultant √(144 + 81) = 15 N at 37° north of east. On 2 kg: a = 7.5 m/s².</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding magnitudes: 12 N + 9 N is not 21 N unless they point the same way.</div>
 </section>
 <section data-case="sum" data-example="line"><h3>Along one line</h3><p>10 N to the right and 4 N to the left: forces on one line just add with signs, net 6 N to the right.</p></section>
 <section data-case="sum" data-example="right"><h3>At right angles</h3><p>12 N and 9 N at 90° give \(\sqrt{12^2 + 9^2} = 15\) N, not 21 N: perpendicular forces add like the sides of a right triangle.</p></section>
 <section data-case="sum" data-example="balance"><h3>Equilibrium</h3><p>Three 12 N forces 120° apart close into a triangle: the net force is zero, so the puck does not accelerate (it can still move at constant velocity).</p></section>
 
 <section data-case="torque">
-  <h3>Torque turns</h3>
-  <p>What turns the bar is not the force alone but the force times its lever arm: the distance from the pivot, times the part of the force at right angles to the bar.</p>
-  <div class="eq">$$\tau = r\,F\sin\alpha, \qquad \tau = I\,\ddot\varphi, \qquad I_\text{bar} = \tfrac13 M L^2$$</div>
+  <h3>Torque</h3>
+  <div class="look"><h4>What you are looking at</h4>A bar on a pivot, a force applied at distance r and angle α; the lever arm (perpendicular distance) is drawn.</div>
+  <p>What makes things turn is not the force alone but where and how you push. A door opens easily pushed at the handle, perpendicular; pushed near the hinge or along the door, it barely moves.</p>
+  <div class="eq">$$\tau = rF\sin\alpha = F \cdot d_\perp, \qquad \tau = I\alpha_{\text{ang}}$$</div>
+  <div class="worked"><h4>Worked example</h4>10 N at 0.6 m, perpendicular: 6 N·m. At 30°: 3 N·m. Along the bar: 0.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using the distance to the point where the force is applied instead of the perpendicular lever arm.</div>
 </section>
 <section data-case="torque" data-example="end"><h3>At the end</h3><p>Largest \(r\), force at 90°: the most torque. That is why door handles are far from the hinges.</p></section>
 <section data-case="torque" data-example="near"><h3>Near the pivot</h3><p>Same force, a tenth of the lever arm: a tenth of the torque.</p></section>
@@ -18,9 +24,12 @@
 <section data-case="torque" data-example="d30"><h3>At 30°</h3><p>\(\sin 30° = \tfrac12\): only half the force is at right angles to the bar.</p></section>
 
 <section data-case="buoyancy">
-  <h3>Buoyancy: the weight of the displaced liquid</h3>
-  <p>Pressure grows with depth, so the liquid pushes harder on the bottom of the block than on its top. The difference is the weight of the liquid displaced (Archimedes). The block floats where that equals its own weight: the submerged fraction is the density ratio.</p>
-  <div class="eq">$$p = p_0 + \rho_f g h, \qquad F_B = \rho_f g V_\text{sub}, \qquad \frac{d}{s} = \frac{\rho_b}{\rho_f}$$</div>
+  <h3>Buoyancy</h3>
+  <div class="look"><h4>What you are looking at</h4>A block floating (or sinking) in a fluid; the submerged part is shaded and the forces drawn.</div>
+  <p>The fluid pushes harder on the bottom of the block than on the top, because pressure grows with depth. The net upward push equals the weight of fluid displaced (Archimedes). A floating body sinks until it displaces its own weight.</p>
+  <div class="eq">$$F_b = \rho_f g V_\text{sub}, \qquad \text{floating: } \frac{V_\text{sub}}{V} = \frac{\rho_b}{\rho_f}$$</div>
+  <div class="worked"><h4>Worked example</h4>Ice (917 kg/m³) in fresh water: 91.7 % under; in sea water (1025): 89.5 % — the tip of the iceberg is about 10 %.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking heavy objects sink: density decides — a steel ship floats because its average density, with the air inside, is below water's.</div>
 </section>
 <section data-case="buoyancy" data-example="ice"><h3>Ice</h3><p>\(917/1000\): 92 % of an iceberg is under water.</p></section>
 <section data-case="buoyancy" data-example="sea"><h3>Sea water</h3><p>Denser water (1025 kg/m³) lifts more: 89 % under.</p></section>

@@ -1,7 +1,11 @@
 <section data-case="snell">
-  <h3>Refraction: Snell's law</h3>
-  <p>Light is slower in glass or water (by the factor \(n\)), so a ray crossing at an angle bends toward the normal going in and away from it coming out. Drag the source.</p>
-  <div class="eq">$$n_1 \sin\theta_1 = n_2\sin\theta_2, \qquad \sin\theta_c = \frac{n_2}{n_1}$$</div>
+  <h3>Refraction</h3>
+  <div class="look"><h4>What you are looking at</h4>A ray hitting the boundary between two materials: the reflected ray, the refracted ray bending toward or away from the normal (dashed), and the angles.</div>
+  <p>Light travels slower in glass or water (speed c/n). A wavefront hitting the surface at an angle has one end slowed first, so the front swings round — like a car whose right wheels hit sand. Going into a denser medium it bends toward the normal; coming out, away from it. Beyond the critical angle no refracted ray exists: everything is reflected.</p>
+  <div class="eq">$$n_1\sin\theta_1 = n_2\sin\theta_2, \qquad \sin\theta_c = \frac{n_2}{n_1}\;(n_1 > n_2)$$</div>
+  <div class="worked"><h4>Worked example</h4>Air to glass at 40°: sin θ₂ = sin 40°/1.5 = 0.43, θ₂ = 25°. Glass to air: θc = 41.8°. Diamond: 24.4° — light bounces around inside many times, hence the sparkle.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Measuring angles from the surface instead of from the normal.</div>
+  <div class="try"><h4>Try it</h4>Go from glass to air and raise the angle past 42°: the refracted ray vanishes.</div>
 </section>
 <section data-case="snell" data-example="normal"><h3>Straight in</h3><p>\(\theta_1 = 0\): \(\sin\theta_2 = 0\) too. A ray along the normal slows down but does not bend.</p></section>
 <section data-case="snell" data-example="water"><h3>Into water</h3><p>\(n = 1.33\) bends less than glass: a straw looks broken at the surface.</p></section>
@@ -10,9 +14,17 @@
 <section data-case="snell" data-example="diamond"><h3>Diamond</h3><p>\(n = 2.42\): the critical angle is only 24°, so light entering a cut diamond bounces around inside before escaping: the sparkle.</p></section>
 
 <section data-case="lens">
-  <h3>Lenses form images</h3>
-  <p>Three easy rays find the image: one parallel to the axis bends through the focus, one through the centre goes straight, one through the near focus leaves parallel. If they only meet when extended backwards, the image is virtual. Drag the object.</p>
-  <div class="eq">$$\frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i}, \qquad m = -\frac{d_i}{d_o}$$</div>
+  <h3>The thin lens</h3>
+  <div class="look"><h4>What you are looking at</h4>An object (arrow), a lens with its focal points F, three principal rays, and the image they form.</div>
+  <p>A converging lens bends every ray parallel to the axis through the far focus, and lets a ray through the centre go straight. Two such rays from the tip of the object meet at the tip of the image. Where they meet depends on how far the object is.</p>
+  <div class="eq">$$\frac{1}{d_o} + \frac{1}{d_i} = \frac{1}{f}, \qquad m = -\frac{d_i}{d_o}$$</div>
+  <ol class="steps">
+    <li>Beyond 2F: smaller, inverted, real image (camera).</li>
+    <li>At 2F: same size. Between F and 2F: bigger (projector).</li>
+    <li>Inside F: the rays diverge; extended back they meet behind the lens — a virtual, upright, enlarged image (magnifying glass).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>f = 10 cm, object at 25 cm: 1/dᵢ = 1/10 − 1/25 → dᵢ = 16.7 cm, m = −0.67.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Sign conventions: a negative dᵢ means a virtual image on the object's side.</div>
 </section>
 <section data-case="lens" data-example="f2"><h3>At twice the focal length</h3><p>\(d_o = 2f \Rightarrow d_i = 2f\), \(m = -1\): real, inverted, same size.</p></section>
 <section data-case="lens" data-example="nearf"><h3>Just beyond F</h3><p>The image moves far away and grows: a projector puts the slide just beyond F.</p></section>
@@ -20,17 +32,22 @@
 <section data-case="lens" data-example="diverging"><h3>Diverging lens</h3><p>\(f < 0\): the image is always virtual, upright and smaller, as in glasses for short sight.</p></section>
 
 <section data-case="mirror">
-  <h3>Concave mirrors</h3>
-  <p>The same equation as a lens, folded back: \(f = R/2\), and a real image forms in front of the mirror.</p>
-  <div class="eq">$$\frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i}, \qquad f = \frac{R}{2}$$</div>
+  <h3>The concave mirror</h3>
+  <div class="look"><h4>What you are looking at</h4>A concave mirror, its focus, and the image of an arrow traced with principal rays.</div>
+  <p>A concave mirror behaves like a converging lens folded back on itself: parallel rays reflect through the focus at half the radius of curvature. Same equation, same three regimes.</p>
+  <div class="eq">$$\frac{1}{d_o} + \frac{1}{d_i} = \frac{1}{f}, \qquad f = \frac{R}{2}$$</div>
+  <div class="worked"><h4>Worked example</h4>Shaving mirror: you stand inside F and see yourself upright and enlarged. Telescope mirror: objects at infinity image at F.</div>
 </section>
 <section data-case="mirror" data-example="f2"><h3>At the centre of curvature</h3><p>\(d_o = 2f = R\): the image is real, inverted, same size, at the same place.</p></section>
 <section data-case="mirror" data-example="inside"><h3>Inside F</h3><p>Upright and magnified behind the mirror: a shaving or make-up mirror.</p></section>
 
 <section data-case="slits">
-  <h3>Two slits: light as a wave</h3>
-  <p>Waves from two openings overlap. Where their paths differ by a whole number of wavelengths they add (bright); by half a wavelength, they cancel (dark). Ripple-tank wavelengths (centimetres) let you see the waves themselves.</p>
-  <div class="eq">$$r_2 - r_1 = m\lambda \;\Rightarrow\; \text{bright}, \qquad \Delta y \approx \frac{\lambda L}{d}$$</div>
+  <h3>Young's double slit</h3>
+  <div class="look"><h4>What you are looking at</h4>Waves from two slits spreading and overlapping; the intensity pattern on the screen shows bright and dark fringes.</div>
+  <p>Each slit is a new source. At each point of the screen the two waves arrive with a path difference d sin θ. If it is a whole number of wavelengths they add (bright); if half a wavelength, they cancel (dark). The fringe spacing measures the wavelength — this is how light was proved to be a wave.</p>
+  <div class="eq">$$d\sin\theta = m\lambda \;(\text{bright}), \qquad \Delta y \approx \frac{\lambda L}{d}$$</div>
+  <div class="worked"><h4>Worked example</h4>Red laser 650 nm, slits 0.25 mm apart, screen at 2 m: fringes 5.2 mm apart.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking closer slits give closer fringes: it is the opposite.</div>
 </section>
 <section data-case="slits" data-example="close"><h3>Slits closer</h3><p>Halving \(d\) doubles the fringe spacing \(\lambda L/d\).</p></section>
 <section data-case="slits" data-example="apart"><h3>Slits apart</h3><p>Twice the separation, half the spacing: the fringes crowd together.</p></section>
