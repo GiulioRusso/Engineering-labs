@@ -2,18 +2,8 @@
 // frequency and noise) through filters, amplifiers, mixers, IQ demodulation and the ADC. Pure, no DOM.
 import { rng } from '../../maths/probability/model.js';
 
-// in-place iterative radix-2 complex FFT (inverse when inv = true, scaled by 1/N)
-export function fft(re, im, inv = false) {
-  const n = re.length;
-  for (let i = 1, j = 0; i < n; i++) { let b = n >> 1; for (; j & b; b >>= 1) j ^= b; j ^= b; if (i < j) { [re[i], re[j]] = [re[j], re[i]]; [im[i], im[j]] = [im[j], im[i]]; } }
-  for (let len = 2; len <= n; len <<= 1) {
-    const a = (inv ? 2 : -2) * Math.PI / len, wr = Math.cos(a), wi = Math.sin(a);
-    for (let i = 0; i < n; i += len) { let cr = 1, ci = 0; for (let k = 0; k < len / 2; k++) {
-      const u = i + k, v = u + len / 2, tr = re[v] * cr - im[v] * ci, ti = re[v] * ci + im[v] * cr;
-      re[v] = re[u] - tr; im[v] = im[u] - ti; re[u] += tr; im[u] += ti; const nr = cr * wr - ci * wi; ci = cr * wi + ci * wr; cr = nr; } }
-  }
-  if (inv) for (let i = 0; i < n; i++) { re[i] /= n; im[i] /= n; }
-}
+import { fft } from '../../lib/dsp.js';
+export { fft };
 // filter by a frequency mask H(f) (f in Hz, two-sided), on a complex signal {re, im} sampled at fs
 export function maskFilter(x, fs, H) {
   const n = x.re.length, re = Float64Array.from(x.re), im = Float64Array.from(x.im); fft(re, im);

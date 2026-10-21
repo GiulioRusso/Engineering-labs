@@ -693,84 +693,240 @@
   "name": "Signal theory",
   "topics": [
    {
-    "id": "signals",
-    "title": "Signals and spectra",
-    "what": "Square, sawtooth, pulses, chirps and noise, in time and in frequency.",
+    "id": "pulses",
+    "title": "Pulses and their spectra",
+    "what": "Rectangle, triangle, Gaussian, sinc and exponential: shape, spectrum, roll-off and phase.",
     "from": "signals",
     "cases": [
-     "gallery"
+     "rect",
+     "tri",
+     "gauss",
+     "sinc",
+     "exp"
+    ],
+    "group": "Signals"
+   },
+   {
+    "id": "chirp-signal",
+    "title": "The chirp",
+    "what": "A sweep in frequency: long in time and wide in band at once.",
+    "from": "signals",
+    "cases": [
+     "chirp"
+    ],
+    "group": "Signals"
+   },
+   {
+    "id": "time-bandwidth",
+    "title": "Time–bandwidth product",
+    "what": "Why no pulse is narrow in both time and frequency; the Gaussian bound.",
+    "from": "signals",
+    "cases": [
+     "tbp"
     ],
     "group": "Signals"
    },
    {
     "id": "fourier-series",
     "title": "Fourier series",
-    "what": "Epicycles: stack rotating circles until they draw a square wave; Gibbs overshoot.",
-    "from": "signals",
+    "what": "Waves built from rotating circles, and how each coefficient is measured.",
+    "from": "fourier",
     "cases": [
-     "fourier"
+     "series",
+     "project"
     ],
-    "group": "Signals"
+    "group": "Fourier"
+   },
+   {
+    "id": "gibbs",
+    "title": "The Gibbs phenomenon",
+    "what": "The 9 % overshoot at a jump that never goes away.",
+    "from": "fourier",
+    "cases": [
+     "gibbs"
+    ],
+    "group": "Fourier"
+   },
+   {
+    "id": "fourier-transform",
+    "title": "From series to transform",
+    "what": "Line spectra fill a continuous envelope as the period grows; uncertainty.",
+    "from": "fourier",
+    "cases": [
+     "transform",
+     "uncert"
+    ],
+    "group": "Fourier"
+   },
+   {
+    "id": "leakage",
+    "title": "Leakage and windows",
+    "what": "Tones between DFT bins, the seam at the record ends, and windows.",
+    "from": "fourier",
+    "cases": [
+     "leakage"
+    ],
+    "group": "Fourier"
+   },
+   {
+    "id": "dft-correlation",
+    "title": "The transform as correlation",
+    "what": "Multiply by a probe and take the area: the spectrum, one frequency at a time.",
+    "from": "dft",
+    "cases": [
+     "correlate"
+    ],
+    "group": "DFT and FFT"
+   },
+   {
+    "id": "dft-winding",
+    "title": "Winding around a circle",
+    "what": "The DFT bin as the centre of mass of the wound signal, bin by bin.",
+    "from": "dft",
+    "cases": [
+     "wind",
+     "bins"
+    ],
+    "group": "DFT and FFT"
+   },
+   {
+    "id": "dft-vs-transform",
+    "title": "DFT vs continuous transform",
+    "what": "DFT dots sit on the continuous sinc; what sets spacing and range.",
+    "from": "dft",
+    "cases": [
+     "bridge"
+    ],
+    "group": "DFT and FFT"
+   },
+   {
+    "id": "fft",
+    "title": "Why the FFT is fast",
+    "what": "The butterfly, N² vs N log N, and timings measured in your browser.",
+    "from": "dft",
+    "cases": [
+     "fft"
+    ],
+    "group": "DFT and FFT"
    },
    {
     "id": "sampling",
-    "title": "Sampling and aliasing",
-    "what": "Sample a sine faster or slower than 2f and watch an alias appear.",
-    "from": "signals",
+    "title": "Sampling a tone",
+    "what": "Samples, sinc reconstruction, DFT and spectral replicas side by side.",
+    "from": "sampling",
     "cases": [
-     "sampling"
+     "tone",
+     "rebuild"
     ],
-    "group": "Signals"
+    "group": "Sampling"
    },
    {
-    "id": "dft",
-    "title": "DFT and FFT",
-    "what": "Samples into frequency bins: resolution, leakage, record length.",
-    "from": "signals",
+    "id": "aliasing",
+    "title": "Aliasing",
+    "what": "Two tones through the same samples, the folding roof, the wagon wheel.",
+    "from": "sampling",
     "cases": [
-     "dft"
+     "alias",
+     "wheel"
     ],
-    "group": "Spectral analysis"
+    "group": "Sampling"
    },
    {
-    "id": "windows",
-    "title": "Windows and leakage",
-    "what": "Rectangular, Hann, Blackman: dynamic range of a spectrum.",
-    "from": "signals",
+    "id": "replicas",
+    "title": "Spectral replicas",
+    "what": "Copies of a pulse spectrum collide as the sampling rate falls.",
+    "from": "sampling",
     "cases": [
-     "spectrum"
+     "replicas"
     ],
-    "group": "Spectral analysis"
+    "group": "Sampling"
    },
    {
     "id": "convolution",
     "title": "Convolution",
-    "what": "Flip, slide, multiply, integrate: watch y(t) being built.",
-    "from": "systems",
+    "what": "Flip, slide, multiply, integrate: continuous and by hand.",
+    "from": "convolution",
     "cases": [
-     "conv"
+     "steps",
+     "pairs",
+     "discrete"
     ],
     "group": "Systems"
    },
    {
-    "id": "lti-systems",
-    "title": "LTI systems",
-    "what": "Impulse, step, square and sine through RC filters, an echo and a moving average.",
-    "from": "systems",
+    "id": "convolution-theorem",
+    "title": "The convolution theorem",
+    "what": "Convolution in time is multiplication in frequency.",
+    "from": "convolution",
     "cases": [
-     "lti"
+     "theorem"
+    ],
+    "group": "Systems"
+   },
+   {
+    "id": "lti-properties",
+    "title": "Linearity and time invariance",
+    "what": "Superposition and shift checked to rounding error.",
+    "from": "lti",
+    "cases": [
+     "linear",
+     "invariant"
+    ],
+    "group": "Systems"
+   },
+   {
+    "id": "impulse-response",
+    "title": "The impulse response",
+    "what": "δ as a limit, and any input as a sum of impulses.",
+    "from": "lti",
+    "cases": [
+     "impulse",
+     "decompose"
+    ],
+    "group": "Systems"
+   },
+   {
+    "id": "poles",
+    "title": "Poles and the time response",
+    "what": "Where the poles sit tells how the system rings and decays.",
+    "from": "lti",
+    "cases": [
+     "poles"
+    ],
+    "group": "Systems"
+   },
+   {
+    "id": "frequency-response",
+    "title": "Frequency response",
+    "what": "The Bode plot and the sinusoidal steady state.",
+    "from": "lti",
+    "cases": [
+     "bode",
+     "steady"
     ],
     "group": "Systems"
    },
    {
     "id": "filtering",
-    "title": "Digital filters",
-    "what": "FIR low-, high- and band-pass on a noisy two-tone signal.",
-    "from": "systems",
+    "title": "Filtering in time and frequency",
+    "what": "Smoothing kernels, spectral masks and their ringing, the Gaussian.",
+    "from": "filtering",
     "cases": [
-     "filter"
+     "kernel",
+     "mask",
+     "gauss"
     ],
-    "group": "Systems"
+    "group": "Filtering"
+   },
+   {
+    "id": "fir-design",
+    "title": "FIR filter design",
+    "what": "The windowed sinc: low-, high- and band-pass.",
+    "from": "filtering",
+    "cases": [
+     "fir"
+    ],
+    "group": "Filtering"
    },
    {
     "id": "modulation",

@@ -1,0 +1,69 @@
+<section data-case="tone">
+  <h3>Sampling a tone</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: a tone (grey) and the samples taken every \(T_s = 1/f_s\) (blue). Top right: what an ideal reconstruction builds from those samples alone. Bottom left: the DFT of the samples. Bottom right: the spectrum of the sampled signal — the tone's two lines ±f₀ copied at every multiple of fs; the dashed red lines are the Nyquist band ±fs/2.</div>
+  <p>After sampling, the only thing left is a list of numbers. The question is: <i>is there only one signal that passes through all of them?</i></p>
+  <div class="eq">$$x[n] = x(nT_s), \qquad X_s(f) = f_s \sum_k X(f - kf_s)$$</div>
+  <ol class="steps">
+    <li>Sampling copies the spectrum at every multiple of fs (bottom right). This is not a defect: a sampled signal genuinely cannot distinguish f from f + fs.</li>
+    <li>Reconstruction keeps only what lies in −fs/2 … +fs/2 (the Nyquist band) and throws the rest away.</li>
+    <li>If the original lines lie inside the band (fs > 2f₀), what is kept is the original. If not, a copy falls into the band and is kept instead: the <span class="key">alias</span>.</li>
+  </ol>
+  <div class="eq">$$f_s > 2 f_{\max} \quad (\text{Nyquist–Shannon})$$</div>
+  <div class="worked"><h4>Worked example</h4>f₀ = 4 Hz. At fs = 22 Hz: 5.5 samples per cycle, the band is ±11 Hz, the line at 4 Hz is inside. At fs = 6 Hz: the band is ±3 Hz; the copy of −4 Hz moved by +6 Hz sits at 2 Hz — the samples look like a 2 Hz tone.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>"Two samples per cycle are enough": exactly 2 is not (the samples may all land on zero crossings); you need strictly more. "I can fix aliasing afterwards": impossible — the information is gone; real systems put an anti-alias low-pass filter <i>before</i> the converter.</div>
+  <div class="try"><h4>Try it</h4>Lower fs slowly from 22 to 6 Hz. Watch the moment the reconstruction (top right) turns red and the DFT peak starts moving the wrong way.</div>
+</section>
+<section data-case="tone" data-example="ok"><h3>Plenty of samples</h3><p>5.5 per cycle: replicas far apart, reconstruction perfect.</p></section>
+<section data-case="tone" data-example="edge"><h3>Just above Nyquist</h3><p>8.5 Hz for a 4 Hz tone: only 2.1 samples per cycle. The dots look nothing like a sine, yet the reconstruction is still exact — the theorem is about information, not about how the dots look.</p></section>
+<section data-case="tone" data-example="alias"><h3>Below Nyquist</h3><p>fs = 6 Hz: the 4 Hz tone appears at |4 − 6| = 2 Hz. Every sample is exactly on the 2 Hz curve as well.</p></section>
+<section data-case="rebuild">
+  <h3>Sinc reconstruction, kernel by kernel</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: each sample launches one sinc kernel (orange), scaled by the sample's value. Bottom: the running sum of the kernels drawn so far, against the original tone (dashed).</div>
+  <div class="eq">$$\hat x(t) = \sum_{n} x[n]\;\text{sinc}\!\left(\frac{t - nT_s}{T_s}\right)$$</div>
+  <ol class="steps">
+    <li>Each kernel equals 1 at its own sample and 0 at every other sample: so the sum passes exactly through all the samples.</li>
+    <li>Between samples, the kernels' tails add up. Because the sinc contains only frequencies below fs/2, so does the sum — it is the <i>only</i> band-limited curve through the samples.</li>
+    <li>If the original was band-limited to below fs/2, that curve must be the original.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>At t = Ts/2 (half-way between two samples) the two nearest kernels each contribute 0.64 of their sample, the next ones −0.21, then 0.13… The sum of all these converges to the true value.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking reconstruction "joins the dots" with straight lines. Straight lines (or steps, as in a cheap DAC) add high frequencies; the sinc is the ideal, and real DACs approximate it with a low-pass filter after the steps.</div>
+  <div class="try"><h4>Try it</h4>Watch the bottom curve grow from the left. Then reduce fs below 2f₀: the kernels build, just as perfectly, the alias.</div>
+</section>
+<section data-case="rebuild" data-example="fine"><h3>Many samples per cycle</h3><p>5 samples per cycle: neighbouring kernels overlap a lot and the sum is smooth from the start.</p></section>
+<section data-case="rebuild" data-example="tight"><h3>2.25 samples per cycle</h3><p>The dots zig-zag, but the kernels' tails fill the gaps and the sum matches the sine exactly (away from the ends of the record).</p></section>
+<section data-case="rebuild" data-example="under"><h3>Too few samples</h3><p>fs = 6 Hz: the sum is a perfect 2 Hz sine — the wrong one, but consistent with every sample.</p></section>
+<section data-case="alias">
+  <h3>Aliasing: two views of the same ambiguity</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a fast tone (grey) and its slow alias (orange), sampled at fs (blue dots): both curves pass through every dot. Bottom: the folding roof — the apparent frequency against the true one. It climbs to fs/2, folds down to 0 at fs, climbs again…</div>
+  <div class="eq">$$\hat f = |f - n f_s|, \qquad n = \text{round}(f/f_s)$$</div>
+  <p>Think of the samples as snapshots of a rotating arrow. If between two snapshots the arrow turns by more than half a turn, you cannot tell whether it went forward a lot or backward a little. The eye (and the maths) picks the smaller movement: that is the alias.</p>
+  <div class="worked"><h4>Worked example</h4>fs = 10 Hz: 7 Hz → 3 Hz, 13 Hz → 3 Hz, 17 Hz → 3 Hz, 9.6 Hz → 0.4 Hz. All tones at k·10 ± 3 Hz produce the same samples.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking aliasing only happens far above Nyquist. Anything above fs/2 folds, even 5.1 Hz at fs = 10 Hz (it becomes 4.9 Hz).</div>
+  <div class="try"><h4>Try it</h4>Slide the tone from 0 to 25 Hz and follow the dot on the roof: the apparent frequency never exceeds fs/2.</div>
+</section>
+<section data-case="alias" data-example="pair"><h3>7 Hz at 10 Hz</h3><p>The orange 3 Hz curve and the grey 7 Hz curve intersect exactly at every sample.</p></section>
+<section data-case="alias" data-example="near"><h3>Just below fs</h3><p>9.6 Hz looks like 0.4 Hz: a very slow wave. This is how a stroboscope makes a fast machine look still.</p></section>
+<section data-case="alias" data-example="multiple"><h3>Exactly 2 fs</h3><p>20 Hz at 10 Hz: every sample is taken at the same phase. The samples are constant — the tone looks like DC.</p></section>
+<section data-case="wheel">
+  <h3>The wagon-wheel effect</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a six-spoke wheel as a camera sees it, one frame at a time (blue), over what really happens (grey); one spoke has an orange marker. Right: the apparent speed of the spoke pattern (top) and of the marker (bottom) against the true speed.</div>
+  <p>A film camera samples the scene at its frame rate. Six identical spokes make a pattern that repeats every sixth of a turn, so the pattern "frequency" is 6 × the wheel speed. When that exceeds half the frame rate, it aliases:</p>
+  <div class="eq">$$f_\text{pattern} = 6\,f_\text{wheel}, \qquad \hat f = f_\text{pattern} - n\,f_\text{frame}$$</div>
+  <div class="worked"><h4>Worked example</h4>24 frames/s, wheel at 3 rev/s: per frame it turns 1/8 rev = 45°, while the spokes are 60° apart. Each spoke lands 15° <i>behind</i> where the next one was: the wheel seems to turn backwards at 15° per frame = 1 rev/s. At 4 rev/s it turns exactly 60° per frame — one spoke spacing — and looks frozen.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the wheel needs to spin faster than the frame rate to alias. Identical spokes multiply the pattern frequency: aliasing starts at 2 rev/s here, not 12.</div>
+  <div class="try"><h4>Try it</h4>Watch the orange marker: it aliases only at higher speeds than the spokes, because it does not repeat six times per turn.</div>
+</section>
+<section data-case="wheel" data-example="still"><h3>Frozen</h3><p>4 rev/s at 24 frames/s: exactly one spoke spacing per frame. Every frame looks identical, so the spokes stand still — only the orange marker shows the truth.</p></section>
+<section data-case="wheel" data-example="back"><h3>Backwards</h3><p>3.8 rev/s: slightly less than a spoke per frame (57°). Each spoke seems to step back 3° every frame: the wheel creeps backwards at 0.2 rev/s, the familiar effect in films.</p></section>
+<section data-case="replicas">
+  <h3>Replicas of a band-limited pulse</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: a Gaussian pulse and its samples. Top right: its spectrum (blue) and the copies that sampling creates every fs (orange dashed). Bottom left: their sum — what the samples really contain; red stems mark extra energy that has folded into the band. Bottom right: the pulse rebuilt from the samples against the original.</div>
+  <div class="eq">$$X_s(f) = f_s \sum_k X(f - kf_s)$$</div>
+  <p>A real signal is not a single tone but a band of frequencies. Each replica is a full copy of that band; as fs falls they move closer and start to overlap. In the overlap, the copies add: the band now contains energy that was never there, and nothing can separate it again.</p>
+  <div class="worked"><h4>Worked example</h4>B = 3 Hz: the spectrum is practically zero beyond 3B = 9 Hz, so it is about 18 Hz wide. fs = 30 Hz: replicas apart. fs = 18 Hz: tails just touch. fs = 6 Hz: heavy overlap, and the rebuilt pulse is too wide and wrongly shaped.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using the "bandwidth" B as if the spectrum ended there. A Gaussian, like most real signals, never ends; you must choose where it is negligible and sample at twice <i>that</i>.</div>
+  <div class="try"><h4>Try it</h4>Lower fs and watch the red stems appear in the bottom-left panel, then the error in the rebuilt pulse grow.</div>
+</section>
+<section data-case="replicas" data-example="apart"><h3>Replicas apart</h3><p>fs = 30 Hz: a clear gap between copies. An ideal low-pass at fs/2 keeps the original only.</p></section>
+<section data-case="replicas" data-example="touch"><h3>Just touching</h3><p>fs = 18 Hz = 6B: the tails meet at ±fs/2 at a level of about 1 %. The rebuilt pulse is almost perfect.</p></section>
+<section data-case="replicas" data-example="crash"><h3>Overlap</h3><p>fs = 6 Hz: the copies pile into the band. The samples now describe a different, smoother pulse.</p></section>

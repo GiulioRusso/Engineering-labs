@@ -1,0 +1,73 @@
+<section data-case="correlate">
+  <h3>The transform is a correlation</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: a signal with two tones (4 Hz and 9 Hz, blue) and a probe cosine at the test frequency f (orange). Bottom left: their product, green where positive, red where negative. Right: the spectrum |X(f)| drawn as the probe sweeps; the dot is the current value.</div>
+  <div class="eq">$$X(f) = \underbrace{\int x(t)\cos(2\pi ft)\,dt}_{\text{Re}} \;-\; j\underbrace{\int x(t)\sin(2\pi ft)\,dt}_{\text{Im}}$$</div>
+  <ol class="steps">
+    <li>Multiply the signal by a probe at the test frequency.</li>
+    <li>If the signal contains that frequency, the two rise and fall together: the product is mostly positive, the area is large.</li>
+    <li>If not, the product oscillates around zero: green and red cancel.</li>
+    <li>Do it with a cosine and a sine (to catch any phase): that pair is \(e^{-j2\pi ft}\).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>At f = 4 Hz the 4 Hz tone (amplitude 1) times the cosine gives cos², whose average is 1/2: over the 2 s record the area is 1/2 × 2 = 1, while the 9 Hz part averages to zero. So |X(4)| = 1. The 9 Hz tone has amplitude 0.6, so |X(9)| = 0.6.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using only the cosine. A tone shifted by a quarter period gives zero area with the cosine and full area with the sine: you need both, which is why X is complex.</div>
+  <div class="try"><h4>Try it</h4>Untick the automatic sweep and move f slowly through 4 Hz: the green takes over and the dot climbs.</div>
+</section>
+<section data-case="correlate" data-example="match"><h3>On a tone</h3><p>f = 4 Hz: the product is cos²-shaped, always above zero. Its area is the height of the spectral peak.</p></section>
+<section data-case="correlate" data-example="miss"><h3>Between tones</h3><p>f = 6.5 Hz: the product beats, positive and negative in turn, and the net area is nearly zero.</p></section>
+<section data-case="wind">
+  <h3>Winding the signal around a circle</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the samples x[n]. Right: each sample drawn as a point at distance x[n] from the origin, at an angle that turns f times around the circle during the record. The orange dot is the <span class="key">centre of mass</span> of all the points. Bottom left: how far the centre of mass is from the origin, for every winding frequency.</div>
+  <div class="eq">$$X[k] = \sum_{n=0}^{N-1} x[n]\,e^{-j2\pi kn/N} = N\cdot\underbrace{\frac{1}{N}\sum_{n} x[n]\,e^{-j2\pi kn/N}}_{\text{centre of mass}}$$</div>
+  <p>The factor \(e^{-j2\pi kn/N}\) is a unit arrow that turns clockwise; multiplying by it wraps the signal around the origin. When the winding speed matches a tone, every crest of the tone lands on the same side of the circle: the points bunch up and the centre of mass moves out. Otherwise the points spread evenly and it stays at the origin.</p>
+  <div class="worked"><h4>Worked example</h4>48 samples, tones at bins 5 (amplitude 1) and 12 (0.6). Wound at 5: centre of mass 0.5 from the origin → |X[5]| = 48 × 0.5 = 24 = N/2 × amplitude. At 12: 0.3 → 14.4.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting the centre of mass to equal the amplitude: a real tone is half a positive and half a negative frequency, so each side gets amplitude/2.</div>
+  <div class="try"><h4>Try it</h4>Let it sweep and watch the flower of points: it collapses into a lopsided loop at 5 and 12.</div>
+</section>
+<section data-case="wind" data-example="on"><h3>Wound at bin 5</h3><p>The points pile up on the right: centre of mass at 0.5. That distance, times N, is the DFT magnitude.</p></section>
+<section data-case="wind" data-example="off"><h3>Wound at 8.5</h3><p>No tone near: the pattern is balanced and the centre of mass stays near the origin.</p></section>
+<section data-case="wind" data-example="zero"><h3>Wound at 0</h3><p>No rotation: every point stays on the real axis and the centre of mass is the plain average of the signal — the DC value, X[0]/N.</p></section>
+<section data-case="bins">
+  <h3>Building the spectrum one bin at a time</h3>
+  <div class="look"><h4>What you are looking at</h4>The DFT computed slowly: for k = 0, 1, 2, … the signal is wound exactly k turns (right) and the length of the centre of mass becomes the bar at bin k (bottom left).</div>
+  <p>The DFT only evaluates integer windings \(k = 0 \dots N-1\). These are special: a whole number of turns means that, for a tone at a different integer bin, the points are <i>perfectly</i> balanced. The bins are orthogonal; each one sees its own tone and nothing else.</p>
+  <ol class="steps">
+    <li>Bins 0 to N/2 are the frequencies 0 to fs/2, spaced fs/N.</li>
+    <li>Bins above N/2 wind faster than half a turn per sample: on a sampled signal that is the same as winding backwards. They are the negative frequencies, mirrors of the first half.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Tones at 6 and 17 with N = 48: bars at 6, 17, and at their mirrors 48 − 6 = 42 and 48 − 17 = 31. Everything else is exactly zero.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading bins above N/2 as high frequencies. For a real signal they repeat the first half (complex conjugates); spectrum plots usually show only 0 … N/2.</div>
+  <div class="try"><h4>Try it</h4>Watch bin 42 light up with the same height as bin 6.</div>
+</section>
+<section data-case="bins" data-example="tone"><h3>Bin 6</h3><p>Exactly six turns: the 6-cycle tone stacks up, the 17-cycle tone cancels perfectly. Bar height N/2 = 24.</p></section>
+<section data-case="bins" data-example="mirror"><h3>Bin 42</h3><p>42 turns per 48 samples is the same as −6: the mirror of bin 6. Same height, opposite phase.</p></section>
+<section data-case="bridge">
+  <h3>The DFT samples the continuous transform</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a rectangular pulse sampled N times over 4 s. Bottom: its continuous transform (a sinc, line) and the DFT values multiplied by Δt (dots). The dots sit on the line.</div>
+  <div class="eq">$$X(f_k) \approx \Delta t \cdot X[k], \qquad f_k = \frac{k}{N\Delta t} = \frac{k}{T}$$</div>
+  <ol class="steps">
+    <li>The record length T sets the spacing of the dots: Δf = 1/T.</li>
+    <li>The sampling step Δt sets how far they reach: up to fs/2 = 1/(2Δt).</li>
+    <li>The pulse sets the shape: zeros at multiples of 1/width.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>T = 4 s, N = 64: dots every 0.25 Hz up to 8 Hz. N = 256 in the same 4 s: still every 0.25 Hz, now up to 32 Hz. To get denser dots you need a longer record (or zero-padding, which interpolates).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Believing more samples always means finer frequency resolution. Resolution is 1/T; more samples in the same time only widen the range.</div>
+  <div class="try"><h4>Try it</h4>Narrow the pulse: the sinc spreads, the dots stay on it.</div>
+</section>
+<section data-case="bridge" data-example="narrow"><h3>A narrow pulse</h3><p>0.15 s: main lobe ±6.7 Hz. With only 64 samples the pulse is a couple of samples wide; the DFT still follows the sinc where it can.</p></section>
+<section data-case="bridge" data-example="more"><h3>More samples</h3><p>256 samples over the same 4 s: the dots reach 32 Hz but are still 0.25 Hz apart.</p></section>
+<section data-case="fft">
+  <h3>Why the FFT is fast</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the 8-point FFT as a network. Inputs (in bit-reversed order) enter on the left; each stage combines pairs with one multiplication (the "butterfly"); the highlighted lines are the chosen stage. Right top: number of multiplications for the direct DFT (N²) and the FFT ((N/2)log₂N). Right bottom: the two actually timed in your browser.</div>
+  <p>Split the sum into even and odd samples. Each half is itself a DFT of length N/2, and the two are joined with one "twiddle factor" per pair:</p>
+  <div class="eq">$$X[k] = E[k] + W_N^k\,O[k], \qquad X[k + N/2] = E[k] - W_N^k\,O[k], \qquad W_N = e^{-j2\pi/N}$$</div>
+  <ol class="steps">
+    <li>One multiplication \(W_N^k O[k]\) gives <i>two</i> outputs — the trick that halves the work at each level.</li>
+    <li>Repeat the split until the DFTs have length 2: \(\log_2 N\) levels, N/2 butterflies each.</li>
+    <li>Total: \((N/2)\log_2 N\) products instead of \(N^2\).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>N = 1024: DFT 1 048 576 products, FFT 5 120 — 205 times fewer. N = 1 million: 10¹² vs 10⁷. This is what made digital signal processing practical.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the FFT is an approximation. It computes exactly the same numbers as the DFT, only in a smarter order.</div>
+  <div class="try"><h4>Try it</h4>Step through the stages: 2-point DFTs, then 4-point, then 8-point.</div>
+</section>
+<section data-case="fft" data-example="first"><h3>Stage 1</h3><p>Neighbouring inputs (x[0] with x[4], x[2] with x[6]…) are combined into 2-point DFTs: just a sum and a difference.</p></section>
+<section data-case="fft" data-example="last"><h3>Last stage</h3><p>The two 4-point DFTs (even and odd samples) are joined with the twiddle factors W₈ᵏ into the full 8-point result.</p></section>

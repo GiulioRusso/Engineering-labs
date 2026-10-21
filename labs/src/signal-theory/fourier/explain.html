@@ -1,0 +1,84 @@
+<section data-case="series">
+  <h3>Fourier series: waves made of circles</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a chain of rotating circles. Each circle is one harmonic: its radius is the amplitude \(b_n\), and it turns \(n\) times per period. The orange arms add up, and the height of the last tip is the value of the sum right now. Right: that height traced over one period (blue), against the target wave (dashed). Bottom: the line spectrum — one stem per harmonic, highlighted for the ones in use.</div>
+  <p>Any periodic signal of period \(T\) can be written as a sum of sines and cosines at multiples of the fundamental \(f_0 = 1/T\):</p>
+  <div class="eq">$$x(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \big[a_n\cos(2\pi n f_0 t) + b_n\sin(2\pi n f_0 t)\big]$$</div>
+  <ol class="steps">
+    <li>The first harmonic (n = 1) has the same period as the wave and gives its basic shape.</li>
+    <li>Each further harmonic corrects the shape: it is faster, so it can build sharper details.</li>
+    <li>Sharp corners need very fast harmonics with significant amplitude: that is why a square wave's coefficients fall only as \(1/n\), while a triangle's (no jumps) fall as \(1/n^2\).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Square wave: \(b_n = 4/(n\pi)\) for odd \(n\): 1.27, 0.42, 0.25, 0.18… Only odd harmonics appear because the wave has half-wave symmetry: its second half is the first half flipped, and even harmonics cannot have that property.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking the first harmonic has amplitude 1 for a square wave of height 1: it is 4/π ≈ 1.27, taller than the wave itself. Thinking more harmonics fix everything: at the jumps an overshoot remains (see the Gibbs case).</div>
+  <div class="try"><h4>Try it</h4>Tick "show each harmonic" with N = 5 and see the three sines that add up. Switch to the triangle: three circles already look perfect, because its higher circles are tiny.</div>
+</section>
+<section data-case="series" data-example="one"><h3>One harmonic</h3><p>A single circle: its tip moves up and down as a pure sine of amplitude 4/π. This is the best one-sine approximation of the square wave (in the least-squares sense).</p></section>
+<section data-case="series" data-example="three"><h3>Three harmonics</h3><p>n = 1, 3, 5. The third harmonic flattens the top and steepens the sides; the fifth flattens further. Each thin orange curve is one harmonic; their sum is blue.</p></section>
+<section data-case="series" data-example="saw"><h3>Sawtooth</h3><p>All harmonics appear, alternating in sign, \(b_n = 2(-1)^{n+1}/(n\pi)\). There is one jump per period, so the decay is \(1/n\), like the square.</p></section>
+<section data-case="series" data-example="triangle"><h3>Triangle</h3><p>\(b_n \propto 1/n^2\): the third harmonic is only 1/9 of the first. Three circles already give an error you can hardly see — smooth waves need few harmonics.</p></section>
+<section data-case="project">
+  <h3>How a coefficient is measured</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the square wave. Top right: a probe sine of harmonic \(n\). Bottom left: their product, sweeping through the period — green where it adds, red where it subtracts. Bottom right: the running total \(2\int x\cdot\text{probe}\); when the sweep finishes it lands exactly on \(b_n\) (dashed).</div>
+  <div class="eq">$$b_n = \frac{2}{T}\int_0^T x(t)\,\sin(2\pi n f_0 t)\,dt$$</div>
+  <p>This is the whole idea of Fourier analysis: to ask "how much of this sine is in my signal?", multiply by that sine and add up. Where the signal and the probe have the same sign, the product is positive. If they agree on average, the area is large; if they are unrelated, positive and negative parts cancel.</p>
+  <div class="worked"><h4>Worked example</h4>n = 1: the probe is positive exactly where the square is +1 and negative where it is −1, so the product is never negative: \(2\int_0^1 |\sin 2\pi t|\,dt = 4/\pi = 1.27\). n = 2: in each half of the square there is one full probe cycle, half up, half down: total zero.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the coefficients come from "fitting". They come from this projection, independently of each other — that is the meaning of the harmonics being <i>orthogonal</i>.</div>
+  <div class="try"><h4>Try it</h4>Step n from 1 to 9: even n always cancels; odd n gives a smaller and smaller net green area.</div>
+</section>
+<section data-case="project" data-example="first"><h3>n = 1</h3><p>All green: the probe follows the square wave. The area is 4/π.</p></section>
+<section data-case="project" data-example="even"><h3>n = 2</h3><p>Two probe cycles per period: in every half-period there is as much red as green. b₂ = 0, and the same holds for every even n.</p></section>
+<section data-case="project" data-example="third"><h3>n = 3</h3><p>In each half-period the probe makes one and a half cycles: two lobes agree with the square (green), one disagrees (red). Two minus one leaves one lobe out of three: b₃ = 4/(3π), a third of b₁.</p></section>
+<section data-case="gibbs">
+  <h3>The Gibbs phenomenon</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the square wave and its partial sum. Bottom: a zoom right after the jump, where the sum overshoots; the red line marks its peak.</div>
+  <p>Near a jump the partial sum always overshoots by about 9 % of the jump height, however many harmonics you use. Adding harmonics squeezes the overshoot closer to the jump, but never lowers it:</p>
+  <div class="eq">$$\lim_{N\to\infty}\max_t x_N(t) = 1 + 0.0895\cdot 2 \approx 1.179$$</div>
+  <p>The reason: a partial sum is the signal seen through an ideal low-pass filter, whose impulse response is a sinc with ripples. Each jump gets smeared by that sinc, and the integral of a sinc overshoots by the same fraction whatever its width.</p>
+  <div class="worked"><h4>Worked example</h4>N = 5 harmonics: peak ≈ 1.18 at 1/20 of a period from the jump. N = 100: peak still ≈ 1.179, now at 1/400 of a period.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Calling it a numerical error. It is exact mathematics: the series converges at every point (the spike moves away) but not uniformly (the maximum error does not shrink). Windows (tapering the coefficients) are what remove it, in filters as in spectra.</div>
+  <div class="try"><h4>Try it</h4>Push N to 200 and watch the zoom panel: the spike narrows, the red line does not move.</div>
+</section>
+<section data-case="gibbs" data-example="few"><h3>5 harmonics</h3><p>The overshoot is wide and easy to see, already about 9 %.</p></section>
+<section data-case="gibbs" data-example="many"><h3>100 harmonics</h3><p>Ten times narrower, the same height. The bottom plot (overshoot vs N) is flat.</p></section>
+<section data-case="transform">
+  <h3>From series to transform</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a train of rectangular pulses (width τ, period T). Bottom: its Fourier series as stems at the frequencies n/T, scaled by T, and the continuous transform of a <i>single</i> pulse (dashed).</div>
+  <p>A periodic signal has only the frequencies \(n/T\): the lines. Their heights follow the transform of one period:</p>
+  <div class="eq">$$c_n = \frac{1}{T}\,X\!\left(\frac{n}{T}\right) = \frac{\tau}{T}\,\text{sinc}\!\left(\frac{n\tau}{T}\right)$$</div>
+  <p>Now stretch the period. The lines get closer (spacing 1/T), but they always sit under the same envelope. As \(T\to\infty\) only one pulse is left and the lines fill the envelope: the line spectrum becomes the continuous Fourier transform.</p>
+  <div class="worked"><h4>Worked example</h4>τ = 1 s, T = 4 s: lines every 0.25 Hz, 4 lines between envelope zeros. T = 16 s: lines every 0.0625 Hz, 16 lines per lobe. The envelope (shape of one pulse) did not change.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the period changes the spectral shape. It changes only where the samples of the envelope are taken. The shape comes from the pulse, the spacing from the repetition.</div>
+  <div class="try"><h4>Try it</h4>Slide T from 2 to 30 and watch the stems fill the dashed envelope.</div>
+</section>
+<section data-case="transform" data-example="dense"><h3>A longer period</h3><p>T = 16 s: sixteen times more lines, same envelope. Almost continuous.</p></section>
+<section data-case="transform" data-example="tight"><h3>T = 2τ</h3><p>The train is a square wave: every second line falls on an envelope zero, so even harmonics vanish — exactly the square-wave series.</p></section>
+<section data-case="transform" data-example="narrow"><h3>A narrow pulse</h3><p>τ = 0.3 s: the envelope widens to zeros at ±3.3 Hz. Many lines have similar height: a narrow pulse train contains many strong harmonics.</p></section>
+<section data-case="leakage">
+  <h3>DFT leakage and windows</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the N-sample record and the window (dashed); with "repeated record" ticked, the record is drawn three times, as the DFT implicitly assumes. Top right: the record after the window. Bottom left: the DFT bins. Bottom right: the same in dB, with the window's continuous response (line) on which the bins (dots) sit.</div>
+  <p>The DFT can only represent frequencies that complete an integer number of cycles in the record: the bins \(k = 0, 1, \dots, N/2\). A tone of 5 cycles lands on bin 5 alone. A tone of 5.3 cycles does not fit: when the record repeats, there is a jump at the seam, and jumps need all frequencies — the energy <span class="key">leaks</span> into every bin.</p>
+  <div class="eq">$$X[k] = \sum_{n=0}^{N-1} w[n]\,x[n]\,e^{-j2\pi kn/N}$$</div>
+  <ol class="steps">
+    <li>Multiplying by a window \(w[n]\) that goes smoothly to zero at both ends removes the jump at the seam.</li>
+    <li>In frequency, the tone is convolved with the window's spectrum: the bins are samples of that shape centred on the tone.</li>
+    <li>Rectangular: narrowest main lobe (best resolution), worst sidelobes (−13 dB). Hann, Hamming, Blackman: wider main lobe, much lower sidelobes.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>5.5 cycles with no window: the two nearest bins read only 0.64 (−3.9 dB, "scalloping loss") and the skirt is still −30 dB ten bins away. With Hann: peak 0.85 (−1.4 dB), skirts below −60 dB.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking leakage is noise: it is deterministic and comes from the record length. Thinking more samples fix it: they make the bins finer but a non-integer tone still leaks. Forgetting the window's gain: a window reduces the signal amplitude, so readings must be corrected (done here).</div>
+  <div class="try"><h4>Try it</h4>Slide the tone slowly from 5 to 6 and watch the seam in the repeated record and the bins spreading. Then pick Blackman and repeat.</div>
+</section>
+<section data-case="leakage" data-example="onbin"><h3>On a bin</h3><p>Exactly 5 cycles: the repeated record joins without a seam. One bin reads 1, all others 0 (in dB: below −100).</p></section>
+<section data-case="leakage" data-example="half"><h3>Half-way between bins</h3><p>5.5 cycles: the worst case. Two bins share the energy and every other bin gets some.</p></section>
+<section data-case="leakage" data-example="hann"><h3>Hann window</h3><p>The ends are brought to zero: no seam. The leakage skirt drops by tens of dB; the peak is two bins wide.</p></section>
+<section data-case="leakage" data-example="blackman"><h3>Blackman window</h3><p>The lowest sidelobes (−58 dB), at the price of a three-bin-wide main lobe. Use it to see a weak tone next to a strong one.</p></section>
+<section data-case="uncert">
+  <h3>Time–frequency uncertainty</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: a tone switched on and off smoothly (a Gaussian burst). Top right: its spectrum, with ±σf marked. Bottom left: its energy in time, with ±σt. Bottom right: where the burst sits on the curve σt·σf = 1/4π.</div>
+  <div class="eq">$$\sigma_t\,\sigma_f \ge \frac{1}{4\pi}$$</div>
+  <p>A tone that lasts for ever has one exact frequency. A tone that lasts a short time is not "a frequency" any more: to build something that starts and stops you need a range of frequencies that cancel outside the burst. The shorter the burst, the wider that range.</p>
+  <div class="worked"><h4>Worked example</h4>σt = 0.5 s → σf = 0.16 Hz. A 0.1 s click → 0.8 Hz. In radar: a 1 µs pulse has about 1 MHz of bandwidth, and to measure Doppler to 100 Hz you must observe for about 10 ms.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking better hardware beats it. It is a property of the signal, not of the instrument.</div>
+  <div class="try"><h4>Try it</h4>Shrink σt and watch the spectrum spread; the dot slides along the curve.</div>
+</section>
+<section data-case="uncert" data-example="short"><h3>A short burst</h3><p>σt = 0.1 s: a click. Its spectrum is σf ≈ 0.8 Hz wide: the pitch is blurred.</p></section>
+<section data-case="uncert" data-example="long"><h3>A long burst</h3><p>σt = 2 s: a sustained note, σf ≈ 0.04 Hz. Precise frequency, vague timing.</p></section>

@@ -1,142 +1,132 @@
-// Signals: a gallery of waveforms with their spectra, Fourier series as epicycles, sampling and aliasing,
-// the DFT and spectrum analysis with windows. 2D: time on top, frequency below.
+// Signals in time and frequency: six pulse families, each taken apart in four panels (the pulse, |X(f)|
+// against its closed form, the spectrum in dB on a log axis with its roll-off, and the phase), then the
+// time–bandwidth product of all of them side by side.
 import { createChart } from '../../lib/viz/chart.js';
-import { createCurve } from '../../lib/viz/curve.js';
-import { WAVES, wave, chirp, noise, bn, partialSum, spectrum, aliasOf, WINDOWS } from './model.js';
+import { PULSES, pair, rmsWidths, energyWithin } from './model.js';
 
-const TOP = [-4.2, 0.55, 8.6, 2.1], BOT = [-4.2, -2.35, 8.6, 2.1];
-const fmt = (v) => String(Number(v.toPrecision(3)));
-const KINDS = [...Object.entries(WAVES).map(([k, v]) => [k, v.label]), ['chirp', 'Chirp'], ['noise', 'Noise']];
+const fmt = (v, d = 3) => (Number.isFinite(v) ? String(Number(v.toPrecision(d))) : '∞');
+const TL = [-4.3, 0.55, 4.0, 2.0], TR = [0.55, 0.55, 4.0, 2.0], BL = [-4.3, -2.35, 4.0, 2.0], BR = [0.55, -2.35, 4.0, 2.0];
+const KINDS = ['rect', 'tri', 'gauss', 'sinc', 'exp', 'chirp'], COL = { rect: '--c-B', tri: '--c-I', gauss: '--c-v', sinc: '--c-north', exp: '--c-E', chirp: '--c-F' };
+// roll-off guide: an envelope of |X|/|X(0)| that shows how fast each spectrum falls
+const ENV = {
+  rect: (f, p) => 1 / (Math.PI * f * p.tau), tri: (f, p) => 1 / (Math.PI * f * p.tau) ** 2, exp: (f, p) => p.lam / Math.hypot(p.lam, 2 * Math.PI * f),
+  gauss: (f, p) => Math.exp(-2 * Math.PI ** 2 * p.sigma ** 2 * f * f), sinc: (f, p) => (f <= p.W ? 1 : 1e-6), chirp: null,
+};
+const ROLL = { rect: 'edges (jumps): −20 dB/decade', tri: 'kinks (no jumps): −40 dB/decade', gauss: 'smooth everywhere: faster than any power', sinc: 'a cliff at W: band-limited', exp: 'one jump at t₀: −20 dB/decade', chirp: 'flat over the swept band, then falls' };
+const WIDTH = { rect: (p) => p.tau, tri: (p) => 2 * p.tau, gauss: (p) => 2.355 * p.sigma, sinc: (p) => 1 / p.W, exp: (p) => 1 / p.lam, chirp: (p) => p.tau };
+const BAND = { rect: (p) => 1 / p.tau, tri: (p) => 1 / p.tau, gauss: (p) => 0.4697 / p.sigma, sinc: (p) => p.W, exp: (p) => p.lam / (2 * Math.PI), chirp: (p) => Math.abs(p.f1 - p.f0) };
 
 export default {
-  id: 'signals', title: 'Signals', size: 4.4, ortho: true, plain: true, cam: 'top', duration: 4,
-  defaults: { kind: 'sine', f: 3, A: 1, duty: 0.2, sn: 0, N: 5, fs: 30, Nfft: 64, f1: 8, f2: 13, A2: 0.5, win: 'rect' },
+  id: 'signals', title: 'Signals', size: 4.4, ortho: true, plain: true, cam: 'top', timeless: true,
+  defaults: { kind: 'rect', A: 1, tau: 1, half: 0.5, T: 4, sigma: 0.5, W: 1, lam: 1, f0: 1, f1: 5, t0: 0, scale: 1 },
   cases: [
-    { id: 'gallery', label: 'Signals', set: {}, examples: [
-      { id: 'square', label: 'Square: odd harmonics', set: { kind: 'square' } },
-      { id: 'saw', label: 'Sawtooth: all harmonics', set: { kind: 'saw' } },
-      { id: 'pulse', label: 'Narrow pulses: a wide spectrum', set: { kind: 'pulse', duty: 0.05 } },
-      { id: 'chirp', label: 'Chirp: frequency sweeps', set: { kind: 'chirp' } },
-      { id: 'noise', label: 'White noise: flat spectrum', set: { kind: 'noise' } },
-      { id: 'noisy', label: 'A sine in noise', set: { kind: 'sine', sn: 0.6 } },
+    { id: 'rect', label: 'Rectangle', set: { kind: 'rect', tau: 1 }, examples: [
+      { id: 'wide', label: 'Wider pulse: narrower spectrum', controls: ['tau'], set: { tau: 3 } },
+      { id: 'narrow', label: 'Narrow pulse: wide spectrum', controls: ['tau'], set: { tau: 0.25 } },
+      { id: 'shift', label: 'Shift it: only the phase changes', controls: ['t0'], set: { t0: 2 } },
+      { id: 'tall', label: 'Twice as tall: twice the spectrum', controls: ['A'], set: { A: 2 } },
     ] },
-    { id: 'fourier', label: 'Fourier series', set: { kind: 'square', f: 0.5 }, examples: [
-      { id: 'one', label: 'One harmonic: a sine', set: { N: 1 } },
-      { id: 'three', label: 'Three harmonics', set: { N: 3 } },
-      { id: 'gibbs', label: '50 harmonics: Gibbs overshoot', set: { N: 50 } },
-      { id: 'saw', label: 'Sawtooth', set: { kind: 'saw', N: 10 } },
-      { id: 'triangle', label: 'Triangle: converges fast', set: { kind: 'triangle', N: 3 } },
+    { id: 'tri', label: 'Triangle', set: { kind: 'tri' }, examples: [
+      { id: 'same', label: 'Same width as the rectangle', controls: ['half'], set: { half: 0.5 } },
+      { id: 'wide', label: 'Wider triangle', controls: ['half'], set: { half: 1.5 } },
     ] },
-    { id: 'sampling', label: 'Sampling', set: { f: 3, fs: 30 }, examples: [
-      { id: 'enough', label: 'fs = 2.5 f: still fine', set: { fs: 7.5 } },
-      { id: 'nyquist', label: 'fs = 2 f: on the edge', set: { fs: 6 } },
-      { id: 'alias', label: 'fs < 2 f: an alias appears', set: { f: 7, fs: 10 } },
-      { id: 'wheel', label: 'f close to fs: slow alias', set: { f: 9.5, fs: 10 } },
+    { id: 'gauss', label: 'Gaussian', set: { kind: 'gauss', sigma: 0.5 }, examples: [
+      { id: 'narrow', label: 'Narrow: a wide Gaussian spectrum', controls: ['sigma'], set: { sigma: 0.15 } },
+      { id: 'wide', label: 'Wide: a narrow Gaussian spectrum', controls: ['sigma'], set: { sigma: 1.5 } },
     ] },
-    { id: 'dft', label: 'DFT', set: { Nfft: 64, f1: 8, A2: 0 }, examples: [
-      { id: 'two', label: 'Two tones', set: { A2: 0.5 } },
-      { id: 'between', label: 'Between two bins: leakage', set: { f1: 8.5 } },
-      { id: 'close', label: 'Too close to resolve', set: { A2: 1, f2: 8.6, Nfft: 16 } },
-      { id: 'longer', label: 'Longer record resolves them', set: { A2: 1, f2: 8.6, Nfft: 256 } },
+    { id: 'sinc', label: 'Sinc', set: { kind: 'sinc', W: 1 }, examples: [
+      { id: 'wide', label: 'Wider band: tighter sinc', controls: ['W'], set: { W: 3 } },
+      { id: 'narrow', label: 'Narrow band: slow, long sinc', controls: ['W'], set: { W: 0.3 } },
     ] },
-    { id: 'spectrum', label: 'Windows', set: { Nfft: 64, f1: 8.5, f2: 16, A2: 0.01, win: 'rect' }, examples: [
-      { id: 'hann', label: 'Hann window: less leakage', set: { win: 'hann' } },
-      { id: 'blackman', label: 'Blackman: the weak tone appears', set: { win: 'blackman' } },
-      { id: 'centred', label: 'Bin-centred tone: no leakage', set: { f1: 8 } },
+    { id: 'exp', label: 'Exponential', set: { kind: 'exp', lam: 1 }, examples: [
+      { id: 'fast', label: 'Fast decay: wide spectrum', controls: ['lam'], set: { lam: 5 } },
+      { id: 'slow', label: 'Slow decay: narrow spectrum', controls: ['lam'], set: { lam: 0.4 } },
+    ] },
+    { id: 'chirp', label: 'Chirp', set: { kind: 'chirp', f0: 1, f1: 5 }, examples: [
+      { id: 'wide', label: 'Sweep 1 → 7 Hz: wide flat band', controls: ['f0', 'f1'], set: { f1: 7 } },
+      { id: 'short', label: 'Too short: not flat any more', controls: ['T'], set: { T: 0.6 } },
+      { id: 'down', label: 'Sweep down: same |X|', controls: ['f0', 'f1'], set: { f0: 5, f1: 1 } },
+    ] },
+    { id: 'tbp', label: 'Time–bandwidth', set: {}, examples: [
+      { id: 'narrow', label: 'All narrower: all spectra wider', controls: ['scale'], set: { scale: 0.4 } },
+      { id: 'wide', label: 'All wider: all spectra narrower', controls: ['scale'], set: { scale: 2.5 } },
     ] },
   ],
   controls: [
-    { title: 'Signal', items: [
-      { id: 'kind', label: 'Waveform', type: 'select', options: KINDS, show: (s) => s.case === 'gallery' || s.case === 'fourier' },
-      { id: 'f', label: 'Frequency f', unit: 'Hz', min: 0.2, max: 20, step: 0.05, show: (s) => s.case !== 'dft' && s.case !== 'spectrum' },
-      { id: 'A', label: 'Amplitude', unit: '', min: 0.1, max: 1, step: 0.01, show: (s) => s.case === 'gallery' },
-      { id: 'duty', label: 'Pulse width (duty)', unit: '', min: 0.02, max: 0.9, step: 0.01, show: (s) => s.case === 'gallery' && s.kind === 'pulse' },
-      { id: 'sn', label: 'Added noise σ', unit: '', min: 0, max: 1, step: 0.01, show: (s) => s.case === 'gallery' },
-      { id: 'N', label: 'Harmonics N', unit: '', min: 1, max: 60, step: 1, show: (s) => s.case === 'fourier' },
-      { id: 'fs', label: 'Sampling rate fs', unit: 'Hz', min: 2, max: 60, step: 0.1, show: (s) => s.case === 'sampling' },
+    { title: 'Pulse', show: (s) => s.case !== 'tbp', items: [
+      { id: 'A', label: 'Amplitude A', unit: '', min: 0.1, max: 3, step: 0.1 },
+      { id: 'tau', label: 'Width τ', unit: 's', min: 0.1, max: 4, step: 0.05, show: (s) => s.kind === 'rect' },
+      { id: 'half', label: 'Half-width τ', unit: 's', min: 0.1, max: 3, step: 0.05, show: (s) => s.kind === 'tri' },
+      { id: 'T', label: 'Duration T', unit: 's', min: 0.3, max: 8, step: 0.1, show: (s) => s.kind === 'chirp' },
+      { id: 'sigma', label: 'Spread σ', unit: 's', min: 0.05, max: 3, step: 0.05, show: (s) => s.kind === 'gauss' },
+      { id: 'W', label: 'Bandwidth W', unit: 'Hz', min: 0.1, max: 4, step: 0.05, show: (s) => s.kind === 'sinc' },
+      { id: 'lam', label: 'Decay rate λ', unit: '1/s', min: 0.2, max: 8, step: 0.1, show: (s) => s.kind === 'exp' },
+      { id: 'f0', label: 'Start frequency f₀', unit: 'Hz', min: 0.5, max: 8, step: 0.5, show: (s) => s.kind === 'chirp' },
+      { id: 'f1', label: 'End frequency f₁', unit: 'Hz', min: 0.5, max: 8, step: 0.5, show: (s) => s.kind === 'chirp' },
+      { id: 't0', label: 'Shift t₀', unit: 's', min: -3, max: 3, step: 0.1 },
     ] },
-    { title: 'Analysis', show: (s) => s.case === 'dft' || s.case === 'spectrum', items: [
-      { id: 'Nfft', label: 'Samples N', type: 'segmented', options: [[16, '16'], [32, '32'], [64, '64'], [128, '128'], [256, '256']] },
-      { id: 'f1', label: 'Tone 1', unit: 'cycles', min: 1, max: 30, step: 0.05 },
-      { id: 'f2', label: 'Tone 2', unit: 'cycles', min: 1, max: 30, step: 0.05 },
-      { id: 'A2', label: 'Tone 2 amplitude', unit: '', min: 0, max: 1, step: 0.005 },
-      { id: 'win', label: 'Window', type: 'segmented', options: Object.entries(WINDOWS).map(([k, v]) => [k, v.label]) },
-    ] },
+    { title: 'Scale', show: (s) => s.case === 'tbp', items: [{ id: 'scale', label: 'Common width τ', unit: 's', min: 0.2, max: 4, step: 0.05 }] },
   ],
   plots: [{ id: 'aux', title: '', xLabel: '', xUnit: '', yUnit: '' }],
   hud: [{ id: 'a', label: '' }, { id: 'b', label: '' }, { id: 'c', label: '' }],
 
   setup(ctx) {
-    const { state, time, hud, plots, stage } = ctx;
+    const { state, hud, plots, stage } = ctx;
     stage.controls.enableRotate = false;
-    const top = createChart(ctx, { box: TOP, xTitle: 't (s)', yTitle: 'x(t)' }), bot = createChart(ctx, { box: BOT, xTitle: 'f (Hz)', yTitle: '|X(f)|' });
-    const fr = createChart(ctx, { box: [-0.9, -1.7, 5.2, 3.4], x: [0, 1], y: [-1.5, 1.5], xTitle: 'one period', yTitle: 'partial sum' });
-    const circles = createCurve(stage, { max: 4000, width: 1.2, color: '--c-ref' }), arms = createCurve(stage, { max: 80, width: 2, color: '--c-E' }), link = createCurve(stage, { max: 1, width: 1, color: '--c-F', dashed: true });
-    const EC = [-2.75, 0], ES = 1.05; // epicycle centre and scale (world units per unit amplitude)
-
+    const tl = createChart(ctx, { box: TL }), tr = createChart(ctx, { box: TR }), bl = createChart(ctx, { box: BL }), br = createChart(ctx, { box: BR });
+    const all = [tl, tr, bl, br];
     return {
-      changed() {
-        const c = state.case, f = c === 'fourier';
-        top.show(!f); bot.show(!f); fr.show(f); top.clear(); bot.clear();
-        top.titles(c === 'dft' || c === 'spectrum' ? 'n (sample)' : 't (s)', c === 'dft' || c === 'spectrum' ? 'x[n]' : 'x(t)'); bot.titles(c === 'dft' || c === 'spectrum' ? 'bin k' : 'f (Hz)', c === 'spectrum' ? '|X| (dB)' : '|X|'); circles.object.visible = arms.object.visible = link.object.visible = f;
-      },
+      changed() { for (const k of all) { k.show(false); k.show(true); } },
       update() {
-        const c = state.case, t0 = time.t;
-        if (c === 'gallery') {
-          const fs = 256, n = 256, xs = [], ys = [], T = 1, nz = noise(n, state.sn, 3 + Math.floor(t0 * 4)), wn = state.kind === 'noise' ? noise(n, 0.5, 9 + Math.floor(t0 * 4)) : null;
-          for (let i = 0; i < n; i++) { const t = i / fs + t0 * 0.25; xs.push(i / fs); ys.push((state.kind === 'chirp' ? state.A * chirp(i / fs, 1, 30, T) : wn ? wn[i] : wave(state.kind, t, state.f, state.A, state.duty)) + nz[i]); }
-          top.range([0, T], [-1.6, 1.6]); top.line('x', xs, ys);
-          const sp = spectrum(ys), fx = sp.map((_, k) => k);
-          bot.range([0, 64], [0, Math.max(0.3, ...sp.slice(1)) * 1.1]); bot.stems('X', fx, sp, { color: '--c-E' });
-          hud.set('a', `${KINDS.find((k) => k[0] === state.kind)[1]}${state.kind === 'chirp' || state.kind === 'noise' ? '' : `, f = ${fmt(state.f)} Hz`}`);
-          hud.set('b', state.kind === 'square' ? 'harmonics at f, 3f, 5f… (1/n)' : state.kind === 'saw' ? 'harmonics at every n·f (1/n)' : state.kind === 'triangle' ? 'odd harmonics, falling as 1/n²' : state.kind === 'pulse' ? `narrower pulse → wider spectrum (first zero at ${fmt(state.f / state.duty)} Hz)` : '');
-          hud.set('c', 'spectrum: 1 s record, 256 samples');
-          plots.aux.draw({ xlim: [0, 64], series: [{ x: fx, y: sp.map((v) => 20 * Math.log10(v + 1e-6)), color: '--c-E', label: 'spectrum [dB]' }] });
-        } else if (c === 'fourier') {
-          // epicycles: harmonic n is a circle of radius |b_n| turning n times per period
-          const u = (t0 * state.f) % 1, seg = [], arm = []; let x = EC[0], y = EC[1];
-          for (let n = 1; n <= state.N; n++) {
-            const b = bn(state.kind, n); if (!b) continue;
-            const r = Math.abs(b) * ES, a = 2 * Math.PI * n * u + (b < 0 ? Math.PI : 0);
-            for (let k = 0; k < 40; k++) { const p = 2 * Math.PI * k / 40, q = 2 * Math.PI * (k + 1) / 40; seg.push(x + r * Math.cos(p), y + r * Math.sin(p), 0, x + r * Math.cos(q), y + r * Math.sin(q), 0); }
-            const nx = x + r * Math.cos(a), ny = y + r * Math.sin(a); arm.push(x, y, 0.001, nx, ny, 0.001); x = nx; y = ny;
-          }
-          circles.segments(seg); arms.segments(arm);
-          const xs = [], ys = [], tg = []; for (let i = 0; i <= 400; i++) { const v = i / 400; xs.push(v); ys.push(partialSum(state.kind, state.N, v)); tg.push(WAVES[state.kind].f(v)); }
-          fr.line('target', xs, tg, { color: '--c-ref', dashed: true, width: 1.4 }); fr.line('sum', xs, ys);
-          // the trace so far, and the link from the last arm to the chart
-          const now = []; for (let i = 0; i <= 400 * u; i++) now.push(i / 400); fr.line('now', now, now.map((v) => partialSum(state.kind, state.N, v)), { color: '--c-E', width: 3.4 });
-          link.segments([x, y, 0.001, fr.mx(u), fr.my(partialSum(state.kind, state.N, u)), 0.001]);
-          const peak = Math.max(...ys);
-          hud.set('a', `${WAVES[state.kind].label}, N = ${state.N} harmonics`); hud.set('b', `b₁ = ${fmt(bn(state.kind, 1))}, b₃ = ${fmt(bn(state.kind, 3))}`);
-          hud.set('c', state.kind === 'square' ? `peak ${fmt(peak)} (Gibbs: → 1.179)` : `peak ${fmt(peak)}`);
-          const ns = Array.from({ length: Math.max(state.N, 9) }, (_, i) => i + 1);
-          plots.aux.draw({ xlim: [0.5, ns.length + 0.5], series: [{ x: ns, y: ns.map((n) => Math.abs(bn(state.kind, n))), color: '--c-E', label: '|bₙ| (harmonic amplitudes)' }] });
-        } else if (c === 'sampling') {
-          const T = Math.max(1, 4 / state.f), fa = aliasOf(state.f, state.fs), xs = [], ys = [], sx = [], sy = [], ax = [];
-          for (let i = 0; i <= 1500; i++) { const t = T * i / 1500; xs.push(t); ys.push(Math.sin(2 * Math.PI * state.f * t)); ax.push(Math.sin(2 * Math.PI * (state.f % state.fs > state.fs / 2 ? -fa : fa) * t)); }
-          for (let n = 0; n <= T * state.fs; n++) { sx.push(n / state.fs); sy.push(Math.sin(2 * Math.PI * state.f * n / state.fs)); }
-          top.range([0, T], [-1.3, 1.3]); top.line('x', xs, ys, { width: 1.6, color: '--c-ref' }); top.stems('s', sx, sy, { color: '--c-B' });
-          top.line('alias', xs, ax, { color: '--c-I', dashed: fa !== state.f, width: 2 });
-          bot.range([0, Math.max(state.fs, state.f) * 1.15], [0, 1.2]);
-          bot.stems('X', [state.f], [1], { color: '--c-ref' }); bot.stems('A', [fa], [0.8], { color: '--c-I' }); bot.stems('N', [state.fs / 2], [1.2], { color: '--c-E', width: 1.4 });
-          hud.set('a', `f = ${fmt(state.f)} Hz, fs = ${fmt(state.fs)} Hz, fs/2 = ${fmt(state.fs / 2)} Hz`);
-          hud.set('b', state.fs > 2 * state.f ? 'fs > 2f: the samples identify f ✓' : `fs ≤ 2f: the samples also fit ${fmt(fa)} Hz`, state.fs > 2 * state.f ? 'good' : 'bad');
-          hud.set('c', 'grey: signal · blue: samples · orange: what they look like');
-          plots.aux.draw({ xlim: [0, 60], cursor: state.f, series: [{ x: Array.from({ length: 241 }, (_, i) => i / 4), y: Array.from({ length: 241 }, (_, i) => aliasOf(i / 4, state.fs)), color: '--c-I', label: 'apparent frequency vs true frequency (Hz)' }] });
-        } else {
-          const N = state.Nfft, x = Array.from({ length: N }, (_, n) => Math.sin(2 * Math.PI * state.f1 * n / N) + state.A2 * Math.sin(2 * Math.PI * state.f2 * n / N + 0.4));
-          const sp = spectrum(x, state.win), k = sp.map((_, i) => i), db = sp.map((v) => Math.max(-100, 20 * Math.log10(v + 1e-9)));
-          top.range([0, N], [-2, 2]); top.stems('n', Array.from({ length: N }, (_, i) => i), x, { color: '--c-B', width: 2 });
-          if (c === 'spectrum') { bot.range([0, N / 2], [-100, 0]); bot.line('dB', k, db, { color: '--c-E' }); }
-          else { bot.range([0, N / 2], [0, 1.15]); bot.stems('bins', k, sp, { color: '--c-E' }); }
-          hud.set('a', `N = ${N} samples, resolution = 1 bin = 1 cycle per record`);
-          hud.set('b', `tone 1 at ${fmt(state.f1)} bins${state.f1 % 1 ? ' (between bins → leakage)' : ' (on a bin)'}`);
-          hud.set('c', `${WINDOWS[state.win].label} window${state.A2 ? `, tone 2 at ${fmt(state.f2)} bins, ${fmt(20 * Math.log10(state.A2))} dB` : ''}`);
-          plots.aux.draw({ xlim: [0, N - 1], series: [{ x: k, y: k.map((n) => WINDOWS[state.win].w(n, N)), color: '--c-ref', label: 'window w[n]' }] });
-        }
+        if (state.case === 'tbp') return tbp();
+        const k = state.kind, p = { A: state.A, tau: k === 'tri' ? state.half : k === 'chirp' ? state.T : state.tau, sigma: state.sigma, W: state.W, lam: state.lam, f0: state.f0, f1: state.f1, t0: state.t0 };
+        const S = pair(k, p), sel = (lo, hi) => S.t.map((v, i) => [v, S.x[i]]).filter(([v]) => v >= lo && v <= hi);
+        const tt = sel(-5, 5), ymax = Math.max(1.2, state.A * 1.15);
+        tl.range([-5, 5], [k === 'sinc' || k === 'chirp' ? -ymax : -0.2 * ymax, ymax]); tl.titles('t (s)', `x(t): ${PULSES[k].label.toLowerCase()}`);
+        tl.line('x', tt.map((a) => a[0]), tt.map((a) => a[1]), { color: COL[k] });
+        const fmax = 8, fi = [], fm = []; for (let i = 0; i < S.f.length; i++) if (Math.abs(S.f[i]) <= fmax) { fi.push(S.f[i]); fm.push(S.mag[i]); }
+        const peak = Math.max(...fm);
+        tr.range([-fmax, fmax], [0, peak * 1.15]); tr.titles('f (Hz)', PULSES[k].X ? '|X(f)|: computed (solid), formula (dashed)' : '|X(f)|: peaks at ±f, the cosine’s two halves');
+        tr.line('X', fi, fm, { color: '--c-E' }); if (PULSES[k].X) tr.line('F', fi, fi.map((f) => PULSES[k].X(f, p)), { color: '--ink-dim', dashed: true, width: 1.4 }); else tr.hide('F');
+        // dB on a log-frequency axis, normalised to the peak
+        const lf = [], ld = [], X0 = Math.max(...S.mag); for (let i = 0; i < S.f.length; i++) if (S.f[i] > 0.05 && S.f[i] <= 40) { lf.push(Math.log10(S.f[i])); ld.push(Math.max(-90, 20 * Math.log10(S.mag[i] / X0 + 1e-12))); }
+        bl.range([-1, 1.6], [-90, 5]); bl.titles('log₁₀ f (Hz)', `|X| in dB: ${ROLL[k]}`); bl.line('d', lf, ld, { color: '--c-E', width: 1.6 });
+        if (ENV[k]) { const g = lf.map((l) => Math.max(-90, 20 * Math.log10(Math.min(1, ENV[k](10 ** l, p))))); bl.line('g', lf, g, { color: '--c-north', dashed: true, width: 1.4 }); } else bl.hide('g');
+        // phase where the spectrum is not negligible
+        // unwrapped phase from f = 0 outwards, where the spectrum is not negligible
+        const i0 = S.f.findIndex((v) => v >= 0), unwrap = (dir) => { const out = []; let prev = 0, off = 0; for (let i = i0; i >= 0 && i < S.f.length && Math.abs(S.f[i]) <= fmax; i += dir) { let a = Math.atan2(S.im[i], S.re[i]) + off; while (a - prev > Math.PI) { a -= 2 * Math.PI; off -= 2 * Math.PI; } while (a - prev < -Math.PI) { a += 2 * Math.PI; off += 2 * Math.PI; } prev = a; if (S.mag[i] > 1e-3 * X0) out.push([S.f[i], a]); } return out; };
+        const P = [...unwrap(-1).reverse(), ...unwrap(1)], pmax = Math.max(3.3, ...P.map((q) => Math.abs(q[1])));
+        br.range([-fmax, fmax], [-pmax, pmax]); br.titles('f (Hz)', state.t0 ? `phase ∠X (rad, unwrapped): slope −2πt₀ = ${fmt(-2 * Math.PI * state.t0)} rad/Hz` : 'phase ∠X (rad, unwrapped)'); br.dots('p', P.map((q) => q[0]), P.map((q) => q[1]), { color: '--c-I', size: 3 });
+        const w = rmsWidths(S.t, S.x, S.f, S.mag), B = BAND[k](p), F90 = (() => { for (let F = 0.01; F < 40; F *= 1.02) if (energyWithin(S.f, S.mag, F) >= 0.9) return F; return Infinity; })();
+        hud.set('a', `duration ≈ ${fmt(WIDTH[k](p))} s · bandwidth ≈ ${fmt(B)} Hz · product ≈ ${fmt(WIDTH[k](p) * B)}`);
+        hud.set('b', `90 % of the energy lies below ${fmt(F90)} Hz${k === 'sinc' ? ' — and 100 % below W' : ''}`);
+        hud.set('c', `σt·σf = ${fmt(w.st * w.sf)} = ${fmt(w.st * w.sf * 4 * Math.PI)} × the bound 1/4π${k === 'gauss' ? ' ✓ the minimum' : ''}`, k === 'gauss' ? 'good' : '');
+        const Fs = Array.from({ length: 120 }, (_, i) => 0.05 * 1.045 ** i); plots.aux.draw({ xlim: [0, 8], cursor: F90, series: [{ x: Fs, y: Fs.map((F) => 100 * energyWithin(S.f, S.mag, F)), color: COL[k], label: 'energy (%) inside ±F vs F (Hz)' }] });
       },
-      theme() { for (const k of [top, bot, fr]) k.theme(); for (const k of [circles, arms, link]) k.theme(); },
+      theme() { for (const k of all) k.theme(); },
     };
+
+    function tbp() {
+      const s = state.scale, shapes = [['rect', { tau: s }], ['tri', { tau: s / 2 }], ['gauss', { sigma: s / 2.355 }], ['sinc', { W: 1 / (2 * s) }], ['exp', { lam: 1 / s }]];
+      tl.range([-4, 4], [-0.3, 1.15]); tl.titles('t (s)', `five pulses, all about ${fmt(s)} s wide`);
+      tr.range([-6, 6], [0, 1.1]); tr.titles('f (Hz)', '|X(f)| normalised: wider pulse ↔ narrower spectrum');
+      const ratios = [];
+      for (const [k, q] of shapes) {
+        const p = { A: 1, tau: 1, sigma: 1, W: 1, lam: 1, f0: 1, f1: 5, t0: k === 'exp' ? -s / 2 : 0, ...q }, S = pair(k, p, 8192, 160);
+        const ts = [], xs = []; for (let i = 0; i < S.t.length; i += 4) if (Math.abs(S.t[i]) <= 4) { ts.push(S.t[i]); xs.push(S.x[i]); }
+        tl.line(k, ts, xs, { color: COL[k], width: 1.8 });
+        const m = Math.max(...S.mag), fs = [], ms = []; for (let i = 0; i < S.f.length; i++) if (Math.abs(S.f[i]) <= 6) { fs.push(S.f[i]); ms.push(S.mag[i] / m); }
+        tr.line(k, fs, ms, { color: COL[k], width: 1.8 });
+        const w = rmsWidths(S.t, S.x, S.f, S.mag); ratios.push([k, w.st * w.sf * 4 * Math.PI, w]);
+      }
+      bl.range([-0.5, 4.5], [0, 4]); bl.titles('rect · triangle · Gaussian · sinc · exponential', 'σt·σf ÷ (1/4π): never below 1');
+      ratios.forEach(([k, r], i) => bl.line(`b${k}`, [i, i], [0, Math.min(4, r)], { color: COL[k], width: 16 })); bl.line('one', [-0.5, 4.5], [1, 1], { color: '--c-north', dashed: true, width: 1.4 });
+      const sfm = Math.max(1.5, ...ratios.map((q) => q[2].sf * 1.15)); br.range([0, 1.5], [0, sfm]); br.titles('σt (s)', 'σf (Hz): the forbidden zone is below the curve');
+      const xs = Array.from({ length: 150 }, (_, i) => 0.05 + i * 0.01); br.line('bound', xs, xs.map((x) => 1 / (4 * Math.PI * x)), { color: '--c-north', width: 1.6 });
+      ratios.forEach(([k, , w]) => br.dots(k, [w.st], [w.sf], { color: COL[k], size: 10 }));
+      hud.set('a', `rect ${fmt(ratios[0][1])} (σf grows with the grid: the jumps never die) · triangle ${fmt(ratios[1][1])} · Gaussian ${fmt(ratios[2][1])}`);
+      hud.set('b', 'σt·σf ≥ 1/4π ≈ 0.0796: no pulse is narrow in both domains'); hud.set('c', 'only the Gaussian sits on the bound', 'good');
+      plots.aux.draw({ xlim: [0.2, 4], cursor: s, series: [{ x: Array.from({ length: 80 }, (_, i) => 0.2 + i * 0.048), y: Array.from({ length: 80 }, (_, i) => 1 / (0.2 + i * 0.048)), color: '--c-B', label: 'bandwidth ≈ 1/duration (Hz) vs duration (s)' }] });
+    }
   },
 };

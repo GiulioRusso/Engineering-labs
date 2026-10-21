@@ -1,0 +1,92 @@
+<section data-case="linear">
+  <h3>Linearity: superposition</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: two test inputs (a step and a sine) and their weighted sum. Top right: the system's response to each one alone. Bottom left: the response to the sum (solid) on top of the same sum of the separate responses (dashed). Bottom right: their difference on a log scale — at the level of rounding errors.</div>
+  <div class="eq">$$\mathcal H\{a\,x_1 + b\,x_2\} = a\,\mathcal H\{x_1\} + b\,\mathcal H\{x_2\}$$</div>
+  <p>Linearity means you can take an input apart, push each piece through the system separately, and add the results. That is what makes LTI systems analysable: understand the response to simple pieces, and you understand everything.</p>
+  <div class="worked"><h4>Worked example</h4>a = 1, b = 0.5: the response to "step + half a sine" is the step response plus half of the sine response, at every instant. The difference is about 10⁻¹⁵ — the computer's rounding, nothing else.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking "linear" means "a straight line". A system whose output is x(t)² or that clips at a maximum is non-linear; an RC circuit or a resonator with curvy responses is linear. Also: y = 2x + 1 is <i>not</i> linear (zero in does not give zero out).</div>
+  <div class="try"><h4>Try it</h4>Use negative weights: still exact. Switch to the RC: still exact.</div>
+</section>
+<section data-case="linear" data-example="neg"><h3>Negative weights</h3><p>a = −1, b = 1.5: subtracting inputs subtracts outputs. Linearity includes scaling by any number.</p></section>
+<section data-case="linear" data-example="rc"><h3>An RC circuit</h3><p>τ y′ + y = x is linear too: every circuit of resistors, capacitors and inductors is.</p></section>
+<section data-case="invariant">
+  <h3>Time invariance</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a short pulse, and the same pulse d seconds later. Bottom: the response to the first (blue), the response to the late one (orange), and the first response simply delayed by d (dashed): orange and dashed coincide.</div>
+  <div class="eq">$$x(t) \to y(t) \quad\Longrightarrow\quad x(t-d) \to y(t-d)$$</div>
+  <p>The system behaves the same today as tomorrow: its components do not change with time. Together with linearity, this means one single response — to one impulse at one time — tells you the response to everything.</p>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming every system is time-invariant. A radio whose gain is turned up halfway through, or a system with an input that switches on at a fixed clock time, is not.</div>
+  <div class="try"><h4>Try it</h4>Move the delay: the orange response slides without changing shape.</div>
+</section>
+<section data-case="invariant" data-example="late"><h3>Four seconds later</h3><p>The same shape, the same size, four seconds later.</p></section>
+<section data-case="impulse">
+  <h3>The impulse response</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a rectangular pulse of width w and height 1/w, so its area is always 1. Bottom: the system's output (blue) and the impulse response h(t) (dashed). As the pulse narrows, the output converges to h(t).</div>
+  <p>The Dirac delta δ(t) is not a real signal but a limit: a pulse so short that the system cannot see its shape, only its area. The system's answer to it is the impulse response h(t).</p>
+  <div class="eq">$$\text{RC:}\; h(t) = \frac{1}{\tau}e^{-t/\tau}u(t), \qquad \text{2nd order:}\; h(t) = \frac{\omega_n^2}{\omega_d}e^{-\zeta\omega_n t}\sin(\omega_d t)\,u(t)$$</div>
+  <div class="worked"><h4>Worked example</h4>RC with τ = 1 s: any pulse much shorter than 1 s (0.05 s, say) gives an output indistinguishable from h(t). A 1.5 s pulse is not "short" for this system: the output is visibly different.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking an impulse must be infinitely tall to work. It only needs to be short compared with the system's own time scale — the hammer tap used to test a bridge is a perfectly good impulse.</div>
+  <div class="try"><h4>Try it</h4>Narrow the pulse and watch the bottom-panel error fall.</div>
+</section>
+<section data-case="impulse" data-example="wide"><h3>A wide pulse</h3><p>1.5 s: the system has time to react during the pulse, so the output is smoother and later than h(t).</p></section>
+<section data-case="impulse" data-example="narrow"><h3>A narrow pulse</h3><p>0.05 s: the output is h(t) to within a few per cent. The system cannot tell this pulse from a true δ.</p></section>
+<section data-case="decompose">
+  <h3>Any input as a sum of impulses</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: an input (grey) cut into thin slices (blue staircase). Bottom: each slice is a short pulse, so it produces a copy of h(t), scaled by the slice's area and started at the slice's time (orange). Their sum (blue) matches the true output (dashed).</div>
+  <p>This is <i>why</i> convolution describes every LTI system:</p>
+  <ol class="steps">
+    <li>Slice the input: \(x(t) \approx \sum_k x(t_k)\,\Delta\,\delta(t - t_k)\).</li>
+    <li>Time invariance: each δ(t − t_k) produces h(t − t_k).</li>
+    <li>Linearity: scale each by \(x(t_k)\Delta\) and add them up.</li>
+    <li>Let Δ → 0: the sum becomes the convolution integral.</li>
+  </ol>
+  <div class="eq">$$y(t) = \sum_k x(t_k)\,\Delta\,h(t-t_k) \;\xrightarrow{\Delta\to 0}\; \int x(\tau)\,h(t-\tau)\,d\tau$$</div>
+  <div class="worked"><h4>Worked example</h4>With 4 slices the sum is lumpy (each copy of h is clearly visible). With 40 the error is below 1 %. The integral is just the limit of this sum.</div>
+  <div class="try"><h4>Try it</h4>Set slices added to 1, 2, 3… and watch the output assemble.</div>
+</section>
+<section data-case="decompose" data-example="few"><h3>4 slices</h3><p>Four copies of h, clearly separate humps. A rough but recognisable output.</p></section>
+<section data-case="decompose" data-example="many"><h3>40 slices</h3><p>The copies overlap so densely that the sum is the true output: that is the convolution.</p></section>
+<section data-case="decompose" data-example="one"><h3>One slice at a time</h3><p>Two slices added out of eight: the output so far is just two delayed, scaled copies of h(t). Increase "slices added" to watch it grow.</p></section>
+<section data-case="poles">
+  <h3>Poles in the s-plane</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the s-plane, with the poles of \(H(s) = \omega_n^2/(s^2 + 2\zeta\omega_n s + \omega_n^2)\); the red vertical line is the imaginary axis, the dashed arc has radius ωn. Right: the impulse and step responses.</div>
+  <div class="eq">$$p_{1,2} = -\zeta\omega_n \pm j\,\omega_n\sqrt{1-\zeta^2}, \qquad h(t) \propto e^{\,\text{Re}(p)\,t}\sin\big(\text{Im}(p)\,t\big)$$</div>
+  <p>Each pole is a mode of the system, \(e^{pt}\). Its real part says how fast the mode decays (or grows); its imaginary part says how fast it oscillates. You can read the whole time response off the picture:</p>
+  <ol class="steps">
+    <li>Further left → faster decay.</li>
+    <li>Further from the real axis → faster oscillation.</li>
+    <li>On the imaginary axis → oscillates for ever. Right of it → grows: <span class="key">unstable</span>.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>ζ = 0.3, ωn = 2: poles at −0.6 ± j1.91. Envelope e^{−0.6 t} (halves every 1.2 s), ringing at 1.91 rad/s (period 3.3 s), overshoot 37 %.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a fast oscillation means instability. Instability is about the real part only: a pole at −5 + j50 rings fast but dies quickly.</div>
+  <div class="try"><h4>Try it</h4>Drag ζ from 2 down to 0 and past it: the poles meet on the real axis at ζ = 1, travel round the arc, and cross into the right half-plane.</div>
+</section>
+<section data-case="poles" data-example="under"><h3>ζ = 0.1</h3><p>Poles close to the imaginary axis: the decay is slow and the system rings for many cycles, overshooting by 73 %.</p></section>
+<section data-case="poles" data-example="crit"><h3>ζ = 1</h3><p>The two poles meet at −ωn: the fastest response with no overshoot.</p></section>
+<section data-case="poles" data-example="over"><h3>ζ = 2</h3><p>Two real poles; the one closer to the origin (−0.54) dominates, so the response is slow.</p></section>
+<section data-case="poles" data-example="unstable"><h3>ζ < 0</h3><p>Negative damping pumps energy in: poles in the right half-plane, oscillations that grow exponentially.</p></section>
+<section data-case="bode">
+  <h3>Frequency response: the Bode plot</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the gain |H(jω)| in dB against log frequency. Bottom: the phase. The dashed vertical line is the corner (1/τ or ωn); the orange dot is the frequency chosen with the ω slider.</div>
+  <div class="eq">$$H(j\omega) = |H(j\omega)|\,e^{j\angle H(j\omega)}$$</div>
+  <p>Put a sine of frequency ω in; in steady state you get the same sine, multiplied by |H| and shifted by ∠H. The Bode plot is that pair of numbers for every ω.</p>
+  <ol class="steps">
+    <li>First order: flat, −3 dB and −45° at ω = 1/τ, then −20 dB per decade and −90°.</li>
+    <li>Second order: flat, then a peak near ωn if ζ < 0.707, −90° at ωn, then −40 dB per decade and −180°.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>ζ = 0.3: at ωn the gain is 1/(2ζ) = 1.67 (+4.4 dB). With ζ = 0.1 it is 5 (+14 dB): a lightly damped system amplifies a sine at its natural frequency.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting the phase. Two systems with the same gain curve can delay signals differently, and in feedback loops the phase decides stability.</div>
+  <div class="try"><h4>Try it</h4>Lower ζ and watch the peak rise and the phase drop more abruptly near ωn.</div>
+</section>
+<section data-case="bode" data-example="peak"><h3>ζ = 0.1</h3><p>A sharp resonance peak of +14 dB at ωn; the phase falls from 0 to −180° in a narrow band around it.</p></section>
+<section data-case="bode" data-example="rc"><h3>First order</h3><p>The RC circuit: one corner, −3 dB at 1/τ, −20 dB per decade beyond, never more than −90°.</p></section>
+<section data-case="steady">
+  <h3>The sinusoidal steady state</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a sine input switched on at t = 0 (grey), the simulated output (blue), and the prediction from the Bode plot (dashed). Bottom: the difference between them — the transient — dying inside its envelope.</div>
+  <div class="eq">$$x = \sin\omega t \;\Rightarrow\; y(t) = \underbrace{|H(j\omega)|\sin(\omega t + \angle H)}_{\text{steady state}} + \underbrace{\text{transient}}_{\propto\, e^{-\zeta\omega_n t}}$$</div>
+  <p>Switching the sine on is itself a sudden event, so the system first rings with its own natural modes. Those die out (if it is stable) and what is left oscillates at the <i>input</i> frequency, with exactly the gain and phase the Bode plot predicts.</p>
+  <div class="worked"><h4>Worked example</h4>ζ = 0.3, ωn = 2, ω = 1: |H| = 4/√(3² + 1.2²) = 1.24, phase −21.8°. After about 4/(ζωn) = 6.7 s the blue and dashed curves are indistinguishable.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Applying the Bode plot to the first instants after switching on: the transient is not in it.</div>
+  <div class="try"><h4>Try it</h4>Put ω = ωn with low damping: a large output, lagging by a quarter cycle (−90°), after a long transient.</div>
+</section>
+<section data-case="steady" data-example="resonance"><h3>At resonance</h3><p>ω = ωn = 2 with ζ = 0.15: gain 1/(2ζ) = 3.3, phase −90°. The transient lasts long because the damping is small.</p></section>
+<section data-case="steady" data-example="high"><h3>Well above ωn</h3><p>ω = 6: the system cannot follow — gain about (ωn/ω)² = 0.11, phase near −180° (the output moves opposite to the input).</p></section>

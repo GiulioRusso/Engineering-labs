@@ -1,0 +1,61 @@
+<div class="look"><h4>What you are looking at</h4>Top left: the test signal — a 2 Hz square wave with a 60 Hz hum and noise (grey) — and the filtered output (blue). Bottom left: their spectra in dB. Top right: the filter seen in time (its kernel or impulse response). Bottom right: the filter seen in frequency.</div>
+<section data-case="kernel mask gauss fir">
+  <p>Every linear filter has two faces, linked by the convolution theorem:</p>
+  <div class="eq">$$y = h * x \quad\longleftrightarrow\quad Y(f) = H(f)\cdot X(f)$$</div>
+  <p>You can design it in either domain, but you always pay in the other. Sharp in frequency means long and wiggly in time; short in time means soft in frequency. This is the uncertainty principle at work.</p>
+</section>
+<section data-case="kernel">
+  <h3>Smoothing in time</h3>
+  <p>Replace each sample by a weighted average of its neighbours: convolution with a kernel. The average cancels fast wiggles (noise, hum) and keeps slow changes.</p>
+  <ol class="steps">
+    <li><b>Rectangular kernel</b> (moving average of M samples): \(|H| = |\text{sinc}(fM/f_s)|\). Zeros exactly at multiples of fs/M — but sidelobes in between let some high frequencies through.</li>
+    <li><b>Gaussian kernel</b>: \(|H|\) is a Gaussian too. No sidelobes, no ripples; the attenuation just keeps growing.</li>
+    <li>Longer kernel → narrower H → more noise removed, but edges smeared over a longer time.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>fs = 512 Hz, moving average of 31 samples (61 ms): first zero at 512/31 = 16.5 Hz. The 60 Hz hum sits near the 4th sidelobe, about −20 dB. The square wave's edges ramp over 61 ms.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a moving average is a good low-pass. It is simple and has exact nulls, but its sidelobes are only −13 dB: a strong tone between nulls leaks through.</div>
+  <div class="try"><h4>Try it</h4>Lengthen the kernel and watch the hum vanish and the edges blur at the same time.</div>
+</section>
+<section data-case="kernel" data-example="rect"><h3>Moving average</h3><p>The rectangle's spectrum is a sinc: deep nulls, but sidelobes of −13, −18, −21 dB… between them.</p></section>
+<section data-case="kernel" data-example="long"><h3>A long kernel</h3><p>101 samples (0.2 s): almost all noise and hum are gone, but the square wave has become a slow, rounded wave.</p></section>
+<section data-case="kernel" data-example="short"><h3>A short kernel</h3><p>5 samples: edges stay sharp, but H(60 Hz) is still near 1 — the hum passes almost untouched.</p></section>
+<section data-case="mask">
+  <h3>Masking the spectrum</h3>
+  <p>Go to the frequency domain (FFT), multiply by a mask M(f), come back (inverse FFT). In time this is the same as convolving with \(m = \mathcal F^{-1}\{M\}\), shown top right.</p>
+  <ol class="steps">
+    <li><b>Brick wall</b>: keep everything below fc, delete everything above. Perfect in frequency — but m is a sinc that rings on both sides, so every edge in the signal rings too (Gibbs).</li>
+    <li><b>Butterworth</b> \(M = 1/\sqrt{1 + (f/f_c)^{2n}}\): order n sets the steepness. Low n: gentle slope, little ringing. High n: approaches the brick wall, rings more.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Brick wall at 10 Hz: the square wave keeps its harmonics at 2, 6 and 10 Hz and loses 14, 18, … The output is the three-harmonic partial sum, overshooting by about 18 % of the step height at each edge, with ripples at ~10 Hz. The ringing even starts <i>before</i> the edge: a zero-phase mask is not causal.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming the ideal filter is the best filter. A sharp cut in frequency always means long ringing in time; for pulses and edges a gentler filter usually looks better.</div>
+  <div class="try"><h4>Try it</h4>Switch to Butterworth and raise the order from 1 to 12: the mask steepens and the impulse response grows side ripples.</div>
+</section>
+<section data-case="mask" data-example="brick"><h3>Brick wall at 10 Hz</h3><p>Every edge of the square wave rings, before and after. m[n] is a sinc of main lobe 1/fc = 100 ms.</p></section>
+<section data-case="mask" data-example="butter"><h3>Butterworth n = 2</h3><p>A soft roll-off (−40 dB/decade): m[n] has only a small undershoot, the edges barely ring.</p></section>
+<section data-case="mask" data-example="steep"><h3>Butterworth n = 10</h3><p>Nearly a brick wall: the ringing is back.</p></section>
+<section data-case="gauss">
+  <h3>The Gaussian: the same shape in both domains</h3>
+  <div class="eq">$$h(t) \propto e^{-t^2/2\sigma_t^2} \;\longleftrightarrow\; H(f) = e^{-f^2/2\sigma_f^2}, \qquad \sigma_f = \frac{1}{2\pi\sigma_t}$$</div>
+  <p>The Gaussian kernel is the best compromise: it is the most compact in time for a given width in frequency (it sits on the uncertainty bound), it has no sidelobes, and its step response never overshoots. That is why it is used for smoothing images (Gaussian blur), for GSM's GMSK pulses and for scale-space analysis.</p>
+  <div class="worked"><h4>Worked example</h4>σt = 4 ms → σf = 40 Hz: H(60 Hz) = e^{−60²/(2·40²)} = 0.32 (−10 dB). σt = 15 ms → σf = 10.6 Hz: the hum is down by 140 dB.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting a sharp cut-off from a Gaussian. It is smooth everywhere, including its transition band: good for edges, poor for separating close frequencies.</div>
+  <div class="try"><h4>Try it</h4>Widen σt: the time kernel spreads while |H| narrows, keeping their product fixed.</div>
+</section>
+<section data-case="gauss" data-example="narrow"><h3>Narrow Gaussian</h3><p>σt = 1 ms: σf = 160 Hz. Barely any smoothing; the hum passes.</p></section>
+<section data-case="gauss" data-example="wide"><h3>Wide Gaussian</h3><p>σt = 15 ms: σf = 10.6 Hz. Strong smoothing with no ringing at all.</p></section>
+<section data-case="fir">
+  <h3>FIR design: the windowed sinc</h3>
+  <p>To build a real low-pass filter: take the ideal one's impulse response (a sinc), cut it to M taps, and taper it with a window (Hamming here) so the cut does not cause ripples.</p>
+  <div class="eq">$$h[n] = w[n]\cdot\frac{\sin\big(2\pi f_c (n-m)/f_s\big)}{\pi (n-m)}, \qquad \Delta f_\text{transition} \approx 3.3\,\frac{f_s}{M}$$</div>
+  <ol class="steps">
+    <li>High-pass: subtract the low-pass from a delta (all-pass).</li>
+    <li>Band-pass: subtract two low-passes.</li>
+    <li>More taps → sharper transition, more delay ((M−1)/2 samples), more computation.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>fs = 512 Hz, 101 taps: transition ≈ 17 Hz wide, stop band below −50 dB. With 15 taps: 113 Hz wide — barely a filter.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Choosing the cut-off but forgetting the transition width: the filter needs room between "pass" and "stop", and that room costs taps.</div>
+  <div class="try"><h4>Try it</h4>Set a band-pass around 60 Hz: only the hum survives.</div>
+</section>
+<section data-case="fir" data-example="hp"><h3>High-pass at 40 Hz</h3><p>The square wave's low harmonics are removed: what remains is the hum, the noise, and spikes at the edges (an edge has energy at all frequencies).</p></section>
+<section data-case="fir" data-example="bp"><h3>Band-pass 45–75 Hz</h3><p>Isolates the 60 Hz hum, plus the square wave's harmonics that happen to fall in the band.</p></section>
+<section data-case="fir" data-example="few"><h3>15 taps</h3><p>A very soft edge: the transition spans about 100 Hz, so the hum is only partly removed.</p></section>

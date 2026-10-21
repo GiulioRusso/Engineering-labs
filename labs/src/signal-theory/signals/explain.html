@@ -1,51 +1,84 @@
-<section data-case="gallery">
-  <h3>Signals and their spectra</h3>
-  <p>Any signal can be seen in time (top) or in frequency (bottom): which sines, of which amplitude, add up to it. A pure sine is a single line; sharp edges need many high harmonics.</p>
-  <div class="eq">$$x(t) = \sum_k A_k \sin(2\pi f_k t + \varphi_k)$$</div>
+<section data-case="rect tri gauss sinc exp chirp">
+  <div class="look"><h4>What you are looking at</h4>Four views of the same pulse. Top left: the pulse in time. Top right: how much of each frequency it contains, \(|X(f)|\) — computed numerically (solid) and from the formula (dashed): they agree. Bottom left: the same spectrum in decibels against log frequency, so you can see how <i>fast</i> it falls (the red dashed guide). Bottom right: the phase of \(X(f)\).</div>
+  <p>The Fourier transform asks one question for every frequency \(f\): <i>how much does the signal look like a rotating phasor \(e^{j2\pi ft}\)?</i></p>
+  <div class="eq">$$X(f) = \int_{-\infty}^{\infty} x(t)\,e^{-j2\pi f t}\,dt$$</div>
+  <p>Three rules explain almost everything you will see here:</p>
+  <ol class="steps">
+    <li><b>Scaling.</b> Make a pulse \(a\) times wider and its spectrum becomes \(a\) times narrower (and \(a\) times taller): \(x(t/a) \leftrightarrow |a|\,X(af)\). Short in time means wide in frequency, always.</li>
+    <li><b>Shift.</b> Moving the pulse by \(t_0\) multiplies \(X(f)\) by \(e^{-j2\pi f t_0}\): the magnitude is identical, only the phase tilts — a straight line of slope \(-2\pi t_0\).</li>
+    <li><b>Smoothness.</b> The sharper the features in time, the slower the spectrum falls. A jump gives \(1/f\) (−20 dB per decade), a kink \(1/f^2\) (−40), a perfectly smooth pulse falls faster than any power.</li>
+  </ol>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking a shift changes the spectrum: |X| does not move at all. Reading the negative frequencies as "extra": for a real signal they are the mirror image of the positive ones, \(X(-f) = X^*(f)\). Confusing amplitude and energy: |X|² is the energy per hertz.</div>
 </section>
-<section data-case="gallery" data-example="square"><h3>Square wave</h3><p>Only odd harmonics, with amplitudes \(\frac{4}{\pi n}\): \(f, 3f, 5f, \dots\). The jumps are what needs the high harmonics.</p></section>
-<section data-case="gallery" data-example="saw"><h3>Sawtooth</h3><p>Every harmonic is present, falling as \(1/n\).</p></section>
-<section data-case="gallery" data-example="pulse"><h3>Narrow pulses</h3><p>Short in time, wide in frequency: the spectrum follows a sinc envelope whose first zero is at \(1/\tau\). Time width × bandwidth ≈ 1.</p></section>
-<section data-case="gallery" data-example="chirp"><h3>A chirp</h3><p>The frequency rises linearly from 1 to 30 Hz over the record: the spectrum is a flat band, not a line. Radar uses chirps to get both energy and resolution.</p></section>
-<section data-case="gallery" data-example="noise"><h3>White noise</h3><p>Random samples, every frequency present with the same average power: a flat (but ragged) spectrum.</p></section>
-<section data-case="gallery" data-example="noisy"><h3>A sine in noise</h3><p>In time the sine is hard to see; in frequency it stands out as one line above the noise floor. That is why receivers look at spectra.</p></section>
-
-<section data-case="fourier">
-  <h3>Fourier series</h3>
-  <p>A periodic signal is a sum of sines at multiples of its frequency. Each term is a circle turning \(n\) times per period with radius \(|b_n|\): stack the circles (epicycles) and the tip of the last one traces the signal.</p>
-  <div class="eq">$$x(t) = \sum_{n=1}^{N} b_n \sin(2\pi n f t), \qquad b_n = 2f\int_0^{1/f} x(t)\sin(2\pi n f t)\,dt$$</div>
+<section data-case="rect">
+  <h3>The rectangular pulse</h3>
+  <div class="eq">$$x(t) = A\,\text{rect}\!\left(\frac{t-t_0}{\tau}\right) \;\longleftrightarrow\; X(f) = A\tau\,\text{sinc}(f\tau)\,e^{-j2\pi f t_0}, \qquad \text{sinc}(u) = \frac{\sin \pi u}{\pi u}$$</div>
+  <p>Why a sinc? At \(f = 0\) the integral is just the area, \(A\tau\). At \(f = 1/\tau\) the phasor makes exactly one full turn during the pulse: positive and negative halves cancel, a zero. At \(1.5/\tau\) one and a half turns: one half-turn is left over, a sidelobe. So the zeros sit at every multiple of \(1/\tau\).</p>
+  <div class="worked"><h4>Worked example</h4>τ = 1 s: main lobe from −1 to +1 Hz, first sidelobe at 1.43 Hz, 13.3 dB down (21 % of the peak). τ = 0.25 s: the lobe is four times wider (±4 Hz) and four times lower.</div>
+  <div class="try"><h4>Try it</h4>Change τ and watch the zeros move as 1/τ. Shift t₀: the top two panels stay still while the phase panel tilts.</div>
 </section>
-<section data-case="fourier" data-example="one"><h3>One harmonic</h3><p>The best single sine for a square wave has amplitude \(4/\pi \approx 1.27\): bigger than the square itself.</p></section>
-<section data-case="fourier" data-example="three"><h3>Three harmonics</h3><p>\(\frac4\pi\left(\sin x + \frac{\sin 3x}{3} + \frac{\sin 5x}{5}\right)\): the corners start to form.</p></section>
-<section data-case="fourier" data-example="gibbs"><h3>The Gibbs phenomenon</h3><p>With 50 harmonics the sum is flat almost everywhere, but near each jump it still overshoots by about 9 % of the jump. More terms make the overshoot narrower, never smaller.</p></section>
-<section data-case="fourier" data-example="saw"><h3>Sawtooth</h3><p>All harmonics with alternating signs, \(\frac{2}{\pi n}\). One jump per period, one Gibbs overshoot.</p></section>
-<section data-case="fourier" data-example="triangle"><h3>Triangle</h3><p>No jumps, only corners: coefficients fall as \(1/n^2\), so three harmonics already look right.</p></section>
-
-<section data-case="sampling">
-  <h3>Sampling and aliasing</h3>
-  <p>Sampling keeps only the values at \(t = n/f_s\). If \(f_s > 2f\) (the Nyquist rate) the samples determine the signal. Otherwise a lower frequency fits the same samples exactly: an alias, folded into \([0, f_s/2]\).</p>
-  <div class="eq">$$f_s > 2 f_{\max}, \qquad f_\text{alias} = |f - k f_s| \text{ (nearest)}$$</div>
+<section data-case="rect" data-example="wide"><h3>A wider pulse</h3><p>τ = 3 s: zeros every 1/3 Hz, a peak three times higher. Energy is concentrated near zero frequency.</p></section>
+<section data-case="rect" data-example="narrow"><h3>A narrow pulse</h3><p>τ = 0.25 s: the main lobe now reaches ±4 Hz. This is why radars use short pulses for fine range resolution — and why short pulses need wide receivers.</p></section>
+<section data-case="rect" data-example="shift"><h3>A shifted pulse</h3><p>t₀ = 2 s: |X(f)| is exactly the same; the phase now rotates by 2π every 0.5 Hz. Delay is encoded only in phase — that is how an echo's delay can be measured from its spectrum.</p></section>
+<section data-case="rect" data-example="tall"><h3>Twice as tall</h3><p>The transform is linear: \(2x \leftrightarrow 2X\). Every value doubles, the shape does not change, and the dB plot (normalised) does not move at all.</p></section>
+<section data-case="tri">
+  <h3>The triangular pulse</h3>
+  <div class="eq">$$x(t) = A\,\max\!\left(0, 1-\frac{|t-t_0|}{\tau}\right) \;\longleftrightarrow\; X(f) = A\tau\,\text{sinc}^2(f\tau)\,e^{-j2\pi f t_0}$$</div>
+  <p>A triangle is a rectangle convolved with itself (slide one rectangle across another and measure the overlap: it grows, peaks, shrinks linearly). Convolution in time is multiplication in frequency, so the spectrum is the sinc <i>squared</i>: always positive, and its sidelobes fall twice as fast in dB.</p>
+  <div class="worked"><h4>Worked example</h4>A triangle of half-width 0.5 s has the same total width as the 1 s rectangle. First sidelobe: −26.5 dB instead of −13.3 dB. In the dB panel the slope is −40 dB/decade: the triangle has no jumps, only kinks.</div>
+  <div class="try"><h4>Try it</h4>Look at the bottom-left panel and compare with the rectangle: same width, much less energy far from zero.</div>
 </section>
-<section data-case="sampling" data-example="enough"><h3>2.5 samples per period</h3><p>Not pretty, but enough: only \(f\) fits these samples below \(f_s/2\).</p></section>
-<section data-case="sampling" data-example="nyquist"><h3>Exactly 2f</h3><p>Two samples per period: depending on the phase they can all be zero. The Nyquist condition is a strict inequality.</p></section>
-<section data-case="sampling" data-example="alias"><h3>An alias</h3><p>7 Hz sampled at 10 Hz gives the same samples as 3 Hz (\(10 - 7\)). After sampling, nothing can tell them apart: filter before you sample.</p></section>
-<section data-case="sampling" data-example="wheel"><h3>The wagon wheel</h3><p>9.5 Hz at 10 Hz looks like 0.5 Hz: the wheel in a film seems to turn slowly, or backwards.</p></section>
-
-<section data-case="dft">
-  <h3>The DFT</h3>
-  <p>The discrete Fourier transform turns \(N\) samples into \(N\) frequency bins, one cycle per record apart. The FFT computes the same numbers in \(N\log N\) steps instead of \(N^2\).</p>
-  <div class="eq">$$X[k] = \sum_{n=0}^{N-1} x[n]\,e^{-j2\pi kn/N}, \qquad \Delta f = \frac{f_s}{N}$$</div>
+<section data-case="tri" data-example="same"><h3>Same width as the rectangle</h3><p>Half-width 0.5 s, total 1 s: zeros at multiples of 2 Hz, sidelobes squared. Smoother edges buy lower leakage — the principle behind every window function.</p></section>
+<section data-case="tri" data-example="wide"><h3>A wider triangle</h3><p>Half-width 1.5 s: zeros every 0.67 Hz. The scaling rule works for every shape.</p></section>
+<section data-case="gauss">
+  <h3>The Gaussian pulse</h3>
+  <div class="eq">$$x(t) = A\,e^{-(t-t_0)^2/2\sigma^2} \;\longleftrightarrow\; X(f) = A\sigma\sqrt{2\pi}\,e^{-2\pi^2\sigma^2 f^2}\,e^{-j2\pi f t_0}$$</div>
+  <p>The Gaussian transforms into a Gaussian. Its time spread is \(\sigma_t = \sigma\) and its frequency spread \(\sigma_f = 1/(2\pi\sigma)\): their product is \(1/4\pi\), the smallest possible for any signal. It has no jumps, no kinks, no sidelobes: in dB it falls as a parabola, faster than any power of f.</p>
+  <div class="worked"><h4>Worked example</h4>σ = 0.5 s → σ_f = 0.318 Hz. Halve σ to 0.25 s → σ_f = 0.637 Hz. The product stays 0.0796 whatever σ you choose.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Mixing up σ (of the amplitude) with the width at half height: FWHM = 2.355 σ.</div>
+  <div class="try"><h4>Try it</h4>Move σ and read the HUD: σt·σf stays exactly at the bound.</div>
 </section>
-<section data-case="dft" data-example="two"><h3>Two tones</h3><p>Each sine lands on its own bin with its amplitude: 1 at bin 8, 0.5 at bin 13.</p></section>
-<section data-case="dft" data-example="between"><h3>Leakage</h3><p>8.5 cycles do not fit the record: the cut ends make the tone spread over many bins, and its peak drops (scalloping).</p></section>
-<section data-case="dft" data-example="close"><h3>Resolution</h3><p>With 16 samples the bins are too coarse: tones 0.6 bins apart merge into one peak.</p></section>
-<section data-case="dft" data-example="longer"><h3>A longer record</h3><p>256 samples of the same signal give bins 16 times finer: the two tones separate. Resolution needs observation time, \(\Delta f \approx 1/T\).</p></section>
-
-<section data-case="spectrum">
-  <h3>Windows</h3>
-  <p>Multiplying the record by a smooth window tapers its ends, so the cut does not throw energy into far bins. The price: a wider main peak. In dB the difference is dramatic.</p>
-  <div class="eq">$$X_w[k] = \sum_n w[n]\,x[n]\,e^{-j2\pi kn/N}$$</div>
+<section data-case="gauss" data-example="narrow"><h3>A narrow Gaussian</h3><p>σ = 0.15 s: the spectrum widens to σ_f ≈ 1.06 Hz but stays a clean Gaussian with no ripples.</p></section>
+<section data-case="gauss" data-example="wide"><h3>A wide Gaussian</h3><p>σ = 1.5 s: the spectrum is a thin spike near zero, σ_f ≈ 0.1 Hz.</p></section>
+<section data-case="sinc">
+  <h3>The sinc</h3>
+  <div class="eq">$$x(t) = A\,\text{sinc}\big(2W(t-t_0)\big) \;\longleftrightarrow\; X(f) = \frac{A}{2W}\,\text{rect}\!\left(\frac{f}{2W}\right)$$</div>
+  <p>This is the rectangle turned around: a hard-edged band in frequency gives an oscillating pulse in time. It is the impulse response of the ideal low-pass filter, and the interpolating function of the sampling theorem.</p>
+  <div class="worked"><h4>Worked example</h4>W = 1 Hz: zero crossings every 0.5 s (= 1/2W) and 100 % of the energy below 1 Hz. The price: the sinc never ends — its tails decay only as 1/t. Any real implementation must cut them, and the cliff in the spectrum then gets ripples.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Believing a perfectly band-limited signal can also be time-limited. It cannot: a signal cannot be finite in both domains.</div>
+  <div class="try"><h4>Try it</h4>Increase W: the zero crossings crowd together, the flat band widens.</div>
 </section>
-<section data-case="spectrum" data-example="hann"><h3>Hann</h3><p>Sidelobes fall from about −13 dB (rectangular) to −31 dB and keep falling fast.</p></section>
-<section data-case="spectrum" data-example="blackman"><h3>Blackman</h3><p>Sidelobes below −58 dB: the −40 dB tone at bin 16, buried in leakage before, is now visible. Window choice sets the dynamic range of a spectrum analyser.</p></section>
-<section data-case="spectrum" data-example="centred"><h3>On a bin</h3><p>A tone with a whole number of cycles has no leakage with any window: the rectangular window is then the sharpest.</p></section>
+<section data-case="sinc" data-example="wide"><h3>A wider band</h3><p>W = 3 Hz: zero crossings every 1/6 s. More bandwidth, sharper features in time.</p></section>
+<section data-case="sinc" data-example="narrow"><h3>A narrow band</h3><p>W = 0.3 Hz: the sinc spreads over many seconds. A narrow filter rings for a long time.</p></section>
+<section data-case="exp">
+  <h3>The one-sided exponential</h3>
+  <div class="eq">$$x(t) = A\,e^{-\lambda (t-t_0)}\,u(t-t_0) \;\longleftrightarrow\; X(f) = \frac{A\,e^{-j2\pi f t_0}}{\lambda + j2\pi f}, \qquad |X(f)| = \frac{A}{\sqrt{\lambda^2 + (2\pi f)^2}}$$</div>
+  <p>This is the impulse response of every first-order system (an RC circuit, a cooling cup of coffee). Its spectrum is flat up to \(f_{3\text{dB}} = \lambda/2\pi\), then falls at −20 dB per decade because of the jump at \(t_0\). Unlike the symmetric pulses, its phase is not linear: it bends from 0 to −90°.</p>
+  <div class="worked"><h4>Worked example</h4>λ = 1/s: f₃dB = 0.16 Hz. A 1 kΩ, 1 µF RC circuit has λ = 1000/s → 159 Hz.</div>
+  <div class="try"><h4>Try it</h4>Increase λ: a faster decay pushes the corner to higher frequency.</div>
+</section>
+<section data-case="exp" data-example="fast"><h3>A fast decay</h3><p>λ = 5/s: corner at 0.8 Hz. Fast response = wide bandwidth.</p></section>
+<section data-case="exp" data-example="slow"><h3>A slow decay</h3><p>λ = 0.4/s: corner at 0.064 Hz. A slow system only passes slow signals.</p></section>
+<section data-case="chirp">
+  <h3>The chirp</h3>
+  <div class="eq">$$x(t) = A\,\text{rect}\!\left(\frac{t}{T}\right)\cos\!\big(2\pi(\bar f\,t + \tfrac{\mu}{2}t^2)\big), \qquad f_i(t) = \bar f + \mu t, \quad \mu = \frac{f_1-f_0}{T}$$</div>
+  <p>The instantaneous frequency slides linearly from \(f_0\) to \(f_1\). Each frequency is visited for a moment, so the spectrum is roughly flat across the sweep: bandwidth \(B = |f_1 - f_0|\), independent of the duration. That breaks the rule "long pulse = narrow spectrum": a chirp can be <i>both</i> long and wide, with \(TB \gg 1\).</p>
+  <div class="worked"><h4>Worked example</h4>T = 4 s, 1 → 5 Hz: B = 4 Hz, TB = 16. A plain pulse of 4 s would have only 0.25 Hz. After a matched filter the chirp compresses to about 1/B = 0.25 s — sixteen times shorter. This is pulse compression, used by every modern radar.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting the peaks at ±f₀ and ±f₁ only. The cosine contains both \(e^{+j}\) and \(e^{-j}\): you see a flat band on each side, mirror images.</div>
+  <div class="try"><h4>Try it</h4>Shorten T: when TB drops near 1 the band stops being flat and the chirp behaves like an ordinary pulse.</div>
+</section>
+<section data-case="chirp" data-example="wide"><h3>A wide sweep</h3><p>1 → 7 Hz: B = 6 Hz, TB = 24. Wider band, flatter top, finer compressed peak.</p></section>
+<section data-case="chirp" data-example="short"><h3>Too short</h3><p>T = 0.6 s: TB = 2.4. There is not enough time to sweep: ripples (Fresnel) dominate and the spectrum looks like a sinc again.</p></section>
+<section data-case="chirp" data-example="down"><h3>Sweeping down</h3><p>5 → 1 Hz: the magnitude spectrum is the same — only the phase (the order in which the frequencies arrive) differs. Up and down chirps are used in pairs to separate range from Doppler.</p></section>
+<section data-case="tbp">
+  <h3>The time–bandwidth product</h3>
+  <div class="look"><h4>What you are looking at</h4>Five pulses scaled to the same width τ (top left) and their spectra (top right). Bottom left: σt·σf of each, divided by the bound 1/4π. Bottom right: each pulse as a dot on the (σt, σf) plane; the red curve is the bound — nothing can sit below it.</div>
+  <p>Measure the "width" of a signal by the standard deviation of its energy, in each domain:</p>
+  <div class="eq">$$\sigma_t^2 = \frac{\int t^2 |x|^2\,dt}{\int |x|^2\,dt}, \qquad \sigma_f^2 = \frac{\int f^2 |X|^2\,df}{\int |X|^2\,df}, \qquad \sigma_t\,\sigma_f \;\ge\; \frac{1}{4\pi}$$</div>
+  <p>This is the Heisenberg–Gabor uncertainty principle. It is not about measuring errors: it is a property of waves. To be sure <i>when</i> something happened you need many frequencies; to be sure of the <i>frequency</i> you need to listen for a long time.</p>
+  <div class="worked"><h4>Worked example</h4>Gaussian: exactly 1. Triangle: √1.2 ≈ 1.10. Rectangle: its σf diverges because |X|² falls only as 1/f² — the number you see grows with the frequency grid, the jumps never die out.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a cleverer pulse could beat the bound. A chirp has TB ≫ 1 by design: it is far above the bound, which is what lets compression trade time for bandwidth.</div>
+  <div class="try"><h4>Try it</h4>Move the common width: all dots slide along hyperbolas, the bars do not change at all. The ratio is a property of the shape, not of the size.</div>
+</section>
+<section data-case="tbp" data-example="narrow"><h3>All narrower</h3><p>τ = 0.4 s: every spectrum widens by the same factor. The dots slide up-left along the curve; the ratios are unchanged.</p></section>
+<section data-case="tbp" data-example="wide"><h3>All wider</h3><p>τ = 2.5 s: every spectrum shrinks. Only the shape decides how close to the bound a pulse can get.</p></section>

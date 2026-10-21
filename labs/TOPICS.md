@@ -125,14 +125,28 @@ In the Electronics Visualizer.
 
 | Topic | What you do | Status |
 |---|---|---|
-| [Signals and spectra](web/signal-theory.html?lab=signals) | Square, sawtooth, pulses, chirps and noise, in time and in frequency. | done |
-| [Fourier series](web/signal-theory.html?lab=fourier-series) | Epicycles: stack rotating circles until they draw a square wave; Gibbs overshoot. | done |
-| [Sampling and aliasing](web/signal-theory.html?lab=sampling) | Sample a sine faster or slower than 2f and watch an alias appear. | done |
-| [DFT and FFT](web/signal-theory.html?lab=dft) | Samples into frequency bins: resolution, leakage, record length. | done |
-| [Windows and leakage](web/signal-theory.html?lab=windows) | Rectangular, Hann, Blackman: dynamic range of a spectrum. | done |
-| [Convolution](web/signal-theory.html?lab=convolution) | Flip, slide, multiply, integrate: watch y(t) being built. | done |
-| [LTI systems](web/signal-theory.html?lab=lti-systems) | Impulse, step, square and sine through RC filters, an echo and a moving average. | done |
-| [Digital filters](web/signal-theory.html?lab=filtering) | FIR low-, high- and band-pass on a noisy two-tone signal. | done |
+| [Pulses and their spectra](web/signal-theory.html?lab=pulses) | Rectangle, triangle, Gaussian, sinc and exponential: shape, spectrum, roll-off and phase. | done |
+| [The chirp](web/signal-theory.html?lab=chirp-signal) | A sweep in frequency: long in time and wide in band at once. | done |
+| [Time–bandwidth product](web/signal-theory.html?lab=time-bandwidth) | Why no pulse is narrow in both time and frequency; the Gaussian bound. | done |
+| [Fourier series](web/signal-theory.html?lab=fourier-series) | Waves built from rotating circles, and how each coefficient is measured. | done |
+| [The Gibbs phenomenon](web/signal-theory.html?lab=gibbs) | The 9 % overshoot at a jump that never goes away. | done |
+| [From series to transform](web/signal-theory.html?lab=fourier-transform) | Line spectra fill a continuous envelope as the period grows; uncertainty. | done |
+| [Leakage and windows](web/signal-theory.html?lab=leakage) | Tones between DFT bins, the seam at the record ends, and windows. | done |
+| [The transform as correlation](web/signal-theory.html?lab=dft-correlation) | Multiply by a probe and take the area: the spectrum, one frequency at a time. | done |
+| [Winding around a circle](web/signal-theory.html?lab=dft-winding) | The DFT bin as the centre of mass of the wound signal, bin by bin. | done |
+| [DFT vs continuous transform](web/signal-theory.html?lab=dft-vs-transform) | DFT dots sit on the continuous sinc; what sets spacing and range. | done |
+| [Why the FFT is fast](web/signal-theory.html?lab=fft) | The butterfly, N² vs N log N, and timings measured in your browser. | done |
+| [Sampling a tone](web/signal-theory.html?lab=sampling) | Samples, sinc reconstruction, DFT and spectral replicas side by side. | done |
+| [Aliasing](web/signal-theory.html?lab=aliasing) | Two tones through the same samples, the folding roof, the wagon wheel. | done |
+| [Spectral replicas](web/signal-theory.html?lab=replicas) | Copies of a pulse spectrum collide as the sampling rate falls. | done |
+| [Convolution](web/signal-theory.html?lab=convolution) | Flip, slide, multiply, integrate: continuous and by hand. | done |
+| [The convolution theorem](web/signal-theory.html?lab=convolution-theorem) | Convolution in time is multiplication in frequency. | done |
+| [Linearity and time invariance](web/signal-theory.html?lab=lti-properties) | Superposition and shift checked to rounding error. | done |
+| [The impulse response](web/signal-theory.html?lab=impulse-response) | δ as a limit, and any input as a sum of impulses. | done |
+| [Poles and the time response](web/signal-theory.html?lab=poles) | Where the poles sit tells how the system rings and decays. | done |
+| [Frequency response](web/signal-theory.html?lab=frequency-response) | The Bode plot and the sinusoidal steady state. | done |
+| [Filtering in time and frequency](web/signal-theory.html?lab=filtering) | Smoothing kernels, spectral masks and their ringing, the Gaussian. | done |
+| [FIR filter design](web/signal-theory.html?lab=fir-design) | The windowed sinc: low-, high- and band-pass. | done |
 | [AM and FM](web/signal-theory.html?lab=modulation) | A message on a carrier: envelope, sidebands, Bessel lines, Carson bandwidth. | done |
 | [Constellations and bit errors](web/signal-theory.html?lab=constellations) | BPSK, QPSK, 8-PSK, 16-QAM in noise; measured vs theoretical bit error rate. | done |
 | [IQ demodulation](web/signal-theory.html?lab=iq-demodulation) | Mix down to I and Q; phase and frequency errors rotate and spin the constellation. | done |

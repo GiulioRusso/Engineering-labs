@@ -1,0 +1,55 @@
+<section data-case="steps pairs">
+  <div class="look"><h4>What you are looking at</h4>Top: in the τ axis, the fixed signal h(τ) (blue) and the other signal g flipped and slid to position t (orange). Where they overlap, their product is shaded green. Bottom: the output; the orange dot is the green area at the current t, and the curve is what it traces as t moves.</div>
+  <div class="eq">$$(h * g)(t) = \int_{-\infty}^{\infty} h(\tau)\,g(t-\tau)\,d\tau$$</div>
+  <p>One output value takes four steps. Do them slowly, they are always the same:</p>
+  <ol class="steps">
+    <li><b>Flip</b> g: \(g(\tau) \to g(-\tau)\). Its right end is now on the left.</li>
+    <li><b>Shift</b> it to t: \(g(t-\tau)\). Increasing t moves it to the right.</li>
+    <li><b>Multiply</b> by h(τ), point by point.</li>
+    <li><b>Integrate</b>: the area of the product is the output at that t.</li>
+  </ol>
+  <div class="pitfall"><h4>Common mistakes</h4>Forgetting the flip — invisible for symmetric shapes, wrong for everything else (try the ramp). Thinking the output has the length of the longer input: it lasts the <i>sum</i> of the two lengths. Mixing up t and τ: τ runs along the axis of the top plot; t is one number, the position of the slide.</div>
+</section>
+<section data-case="steps">
+  <h3>Rectangle * rectangle</h3>
+  <p>Two rectangles of height 1. Before they touch, the area is zero. As g enters, the overlap is a rectangle whose width grows linearly with t: a ramp. When one is fully inside the other, the area stops growing. Then it shrinks linearly. With equal widths there is no flat part: the result is a triangle.</p>
+  <div class="eq">$$\text{rect} * \text{rect} = \max(0,\, 1 - |t|)$$</div>
+  <div class="worked"><h4>Worked example</h4>Widths 1 and 1: at t = −0.7 the overlap is from −0.5 to −0.2, width 0.3 → output 0.3. At t = 0: width 1 → output 1. Widths 1 and 2: rises over 1 s, flat for 1 s (height 1), falls over 1 s — a trapezoid 3 s long.</div>
+  <div class="try"><h4>Try it</h4>Stop at t = −0.7 and check the area by eye: the green strip is 0.3 wide and 1 tall.</div>
+</section>
+<section data-case="steps" data-example="enter"><h3>Overlap growing</h3><p>t = −0.7: the orange rectangle covers 0.3 s of the blue one. Output 0.3, and it grows by 1 for every second of slide.</p></section>
+<section data-case="steps" data-example="full"><h3>Full overlap</h3><p>t = 0: the two rectangles coincide, the area is 1 — the peak of the triangle.</p></section>
+<section data-case="steps" data-example="wide"><h3>Different widths</h3><p>1 s and 2 s: the narrow one fits inside the wide one for a whole second, giving a flat top. Total length 3 s.</p></section>
+<section data-case="pairs">
+  <h3>Any pair of signals</h3>
+  <p>The same four steps work for any shapes. Convolution is the mathematical form of <i>blurring</i>, <i>smoothing</i> and <i>memory</i>: every output value is a weighted average of the input around that time, with weights given by the other signal.</p>
+  <div class="worked"><h4>Worked example</h4>Gaussian * Gaussian (σ = 0.3 s each): another Gaussian with σ = √(0.3² + 0.3²) = 0.42 s. Variances add, as for the sum of two independent random variables — that is exactly what convolution of probability densities means.</div>
+  <div class="try"><h4>Try it</h4>Choose the ramp for g and slide slowly: once flipped, its low end leads and its tall end trails.</div>
+</section>
+<section data-case="pairs" data-example="blur"><h3>Rectangle * Gaussian</h3><p>The rectangle keeps its width, but its vertical edges become smooth S-curves, each as wide as the Gaussian. This is what a camera's blur does to a sharp edge.</p></section>
+<section data-case="pairs" data-example="gg"><h3>Gaussian * Gaussian</h3><p>Still a Gaussian, √2 times wider. Blur twice with the same lens and the blurs add in quadrature.</p></section>
+<section data-case="pairs" data-example="charge"><h3>Rectangle * exponential</h3><p>A pulse into an RC circuit (whose impulse response is the exponential): the output charges as \(1-e^{-at}\) while the pulse lasts, then discharges. Every RC circuit computes this convolution.</p></section>
+<section data-case="pairs" data-example="flip"><h3>Watch the flip</h3><p>The ramp g rises from 0 to 1. Flipped and slid, its low end arrives first and the tall end last: the output grows slowly (quadratically) and then drops suddenly when the tall end leaves. Without the flip you would predict the opposite shape.</p></section>
+<section data-case="discrete">
+  <h3>Discrete convolution, by hand</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the input sequence x[k]. Top right: the kernel h flipped and moved to n. Bottom left: the products of the samples that line up. Bottom right: their sum, y[n], built one index at a time. The HUD writes the sum out.</div>
+  <div class="eq">$$y[n] = \sum_k x[k]\,h[n-k]$$</div>
+  <p>This is what a computer does: no integrals, just multiply-and-add. A digital filter is nothing more than this sum.</p>
+  <div class="worked"><h4>Worked example</h4>x = [1, 2, 3, 2, 1, …], h = [1, 1, 1]: y[2] = x[0]·1 + x[1]·1 + x[2]·1 = 1 + 2 + 3 = 6. With h = [1, −1]: y[2] = x[2] − x[1] = 1, the change between samples.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Lining up h without flipping. With [1, −1] that gives the previous minus the current sample — the opposite sign.</div>
+  <div class="try"><h4>Try it</h4>Step n by hand and check each product before looking at the sum.</div>
+</section>
+<section data-case="discrete" data-example="avg"><h3>Three-point sum</h3><p>Each output is the sum of three neighbours: noise and sharp changes are smoothed (divide by 3 to get the average).</p></section>
+<section data-case="discrete" data-example="diff"><h3>Difference</h3><p>[1, −1] subtracts the previous sample: constant parts vanish, only changes remain — the discrete derivative, an edge detector.</p></section>
+<section data-case="discrete" data-example="echo"><h3>Echo</h3><p>[1, 0, 0, 0.5]: each output is the input plus half of the input three samples ago. Every reverb in audio is a (long) kernel like this.</p></section>
+<section data-case="theorem">
+  <h3>The convolution theorem</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: h and g, and their convolution computed by sliding. Bottom left: their spectra. Bottom right: the spectrum of the convolution (solid) and the product of the two spectra (dashed) — they coincide.</div>
+  <div class="eq">$$h * g \;\longleftrightarrow\; H(f)\cdot G(f)$$</div>
+  <p>This is the most useful identity in signal processing. Sliding and integrating is hard; multiplying two curves is easy. So: to filter, multiply the spectrum by the filter's response; to understand what a convolution does, look at the product of spectra.</p>
+  <div class="worked"><h4>Worked example</h4>rect * rect = triangle, and sinc · sinc = sinc²: the triangle's spectrum. Its sidelobes are the square of the rectangle's: −26.5 dB instead of −13.3 dB.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a filter can add frequencies. It multiplies: where the input spectrum is zero the output is zero too. Only non-linear systems create new frequencies.</div>
+  <div class="try"><h4>Try it</h4>Pick rect and Gaussian: the product inherits the Gaussian's lack of sidelobes.</div>
+</section>
+<section data-case="theorem" data-example="rr"><h3>rect * rect</h3><p>Two sinc spectra multiply into sinc²: the triangle's spectrum, always positive, sidelobes squared.</p></section>
+<section data-case="theorem" data-example="rg"><h3>Smoothing</h3><p>Multiplying by the Gaussian's spectrum (no sidelobes, falling fast) kills the rectangle's high frequencies: that is why the blurred rectangle has smooth edges.</p></section>
