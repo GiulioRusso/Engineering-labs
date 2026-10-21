@@ -1,0 +1,31 @@
+<section data-case="first second poles">
+  <p>The complex plane \(s = \sigma + j\omega\), with the poles of \(G(s)\) as ×. The poles decide how the system moves; the right half plane (tinted) is unstable. Drag the pole. The <i>3D view</i> (in View) shows \(\log|G(s)|\) as a surface: every pole is a peak.</p>
+</section>
+<section data-case="first">
+  <h3>First order</h3>
+  <p>One pole at \(-1/\tau\). The step response climbs towards \(K\) without overshoot, reaching 63 % after one time constant and 98 % after four. The further left the pole, the faster.</p>
+  <div class="eq">$$G(s) = \frac{K}{\tau s + 1}, \qquad y(t) = K\left(1 - e^{-t/\tau}\right)$$</div>
+</section>
+<section data-case="first" data-example="fast"><h3>Small τ</h3><p>The pole moves left to \(-3.3\): the response is three times faster. A thermometer with a thin bulb, a small RC circuit.</p></section>
+<section data-case="first" data-example="slow"><h3>Large τ</h3><p>A pole near the origin is slow: \(\tau = 3\) s means 12 s to settle.</p></section>
+<section data-case="first" data-example="gain"><h3>Gain</h3><p>\(K\) scales the final value but not the speed: the pole does not move.</p></section>
+<section data-case="second">
+  <h3>Second order</h3>
+  <p>Two poles at \(-\zeta\omega_n \pm j\omega_n\sqrt{1-\zeta^2}\). Their distance from the origin is \(\omega_n\) (speed), their angle sets \(\zeta\) (damping). The imaginary part makes it oscillate, the real part makes it decay.</p>
+  <div class="eq">$$G(s) = \frac{K\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}, \qquad M_p = e^{-\pi\zeta/\sqrt{1-\zeta^2}}, \qquad t_s \approx \frac{4}{\zeta\omega_n}$$</div>
+</section>
+<section data-case="second" data-example="z0"><h3>No damping</h3><p>The poles sit on the \(j\omega\) axis: the response oscillates between 0 and \(2K\) forever.</p></section>
+<section data-case="second" data-example="z07"><h3>ζ = 0.7</h3><p>A common design target: about 5 % overshoot and a quick rise. The poles are at 45° from the negative real axis.</p></section>
+<section data-case="second" data-example="z1"><h3>Critical damping</h3><p>The two poles meet on the real axis: the fastest response without overshoot.</p></section>
+<section data-case="second" data-example="z2"><h3>Overdamped</h3><p>Two separate real poles; the one near the origin is slow and dominates. Sluggish, no overshoot.</p></section>
+<section data-case="second" data-example="wn"><h3>Faster, same shape</h3><p>Doubling \(\omega_n\) at fixed \(\zeta\) moves the poles out along the same rays: same overshoot, half the time.</p></section>
+<section data-case="poles">
+  <h3>Poles and stability</h3>
+  <p>Each pole \(p\) contributes a mode \(e^{pt}\) to the response. With \(p = \sigma \pm j\omega\) that is \(e^{\sigma t}\cos\omega t\): it decays if \(\sigma < 0\), grows if \(\sigma > 0\). A system is stable when every pole is in the left half plane. The plot is the impulse response, the sum of the modes.</p>
+  <div class="eq">$$y(t) = \sum_i c_i\, e^{p_i t}, \qquad \text{stable} \iff \operatorname{Re} p_i < 0\ \ \forall i$$</div>
+</section>
+<section data-case="poles" data-example="axis"><h3>On the jω axis</h3><p>\(\sigma = 0\): the oscillation neither grows nor decays. Marginally stable: any extra push would accumulate.</p></section>
+<section data-case="poles" data-example="rhp"><h3>Right half plane</h3><p>\(\sigma > 0\): the oscillation grows as \(e^{0.3t}\) without limit. An unstable system.</p></section>
+<section data-case="poles" data-example="real"><h3>Real poles</h3><p>No imaginary part, no oscillation: the modes are pure exponentials.</p></section>
+<section data-case="poles" data-example="far"><h3>A far pole</h3><p>A pole at \(-4\) has a mode \(e^{-4t}\) that dies out almost at once: the response is still dominated by the pair closest to the axis.</p></section>
+<section data-case="poles" data-example="near"><h3>A near pole</h3><p>A real pole at \(-0.2\) decays slower than the pair: now it dominates, and the system looks first order and slow.</p></section>

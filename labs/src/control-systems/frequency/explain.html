@@ -1,0 +1,29 @@
+<section data-case="bode nyquist lead">
+  <p>Feed the loop a sine of frequency \(\omega\): it comes out scaled by \(|L(j\omega)|\) and shifted by \(\angle L(j\omega)\). The yellow curve traces \(L(j\omega)\) in the complex plane as \(\omega\) grows: the Nyquist plot (to scale up to \(|L| = 2\), compressed beyond). Magnitude and phase against \(\log\omega\) are the Bode diagram below. Tick <i>3D view</i> in View to lift the curve by \(\log\omega\): its shadows are both diagrams.</p>
+</section>
+<section data-case="bode">
+  <h3>The Bode diagram</h3>
+  <p>In decibels the factors of \(L\) add. A pole at \(\omega_p\) is flat below it and falls 20 dB per decade above it, with −3 dB and −45° at the corner; its phase goes from 0° to −90°.</p>
+  <div class="eq">$$|L|_\text{dB} = 20\log_{10}|L|, \qquad \frac{1}{1 + j\omega/\omega_p}: \ -3\ \text{dB},\ -45° \text{ at } \omega = \omega_p$$</div>
+</section>
+<section data-case="bode" data-example="pole2"><h3>Two poles</h3><p>Above both corners the slopes add: −40 dB per decade, and the phase heads to −180°.</p></section>
+<section data-case="bode" data-example="int"><h3>An integrator</h3><p>\(1/j\omega\) falls 20 dB per decade at every frequency and adds a constant −90°. Infinite gain at \(\omega = 0\): zero steady-state error to a step.</p></section>
+<section data-case="bode" data-example="zero"><h3>A zero</h3><p>A zero rises +20 dB per decade above its corner and adds up to +90°: here it cancels the slope of the second pole above 5 rad/s.</p></section>
+<section data-case="bode" data-example="gain"><h3>Gain</h3><p>\(K = 10\) lifts the whole magnitude by 20 dB. The phase does not change.</p></section>
+<section data-case="nyquist">
+  <h3>The Nyquist criterion</h3>
+  <p>The closed loop \(1 + L\) has a pole where \(L = -1\). For a loop with no unstable poles, the closed loop is stable when the Nyquist curve (with its mirror for negative frequencies) does not encircle −1. How far the curve stays from −1 is measured by two margins (red).</p>
+  <div class="eq">$$\text{GM} = -20\log_{10}|L(j\omega_{pc})|, \ \angle L(j\omega_{pc}) = -180°; \qquad \text{PM} = 180° + \angle L(j\omega_{gc}), \ |L(j\omega_{gc})| = 1$$</div>
+</section>
+<section data-case="nyquist" data-example="small"><h3>Small gain</h3><p>The curve crosses the negative real axis far to the right of −1: large gain and phase margins, a calm, slow loop.</p></section>
+<section data-case="nyquist" data-example="more"><h3>More gain</h3><p>The whole curve grows: it crosses closer to −1, both margins shrink, the step response overshoots more.</p></section>
+<section data-case="nyquist" data-example="edge"><h3>Through −1</h3><p>At \(K = 3\) the curve passes through −1 at \(\omega = \sqrt2\): GM = 0 dB, PM = 0°. The closed loop oscillates forever.</p></section>
+<section data-case="nyquist" data-example="over"><h3>Encircling −1</h3><p>Now −1 is inside the loop of the curve: two closed-loop poles in the right half plane. Unstable.</p></section>
+<section data-case="lead">
+  <h3>Lead and lag compensation</h3>
+  <p>Add \(C(s) = \frac{1 + s/z}{1 + s/p}\) in series. A <b>lead</b> (\(z < p\)) adds phase between \(z\) and \(p\), up to \(\varphi_{\max}\) at \(\sqrt{zp}\): placed near the crossover it raises the phase margin. A <b>lag</b> (\(z > p\)) adds gain at low frequency only, cutting the steady-state error without touching the margins. Dashed: without \(C\).</p>
+  <div class="eq">$$\sin\varphi_{\max} = \frac{p - z}{p + z}, \qquad \omega_{\max} = \sqrt{zp}$$</div>
+</section>
+<section data-case="lead" data-example="none"><h3>Without a compensator</h3><p>\(K = 2.5\) gives a fast loop but only 5° of phase margin: the step response rings for a long time.</p></section>
+<section data-case="lead" data-example="lag"><h3>Lag</h3><p>Ten times the gain (so ten times less ramp error) with a lag at 0.005–0.05 rad/s: at the crossover the lag is invisible, the margins stay near 30°. The price: a slow tail in the step response.</p></section>
+<section data-case="lead" data-example="wide"><h3>A wider lead</h3><p>A larger \(p/z\) gives more phase but also more high-frequency gain, which amplifies sensor noise.</p></section>

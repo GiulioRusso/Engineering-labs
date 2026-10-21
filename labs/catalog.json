@@ -66,49 +66,82 @@
   "name": "Control systems",
   "topics": [
    {
-    "id": "step-response",
-    "title": "Step response from the poles",
-    "what": "Drag first- and second-order poles; the step response, overshoot and settling time follow."
+    "id": "time-response",
+    "title": "Time response",
+    "what": "First- and second-order systems: time constant, damping, overshoot, settling.",
+    "from": "response",
+    "cases": [
+     "first",
+     "second"
+    ],
+    "group": "Time domain"
    },
    {
-    "id": "s-plane",
-    "title": "The s-plane and the z-plane",
-    "what": "Poles over a 3D |H(s)| surface; natural modes grow or decay with their position."
+    "id": "poles",
+    "title": "Poles and stability",
+    "what": "Poles over the 3D |G(s)| surface: left half plane decays, right half plane grows.",
+    "from": "response",
+    "cases": [
+     "poles"
+    ],
+    "group": "Time domain"
    },
    {
     "id": "steady-state-error",
-    "title": "System type and steady-state error",
-    "what": "Step, ramp and parabola into type 0, 1 and 2 loops: which error survives."
+    "title": "Feedback and steady-state error",
+    "what": "Close the loop: step and ramp into type 0, 1 and 2 systems, which error survives.",
+    "from": "feedback",
+    "cases": [
+     "error"
+    ],
+    "group": "Feedback"
    },
    {
     "id": "root-locus",
     "title": "Root locus",
-    "what": "Drag the gain: closed-loop poles slide along the locus over |G(s)|."
+    "what": "Raise the gain: the closed-loop poles slide along the locus.",
+    "from": "feedback",
+    "cases": [
+     "locus"
+    ],
+    "group": "Feedback"
+   },
+   {
+    "id": "pid",
+    "title": "PID control",
+    "what": "A motor holds a rod upright: tune Kp, Ki, Kd, then push it, load it and add sensor noise.",
+    "from": "pid-pendulum",
+    "group": "Feedback"
    },
    {
     "id": "bode",
-    "title": "Bode diagrams",
-    "what": "Build a Bode plot pole by pole; asymptotes, corners and margins."
+    "title": "Bode diagram",
+    "what": "Magnitude and phase against frequency; corners, slopes and asymptotes.",
+    "from": "frequency",
+    "cases": [
+     "bode"
+    ],
+    "group": "Frequency domain"
    },
    {
     "id": "nyquist",
-    "title": "The Nyquist criterion",
-    "what": "The Nyquist curve lifted along log ω in 3D; count the encirclements of −1."
-   },
-   {
-    "id": "nichols",
-    "title": "The Nichols chart",
-    "what": "Gain vs phase with M-circles; drag the gain and read the margins."
+    "title": "Nyquist and stability margins",
+    "what": "The frequency response as a curve around −1: gain and phase margins.",
+    "from": "frequency",
+    "cases": [
+     "nyquist"
+    ],
+    "group": "Frequency domain"
    },
    {
     "id": "lead-lag",
-    "title": "Lead and lag compensators",
-    "what": "Drop a lead or lag network into the loop; the locus and margins move."
-   },
-   {
-    "id": "pid-pendulum",
-    "title": "PID on an inverted pendulum",
-    "what": "Tune Kp, Ki, Kd and push the pendulum; windup and noise included."
+    "title": "Lead and lag compensation",
+    "what": "Add a lead or lag network to the loop: the margins and the step response move.",
+    "from": "frequency",
+    "cases": [
+     "lead"
+    ],
+    "group": "Frequency domain"
    }
   ]
  },
@@ -182,19 +215,40 @@
     "id": "functions",
     "title": "Functions",
     "what": "Lines, parabolas, exponentials and logarithms: drag the graph, read the equation.",
-    "from": "function-explorer"
+    "from": "function-explorer",
+    "group": "Functions"
    },
    {
     "id": "trigonometry",
     "title": "Trigonometry",
     "what": "A point on the unit circle: sine, cosine, tangent and the waves they make.",
-    "from": "unit-circle"
+    "from": "unit-circle",
+    "group": "Functions"
    },
    {
     "id": "complex-numbers",
     "title": "Complex numbers",
     "what": "Sums, products, powers and roots as arrows in the plane.",
-    "from": "complex-plane"
+    "from": "complex-plane",
+    "group": "Functions"
+   },
+   {
+    "id": "calculus",
+    "title": "Calculus",
+    "what": "Derivative as a limit of slopes, integral as a limit of sums, Taylor polynomials.",
+    "group": "Calculus"
+   },
+   {
+    "id": "sequences",
+    "title": "Sequences and series",
+    "what": "Partial sums that converge or not: geometric, harmonic, alternating, and the limit.",
+    "group": "Calculus"
+   },
+   {
+    "id": "differential-equations",
+    "title": "Differential equations",
+    "what": "Slope fields and solution curves; Euler steps against the exact solution.",
+    "group": "Calculus"
    },
    {
     "id": "vectors",
@@ -204,24 +258,22 @@
     "cases": [
      "dot",
      "cross"
-    ]
-   },
-   {
-    "id": "calculus",
-    "title": "Calculus",
-    "what": "Derivative as a limit of slopes, integral as a limit of sums, Taylor polynomials."
+    ],
+    "group": "Linear algebra"
    },
    {
     "id": "matrices",
     "title": "Matrices and linear maps",
     "what": "A 3×3 matrix deforms the unit cube: determinant, eigenvectors.",
-    "from": "linear-maps"
+    "from": "linear-maps",
+    "group": "Linear algebra"
    },
    {
     "id": "surfaces",
     "title": "Functions of two variables",
     "what": "Walk on a surface: gradient, tangent plane, level curves.",
-    "from": "surfaces-gradient"
+    "from": "surfaces-gradient",
+    "group": "Multivariable calculus"
    },
    {
     "id": "vector-calculus",
@@ -231,7 +283,14 @@
     "cases": [
      "div",
      "curl"
-    ]
+    ],
+    "group": "Multivariable calculus"
+   },
+   {
+    "id": "probability",
+    "title": "Probability",
+    "what": "A Galton board: random falls build the binomial and then the normal curve.",
+    "group": "Probability"
    }
   ]
  },
@@ -247,7 +306,8 @@
     "cases": [
      "projectile",
      "circular"
-    ]
+    ],
+    "group": "Mechanics"
    },
    {
     "id": "momentum",
@@ -256,7 +316,8 @@
     "from": "motion-energy",
     "cases": [
      "collision"
-    ]
+    ],
+    "group": "Mechanics"
    },
    {
     "id": "forces",
@@ -266,7 +327,8 @@
     "cases": [
      "sum",
      "torque"
-    ]
+    ],
+    "group": "Mechanics"
    },
    {
     "id": "fluids",
@@ -275,27 +337,67 @@
     "from": "forces-torque",
     "cases": [
      "buoyancy"
-    ]
+    ],
+    "group": "Mechanics"
    },
    {
     "id": "oscillations",
     "title": "Oscillations",
-    "what": "Spring and pendulum: period, energy, damping and resonance."
+    "what": "Spring and pendulum: period, energy, damping and resonance.",
+    "group": "Waves and oscillations"
    },
    {
-    "id": "gravity-field",
-    "title": "Gravitational field",
-    "what": "The field of two masses, arrow by arrow.",
-    "from": "maths/vector-fields",
-    "cases": [
-     "gravity"
-    ]
+    "id": "waves",
+    "title": "Waves",
+    "what": "A string: travelling pulses, superposition, standing waves, and the Doppler effect.",
+    "group": "Waves and oscillations"
    },
    {
     "id": "thermodynamics",
     "title": "Gas and heat",
     "what": "Atoms in a piston: pressure from impacts, heating, isothermal and adiabatic squeezes.",
-    "from": "gas-piston"
+    "from": "gas-piston",
+    "group": "Heat"
+   },
+   {
+    "id": "electrostatics",
+    "title": "Electric charges",
+    "what": "Field lines, equipotentials and Gauss’s law for point charges.",
+    "from": "point-charges",
+    "group": "Electromagnetism"
+   },
+   {
+    "id": "magnetic-field",
+    "title": "Magnetic field of currents",
+    "what": "A loop and a solenoid: field lines, B on the axis.",
+    "from": "coil-induction",
+    "cases": [
+     "field"
+    ],
+    "group": "Electromagnetism"
+   },
+   {
+    "id": "induction",
+    "title": "Electromagnetic induction",
+    "what": "Move a magnet through a coil: flux, EMF, Lenz, magnetic braking.",
+    "from": "coil-induction",
+    "cases": [
+     "magnet",
+     "ac"
+    ],
+    "group": "Electromagnetism"
+   },
+   {
+    "id": "charged-particle",
+    "title": "Charges in E and B",
+    "what": "Circles, helices and drifts of a charged particle.",
+    "group": "Electromagnetism"
+   },
+   {
+    "id": "em-wave",
+    "title": "Electromagnetic waves",
+    "what": "E and B travelling together; reflection and standing waves.",
+    "group": "Electromagnetism"
    },
    {
     "id": "geometric-optics",
@@ -306,7 +408,8 @@
      "snell",
      "lens",
      "mirror"
-    ]
+    ],
+    "group": "Optics"
    },
    {
     "id": "interference",
@@ -315,63 +418,43 @@
     "from": "optics-bench",
     "cases": [
      "slits"
-    ]
-   },
-   {
-    "id": "electrostatics",
-    "title": "Electric charges",
-    "what": "Field lines, equipotentials and Gauss’s law for point charges.",
-    "from": "point-charges"
-   },
-   {
-    "id": "magnetic-field",
-    "title": "Magnetic field of currents",
-    "what": "A loop and a solenoid: field lines, B on the axis.",
-    "from": "coil-induction",
-    "cases": [
-     "field"
-    ]
-   },
-   {
-    "id": "induction",
-    "title": "Electromagnetic induction",
-    "what": "Move a magnet through a coil: flux, EMF, Lenz, magnetic braking.",
-    "from": "coil-induction",
-    "cases": [
-     "magnet",
-     "ac"
-    ]
-   },
-   {
-    "id": "charged-particle",
-    "title": "Charges in E and B",
-    "what": "Circles, helices and drifts of a charged particle."
-   },
-   {
-    "id": "em-wave",
-    "title": "Electromagnetic waves",
-    "what": "E and B travelling together; reflection and standing waves."
+    ],
+    "group": "Optics"
    },
    {
     "id": "flight",
     "title": "Flight",
     "what": "Lift, drag, the stall and the flight envelope of a light aircraft.",
-    "from": "flight-envelope"
+    "from": "flight-envelope",
+    "group": "Flight and space"
+   },
+   {
+    "id": "gravity-field",
+    "title": "Gravitational field",
+    "what": "The field of two masses, arrow by arrow.",
+    "from": "maths/vector-fields",
+    "cases": [
+     "gravity"
+    ],
+    "group": "Flight and space"
    },
    {
     "id": "orbits",
     "title": "Orbits",
-    "what": "Kepler orbits around a turning Earth, ground tracks, J2."
+    "what": "Kepler orbits around a turning Earth, ground tracks, J2.",
+    "group": "Flight and space"
    },
    {
     "id": "orbital-transfers",
     "title": "Orbital transfers",
-    "what": "Hohmann and bi-elliptic transfers, Δv and the rocket equation."
+    "what": "Hohmann and bi-elliptic transfers, Δv and the rocket equation.",
+    "group": "Flight and space"
    },
    {
     "id": "lagrange-points",
     "title": "Lagrange points",
-    "what": "The rotating two-body potential and its five equilibria."
+    "what": "The rotating two-body potential and its five equilibria.",
+    "group": "Flight and space"
    }
   ]
  },

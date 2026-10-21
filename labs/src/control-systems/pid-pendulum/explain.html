@@ -1,0 +1,15 @@
+<section data-case="pid">
+  <h3>PID control</h3>
+  <p>A motor at the pivot pushes the rod back towards upright. The controller looks at the error (the tilt) three ways: how big it is now (P), how much it has added up (I), and how fast it is changing (D).</p>
+  <div class="eq">$$\tau = -K_p\,\theta - K_i\!\int\!\theta\,dt - K_d\,\dot\theta, \qquad mL^2\ddot\theta = mgL\sin\theta + \tau + \tau_\text{dist}$$</div>
+  <p><b>P</b> is a spring: it must beat gravity, \(K_p > mgL\). <b>D</b> is a damper: it calms the swinging but amplifies sensor noise. <b>I</b> removes any steady error, but can overshoot and wind up when the motor saturates.</p>
+</section>
+<section data-case="pid" data-example="weak"><h3>Kp too small</h3><p>With \(K_p = 3 < mgL = 4.9\) N·m/rad, gravity pulls harder than the controller pushes back: the rod falls, slowly at first.</p></section>
+<section data-case="pid" data-example="p"><h3>P only</h3><p>A pure spring: the rod rocks back and forth around upright, damped only by the small friction in the pivot. The linearised equation is \(mL^2\ddot\theta = -(K_p - mgL)\theta\).</p></section>
+<section data-case="pid" data-example="push"><h3>A push</h3><p>A short torque kick at 1 s. More \(K_d\) absorbs it with less swinging; too little and it rocks for longer.</p></section>
+<section data-case="pid" data-example="noise"><h3>Noise and the D term</h3><p>The sensor jitters by a fraction of a degree. D reacts to the rate of change, and noise changes very fast: the motor torque (violet) shakes. Real controllers filter the derivative (here over 10 ms) and keep \(K_d\) moderate.</p></section>
+<section data-case="pid" data-example="load"><h3>A load</h3><p>From 3 s a constant load torque leans on the rod. PD can only push back if the rod is tilted: it settles where \(K_p\theta = mgL\sin\theta + \tau_\text{load}\), about 7.6° here.</p></section>
+<section data-case="pid" data-example="integral"><h3>Integral action</h3><p>The integral keeps growing while any tilt remains, so the motor keeps adding torque until the tilt is exactly zero. The cost: a slower, slightly oscillatory recovery.</p></section>
+<section data-case="pid" data-example="windup"><h3>Integrator windup</h3><p>The motor can only give 6 N·m. Starting at 30°, it saturates; meanwhile the integral keeps piling up. When the rod finally comes back, the huge stored integral pushes it far past upright, beyond what the weak motor can recover: it falls.</p></section>
+<section data-case="pid" data-example="antiwindup"><h3>Anti-windup</h3><p>Stop integrating while the motor is saturated: the integral stays small, and the rod comes back without the big overshoot.</p></section>
+<details><summary>About the model</summary><p>Point mass on a massless rod, pivot friction \(b\), controller at 1 kHz with a 10 ms derivative filter, integration by semi-implicit Euler. Tests: falls for \(K_p &lt; mgL\), holds above; PD load tilt satisfies the torque balance (10⁻³); integral removes it; windup falls, anti-windup recovers.</p></details>

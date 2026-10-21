@@ -1,0 +1,19 @@
+<section data-case="galton">
+  <h3>The Galton board</h3>
+  <p>Each ball meets \(n\) pegs and bounces right with probability \(p\). Where it lands counts its right bounces \(k\). Many balls pile up into the binomial distribution; the dashed curve in the plot is the exact probability.</p>
+  <div class="eq">$$P(k) = \binom{n}{k} p^k (1-p)^{n-k}, \qquad \mu = np, \quad \sigma = \sqrt{np(1-p)}$$</div>
+</section>
+<section data-case="galton" data-example="few"><h3>Few rows</h3><p>Four rows give five bins: \(P = \tfrac1{16}, \tfrac4{16}, \tfrac6{16}, \tfrac4{16}, \tfrac1{16}\). The middle is most likely because the most paths lead there (6 of 16).</p></section>
+<section data-case="galton" data-example="biased"><h3>Biased pegs</h3><p>\(p = 0.7\): the pile moves right to \(np = 7\) and becomes a little lopsided.</p></section>
+<section data-case="galton" data-example="many"><h3>Many rows</h3><p>With 24 rows the histogram is almost the normal curve with the same \(\mu\) and \(\sigma\) (de Moivre–Laplace). The sum of many small independent pushes is normal.</p></section>
+<section data-case="galton" data-example="fewballs"><h3>Few balls</h3><p>50 balls give a ragged histogram: frequencies fluctuate around the probabilities by about \(\sqrt{NP}\) balls per bin. More trials, smaller relative noise (law of large numbers).</p></section>
+
+<section data-case="dice">
+  <h3>Sums of dice: the central limit theorem</h3>
+  <p>One die is flat: every face \(\tfrac16\). The sum of several dice is not: there are more ways to make 7 than 2. The more dice you add, the closer the shape gets to the normal curve, whatever the shape of one die.</p>
+  <div class="eq">$$\mu = 3.5\,k, \qquad \sigma = \sqrt{k\cdot\tfrac{35}{12}}, \qquad \frac{S_k - \mu}{\sigma} \xrightarrow{k\to\infty} \mathcal N(0, 1)$$</div>
+</section>
+<section data-case="dice" data-example="one"><h3>One die</h3><p>A uniform distribution: six equal bars, nothing bell-shaped.</p></section>
+<section data-case="dice" data-example="three"><h3>Three dice</h3><p>Already a smooth hump: 10 and 11 are the most likely sums (27 ways each out of 216).</p></section>
+<section data-case="dice" data-example="ten"><h3>Ten dice</h3><p>The exact distribution and the normal curve differ by less than 0.002 everywhere.</p></section>
+<details><summary>About the model</summary><p>A seeded random generator, so the same experiment replays every time. Tests: binomial mean, simulated mean within 3 standard errors, two-dice frequency of 7, ten dice vs normal (max difference &lt; 0.002).</p></details>

@@ -29,15 +29,14 @@ In the Algorithm Visualizer.
 
 | Topic | What you do | Status |
 |---|---|---|
-| Step response from the poles | Drag first- and second-order poles; the step response, overshoot and settling time follow. | planned |
-| The s-plane and the z-plane | Poles over a 3D |H(s)| surface; natural modes grow or decay with their position. | planned |
-| System type and steady-state error | Step, ramp and parabola into type 0, 1 and 2 loops: which error survives. | planned |
-| Root locus | Drag the gain: closed-loop poles slide along the locus over |G(s)|. | planned |
-| Bode diagrams | Build a Bode plot pole by pole; asymptotes, corners and margins. | planned |
-| The Nyquist criterion | The Nyquist curve lifted along log ω in 3D; count the encirclements of −1. | planned |
-| The Nichols chart | Gain vs phase with M-circles; drag the gain and read the margins. | planned |
-| Lead and lag compensators | Drop a lead or lag network into the loop; the locus and margins move. | planned |
-| PID on an inverted pendulum | Tune Kp, Ki, Kd and push the pendulum; windup and noise included. | planned |
+| [Time response](web/control-systems.html?lab=time-response) | First- and second-order systems: time constant, damping, overshoot, settling. | done |
+| [Poles and stability](web/control-systems.html?lab=poles) | Poles over the 3D |G(s)| surface: left half plane decays, right half plane grows. | done |
+| [Feedback and steady-state error](web/control-systems.html?lab=steady-state-error) | Close the loop: step and ramp into type 0, 1 and 2 systems, which error survives. | done |
+| [Root locus](web/control-systems.html?lab=root-locus) | Raise the gain: the closed-loop poles slide along the locus. | done |
+| [PID control](web/control-systems.html?lab=pid) | A motor holds a rod upright: tune Kp, Ki, Kd, then push it, load it and add sensor noise. | done |
+| [Bode diagram](web/control-systems.html?lab=bode) | Magnitude and phase against frequency; corners, slopes and asymptotes. | done |
+| [Nyquist and stability margins](web/control-systems.html?lab=nyquist) | The frequency response as a curve around −1: gain and phase margins. | done |
+| [Lead and lag compensation](web/control-systems.html?lab=lead-lag) | Add a lead or lag network to the loop: the margins and the step response move. | done |
 
 ## Digital electronics
 
@@ -69,11 +68,14 @@ In the Electronics Visualizer.
 | [Functions](web/maths.html?lab=functions) | Lines, parabolas, exponentials and logarithms: drag the graph, read the equation. | done |
 | [Trigonometry](web/maths.html?lab=trigonometry) | A point on the unit circle: sine, cosine, tangent and the waves they make. | done |
 | [Complex numbers](web/maths.html?lab=complex-numbers) | Sums, products, powers and roots as arrows in the plane. | done |
-| [Vectors](web/maths.html?lab=vectors) | Dot and cross product of two arrows you drag in 3D. | done |
 | [Calculus](web/maths.html?lab=calculus) | Derivative as a limit of slopes, integral as a limit of sums, Taylor polynomials. | done |
+| [Sequences and series](web/maths.html?lab=sequences) | Partial sums that converge or not: geometric, harmonic, alternating, and the limit. | done |
+| [Differential equations](web/maths.html?lab=differential-equations) | Slope fields and solution curves; Euler steps against the exact solution. | done |
+| [Vectors](web/maths.html?lab=vectors) | Dot and cross product of two arrows you drag in 3D. | done |
 | [Matrices and linear maps](web/maths.html?lab=matrices) | A 3×3 matrix deforms the unit cube: determinant, eigenvectors. | done |
 | [Functions of two variables](web/maths.html?lab=surfaces) | Walk on a surface: gradient, tangent plane, level curves. | done |
 | [Divergence and curl](web/maths.html?lab=vector-calculus) | Tracers in a flow: spreading is divergence, turning is curl. | done |
+| [Probability](web/maths.html?lab=probability) | A Galton board: random falls build the binomial and then the normal curve. | done |
 
 ## Physics
 
@@ -84,16 +86,17 @@ In the Electronics Visualizer.
 | [Forces and torque](web/physics.html?lab=forces) | Add forces tip to tail; turn a lever. | done |
 | [Buoyancy](web/physics.html?lab=fluids) | A block in a liquid bobs and settles where buoyancy equals weight. | done |
 | [Oscillations](web/physics.html?lab=oscillations) | Spring and pendulum: period, energy, damping and resonance. | done |
-| [Gravitational field](web/physics.html?lab=gravity-field) | The field of two masses, arrow by arrow. | done |
+| [Waves](web/physics.html?lab=waves) | A string: travelling pulses, superposition, standing waves, and the Doppler effect. | done |
 | [Gas and heat](web/physics.html?lab=thermodynamics) | Atoms in a piston: pressure from impacts, heating, isothermal and adiabatic squeezes. | done |
-| [Rays: refraction, lenses, mirrors](web/physics.html?lab=geometric-optics) | Snell’s law, total reflection and image formation. | done |
-| [Interference](web/physics.html?lab=interference) | Two slits, two waves: bright and dark fringes. | done |
 | [Electric charges](web/physics.html?lab=electrostatics) | Field lines, equipotentials and Gauss’s law for point charges. | done |
 | [Magnetic field of currents](web/physics.html?lab=magnetic-field) | A loop and a solenoid: field lines, B on the axis. | done |
 | [Electromagnetic induction](web/physics.html?lab=induction) | Move a magnet through a coil: flux, EMF, Lenz, magnetic braking. | done |
 | [Charges in E and B](web/physics.html?lab=charged-particle) | Circles, helices and drifts of a charged particle. | done |
 | [Electromagnetic waves](web/physics.html?lab=em-wave) | E and B travelling together; reflection and standing waves. | done |
+| [Rays: refraction, lenses, mirrors](web/physics.html?lab=geometric-optics) | Snell’s law, total reflection and image formation. | done |
+| [Interference](web/physics.html?lab=interference) | Two slits, two waves: bright and dark fringes. | done |
 | [Flight](web/physics.html?lab=flight) | Lift, drag, the stall and the flight envelope of a light aircraft. | done |
+| [Gravitational field](web/physics.html?lab=gravity-field) | The field of two masses, arrow by arrow. | done |
 | [Orbits](web/physics.html?lab=orbits) | Kepler orbits around a turning Earth, ground tracks, J2. | done |
 | [Orbital transfers](web/physics.html?lab=orbital-transfers) | Hohmann and bi-elliptic transfers, Δv and the rocket equation. | done |
 | [Lagrange points](web/physics.html?lab=lagrange-points) | The rotating two-body potential and its five equilibria. | done |

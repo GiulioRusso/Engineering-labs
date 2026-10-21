@@ -1,0 +1,25 @@
+<section data-case="error">
+  <h3>Feedback and steady-state error</h3>
+  <p>The controller measures the error \(e = r - y\) and drives the plant with \(K e\). Once things settle, what error is left depends on the input and on the <i>type</i> of the loop: the number of integrators (poles at \(s = 0\)) in \(KG(s)\). The plane shows the closed-loop poles; the 3D view adds the surface \(|T(s)|\).</p>
+  <div class="eq">$$T = \frac{KG}{1 + KG}, \qquad e_\infty = \lim_{s\to0} \frac{s\,R(s)}{1 + KG(s)}$$</div>
+  <table><tr><th></th><th>step</th><th>ramp</th><th>parabola</th></tr>
+  <tr><td>type 0</td><td>\(1/(1+K_p)\)</td><td>∞</td><td>∞</td></tr>
+  <tr><td>type 1</td><td>0</td><td>\(1/K_v\)</td><td>∞</td></tr>
+  <tr><td>type 2</td><td>0</td><td>0</td><td>\(1/K_a\)</td></tr></table>
+</section>
+<section data-case="error" data-example="gain"><h3>More gain</h3><p>A type 0 loop always leaves an error: some error is needed to keep pushing. With \(K = 20\) it shrinks to \(1/21\), about 5 %.</p></section>
+<section data-case="error" data-example="t1"><h3>An integrator</h3><p>A type 1 loop integrates the error: as long as any error is left, the push keeps growing. It only stops when \(e = 0\).</p></section>
+<section data-case="error" data-example="ramp1"><h3>Following a ramp</h3><p>The type 1 loop follows a moving target with a constant lag \(1/K_v = 1/K\): to keep moving it needs a steady error.</p></section>
+<section data-case="error" data-example="ramp0"><h3>Type 0 and a ramp</h3><p>Without an integrator the output cannot keep up with a moving target: the error grows without limit.</p></section>
+<section data-case="error" data-example="para2"><h3>Type 2, parabola</h3><p>Two integrators follow a steadily accelerating target with a constant error \(1/K_a\), here \(2/K\).</p></section>
+<section data-case="locus">
+  <h3>The root locus</h3>
+  <p>As the gain \(K\) grows from 0 to ∞, the closed-loop poles (dots) start at the open-loop poles (×) and travel to the zeros (○) or off to infinity along the yellow curves. Pick \(K\) by where you want the poles.</p>
+  <div class="eq">$$1 + K G(s) = 0 \iff \angle G(s) = 180°, \quad K = \frac{1}{|G(s)|}$$</div>
+</section>
+<section data-case="locus" data-example="meet"><h3>The poles meet</h3><p>At \(K \approx 0.63\) the two slow real poles meet at \(s \approx -0.45\) (breakaway) and split into a complex pair: from here on the response overshoots.</p></section>
+<section data-case="locus" data-example="under"><h3>Oscillatory</h3><p>The pair moves up and towards the axis: less damping, more overshoot, but a faster rise.</p></section>
+<section data-case="locus" data-example="edge"><h3>On the edge</h3><p>At \(K = 12\) the pair reaches the \(j\omega\) axis at \(\pm j\sqrt3\): the loop oscillates forever. The Routh criterion gives the same limit: \(4 \cdot 3 > K\).</p></section>
+<section data-case="locus" data-example="unstable"><h3>Too much gain</h3><p>Past \(K = 12\) the pair is in the right half plane: more gain made the loop unstable.</p></section>
+<section data-case="locus" data-example="zero"><h3>A zero helps</h3><p>A zero at \(-2\) attracts one branch and bends the others away from the right half plane: the loop stays stable for much larger gains. This is what a lead compensator does.</p></section>
+<section data-case="locus" data-example="two"><h3>Two poles</h3><p>With only two poles the branches go straight up and down from \(-1\): more gain means less damping, but never instability.</p></section>

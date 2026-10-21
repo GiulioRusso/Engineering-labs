@@ -9,6 +9,7 @@
 //     (explain.html: <section data-case="…" [data-example="…"]>; untagged elements always show)
 //     controls: [group], display: [group],           see panel.js
 //     plots: [{ id, title, xLabel, xUnit, yUnit, y2Unit }], hud: [rows],
+//     camOf?(state) -> camera preset name (overrides case/example cams, e.g. 2D/3D views)
 //     setup(ctx) -> { update(dt), changed?(id), highlight?(key), theme?(), dispose?() } }
 // ctx gives the lab its stage, state, time, plots, HUD, legend and helpers. The runtime owns the
 // panel, play bar, URL, explain drawer, keyboard and theme, so labs contain only physics + scene.
@@ -76,7 +77,7 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     stage.preset(camOf());
     impl.update(0); stage.requestRender(); bar(); writeUrl();
   }
-  const camOf = () => { const c = caseOf(state.case); return exOf(c, state.example)?.cam || c.cam || def.cam || 'iso'; };
+  const camOf = () => { const c = caseOf(state.case); return def.camOf?.(state) || exOf(c, state.example)?.cam || c.cam || def.cam || 'iso'; };
 
   function onChange(id) {
     impl.changed?.(id);

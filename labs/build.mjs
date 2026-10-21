@@ -40,7 +40,7 @@ async function buildSubject(S) {
     ...dirs.map((d, i) => `import L${i} from ${JSON.stringify(join(d, 'lab.js'))};`),
     'const sub = (L, t) => { const cases = t.cases ? L.cases.filter((c) => t.cases.includes(c.id)) : L.cases;',
     "  return { ...L, ...t, cases, gif: L.gif && cases.some((c) => c.id === L.gif.scenario.split('/')[0]) ? L.gif : undefined }; };",
-    `startTopic({ name: ${JSON.stringify(S.name)}, labs: [${topics.map((t) => `sub(L${dirs.indexOf(srcOf(S.subject, t))}, ${JSON.stringify({ id: t.id, title: t.title, cases: t.cases })})`).join(', ')}] });`,
+    `startTopic({ name: ${JSON.stringify(S.name)}, labs: [${topics.map((t) => `sub(L${dirs.indexOf(srcOf(S.subject, t))}, ${JSON.stringify({ id: t.id, title: t.title, group: t.group, cases: t.cases })})`).join(', ')}] });`,
   ].join('\n');
   const res = await build({
     stdin: { contents: entry, resolveDir: join(root, 'src', S.subject), sourcefile: `${S.subject}-entry.js`, loader: 'js' },

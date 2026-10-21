@@ -86,6 +86,8 @@ button, input, select { font: inherit; color: inherit; }
 .shell { display: grid; grid-template-columns: 210px 1fr; min-height: 0; position: relative; }
 .side-closed .shell { grid-template-columns: 1fr; } .side-closed .side { display: none; }
 .side { overflow-y: auto; background: var(--panel); border-right: 1px solid var(--line); padding: 10px 8px 30px; display: grid; align-content: start; gap: 2px; }
+.side .grp { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-dim); font-weight: 700; padding: 12px 10px 4px; }
+.side .grp:first-child { padding-top: 2px; }
 .side a { display: block; padding: 7px 10px; border-radius: 7px; color: var(--ink); text-decoration: none; font-size: 13.5px; border: 1px solid transparent; }
 .side a:hover { background: var(--panel-2); }
 .side a[aria-current="true"] { background: color-mix(in srgb, var(--accent) 14%, transparent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }

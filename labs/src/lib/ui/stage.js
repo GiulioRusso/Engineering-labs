@@ -149,6 +149,7 @@ export function createStage(container, { size = 0.5, presets }) {
       disposed = true; renderer.forceContextLoss(); // browsers cap live WebGL contexts (~16): free this one now
       renderer.domElement.remove(); labels.domElement.remove();
     },
+    setOrtho(on) { if (on !== (camera === ortho)) api.toggleOrtho(); },
     toggleOrtho() {
       const next = camera === persp ? ortho : persp;
       next.position.copy(camera.position); next.quaternion.copy(camera.quaternion);

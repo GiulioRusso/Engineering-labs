@@ -1,0 +1,33 @@
+<section data-case="geometric">
+  <h3>The geometric series</h3>
+  <p>Each term is the previous one times \(r\). Each violet step is one term added; the dots are the partial sums \(S_n\). If \(|r| < 1\) the steps shrink fast enough for the sums to settle on a limit.</p>
+  <div class="eq">$$S_n = a + ar + \dots + ar^{n-1} = a\,\frac{1 - r^n}{1 - r} \;\xrightarrow{|r|<1}\; \frac{a}{1 - r}$$</div>
+</section>
+<section data-case="geometric" data-example="neg"><h3>Negative ratio</h3><p>With \(r = -\tfrac12\) the steps alternate up and down, closing in on \(\frac{1}{1 + 1/2} = \tfrac23\) from both sides.</p></section>
+<section data-case="geometric" data-example="slow"><h3>Close to 1</h3><p>\(r = 0.9\): the limit is \(10\), but the error only shrinks by 10 % per term, so it takes about 30 terms per digit.</p></section>
+<section data-case="geometric" data-example="one"><h3>r = 1</h3><p>Every term is \(a\): \(S_n = na\) grows without bound. A series can only converge if its terms go to zero.</p></section>
+<section data-case="geometric" data-example="diverge"><h3>r > 1</h3><p>The terms grow, so the sums explode exponentially. No limit.</p></section>
+
+<section data-case="pseries">
+  <h3>The p-series</h3>
+  <p>The terms \(1/n^p\) always go to zero, but that is not enough. The sum converges only for \(p > 1\): compare it with the area under \(1/x^p\).</p>
+  <div class="eq">$$\sum_{n=1}^\infty \frac{1}{n^p} < \infty \iff p > 1, \qquad \sum \frac{1}{n^2} = \frac{\pi^2}{6}$$</div>
+</section>
+<section data-case="pseries" data-example="harmonic"><h3>The harmonic series</h3><p>\(1 + \tfrac12 + \tfrac13 + \dots\) grows like \(\ln n\): after 200 terms it is only about 5.9, yet it passes every number eventually. Terms going to zero do not guarantee convergence.</p></section>
+<section data-case="pseries" data-example="p4"><h3>p = 4</h3><p>The terms fall so fast that a handful already gives \(\pi^4/90 \approx 1.0823\) to four digits.</p></section>
+<section data-case="pseries" data-example="half"><h3>p = ½</h3><p>\(1/\sqrt n\) shrinks even more slowly than \(1/n\): the sum grows like \(2\sqrt n\).</p></section>
+
+<section data-case="alternating">
+  <h3>Alternating series</h3>
+  <p>Terms of alternating sign that shrink to zero always converge (Leibniz): each step overshoots the limit by less than the last. The error is smaller than the next term. The harmonic series diverges, but with alternating signs it converges to \(\ln 2\).</p>
+  <div class="eq">$$1 - \tfrac12 + \tfrac13 - \tfrac14 + \dots = \ln 2, \qquad |S_n - L| < |a_{n+1}|$$</div>
+</section>
+<section data-case="alternating" data-example="leibniz"><h3>π from odd numbers</h3><p>\(4\left(1 - \tfrac13 + \tfrac15 - \dots\right) = \pi\). Beautiful but slow: the error after \(n\) terms is about \(1/n\).</p></section>
+<section data-case="alternating" data-example="tight"><h3>A smaller ε</h3><p>Since the error is below \(1/(n+1)\), staying within 0.01 needs about 100 terms. The ε band shows when the sums stay inside for good.</p></section>
+
+<section data-case="limit">
+  <h3>The limit of a sequence</h3>
+  <p>\(a_n \to L\) means: for every tolerance \(\varepsilon\), from some index \(N\) on, all the values stay inside the band \(L \pm \varepsilon\). Here \((1 + 1/n)^n\) creeps up to \(e\).</p>
+  <div class="eq">$$\forall \varepsilon > 0\ \exists N:\ n \ge N \Rightarrow |a_n - L| < \varepsilon, \qquad \left(1 + \tfrac1n\right)^n \to e$$</div>
+</section>
+<section data-case="limit" data-example="eps"><h3>A tighter band</h3><p>A smaller \(\varepsilon\) needs a later \(N\). Here the error is about \(e/2n\), so \(\varepsilon = 0.005\) needs \(n \approx 270\).</p></section>

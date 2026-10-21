@@ -1,0 +1,36 @@
+<section data-case="travel">
+  <h3>A travelling wave</h3>
+  <p>Each bit of the string only moves up and down, yet the shape moves along at speed \(v\). The pattern repeats every wavelength \(\lambda\) in space and every period \(T\) in time; the plot shows one point of the string (the dot) going up and down.</p>
+  <div class="eq">$$y(x, t) = A\sin\!\big(k(x - vt)\big), \qquad k = \frac{2\pi}{\lambda}, \qquad v = f\lambda$$</div>
+</section>
+<section data-case="travel" data-example="short"><h3>Half the wavelength</h3><p>The speed is set by the string, not by the wave: with \(v\) fixed, halving \(\lambda\) doubles \(f\).</p></section>
+<section data-case="travel" data-example="fast"><h3>A faster wave</h3><p>A tighter or lighter string carries waves faster (\(v = \sqrt{T/\mu}\)). Same \(\lambda\), so each point oscillates faster.</p></section>
+<section data-case="travel" data-example="pulse"><h3>A pulse</h3><p>Any shape travels unchanged: \(y = g(x - vt)\) for any function \(g\). A sine is just the simplest repeating one.</p></section>
+
+<section data-case="super">
+  <h3>Superposition</h3>
+  <p>Where two waves meet, the displacements simply add (dashed: the two waves, blue: the string). Afterwards each wave goes on as if the other had never been there.</p>
+  <div class="eq">$$y = y_1 + y_2$$</div>
+</section>
+<section data-case="super" data-example="cancel"><h3>Destructive interference</h3><p>An upward and a downward pulse cancel exactly when they overlap: for an instant the string is flat. The energy is still there, as motion of the string.</p></section>
+<section data-case="super" data-example="standing"><h3>A standing wave</h3><p>Two equal sine waves going opposite ways add up to a pattern that does not travel: points that never move (nodes) every \(\lambda/2\).</p><div class="eq">$$A\sin(kx - \omega t) + A\sin(kx + \omega t) = 2A\sin(kx)\cos(\omega t)$$</div></section>
+<section data-case="super" data-example="beats"><h3>Beats</h3><p>Two waves of slightly different frequency drift in and out of step: loud, quiet, loud. The loudness swells at the difference frequency \(|f_1 - f_2|\), which is how musicians tune by ear.</p></section>
+
+<section data-case="standing">
+  <h3>Modes of a string</h3>
+  <p>A string fixed at both ends can only hold standing waves that fit a whole number of half-wavelengths: \(L = n\lambda/2\). Each mode has its own frequency, all multiples of the fundamental: the harmonics of a guitar string.</p>
+  <div class="eq">$$f_n = \frac{n\,v}{2L}, \qquad y_n = A\sin\frac{n\pi x}{L}\cos(2\pi f_n t)$$</div>
+</section>
+<section data-case="standing" data-example="n2"><h3>Second harmonic</h3><p>One node in the middle, twice the frequency: an octave above the fundamental.</p></section>
+<section data-case="standing" data-example="n3"><h3>Third harmonic</h3><p>Two nodes, three times the frequency: an octave and a fifth.</p></section>
+<section data-case="standing" data-example="mix"><h3>Two modes together</h3><p>A real plucked string vibrates in many modes at once. Their mix gives the shape its corners and the instrument its timbre.</p></section>
+
+<section data-case="doppler">
+  <h3>The Doppler effect</h3>
+  <p>A moving source emits each wavefront from a new place: in front they bunch up (higher pitch), behind they spread out (lower pitch). The waves themselves always travel at \(c\).</p>
+  <div class="eq">$$f_\text{ahead} = \frac{f\,c}{c - v_s}, \qquad f_\text{behind} = \frac{f\,c}{c + v_s}$$</div>
+</section>
+<section data-case="doppler" data-example="rest"><h3>At rest</h3><p>Concentric circles: both observers hear the source frequency.</p></section>
+<section data-case="doppler" data-example="barrier"><h3>At the wave speed</h3><p>The source keeps up with its own wavefronts: they pile up into a wall in front of it, the sound barrier.</p></section>
+<section data-case="doppler" data-example="mach"><h3>Supersonic</h3><p>Faster than its waves, the source leaves them behind inside a cone. The observer ahead hears nothing until the cone sweeps past: a sonic boom. The cone half-angle is \(\sin\theta = c/v_s = 1/M\).</p></section>
+<details><summary>About the model</summary><p>Closed-form waves. Doppler signals use the emission time found by bisection on \(|\mathbf p - \mathbf s(t_e)| = c(t - t_e)\). Tests: opposite waves = standing wave (10⁻¹²), string mode frequencies and fixed ends, wavefront counting vs \(fc/(c \mp v)\) (10⁻⁶).</p></details>

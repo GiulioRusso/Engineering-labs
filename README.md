@@ -11,19 +11,20 @@ Lenz's law drawn in the scene and the equations one click away.
 ## ▶️ How to open
 
 Clone or download the repository, then double-click **`index.html`** at the top of the folder (on a Mac
-you can also run `open index.html`). It opens the catalogue: one card per subject.
+you can also run `open index.html`). It opens the catalogue: one card per subject, and a search box over every topic.
 
 **One file per subject**, holding all its topics:
 
 | Subject | Open this file | Topics |
 |---|---|---|
-| Maths | [`labs/web/maths.html`](labs/web/maths.html) | functions · trigonometry · complex numbers · vectors · calculus · matrices · functions of two variables · divergence and curl |
-| Physics | [`labs/web/physics.html`](labs/web/physics.html) | motion · momentum · forces · buoyancy · oscillations · gravitational field · gas and heat · rays · interference · electric charges · magnetic field · induction · charges in E and B · EM waves · flight · orbits · orbital transfers · Lagrange points |
+| Maths | [`labs/web/maths.html`](labs/web/maths.html) | functions · trigonometry · complex numbers · calculus · sequences and series · differential equations · vectors · matrices · functions of two variables · divergence and curl · probability |
+| Physics | [`labs/web/physics.html`](labs/web/physics.html) | motion · momentum · forces · buoyancy · oscillations · waves · gravitational field · gas and heat · rays · interference · electric charges · magnetic field · induction · charges in E and B · EM waves · flight · orbits · orbital transfers · Lagrange points |
+| Control systems | [`labs/web/control-systems.html`](labs/web/control-systems.html) | time response · poles and stability · steady-state error · root locus · PID · Bode · Nyquist and margins · lead/lag compensation |
 | Computer science | [`visualizations/algorithm-visualization/web/index.html`](visualizations/algorithm-visualization/web/index.html) | the Algorithm Visualizer |
 | Digital electronics | [`visualizations/electronics-visualization/web/index.html`](visualizations/electronics-visualization/web/index.html) | the Electronics Visualizer |
 
-The other subjects (analog electronics, circuits, control, electronic warfare, machine learning, signal
-theory) are planned; they will appear as `labs/web/<subject>.html` in the same way. No install, no server,
+The other subjects (analog electronics, circuits, electronic warfare, machine learning, signal theory)
+are planned; they will appear as `labs/web/<subject>.html` in the same way. No install, no server,
 no internet connection.
 
 ## 🧪 How a topic works

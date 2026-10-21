@@ -17,7 +17,7 @@ export function startTopic({ name, labs: all }) {
       <button class="btn" data-a="panel" aria-expanded="true" title="Settings" aria-label="Settings">⚙&#xFE0E;</button>
     </header>
     <div class="shell">
-      <nav class="side" aria-label="${name} topics">${all.map((l) => `<a href="?lab=${l.id}" data-lab="${l.id}">${l.title}</a>`).join('')}</nav>
+      <nav class="side" aria-label="${name} topics">${all.map((l, i) => `${l.group && l.group !== all[i - 1]?.group ? `<div class="grp">${l.group}</div>` : ''}<a href="?lab=${l.id}" data-lab="${l.id}">${l.title}</a>`).join('')}</nav>
       <div class="mount"></div>
     </div></div>`;
   const $ = (s) => document.querySelector(s), btn = (a) => $(`[data-a="${a}"]`);

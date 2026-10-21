@@ -12,6 +12,9 @@ import { si } from '../../lib/ui/format.js';
 import { createModel, scripted, simulateDrop, BOX, DEFAULTS } from './model/coil.js';
 
 
+const SOL = { mode: 'probe', N: 150, R: 0.025, L: 0.6, I0: 2, f: 0, a: 0.015, x: 0, z: 0.1 }; // a long solenoid
+const DROP = { motion: 'drop', N: 200, R: 0.02, L: 0.2, Rc: 0.05, mass: 0.05, z: 0.3 }; // a magnet released above a long coil
+
 export default {
   id: 'coil-induction',
   title: 'Coil: magnetic field and induction',
@@ -27,10 +30,10 @@ export default {
     { id: 'field', label: 'Field', cam: 'iso', set: { mode: 'probe', N: 1, R: 0.05, L: 0.002, I0: 5, f: 0, a: 0.02, x: 0.13, z: 0.12 }, examples: [
       { id: 'double', label: 'Double the current', set: { I0: 10 } },
       { id: 'wide', label: 'Wider loop: weaker centre', set: { R: 0.08 } },
-      { id: 'solenoid', label: 'Many loops: a solenoid', cam: 'front', controls: ['N', 'L'], set: { mode: 'probe', N: 150, R: 0.025, L: 0.6, I0: 2, f: 0, a: 0.015, x: 0, z: 0.1 } },
-      { id: 'turns', label: 'More turns per metre', cam: 'front', controls: ['N', 'L'], set: { mode: 'probe', N: 150, R: 0.025, L: 0.6, I0: 2, f: 0, a: 0.015, x: 0, z: 0.1, N: 200, L: 0.4 } },
-      { id: 'radius', label: 'Wider solenoid, same n', cam: 'front', controls: ['R'], set: { mode: 'probe', N: 150, R: 0.025, L: 0.6, I0: 2, f: 0, a: 0.015, x: 0, z: 0.1, R: 0.05 } },
-      { id: 'short', label: 'Short and wide: fringing', cam: 'front', controls: ['N', 'R', 'L'], set: { mode: 'probe', N: 150, R: 0.025, L: 0.6, I0: 2, f: 0, a: 0.015, x: 0, z: 0.1, N: 12, R: 0.06, L: 0.03, I0: 4, a: 0.02, z: 0.09 } },
+      { id: 'solenoid', label: 'Many loops: a solenoid', cam: 'front', controls: ['N', 'L'], set: SOL },
+      { id: 'turns', label: 'More turns per metre', cam: 'front', controls: ['N', 'L'], set: { ...SOL, N: 200, L: 0.4 } },
+      { id: 'radius', label: 'Wider solenoid, same n', cam: 'front', controls: ['R'], set: { ...SOL, R: 0.05 } },
+      { id: 'short', label: 'Short and wide: fringing', cam: 'front', controls: ['N', 'R', 'L'], set: { ...SOL, N: 12, R: 0.06, L: 0.03, I0: 4, a: 0.02, z: 0.09 } },
     ] },
     { id: 'magnet', label: 'Moving magnet', cam: 'iso', speed: 0.25, set: { mode: 'magnet', motion: 'push', N: 40, R: 0.04, L: 0.16, Rc: 0.5, pushT: 0.15, pol: 1, x: 0, z: -0.3 }, examples: [
       { id: 'slow', label: 'Ten times slower', speed: 1, set: { pushT: 1.5 } },
@@ -39,9 +42,9 @@ export default {
       { id: 'open', label: 'Open circuit', set: { open: true } },
       { id: 'still', label: 'Held still inside: no EMF', controls: ['motion', 'z'], set: { motion: 'still', z: 0 } },
       { id: 'hand', label: 'Move it yourself', controls: ['motion'], set: { motion: 'live', z: -0.25 } },
-      { id: 'drop', label: 'Drop it: magnetic braking', cam: 'front', speed: 0.5, controls: ['Rc', 'mass'], set: { motion: 'drop', N: 200, R: 0.02, L: 0.2, Rc: 0.05, mass: 0.05, z: 0.3 } },
-      { id: 'drop-open', label: 'Drop, open circuit: free fall', cam: 'front', speed: 0.5, controls: ['open'], set: { motion: 'drop', N: 200, R: 0.02, L: 0.2, Rc: 0.05, mass: 0.05, z: 0.3, open: true } },
-      { id: 'brake', label: 'Drop, low resistance: strong braking', cam: 'front', speed: 0.5, controls: ['Rc'], set: { motion: 'drop', N: 200, R: 0.02, L: 0.2, Rc: 0.05, mass: 0.05, z: 0.3, Rc: 0.01 } },
+      { id: 'drop', label: 'Drop it: magnetic braking', cam: 'front', speed: 0.5, controls: ['Rc', 'mass'], set: DROP },
+      { id: 'drop-open', label: 'Drop, open circuit: free fall', cam: 'front', speed: 0.5, controls: ['open'], set: { ...DROP, open: true } },
+      { id: 'brake', label: 'Drop, low resistance: strong braking', cam: 'front', speed: 0.5, controls: ['Rc'], set: { ...DROP, Rc: 0.01 } },
     ] },
     { id: 'ac', label: 'AC coil', cam: 'iso', speed: 0.02, set: { mode: 'probe', N: 60, R: 0.03, L: 0.12, I0: 3, f: 50, a: 0.03, Rp: 0.05, x: 0, z: 0.12, sliceField: 'E', arrows: true, arrowField: 'E' }, examples: [
       { id: 'f100', label: 'Double frequency: double EMF', set: { f: 100 } },

@@ -32,7 +32,7 @@ Only these files are meant to be opened. Each works by double-click, offline, wi
 |---|---|
 | `../index.html` (repository root) | the catalogue: one card per subject |
 | `web/index.html` | the same catalogue, from inside `labs/` |
-| `web/<subject>.html` | **one subject, all its topics**. Today: `maths.html` (8 topics), `physics.html` (18) |
+| `web/<subject>.html` | **one subject, all its topics**. Today: `maths.html` (11 topics), `physics.html` (19), `control-systems.html` (8) |
 
 The address bar always holds the exact view, e.g. `web/maths.html?lab=vectors&case=dot&ex=perp&ax=1.2`.
 Everything under `src/` is source; it is not opened directly.
@@ -63,7 +63,8 @@ labs/
 │   │   ├── lab.js                #   cases, examples, controls, plots + setup()
 │   │   ├── explain.html          #   the explanations ($$TeX$$ allowed)
 │   │   └── model.js, *.test.js   #   the maths/physics, pure JS, tested in node
-│   └── physics/<lab>/            # same pattern
+│   ├── physics/<lab>/            # same pattern
+│   └── control-systems/          # tf.js (transfer functions, tested), splane.js (pole-zero plane), <lab>/
 ├── tools/                        # test.mjs, smoke.mjs (+ smoke.sh), capture.mjs, catalogue.mjs
 └── web/                          # BUILT, COMMITTED: <subject>.html, index.html, media/
 ```
@@ -102,7 +103,9 @@ elements show everywhere.
 <section data-case="dot cross">… shared by both cases …</section>
 ```
 
-Style: short labels, hints as tooltips, start from the basics, one idea per example.
+Style: short labels, hints as tooltips, start from the basics, one idea per example. Topics carry a
+`group` in `catalog.json` (sections of the left bar and of the home page). Prefer flat 2D views; offer 3D
+as a View option only where it adds something (`view3d` + `camOf(state)` in the lab definition).
 
 Adding a topic:
 1. Add it to `catalog.json` (id, title, what, and `from`/`cases` if it reuses a lab).
