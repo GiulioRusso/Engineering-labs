@@ -59,6 +59,13 @@ In the Electronics Visualizer.
 | [The PRF dilemma](web/electronic-warfare.html?lab=ambiguity) | Reported against true range and velocity: raise the PRF and one folds, lower it and the other does. | done |
 | [Receiver architectures](web/electronic-warfare.html?lab=receivers) | Follow one pulse through a superheterodyne, a digital-IF and a homodyne receiver, stage by stage. | done |
 | [IQ demodulation](web/electronic-warfare.html?lab=iq-receiver) | RF pulse to I and Q: LO detuning, filter bandwidth and rise time. | done |
+| [Phased-array beamforming](web/electronic-warfare.html?lab=beamforming) | The instantaneous near field beside the far-field pattern: steering, taper, grating lobes. | done |
+| [Maxwell on a grid](web/electronic-warfare.html?lab=fdtd) | Solve E and H step by step (FDTD): walls, slits, standing waves, the Courant limit. | done |
+| [Pointing a beam](web/electronic-warfare.html?lab=pointing) | Gain is borrowed solid angle: fly a receiver through the beam and watch the link close. | done |
+| [Lobing and angle tracking](web/electronic-warfare.html?lab=lobing) | Two squinted beams, the Δ/Σ error signal and a loop that follows a weaving target. | done |
+| [Searching a volume](web/electronic-warfare.html?lab=search) | A pencil beam nodding through elevation bars: coverage, gaps and frame time. | done |
+| [Airborne engagement](web/electronic-warfare.html?lab=engagement) | Own ship, sweeping beam, three targets: radial velocity, range–Doppler history and the target’s warning receiver. | done |
+| [Ground clutter](web/electronic-warfare.html?lab=ground-clutter) | Iso-range circles and iso-Doppler hyperbolas on the ground; the footprint and its clutter spectrum. | done |
 | [Detection in noise](web/electronic-warfare.html?lab=detection) | Radar equation, threshold, false alarms and probability of detection on an A-scope. | done |
 | [The PPI scope](web/electronic-warfare.html?lab=ppi) | A rotating beam paints aircraft, ground clutter and rain on a plan display. | done |
 | [Jamming and burn-through](web/electronic-warfare.html?lab=jamming) | Self-screening and stand-off jammers: S/J against range and the burn-through point. | done |

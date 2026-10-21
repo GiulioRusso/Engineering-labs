@@ -1,0 +1,27 @@
+<section data-case="engage">
+  <h3>An airborne engagement</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: plan view. Our aircraft (green) flies north with its radar beam sweeping left and right. Three targets fly their own courses. Right top: every detection plotted as range against closing speed. Right bottom: what a radar-warning receiver (RWR) on target 1 hears.</div>
+  <p>A target is seen only when the beam is on it. What comes back carries its <span class="key">radial</span> velocity — the part of the relative velocity along the line of sight:</p>
+  <div class="eq">$$v_r = -(\mathbf v_\text{tgt} - \mathbf v_\text{own})\cdot\hat{\mathbf r}, \qquad f_d = \frac{2 v_r}{\lambda} \quad (66.7\ \text{Hz per m/s at X-band})$$</div>
+  <div class="worked"><h4>Worked example</h4>Target 1 flies straight at us at 280 m/s while we fly at 250 m/s towards it: closing speed ≈ 530 m/s → 35 kHz. Target 2 crosses at 250 m/s almost perpendicular to the line of sight: its closing speed is small, whatever its true speed. It is geometry that is measured, not speed.</div>
+  <h4>The engagement runs both ways</h4>
+  <p>Every time our beam sweeps across target 1, its RWR registers a pulse burst. The spacing of the blips gives our scan period, their width our beam width. Looking is itself a transmission: a scanning radar broadcasts its own parameters to anyone listening.</p>
+  <div class="pitfall"><h4>Common mistake</h4>Reading the Doppler as the target's speed. A fast crossing target can sit at nearly zero Doppler — right where ground clutter lives — which is exactly how aircraft try to hide from pulse-Doppler radars ("beaming").</div>
+  <div class="try"><h4>Try it</h4>Stop our aircraft: the closing speeds change for every target. Speed up the scan: the RWR blips come more often but each is shorter.</div>
+</section>
+<section data-case="engage" data-example="still"><h3>Own ship at rest</h3><p>Only the targets' own motion counts now: target 1's closing speed drops from about 530 to 280 m/s.</p></section>
+<section data-case="engage" data-example="fast"><h3>Fast scan</h3><p>Each target is visited more often, but the beam dwells on it for less time: fewer pulses per look, worse Doppler resolution.</p></section>
+<section data-case="engage" data-example="narrow"><h3>Narrow beam</h3><p>RWR blips become short spikes: the beam width can be read from their duration (scan rate × time = beam width).</p></section>
+<section data-case="clutter">
+  <h3>Ground clutter seen from the air</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the ground below, coloured by the Doppler it returns (orange ahead, blue behind, dark abeam), with iso-range circles and iso-Doppler hyperbolas. The green outline is the patch lit by the beam. Right top: the clutter Doppler spectrum — the footprint sliced by those hyperbolas. Right bottom: how the footprint grows as the beam looks closer to the horizon.</div>
+  <p>A ground point ahead of the aircraft is approached at almost full speed; one abeam is not approached at all. From altitude h:</p>
+  <div class="eq">$$f_c = \frac{2v}{\lambda}\,\frac{x}{\sqrt{x^2 + y^2 + h^2}}$$</div>
+  <p>Setting it constant gives a cone around the flight line; its intersection with flat ground is a <b>hyperbola</b>. Constant range gives circles. Every ground cell has one range and one Doppler: the clutter spectrum is just the footprint counted along the hyperbolas.</p>
+  <div class="worked"><h4>Worked example</h4>A 4° beam from 8 km: at 60° depression it covers 0.75 km of ground; at 10° it covers 19 km — 25 times more clutter in the same range cell. Directly below, the altitude line returns strongly at zero Doppler and minimum range.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking clutter is noise. It is a structured signal, at known Doppler for each direction — which is exactly what lets pulse-Doppler radars filter it out, except for targets whose Doppler falls in the same band.</div>
+  <div class="try"><h4>Try it</h4>Lower the depression angle towards the horizon and watch the footprint and the spectrum widen. Turn the beam sideways: the clutter collapses towards zero Doppler.</div>
+</section>
+<section data-case="clutter" data-example="steep"><h3>Looking down</h3><p>60°: a small patch, a narrow clutter line, little clutter power.</p></section>
+<section data-case="clutter" data-example="shallow"><h3>Near the horizon</h3><p>8°: the beam's lower edge reaches tens of kilometres; the footprint floods a long strip of ground into the radar.</p></section>
+<section data-case="clutter" data-example="side"><h3>Looking sideways</h3><p>80° off the nose: the footprint lies along the zero-Doppler hyperbolas. A target crossing at 90° lands right on top of it.</p></section>

@@ -290,6 +290,76 @@
     "group": "Receivers"
    },
    {
+    "id": "beamforming",
+    "title": "Phased-array beamforming",
+    "what": "The instantaneous near field beside the far-field pattern: steering, taper, grating lobes.",
+    "from": "beams",
+    "cases": [
+     "array"
+    ],
+    "group": "Antennas and beams"
+   },
+   {
+    "id": "fdtd",
+    "title": "Maxwell on a grid",
+    "what": "Solve E and H step by step (FDTD): walls, slits, standing waves, the Courant limit.",
+    "from": "beams",
+    "cases": [
+     "fdtd"
+    ],
+    "group": "Antennas and beams"
+   },
+   {
+    "id": "pointing",
+    "title": "Pointing a beam",
+    "what": "Gain is borrowed solid angle: fly a receiver through the beam and watch the link close.",
+    "from": "beams",
+    "cases": [
+     "pointing"
+    ],
+    "group": "Antennas and beams"
+   },
+   {
+    "id": "lobing",
+    "title": "Lobing and angle tracking",
+    "what": "Two squinted beams, the Δ/Σ error signal and a loop that follows a weaving target.",
+    "from": "beams",
+    "cases": [
+     "lobing"
+    ],
+    "group": "Antennas and beams"
+   },
+   {
+    "id": "search",
+    "title": "Searching a volume",
+    "what": "A pencil beam nodding through elevation bars: coverage, gaps and frame time.",
+    "from": "beams",
+    "cases": [
+     "nodding"
+    ],
+    "group": "Antennas and beams"
+   },
+   {
+    "id": "engagement",
+    "title": "Airborne engagement",
+    "what": "Own ship, sweeping beam, three targets: radial velocity, range–Doppler history and the target’s warning receiver.",
+    "from": "airborne",
+    "cases": [
+     "engage"
+    ],
+    "group": "Airborne radar"
+   },
+   {
+    "id": "ground-clutter",
+    "title": "Ground clutter",
+    "what": "Iso-range circles and iso-Doppler hyperbolas on the ground; the footprint and its clutter spectrum.",
+    "from": "airborne",
+    "cases": [
+     "clutter"
+    ],
+    "group": "Airborne radar"
+   },
+   {
     "id": "detection",
     "title": "Detection in noise",
     "what": "Radar equation, threshold, false alarms and probability of detection on an A-scope.",

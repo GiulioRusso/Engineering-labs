@@ -1,0 +1,67 @@
+<section data-case="array">
+  <h3>Phased-array beamforming</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the actual field in front of the array at this instant (blue negative, orange positive). Each element at the bottom radiates circular waves; where they arrive in step they add, elsewhere they cancel. Right: the same array seen from far away — the radiation pattern in dB.</div>
+  <p>The beam is not "emitted" in a direction: it is <span class="key">what survives the cancellation</span>. Give each element a slightly later phase than its neighbour and the line of constant phase tilts, so the direction where everything adds up tilts with it — the beam steers with no moving parts.</p>
+  <div class="eq">$$\beta_n = -k\,d\,n\sin\theta_0, \qquad AF(\theta) = \Big|\sum_n a_n\, e^{\,jkdn(\sin\theta - \sin\theta_0)}\Big|, \qquad \theta_{3\text{dB}} \approx \frac{0.886\,\lambda}{N d \cos\theta_0}$$</div>
+  <h4>Step by step</h4>
+  <ol class="steps"><li>Pick a direction θ₀. The path to a far point in that direction is \(d\sin\theta_0\) shorter for each next element.</li><li>Delay each element's phase by exactly that path: \(kd\sin\theta_0\) per element.</li><li>Now all contributions arrive in phase along θ₀: the main beam.</li><li>In other directions they arrive with a spread of phases and largely cancel: the nulls and sidelobes.</li></ol>
+  <div class="worked"><h4>Worked example</h4>16 elements, \(d = \lambda/2\): aperture 8λ, beam width \(0.886/8 = 0.11\) rad = 6.3°. Uniform weights give −13.2 dB sidelobes; Hamming weights give about −40 dB but a beam about 1.45 times wider (9.2°).</div>
+  <div class="pitfall"><h4>Common mistake: spacing</h4>Elements further apart than \(\lambda/(1 + |\sin\theta_0|)\) let a second direction also add in phase: a <b>grating lobe</b> as strong as the main beam, pointing somewhere you did not ask for. Keep \(d \le \lambda/2\) to be safe at all steering angles.</div>
+  <div class="try"><h4>Try it</h4>Steer to 30° and watch the wavefronts tilt in the near field and the beam move in the polar plot. Then set the spacing to 1 λ: a second beam appears.</div>
+</section>
+<section data-case="array" data-example="steer"><h3>Steering</h3><p>A phase step of −90° per element (\(d = \lambda/2\), \(\sin 30° = 0.5\)): the beam leaves at 30°, slightly wider (by \(1/\cos 30°\)).</p></section>
+<section data-case="array" data-example="taper"><h3>Taper</h3><p>Weighting the edge elements less smooths the aperture's "edges": sidelobes drop by almost 30 dB, the beam gets wider. The same trade as windowing a spectrum.</p></section>
+<section data-case="array" data-example="grating"><h3>Grating lobe</h3><p>\(d = \lambda\), steered to 20°: another direction (−42°) has whole-wavelength path differences too, and gets a full-strength beam.</p></section>
+<section data-case="array" data-example="few"><h3>Four elements</h3><p>Aperture 2λ: a 25° beam and broad sidelobes. Aperture is what buys a narrow beam.</p></section>
+
+<section data-case="fdtd">
+  <h3>Maxwell's equations on a grid (FDTD)</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: \(E_z\) everywhere on the grid, computed step by step from Maxwell's equations — no formula for the wave is used. Top right: \(|H|\). Bottom right: \(E_z\) and \(H_y\) along the dotted line.</div>
+  <p>The two curl equations say: a changing \(E\) creates a circulating \(H\), and a changing \(H\) creates a circulating \(E\). On a grid that becomes a leapfrog: update \(H\) from the differences of \(E\) around it, then \(E\) from the differences of \(H\), and repeat (the Yee scheme).</p>
+  <div class="eq">$$\mu\frac{\partial \mathbf H}{\partial t} = -\nabla\times\mathbf E, \qquad \varepsilon\frac{\partial \mathbf E}{\partial t} = \nabla\times\mathbf H, \qquad S = \frac{c\,\Delta t}{\Delta x} \le \frac{1}{\sqrt 2}$$</div>
+  <h4>Why the stability limit</h4>
+  <p>In one time step a wave may not travel further than the grid can "pass the message" between neighbours. In 2-D that is \(S \le 1/\sqrt2 \approx 0.707\). Above it, errors grow exponentially and the field reaches astronomical values within a few hundred steps.</p>
+  <div class="pitfall"><h4>Common mistake</h4>Making the time step bigger to "go faster". The grid cell sets the largest allowed step; to go faster you need fewer cells (lower resolution) or more computing power.</div>
+  <div class="try"><h4>Try it</h4>Put a wall in: the reflected wave and the incoming one form a standing wave — watch \(E\) and \(H\) on the cut: their peaks alternate in space.</div>
+</section>
+<section data-case="fdtd" data-example="wall"><h3>A wall</h3><p>A perfect conductor forces \(E_z = 0\) on its surface: total reflection, and a standing wave in front with \(E\) nodes where \(H\) has antinodes.</p></section>
+<section data-case="fdtd" data-example="slit"><h3>A slit</h3><p>The opening acts as a new source: waves spread out behind it (diffraction), more widely the narrower the slit.</p></section>
+<section data-case="fdtd" data-example="double"><h3>Two slits</h3><p>Two new sources interfere: bright and dark directions behind the wall — the same physics as the double-slit experiment and as a two-element array.</p></section>
+<section data-case="fdtd" data-example="courant"><h3>Near the limit</h3><p>S = 0.7: still stable, and the waves move 40 % faster per step than at 0.5. At 0.75 it would blow up.</p></section>
+
+<section data-case="pointing">
+  <h3>Pointing a beam at a receiver</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the beam (its gain against direction) and an aircraft crossing it; green when the link closes. Right top: the received power along the track against the sensitivity (red). Right bottom: how much gain is lost off boresight.</div>
+  <p>Gain is not free power, it is <span class="key">borrowed solid angle</span>: concentrating the energy into a cone of \(\theta \times \theta\) multiplies it by about \(4\pi/\theta^2\).</p>
+  <div class="eq">$$P_r = P_t\, G_t(\psi)\, G_r \left(\frac{\lambda}{4\pi R}\right)^2, \qquad G_0 \approx \frac{4\pi}{\theta^2}, \qquad G(\psi) \approx G_0\, e^{-2.773(\psi/\theta)^2}$$</div>
+  <div class="worked"><h4>Worked example</h4>A 4° beam: \(G_0 = 4\pi/(0.07)^2 \approx 2600\) = 34 dBi. Halving it to 2° gains 6 dB — and covers a quarter of the sky. Being 4° off boresight with a 4° beam costs \(2.773 \times 4.34 = 12\) dB: no extra transmit power is as cheap as pointing correctly.</div>
+  <div class="try"><h4>Try it</h4>Narrow the beam: the peak rises, the window where the link closes shrinks. A high-gain link must be kept aimed.</div>
+</section>
+<section data-case="pointing" data-example="narrow"><h3>Narrow beam</h3><p>2°: +6 dB at the peak, but the aircraft is inside the beam for half as long.</p></section>
+<section data-case="pointing" data-example="miss"><h3>Aimed off</h3><p>4° pointing error with a 4° beam: −12 dB at the moment the aircraft should have been on boresight.</p></section>
+<section data-case="pointing" data-example="far"><h3>Twice as far</h3><p>One-way link: −6 dB per doubling of range (for a radar echo it would be −12 dB).</p></section>
+
+<section data-case="lobing">
+  <h3>Lobing: two beams for one angle</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: two beams A and B squinted either side of the antenna axis (dashed), and the target (orange). Right top: A, B and the error signal Δ/Σ against target angle. Right bottom: the target weaving and where the antenna points as the loop follows it.</div>
+  <p>One beam cannot tell where the target is inside it: at the peak its slope is zero, so a small offset barely changes the power. Two squinted beams overlap in the middle; a target slightly to one side gives a stronger echo in that beam. The <b>ratio</b> does not depend on range, size or aspect — only on angle:</p>
+  <div class="eq">$$\frac{\Delta}{\Sigma} = \frac{B - A}{B + A} \quad\begin{cases} = 0 & \text{on axis} \\ > 0 & \text{towards B} \\ < 0 & \text{towards A} \end{cases}$$</div>
+  <p>A control loop turns the antenna by (gain × error) each step, driving the error to zero: the antenna follows the target.</p>
+  <div class="pitfall"><h4>Common mistake</h4>Squinting too little: the error curve gets shallow and noise dominates. Too much: the overlap dip in the middle loses sensitivity.</div>
+  <div class="try"><h4>Try it</h4>Lower the loop gain and watch the antenna lag behind the weaving target; raise it and it follows closely.</div>
+</section>
+<section data-case="lobing" data-example="tight"><h3>Small squint</h3><p>0.5° squint on a 4° beam: the Δ/Σ slope is gentle; small errors are hard to see.</p></section>
+<section data-case="lobing" data-example="agile"><h3>Agile target</h3><p>A 5° weave: the loop must turn the antenna quickly; with a modest gain it stays a little behind at the turns.</p></section>
+<section data-case="lobing" data-example="lazy"><h3>Low loop gain</h3><p>The antenna lags far behind; with a weave faster than the loop, the target can leave the beam. Sequential lobing (switching A and B in time) is also what an inverse-gain jammer exploits; monopulse forms both at once from one pulse.</p></section>
+
+<section data-case="nodding">
+  <h3>Searching a volume with a pencil beam</h3>
+  <div class="look"><h4>What you are looking at</h4>A vertical cut through the sky: the radar at the origin, the elevation bars (wedges) it paints one after the other, the current one highlighted. Aircraft turn green when the beam is on them. Right: when each aircraft was hit.</div>
+  <p>A narrow beam sees only a small cone at a time. To search, the antenna scans in azimuth while stepping (nodding) in elevation, painting one bar per scan. The frame time is the number of beam positions times the time spent in each.</p>
+  <div class="eq">$$N_\text{beams} \approx \frac{\Omega}{\theta_{az}\,\theta_{el}}, \qquad T_\text{frame} = N_\text{beams}\,\frac{n_p}{\text{PRF}}, \qquad h_\text{bar}(R) \approx R\,\theta_{el}$$</div>
+  <div class="worked"><h4>Worked example</h4>A 4° bar is 349 m tall at 5 km but 3.5 km tall at 50 km. Coverage is dense close in and full of holes far out, between and above the bars.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming every aircraft in range is seen. An aircraft flying in a gap, or above the top bar, is simply not detected however large its echo.</div>
+  <div class="try"><h4>Try it</h4>Narrow the bars: gaps open far out. Add bars to fill them: the frame time grows and every aircraft is revisited less often.</div>
+</section>
+<section data-case="nodding" data-example="gaps"><h3>Gaps</h3><p>Four 2° bars cover only up to 8.5° elevation: the high aircraft close in is above the top bar.</p></section>
+<section data-case="nodding" data-example="more"><h3>More bars</h3><p>Eight bars cover the sky but the frame takes twice as long: each aircraft is hit half as often.</p></section>
