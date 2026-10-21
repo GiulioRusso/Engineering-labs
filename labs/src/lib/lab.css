@@ -96,7 +96,7 @@ button, input, select { font: inherit; color: inherit; }
 .lab.no-dock { grid-template: "view panel" 1fr / 1fr var(--panel-w); } .lab.no-dock .dock { display: none; }
 .panel-closed .lab { grid-template-columns: 1fr 0; } .panel-closed .lab .panel { display: none; }
 .viewport { grid-area: view; position: relative; overflow: hidden; background: var(--scene); min-height: 0; }
-.stage { position: absolute; inset: 0; touch-action: none; } .stage canvas { display: block; }
+.stage { position: absolute; inset: 0; touch-action: none; z-index: 0; } /* own stacking context: 3D labels set big z-indexes */ .stage canvas { display: block; }
 .label3d { font: 12px var(--mono); color: var(--ink); background: color-mix(in srgb, var(--panel) 75%, transparent); padding: 1px 5px; border-radius: 4px; pointer-events: none; white-space: nowrap; }
 
 .hud { position: absolute; top: 10px; left: 10px; z-index: 2; background: color-mix(in srgb, var(--panel) 88%, transparent); border: 1px solid var(--line);
