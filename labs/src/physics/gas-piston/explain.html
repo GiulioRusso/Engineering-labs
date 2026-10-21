@@ -1,19 +1,19 @@
-<section data-case="heating isothermal adiabatic manual">
+<section data-case="gas">
   <h3>Pressure is momentum delivered</h3>
   <p>Every dot is an atom of argon. The pressure is not computed from a formula: it is measured from the momentum the atoms deliver when they bounce off the walls. Adding up the bounces gives the ideal gas law.</p>
   <div class="eq">$$p = \frac{1}{3}\frac{N m \langle v^2\rangle}{V} = \frac{N k_B T}{V}, \qquad \tfrac32 k_B T = \langle \tfrac12 m v^2 \rangle$$</div>
 </section>
-<section data-case="heating"><h3>Heating at fixed volume</h3><p>The hot bottom wall speeds up the atoms that touch it. Faster atoms hit harder and more often: the pressure rises in proportion to the temperature.</p><div class="eq">$$\frac{p}{T} = \frac{N k_B}{V} = \text{const}$$</div></section>
-<section data-case="heating" data-example="more"><h3>Twice the gas</h3><p>Twice the atoms, same temperature: twice the hits, twice the pressure.</p></section>
-<section data-case="heating" data-example="cold"><h3>Starting cold</h3><p>The atoms start slow (speed \(\propto \sqrt T\)); the pressure starts at half.</p></section>
-<section data-case="isothermal"><h3>Isothermal: heat leaves as fast as work comes in</h3><p>The walls are held at fixed temperature. Compressing does not warm the gas: the work done flows out as heat. Pressure rises only because the atoms are crowded.</p><div class="eq">$$pV = nRT = \text{const}, \qquad W = nRT\ln\frac{V_1}{V_2}$$</div></section>
-<section data-case="isothermal" data-example="half"><h3>Half the volume</h3><p>Same temperature, half the room: twice the pressure.</p></section>
-<section data-case="isothermal" data-example="quarter"><h3>A quarter of the volume</h3><p>Four times the pressure; on the p–V diagram the path is a hyperbola.</p></section>
-<section data-case="adiabatic"><h3>Adiabatic: squeezing heats the gas</h3><p>An atom bouncing off a piston that moves inward comes back faster, like a ball off a swung bat. With insulated walls the gas warms as it is compressed and cools as it expands.</p><div class="eq">$$p V^\gamma = \text{const}, \quad T V^{\gamma - 1} = \text{const}, \qquad \gamma = \tfrac53$$</div></section>
-<section data-case="adiabatic" data-example="half"><h3>To half</h3><p>\(T_2/T_1 = 2^{2/3} \approx 1.59\): 300 K becomes about 476 K. The p–V curve is steeper than the isothermal one.</p></section>
-<section data-case="adiabatic" data-example="quarter"><h3>To a quarter</h3><p>\(4^{2/3} \approx 2.52\): this is how a diesel engine ignites its fuel without a spark.</p></section>
-<section data-case="manual"><h3>By hand</h3><p>Drag the piston. A fast push heats the gas more than a slow one, which lets the walls take the heat away.</p></section>
-<section data-case="heating isothermal adiabatic manual"><h3>Speeds follow Maxwell–Boltzmann</h3><div class="eq">$$f(v) = 4\pi\left(\frac{m}{2\pi k_B T}\right)^{3/2} v^2 e^{-m v^2/2k_BT}$$</div></section>
+<section data-case="gas"><h3>Heating at fixed volume</h3><p>The hot bottom wall speeds up the atoms that touch it. Faster atoms hit harder and more often: the pressure rises in proportion to the temperature.</p><div class="eq">$$\frac{p}{T} = \frac{N k_B}{V} = \text{const}$$</div></section>
+<section data-case="gas" data-example="more"><h3>Twice the gas</h3><p>Twice the atoms, same temperature: twice the hits, twice the pressure.</p></section>
+<section data-case="gas" data-example="cold"><h3>Starting cold</h3><p>The atoms start slow (speed \(\propto \sqrt T\)); the pressure starts at half.</p></section>
+<section data-case="gas"><h3>Isothermal: heat leaves as fast as work comes in</h3><p>The walls are held at fixed temperature. Compressing does not warm the gas: the work done flows out as heat. Pressure rises only because the atoms are crowded.</p><div class="eq">$$pV = nRT = \text{const}, \qquad W = nRT\ln\frac{V_1}{V_2}$$</div></section>
+<section data-case="gas" data-example="iso-half"><h3>Half the volume</h3><p>Same temperature, half the room: twice the pressure.</p></section>
+<section data-case="gas" data-example="iso-quarter"><h3>A quarter of the volume</h3><p>Four times the pressure; on the p–V diagram the path is a hyperbola.</p></section>
+<section data-case="gas"><h3>Adiabatic: squeezing heats the gas</h3><p>An atom bouncing off a piston that moves inward comes back faster, like a ball off a swung bat. With insulated walls the gas warms as it is compressed and cools as it expands.</p><div class="eq">$$p V^\gamma = \text{const}, \quad T V^{\gamma - 1} = \text{const}, \qquad \gamma = \tfrac53$$</div></section>
+<section data-case="gas" data-example="adi-half"><h3>To half</h3><p>\(T_2/T_1 = 2^{2/3} \approx 1.59\): 300 K becomes about 476 K. The p–V curve is steeper than the isothermal one.</p></section>
+<section data-case="gas" data-example="adi-quarter"><h3>To a quarter</h3><p>\(4^{2/3} \approx 2.52\): this is how a diesel engine ignites its fuel without a spark.</p></section>
+<section data-case="gas" data-example="hand"><h3>By hand</h3><p>Drag the piston. A fast push heats the gas more than a slow one, which lets the walls take the heat away.</p></section>
+<section data-case="gas"><h3>Speeds follow Maxwell–Boltzmann</h3><div class="eq">$$f(v) = 4\pi\left(\frac{m}{2\pi k_B T}\right)^{3/2} v^2 e^{-m v^2/2k_BT}$$</div></section>
 <details><summary>About the model</summary>
   <p>Point atoms, elastic walls; the lid is a heavy moving wall (\(v' = 2u - v\)). Atom–atom collisions are modelled as isotropic scattering at \(10^5\) per second, keeping each speed, so energy is shared between directions as in a real gas. Tests: measured pressure vs \(NkT/V\) within 3 % (statistical); slow adiabatic halving of the volume heats by ×1.61 vs the ideal ×1.587.</p>
 </details>

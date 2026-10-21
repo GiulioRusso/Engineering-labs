@@ -127,7 +127,7 @@ button, input, select { font: inherit; color: inherit; }
 .case[aria-selected="true"] { background: var(--panel); color: var(--ink); font-weight: 650; box-shadow: 0 0 0 1px var(--accent) inset; }
 .examples .list { display: grid; gap: 4px; }
 .ex { text-align: left; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 13px; }
-.ex:hover { border-color: var(--ink-dim); } .ex[hidden] { display: none; }
+.ex:hover { border-color: var(--ink-dim); } .ex.free { font-style: italic; color: var(--ink-dim); } .ex[hidden] { display: none; }
 .ex[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); font-weight: 600; }
 .psec { border-bottom: 1px solid var(--line); padding-bottom: 6px; }
 .psec:last-child { border-bottom: 0; }
@@ -166,7 +166,6 @@ button, input, select { font: inherit; color: inherit; }
 .explain section { border: 1px solid transparent; border-radius: 8px; padding: 6px 10px; margin: 6px -10px; cursor: pointer; }
 .explain section:hover { border-color: var(--line); }
 .explain [hidden] { display: none; }
-.explain section.example { border-color: color-mix(in srgb, var(--accent) 50%, transparent); background: color-mix(in srgb, var(--accent) 6%, transparent); }
 .explain section.active { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
 .explain h3 { font-size: 14px; margin: 4px 0; } .explain p { margin: 6px 0; }
 .explain .eq { overflow-x: auto; padding: 4px 0; font-size: 15px; } .explain math { font-size: 1.08em; }

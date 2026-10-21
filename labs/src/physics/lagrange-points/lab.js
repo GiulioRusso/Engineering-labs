@@ -13,14 +13,13 @@ export default {
   cameras: { front: { pos: [0, -4.5, 1.6] }, side: { pos: [4.5, 0, 1.6] }, top: { pos: [0, -0.01, 4.6] }, iso: { pos: [2.6, -3.4, 2.6] } },
   defaults: { system: 'earth-moon', mu: 0.012150585, start: 'L4', dx: 0.01, dy: 0, surface: true, contours: true },
   cases: [
-    { id: 'stable', label: 'L4 and L5', set: {}, examples: [
-      { id: 'l5', label: 'L5', set: { start: 'L5' } },
+    { id: 'points', label: 'Points', set: {}, examples: [
+      { id: 'l5', label: 'L5: stable too', set: { start: 'L5' } },
       { id: 'trojans', label: 'Jupiter Trojans', set: { system: 'sun-jupiter', mu: 9.5388e-4, dx: 0.02 } },
       { id: 'routh', label: 'Too heavy: μ = 0.06', set: { system: 'custom', mu: 0.06, dx: 0.005 } },
-    ] },
-    { id: 'unstable', label: 'L1, L2, L3', set: { start: 'L1', dx: 0.002 }, examples: [
-      { id: 'l2', label: 'L2: where JWST is', set: { start: 'L2' } },
-      { id: 'l3', label: 'L3: behind the Sun', set: { start: 'L3' } },
+      { id: 'l1', label: 'L1: a saddle, drifts away', set: { start: 'L1', dx: 0.002 } },
+      { id: 'l2', label: 'L2: where JWST is', set: { start: 'L2', dx: 0.002 } },
+      { id: 'l3', label: 'L3: behind the big body', set: { start: 'L3', dx: 0.002 } },
     ] },
   ],
   controls: [

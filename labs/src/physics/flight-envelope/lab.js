@@ -12,22 +12,21 @@ export default {
   cameras: { front: { pos: [0, -24, 2] }, side: { pos: [24, 0, 2] }, top: { pos: [0, -0.01, 24] }, iso: { pos: [15, -15, 8] } },
   defaults: { mode: 'trim', V: 55, h: 1000, alpha: 4 * deg, bank: 0, flow: true },
   cases: [
-    { id: 'level', label: 'Level flight', controls: ['V', 'h'], set: { V: 55, h: 1000 }, examples: [
+    { id: 'flight', label: 'Flight', set: { V: 55, h: 1000 }, examples: [
       { id: 'slow', label: 'Slow: big angle of attack', set: { V: 30 } },
       { id: 'fast', label: 'Fast: small angle', set: { V: 80 } },
       { id: 'high', label: 'Thin air at 4000 m', set: { h: 4000 } },
-    ] },
-    { id: 'turn', label: 'Turn', controls: ['V', 'h', 'bank'], set: { V: 50, bank: 60 * deg }, examples: [
-      { id: 'b30', label: '30° bank: n = 1.15', set: { bank: 30 * deg } },
-      { id: 'slow', label: 'Too slow for this bank', set: { V: 34 } },
-    ] },
-    { id: 'stall', label: 'Stall', controls: ['V', 'h', 'alpha'], set: { mode: 'free', V: 30, alpha: 18 * deg }, examples: [
-      { id: 'before', label: 'Just below the stall', set: { alpha: 13 * deg } },
-      { id: 'neg', label: 'Negative angle: pushes down', set: { alpha: -3 * deg } },
+      { id: 'b30', label: 'Turn, 30° bank', set: { bank: 30 * deg } },
+      { id: 'b60', label: 'Turn, 60° bank: n = 2', set: { V: 50, bank: 60 * deg } },
+      { id: 'slowturn', label: 'Too slow for that bank', controls: ['V', 'bank'], set: { V: 34, bank: 60 * deg } },
+      { id: 'stall', label: 'Stall: α past 15°', controls: ['alpha'], set: { mode: 'free', V: 30, alpha: 18 * deg } },
+      { id: 'before', label: 'Just below the stall', controls: ['alpha'], set: { mode: 'free', V: 30, alpha: 13 * deg } },
+      { id: 'neg', label: 'Negative angle: pushes down', controls: ['alpha'], set: { mode: 'free', V: 30, alpha: -3 * deg } },
     ] },
   ],
   controls: [
     { title: 'Flight', items: [
+      { id: 'mode', label: 'Angle of attack', type: 'segmented', options: [['trim', 'For level flight'], ['free', 'By hand']] },
       { id: 'V', label: 'Airspeed', unit: 'm/s', min: 20, max: 82, step: 0.5 },
       { id: 'h', label: 'Altitude', unit: 'm', min: 0, max: 6000, step: 50 },
       { id: 'bank', label: 'Bank', unit: '°', k: 1 / deg, min: 0, max: 70 * deg, step: deg },

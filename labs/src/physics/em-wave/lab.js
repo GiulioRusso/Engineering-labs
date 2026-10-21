@@ -12,18 +12,18 @@ export default {
   cameras: { front: { pos: [0, -4.2, 0.3] }, side: { pos: [4.5, 0, 0.3] }, top: { pos: [0, -0.01, 4.4] }, iso: { pos: [2.6, -3.2, 1.8] } },
   defaults: { mode: 'travel', f: 1e9, E0: 10, n2: 1.5, showB: true, glyphs: true },
   cases: [
-    { id: 'travel', label: 'Free space', set: { mode: 'travel' }, examples: [
+    { id: 'wave', label: 'Wave', set: { mode: 'travel' }, examples: [
       { id: 'high', label: 'Ten times the frequency', set: { f: 1e10 } },
       { id: 'strong', label: 'Double the amplitude', set: { E0: 20 } },
+      { id: 'glass', label: 'Into glass: 4 % reflected', set: { mode: 'interface', n2: 1.5 } },
+      { id: 'matched', label: 'n₂ = 1: no reflection', set: { mode: 'interface', n2: 1 } },
+      { id: 'dense', label: 'n₂ = 4: strong reflection', set: { mode: 'interface', n2: 4 } },
+      { id: 'mirror', label: 'A mirror: standing wave', set: { mode: 'conductor' } },
     ] },
-    { id: 'interface', label: 'Into a material', set: { mode: 'interface', n2: 1.5 }, examples: [
-      { id: 'matched', label: 'n₂ = 1: no reflection', set: { n2: 1 } },
-      { id: 'dense', label: 'n₂ = 4: strong reflection', set: { n2: 4 } },
-    ] },
-    { id: 'mirror', label: 'Mirror', set: { mode: 'conductor' } },
   ],
   controls: [
     { title: 'Wave', items: [
+      { id: 'mode', label: 'In the middle', type: 'segmented', options: [['travel', 'Nothing'], ['interface', 'A material'], ['conductor', 'A mirror']] },
       { id: 'f', label: 'Frequency f', unit: 'GHz', k: 1e-9, min: 1e8, max: 1e11, log: true },
       { id: 'E0', label: 'Amplitude', unit: 'V/m', min: 1, max: 100, step: 1 },
       { id: 'n2', label: 'Index n₂', unit: '', min: 1, max: 5, step: 0.01, show: (s) => s.mode === 'interface' },

@@ -17,23 +17,26 @@
 <section data-case="pendulum" data-example="big"><h3>A big swing</h3><p>At large angles \(\sin\theta < \theta\): the pull is weaker than the linear law, so the pendulum is slower. At 115° the period is about 30 % longer. The exact period uses the arithmetic–geometric mean:</p><div class="eq">$$T = \frac{2\pi\sqrt{L/g}}{\operatorname{AGM}\!\left(1, \cos\tfrac{\theta_0}{2}\right)}$$</div></section>
 <section data-case="pendulum" data-example="top"><h3>Almost over the top</h3><p>Released near the top, it lingers there before falling: the period grows without limit as \(\theta_0 \to 180°\). The motion is far from a sine wave.</p></section>
 
-<section data-case="damped">
+<section data-case="pendulum" data-example="damped"><h3>Air friction</h3><p>The swing keeps its rhythm but shrinks as \(e^{-\gamma t}\) (dashed envelope): energy goes into the air.</p></section>
+<section data-case="pendulum" data-example="pushed"><h3>Pushed in rhythm</h3><p>Small pushes at the pendulum's own frequency \(\sqrt{g/L}\) add up swing after swing, as on a playground swing. The amplitude grows until friction removes energy as fast as the pushes add it.</p></section>
+
+<section data-case="spring pendulum">
   <h3>Damping</h3>
   <p>Friction proportional to the speed drains energy: the oscillation keeps its rhythm but its amplitude shrinks as \(e^{-\gamma t}\) (dashed envelope).</p>
   <div class="eq">$$\ddot x + 2\gamma\dot x + \omega_0^2 x = 0, \qquad x \approx x_0 e^{-\gamma t}\cos\omega_1 t, \quad \omega_1 = \sqrt{\omega_0^2 - \gamma^2}$$</div>
 </section>
-<section data-case="damped" data-example="light"><h3>Light damping</h3><p>\(\gamma \ll \omega_0\): many swings, each slightly smaller. A guitar string or a swing.</p></section>
-<section data-case="damped" data-example="critical"><h3>Critical damping</h3><p>\(\gamma = \omega_0\): the fastest return to rest without overshooting. Car suspensions and door closers are tuned close to this.</p></section>
-<section data-case="damped" data-example="over"><h3>Overdamped</h3><p>\(\gamma > \omega_0\): no oscillation at all, it creeps back slowly, as if moving through honey.</p></section>
+<section data-case="spring" data-example="light"><h3>Light damping</h3><p>\(\gamma \ll \omega_0\): many swings, each slightly smaller. A guitar string or a swing.</p></section>
+<section data-case="spring" data-example="critical"><h3>Critical damping</h3><p>\(\gamma = \omega_0\): the fastest return to rest without overshooting. Car suspensions and door closers are tuned close to this.</p></section>
+<section data-case="spring" data-example="over"><h3>Overdamped</h3><p>\(\gamma > \omega_0\): no oscillation at all, it creeps back slowly, as if moving through honey.</p></section>
 
-<section data-case="driven">
+<section data-case="spring pendulum">
   <h3>Driven oscillations and resonance</h3>
   <p>Push periodically at \(\omega_d\). After the start-up dies away, the mass follows the drive, with an amplitude that peaks when the drive matches the natural frequency (right plot).</p>
   <div class="eq">$$\ddot x + 2\gamma\dot x + \omega_0^2 x = \frac{F_0}{m}\cos\omega_d t, \qquad A = \frac{F_0/m}{\sqrt{(\omega_0^2 - \omega_d^2)^2 + (2\gamma\omega_d)^2}}$$</div>
 </section>
-<section data-case="driven" data-example="resonance"><h3>At resonance</h3><p>Each push arrives just when it helps most: the amplitude grows until the damping removes energy as fast as the drive adds it, \(A = F_0/(2m\gamma\omega_0)\).</p></section>
-<section data-case="driven" data-example="above"><h3>Far above resonance</h3><p>The mass cannot keep up: tiny amplitude, moving opposite to the push (180° out of phase).</p></section>
-<section data-case="driven" data-example="sharp"><h3>Less damping</h3><p>The peak grows taller and narrower: its width is about \(2\gamma\). This is how a radio tunes to one station, and how soldiers marching in step can shake a bridge.</p></section>
+<section data-case="spring" data-example="resonance"><h3>At resonance</h3><p>Each push arrives just when it helps most: the amplitude grows until the damping removes energy as fast as the drive adds it, \(A = F_0/(2m\gamma\omega_0)\).</p></section>
+<section data-case="spring" data-example="above"><h3>Far above resonance</h3><p>The mass cannot keep up: tiny amplitude, moving opposite to the push (180° out of phase).</p></section>
+<section data-case="spring" data-example="sharp"><h3>Less damping</h3><p>The peak grows taller and narrower: its width is about \(2\gamma\). This is how a radio tunes to one station, and how soldiers marching in step can shake a bridge.</p></section>
 
 <details><summary>About the model</summary>
   <p>RK4 at \(\Delta t = 2\) ms over 20 s. Tests: spring period vs \(2\pi\sqrt{m/k}\) (10⁻⁵) and energy (10⁻⁹); pendulum at 115° vs the AGM period (10⁻⁵); damped envelope vs \(e^{-\gamma t}\) (2 %); steady driven amplitude vs the resonance formula at three frequencies (0.2 %).</p>

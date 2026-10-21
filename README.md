@@ -29,9 +29,9 @@ no internet connection.
 ## 🧪 How a topic works
 
 Pick a topic in the left bar (☰ folds it). On the right: the **cases** of the topic as tabs (e.g. Line,
-Parabola…), then **examples** that each show one idea (e.g. *At 90°: a·b = 0*), the controls the case
-uses, and a folded **View** section. **?** explains the topic, the case and the selected example. In the
-scene: things to drag, live readouts (✓ when a physical check holds), a play bar.
+Parabola…), then **Free** (every control, full explanation) and **examples** that each show one idea
+(e.g. *At 90°: a·b = 0*) with only its own controls and explanation (**?**). **View** is folded at the
+bottom. In the scene: things to drag, live readouts (✓ when a physical check holds), a play bar.
 
 The full map, including planned topics, is in [`labs/TOPICS.md`](labs/TOPICS.md).
 

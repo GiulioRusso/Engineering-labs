@@ -14,11 +14,15 @@ with linked plots, live readouts and the explanation one click away.
 | **Subject** | Maths, Physics | one file: `web/<subject>.html` |
 | **Topic** | Functions, Vectors, Oscillations | left bar (☰ folds it) |
 | **Case** | Line, Parabola · Dot product, Cross product | tabs at the top right |
-| **Example** | “At 90°: a·b = 0” | list under the tabs |
+| **Example** | “At 90°: a·b = 0” | list under the tabs, after **Free** |
 
-Every case starts from its simplest setting; each example adds one idea on top of it. **?** opens the
-explanation of the topic and the selected case, and of the selected example when there is one.
-Below the examples: the controls the case uses; at the bottom, folded, **View** (what is drawn).
+**Free** is the case from its simplest setting with every control and the full explanation. An
+**example** shows one idea: only its own controls, and **?** explains only that example. At the bottom,
+folded, **View** (what is drawn).
+
+A case is a different idea or apparatus (line vs parabola, lens vs mirror). A mode that applies to many
+examples is a setting, not a case: how the magnet moves, damping and drive, the gas process, Hohmann
+vs bi-elliptic.
 
 ## ▶️ What you can launch
 
@@ -83,12 +87,14 @@ Three rules hold everything together:
 ```js
 cases: [
   { id: 'dot', label: 'Dot product', set: { ax: 1.6, bx: 0.6, by: 1.4 },   // the simplest setting
-    controls: ['ax', 'ay', 'bx', 'by'],                                     // optional: controls shown
-    examples: [{ id: 'perp', label: 'At 90°: a·b = 0', set: { bx: 0 } }] }, // added on top of the case
+    examples: [{ id: 'perp', label: 'At 90°: a·b = 0', set: { bx: 0, by: 1.5 } },  // added on top of the case
+               { id: 'swap', label: 'Swap a and b', set: { … }, controls: ['ax', 'bx'] }] },
+// an example shows example.controls, else case.controls, else the controls its `set` changes
 ],
 ```
 
-`explain.html` has one section per case and one per example; untagged elements show everywhere.
+`explain.html`: the case sections are shown in Free, each example section with its example; untagged
+elements show everywhere.
 
 ```html
 <section data-case="dot"><h3>The dot product</h3> … $$\mathbf a\cdot\mathbf b = |\mathbf a||\mathbf b|\cos\theta$$</section>

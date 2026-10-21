@@ -1,16 +1,17 @@
-<section data-case="hohmann">
+<section data-case="transfer">
   <h3>The Hohmann transfer</h3>
   <p>To climb from one circular orbit to another, burn forward once to stretch the orbit into an ellipse that touches the target, coast half of it, then burn again at the far end to round it off. It is the cheapest two-burn transfer.</p>
   <div class="eq">$$a_t = \frac{r_1 + r_2}{2}, \quad \Delta v_1 = \sqrt{\frac{\mu}{r_1}}\left(\sqrt{\frac{2r_2}{r_1 + r_2}} - 1\right), \quad t = \pi\sqrt{\frac{a_t^3}{\mu}}$$</div>
 </section>
-<section data-case="hohmann" data-example="small"><h3>A small hop</h3><p>A modest change in radius costs a few hundred m/s.</p></section>
-<section data-case="hohmann" data-example="moon"><h3>To the Moon's distance</h3><p>Almost all the Δv is the first burn (escaping low orbit); arriving is cheap because the spacecraft is slow up there. The trip takes about 5 days.</p></section>
-<section data-case="hohmann" data-example="far"><h3>A far target</h3><p>Note the total, then compare with the bi-elliptic case for the same target.</p></section>
-<section data-case="hohmann" data-example="hydrogen"><h3>Better engine</h3><p>Same Δv, but a higher \(I_{sp}\) needs much less propellant: the rocket equation is exponential.</p></section>
-<section data-case="bielliptic"><h3>Going further to arrive cheaper</h3><p>Overshoot to a distant apoapsis \(r_b\), where the spacecraft is slow and changing the orbit is cheap, then fall back to the target. It saves fuel only when the target is more than about 12 times further out, and it takes much longer.</p></section>
-<section data-case="bielliptic" data-example="geo"><h3>Not worth it for GEO</h3><p>\(r_2/r_1 \approx 6\): three burns cost more than Hohmann's two.</p></section>
-<section data-case="hohmann bielliptic">
+<section data-case="transfer" data-example="small"><h3>A small hop</h3><p>A modest change in radius costs a few hundred m/s.</p></section>
+<section data-case="transfer" data-example="moon"><h3>To the Moon's distance</h3><p>Almost all the Δv is the first burn (escaping low orbit); arriving is cheap because the spacecraft is slow up there. The trip takes about 5 days.</p></section>
+<section data-case="transfer" data-example="far"><h3>A far target</h3><p>Note the total, then compare with the bi-elliptic case for the same target.</p></section>
+<section data-case="transfer" data-example="hydrogen"><h3>Better engine</h3><p>Same Δv, but a higher \(I_{sp}\) needs much less propellant: the rocket equation is exponential.</p></section>
+<section data-case="transfer"><h3>Going further to arrive cheaper</h3><p>Overshoot to a distant apoapsis \(r_b\), where the spacecraft is slow and changing the orbit is cheap, then fall back to the target. It saves fuel only when the target is more than about 12 times further out, and it takes much longer.</p></section>
+<section data-case="transfer" data-example="bi-geo"><h3>Not worth it for GEO</h3><p>\(r_2/r_1 \approx 6\): three burns cost more than Hohmann's two.</p></section>
+<section data-case="transfer">
   <h3>The rocket equation</h3>
   <p>Each burn costs propellant exponentially: the rocket must also accelerate the fuel it has not burned yet.</p>
   <div class="eq">$$\Delta v = I_{sp}\, g_0 \ln\frac{m_0}{m_f}, \qquad m_\text{prop} = m_\text{dry}\left(e^{\Delta v / I_{sp} g_0} - 1\right)$$</div>
 </section>
+<section data-case="transfer" data-example="bi"><h3>Bi-elliptic</h3><p>Overshoot to \(r_b\), far beyond the target, where the spacecraft is slow and changing the orbit is cheap; then fall back. For \(r_2/r_1 = 15\) the three burns cost less than Hohmann's two, at the price of a much longer trip.</p></section>

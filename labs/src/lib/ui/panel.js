@@ -1,9 +1,9 @@
-// Settings panel, top to bottom: the cases of the topic (line, parabola…), the examples of the selected
-// case (didactic presets, each explained in the ? drawer), the controls that case uses, then View (what
-// is drawn, folded). Hints are tooltips; a hint may be a function of the state.
+// Settings panel, top to bottom: the cases of the topic (line, parabola…), then Free plus the examples
+// of the selected case, then the controls, then View (what is drawn, folded). Free shows every control;
+// an example shows only its own controls. Hints are tooltips; a hint may be a function of the state.
 //
-// spec = { cases: [{ id, label, controls?, examples?: [{ id, label }] }], onPick(caseId, exampleId), controls: [group], display: [group] }
-//   case.controls: ids of the controls this case uses (default: all)
+// spec = { cases: [{ id, label, controls?, examples?: [{ id, label, set, controls? }] }], onPick(caseId, exampleId), controls: [group], display: [group] }
+//   an example's controls: example.controls, else case.controls, else the ids its `set` changes
 // group = { title, show?(state), items: [item] }
 // item types:
 //   { id, label, unit, min, max, step?, k = 1, log?, hint?, show? }          slider + number (SI in state, ×k shown)
@@ -19,7 +19,10 @@ export function createPanel(root, spec, state, onChange) {
   root.innerHTML = '';
   const syncs = [];
   const kase = () => spec.cases.find((c) => c.id === state.case);
-  const used = (it) => !it.id || !kase()?.controls || kase().controls.includes(it.id);
+  const used = (it) => {
+    const c = kase(), e = c?.examples?.find((x) => x.id === state.example);
+    return !it.id || !e || (e.controls ?? c.controls ?? Object.keys(e.set || {})).includes(it.id);
+  };
 
   const top = html('<section class="psec"></section>');
   if (spec.cases.length > 1) {
@@ -34,9 +37,9 @@ export function createPanel(root, spec, state, onChange) {
     top.append(row);
   }
   const exBox = html('<div class="examples"><h2>Examples</h2><div class="list"></div></div>'), list = exBox.querySelector('.list');
-  const exBtns = spec.cases.flatMap((c) => (c.examples || []).map((e) => {
-    const b = html(`<button class="ex" aria-pressed="false">${e.label}</button>`);
-    b.addEventListener('click', () => spec.onPick(c.id, state.example === e.id && state.case === c.id ? '' : e.id));
+  const exBtns = spec.cases.flatMap((c) => (c.examples?.length ? [{ id: '', label: 'Free: all controls' }, ...c.examples] : []).map((e) => {
+    const b = html(`<button class="ex${e.id ? '' : ' free'}" aria-pressed="false">${e.label}</button>`);
+    b.addEventListener('click', () => spec.onPick(c.id, e.id));
     list.append(b);
     return [c.id, e.id, b];
   }));

@@ -3,8 +3,9 @@
 // A definition (src/<topic>/<id>/lab.js, default export) is plain data plus one setup function:
 //   { id, title, size, cameras, cam, speed, duration, loop,
 //     defaults: { …state },                         every parameter and display toggle, in SI
-//     cases: [{ id, label, cam, speed, controls?: [ids], set: { …state },     the parts of the topic (line, parabola…)
-//              examples: [{ id, label, cam, speed, set }] }],                 didactic presets inside a case
+//     cases: [{ id, label, cam, speed, set: { …state },                     the parts of the topic (line, parabola…)
+//              controls?: [ids],                                             default controls of its examples
+//              examples: [{ id, label, cam, speed, set, controls? }] }],     didactic presets; Free = no example
 //     (explain.html: <section data-case="…" [data-example="…"]>; untagged elements always show)
 //     controls: [group], display: [group],           see panel.js
 //     plots: [{ id, title, xLabel, xUnit, yUnit, y2Unit }], hud: [rows],

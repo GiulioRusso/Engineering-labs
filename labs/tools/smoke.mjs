@@ -53,9 +53,8 @@ for (const topic of topics) {
       if (frac < 0.02) fail(`${topic}/${id}/${s}: blank scene (${(frac * 100).toFixed(1)} %)`);
       if (await p.evaluate(() => !!window.__labContextLost)) fail(`${topic}/${id}/${s}: WebGL context lost`);
       // every case and every example is explained in the ? drawer
-      const ex = await p.evaluate((x) => { const d = document.querySelector('.explain'), vis = [...d.querySelectorAll('[data-case]')].filter((e) => !e.hidden);
-        return { cs: vis.some((e) => !e.dataset.example), ex: !x.includes('/') || vis.some((e) => e.dataset.example) }; }, s);
-      if (!ex.cs || !ex.ex) fail(`${topic}/${id}/${s}: no explanation for this ${ex.cs ? 'example' : 'case'}`);
+      const explained = await p.evaluate((x) => [...document.querySelectorAll('.explain [data-case]')].some((e) => !e.hidden && !!e.dataset.example === x.includes('/')), s);
+      if (!explained) fail(`${topic}/${id}/${s}: no explanation for this ${s.includes('/') ? 'example' : 'case'}`);
       drawn.push(`${s} ${(frac * 100).toFixed(0)}%`);
     }
     await sleep(1500);

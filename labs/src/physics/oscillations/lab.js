@@ -6,7 +6,6 @@ import { si } from '../../lib/ui/format.js';
 import { simulate, energy, period, omega0, steadyAmplitude, measuredPeriod, G } from './model.js';
 
 const D = 20, K = 3, PIVOT = 1.5; // simulated seconds; world units per metre (spring); pendulum pivot height
-const spring = ['m', 'k', 'x0'], pend = ['m', 'L', 'th0'];
 
 export default {
   id: 'oscillations', title: 'Oscillations', size: 1.5, plain: true, duration: D, scrub: true,
@@ -14,38 +13,37 @@ export default {
   cam: 'front',
   defaults: { kind: 'spring', m: 1, k: 10, x0: 0.3, L: 1, th0: 0.2, gamma: 0, F0: 0, wd: 2, vectors: true },
   cases: [
-    { id: 'spring', label: 'Spring', controls: spring, set: {}, examples: [
+    { id: 'spring', label: 'Spring', set: {}, examples: [
       { id: 'heavy', label: '4× the mass: 2× the period', set: { m: 4 } },
       { id: 'stiff', label: '4× stiffer: half the period', set: { k: 40 } },
       { id: 'wide', label: 'Bigger swing: same period', set: { x0: 0.6 } },
+      { id: 'light', label: 'Light damping', set: { gamma: 0.08 } },
+      { id: 'critical', label: 'Critical damping', set: { gamma: Math.sqrt(10) } },
+      { id: 'over', label: 'Overdamped: creeps back', set: { gamma: 8 } },
+      { id: 'resonance', label: 'Driven at resonance', controls: ['gamma', 'F0', 'wd'], set: { x0: 0, gamma: 0.2, F0: 1, wd: Math.sqrt(10) } },
+      { id: 'above', label: 'Driven far above: out of phase', controls: ['wd'], set: { x0: 0, gamma: 0.2, F0: 1, wd: 7 } },
+      { id: 'sharp', label: 'Less damping: sharper peak', controls: ['gamma', 'wd'], set: { x0: 0, gamma: 0.05, F0: 1, wd: Math.sqrt(10) } },
     ] },
-    { id: 'pendulum', label: 'Pendulum', controls: pend, set: { kind: 'pendulum' }, examples: [
+    { id: 'pendulum', label: 'Pendulum', set: { kind: 'pendulum' }, examples: [
       { id: 'long', label: '4× longer: 2× the period', set: { L: 4 } },
       { id: 'heavy', label: 'Heavier bob: same period', set: { m: 5 } },
       { id: 'big', label: 'Big swing: slower', set: { th0: 2 } },
       { id: 'top', label: 'Almost over the top', set: { th0: 3 } },
-    ] },
-    { id: 'damped', label: 'Damped', controls: [...spring, 'gamma'], set: { gamma: 0.3 }, examples: [
-      { id: 'light', label: 'Light damping', set: { gamma: 0.08 } },
-      { id: 'critical', label: 'Critical: fastest return', set: { gamma: Math.sqrt(10) } },
-      { id: 'over', label: 'Overdamped: creeps back', set: { gamma: 8 } },
-    ] },
-    { id: 'driven', label: 'Driven', controls: ['m', 'k', 'gamma', 'F0', 'wd'], set: { x0: 0, gamma: 0.2, F0: 1, wd: 2 }, examples: [
-      { id: 'resonance', label: 'At resonance: ω_d = ω₀', set: { wd: Math.sqrt(10) } },
-      { id: 'above', label: 'Far above: tiny, out of phase', set: { wd: 7 } },
-      { id: 'sharp', label: 'Less damping: sharper peak', set: { wd: Math.sqrt(10), gamma: 0.05 } },
+      { id: 'damped', label: 'With air friction', controls: ['gamma'], set: { th0: 0.8, gamma: 0.15 } },
+      { id: 'pushed', label: 'Pushed in rhythm: resonance', controls: ['F0', 'wd'], set: { th0: 0, gamma: 0.1, F0: 0.3, wd: 3.13 } },
     ] },
   ],
+
   controls: [
     { title: 'Oscillator', items: [
       { id: 'm', label: 'Mass m', unit: 'kg', min: 0.1, max: 10, log: true },
-      { id: 'k', label: 'Spring constant k', unit: 'N/m', min: 1, max: 100, log: true },
-      { id: 'L', label: 'Length L', unit: 'm', min: 0.1, max: 5, log: true },
+      { id: 'k', label: 'Spring constant k', unit: 'N/m', min: 1, max: 100, log: true, show: (s) => s.kind === 'spring' },
+      { id: 'L', label: 'Length L', unit: 'm', min: 0.1, max: 5, log: true, show: (s) => s.kind === 'pendulum' },
       { type: 'readout', label: 'Natural frequency ω₀', value: (s) => `${omega0(s).toFixed(3)} rad/s` },
     ] },
     { title: 'Start', items: [
-      { id: 'x0', label: 'Pulled out by', unit: 'cm', k: 100, min: 0, max: 0.6, step: 0.005 },
-      { id: 'th0', label: 'Released at', unit: '°', k: 180 / Math.PI, min: 0, max: 3.1, step: Math.PI / 180 },
+      { id: 'x0', label: 'Pulled out by', unit: 'cm', k: 100, min: 0, max: 0.6, step: 0.005, show: (s) => s.kind === 'spring' },
+      { id: 'th0', label: 'Released at', unit: '°', k: 180 / Math.PI, min: 0, max: 3.1, step: Math.PI / 180, show: (s) => s.kind === 'pendulum' },
     ] },
     { title: 'Damping and drive', items: [
       { id: 'gamma', label: 'Damping γ', unit: '1/s', min: 0, max: 10, step: 0.01 },
@@ -109,7 +107,8 @@ export default {
         hud.set('q', p ? `${(q * f).toFixed(1)}°` : si(q, 'm'));
         hud.set('E', `${si(E.K + E.U, 'J')}  (K ${si(E.K, 'J')}, U ${si(E.U, 'J')})`);
         const E0 = energy(state, R.q[0], R.v[0]), lossless = !state.gamma && !state.F0;
-        hud.set('chk', lossless ? `energy kept: ${((E.K + E.U) / (E0.K + E0.U)).toFixed(7)} ✓` : state.F0 ? `steady amplitude ${si(steadyAmplitude(omega0(state), state.gamma, state.F0 / state.m, state.wd), 'm')}` : `envelope e^(−γt) = ${Math.exp(-state.gamma * time.t).toFixed(3)}`, lossless ? 'good' : '');
+        const fm = state.F0 / (p ? state.m * state.L : state.m), A = steadyAmplitude(omega0(state), state.gamma, fm, state.wd);
+        hud.set('chk', lossless ? `energy kept: ${((E.K + E.U) / (E0.K + E0.U)).toFixed(7)} ✓` : state.F0 ? `steady amplitude ${p ? `${(A * f).toFixed(1)}° (linear)` : si(A, 'm')}` : `envelope e^(−γt) = ${Math.exp(-state.gamma * time.t).toFixed(3)}`, lossless ? 'good' : '');
 
         const T = [], Q = [], Ev = [], Up = [], Lo = [], Ks = [], Us = [];
         for (let j = 0; j < R.t.length; j += 20) {
@@ -121,8 +120,8 @@ export default {
         if (Up.length) series.push({ x: T, y: Up, color: '--c-ref', dash: [4, 3], label: 'e^(−γt)' }, { x: T, y: Lo, color: '--c-ref', dash: [4, 3] });
         plots.pos.draw({ xlim: [0, D], cursor: time.t, series });
         if (state.F0) {
-          const W = [], A = [], w0 = omega0(state); for (let j = 0; j <= 300; j++) { const w = 0.2 + 9.8 * j / 300; W.push(w); A.push(steadyAmplitude(w0, state.gamma, state.F0 / state.m, w)); }
-          plots.second.draw({ xlim: [0.2, 10], cursor: state.wd, series: [{ x: W, y: A, color: '--c-F', label: 'resonance: amplitude vs ω_d [m]' }] });
+          const W = [], Am = [], w0 = omega0(state); for (let j = 0; j <= 300; j++) { const w = 0.2 + 9.8 * j / 300; W.push(w); Am.push(steadyAmplitude(w0, state.gamma, fm, w) * f); }
+          plots.second.draw({ xlim: [0.2, 10], cursor: state.wd, series: [{ x: W, y: Am, color: '--c-F', label: `resonance: amplitude vs ω_d [${p ? '°' : 'm'}]` }] });
         } else plots.second.draw({ xlim: [0, D], cursor: time.t, series: [{ x: T, y: Ks, color: '--c-v', label: 'kinetic [J]' }, { x: T, y: Us, color: '--c-E', label: 'potential [J]' }, { x: T, y: Ev, color: '--ink', dash: [4, 3], label: 'total' }] });
       },
       theme() {

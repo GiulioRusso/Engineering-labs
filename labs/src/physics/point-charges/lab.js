@@ -19,21 +19,17 @@ export default {
   timeless: true,
   defaults: { n: 2, q1: 2e-9, x1: -0.15, z1: 0, q2: -2e-9, x2: 0.15, z2: 0, q3: 1e-9, x3: 0, z3: 0.2, q4: -1e-9, x4: 0, z4: -0.2, lines: true, slice: true, contours: true, gauss: false },
   cases: [
-    { id: 'one', label: 'One charge', set: { n: 1, q1: 2e-9, x1: 0, z1: 0 }, examples: [
+    { id: 'charges', label: 'Charges', set: { n: 1, q1: 2e-9, x1: 0, z1: 0 }, examples: [
       { id: 'neg', label: 'A negative charge', set: { q1: -2e-9 } },
       { id: 'big', label: 'More charge: more lines', set: { q1: 5e-9 } },
-    ] },
-    { id: 'two', label: 'Two charges', set: { n: 2, q1: 2e-9, q2: -2e-9 }, examples: [
-      { id: 'like', label: 'Like charges: a null point', set: { q2: 2e-9 } },
-      { id: 'unequal', label: 'Unequal: lines escape', set: { q1: 3e-9, q2: -1e-9 } },
-      { id: 'close', label: 'Close together: a dipole', set: { x1: -0.04, x2: 0.04 } },
-    ] },
-    { id: 'four', label: 'Four charges', set: { n: 4, q1: 2e-9, x1: -0.15, z1: -0.15, q2: -2e-9, x2: 0.15, z2: -0.15, q3: 2e-9, x3: 0.15, z3: 0.15, q4: -2e-9, x4: -0.15, z4: 0.15 }, examples: [
-      { id: 'same', label: 'All positive', set: { q2: 2e-9, q4: 2e-9 } },
-    ] },
-    { id: 'gauss', label: "Gauss's law", set: { n: 2, q1: 2e-9, x1: -0.08, q2: -1e-9, x2: 0.25, gauss: true }, examples: [
-      { id: 'inside', label: 'Both inside', set: { x1: -0.05, x2: 0.05 } },
-      { id: 'alone', label: 'One charge alone', set: { n: 1 } },
+      { id: 'pair', label: 'Two opposite charges', set: { n: 2, q1: 2e-9, x1: -0.15, q2: -2e-9 } },
+      { id: 'like', label: 'Like charges: a null point', set: { n: 2, q1: 2e-9, x1: -0.15, q2: 2e-9 } },
+      { id: 'unequal', label: 'Unequal: lines escape', set: { n: 2, q1: 3e-9, x1: -0.15, q2: -1e-9 } },
+      { id: 'close', label: 'Close together: a dipole', set: { n: 2, q1: 2e-9, x1: -0.04, q2: -2e-9, x2: 0.04 } },
+      { id: 'four', label: 'Four charges: a quadrupole', controls: ['q1', 'q2', 'q3', 'q4'], set: { n: 4, q1: 2e-9, x1: -0.15, z1: -0.15, q2: -2e-9, x2: 0.15, z2: -0.15, q3: 2e-9, x3: 0.15, z3: 0.15, q4: -2e-9, x4: -0.15, z4: 0.15 } },
+      { id: 'same', label: 'Four positive charges', controls: ['q1', 'q2', 'q3', 'q4'], set: { n: 4, q1: 2e-9, x1: -0.15, z1: -0.15, q2: 2e-9, x2: 0.15, z2: -0.15, q3: 2e-9, x3: 0.15, z3: 0.15, q4: 2e-9, x4: -0.15, z4: 0.15 } },
+      { id: 'gauss', label: "Gauss's law: charge outside", controls: ['q1', 'q2'], set: { n: 2, q1: 2e-9, x1: -0.08, q2: -1e-9, x2: 0.25, gauss: true } },
+      { id: 'inside', label: "Gauss's law: both inside", controls: ['q1', 'q2'], set: { n: 2, q1: 2e-9, x1: -0.05, q2: -1e-9, x2: 0.05, gauss: true } },
     ] },
   ],
   controls: [

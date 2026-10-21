@@ -329,8 +329,7 @@
     "what": "A loop and a solenoid: field lines, B on the axis.",
     "from": "coil-induction",
     "cases": [
-     "loop",
-     "solenoid"
+     "field"
     ]
    },
    {
@@ -339,9 +338,7 @@
     "what": "Move a magnet through a coil: flux, EMF, Lenz, magnetic braking.",
     "from": "coil-induction",
     "cases": [
-     "push",
-     "drag",
-     "drop",
+     "magnet",
      "ac"
     ]
    },

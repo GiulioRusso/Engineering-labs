@@ -13,22 +13,20 @@ export default {
   cameras: { front: { pos: [0.5, -2.6, 0.55], target: [0.5, 0.5, 0.55] }, side: { pos: [3, 0.5, 0.55], target: [0.5, 0.5, 0.55] }, top: { pos: [0.5, 0.49, 3], target: [0.5, 0.5, 0.5] }, iso: { pos: [2.1, -1.6, 1.6], target: [0.5, 0.5, 0.5] } },
   defaults: { mode: 'heating', T0: 300, squeeze: 0.5, moles: 0.01, color: true },
   cases: [
-    { id: 'heating', label: 'Heating', set: { mode: 'heating' }, examples: [
-      { id: 'more', label: 'Twice the gas', set: { moles: 0.02 } },
-      { id: 'cold', label: 'Start cold: 150 K', set: { T0: 150 } },
+    { id: 'gas', label: 'Gas', set: { mode: 'heating' }, examples: [
+      { id: 'more', label: 'Heat twice the gas', set: { moles: 0.02 } },
+      { id: 'cold', label: 'Heat from 150 K', set: { T0: 150 } },
+      { id: 'iso-half', label: 'Squeeze slowly to half', set: { mode: 'isothermal', squeeze: 0.5 } },
+      { id: 'iso-quarter', label: 'Squeeze slowly to a quarter', set: { mode: 'isothermal', squeeze: 0.25 } },
+      { id: 'adi-half', label: 'Insulated, to half: T × 1.59', set: { mode: 'adiabatic', squeeze: 0.5 } },
+      { id: 'adi-quarter', label: 'Insulated, to a quarter: T × 2.52', set: { mode: 'adiabatic', squeeze: 0.25 } },
+      { id: 'hand', label: 'Push the piston yourself', set: { mode: 'manual' } },
     ] },
-    { id: 'isothermal', label: 'Isothermal', set: { mode: 'isothermal' }, examples: [
-      { id: 'half', label: 'Squeeze to half', set: { squeeze: 0.5 } },
-      { id: 'quarter', label: 'Squeeze to a quarter', set: { squeeze: 0.25 } },
-    ] },
-    { id: 'adiabatic', label: 'Adiabatic', set: { mode: 'adiabatic' }, examples: [
-      { id: 'half', label: 'To half: T × 1.59', set: { squeeze: 0.5 } },
-      { id: 'quarter', label: 'To a quarter: T × 2.52', set: { squeeze: 0.25 } },
-    ] },
-    { id: 'manual', label: 'By hand', set: { mode: 'manual' } },
   ],
+
   controls: [
-    { title: 'Piston', show: (s) => s.mode === 'adiabatic' || s.mode === 'isothermal', items: [
+    { title: 'Process', items: [
+      { id: 'mode', label: 'Process', type: 'segmented', options: [['heating', 'Heat'], ['isothermal', 'Isothermal'], ['adiabatic', 'Insulated'], ['manual', 'By hand']] },
       { id: 'squeeze', label: 'Compress to', unit: '', min: 0.25, max: 0.9, step: 0.01, show: (s) => s.mode === 'adiabatic' || s.mode === 'isothermal' },
     ] },
     { title: 'Gas', items: [

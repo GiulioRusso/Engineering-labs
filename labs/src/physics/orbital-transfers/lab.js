@@ -20,18 +20,18 @@ export default {
   cameras: { front: { pos: [0, -6.5, 1.2] }, side: { pos: [6.5, 0, 1.2] }, top: { pos: [0, -0.01, 6.8] }, iso: { pos: [3.6, -4.4, 3.4] } },
   defaults: { kind: 'hohmann', h1: 300 * km, r2: 42164 * km, rb: 3e8, isp: 320, dry: 1000 },
   cases: [
-    { id: 'hohmann', label: 'Hohmann', set: { kind: 'hohmann' }, examples: [
+    { id: 'transfer', label: 'Transfer', set: { kind: 'hohmann' }, examples: [
       { id: 'small', label: 'A small hop', set: { r2: 10000 * km } },
       { id: 'moon', label: 'Out to the Moon’s distance', set: { r2: 384400 * km } },
       { id: 'far', label: 'A far target: r₂/r₁ = 15', set: { r2: 15 * (RE + 300 * km) } },
+      { id: 'bi', label: 'Same target, bi-elliptic', controls: ['kind', 'rb'], set: { kind: 'bielliptic', r2: 15 * (RE + 300 * km), rb: 6e8 } },
+      { id: 'bi-geo', label: 'Bi-elliptic to GEO: not worth it', controls: ['kind', 'rb'], set: { kind: 'bielliptic', rb: 1.2e8 } },
       { id: 'hydrogen', label: 'Hydrogen engine', set: { isp: 450 } },
-    ] },
-    { id: 'bielliptic', label: 'Bi-elliptic', set: { kind: 'bielliptic', r2: 15 * (RE + 300 * km), rb: 6e8 }, examples: [
-      { id: 'geo', label: 'To GEO: not worth it', set: { r2: 42164 * km, rb: 1.2e8 } },
     ] },
   ],
   controls: [
     { title: 'Mission', items: [
+      { id: 'kind', label: 'Route', type: 'segmented', options: [['hohmann', 'Hohmann'], ['bielliptic', 'Bi-elliptic']] },
       { id: 'h1', label: 'Start altitude', unit: 'km', k: 1e-3, min: 200 * km, max: 2000 * km, log: true },
       { id: 'r2', label: 'Target radius', unit: 'km', k: 1e-3, min: 8000 * km, max: 400000 * km, log: true, hint: 'GEO 42 164 km' },
       { id: 'rb', label: 'Apoapsis r_b', unit: 'km', k: 1e-3, min: 5e7, max: 1.5e9, log: true, show: (s) => s.kind === 'bielliptic' },

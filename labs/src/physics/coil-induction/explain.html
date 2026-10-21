@@ -1,44 +1,45 @@
-<section data-case="loop" data-highlight="coil">
+<section data-case="field" data-highlight="coil">
   <h3>One loop of current</h3>
   <p>Every short piece of wire adds a little field, perpendicular to both the wire and the line to the point (Biot–Savart). Summed around a ring, the field threads through the middle and curls back around the wire outside. Far away the ring is a magnetic dipole: the field fades as \(1/r^3\).</p>
   <div class="eq">$$\cB{B_z}(z) = \frac{\mu_0 \cI{I} R^2}{2\,(R^2+z^2)^{3/2}}, \qquad \cB{B}(0) = \frac{\mu_0 \cI{I}}{2R}$$</div>
 </section>
-<section data-case="loop" data-example="double"><h3>Double the current</h3><p>The field is proportional to \(I\): every value on the axis plot doubles. The shape of the lines does not change.</p></section>
-<section data-case="loop" data-example="wide"><h3>A wider loop</h3><p>At the centre \(B = \mu_0 I/2R\): a loop 1.6 times wider gives a field 1.6 times weaker there, but it reaches further along the axis.</p></section>
+<section data-case="field" data-example="double"><h3>Double the current</h3><p>The field is proportional to \(I\): every value on the axis plot doubles. The shape of the lines does not change.</p></section>
+<section data-case="field" data-example="wide"><h3>A wider loop</h3><p>At the centre \(B = \mu_0 I/2R\): a loop 1.6 times wider gives a field 1.6 times weaker there, but it reaches further along the axis.</p></section>
 
-<section data-case="solenoid" data-highlight="lines">
+<section data-case="field" data-highlight="lines">
   <h3>Many loops: the solenoid</h3>
   <p>Side by side, the rings' fields add up inside and nearly cancel outside. In a long coil the field inside is uniform and depends only on the turns per metre \(n = N/L\), not on the radius. At an end it is half the central value.</p>
   <div class="eq">$$\cB{B} \approx \mu_0\, n\, \cI{I}$$</div>
 </section>
-<section data-case="solenoid" data-example="turns"><h3>More turns per metre</h3><p>200 turns on 40 cm: \(n = 500\)/m instead of 250/m, so twice the field inside.</p></section>
-<section data-case="solenoid" data-example="radius"><h3>Wider, same n</h3><p>Doubling the radius leaves the inside field unchanged: \(\mu_0 n I\) has no \(R\) in it (as long as the coil stays long compared to its width).</p></section>
-<section data-case="solenoid" data-example="short"><h3>Short and wide</h3><p>When \(L\) is smaller than \(R\) the field is no longer uniform: it peaks in the middle and the lines spread out widely (fringing). The coil behaves more like a single loop.</p></section>
+<section data-case="field" data-example="solenoid"><h3>A solenoid</h3><p>150 loops side by side over 60 cm. Inside, their fields add up to a nearly uniform \(B = \mu_0 n I\); outside they almost cancel. The model curve sits on the dashed formula.</p></section>
+<section data-case="field" data-example="turns"><h3>More turns per metre</h3><p>200 turns on 40 cm: \(n = 500\)/m instead of 250/m, so twice the field inside.</p></section>
+<section data-case="field" data-example="radius"><h3>Wider, same n</h3><p>Doubling the radius leaves the inside field unchanged: \(\mu_0 n I\) has no \(R\) in it (as long as the coil stays long compared to its width).</p></section>
+<section data-case="field" data-example="short"><h3>Short and wide</h3><p>When \(L\) is smaller than \(R\) the field is no longer uniform: it peaks in the middle and the lines spread out widely (fringing). The coil behaves more like a single loop.</p></section>
 
-<section data-case="push drag drop ac" data-highlight="pickup">
+<section data-case="magnet ac" data-highlight="pickup">
   <h3>Flux through a loop</h3>
   <p>Flux counts how much field passes through the surface bounded by a loop. It is proportional to the source current; the constant \(M\) (mutual inductance) depends only on the shapes and positions.</p>
   <div class="eq">$$\Phi = \int_S \cB{\mathbf B}\cdot d\mathbf A = M\,\cI{I}$$</div>
 </section>
-<section data-case="push drag drop ac" data-highlight="emf">
+<section data-case="magnet ac" data-highlight="emf">
   <h3>Faraday: change makes an EMF</h3>
   <p>A voltage appears around the loop only while the flux changes, because the current changes or something moves. A strong but steady field gives nothing.</p>
   <div class="eq">$$\mathcal E = -\frac{d\Phi}{dt}$$</div>
 </section>
-<section data-case="push drag drop" data-highlight="lenz">
+<section data-case="magnet" data-highlight="lenz">
   <h3>Lenz: the induced current pushes back</h3>
   <p>The EMF drives a current \(\cI{I_\text{ind}} = \mathcal E/R\). Its own field opposes the change in flux, so the force on the magnet opposes its velocity. The kinetic energy lost becomes heat.</p>
   <div class="eq">$$\cF{\mathbf F}\cdot\cv{\mathbf v} = -\cI{I_\text{ind}}^2 R \le 0$$</div>
 </section>
-<section data-case="push" data-example="slow"><h3>Ten times slower</h3><p>The EMF peak is ten times smaller but lasts ten times longer. The area under \(\mathcal E(t)\) is the total change in flux, whatever the speed.</p></section>
-<section data-case="push" data-example="flip"><h3>Flip the magnet</h3><p>South pole first: the flux grows the other way, so the EMF and the current change sign. The force still opposes the motion.</p></section>
-<section data-case="push" data-example="turns"><h3>More turns</h3><p>Each turn collects the same flux change: four times the turns, four times the EMF.</p></section>
-<section data-case="push" data-example="open"><h3>Open circuit</h3><p>The EMF is still there (it is a voltage across the gap), but no current flows: no induced field, no braking force.</p></section>
-<section data-case="drag"><h3>Move it yourself</h3><p>Drag the magnet in and out. Fast moves give large EMFs; the sign tells whether the flux is growing or shrinking.</p></section>
-<section data-case="drag" data-example="still"><h3>Held still</h3><p>Maximum flux, zero EMF: only a change in flux induces anything.</p></section>
-<section data-case="drop"><h3>Magnetic braking</h3><p>The induced current pushes back on the falling magnet. It falls more slowly than in free fall, and its lost kinetic energy heats the coil.</p></section>
-<section data-case="drop" data-example="open"><h3>Open circuit</h3><p>No current, no braking: the magnet falls freely at \(g\).</p></section>
-<section data-case="drop" data-example="strong"><h3>Lower resistance</h3><p>Five times less resistance, five times the current for the same EMF: the magnet drifts down almost at a constant, slow speed (as in an eddy-current brake).</p></section>
+<section data-case="magnet" data-example="slow"><h3>Ten times slower</h3><p>The EMF peak is ten times smaller but lasts ten times longer. The area under \(\mathcal E(t)\) is the total change in flux, whatever the speed.</p></section>
+<section data-case="magnet" data-example="flip"><h3>Flip the magnet</h3><p>South pole first: the flux grows the other way, so the EMF and the current change sign. The force still opposes the motion.</p></section>
+<section data-case="magnet" data-example="turns"><h3>More turns</h3><p>Each turn collects the same flux change: four times the turns, four times the EMF.</p></section>
+<section data-case="magnet" data-example="open"><h3>Open circuit</h3><p>The EMF is still there (it is a voltage across the gap), but no current flows: no induced field, no braking force.</p></section>
+<section data-case="magnet" data-example="hand"><h3>Move it yourself</h3><p>Drag the magnet in and out. Fast moves give large EMFs; the sign tells whether the flux is growing or shrinking.</p></section>
+<section data-case="magnet" data-example="still"><h3>Held still</h3><p>Maximum flux, zero EMF: only a change in flux induces anything.</p></section>
+<section data-case="magnet" data-example="drop"><h3>Magnetic braking</h3><p>The induced current pushes back on the falling magnet. It falls more slowly than in free fall, and its lost kinetic energy heats the coil.</p></section>
+<section data-case="magnet" data-example="drop-open"><h3>Open circuit</h3><p>No current, no braking: the magnet falls freely at \(g\).</p></section>
+<section data-case="magnet" data-example="brake"><h3>Lower resistance</h3><p>Five times less resistance, five times the current for the same EMF: the magnet drifts down almost at a constant, slow speed (as in an eddy-current brake).</p></section>
 <section data-case="ac" data-highlight="efield">
   <h3>The induced electric field</h3>
   <p>An alternating current makes a changing field: nothing moves, yet the ring sees an EMF. The changing magnetic field is surrounded by a circulating electric field, even in empty space; the ring only gives its charges a path. This is how a transformer works.</p>

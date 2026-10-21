@@ -1,5 +1,5 @@
 // Theory drawer: sections pre-rendered to MathML at build time. show(case, example) keeps the untagged
-// elements, the sections whose data-case lists the case, and the section of the selected example.
+// elements plus, for an example, its own section; with no example (Free), the sections of the case.
 // Clicking a section with data-highlight calls onHighlight(key), or onHighlight(null) when clicked again or closed.
 export function initExplain(drawer, onHighlight) {
   const set = (open) => {
@@ -29,9 +29,8 @@ export function initExplain(drawer, onHighlight) {
     show(caseId, exId) {
       current = null;
       for (const el of drawer.querySelectorAll('[data-case]')) {
-        const ex = el.dataset.example, on = el.dataset.case.split(' ').includes(caseId) && (!ex || ex === exId);
+        const ex = el.dataset.example, on = el.dataset.case.split(' ').includes(caseId) && (exId ? ex === exId : !ex);
         el.hidden = !on;
-        el.classList.toggle('example', !!ex);
         if (on && ex) current = el;
       }
       reveal();
