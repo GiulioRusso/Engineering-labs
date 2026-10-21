@@ -29,7 +29,7 @@ no internet connection.
 
 ## 🧪 How a topic works
 
-Pick a topic in the left bar (☰ folds it). On the right: the **cases** of the topic as tabs (e.g. Line,
+Pick a topic in the left bar (drag its edge to resize, ‹ to hide it). On the right: the **cases** of the topic as tabs (e.g. Line,
 Parabola…), then **Free** (every control, full explanation) and **examples** that each show one idea
 (e.g. *At 90°: a·b = 0*) with only its own controls and explanation (**?**). **View** is folded at the
 bottom. In the scene: things to drag, live readouts (✓ when a physical check holds), a play bar.

@@ -23,6 +23,7 @@ import { createHud } from './hud.js';
 import { initExplain } from './explain.js';
 import { cssVar } from './theme.js';
 import { createLegend } from '../viz/legend.js';
+import { onDrag, store } from './drag.js';
 
 export const PRESETS = (d) => ({
   front: { pos: [0, -2.5 * d, 0.1 * d] }, side: { pos: [2.5 * d, 0, 0.1 * d] },
@@ -36,9 +37,20 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
       <div class="hud"></div><div class="legend"></div><div class="hint"></div>
       <div class="playbar"></div><aside class="explain" aria-label="Explanation"></aside></main>
     <aside class="panel" aria-label="Controls"></aside>
-    <section class="dock" aria-label="Linked plots">${plotsDef.map((p) => `<div class="plot" data-plot="${p.id}"></div>`).join('')}</section></div>`;
+    <section class="dock" aria-label="Linked plots"><div class="dock-grip" title="Drag to resize the plots, double-click for large"></div>${plotsDef.map((p) => `<div class="plot" data-plot="${p.id}"></div>`).join('')}</section></div>`;
   const q = (s) => root.querySelector(s);
   const el = { stage: q('.stage'), hud: q('.hud'), legend: q('.legend'), hint: q('.hint'), playbar: q('.playbar'), explain: q('.explain'), panel: q('.panel') };
+
+  // plots dock: drag its top edge to make the plots taller (remembered for every topic)
+  const shell = root.closest('.topic') || document.documentElement, setH = (h) => shell.style.setProperty('--dock-h', `${h}px`);
+  if (store.get('labs-dock-h')) setH(Number(store.get('labs-dock-h')));
+  let h0 = 0; const maxH = () => root.getBoundingClientRect().height - 160;
+  onDrag(q('.dock-grip'), {
+    start: () => { h0 = q('.dock').getBoundingClientRect().height; },
+    move: (dx, dy) => setH(Math.max(110, Math.min(maxH(), h0 - dy))),
+    end: (dx, dy) => store.set('labs-dock-h', String(Math.round(Math.max(110, Math.min(maxH(), h0 - dy))))),
+  });
+  q('.dock-grip').addEventListener('dblclick', () => { const big = q('.dock').getBoundingClientRect().height < maxH() * 0.6, h = big ? Math.round(maxH() * 0.65) : 176; setH(h); store.set('labs-dock-h', String(h)); });
 
   const stage = createStage(el.stage, { size: def.size ?? 0.5, presets: def.cameras || PRESETS(def.size ?? 0.5) });
   const handles = createHandles(stage, el.hint);

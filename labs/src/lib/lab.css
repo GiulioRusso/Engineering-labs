@@ -83,11 +83,24 @@ button, input, select { font: inherit; color: inherit; }
 .btn[hidden] { display: none; }
 .btn-group { display: flex; gap: 2px; } .btn-group .btn { padding: 0 8px; }
 
-.shell { display: grid; grid-template-columns: 210px 1fr; min-height: 0; position: relative; }
-.side-closed .shell { grid-template-columns: 1fr; } .side-closed .side { display: none; }
+.shell { display: grid; grid-template-columns: var(--side-w) 1fr; min-height: 0; position: relative; }
+.side-closed .shell { grid-template-columns: 26px 1fr; } .side-closed .side, .side-closed .side-grip { display: none; }
+.topic { --side-w: 210px; } .shell { grid-template-columns: var(--side-w) 1fr; }
+.side { position: relative; }
+.side-fold { position: absolute; top: 6px; right: 6px; width: 24px; height: 24px; border-radius: 6px; border: 1px solid transparent; background: none; color: var(--ink-dim); cursor: pointer; font-size: 16px; line-height: 1; z-index: 1; }
+.side-fold:hover { border-color: var(--line); color: var(--ink); }
+.side-grip { position: absolute; top: 0; bottom: 0; left: calc(var(--side-w) - 4px); width: 8px; cursor: col-resize; z-index: 9; }
+.side-grip:hover, .dragging .side-grip { background: color-mix(in srgb, var(--accent) 35%, transparent); }
+.side-tab { display: none; writing-mode: vertical-rl; rotate: 180deg; padding: 14px 0; border: 0; border-left: 1px solid var(--line); background: var(--panel); color: var(--ink-dim); cursor: pointer; font-size: 12px; letter-spacing: .08em; text-align: end; }
+.side-tab:hover { color: var(--accent); border-color: var(--accent); }
+.side-closed .side-tab { display: block; }
+.dragging { cursor: grabbing; user-select: none; }
+.dock-grip { position: absolute; left: 0; right: 0; top: -5px; height: 10px; cursor: row-resize; z-index: 3; }
+.dock-grip::after { content: ""; position: absolute; left: 50%; top: 3px; width: 44px; height: 4px; margin-left: -22px; border-radius: 2px; background: var(--line); }
+.dock-grip:hover::after, .dragging .dock-grip::after { background: var(--accent); }
 .side { overflow-y: auto; background: var(--panel); border-right: 1px solid var(--line); padding: 10px 8px 30px; display: grid; align-content: start; gap: 2px; }
 .side .grp { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-dim); font-weight: 700; padding: 12px 10px 4px; }
-.side .grp:first-child { padding-top: 2px; }
+.side .side-fold + .grp { padding-top: 2px; }
 .side a { display: block; padding: 7px 10px; border-radius: 7px; color: var(--ink); text-decoration: none; font-size: 13.5px; border: 1px solid transparent; }
 .side a:hover { background: var(--panel-2); }
 .side a[aria-current="true"] { background: color-mix(in srgb, var(--accent) 14%, transparent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
@@ -156,7 +169,7 @@ button, input, select { font: inherit; color: inherit; }
 .hidden { display: none !important; }
 
 /* ------------------------------------------------------------------ dock */
-.dock { grid-area: dock; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; padding: 8px; background: var(--panel); border-top: 1px solid var(--line); min-width: 0; min-height: 0; }
+.dock { grid-area: dock; position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; padding: 8px; background: var(--panel); border-top: 1px solid var(--line); min-width: 0; min-height: 0; }
 .plot { position: relative; min-width: 0; min-height: 0; } .plot canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 
 /* ------------------------------------------------------------------ theory drawer */
@@ -176,7 +189,7 @@ button, input, select { font: inherit; color: inherit; }
 .explain td, .explain th { border-bottom: 1px solid var(--line); padding: 3px 4px; text-align: left; vertical-align: top; }
 
 /* ------------------------------------------------------------------ narrow screens */
-@media (max-width: 1100px) { .shell, .side-closed .shell { grid-template-columns: 1fr; } .side { position: absolute; z-index: 8; top: 0; bottom: 0; left: 0; width: min(260px, 80vw); box-shadow: 8px 0 24px rgb(0 0 0 / .3); } }
+@media (max-width: 1100px) { .shell, .side-closed .shell { grid-template-columns: 26px 1fr; } .side { position: absolute; z-index: 8; top: 0; bottom: 0; left: 0; width: min(260px, 80vw); box-shadow: 8px 0 24px rgb(0 0 0 / .3); } .side-grip { display: none; } }
 @media (max-width: 760px) {
   :root { --dock-h: 140px; }
   .lab, .panel-closed .lab { grid-template: "view" 1fr "dock" var(--dock-h) / 1fr; }

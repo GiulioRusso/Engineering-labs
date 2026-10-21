@@ -15,6 +15,20 @@ const HUE = {
   'analog-electronics': 28, circuits: 45, 'computer-science': 200, 'control-systems': 160, 'digital-electronics': 260,
   'electronic-warfare': 0, 'machine-learning': 300, maths: 220, physics: 190, 'signal-theory': 130,
 };
+// one simple line icon per subject (24×24, stroke = currentColor)
+const ICON = {
+  maths: '<path d="M18 5H7l6 7-6 7h11"/>',
+  physics: '<circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>',
+  'control-systems': '<rect x="9" y="3.5" width="6" height="5" rx="1"/><path d="M3 6h6M15 6h6v12H3V6"/><path d="M3 18l3-3m-3 3l3 3"/>',
+  'computer-science': '<path d="M8 6l-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/>',
+  'digital-electronics': '<rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 2v4M12 2v4M15 2v4M9 18v4M12 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>',
+  'analog-electronics': '<circle cx="13" cy="12" r="7"/><path d="M2 12h7M9 8v8M9 10l6-4M9 14l6 4M15 6v-4M15 18v4"/>',
+  circuits: '<path d="M2 12h4l2-4 3 8 3-8 3 8 2-4h3"/>',
+  'electronic-warfare': '<path d="M12 20a8 8 0 0 1-8-8M12 16a4 4 0 0 1-4-4"/><circle cx="12" cy="12" r="1.5"/><path d="M12 12l7-7M15 4a8 8 0 0 1 5 5"/>',
+  'machine-learning': '<circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 7l3 4M7 17l3-4M14 11l3-4M14 13l3 4"/>',
+  'signal-theory': '<path d="M2 12c2.5-8 5-8 7.5 0s5 8 7.5 0 3.5-5 5-3"/>',
+};
+const icon = (k) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k] || '<circle cx="12" cy="12" r="8"/>'}</svg>`;
 const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
 // labsRoot: absolute path of labs/; web: path from the page to labs/web/; repo: path from the page to the repo root.
@@ -30,15 +44,15 @@ export function renderCatalogue({ catalog, labsRoot, web, repo }) {
     if (S.visualizer) {
       const v = VIS[S.visualizer];
       index.push({ s: S.name, t: v.title, w: v.what, h: `${repo}${v.href}` });
-      return `<a class="card" style="${style}" href="${repo}${v.href}"><span class="name"><i></i>${esc(S.name)}</span><span class="sub">${v.title}</span></a>`;
+      return `<a class="card" style="${style}" href="${repo}${v.href}"><span class="name">${icon(S.subject)}${esc(S.name)}</span><span class="sub">${v.title}</span></a>`;
     }
-    if (!done.length) return `<div class="card soon" style="${style}"><span class="name"><i></i>${esc(S.name)}</span><span class="sub">coming soon</span></div>`;
+    if (!done.length) return `<div class="card soon" style="${style}"><span class="name">${icon(S.subject)}${esc(S.name)}</span><span class="sub">coming soon</span></div>`;
     nTopics += done.length;
     for (const t of done) index.push({ s: S.name, t: t.title, w: t.what, g: t.group || '', h: `${web}${S.subject}.html?lab=${t.id}` });
     const img = hasMedia(`${done[0].id}.png`) ? `<img src="${web}media/${done[0].id}.png" alt="" loading="lazy">` : '';
     const groups = [];
     for (const t of done) { const g = t.group || ''; if (groups.at(-1)?.g !== g) groups.push({ g, ts: [] }); groups.at(-1).ts.push(t); }
-    return `<div class="card big" style="${style}"><a class="head" href="${web}${S.subject}.html">${img}<span class="name"><i></i>${esc(S.name)}</span><span class="sub">${done.length} topics</span></a>
+    return `<div class="card big" style="${style}"><a class="head" href="${web}${S.subject}.html">${img}<span class="name">${icon(S.subject)}${esc(S.name)}</span><span class="sub">${done.length} topics</span></a>
       <details class="list"><summary>Topics</summary>${groups.map(({ g, ts }) => `${g ? `<div class="grp">${esc(g)}</div>` : ''}${ts.map((t) => `<a href="${web}${S.subject}.html?lab=${t.id}">${esc(t.title)}</a>`).join('')}`).join('')}</details></div>`;
   });
 
@@ -78,8 +92,9 @@ a.card:hover, .card .head:hover img { border-color: hsl(var(--hue) 70% 58%); }
 .card .head { display: grid; gap: 2px; padding: 0 4px 4px; }
 .card img { width: calc(100% + 8px); margin: 0 -4px 8px; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); }
 .name { font-weight: 650; display: flex; align-items: center; gap: 8px; }
-.name i { width: 9px; height: 9px; border-radius: 50%; background: hsl(var(--hue) 70% 58%); }
-.sub { font-size: 12.5px; color: var(--dim); padding-left: 17px; }
+.name .ic { width: 22px; height: 22px; flex: none; color: hsl(var(--hue) 70% 62%); }
+:root[data-theme="light"] .name .ic { color: hsl(var(--hue) 70% 38%); }
+.sub { font-size: 12.5px; color: var(--dim); padding-left: 30px; }
 .soon { opacity: .55; }
 .list { border-top: 1px solid var(--line); margin-top: 4px; }
 .list summary { cursor: pointer; font-size: 13px; color: var(--dim); padding: 7px 4px 3px; list-style: none; }

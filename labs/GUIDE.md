@@ -12,7 +12,7 @@ with linked plots, live readouts and the explanation one click away.
 | Level | Example | Where |
 |---|---|---|
 | **Subject** | Maths, Physics | one file: `web/<subject>.html` |
-| **Topic** | Functions, Vectors, Oscillations | left bar (☰ folds it) |
+| **Topic** | Functions, Vectors, Oscillations | left bar: drag its edge to resize, ‹ hides it, the Topics tab brings it back |
 | **Case** | Line, Parabola · Dot product, Cross product | tabs at the top right |
 | **Example** | “At 90°: a·b = 0” | list under the tabs, after **Free** |
 
@@ -125,4 +125,5 @@ Adding a topic:
   every example. Fails on a console error, a network request, a WebGL context loss, a blank scene, or a
   case or example without its explanation; checks that both catalogues link every topic.
 
+Drag the top edge of the plots to make them taller (double-click: large). Sizes are remembered.
 Keyboard: `Space` play/pause, `R` reset the case or example, `1`–`4` cameras, `Esc` close.
