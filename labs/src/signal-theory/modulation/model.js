@@ -56,3 +56,18 @@ export function iqDemod(symbols, { fc = 40, Ts = 0.25, dphi = 0, df = 0, sigma =
   });
   return out;
 }
+
+// analog modulation sampled at fs over n samples: message m(t) in [−1, 1], carrier fc
+export const MESSAGES = { sine: (t, fm) => Math.cos(2 * Math.PI * fm * t), square: (t, fm) => (((t * fm) % 1) < 0.5 ? 1 : -1), tri: (t, fm) => 1 - 4 * Math.abs(((t * fm + 0.25) % 1) - 0.5) };
+export function modulate(kind, { fc, fm, mu = 0.8, df = 20, kp = 2.5, msg = 'sine', dsb = false }, fs, n) {
+  const m = Array.from({ length: n }, (_, i) => MESSAGES[msg](i / fs, fm)), s = new Float64Array(n), fi = new Float64Array(n); let ph = 0;
+  for (let i = 0; i < n; i++) {
+    const t = i / fs, c = 2 * Math.PI * fc * t;
+    if (kind === 'am') { s[i] = (dsb ? m[i] : 1 + mu * m[i]) * Math.cos(c); fi[i] = fc; }
+    else if (kind === 'fm') { s[i] = Math.cos(c + ph); fi[i] = fc + df * m[i]; ph += 2 * Math.PI * df * m[i] / fs; }
+    else { s[i] = Math.cos(c + kp * m[i]); fi[i] = fc + kp * ((m[Math.min(i + 1, n - 1)] - m[Math.max(i - 1, 0)]) * fs / (i > 0 && i < n - 1 ? 2 : 1)) / (2 * Math.PI); }
+  }
+  return { m, s: Array.from(s), fi: Array.from(fi) };
+}
+// envelope detector: full-wave rectify, then a one-pole low-pass with cut-off fcut
+export function envelope(s, fs, fcut) { const a = Math.exp(-2 * Math.PI * fcut / fs); let y = 0; return s.map((v) => (y = a * y + (1 - a) * Math.abs(v) * Math.PI / 2)); }

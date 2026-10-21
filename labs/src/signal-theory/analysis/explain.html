@@ -1,0 +1,80 @@
+<section data-case="bins">
+  <h3>Reading FFT bins</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the record. Top right: the FFT in its raw order — bins 0 … N−1 map to 0 … fs, and the upper half is really the negative frequencies. Bottom left: the same after fftshift, centred on DC. Bottom right: a zoom on the two tones, with zero padding (line) and without (dots).</div>
+  <div class="eq">$$\Delta f = \frac{f_s}{N} = \frac{1}{T}$$</div>
+  <ol class="steps">
+    <li>Bin k is the frequency k·fs/N. Bin N/2 is fs/2; bins above it are −fs/2 … 0 (they wrapped around).</li>
+    <li>fftshift just swaps the two halves so that zero is in the middle.</li>
+    <li>Two tones closer than 1/T fall into one main lobe: only observing for longer separates them.</li>
+    <li>Zero padding (appending zeros) evaluates the same spectrum on a finer grid — a smoother curve, not a sharper one.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>fs = 1 kHz, T = 0.128 s: Δf = 7.8 Hz. Tones at 100 and 118 Hz (18 Hz apart) just separate. To resolve 1 Hz you need 1 s of data, whatever fs is.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Reading bin 120 of a 128-point FFT as a high frequency (it is −8 bins). Believing zero padding improves resolution: it only interpolates.</div>
+  <div class="try"><h4>Try it</h4>Bring the tones closer than 1/T and lengthen T until they split again.</div>
+</section>
+<section data-case="bins" data-example="resolve"><h3>Observe longer</h3><p>T = 0.512 s: Δf = 2 Hz; the two tones are now many bins apart and clearly separate.</p></section>
+<section data-case="bins" data-example="pad"><h3>Zero padding ×8</h3><p>The curve is smooth and shows the true lobe shape between the original bins (dots), but the two lobes are just as wide as before.</p></section>
+<section data-case="window">
+  <h3>A window to find a weak tone</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the record (and window). Top right: linear spectra, rectangular vs Hamming. Bottom: the same in dB, where the weak tone (dashed) is visible only if it rises above the strong tone's sidelobes.</div>
+  <p>A strong tone not centred on a bin spreads sidelobes across the spectrum: −13 dB, then falling only 6 dB per octave. A tone 40 dB weaker 18 Hz away is buried. The Hamming window pushes sidelobes below −43 dB, at the price of a main lobe twice as wide.</p>
+  <div class="eq">$$w[n] = 0.54 - 0.46\cos\frac{2\pi n}{N-1}$$</div>
+  <div class="worked"><h4>Worked example</h4>100 Hz at amplitude 1, 118 Hz at 0.01 (−40 dB), 7.8 Hz bins: 2.3 bins apart. Rectangular sidelobes there ≈ −19 dB: the weak tone is invisible. Hamming's sidelobes are near −43 dB: the weak tone just clears them as a separate peak.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Windowing when you need to separate two equal tones very close together: the wider main lobe can merge them. Choose the window for the job.</div>
+  <div class="try"><h4>Try it</h4>Lower tone 2 to −60 dB: Hamming fails, Blackman (−58 dB) only just copes.</div>
+</section>
+<section data-case="window" data-example="rect"><h3>No window</h3><p>The weak tone sits under the strong tone's sidelobes: you cannot see it.</p></section>
+<section data-case="window" data-example="hamming"><h3>Hamming</h3><p>Sidelobes below −43 dB: the weak tone appears as its own peak.</p></section>
+<section data-case="shift">
+  <h3>Shifting a spectrum: RF to IF</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the RF pulse and the I/Q result of multiplying it by a complex phasor. Bottom: the spectra before and after — everything moves down by fLO.</div>
+  <div class="eq">$$y(t) = x(t)\,e^{-j2\pi f_\text{LO}t} \;\Longleftrightarrow\; Y(f) = X(f + f_\text{LO})$$</div>
+  <p>Multiplying by a complex exponential is the frequency-domain version of a time delay: a pure shift. This is the mixer in every receiver.</p>
+  <div class="worked"><h4>Worked example</h4>fc = 400 Hz, fLO = 300 Hz: the +400 lobe lands at 100 Hz (IF), the −400 lobe at −700 Hz (to be filtered out).</div>
+  <div class="try"><h4>Try it</h4>Set fLO = 400: the wanted lobe goes to DC and I becomes the envelope.</div>
+</section>
+<section data-case="shift" data-example="dc"><h3>To DC</h3><p>fLO = fc: zero-IF. The +fc lobe is now centred on 0 Hz.</p></section>
+<section data-case="resample">
+  <h3>Resampling</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the original signal (tones at 50, 180, 320 Hz, sampled at 1 kHz) and its spectrum, with the new Nyquist frequency dashed. Right: the signal after keeping one sample in D, and its spectrum; red stems mark where tones above the new Nyquist fold to.</div>
+  <p>Throwing away samples lowers the rate to fs/D, and with it the Nyquist frequency to fs/2D. Anything above it folds back — unless it was removed first. Decimation is always two steps: low-pass at the new Nyquist, then keep every D-th sample.</p>
+  <div class="worked"><h4>Worked example</h4>D = 4: new rate 250 Hz, Nyquist 125 Hz. 180 Hz folds to 70 Hz, 320 Hz to 70 Hz too (320 − 250). Without the filter, two fake tones appear at 70 Hz.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Decimating a clean-looking signal without filtering because "there is nothing up there" — noise is always up there, and it folds into your band.</div>
+  <div class="try"><h4>Try it</h4>Toggle the filter at D = 4 and watch the red stems vanish.</div>
+</section>
+<section data-case="resample" data-example="alias"><h3>No filter</h3><p>The 180 and 320 Hz tones reappear at 70 Hz: indistinguishable from a real 70 Hz signal.</p></section>
+<section data-case="resample" data-example="clean"><h3>With the filter</h3><p>Only the 50 Hz tone survives, correctly placed.</p></section>
+<section data-case="iq">
+  <h3>From I/Q to amplitude, phase and frequency</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the I/Q point of a chirp pulse traced as time advances, with the current phasor. Top right: I, Q and the amplitude. Bottom left: the unwrapped phase. Bottom right: the instantaneous frequency, its derivative.</div>
+  <div class="eq">$$A = \sqrt{I^2 + Q^2}, \qquad \varphi = \text{atan2}(Q, I), \qquad f_i = \frac{1}{2\pi}\frac{d\varphi}{dt}$$</div>
+  <p>I and Q are the coordinates of a rotating arrow. Its length is the amplitude, its angle the phase, and how fast it turns is the frequency. A chirp turns faster and faster: its phase is a parabola, its frequency a straight line.</p>
+  <div class="worked"><h4>Worked example</h4>Here fᵢ = −40 + 800t Hz: at 50 ms the arrow is momentarily still (fᵢ = 0), at 150 ms it turns at 80 Hz.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Forgetting to unwrap: atan2 jumps from +π to −π every turn, and a naive derivative gives huge spikes. Trusting the phase where the amplitude is tiny: there noise rotates it at random.</div>
+</section>
+<section data-case="iq" data-example="noisy"><h3>With noise</h3><p>The amplitude barely changes, but the instantaneous frequency becomes jumpy at the pulse's edges where the arrow is short.</p></section>
+<section data-case="crlb">
+  <h3>Frequency estimation and the Cramér–Rao bound</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: one noisy pulse. Top right: its spectrum near the peak, true frequency dashed, estimate green. Bottom left: histogram of 200 estimates. Bottom right: error against SNR — the bound (red), the interpolated estimator (green), the plain nearest bin (grey).</div>
+  <p>The strongest bin gives the frequency only to within a bin. Fitting a parabola through the peak and its neighbours (in log) locates the true peak between bins. How well can anyone do? The Cramér–Rao bound:</p>
+  <div class="eq">$$\sigma_f \ge \frac{f_s}{2\pi}\sqrt{\frac{6}{\text{SNR}\,N(N^2 - 1)}}$$</div>
+  <div class="worked"><h4>Worked example</h4>N = 128 at 1 kHz, SNR 20 dB: bin width 7.8 Hz, bound 0.027 Hz. The interpolated estimator gets within a small factor; the nearest bin is stuck near 2 Hz (uniform within a bin).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking resolution (1/T) limits accuracy. Resolution is about separating two tones; one tone's frequency can be measured far more precisely than a bin, given enough SNR.</div>
+  <div class="try"><h4>Try it</h4>Lower the SNR below 0 dB: the estimates break away from the bound (threshold effect).</div>
+</section>
+<section data-case="crlb" data-example="low"><h3>0 dB</h3><p>At low SNR the noise sometimes wins the peak search: occasional big errors push the measured spread far above the bound.</p></section>
+<section data-case="crlb" data-example="long"><h3>Four times the samples</h3><p>N = 512: the bound improves by 4^{3/2} = 8 — longer observation is the best investment.</p></section>
+<section data-case="plateau">
+  <h3>Finding plateaus</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: a noisy signal with flat levels and ramps, smoothed. Top right: its smoothed derivative with the flatness threshold. Bottom left: the density of the flat samples' values, whose peaks are the levels. Bottom right: the plateaus found and their levels.</div>
+  <ol class="steps">
+    <li>Smooth first: a derivative amplifies noise, so fit a local quadratic (Savitzky–Golay) and differentiate the fit.</li>
+    <li>Where |A′| is below a threshold, the signal is flat: that says <i>when</i>.</li>
+    <li>Collect the values of the flat samples and estimate their density with a Gaussian kernel: each plateau makes a peak, which says <i>at what level</i>.</li>
+  </ol>
+  <div class="eq">$$\hat p(x) = \frac{1}{Nh}\sum_i K\!\left(\frac{x - x_i}{h}\right)$$</div>
+  <div class="worked"><h4>Worked example</h4>Levels 0.2, 1.0, 0.6 and 1.0 again: the derivative finds four flat stretches, the density only three peaks — the two 1.0 plateaus merge, as they should.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Choosing h too small: noise makes many little peaks. Too large: neighbouring levels merge. h should be comparable to the noise level.</div>
+</section>
+<section data-case="plateau" data-example="noisy"><h3>More noise</h3><p>A wider smoothing window keeps the derivative usable; edges of plateaus become less sharp.</p></section>
+<section data-case="plateau" data-example="narrow"><h3>A narrow kernel</h3><p>h = 0.015: the density becomes spiky and false levels appear.</p></section>

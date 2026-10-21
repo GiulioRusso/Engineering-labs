@@ -1,0 +1,52 @@
+<section data-case="pulse">
+  <h3>The received pulse</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: a pulse as the antenna delivers it — a fast carrier under a slow Gaussian envelope. Top right: its spectrum, two lobes at ±fc. Bottom left: a zoom on the +fc lobe. Bottom right: the spectrum of the envelope alone, centred on zero.</div>
+  <div class="eq">$$x(t) = e(t)\cos(2\pi f_c t) \;\longleftrightarrow\; X(f) = \tfrac12\big[E(f - f_c) + E(f + f_c)\big]$$</div>
+  <p>Multiplying by a cosine shifts the envelope's spectrum to +fc and −fc. All the information — the envelope's shape, the pulse's timing — sits in the lobe's shape. The carrier frequency only says <i>where</i> on the frequency axis the lobe sits.</p>
+  <div class="worked"><h4>Worked example</h4>σ = 30 ms envelope: lobe width σf = 1/(2π·0.03) = 5.3 Hz. Make the pulse 8 ms: 20 Hz. A 1 µs radar pulse has a lobe about 1 MHz wide, wherever its carrier is.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the negative-frequency lobe is a second signal. For a real x(t) it is the mirror image of the positive one, X(−f) = X*(f): no new information.</div>
+  <div class="try"><h4>Try it</h4>Move fc: both lobes slide, their shape stays. Shorten the pulse: both widen.</div>
+</section>
+<section data-case="pulse" data-example="short"><h3>A shorter pulse</h3><p>σ = 8 ms: the lobes are about four times wider. Short pulses need wide receivers.</p></section>
+<section data-case="pulse" data-example="move"><h3>Another carrier</h3><p>1200 Hz: the same lobes, moved. Tuning a receiver means choosing which lobe to bring down.</p></section>
+<section data-case="mixing">
+  <h3>Quadrature mixing: RF → IF → baseband</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the RF spectrum and the oscillator frequency fLO. Middle: after multiplying by \(e^{-j2\pi f_\text{LO}t}\) — every line moves down by fLO; the green dashed lines are the low-pass filter. Bottom: after the low-pass.</div>
+  <div class="eq">$$z(t) = \text{LPF}\big\{x(t)\,e^{-j2\pi f_\text{LO}t}\big\} = I(t) + jQ(t), \quad I = \text{LPF}\{x\cos\}, \; Q = -\text{LPF}\{x\sin\}$$</div>
+  <ol class="steps">
+    <li>The +fc lobe moves to fc − fLO: the <b>difference</b>, the wanted IF.</li>
+    <li>The −fc lobe moves to −fc − fLO: the <b>sum</b>, far away.</li>
+    <li>The low-pass keeps the difference and removes the sum.</li>
+    <li>Using cos and sin together (I and Q) is what lets us shift by a <i>complex</i> exponential: one lobe moves, no mirror is created.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>fc = 600 Hz, fLO = 450 Hz: IF = 150 Hz, image at −1050 Hz. With fLO = 600 Hz the IF is 0 — a direct-conversion (zero-IF) receiver.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Choosing a low-pass narrower than the pulse's own bandwidth: it removes part of the wanted lobe, and the pulse comes out longer and weaker.</div>
+  <div class="try"><h4>Try it</h4>Sweep fLO and watch the middle row slide; then narrow the low-pass until it bites into the lobe.</div>
+</section>
+<section data-case="mixing" data-example="zero"><h3>Zero IF</h3><p>fLO = fc: the wanted lobe lands on 0 Hz; I is the envelope and Q is zero.</p></section>
+<section data-case="mixing" data-example="if"><h3>An intermediate frequency</h3><p>fLO = 450 Hz parks the pulse at 150 Hz. Superheterodyne receivers do this so that all the filtering happens at one fixed frequency.</p></section>
+<section data-case="mixing" data-example="tight"><h3>A filter too narrow</h3><p>10 Hz cut-off for a pulse 5 Hz wide (σ): its tails are removed and the pulse is visibly distorted.</p></section>
+<section data-case="residual">
+  <h3>The residual Δf</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: RF lobe and the LO. Top right: the demodulated I and Q against time, with their magnitude (dashed). Bottom left: the complex baseband spectrum. Bottom right: the phase of I + jQ during the pulse.</div>
+  <div class="eq">$$z(t) = e(t)\,e^{\,j(2\pi\Delta f\,t + \varphi)}, \qquad \Delta f = f_c - f_\text{LO}$$</div>
+  <p>If the oscillator is not exactly on the carrier, the baseband is a phasor still turning at Δf: I and Q oscillate under the envelope, a quarter cycle apart. The magnitude is still the envelope — so detection works — but the phase now drifts linearly at 2πΔf. That drift is the Doppler shift in a radar, and a frequency error to be corrected in a modem.</p>
+  <div class="worked"><h4>Worked example</h4>fc = 600, fLO = 590: Δf = 10 Hz. Over the ±2σ = ±60 ms of the pulse the phasor turns 1.2 times.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking Q = 0 means "no signal on Q": with Δf = 0 but a carrier phase of 90°, everything is on Q. Only I + jQ together are meaningful.</div>
+  <div class="try"><h4>Try it</h4>Set fLO = 600 and turn the carrier phase: I and Q trade places while the magnitude stays.</div>
+</section>
+<section data-case="residual" data-example="tuned"><h3>Tuned</h3><p>Δf = 0, phase 0: I is the envelope, Q is zero, the phase is flat.</p></section>
+<section data-case="residual" data-example="phase"><h3>Tuned, 90° phase</h3><p>The same pulse, now entirely on Q. The magnitude is unchanged.</p></section>
+<section data-case="residual" data-example="far"><h3>Δf = 40 Hz</h3><p>I and Q oscillate several times under the pulse; the baseband lobe sits at 40 Hz.</p></section>
+<section data-case="bins">
+  <h3>One bin or leakage?</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: I and Q of a residual tone in a short record of N samples. Top right: the DFT of I + jQ. Bottom left: zoom around the tone, with its true position dashed. Bottom right: the height of the nearest bin against the offset from a bin centre.</div>
+  <p>The DFT bins are spaced fs/N. A residual that is an exact multiple of that spacing turns a whole number of times in the record and lands in one bin. Anything else spreads over the neighbours, and the nearest bin reads low:</p>
+  <div class="eq">$$|X[k]| = \left|\frac{\sin(\pi\delta)}{N\sin(\pi\delta/N)}\right| \;\approx\; |\text{sinc}\,\delta|, \qquad \delta = \text{offset in bins}$$</div>
+  <div class="worked"><h4>Worked example</h4>fs = 1 kHz, N = 100: bins every 10 Hz. Δf = 30 Hz → bin 3 alone, height 1. Δf = 35 Hz → bins 3 and 4 at 0.64 (−3.9 dB) each, with a skirt on both sides.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading a lower peak as a weaker signal: it may just be a tone between bins. Windows and interpolation between bins correct for it.</div>
+  <div class="try"><h4>Try it</h4>Slide Δf from 3 to 4 bins: the energy flows from one bin to the next through a half-bin minimum.</div>
+</section>
+<section data-case="bins" data-example="on"><h3>On a bin</h3><p>Three whole turns in the record: a single bin at height 1, every other bin exactly zero.</p></section>
+<section data-case="bins" data-example="half"><h3>Half a bin off</h3><p>The worst case: two equal bins at 0.64 and leakage everywhere.</p></section>
+<section data-case="bins" data-example="zero"><h3>At DC</h3><p>Perfect tuning: I and Q are constant and the energy is in bin 0.</p></section>

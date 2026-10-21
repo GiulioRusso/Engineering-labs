@@ -1,30 +1,61 @@
-<section data-case="analog">
-  <h3>AM and FM</h3>
-  <p>A message (orange) rides on a fast carrier. <b>AM</b> changes the carrier's amplitude: the spectrum is the carrier plus two sidebands at \(f_c \pm f_m\). <b>FM</b> changes its frequency: the spectrum has many sidebands at \(f_c + n f_m\) with amplitudes \(J_n(\beta)\).</p>
-  <div class="eq">$$s_\text{AM} = \big(1 + m\cos 2\pi f_m t\big)\cos 2\pi f_c t, \qquad s_\text{FM} = \cos\!\big(2\pi f_c t + \beta\sin 2\pi f_m t\big)$$</div>
+<section data-case="carrier">
+  <h3>Why a carrier?</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the message (a slow wave — think of a voice). Middle: a much faster carrier. Bottom: the carrier with the message written into its amplitude — the dashed envelope is the message.</div>
+  <p>Three problems make sending the message directly impossible:</p>
+  <ol class="steps">
+    <li><b>Antennas.</b> An antenna radiates well when it is about a quarter wavelength long. For 1 kHz, λ = 300 km: you would need a 75 km antenna. At 100 MHz, 75 cm.</li>
+    <li><b>Sharing.</b> Every voice occupies the same 0–4 kHz. Moving each one to its own carrier frequency puts them side by side: that is what tuning a radio selects.</li>
+    <li><b>Propagation.</b> Different frequency bands travel differently (ground wave, sky wave, line of sight); the carrier chooses the band.</li>
+  </ol>
+  <p>The carrier must be much faster than the message (fc ≫ fm), so that it oscillates many times during each message cycle and can follow its shape.</p>
+  <div class="try"><h4>Try it</h4>Bring the carrier down to 4× the message: the envelope is barely recognisable.</div>
 </section>
-<section data-case="analog" data-example="full"><h3>m = 1</h3><p>The envelope just touches zero. Even so, only a third of the power is in the sidebands that carry the message.</p></section>
-<section data-case="analog" data-example="over"><h3>Over-modulation</h3><p>With \(m > 1\) the envelope \(1 + m\cos\) goes negative and folds over: a simple envelope detector would distort the message.</p></section>
-<section data-case="analog" data-example="fm"><h3>FM, β = 1</h3><p>The amplitude never changes. Power moves from the carrier (\(J_0^2\)) into a few sidebands; \(\sum J_n^2 = 1\).</p></section>
-<section data-case="analog" data-example="wide"><h3>Wide-band FM</h3><p>Large \(\beta\) spreads the power over many sidebands. Carson's rule: about 98 % of it lies within \(2(\beta + 1)f_m\). Broadcast FM trades bandwidth for noise immunity.</p></section>
-<section data-case="analog" data-example="null"><h3>No carrier</h3><p>At \(\beta = 2.405\), the first zero of \(J_0\), the carrier line vanishes completely: all the power is in the sidebands. Engineers use this to calibrate FM deviation.</p></section>
-
-<section data-case="digital">
-  <h3>Digital constellations</h3>
-  <p>Each symbol is a point in the I–Q plane carrying \(\log_2 M\) bits. Noise spreads the received points into clouds (blue); the receiver picks the nearest ideal point (orange). More points per symbol means more bits but closer neighbours, so more \(E_b/N_0\) is needed for the same bit error rate (right).</p>
-  <div class="eq">$$P_b^\text{BPSK} = P_b^\text{QPSK} = Q\!\left(\sqrt{2E_b/N_0}\right), \qquad Q(x) = \tfrac12\operatorname{erfc}(x/\sqrt2)$$</div>
+<section data-case="carrier" data-example="slow"><h3>A slow carrier</h3><p>fc = 32 Hz, fm = 8 Hz: only four carrier cycles per message cycle. The envelope is sampled too coarsely to follow the message smoothly.</p></section>
+<section data-case="am">
+  <h3>Amplitude modulation (AM)</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the AM signal and its envelope (dashed). Top right: its spectrum — the carrier line and two sidebands. Bottom left: what a simple envelope detector (diode + RC) recovers. Bottom right: how the transmitted power is split between carrier and sidebands.</div>
+  <div class="eq">$$s(t) = \big[1 + \mu\,m(t)\big]\cos(2\pi f_c t), \qquad \cos a\cos b = \tfrac12\big[\cos(a-b) + \cos(a+b)\big]$$</div>
+  <p>With a single tone \(m = \cos 2\pi f_m t\) the product splits into three lines: the carrier at fc, and two sidebands at fc − fm and fc + fm, each of amplitude μ/2. Every frequency of the message is copied twice, mirrored around the carrier: bandwidth 2fm.</p>
+  <div class="worked"><h4>Worked example</h4>fc = 100 Hz, fm = 8 Hz, μ = 0.8: lines at 92 Hz (0.4), 100 Hz (1), 108 Hz (0.4). Power: carrier 0.5, sidebands 2 × 0.4²/2 = 0.16. Only 24 % of the power carries the message. Even at μ = 1 the maximum is 33 %.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Pushing μ above 1 to get "more signal": the envelope then crosses zero and the detector folds it back — distortion. Thinking the carrier carries information: it is the same whatever the message; it is there only so the cheap envelope detector works. DSB-SC removes it, but then the receiver needs a synchronised oscillator.</div>
+  <div class="try"><h4>Try it</h4>Slide μ from 0 to 1.5 and watch the envelope, the sidebands and the detector output.</div>
 </section>
-<section data-case="digital" data-example="bpsk"><h3>BPSK</h3><p>Two points as far apart as possible: one bit per symbol, the lowest error rate for a given energy per bit.</p></section>
-<section data-case="digital" data-example="noisy"><h3>QPSK at 4 dB</h3><p>The clouds touch the decision boundaries (the axes): about 1 bit in 80 is wrong.</p></section>
-<section data-case="digital" data-example="qam"><h3>16-QAM</h3><p>Four bits per symbol, twice QPSK, but the points are much closer: it needs about 4 dB more \(E_b/N_0\) for the same error rate. Wi-Fi and 4G switch between schemes as the signal changes.</p></section>
-<section data-case="digital" data-example="psk8"><h3>8-PSK</h3><p>Eight points on a circle: three bits per symbol, all with the same amplitude (friendly to saturating amplifiers).</p></section>
-
-<section data-case="iq">
-  <h3>IQ demodulation</h3>
-  <p>The receiver multiplies the signal by its own \(\cos\) and \(-\sin\) of the carrier and averages over each symbol: out come the I and Q values. If its oscillator is off by a phase \(\varphi\), every point is rotated by \(-\varphi\); off by a frequency \(\Delta f\), the rotation grows with time and the constellation spins.</p>
-  <div class="eq">$$s = I\cos\omega t - Q\sin\omega t, \qquad \hat I + j\hat Q = (I + jQ)\,e^{-j(\varphi + 2\pi\Delta f\,t)}$$</div>
+<section data-case="am" data-example="full"><h3>μ = 1</h3><p>The envelope just touches zero at the message's minimum: the deepest modulation without distortion.</p></section>
+<section data-case="am" data-example="over"><h3>Overmodulation</h3><p>μ = 1.4: 1 + μm goes negative, the carrier phase flips, and the envelope detector (which sees only |1 + μm|) outputs a folded, distorted message.</p></section>
+<section data-case="am" data-example="dsb"><h3>Double sideband, suppressed carrier</h3><p>Only the two sidebands: all the power is useful. But the envelope is |m(t)|, not m(t), so an envelope detector fails — the receiver must multiply by an exact copy of the carrier (coherent detection).</p></section>
+<section data-case="am" data-example="square"><h3>A square message</h3><p>The square wave has harmonics at fm, 3fm, 5fm…; each gets its own pair of sidebands. The modulated spectrum is the message spectrum, copied on both sides of the carrier.</p></section>
+<section data-case="fm">
+  <h3>Frequency modulation (FM)</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the FM signal — constant amplitude, its cycles squeezed and stretched by the message (dashed). Top right: its instantaneous frequency. Bottom left: the spectrum, with the predicted line heights |Jₙ(β)| (dots) and Carson's bandwidth (dashed). Bottom right: the Bessel functions that set those heights, against β.</div>
+  <div class="eq">$$f_i(t) = f_c + \Delta f\,m(t), \qquad s(t) = \cos\!\Big(2\pi f_c t + 2\pi\Delta f\!\int_0^t m\,d\tau\Big), \qquad \beta = \frac{\Delta f}{f_m}$$</div>
+  <p>The message sets the frequency; the phase is its integral. For a tone message the spectrum is a line at fc and an infinite set of sidebands at fc ± n·fm with amplitudes \(J_n(\beta)\). In practice only about β + 1 pairs matter:</p>
+  <div class="eq">$$B \approx 2(\Delta f + f_m) = 2f_m(\beta + 1) \quad\text{(Carson)}$$</div>
+  <div class="worked"><h4>Worked example</h4>Broadcast FM: Δf = 75 kHz, fm = 15 kHz → β = 5, B ≈ 180 kHz (stations are 200 kHz apart). Here Δf = 20, fm = 8: β = 2.5, B ≈ 56 Hz.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking the bandwidth is 2Δf: the sidebands extend a bit beyond the swing (that is the + fm). Thinking the carrier line is always there: at β = 2.405 (the first zero of J₀) it vanishes entirely — all the power is in the sidebands.</div>
+  <div class="try"><h4>Try it</h4>Raise Δf slowly and follow the orange line on the Bessel plot: each time it crosses a zero of Jₙ, that spectral line disappears.</div>
 </section>
-<section data-case="iq" data-example="phase"><h3>Phase error</h3><p>A 30° phase error rotates the whole constellation by −30°. Points drift towards the decision boundaries: a phase-locked loop must remove it.</p></section>
-<section data-case="iq" data-example="quarter"><h3>90°</h3><p>A quarter turn: what was I is read as −Q. A carrier phase ambiguity of 90° is why QPSK systems use differential coding or pilots.</p></section>
-<section data-case="iq" data-example="spin"><h3>Frequency offset</h3><p>A 0.05 Hz offset adds 4.5° every symbol: the points walk around the circle. Real receivers track it continuously.</p></section>
-<section data-case="iq" data-example="noise"><h3>Noise</h3><p>Thermal noise turns each point into a cloud; averaging over the symbol (a matched filter) keeps the cloud as small as possible.</p></section>
+<section data-case="fm" data-example="narrow"><h3>Narrowband FM</h3><p>β = 0.25: J₀ ≈ 0.98, J₁ ≈ 0.12, the rest negligible. One pair of sidebands, like AM — but with the lower one inverted in phase, so the amplitude stays constant.</p></section>
+<section data-case="fm" data-example="null"><h3>The carrier vanishes</h3><p>β = 2.405: J₀ = 0. This "carrier null" is how engineers calibrate FM deviation with a spectrum analyser.</p></section>
+<section data-case="fm" data-example="wide"><h3>Wideband FM</h3><p>β = 6: about seven significant sideband pairs; Carson predicts 2·8·7 = 112 Hz. More bandwidth, much better noise rejection after demodulation.</p></section>
+<section data-case="pm">
+  <h3>Phase modulation vs frequency modulation</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the same message sent by PM (left) and FM (right). Bottom left: the two instantaneous frequencies. Bottom right: the two spectra.</div>
+  <div class="eq">$$s_{PM} = \cos\big(2\pi f_c t + k_p\,m(t)\big), \qquad f_i^{PM} = f_c + \frac{k_p}{2\pi}\frac{dm}{dt}$$</div>
+  <p>In PM the message sets the phase directly, so the frequency follows the message's <i>rate of change</i>. PM of m is the same as FM of dm/dt — they are two faces of angle modulation.</p>
+  <div class="worked"><h4>Worked example</h4>kp = 2.5 rad, tone fm = 8 Hz: PM frequency swing = kp·fm = 20 Hz, the same as FM with Δf = 20. Double fm: PM swings 40 Hz, FM still 20.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking you can tell PM and FM apart from a single tone: you cannot — a sine's derivative is a shifted sine. The difference shows with a richer message (try the square wave) or when fm changes.</div>
+  <div class="try"><h4>Try it</h4>Select the square message: PM jumps its phase at the edges (spikes in fᵢ), FM jumps its frequency (steps in fᵢ). BPSK is exactly PM with a square message.</div>
+</section>
+<section data-case="pm" data-example="faster"><h3>A faster message</h3><p>fm = 20 Hz: the PM swing grows to 50 Hz and its spectrum widens, while FM keeps the same 20 Hz swing.</p></section>
+<section data-case="pm" data-example="square"><h3>A square message</h3><p>PM holds two phases and jumps between them; FM holds two frequencies. The spectra differ completely.</p></section>
+<section data-case="compare">
+  <h3>AM, FM and PM side by side</h3>
+  <div class="look"><h4>What you are looking at</h4>Each row is one modulation of the same message: the signal on the left, its spectrum on the right.</div>
+  <ol class="steps">
+    <li><b>AM</b> changes the amplitude: narrow band (2fm), simple detector, but amplitude noise goes straight into the message.</li>
+    <li><b>FM</b> changes the frequency: wider band, a limiter discards amplitude noise, much better audio quality.</li>
+    <li><b>PM</b> changes the phase: the basis of digital modulation (PSK, QAM) and of GPS, Wi-Fi, 4G/5G.</li>
+  </ol>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking FM is "better" in every way: it costs several times the bandwidth. Every choice is a trade between bandwidth, power and receiver complexity.</div>
+</section>
+<section data-case="compare" data-example="tri"><h3>A triangle message</h3><p>FM turns the triangle's straight ramps into steady frequency sweeps (chirps); PM turns them into two fixed frequencies, because the derivative of a triangle is a square.</p></section>

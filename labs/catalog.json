@@ -929,34 +929,170 @@
     "group": "Filtering"
    },
    {
-    "id": "modulation",
-    "title": "AM and FM",
-    "what": "A message on a carrier: envelope, sidebands, Bessel lines, Carson bandwidth.",
+    "id": "fft-bins",
+    "title": "Reading FFT bins",
+    "what": "fftshift, resolution 1/T, zero padding, and a window for a weak tone.",
+    "from": "analysis",
+    "cases": [
+     "bins",
+     "window"
+    ],
+    "group": "Spectral analysis"
+   },
+   {
+    "id": "resampling",
+    "title": "Shifting and resampling",
+    "what": "RF→IF with a phasor; decimation with and without anti-alias filter.",
+    "from": "analysis",
+    "cases": [
+     "shift",
+     "resample"
+    ],
+    "group": "Spectral analysis"
+   },
+   {
+    "id": "iq-phase",
+    "title": "Amplitude, phase, frequency",
+    "what": "From I/Q to envelope, unwrapped phase and instantaneous frequency.",
+    "from": "analysis",
+    "cases": [
+     "iq"
+    ],
+    "group": "Spectral analysis"
+   },
+   {
+    "id": "crlb",
+    "title": "Frequency estimation",
+    "what": "Peak interpolation against the Cramér–Rao bound.",
+    "from": "analysis",
+    "cases": [
+     "crlb"
+    ],
+    "group": "Spectral analysis"
+   },
+   {
+    "id": "plateaus",
+    "title": "Plateau detection",
+    "what": "Smoothed derivatives say where, kernel density says at what level.",
+    "from": "analysis",
+    "cases": [
+     "plateau"
+    ],
+    "group": "Spectral analysis"
+   },
+   {
+    "id": "why-carrier",
+    "title": "Why a carrier",
+    "what": "Antenna size, sharing the spectrum: putting a message on a carrier.",
     "from": "modulation",
     "cases": [
-     "analog"
+     "carrier"
     ],
     "group": "Communications"
    },
    {
-    "id": "constellations",
-    "title": "Constellations and bit errors",
-    "what": "BPSK, QPSK, 8-PSK, 16-QAM in noise; measured vs theoretical bit error rate.",
+    "id": "am",
+    "title": "Amplitude modulation",
+    "what": "Envelope, sidebands, overmodulation, the envelope detector, DSB-SC.",
     "from": "modulation",
     "cases": [
-     "digital"
+     "am"
     ],
     "group": "Communications"
+   },
+   {
+    "id": "fm",
+    "title": "Frequency and phase modulation",
+    "what": "Instantaneous frequency, Bessel sidebands, Carson; PM vs FM.",
+    "from": "modulation",
+    "cases": [
+     "fm",
+     "pm"
+    ],
+    "group": "Communications"
+   },
+   {
+    "id": "am-fm-pm",
+    "title": "AM, FM and PM compared",
+    "what": "The same message three ways, in time and frequency.",
+    "from": "modulation",
+    "cases": [
+     "compare"
+    ],
+    "group": "Communications"
+   },
+   {
+    "id": "psk",
+    "title": "BPSK and QPSK",
+    "what": "Bits on a carrier, the correlator, decisions and Gray coding.",
+    "from": "digital",
+    "cases": [
+     "bpsk",
+     "qpsk"
+    ],
+    "group": "Digital communications"
+   },
+   {
+    "id": "qam",
+    "title": "M-QAM",
+    "what": "Constellations, decision regions and noisy clouds.",
+    "from": "digital",
+    "cases": [
+     "qam"
+    ],
+    "group": "Digital communications"
+   },
+   {
+    "id": "ber",
+    "title": "Bit error rate",
+    "what": "BER curves, theory against Monte Carlo.",
+    "from": "digital",
+    "cases": [
+     "ber"
+    ],
+    "group": "Digital communications"
+   },
+   {
+    "id": "eye-diagram",
+    "title": "Eye diagram",
+    "what": "Raised-cosine pulses, ISI and the eye opening.",
+    "from": "digital",
+    "cases": [
+     "eye"
+    ],
+    "group": "Digital communications"
+   },
+   {
+    "id": "shannon",
+    "title": "The Shannon limit",
+    "what": "Spectral efficiency against Eb/N0, and the gap to capacity.",
+    "from": "digital",
+    "cases": [
+     "shannon"
+    ],
+    "group": "Digital communications"
    },
    {
     "id": "iq-demodulation",
     "title": "IQ demodulation",
-    "what": "Mix down to I and Q; phase and frequency errors rotate and spin the constellation.",
-    "from": "modulation",
+    "what": "Pulse, mixer, low-pass: RF to IF to baseband.",
+    "from": "iqrx",
     "cases": [
-     "iq"
+     "pulse",
+     "mixing"
     ],
-    "group": "Communications"
+    "group": "Receivers"
+   },
+   {
+    "id": "residual-df",
+    "title": "Residual Δf and DFT bins",
+    "what": "An off-tune oscillator rotates the baseband; one bin or leakage.",
+    "from": "iqrx",
+    "cases": [
+     "residual",
+     "bins"
+    ],
+    "group": "Receivers"
    },
    {
     "id": "link-budget",

@@ -1,0 +1,75 @@
+<section data-case="bpsk">
+  <h3>BPSK: one bit per symbol</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the bits as a ±1 (NRZ) stream. Middle: the carrier multiplied by that stream, plus noise. Bottom: what the receiver computes for each bit — multiply by its own carrier and integrate; a red dot marks a wrong decision. Right: every received bit as a point in the I/Q plane; orange dots are the two ideal points with their bit labels.</div>
+  <div class="eq">$$s(t) = \pm\cos(2\pi f_c t), \qquad P_b = \tfrac12\,\text{erfc}\sqrt{E_b/N_0}$$</div>
+  <ol class="steps">
+    <li><b>Modulate:</b> bit 0 → +cos, bit 1 → −cos. A change of bit is a jump of 180° in phase.</li>
+    <li><b>Correlate:</b> multiply the received signal by cos and integrate over one bit: ±1 plus a Gaussian noise term.</li>
+    <li><b>Decide:</b> positive → 0, negative → 1. An error happens when noise pushes the sample across zero.</li>
+  </ol>
+  <p>\(E_b/N_0\) — energy per bit over noise density — is the fair way to compare schemes: it does not depend on bandwidth or bit rate.</p>
+  <div class="worked"><h4>Worked example</h4>At 9.6 dB (E_b/N_0 = 9.1), BER = ½ erfc(3.02) ≈ 10⁻⁵: one wrong bit in 100 000. At 0 dB, BER ≈ 8 %.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Confusing SNR and E_b/N_0 (they differ by the ratio of bit rate to bandwidth). Thinking the receiver looks at the waveform's shape: it only needs the correlator's sign.</div>
+  <div class="try"><h4>Try it</h4>Lower Eb/N0 until the cloud of points straddles the vertical axis — the red dots appear exactly then.</div>
+</section>
+<section data-case="bpsk" data-example="clean"><h3>15 dB</h3><p>Two tight clusters far from the decision line: practically no errors (BER ≈ 10⁻¹⁵).</p></section>
+<section data-case="bpsk" data-example="noisy"><h3>0 dB</h3><p>The clusters merge: about one bit in thirteen is wrong.</p></section>
+<section data-case="qpsk">
+  <h3>QPSK: two BPSK streams at once</h3>
+  <div class="look"><h4>What you are looking at</h4>Top two rows: the I and Q streams (one bit each per symbol). Bottom: the resulting carrier phase per symbol. Right: the four-point constellation with Gray-coded labels and the received points.</div>
+  <div class="eq">$$s(t) = I\cos(2\pi f_c t) - Q\sin(2\pi f_c t), \qquad I, Q \in \{\pm 1/\sqrt 2\}$$</div>
+  <p>Cosine and sine are orthogonal: a receiver that correlates with each separately sees two independent BPSK channels in the same bandwidth. Twice the bits per hertz, and — per bit — the same error rate as BPSK.</p>
+  <div class="worked"><h4>Worked example</h4>Bits 1, 0 → I = −, Q = + → phase 135°. Gray labels: 00 at 45°, 01 at 135°, 11 at 225°, 10 at 315° — neighbours differ in one bit.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking four points must be "worse" than two at the same Eb/N0. Each axis carries one bit with half the energy, but the distance per bit is the same.</div>
+  <div class="try"><h4>Try it</h4>Drop to 3 dB: most errors move a point to an adjacent quadrant, flipping only one of its two bits.</div>
+</section>
+<section data-case="qpsk" data-example="noisy"><h3>3 dB</h3><p>BER ≈ 2 % — the same as BPSK at 3 dB, while carrying twice the data.</p></section>
+<section data-case="qam">
+  <h3>M-QAM: amplitude and phase</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the ideal constellation (Gray labels) with the decision boundaries. Right: the received symbols — blue decided correctly, red in the wrong box.</div>
+  <p>A square grid of M points: each axis takes √M levels. More points carry more bits per symbol (log₂M), but at the same average power they are closer together, so noise causes errors sooner.</p>
+  <div class="eq">$$d_\text{min} = \frac{2}{\sqrt{\tfrac23(M-1)}}, \qquad P_b \approx \frac{2(1 - 1/\sqrt M)}{\log_2 M}\,\text{erfc}\sqrt{\frac{3\log_2 M}{2(M-1)}\frac{E_b}{N_0}}$$</div>
+  <div class="worked"><h4>Worked example</h4>16-QAM: d = 0.63; 64-QAM: d = 0.31; 256-QAM: d = 0.15. Halving the distance costs about 6 dB; adding the extra bits per symbol gives some back — net about 4 dB per step.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the corner points are "stronger": they have more power but errors depend on distance to neighbours, which is the same everywhere; inner points have more neighbours and err more often.</div>
+  <div class="try"><h4>Try it</h4>Pick 64-QAM and raise Eb/N0 from 10 to 18 dB: the red points disappear first from the corners.</div>
+</section>
+<section data-case="qam" data-example="q16"><h3>16-QAM at 10 dB</h3><p>Clusters are separated; BER around 10⁻³. Used by 4G for good channels.</p></section>
+<section data-case="qam" data-example="q64"><h3>64-QAM at 14 dB</h3><p>The clusters touch: BER about 10⁻³ — 6 bits per symbol need more power.</p></section>
+<section data-case="qam" data-example="q256"><h3>256-QAM</h3><p>8 bits per symbol: even at 20 dB some errors remain. Wi-Fi and 5G use it only when the link is excellent.</p></section>
+<section data-case="ber">
+  <h3>BER curves</h3>
+  <div class="look"><h4>What you are looking at</h4>Bit error rate (log scale) against Eb/N0 for six schemes: lines from theory, dots from actually sending random bits through noise in your browser.</div>
+  <p>Every curve has the same shape: almost flat at low SNR, then a "waterfall" where each extra dB cuts the error rate tenfold or more. Read them horizontally: how much Eb/N0 does each scheme need for a target BER?</p>
+  <div class="worked"><h4>Worked example</h4>BER 10⁻⁵: BPSK/QPSK need 9.6 dB, 16-QAM 13.4, 64-QAM 17.8. Moving from QPSK (2 bits) to 64-QAM (6 bits) triples the throughput for about 8 dB — 6 times the power per bit.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading the curves vertically at one Eb/N0 and concluding "BPSK is always better". It is more robust; QAM is more efficient. Real systems switch between them as the channel changes (adaptive modulation).</div>
+  <div class="try"><h4>Try it</h4>Highlight each scheme and compare its dots with its line: the Monte Carlo agrees down to where errors become too rare to count.</div>
+</section>
+<section data-case="ber" data-example="cost"><h3>The cost of bits</h3><p>At 10 dB, BPSK makes about 4 errors per million bits, 64-QAM about 2 per hundred.</p></section>
+<section data-case="eye">
+  <h3>Pulse shaping and the eye diagram</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the raised-cosine pulse used for each symbol — note it is exactly zero at every other symbol instant (dots). Top right: its spectrum. Bottom: the eye diagram — many two-symbol stretches of the received signal overlaid — without noise (left) and with noise (right).</div>
+  <p>Square pulses waste bandwidth (their spectrum is a sinc). Smooth pulses use less, but they overlap their neighbours. The trick (Nyquist) is a pulse that overlaps — but passes through zero at every other sampling instant. Then, sampled at the right moment, each symbol sees no interference (no ISI).</p>
+  <div class="eq">$$p(t) = \text{sinc}(t/T)\,\frac{\cos(\pi\alpha t/T)}{1 - (2\alpha t/T)^2}, \qquad B = \frac{1+\alpha}{2T}$$</div>
+  <ol class="steps">
+    <li>The eye's vertical opening is the noise margin at the sampling instant.</li>
+    <li>Its horizontal opening is the tolerance to timing errors.</li>
+    <li>α trades bandwidth for a wider eye and faster-decaying tails.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>1 Msymbol/s with α = 0.35: bandwidth 675 kHz (one-sided). With α = 0 it would be 500 kHz, but any timing error would let the slowly decaying sinc tails pile up.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Sampling at the eye's edge: there all the neighbouring pulses contribute, and the margin is gone.</div>
+  <div class="try"><h4>Try it</h4>Move α from 0 to 1 and watch the eye open horizontally; then lower Eb/N0 until it closes.</div>
+</section>
+<section data-case="eye" data-example="sinc"><h3>α = 0</h3><p>The sinc pulse: minimum bandwidth, but the eye is narrow — tiny timing errors cause large ISI.</p></section>
+<section data-case="eye" data-example="wide"><h3>α = 1</h3><p>Double the minimum bandwidth, but a wide-open eye and short pulses.</p></section>
+<section data-case="eye" data-example="pam"><h3>4-PAM</h3><p>Four levels stack three eyes; each is a third as tall, so noise closes them sooner — the price of two bits per symbol.</p></section>
+<section data-case="eye" data-example="noisy"><h3>A closing eye</h3><p>At 4 dB the noise fills the eye: decisions at its centre become unreliable.</p></section>
+<section data-case="shannon">
+  <h3>The Shannon limit</h3>
+  <div class="look"><h4>What you are looking at</h4>Spectral efficiency η (bits per second per hertz) against the Eb/N0 needed. The red curve is Shannon's limit: no system, however clever, works reliably to its left. Dots: the uncoded schemes at the chosen BER; dashed lines: their gap to the limit.</div>
+  <div class="eq">$$C = B\log_2(1 + S/N) \quad\Longrightarrow\quad \frac{E_b}{N_0}\bigg|_{\min} = \frac{2^\eta - 1}{\eta} \;\xrightarrow{\eta\to 0}\; \ln 2 = -1.59\ \text{dB}$$</div>
+  <p>Shannon proved that error-free communication is possible at any rate below C — not with a cleverer constellation, but with long error-correcting codes. Uncoded schemes sit 8–10 dB to the right of the limit; modern codes (turbo, LDPC, polar) get within a fraction of a dB.</p>
+  <div class="worked"><h4>Worked example</h4>η = 2 (QPSK): the limit is 1.76 dB, uncoded QPSK needs 9.6 dB at BER 10⁻⁵ — a gap of 7.8 dB that coding recovers.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the limit forbids low-power links entirely: it allows any Eb/N0 above −1.59 dB, at a low enough rate. Deep-space probes live near that corner.</div>
+  <div class="try"><h4>Try it</h4>Tighten the target BER: the dots move right, the limit does not.</div>
+</section>
+<section data-case="shannon" data-example="strict"><h3>BER 10⁻⁹</h3><p>Every uncoded scheme needs about 3 dB more than at 10⁻⁵; Shannon's curve, defined for arbitrarily small error, stays where it is.</p></section>

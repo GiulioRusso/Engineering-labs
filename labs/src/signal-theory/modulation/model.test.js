@@ -22,3 +22,11 @@ export const tests = {
     b.forEach(([x, y], i) => { const [u, v] = s[i]; ok(Math.hypot(x - v, y + u) < 0.02, `rotated ${i}`); }); // ×e^(−jπ/2)
   },
 };
+import { modulate, envelope } from './model.js';
+import { fft } from '../../lib/dsp.js';
+const amp = (s, fs, f) => { const N = s.length, re = Float64Array.from(s), im = new Float64Array(N); fft(re, im); const k = Math.round(f * N / fs); return 2 * Math.hypot(re[k], im[k]) / N; };
+Object.assign(tests, {
+  'AM: carrier 1, sidebands μ/2 at fc ± fm'() { const { s } = modulate('am', { fc: 100, fm: 8, mu: 0.8 }, 1024, 1024); near(amp(s, 1024, 100), 1, 1e-6, 'carrier'); near(amp(s, 1024, 108), 0.4, 1e-6, 'usb'); near(amp(s, 1024, 92), 0.4, 1e-6, 'lsb'); },
+  'FM: line n has amplitude |J_n(β)|'() { const { s } = modulate('fm', { fc: 200, fm: 8, df: 24 }, 1024, 1024); for (const n of [0, 1, 2, 3]) near(amp(s, 1024, 200 + 8 * n) + 0.01, Math.abs(besselJ(n, 3)) + 0.01, 0.02, `J${n}`); },
+  'envelope detector follows 1 + μ m(t)'() { const fs = 8192, { s, m } = modulate('am', { fc: 500, fm: 5, mu: 0.5 }, fs, fs), e = envelope(s, fs, 50); for (const i of [3000, 5000, 7000]) near(e[i], 1 + 0.5 * m[i - 25], 0.06, `i=${i}`); },
+});
