@@ -163,7 +163,9 @@ In the Electronics Visualizer.
 | [The Shannon limit](web/signal-theory.html?lab=shannon) | Spectral efficiency against Eb/N0, and the gap to capacity. | done |
 | [IQ demodulation](web/signal-theory.html?lab=iq-demodulation) | Pulse, mixer, low-pass: RF to IF to baseband. | done |
 | [Residual Δf and DFT bins](web/signal-theory.html?lab=residual-df) | An off-tune oscillator rotates the baseband; one bin or leakage. | done |
-| [Link budget](web/signal-theory.html?lab=link-budget) | Friis: transmit power, antenna gains and path loss against receiver sensitivity. | done |
+| [Links and propagation](web/signal-theory.html?lab=link-budget) | Friis link budget, free-space loss, ground reflection and the breakpoint. | done |
+| [Yagi and patch antennas](web/signal-theory.html?lab=yagi-patch) | Parasitic elements that steer a beam; the microstrip patch. | done |
+| [Vivaldi antenna](web/signal-theory.html?lab=vivaldi) | Tapered slot: travelling wave, endfire beam, broadband match, arrays. | done |
 | [Dipole: current and fields](web/signal-theory.html?lab=dipole-current) | Standing-wave current, E and H radiating, field lines detaching. | done |
 | [Dipole: radiation pattern](web/signal-theory.html?lab=dipole-pattern) | E- and H-plane, 3D pattern, pattern against length. | done |
 | [Dipole: impedance and directivity](web/signal-theory.html?lab=dipole-impedance) | Input impedance, resonance, matching, directivity vs length. | done |

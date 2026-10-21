@@ -1,0 +1,55 @@
+<section data-case="geometry">
+  <h3>The tapered slot</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a Vivaldi antenna seen from above — two metal flares (orange edges) on a board, fed at the narrow end (red) and opening toward the right. Bottom: the slot width along the antenna; dashed lines mark where the slot is half a wavelength wide at f₀, 2f₀ and 3f₀.</div>
+  <div class="eq">$$w(x) = c_1 e^{Rx} + c_2, \qquad c_1 = \frac{W_a - W_t}{e^{RL} - 1}, \quad c_2 = \frac{W_t e^{RL} - W_a}{e^{RL} - 1}$$</div>
+  <p>The slot starts as a narrow gap (a slot line that guides the wave) and widens exponentially until it opens into free space. Each frequency travels along the slot until it reaches the place where the slot is about half its wavelength wide, and radiates from there. The antenna looks the same — scaled — to every frequency in its band. That is the secret of its bandwidth.</p>
+  <div class="worked"><h4>Worked example</h4>Opening 1.5 λ₀: the lowest frequency that fits is where 1.5 λ₀ ≈ λ/2, i.e. f ≈ 0.33 f₀. A 4 λ₀ long antenna at 3 GHz is 40 cm — and works roughly from 1 to 9 GHz.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Calling it a resonant antenna. A dipole resonates at one length; a Vivaldi has no resonance — it is a travelling-wave structure.</div>
+</section>
+<section data-case="geometry" data-example="steep"><h3>A steep taper</h3><p>The slot stays narrow, then opens suddenly: shorter radiating region, wider beam, poorer match.</p></section>
+<section data-case="geometry" data-example="gentle"><h3>An almost linear taper</h3><p>The slot opens steadily: smooth transition, but the narrow region where the highest frequencies radiate is short.</p></section>
+<section data-case="current">
+  <h3>The travelling wave</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the current along the flare edges at one instant. Bottom: the current along the antenna (blue) and its envelope (dashed).</div>
+  <div class="eq">$$J(x,t) \propto e^{-\int_0^x \alpha\,dx'}\cos(kx - \omega t), \qquad \alpha \propto w(x)$$</div>
+  <p>The current is a wave travelling from the feed toward the opening. It does not bounce back: it leaks energy into radiation as it goes, faster where the slot is wide. By the opening most of the power is gone — nothing is left to reflect.</p>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting a standing wave as on a dipole: there is none, because there is no open end for the wave to bounce off.</div>
+</section>
+<section data-case="current" data-example="steep"><h3>Steep taper</h3><p>The slot widens early, so the wave leaks out in the first half of the antenna.</p></section>
+<section data-case="field">
+  <h3>The field in the slot</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the electric field across the slot, and leaving it at the right. Bottom: how much of the wave is still guided along the antenna.</div>
+  <p>Near the throat the field is squeezed into a gap much smaller than a wavelength: a guided slot-line wave, slower than light. As the gap widens the field spreads and speeds up; when the gap is a sizeable fraction of a wavelength it no longer needs the metal and detaches as a free-space wave, launched along the axis (endfire).</p>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the antenna radiates from its tip. Each frequency radiates from its own part of the slot.</div>
+</section>
+<section data-case="field" data-example="high"><h3>At 2 f₀</h3><p>Shorter waves: they detach earlier, closer to the throat.</p></section>
+<section data-case="pattern">
+  <h3>The endfire pattern</h3>
+  <div class="look"><h4>What you are looking at</h4>Polar patterns in dB, forward up: E-plane (in the plane of the board) on the left, H-plane (across it) on the right.</div>
+  <p>The E-plane beam comes from the length of radiating slot, adding in phase only straight ahead (a travelling-wave array); the H-plane beam from the width of the opening. Both narrow as frequency rises, because the antenna gets electrically bigger.</p>
+  <div class="eq">$$D \approx \frac{41\,253}{\theta_E\,\theta_H} \quad(\text{degrees})$$</div>
+  <div class="worked"><h4>Worked example</h4>Beams of 50° and 60°: D ≈ 13.8 → 11.4 dBi.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting constant gain over the band: the shape is constant only in its radiating region; the beam keeps narrowing with frequency.</div>
+</section>
+<section data-case="pattern" data-example="low"><h3>At 0.5 f₀</h3><p>Electrically small: a broad beam, low gain.</p></section>
+<section data-case="pattern" data-example="high"><h3>At 2.5 f₀</h3><p>The beam is much narrower and the gain higher.</p></section>
+<section data-case="band">
+  <h3>Bandwidth and gain</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the input match S11 against frequency. Top right: its two causes. Bottom: gain and beamwidths.</div>
+  <p>The taper is an impedance transformer from the 50 Ω feed to the 377 Ω of free space. A long, gradual transformer reflects little at all frequencies above some minimum:</p>
+  <div class="eq">$$|\Gamma| \approx \tfrac12\ln\frac{377}{Z_f}\left|\frac{\sin\beta L}{\beta L}\right|$$</div>
+  <p>Below the frequency where the opening is about λ/2 the wave cannot leave the aperture and is reflected: that sets the low band edge.</p>
+  <div class="worked"><h4>Worked example</h4>L = 4 λ₀, Wa = 1.5 λ₀: matched from about 0.4 f₀ up past 3 f₀ — more than 7:1. Typical real Vivaldis reach 3:1 to 10:1. (This is a simplified model: real antennas add ripples from the feed transition.)</div>
+  <div class="pitfall"><h4>Common mistake</h4>Shortening the antenna to save space: the transformer gets abrupt and the match worsens at the low end.</div>
+</section>
+<section data-case="band" data-example="short"><h3>A short Vivaldi</h3><p>L = 1.5 λ₀: the taper reflects more; the low end of the band suffers.</p></section>
+<section data-case="band" data-example="narrow"><h3>A small opening</h3><p>Wa = 0.6 λ₀: the aperture only lets go of frequencies above ≈ 0.8 f₀.</p></section>
+<section data-case="array">
+  <h3>Vivaldis in an array</h3>
+  <div class="look"><h4>What you are looking at</h4>The pattern of N Vivaldis side by side, steered to the green line; dashed: a single element.</div>
+  <p>Vivaldis are long and thin: they can be packed half a wavelength apart and still each have a wide bandwidth. That makes them the standard element for wideband phased arrays (electronic warfare, radio astronomy). The spacing that is half a wavelength at the lowest frequency becomes too wide at the top of the band — grating lobes set the upper limit.</p>
+  <div class="eq">$$\text{no grating lobes if } d < \frac{\lambda}{1 + |\sin\theta_0|}$$</div>
+  <div class="pitfall"><h4>Common mistake</h4>Checking the spacing only at the design frequency. In a wideband array the highest frequency decides it.</div>
+</section>
+<section data-case="array" data-example="scan"><h3>Scan to 40°</h3><p>The array factor moves the beam; the element pattern multiplies it, so the steered beam is a little weaker.</p></section>
+<section data-case="array" data-example="grating"><h3>Grating lobes at high frequency</h3><p>At 2.2 f₀ the 0.5 λ₀ spacing is 1.1 λ: a second beam appears in visible space.</p></section>

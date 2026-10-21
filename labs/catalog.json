@@ -1096,11 +1096,38 @@
    },
    {
     "id": "link-budget",
-    "title": "Link budget",
-    "what": "Friis: transmit power, antenna gains and path loss against receiver sensitivity.",
-    "from": "antennas",
+    "title": "Links and propagation",
+    "what": "Friis link budget, free-space loss, ground reflection and the breakpoint.",
+    "from": "propagation",
     "cases": [
-     "link"
+     "friis",
+     "tworay"
+    ],
+    "group": "Antennas and propagation"
+   },
+   {
+    "id": "yagi-patch",
+    "title": "Yagi and patch antennas",
+    "what": "Parasitic elements that steer a beam; the microstrip patch.",
+    "from": "propagation",
+    "cases": [
+     "yagi",
+     "patch"
+    ],
+    "group": "Antennas and propagation"
+   },
+   {
+    "id": "vivaldi",
+    "title": "Vivaldi antenna",
+    "what": "Tapered slot: travelling wave, endfire beam, broadband match, arrays.",
+    "from": "vivaldi",
+    "cases": [
+     "geometry",
+     "current",
+     "field",
+     "pattern",
+     "band",
+     "array"
     ],
     "group": "Antennas and propagation"
    },

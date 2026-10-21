@@ -1,0 +1,44 @@
+<section data-case="friis">
+  <h3>A free-space link</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: received power against distance (log axis); the red line is what the receiver needs. Bottom: the link budget as bars — what each term adds or takes away.</div>
+  <div class="eq">$$P_r = P_t\,G_t\,G_r\left(\frac{\lambda}{4\pi d}\right)^2 \quad\Longleftrightarrow\quad P_r[\text{dBm}] = P_t + G_t + G_r - 20\log_{10}\frac{4\pi d}{\lambda}$$</div>
+  <ol class="steps">
+    <li>The transmitter's power spreads over a sphere of area 4πd²: the density falls as 1/d².</li>
+    <li>The receiving antenna collects through its effective area Gλ²/4π: that is where λ² enters.</li>
+    <li>In dB: −20 dB per decade of distance, −6 dB per doubling of distance or of frequency.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Wi-Fi: 20 dBm, 2 dBi antennas, 2.4 GHz, 1 km: FSPL = 100 dB → −76 dBm; with a −90 dBm receiver, 14 dB of margin.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Saying "high frequencies are absorbed more by free space". Space absorbs nothing: the λ² comes from the receiving antenna being smaller at high frequency. With fixed-size dishes, high frequencies actually win.</div>
+</section>
+<section data-case="friis" data-example="far"><h3>10 km</h3><p>20 dB more loss: −96 dBm, below the sensitivity.</p></section>
+<section data-case="friis" data-example="dish"><h3>Dishes</h3><p>+56 dB of antenna gain buys a 50 km link at the same power.</p></section>
+<section data-case="friis" data-example="mm"><h3>60 GHz</h3><p>25 times the frequency: 20 log 25 = 28 dB more loss with the same small antennas.</p></section>
+<section data-case="tworay">
+  <h3>The ground reflection</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: received power with only the direct wave (grey) and with a wave reflected by the ground as well (blue). Bottom: their difference.</div>
+  <div class="eq">$$P_r \approx P_t G_t G_r \frac{h_t^2 h_r^2}{d^4} \quad \text{beyond} \quad d_b = \frac{4 h_t h_r}{\lambda}$$</div>
+  <p>Over flat ground the receiver gets two waves: direct and reflected (which flips sign at grazing incidence). Close in, their path difference changes quickly: they alternately add and cancel, ±6 dB ripples. Far away the paths become almost equal and, with the sign flip, the two nearly cancel: power falls as 1/d⁴, 40 dB per decade.</p>
+  <div class="worked"><h4>Worked example</h4>hₜ = 10 m, hᵣ = 1.5 m at 2.4 GHz: breakpoint 480 m. Beyond it, doubling the distance costs 12 dB, not 6.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using free-space loss for ground links beyond the breakpoint: it overestimates the range dramatically. Raising the antennas helps (d_b grows as hₜhᵣ).</div>
+</section>
+<section data-case="tworay" data-example="tall"><h3>A taller mast</h3><p>50 m: the breakpoint moves to 2.4 km.</p></section>
+<section data-case="yagi">
+  <h3>The Yagi–Uda antenna</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the elements — a reflector behind, the fed dipole (red), directors in front. Right: the pattern in the plane of the elements, forward up.</div>
+  <p>Only one element is connected. The others are plain rods: the driven dipole's field induces currents in them, and they re-radiate. A slightly longer rod behind (reflector) and slightly shorter rods in front (directors) carry currents with just the right phase lag that their waves add in front and cancel behind — a phased array with no phase shifters.</p>
+  <div class="eq">$$F(\varphi) = \Big|\sum_n a_n\,e^{\,j(k x_n\cos\varphi - n\phi)}\Big|$$</div>
+  <div class="worked"><h4>Worked example</h4>Dipole + reflector: about 4–5 dB more than a dipole forward. With 10 directors: 12–14 dBi — the classic TV antenna.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Mounting it backwards: the beam points along the directors, away from the reflector.</div>
+</section>
+<section data-case="yagi" data-example="none"><h3>Reflector only</h3><p>A two-element beam: moderate front-to-back ratio, broad lobe.</p></section>
+<section data-case="yagi" data-example="long"><h3>10 directors</h3><p>A long boom: narrower beam, higher gain — each extra director adds less.</p></section>
+<section data-case="yagi" data-example="wrong"><h3>Wrong phasing</h3><p>With the currents lagging the wrong way, the waves add toward the back.</p></section>
+<section data-case="patch">
+  <h3>The patch antenna</h3>
+  <div class="look"><h4>What you are looking at</h4>Patterns of a rectangular patch on a ground plane, broadside up: E-plane (along the patch length, left) and H-plane (along its width, right).</div>
+  <p>A metal rectangle about half a wavelength long (in the substrate) over a ground plane is a resonant cavity. Its two short ends act as slots with fields in phase: they add straight up and partly cancel sideways. The ground plane blocks almost everything behind.</p>
+  <div class="eq">$$E_E(\theta) \propto \cos\!\left(\tfrac{kL}{2}\sin\theta\right)\text{sinc}\!\left(\tfrac{kh}{2}\sin\theta\right), \qquad E_H(\theta) \propto \cos\theta\;\text{sinc}\!\left(\tfrac{kW}{2}\sin\theta\right)$$</div>
+  <div class="worked"><h4>Worked example</h4>A typical patch: beams of about 80–100°, 6–8 dBi. Every phone, GPS receiver and Wi-Fi card has some.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting wide bandwidth: a patch is a resonator, typically a few per cent wide; thicker substrates widen it.</div>
+</section>
+<section data-case="patch" data-example="wide"><h3>A wide patch</h3><p>W = 1.2 λ: a longer slot narrows the H-plane beam.</p></section>
