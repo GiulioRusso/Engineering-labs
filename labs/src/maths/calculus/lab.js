@@ -6,30 +6,22 @@ import * as THREE from 'three';
 import { FUNCS, f, df, integral, riemann, taylor } from './model.js';
 
 const X = [-5, 5], Y = [-3, 3.5];
-const MODE_HINT = {
-  derivative: 'Drag the point along the curve; shrink h and watch the secant become the tangent.',
-  integral: 'Drag a and b; add strips and compare the sum with the exact area.',
-  taylor: 'Drag the point x₀; raise the order N and watch the polynomial hug the curve.',
-};
 
 export default {
   id: 'calculus', title: 'Derivative, integral, Taylor', size: 4.4, ortho: true, plain: true, timeless: true, cam: 'top',
-  defaults: { mode: 'derivative', fn: 'sin', x0: 0.8, h: 1.2, a: -1, b: 2.5, n: 8, rule: 'mid', N: 3 },
+  defaults: { mode: 'derivative', fn: 'sq', x0: 0.8, h: 1.2, a: -1, b: 2.5, n: 8, rule: 'mid', N: 3 },
   scenarios: [
-    { id: 'secant', label: 'Secant to tangent', hint: 'A slope as h → 0.', set: { mode: 'derivative', fn: 'sin', h: 1.5 } },
-    { id: 'cubic-slope', label: 'Where the slope is zero', hint: 'A cubic has flat points at its peaks.', set: { mode: 'derivative', fn: 'cubic', x0: 1.414, h: 0.3 } },
-    { id: 'riemann', label: 'Riemann sum', hint: 'Area as a sum of strips.', set: { mode: 'integral', fn: 'gauss', a: -2, b: 1.5, n: 6, rule: 'left' } },
-    { id: 'midpoint', label: 'Midpoint is better', hint: 'Same strips, a tenth of the error.', set: { mode: 'integral', fn: 'gauss', a: -2, b: 1.5, n: 6, rule: 'mid' } },
-    { id: 'taylor', label: 'Taylor series of sin', hint: 'More terms, wider fit.', set: { mode: 'taylor', fn: 'sin', x0: 0, N: 5 } },
+    { id: 'derivative', label: 'Derivative', hint: 'Shrink h: the secant becomes the tangent.', set: { mode: 'derivative', fn: 'sq', x0: 1, h: 1 } },
+    { id: 'integral', label: 'Integral', hint: 'Add strips: the sum becomes the area.', set: { mode: 'integral', fn: 'sq', a: 0, b: 2, n: 4, rule: 'left' } },
+    { id: 'taylor', label: 'Taylor', hint: 'Raise N: the polynomial hugs the curve.', set: { mode: 'taylor', fn: 'sin', x0: 0, N: 1 } },
   ],
   controls: [
-    { title: 'What to do', items: [
-      { id: 'mode', label: 'Idea', type: 'segmented', options: [['derivative', 'Derivative'], ['integral', 'Integral'], ['taylor', 'Taylor']], hint: (s) => MODE_HINT[s.mode] },
-      { id: 'fn', label: 'Function f(x)', type: 'select', options: Object.entries(FUNCS).map(([k, v]) => [k, v.label]) },
+    { title: 'Function', items: [
+      { id: 'fn', label: 'f(x)', type: 'select', options: Object.entries(FUNCS).map(([k, v]) => [k, v.label]) },
     ] },
     { title: 'Derivative', show: (s) => s.mode === 'derivative', items: [
       { id: 'x0', label: 'Point x₀', unit: '', min: -4.5, max: 4.5, step: 0.01 },
-      { id: 'h', label: 'Step h', unit: '', min: 0.001, max: 3, log: true, hint: 'The secant joins x₀ and x₀ + h.' },
+      { id: 'h', label: 'Step h', unit: '', min: 0.001, max: 3, log: true, },
     ] },
     { title: 'Integral', show: (s) => s.mode === 'integral', items: [
       { id: 'a', label: 'From a', unit: '', min: -4.5, max: 4.5, step: 0.01 },

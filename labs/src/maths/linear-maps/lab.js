@@ -10,33 +10,33 @@ const rot = (a) => ({ ...I, a11: Math.cos(a), a12: -Math.sin(a), a21: Math.sin(a
 const CORNERS = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]];
 const EDGES = [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]];
 const FACES = [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]];
-const entry = (r, c) => ({ id: `a${r}${c}`, label: `row ${r}, column ${c}`, unit: '', min: -2.5, max: 2.5, step: 0.01 });
+const entry = (r, c) => ({ id: `a${r}${c}`, label: `a${'₀₁₂₃'[r]}${'₀₁₂₃'[c]}`, unit: '', min: -2.5, max: 2.5, step: 0.01 });
 
 export default {
   id: 'linear-maps', title: 'Linear maps on the unit cube', size: 1.6, duration: 4,
   cameras: { front: { pos: [0.4, -5, 0.6], target: [0.4, 0.4, 0.4] }, side: { pos: [5, 0.4, 0.6], target: [0.4, 0.4, 0.4] }, top: { pos: [0.4, 0.39, 5], target: [0.4, 0.4, 0.4] }, iso: { pos: [3.2, -3.4, 2.6], target: [0.4, 0.4, 0.4] } },
   defaults: { ...I, morph: true, eigen: true, ghost: true },
   scenarios: [
-    { id: 'stretch', label: 'Stretch', hint: 'Diagonal matrix: the axes are eigenvectors.', set: { ...I, a11: 1.8, a22: 0.6, a33: 1.2 } },
-    { id: 'shear', label: 'Shear', hint: 'Slides layers; the volume stays 1.', set: { ...I, a12: 1 } },
-    { id: 'rotation', label: 'Rotation about z', hint: 'One real eigenvector: the axis.', set: rot(0.8) },
-    { id: 'reflection', label: 'Reflection', hint: 'det < 0: space turned inside out.', set: { ...I, a11: -1 } },
-    { id: 'projection', label: 'Flatten to a plane', hint: 'det = 0: no way back.', set: { ...I, a33: 0, a13: 0.4, a23: 0.3 } },
-    { id: 'general', label: 'A general matrix', hint: 'Symmetric: three real eigenvectors, at right angles.', set: { a11: 1.5, a12: 0.5, a13: 0.2, a21: 0.5, a22: 1, a23: 0.4, a31: 0.2, a32: 0.4, a33: 0.7 } },
+    { id: 'stretch', label: 'Stretch', hint: 'Diagonal: the axes are eigenvectors.', controls: ['a11', 'a22', 'a33'], set: { ...I, a11: 1.8, a22: 0.6, a33: 1.2 } },
+    { id: 'rotation', label: 'Rotation', hint: 'The axis is the only real eigenvector.', controls: [], set: rot(0.8) },
+    { id: 'shear', label: 'Shear', hint: 'Volume stays 1.', controls: ['a12', 'a13', 'a23'], set: { ...I, a12: 1 } },
+    { id: 'reflection', label: 'Reflection', hint: 'det < 0.', controls: ['a11', 'a22', 'a33'], set: { ...I, a11: -1 } },
+    { id: 'projection', label: 'Projection', hint: 'det = 0.', controls: ['a13', 'a23', 'a33'], set: { ...I, a33: 0, a13: 0.4, a23: 0.3 } },
+    { id: 'general', label: 'Any matrix', set: { a11: 1.5, a12: 0.5, a13: 0.2, a21: 0.5, a22: 1, a23: 0.4, a31: 0.2, a32: 0.4, a33: 0.7 } },
   ],
   controls: [
-    { title: 'Matrix', hint: 'Easiest: drag the tips of the red, green and blue arrows (the columns).', items: [
+    { title: 'Matrix', items: [
       { type: 'readout', label: 'det A (volume)', value: (s) => det(cols(s)).toFixed(3) },
       { type: 'readout', label: 'trace', value: (s) => (s.a11 + s.a22 + s.a33).toFixed(3) },
     ] },
-    { title: 'Column 1 (red)', open: false, items: [entry(1, 1), entry(2, 1), entry(3, 1)] },
-    { title: 'Column 2 (green)', open: false, items: [entry(1, 2), entry(2, 2), entry(3, 2)] },
-    { title: 'Column 3 (blue)', open: false, items: [entry(1, 3), entry(2, 3), entry(3, 3)] },
+    { title: 'Column 1', items: [entry(1, 1), entry(2, 1), entry(3, 1)] },
+    { title: 'Column 2', items: [entry(1, 2), entry(2, 2), entry(3, 2)] },
+    { title: 'Column 3', items: [entry(1, 3), entry(2, 3), entry(3, 3)] },
   ],
   display: [{ title: 'Show', items: [
-    { id: 'morph', label: 'Animate from the identity to A', type: 'check', hint: 'The play bar runs the morph back and forth.' },
-    { id: 'ghost', label: 'Original unit cube', type: 'check', color: '--c-ref' },
-    { id: 'eigen', label: 'Eigenvector lines', type: 'check', color: '--c-E' },
+    { id: 'morph', label: 'Morph from identity', type: 'check' },
+    { id: 'ghost', label: 'Original cube', type: 'check', color: '--c-ref' },
+    { id: 'eigen', label: 'Eigenvectors', type: 'check', color: '--c-E' },
   ] }],
   hud: [{ id: 'm1', label: 'A =' }, { id: 'm2', label: '' }, { id: 'm3', label: '' }, 'sep', { id: 'det', label: 'det A' }, { id: 'ev', label: 'eigenvalues' }],
 

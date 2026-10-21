@@ -1,9 +1,10 @@
-// Control panel: Scenarios first, then the settings in named, collapsible groups, then Display.
-// Every control has a label, its unit and an optional one-line hint; a hint may be a function of the
-// state, so a mode switch can explain the mode currently selected.
+// Control panel, top to bottom: Scenario (one click sets everything), the controls for that scenario
+// in named groups, then View (what is drawn, collapsed). Hints are tooltips; a hint may be a function
+// of the state, so a mode switch can explain the mode currently selected.
 //
-// spec = { scenarios: [{ id, label, hint }], onScenario(id), controls: [group], display: [group] }
-// group = { title, hint?, open = true, show?(state), items: [item] }
+// spec = { scenarios: [{ id, label, hint, controls? }], onScenario(id), controls: [group], display: [group] }
+//   scenario.controls: ids of the controls this scenario uses (default: all)
+// group = { title, show?(state), items: [item] }
 // item types:
 //   { id, label, unit, min, max, step?, k = 1, log?, hint?, show? }          slider + number (SI in state, ×k shown)
 //   { id, label, type: 'segmented', options: [[value, text]], hint? }       mode switch (radio group)
@@ -17,13 +18,14 @@ let uid = 0;
 export function createPanel(root, spec, state, onChange) {
   root.innerHTML = '';
   const syncs = [];
+  const scenario = () => spec.scenarios?.find((s) => s.id === state.scenario);
+  const used = (it) => !it.id || !scenario()?.controls || scenario().controls.includes(it.id);
 
-  // ---- scenarios
-  if (spec.scenarios?.length) {
-    const sec = html('<section class="psec"><h2>Scenarios</h2><p class="ghint">Ready-made experiments. Each one sets everything below.</p><div class="scenarios"></div></section>');
+  if (spec.scenarios?.length > 1) {
+    const sec = html('<section class="psec"><h2>Scenario</h2><div class="scenarios"></div></section>');
     const box = sec.querySelector('.scenarios');
     const btns = spec.scenarios.map((s) => {
-      const b = html(`<button class="scen" aria-pressed="false"><b>${s.label}</b>${s.hint ? `<span>${s.hint}</span>` : ''}</button>`);
+      const b = html(`<button class="scen" aria-pressed="false"${s.hint ? ` title="${s.hint}"` : ''}>${s.label}</button>`);
       b.addEventListener('click', () => spec.onScenario(s.id));
       box.append(b);
       return [s.id, b];
@@ -32,23 +34,18 @@ export function createPanel(root, spec, state, onChange) {
     root.append(sec);
   }
 
-  const groups = (list, heading, sub) => {
-    if (!list?.length) return;
-    root.append(html(`<h2 class="phead">${heading}</h2>`));
-    if (sub) root.append(html(`<p class="ghint top">${sub}</p>`));
-    for (const g of list) {
-      const d = html(`<details class="group"${g.open === false ? '' : ' open'}><summary>${g.title}</summary></details>`);
-      if (g.hint) d.append(html(`<p class="ghint">${g.hint}</p>`));
-      for (const it of g.items) d.append(item(it));
-      root.append(d);
-      if (g.show) syncs.push(() => d.classList.toggle('hidden', !g.show(state)));
+  const groups = (list, box) => {
+    for (const g of list || []) {
+      const d = html(`<div class="group"><h3>${g.title}</h3></div>`);
+      const items = g.items.map((it) => { const [el, vis] = item(it); d.append(el); return vis; });
+      box.append(d);
+      syncs.push(() => d.classList.toggle('hidden', (g.show && !g.show(state)) || !items.some((v) => v())));
     }
   };
 
   function item(it) {
     const id = `c${++uid}`;
     let el, sync;
-    const hint = html('<div class="hint"></div>');
     if (it.type === 'segmented') {
       el = html(`<div class="item"><div class="lbl" id="${id}">${it.label}</div><div class="seg" role="radiogroup" aria-labelledby="${id}"></div></div>`);
       const seg = el.querySelector('.seg');
@@ -87,14 +84,24 @@ export function createPanel(root, spec, state, onChange) {
       num.addEventListener('change', () => { const v = Number(num.value) / k; if (Number.isFinite(v)) { state[it.id] = snap(v); onChange(it.id); } sync(); });
       sync = () => { num.value = fmt(state[it.id] * k); rng.value = String(Math.round(toU(state[it.id]))); };
     }
-    el.append(hint);
-    const full = () => { sync(); const h = text(it.hint, state); hint.textContent = h; hint.hidden = !h; if (it.show) el.classList.toggle('hidden', !it.show(state)); };
-    syncs.push(full);
-    return el;
+    let vis = true;
+    syncs.push(() => {
+      sync();
+      el.title = text(it.hint, state);
+      vis = used(it) && (!it.show || it.show(state));
+      el.classList.toggle('hidden', !vis);
+    });
+    return [el, () => vis];
   }
 
-  groups(spec.controls, 'Settings');
-  groups(spec.display, 'Display', 'What is drawn in the scene. None of this changes the physics.');
+  const controls = html('<section class="psec"></section>');
+  groups(spec.controls, controls);
+  root.append(controls);
+  if (spec.display?.length) {
+    const view = html('<details class="psec view"><summary>View</summary></details>');
+    groups(spec.display, view);
+    root.append(view);
+  }
 
   const api = { sync() { for (const f of syncs) f(); } };
   api.sync();

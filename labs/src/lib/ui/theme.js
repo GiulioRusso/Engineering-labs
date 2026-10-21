@@ -7,8 +7,7 @@ export function initTheme(button, onChange) {
   try { theme = localStorage.getItem(KEY) || theme; } catch { /* storage blocked: keep default */ }
   const apply = () => {
     document.documentElement.dataset.theme = theme;
-    button.setAttribute('aria-pressed', String(theme === 'light'));
-    button.textContent = theme === 'light' ? 'Dark' : 'Light';
+    button.textContent = theme === 'light' ? '☾' : '☀';
     button.title = `Switch to ${theme === 'light' ? 'dark' : 'light'} theme`;
     onChange(theme);
   };

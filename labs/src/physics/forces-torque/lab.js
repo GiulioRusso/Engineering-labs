@@ -8,42 +8,34 @@ import { si } from '../../lib/ui/format.js';
 import { resultant, torque, barInertia, draft, pressure, bob, G } from './model.js';
 
 const KF = 0.12; // world units per newton for force arrows
-const KIND_HINT = {
-  resultant: 'Drag the tips of the three forces. The thick arrow is their sum.',
-  torque: 'A bar pinned at the left end; drag where the force acts and change its angle.',
-  buoyancy: 'Drop a block into a liquid; it bobs and settles where buoyancy = weight.',
-};
 
 export default {
   id: 'forces-torque', title: 'Forces and torque', size: 4.6, ortho: true, plain: true, cam: 'top', duration: 4,
   defaults: { kind: 'resultant', f1x: 12, f1y: 6, f2x: -4, f2y: 10, f3x: -6, f3y: -8, m: 2, F: 10, r: 0.6, alpha: Math.PI / 2, L: 1, M: 2, s: 0.4, rb: 600, rf: 1000, tiptail: true },
   scenarios: [
-    { id: 'sum', label: 'Adding forces', hint: 'Tip to tail: the resultant.', set: { kind: 'resultant' } },
-    { id: 'balance', label: 'Equilibrium', hint: 'Three forces that cancel: no acceleration.', set: { kind: 'resultant', f1x: 12, f1y: 0, f2x: -6, f2y: 10.39, f3x: -6, f3y: -10.39 } },
-    { id: 'lever', label: 'Torque on a lever', hint: 'Far and perpendicular turns hardest.', set: { kind: 'torque' } },
-    { id: 'along', label: 'Pushing along the bar', hint: 'α = 0: no torque at all.', set: { kind: 'torque', alpha: 0.05 } },
-    { id: 'wood', label: 'Wood floats', hint: '600 kg/m³ in water: 60 % under.', set: { kind: 'buoyancy', rb: 600 } },
-    { id: 'ice', label: 'Ice in water', hint: '917 kg/m³: mostly under the surface.', set: { kind: 'buoyancy', rb: 917 } },
+    { id: 'sum', label: 'Adding forces', hint: 'Drag the force tips.', set: { kind: 'resultant' } },
+    { id: 'balance', label: 'Equilibrium', set: { kind: 'resultant', f1x: 12, f1y: 0, f2x: -6, f2y: 10.39, f3x: -6, f3y: -10.39 } },
+    { id: 'lever', label: 'Torque', set: { kind: 'torque' } },
+    { id: 'float', label: 'Buoyancy', set: { kind: 'buoyancy', rb: 600 } },
   ],
   controls: [
-    { title: 'Situation', items: [{ id: 'kind', label: 'Show', type: 'segmented', options: [['resultant', 'Sum of forces'], ['torque', 'Torque'], ['buoyancy', 'Buoyancy']], hint: (s) => KIND_HINT[s.kind] }] },
     { title: 'Forces', show: (s) => s.kind === 'resultant', items: [
-      { id: 'm', label: 'Mass of the puck', unit: 'kg', min: 0.2, max: 10, log: true },
+      { id: 'm', label: 'Mass', unit: 'kg', min: 0.2, max: 10, log: true },
       { type: 'readout', label: 'Net force', value: (s) => { const R = resultant([[s.f1x, s.f1y], [s.f2x, s.f2y], [s.f3x, s.f3y]]); return `${Math.hypot(...R).toFixed(2)} N`; } },
     ] },
     { title: 'Lever', show: (s) => s.kind === 'torque', items: [
       { id: 'F', label: 'Force F', unit: 'N', min: 0, max: 30, step: 0.1 },
-      { id: 'r', label: 'Distance from the pivot r', unit: 'm', min: 0, max: 1, step: 0.01 },
-      { id: 'alpha', label: 'Angle to the bar α', unit: '°', k: 180 / Math.PI, min: 0, max: Math.PI, step: Math.PI / 180 },
+      { id: 'r', label: 'Distance r', unit: 'm', min: 0, max: 1, step: 0.01 },
+      { id: 'alpha', label: 'Angle α', unit: '°', k: 180 / Math.PI, min: 0, max: Math.PI, step: Math.PI / 180 },
       { id: 'M', label: 'Bar mass', unit: 'kg', min: 0.2, max: 10, log: true },
     ] },
     { title: 'Block and liquid', show: (s) => s.kind === 'buoyancy', items: [
-      { id: 'rb', label: 'Block density ρ_b', unit: 'kg/m³', min: 100, max: 3000, step: 1 },
-      { id: 'rf', label: 'Liquid density ρ_f', unit: 'kg/m³', min: 700, max: 1500, step: 1, hint: 'Water 1000, sea water 1025, oil about 900.' },
-      { id: 's', label: 'Block side s', unit: 'm', min: 0.1, max: 0.8, step: 0.01 },
+      { id: 'rb', label: 'Block ρ', unit: 'kg/m³', min: 100, max: 3000, step: 1 },
+      { id: 'rf', label: 'Liquid ρ', unit: 'kg/m³', min: 700, max: 1500, step: 1, hint: 'Water 1000' },
+      { id: 's', label: 'Side s', unit: 'm', min: 0.1, max: 0.8, step: 0.01 },
     ] },
   ],
-  display: [{ title: 'Show', items: [{ id: 'tiptail', label: 'Tip-to-tail construction', type: 'check', show: (s) => s.kind === 'resultant' }] }],
+  display: [{ title: 'Show', items: [{ id: 'tiptail', label: 'Tip to tail', type: 'check', show: (s) => s.kind === 'resultant' }] }],
   plots: [{ id: 'p1', title: '', xLabel: '', xUnit: '', yUnit: '' }],
   hud: [{ id: 'a', label: '' }, { id: 'b', label: '' }, { id: 'c', label: '' }, 'sep', { id: 'chk', label: '' }],
 

@@ -7,48 +7,42 @@ import { createKnob } from '../../lib/viz/knob.js';
 import { si } from '../../lib/ui/format.js';
 import { projectile, range, apex, circular, collide, G } from './model.js';
 
-const KIND_HINT = {
-  projectile: 'Drag the round handle at the arrow tip to set the launch speed and angle.',
-  circular: 'A ball on a circle at constant speed: the acceleration points to the centre.',
-  collision: 'Two carts on a track meet head-on; momentum is shared, energy maybe not.',
-};
 
 export default {
   id: 'motion-energy', title: 'Motion, momentum and energy', size: 5, ortho: true, plain: true, cam: 'top',
   defaults: { kind: 'projectile', v0: 15, angle: 0.8, h0: 0, m: 1, drag: false, cd: 0.02, r: 2, w: 1.5, m1: 2, m2: 1, u1: 2, u2: -1, e: 1, trail: true, vectors: true },
   scenarios: [
-    { id: 'projectile', label: 'Projectile', hint: 'KE and PE trade; the total stays.', set: { kind: 'projectile' } },
-    { id: 'air', label: 'With air drag', hint: 'Energy leaks away; the path is no parabola.', set: { kind: 'projectile', v0: 30, drag: true, cd: 0.01 } },
-    { id: 'circle', label: 'Circular motion', hint: 'Constant speed, yet accelerating.', set: { kind: 'circular' } },
-    { id: 'elastic', label: 'Elastic collision', hint: 'Momentum and kinetic energy both survive.', set: { kind: 'collision', e: 1 } },
-    { id: 'stick', label: 'Carts that stick', hint: 'e = 0: momentum survives, energy does not.', set: { kind: 'collision', e: 0 } },
+    { id: 'projectile', label: 'Projectile', hint: 'Drag the arrow tip to aim.', set: { kind: 'projectile' } },
+    { id: 'air', label: 'With air drag', set: { kind: 'projectile', v0: 30, drag: true, cd: 0.01 } },
+    { id: 'circle', label: 'Circular motion', set: { kind: 'circular' } },
+    { id: 'elastic', label: 'Elastic collision', set: { kind: 'collision', e: 1 } },
+    { id: 'stick', label: 'Carts that stick', set: { kind: 'collision', e: 0 } },
   ],
   controls: [
-    { title: 'Motion', items: [
-      { id: 'kind', label: 'Situation', type: 'segmented', options: [['projectile', 'Projectile'], ['circular', 'Circular'], ['collision', 'Collision']], hint: (s) => KIND_HINT[s.kind] },
+    { title: 'Body', show: (s) => s.kind !== 'collision', items: [
       { id: 'm', label: 'Mass m', unit: 'kg', min: 0.1, max: 10, log: true, show: (s) => s.kind !== 'collision' },
     ] },
     { title: 'Launch', show: (s) => s.kind === 'projectile', items: [
-      { id: 'v0', label: 'Launch speed v₀', unit: 'm/s', min: 1, max: 40, step: 0.1 },
+      { id: 'v0', label: 'Speed v₀', unit: 'm/s', min: 1, max: 40, step: 0.1 },
       { id: 'angle', label: 'Angle θ', unit: '°', k: 180 / Math.PI, min: 0, max: Math.PI / 2, step: Math.PI / 360 },
-      { id: 'h0', label: 'Launch height h₀', unit: 'm', min: 0, max: 20, step: 0.1 },
-      { id: 'drag', label: 'Air drag', type: 'check', hint: 'Drag force ∝ v², opposite to the motion.' },
-      { id: 'cd', label: 'Drag coefficient c = ½ρC_dA/m', unit: '1/m', min: 0.001, max: 0.1, log: true, show: (s) => s.drag },
+      { id: 'h0', label: 'Height h₀', unit: 'm', min: 0, max: 20, step: 0.1 },
+      { id: 'drag', label: 'Air drag', type: 'check' },
+      { id: 'cd', label: 'Drag c = ½ρC_dA/m', unit: '1/m', min: 0.001, max: 0.1, log: true, show: (s) => s.drag },
     ] },
     { title: 'Circle', show: (s) => s.kind === 'circular', items: [
       { id: 'r', label: 'Radius r', unit: 'm', min: 0.2, max: 5, step: 0.05 },
       { id: 'w', label: 'Angular speed ω', unit: 'rad/s', min: 0.2, max: 6, step: 0.05 },
     ] },
     { title: 'Carts', show: (s) => s.kind === 'collision', items: [
-      { id: 'm1', label: 'Mass of cart 1', unit: 'kg', min: 0.2, max: 10, log: true },
-      { id: 'm2', label: 'Mass of cart 2', unit: 'kg', min: 0.2, max: 10, log: true },
-      { id: 'u1', label: 'Speed of cart 1', unit: 'm/s', min: -3, max: 4, step: 0.05 },
-      { id: 'u2', label: 'Speed of cart 2', unit: 'm/s', min: -4, max: 3, step: 0.05 },
-      { id: 'e', label: 'Bounciness e', unit: '', min: 0, max: 1, step: 0.01, hint: '1 elastic, 0 they stick together.' },
+      { id: 'm1', label: 'Mass 1', unit: 'kg', min: 0.2, max: 10, log: true },
+      { id: 'm2', label: 'Mass 2', unit: 'kg', min: 0.2, max: 10, log: true },
+      { id: 'u1', label: 'Speed 1', unit: 'm/s', min: -3, max: 4, step: 0.05 },
+      { id: 'u2', label: 'Speed 2', unit: 'm/s', min: -4, max: 3, step: 0.05 },
+      { id: 'e', label: 'Bounciness e', unit: '', min: 0, max: 1, step: 0.01, hint: '1 elastic, 0 sticky' },
     ] },
   ],
   display: [{ title: 'Show', items: [
-    { id: 'vectors', label: 'Velocity and acceleration arrows', type: 'check', color: '--c-v' },
+    { id: 'vectors', label: 'Vectors', type: 'check', color: '--c-v' },
     { id: 'trail', label: 'Path', type: 'check' },
   ] }],
   plots: [

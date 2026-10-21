@@ -5,43 +5,33 @@ import { createKnob } from '../../lib/viz/knob.js';
 import { family } from './model.js';
 
 const X = [-6, 6], Y = [-4.5, 4.5];
-const FAM_HINT = {
-  linear: 'Drag the two handles: two points fix a line.',
-  quadratic: 'Drag the handle to move the vertex; the slider bends the parabola.',
-  exponential: 'Drag the handle on the y axis (A) and the one at x = 1 (A·b).',
-  logarithm: 'Drag the handle at y = 1: its x is the base b, since log_b(b) = 1.',
-};
 
 export default {
   id: 'function-explorer', title: 'Functions', size: 5, ortho: true, plain: true, timeless: true, cam: 'top',
-  defaults: { family: 'quadratic', x1: -2, y1: -1, x2: 2, y2: 2, a: 0.5, h: 1, k: -2, A: 1, base: 2, inverse: false, points: true },
+  defaults: { family: 'linear', x1: -2, y1: -1, x2: 2, y2: 2, a: 1, h: 0, k: 0, A: 1, base: 2, inverse: false, points: true },
   scenarios: [
-    { id: 'linear', label: 'Straight line', hint: 'Slope and intercept from two points.', set: { family: 'linear' } },
-    { id: 'parabola', label: 'Parabola', hint: 'Vertex, roots and the discriminant.', set: { family: 'quadratic' } },
-    { id: 'no-roots', label: 'Parabola with no roots', hint: 'Δ < 0: it never crosses the axis.', set: { family: 'quadratic', a: 0.6, h: -1, k: 1.2 } },
-    { id: 'exponential', label: 'Exponential growth', hint: 'Doubles for every step in x.', set: { family: 'exponential', A: 0.5, base: 2 } },
-    { id: 'log-inverse', label: 'Logarithm as inverse', hint: 'The mirror of the exponential across y = x.', set: { family: 'logarithm', base: 2, inverse: true } },
+    { id: 'linear', label: 'Line', set: { family: 'linear' } },
+    { id: 'parabola', label: 'Parabola', set: { family: 'quadratic' } },
+    { id: 'exponential', label: 'Exponential', set: { family: 'exponential' } },
+    { id: 'logarithm', label: 'Logarithm', set: { family: 'logarithm' } },
   ],
   controls: [
     { title: 'Function', items: [
-      { id: 'family', label: 'Family', type: 'segmented', options: [['linear', 'Linear'], ['quadratic', 'Quadratic'], ['exponential', 'Exponential'], ['logarithm', 'Log']], hint: (s) => FAM_HINT[s.family] },
       { type: 'readout', label: 'Equation', value: (s) => family(s).text },
-    ] },
-    { title: 'Parameters', items: [
-      { id: 'a', label: 'Opening a', unit: '', min: -3, max: 3, step: 0.05, show: (s) => s.family === 'quadratic', hint: 'a > 0 opens up, a < 0 opens down; bigger |a| is steeper.' },
-      { id: 'h', label: 'Vertex x (h)', unit: '', min: -5, max: 5, step: 0.05, show: (s) => s.family === 'quadratic' },
-      { id: 'k', label: 'Vertex y (k)', unit: '', min: -4, max: 4, step: 0.05, show: (s) => s.family === 'quadratic' },
-      { id: 'A', label: 'Starting value A', unit: '', min: 0.1, max: 4, step: 0.05, show: (s) => s.family === 'exponential' },
-      { id: 'base', label: 'Base b', unit: '', min: 0.2, max: 5, step: 0.01, show: (s) => s.family === 'exponential' || s.family === 'logarithm', hint: 'b > 1 grows, 0 < b < 1 decays.' },
-      { id: 'x1', label: 'Point 1 x', unit: '', min: -5, max: 5, step: 0.05, show: (s) => s.family === 'linear' },
-      { id: 'y1', label: 'Point 1 y', unit: '', min: -4, max: 4, step: 0.05, show: (s) => s.family === 'linear' },
-      { id: 'x2', label: 'Point 2 x', unit: '', min: -5, max: 5, step: 0.05, show: (s) => s.family === 'linear' },
-      { id: 'y2', label: 'Point 2 y', unit: '', min: -4, max: 4, step: 0.05, show: (s) => s.family === 'linear' },
+      { id: 'a', label: 'a', unit: '', min: -3, max: 3, step: 0.05, show: (s) => s.family === 'quadratic', hint: 'a > 0 opens up, a < 0 opens down; bigger |a| is steeper.' },
+      { id: 'h', label: 'Vertex x', unit: '', min: -5, max: 5, step: 0.05, show: (s) => s.family === 'quadratic' },
+      { id: 'k', label: 'Vertex y', unit: '', min: -4, max: 4, step: 0.05, show: (s) => s.family === 'quadratic' },
+      { id: 'A', label: 'A', unit: '', min: 0.1, max: 4, step: 0.05, show: (s) => s.family === 'exponential' },
+      { id: 'base', label: 'Base', unit: '', min: 0.2, max: 5, step: 0.01, show: (s) => s.family === 'exponential' || s.family === 'logarithm', hint: 'b > 1 grows, 0 < b < 1 decays.' },
+      { id: 'x1', label: 'x₁', unit: '', min: -5, max: 5, step: 0.05, show: (s) => s.family === 'linear' },
+      { id: 'y1', label: 'y₁', unit: '', min: -4, max: 4, step: 0.05, show: (s) => s.family === 'linear' },
+      { id: 'x2', label: 'x₂', unit: '', min: -5, max: 5, step: 0.05, show: (s) => s.family === 'linear' },
+      { id: 'y2', label: 'y₂', unit: '', min: -4, max: 4, step: 0.05, show: (s) => s.family === 'linear' },
     ] },
   ],
   display: [{ title: 'Show', items: [
-    { id: 'points', label: 'Key points (roots, vertex, intercept)', type: 'check' },
-    { id: 'inverse', label: 'Inverse function (mirror across y = x)', type: 'check', color: '--c-ref', show: (s) => s.family === 'exponential' || s.family === 'logarithm' },
+    { id: 'points', label: 'Key points', type: 'check' },
+    { id: 'inverse', label: 'Inverse', type: 'check', color: '--c-ref', show: (s) => s.family === 'exponential' || s.family === 'logarithm' },
   ] }],
   hud: [{ id: 'eq', label: 'f' }, { id: 'yint', label: 'y-intercept' }, { id: 'roots', label: 'roots' }, { id: 'extra', label: '' }],
 

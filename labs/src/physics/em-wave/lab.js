@@ -6,33 +6,26 @@ import { si } from '../../lib/ui/format.js';
 import { fields, fresnel, C0, ETA0 } from './model.js';
 
 const L = 3; // the scene shows three incident wavelengths (world units = wavelengths)
-const MODE_HINT = {
-  travel: 'One wave in empty space.',
-  interface: 'From the left in air, it meets a material of index n₂ at the middle.',
-  conductor: 'A perfect mirror at the middle: everything comes back.',
-};
 
 export default {
   id: 'em-wave', title: 'Electromagnetic waves', size: 1.5,
   cameras: { front: { pos: [0, -4.2, 0.3] }, side: { pos: [4.5, 0, 0.3] }, top: { pos: [0, -0.01, 4.4] }, iso: { pos: [2.6, -3.2, 1.8] } },
   defaults: { mode: 'travel', f: 1e9, E0: 10, n2: 1.5, showB: true, glyphs: true },
   scenarios: [
-    { id: 'travel', label: 'Travelling wave', hint: 'E and B in phase, at right angles.', set: { mode: 'travel' } },
-    { id: 'glass', label: 'Into glass', hint: 'n₂ = 1.5: 4 % reflected.', set: { mode: 'interface', n2: 1.5 } },
-    { id: 'dense', label: 'Into a dense material', hint: 'n₂ = 4: shorter waves, strong reflection.', set: { mode: 'interface', n2: 4 } },
-    { id: 'mirror', label: 'Standing wave at a mirror', hint: 'Nodes every λ/2; the pattern does not move.', set: { mode: 'conductor' } },
+    { id: 'travel', label: 'Free space', set: { mode: 'travel' } },
+    { id: 'glass', label: 'Into glass', set: { mode: 'interface', n2: 1.5 } },
+    { id: 'mirror', label: 'Mirror', hint: 'Standing wave.', set: { mode: 'conductor' } },
   ],
   controls: [
     { title: 'Wave', items: [
-      { id: 'mode', label: 'Situation', type: 'segmented', options: [['travel', 'Free space'], ['interface', 'Dielectric'], ['conductor', 'Mirror']], hint: (s) => MODE_HINT[s.mode] },
-      { id: 'f', label: 'Frequency f', unit: 'GHz', k: 1e-9, min: 1e8, max: 1e11, log: true, hint: 'The scene always shows three wavelengths; the readouts give λ.' },
-      { id: 'E0', label: 'Amplitude E₀', unit: 'V/m', min: 1, max: 100, step: 1 },
-      { id: 'n2', label: 'Refractive index n₂', unit: '', min: 1, max: 5, step: 0.01, show: (s) => s.mode === 'interface' },
+      { id: 'f', label: 'Frequency f', unit: 'GHz', k: 1e-9, min: 1e8, max: 1e11, log: true },
+      { id: 'E0', label: 'Amplitude', unit: 'V/m', min: 1, max: 100, step: 1 },
+      { id: 'n2', label: 'Index n₂', unit: '', min: 1, max: 5, step: 0.01, show: (s) => s.mode === 'interface' },
     ] },
   ],
   display: [{ title: 'Show', items: [
-    { id: 'showB', label: 'Magnetic field B (drawn ×c)', type: 'check', color: '--c-B' },
-    { id: 'glyphs', label: 'Field arrows (not just the outline)', type: 'check' },
+    { id: 'showB', label: 'B field', type: 'check', color: '--c-B' },
+    { id: 'glyphs', label: 'Arrows', type: 'check' },
   ] }],
   plots: [{ id: 'snap', title: 'Fields along x, now', xLabel: 'x', xUnit: 'm', yUnit: 'V/m' }, { id: 'power', title: 'Power balance', xLabel: '', xUnit: '', yUnit: '' }],
   hud: [{ id: 'lam', label: 'λ = c/f' }, { id: 'k', label: 'k, ω' }, { id: 'ratio', label: '|E|/|B|' }, 'sep', { id: 'R', label: 'reflected R' }, { id: 'T', label: 'transmitted T' }, { id: 'sum', label: 'R + T' }],

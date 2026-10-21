@@ -7,10 +7,6 @@ import { solveKepler, MU, RE } from '../orbits/model.js';
 import { hohmann, bielliptic, propellant } from './model.js';
 
 const km = 1e3;
-const KIND_HINT = {
-  hohmann: 'Burn forward, coast half an ellipse, burn forward again.',
-  bielliptic: 'Overshoot to a far apoapsis, then come back down to the target orbit.',
-};
 
 // Position on an ellipse (periapsis rp along +x rotated by phase, apoapsis ra) at time τ since periapsis.
 function onEllipse(rp, ra, tau, phase = 0) {
@@ -24,21 +20,18 @@ export default {
   cameras: { front: { pos: [0, -6.5, 1.2] }, side: { pos: [6.5, 0, 1.2] }, top: { pos: [0, -0.01, 6.8] }, iso: { pos: [3.6, -4.4, 3.4] } },
   defaults: { kind: 'hohmann', h1: 300 * km, r2: 42164 * km, rb: 3e8, isp: 320, dry: 1000 },
   scenarios: [
-    { id: 'geo', label: 'LEO to GEO', hint: 'The classic Hohmann transfer: 3.9 km/s.', set: {} },
-    { id: 'geo-bi', label: 'LEO to GEO, bi-elliptic', hint: 'Not worth it this close: costs more.', set: { kind: 'bielliptic', rb: 1.2e8 } },
-    { id: 'far', label: 'A far orbit (r₂/r₁ = 15)', hint: 'Now the bi-elliptic route saves fuel.', set: { kind: 'bielliptic', r2: 15 * (RE + 300 * km), rb: 6e8 } },
-    { id: 'far-h', label: 'Same, by Hohmann', hint: 'Compare the totals.', set: { kind: 'hohmann', r2: 15 * (RE + 300 * km) } },
+    { id: 'geo', label: 'Hohmann to GEO', set: {} },
+    { id: 'far', label: 'Bi-elliptic', hint: 'Cheaper for far targets.', set: { kind: 'bielliptic', r2: 15 * (RE + 300 * km), rb: 6e8 } },
   ],
   controls: [
     { title: 'Mission', items: [
-      { id: 'kind', label: 'Transfer', type: 'segmented', options: [['hohmann', 'Hohmann'], ['bielliptic', 'Bi-elliptic']], hint: (s) => KIND_HINT[s.kind] },
-      { id: 'h1', label: 'Start: circular orbit at altitude', unit: 'km', k: 1e-3, min: 200 * km, max: 2000 * km, log: true },
-      { id: 'r2', label: 'Target: orbit radius r₂', unit: 'km', k: 1e-3, min: 8000 * km, max: 400000 * km, log: true, hint: 'GEO 42 164 km, the Moon 384 400 km.' },
-      { id: 'rb', label: 'Intermediate apoapsis r_b', unit: 'km', k: 1e-3, min: 5e7, max: 1.5e9, log: true, show: (s) => s.kind === 'bielliptic' },
+      { id: 'h1', label: 'Start altitude', unit: 'km', k: 1e-3, min: 200 * km, max: 2000 * km, log: true },
+      { id: 'r2', label: 'Target radius', unit: 'km', k: 1e-3, min: 8000 * km, max: 400000 * km, log: true, hint: 'GEO 42 164 km' },
+      { id: 'rb', label: 'Apoapsis r_b', unit: 'km', k: 1e-3, min: 5e7, max: 1.5e9, log: true, show: (s) => s.kind === 'bielliptic' },
     ] },
     { title: 'Rocket', items: [
-      { id: 'isp', label: 'Specific impulse I_sp', unit: 's', min: 200, max: 460, step: 1, hint: 'Solid ~250 s, kerosene ~320 s, hydrogen ~450 s.' },
-      { id: 'dry', label: 'Spacecraft dry mass', unit: 'kg', min: 100, max: 20000, log: true },
+      { id: 'isp', label: 'I_sp', unit: 's', min: 200, max: 460, step: 1 },
+      { id: 'dry', label: 'Dry mass', unit: 'kg', min: 100, max: 20000, log: true },
     ] },
   ],
   plots: [{ id: 'dv', title: 'Total Δv against r₂/r₁', xLabel: 'r₂/r₁', xUnit: '', yUnit: 'm/s' }, { id: 'rocket', title: 'Rocket equation', xLabel: 'Δv', xUnit: 'm/s', yUnit: 'kg' }],

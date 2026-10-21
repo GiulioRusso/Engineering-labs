@@ -11,27 +11,24 @@ const R = 3, FLOOR = -1.6;
 export default {
   id: 'surfaces-gradient', title: 'Surfaces and the gradient', size: 3, timeless: true, plain: true,
   cameras: { front: { pos: [0, -9, 2.2] }, side: { pos: [9, 0, 2.2] }, top: { pos: [0, -0.01, 9.5] }, iso: { pos: [6, -6.5, 5] } },
-  defaults: { surf: 'hills', x: 0.4, y: -0.3, plane: true, contours: true, floor: true, grad: true },
+  defaults: { surf: 'bowl', x: 0.4, y: -0.3, plane: true, contours: true, floor: true, grad: true },
   scenarios: [
-    { id: 'hills', label: 'Two hills and a valley', hint: 'Follow the gradient uphill.', set: { surf: 'hills', x: 0.2, y: -0.2 } },
-    { id: 'bowl', label: 'Bowl', hint: 'The gradient grows with the distance from the bottom.', set: { surf: 'bowl', x: 1.5, y: 1 } },
-    { id: 'saddle', label: 'Saddle point', hint: 'Flat at the centre, but neither top nor bottom.', set: { surf: 'saddle', x: 0.6, y: 0.3 } },
-    { id: 'ripple', label: 'Ripple', hint: 'Contours are circles; the gradient is radial.', set: { surf: 'ripple', x: 1.2, y: 0.8 } },
+    { id: 'bowl', label: 'Bowl', set: { surf: 'bowl', x: 1.5, y: 1 } },
+    { id: 'saddle', label: 'Saddle', set: { surf: 'saddle', x: 0.6, y: 0.3 } },
+    { id: 'hills', label: 'Hills', set: { surf: 'hills', x: 0.2, y: -0.2 } },
+    { id: 'ripple', label: 'Ripple', set: { surf: 'ripple', x: 1.2, y: 0.8 } },
   ],
   controls: [
-    { title: 'Surface', items: [
-      { id: 'surf', label: 'Function', type: 'select', options: Object.entries(SURF).map(([k, v]) => [k, v.label]) },
-    ] },
-    { title: 'Point', hint: 'Or drag the point on the surface.', items: [
+    { title: 'Point', items: [
       { id: 'x', label: 'x', unit: '', min: -2.8, max: 2.8, step: 0.01 },
       { id: 'y', label: 'y', unit: '', min: -2.8, max: 2.8, step: 0.01 },
     ] },
   ],
   display: [{ title: 'Show', items: [
-    { id: 'grad', label: 'Gradient arrow (on the floor) and steepest-ascent arrow', type: 'check', color: '--c-F' },
+    { id: 'grad', label: 'Gradient', type: 'check', color: '--c-F' },
     { id: 'plane', label: 'Tangent plane', type: 'check' },
     { id: 'contours', label: 'Level curves', type: 'check', color: '--c-E' },
-    { id: 'floor', label: 'Contour map on the floor', type: 'check' },
+    { id: 'floor', label: 'Contour map', type: 'check' },
   ] }],
   plots: [{ id: 'slice', title: 'Height along the gradient direction', xLabel: 's', xUnit: '', yUnit: '' }],
   hud: [{ id: 'f', label: 'f(x, y)' }, { id: 'gx', label: '∂f/∂x' }, { id: 'gy', label: '∂f/∂y' }, { id: 'g', label: '|∇f|' }, 'sep', { id: 'perp', label: '∇f vs level curve' }],

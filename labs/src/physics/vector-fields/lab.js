@@ -9,11 +9,6 @@ import { logNorm } from '../../lib/viz/colormap.js';
 import { si } from '../../lib/ui/format.js';
 import { dot, cross, norm, gravity, FIELDS, measure } from './model.js';
 
-const KIND_HINT = {
-  products: 'Drag the tips of a and b (in 3D: orbit the view to move them in depth).',
-  gravity: 'Drag the two masses and the small probe; the arrows show g everywhere in the plane.',
-  divcurl: 'Pick a field and drag the probe circle. Tracer dots show spreading (divergence) and turning (curl).',
-};
 
 export default {
   id: 'vector-fields', title: 'Vectors and vector fields', size: 2.4,
@@ -21,27 +16,24 @@ export default {
   duration: 2.5,
   defaults: { kind: 'products', ax: 1.6, ay: 0.3, az: 0.2, bx: 0.6, by: 1.4, bz: 0.4, m1: 4e10, m2: 2e10, x1: -0.9, y1: 0.2, x2: 1, y2: -0.3, px: 0.1, py: 0.9, field: 'vortex', qx: 0.8, qy: 0.4, tracers: true },
   scenarios: [
-    { id: 'products', label: 'Dot and cross product', hint: 'Projection, area and the normal.', set: { kind: 'products' } },
-    { id: 'perp', label: 'Perpendicular vectors', hint: 'a·b = 0; |a×b| is largest.', set: { kind: 'products', ax: 1.5, ay: 0, az: 0, bx: 0, by: 1.5, bz: 0 } },
-    { id: 'gravity', label: 'Two masses', hint: 'Fields add; there is a point of zero g between.', cam: 'top', set: { kind: 'gravity' } },
-    { id: 'source', label: 'A source', hint: 'Divergence > 0: tracers spread out.', cam: 'top', set: { kind: 'divcurl', field: 'source' } },
-    { id: 'vortex', label: 'A vortex', hint: 'Curl > 0: tracers turn, no spreading.', cam: 'top', set: { kind: 'divcurl', field: 'vortex' } },
-    { id: 'shear', label: 'Shear flow', hint: 'Straight streamlines, yet curl ≠ 0.', cam: 'top', set: { kind: 'divcurl', field: 'shear', qx: 0, qy: 0.4 } },
+    { id: 'products', label: 'Dot and cross', hint: 'Drag the tips of a and b.', set: { kind: 'products' } },
+    { id: 'gravity', label: 'Gravity field', cam: 'top', set: { kind: 'gravity' } },
+    { id: 'source', label: 'Divergence', cam: 'top', set: { kind: 'divcurl', field: 'source' } },
+    { id: 'vortex', label: 'Curl', cam: 'top', set: { kind: 'divcurl', field: 'vortex' } },
   ],
   controls: [
-    { title: 'Situation', items: [{ id: 'kind', label: 'Show', type: 'segmented', options: [['products', 'Products'], ['gravity', 'Gravity field'], ['divcurl', 'Div and curl']], hint: (s) => KIND_HINT[s.kind] }] },
-    { title: 'Vectors a and b', show: (s) => s.kind === 'products', open: false, items: [
-      ...['ax', 'ay', 'az', 'bx', 'by', 'bz'].map((id) => ({ id, label: `${id[0]} ${id[1]}-component`, unit: '', min: -2, max: 2, step: 0.01 })),
+    { title: 'Vectors', show: (s) => s.kind === 'products', items: [
+      ...['ax', 'ay', 'az', 'bx', 'by', 'bz'].map((id) => ({ id, label: `${id[0]} ${id[1]}`, unit: '', min: -2, max: 2, step: 0.01 })),
     ] },
     { title: 'Masses', show: (s) => s.kind === 'gravity', items: [
       { id: 'm1', label: 'Mass 1', unit: 'kg', min: 1e9, max: 1e11, log: true },
       { id: 'm2', label: 'Mass 2', unit: 'kg', min: 1e9, max: 1e11, log: true },
     ] },
     { title: 'Field', show: (s) => s.kind === 'divcurl', items: [
-      { id: 'field', label: 'Vector field F', type: 'select', options: Object.entries(FIELDS).map(([k, v]) => [k, v.label]) },
+      { id: 'field', label: 'Field', type: 'select', options: Object.entries(FIELDS).map(([k, v]) => [k, v.label]) },
     ] },
   ],
-  display: [{ title: 'Show', items: [{ id: 'tracers', label: 'Tracer dots carried by the flow', type: 'check', show: (s) => s.kind === 'divcurl' }] }],
+  display: [{ title: 'Show', items: [{ id: 'tracers', label: 'Tracers', type: 'check', show: (s) => s.kind === 'divcurl' }] }],
   hud: [{ id: 'a', label: '' }, { id: 'b', label: '' }, { id: 'c', label: '' }, 'sep', { id: 'chk', label: '' }],
 
   setup(ctx) {

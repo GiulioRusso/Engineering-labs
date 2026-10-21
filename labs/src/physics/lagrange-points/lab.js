@@ -13,24 +13,23 @@ export default {
   cameras: { front: { pos: [0, -4.5, 1.6] }, side: { pos: [4.5, 0, 1.6] }, top: { pos: [0, -0.01, 4.6] }, iso: { pos: [2.6, -3.4, 2.6] } },
   defaults: { system: 'earth-moon', mu: 0.012150585, start: 'L4', dx: 0.01, dy: 0, surface: true, contours: true },
   scenarios: [
-    { id: 'l4', label: 'Earth–Moon L4', hint: 'A nudged body circles L4: stable.', set: {} },
-    { id: 'l1', label: 'Earth–Moon L1', hint: 'A saddle: the body drifts away.', set: { start: 'L1', dx: 0.002 } },
-    { id: 'trojan', label: 'Jupiter Trojans', hint: 'Asteroids trapped at the Sun–Jupiter L4.', set: { system: 'sun-jupiter', mu: 9.5388e-4, dx: 0.02 } },
-    { id: 'routh', label: 'Too heavy: μ = 0.06', hint: 'Beyond the Routh limit L4 is unstable.', set: { system: 'custom', mu: 0.06, dx: 0.005 } },
+    { id: 'l4', label: 'Stable: L4', set: {} },
+    { id: 'l1', label: 'Unstable: L1', set: { start: 'L1', dx: 0.002 } },
+    { id: 'trojan', label: 'Jupiter Trojans', set: { system: 'sun-jupiter', mu: 9.5388e-4, dx: 0.02 } },
   ],
   controls: [
-    { title: 'Two bodies', items: [
-      { id: 'system', label: 'System', type: 'select', options: [...Object.entries(SYSTEMS).map(([k, v]) => [k, v.label]), ['custom', 'Custom mass ratio']] },
-      { id: 'mu', label: 'Mass ratio μ = m₂/(m₁ + m₂)', unit: '', min: 1e-6, max: 0.5, log: true, show: (s) => s.system === 'custom', hint: 'L4 stays stable below 0.0385.' },
+    { title: 'System', items: [
+      { id: 'system', label: 'Bodies', type: 'select', options: [...Object.entries(SYSTEMS).map(([k, v]) => [k, v.label]), ['custom', 'Custom mass ratio']] },
+      { id: 'mu', label: 'μ = m₂/(m₁ + m₂)', unit: '', min: 1e-6, max: 0.5, log: true, show: (s) => s.system === 'custom' },
     ] },
     { title: 'Test body', items: [
       { id: 'start', label: 'Start near', type: 'segmented', options: ['L1', 'L2', 'L3', 'L4', 'L5'].map((k) => [k, k]) },
-      { id: 'dx', label: 'Nudge in x', unit: 'a', min: -0.05, max: 0.05, step: 0.0005, hint: 'In units of the separation a.' },
-      { id: 'dy', label: 'Nudge in y', unit: 'a', min: -0.05, max: 0.05, step: 0.0005 },
+      { id: 'dx', label: 'Nudge x', unit: 'a', min: -0.05, max: 0.05, step: 0.0005 },
+      { id: 'dy', label: 'Nudge y', unit: 'a', min: -0.05, max: 0.05, step: 0.0005 },
     ] },
   ],
   display: [{ title: 'Show', items: [
-    { id: 'surface', label: 'Potential surface', type: 'check' },
+    { id: 'surface', label: 'Surface', type: 'check' },
     { id: 'contours', label: 'Contours', type: 'check' },
   ] }],
   plots: [{ id: 'dist', title: 'Distance from the starting point', xLabel: 't', xUnit: 'orbits', yUnit: '' }, { id: 'jac', title: 'Jacobi constant drift', xLabel: 't', xUnit: 'orbits', yUnit: '' }],

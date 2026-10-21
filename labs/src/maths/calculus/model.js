@@ -2,6 +2,7 @@
 // Each function provides its exact n-th derivative d(n, x), so Taylor polynomials are exact.
 function hermite(n, x) { let a = 1, b = x; if (n === 0) return 1; for (let k = 1; k < n; k++) [a, b] = [b, x * b - k * a]; return b; }
 export const FUNCS = {
+  sq: { label: 'x²/2', d: (n, x) => [x * x / 2, x, 1][n] ?? 0 },
   sin: { label: 'sin x', d: (n, x) => Math.sin(x + n * Math.PI / 2) },
   cubic: { label: 'x³/6 − x', d: (n, x) => [x ** 3 / 6 - x, x * x / 2 - 1, x, 1][n] ?? 0 },
   exp: { label: 'e^(x/2)', d: (n, x) => 0.5 ** n * Math.exp(x / 2) },

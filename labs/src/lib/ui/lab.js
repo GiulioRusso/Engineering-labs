@@ -1,14 +1,14 @@
 // Lab runtime: mounts one animation definition into the topic page and runs it.
 //
 // A definition (src/<topic>/<id>/lab.js, default export) is plain data plus one setup function:
-//   { id, title, notebook, size, cameras, cam, speed, duration, loop,
+//   { id, title, size, cameras, cam, speed, duration, loop,
 //     defaults: { …state },                         every parameter and display toggle, in SI
-//     scenarios: [{ id, label, hint, cam, speed, set: { …state } }],
+//     scenarios: [{ id, label, hint, cam, speed, controls?: [ids], set: { …state } }],
 //     controls: [group], display: [group],           see panel.js
-//     plots: [{ id, title, xLabel, xUnit, yUnit, y2Unit }], hud: [rows], tour?: [steps],
+//     plots: [{ id, title, xLabel, xUnit, yUnit, y2Unit }], hud: [rows],
 //     setup(ctx) -> { update(dt), changed?(id), highlight?(key), theme?(), dispose?() } }
 // ctx gives the lab its stage, state, time, plots, HUD, legend and helpers. The runtime owns the
-// panel, play bar, URL, explain drawer, tour, keyboard and theme, so labs contain only physics + scene.
+// panel, play bar, URL, explain drawer, keyboard and theme, so labs contain only physics + scene.
 import * as THREE from 'three';
 import { createStage, label } from './stage.js';
 import { createHandles } from './handles.js';
@@ -17,7 +17,6 @@ import { createPlaybar } from './playbar.js';
 import { createPlot } from './plots.js';
 import { createHud } from './hud.js';
 import { initExplain } from './explain.js';
-import { createTour } from './tour.js';
 import { cssVar } from './theme.js';
 import { createLegend } from '../viz/legend.js';
 
@@ -30,12 +29,12 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
   const plotsDef = def.plots || [];
   root.innerHTML = `<div class="lab${plotsDef.length ? '' : ' no-dock'}">
     <main class="viewport"><div class="stage" role="application" aria-label="${def.title}: interactive 3D scene"></div>
-      <div class="hud"></div><div class="legend"></div><div class="hint"></div><div class="tour"></div>
+      <div class="hud"></div><div class="legend"></div><div class="hint"></div>
       <div class="playbar"></div><aside class="explain" aria-label="Explanation"></aside></main>
     <aside class="panel" aria-label="Controls"></aside>
     <section class="dock" aria-label="Linked plots">${plotsDef.map((p) => `<div class="plot" data-plot="${p.id}"></div>`).join('')}</section></div>`;
   const q = (s) => root.querySelector(s);
-  const el = { stage: q('.stage'), hud: q('.hud'), legend: q('.legend'), hint: q('.hint'), tour: q('.tour'), playbar: q('.playbar'), explain: q('.explain'), panel: q('.panel') };
+  const el = { stage: q('.stage'), hud: q('.hud'), legend: q('.legend'), hint: q('.hint'), playbar: q('.playbar'), explain: q('.explain'), panel: q('.panel') };
 
   const stage = createStage(el.stage, { size: def.size ?? 0.5, presets: def.cameras || PRESETS(def.size ?? 0.5) });
   const handles = createHandles(stage, el.hint);
@@ -47,7 +46,7 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
   const hud = createHud(el.hud, def.hud || []);
   if (!def.hud?.length) el.hud.hidden = true;
   const legend = createLegend(el.legend);
-  let impl = null, frames = 0, panel = null, playbar = null, tour = null;
+  let impl = null, frames = 0, panel = null, playbar = null;
 
   const ctx = {
     THREE, def, stage, scene: stage.scene, state, time, handles, plots, hud, legend, label, cssVar, el, highlight: null,
@@ -81,7 +80,7 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     const sc = def.scenarios.find((s) => s.id === state.scenario) || {}, ref = { ...def.defaults, ...(sc.set || {}) }, diff = {};
     for (const k of Object.keys(def.defaults)) if (JSON.stringify(state[k]) !== JSON.stringify(ref[k])) diff[k] = state[k];
     if (time.speed !== (sc.speed ?? def.speed ?? 1)) diff.speed = time.speed;
-    return { scenario: state.scenario, diff, tour: tour && tour.index >= 0 ? tour.index + 1 : null };
+    return { scenario: state.scenario, diff };
   }
   function writeUrl() { onUrl(urlParams()); }
 
@@ -109,11 +108,6 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
   el.explain.innerHTML = `<button class="btn close" aria-label="Close explanation">Close</button>${tpl ? tpl.innerHTML : '<p>No explanation yet.</p>'}`;
   const explain = initExplain(el.explain, (k) => { ctx.highlight = k; impl.highlight?.(k); ctx.requestUpdate(); });
 
-  tour = def.tour?.length ? createTour(el.tour, def.tour.map((s) => ({
-    title: s.title, text: s.text,
-    apply: () => { loadScenario(s.scenario, { ...(s.set || {}) }); setPlaying(!stage.reducedMotion); },
-  })), { onStep: writeUrl }) : null;
-
   // initial state from the URL
   const keep = {};
   for (const [k, v] of Object.entries(url.params || {})) {
@@ -121,28 +115,24 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     keep[k] = v === 'true' ? true : v === 'false' ? false : Number.isFinite(Number(v)) && v !== '' ? Number(v) : v;
   }
   loadScenario(url.scenario && def.scenarios.some((s) => s.id === url.scenario) ? url.scenario : def.scenarios[0].id, keep);
-  stage.preset((def.scenarios.find((s) => s.id === state.scenario) || {}).cam || def.cam || 'iso', { instant: true });
+  const camOf = () => (def.scenarios.find((s) => s.id === state.scenario) || {}).cam || def.cam || 'iso';
+  stage.preset(camOf(), { instant: true });
   if (def.ortho) stage.toggleOrtho();
   if (def.plain) { stage.grid.visible = false; stage.axes.visible = false; }
-  if (url.tour && tour) tour.show(url.tour - 1);
   // timeless labs (a graph you shape by hand) have no clock: no play bar, render on demand only
   if (def.timeless) { el.playbar.hidden = true; time.playing = false; }
   setPlaying(time.playing);
 
   return {
-    def, ctx, hasTour: !!tour,
+    def, ctx,
     toggleExplain: () => explain.toggle(),
-    toggleTour: () => tour?.toggle(),
-    preset: (n) => stage.preset(n),
-    toggleOrtho: () => stage.toggleOrtho(),
-    reset: () => loadScenario(state.scenario),
+    resetView: () => stage.preset(camOf()),
     urlParams,
     theme() { stage.setTheme(); impl.theme?.(); for (const p of Object.values(plots)) p.redraw(); ctx.requestUpdate(); },
     key(e) {
       if (e.key === ' ' && !def.timeless) { e.preventDefault(); setPlaying(!time.playing); }
       else if (e.key === 'r' || e.key === 'R') loadScenario(state.scenario);
-      else if ((e.key === 't' || e.key === 'T') && tour) tour.toggle();
-      else if (e.key === 'Escape') { tour?.close(); explain.close(); }
+      else if (e.key === 'Escape') explain.close();
       else if (e.key.length === 1 && '1234'.includes(e.key)) stage.preset(['front', 'side', 'top', 'iso'][Number(e.key) - 1]);
     },
     // test hooks (smoke, capture)

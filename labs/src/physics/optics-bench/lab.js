@@ -10,45 +10,37 @@ import { image, snell, twoSlit, fringe } from './model.js';
 
 const K = 10, XM = 0.45; // world units per metre; the bench spans ±0.45 m
 const WAVE_SPEED = 0.3;  // ripple-tank wave speed, m/s
-const KIND_HINT = {
-  lens: 'Drag the tip of the object arrow. Rays: parallel → through F′, through the centre, through F → parallel.',
-  mirror: 'A concave mirror on the right. Drag the object; move it inside F for a virtual image.',
-  snell: 'Drag the light source around the circle: the ray bends at the surface, or reflects totally.',
-  slits: 'Waves from two openings overlap; the screen on the right shows where they add up.',
-};
 
 export default {
   id: 'optics-bench', title: 'Optics bench', size: 4.4, ortho: true, plain: true, cam: 'top',
-  defaults: { kind: 'lens', f: 0.1, dobj: 0.25, ho: 0.04, conv: true, n1: 1, n2: 1.5, th1: 0.6, lam: 0.012, d: 0.05, L: 0.42, rays: true },
+  defaults: { kind: 'snell', f: 0.1, dobj: 0.25, ho: 0.04, conv: true, n1: 1, n2: 1.5, th1: 0.6, lam: 0.012, d: 0.05, L: 0.42, rays: true },
   scenarios: [
-    { id: 'real', label: 'Real image', hint: 'Object beyond F: inverted image on the other side.', set: { kind: 'lens', dobj: 0.25 } },
-    { id: 'magnifier', label: 'Magnifying glass', hint: 'Object inside F: upright, virtual, larger.', set: { kind: 'lens', dobj: 0.06 } },
-    { id: 'diverging', label: 'Diverging lens', hint: 'Always a smaller, upright, virtual image.', set: { kind: 'lens', conv: false, dobj: 0.2 } },
-    { id: 'mirror', label: 'Concave mirror', hint: 'Like a lens, folded back.', set: { kind: 'mirror', f: 0.12, dobj: 0.3 } },
-    { id: 'snell', label: 'Into glass', hint: 'The ray bends toward the normal.', set: { kind: 'snell', n1: 1, n2: 1.5, th1: 0.7 } },
-    { id: 'tir', label: 'Total internal reflection', hint: 'From glass to air beyond 41.8°.', set: { kind: 'snell', n1: 1.5, n2: 1, th1: 0.85 } },
-    { id: 'slits', label: 'Double slit', hint: 'Bright and dark fringes on the screen.', set: { kind: 'slits' } },
+    { id: 'snell', label: 'Refraction', hint: 'Drag the source.', set: { kind: 'snell', n1: 1, n2: 1.5, th1: 0.7 } },
+    { id: 'tir', label: 'Total reflection', set: { kind: 'snell', n1: 1.5, n2: 1, th1: 0.85 } },
+    { id: 'real', label: 'Lens', hint: 'Drag the object.', set: { kind: 'lens', dobj: 0.25 } },
+    { id: 'magnifier', label: 'Magnifier', set: { kind: 'lens', dobj: 0.06 } },
+    { id: 'mirror', label: 'Mirror', set: { kind: 'mirror', f: 0.12, dobj: 0.3 } },
+    { id: 'slits', label: 'Double slit', set: { kind: 'slits' } },
   ],
   controls: [
-    { title: 'Experiment', items: [{ id: 'kind', label: 'Show', type: 'segmented', options: [['lens', 'Lens'], ['mirror', 'Mirror'], ['snell', 'Refraction'], ['slits', 'Double slit']], hint: (s) => KIND_HINT[s.kind] }] },
     { title: 'Lens or mirror', show: (s) => s.kind === 'lens' || s.kind === 'mirror', items: [
-      { id: 'conv', label: 'Converging (convex lens)', type: 'check', show: (s) => s.kind === 'lens', hint: 'Untick for a diverging (concave) lens: negative f.' },
-      { id: 'f', label: 'Focal length |f|', unit: 'cm', k: 100, min: 0.03, max: 0.2, step: 0.001 },
-      { id: 'dobj', label: 'Object distance d_o', unit: 'cm', k: 100, min: 0.02, max: 0.42, step: 0.001 },
-      { id: 'ho', label: 'Object height', unit: 'cm', k: 100, min: 0.01, max: 0.08, step: 0.001 },
+      { id: 'conv', label: 'Converging', type: 'check', show: (s) => s.kind === 'lens' },
+      { id: 'f', label: 'Focal length', unit: 'cm', k: 100, min: 0.03, max: 0.2, step: 0.001 },
+      { id: 'dobj', label: 'Distance', unit: 'cm', k: 100, min: 0.02, max: 0.42, step: 0.001 },
+      { id: 'ho', label: 'Height', unit: 'cm', k: 100, min: 0.01, max: 0.08, step: 0.001 },
     ] },
     { title: 'Refraction', show: (s) => s.kind === 'snell', items: [
-      { id: 'n1', label: 'Upper medium n₁', unit: '', min: 1, max: 2.5, step: 0.01, hint: 'Air 1.00, water 1.33, glass 1.5, diamond 2.42.' },
-      { id: 'n2', label: 'Lower medium n₂', unit: '', min: 1, max: 2.5, step: 0.01 },
-      { id: 'th1', label: 'Angle of incidence θ₁', unit: '°', k: 180 / Math.PI, min: 0, max: 1.5, step: Math.PI / 360 },
+      { id: 'n1', label: 'n₁ (top)', unit: '', min: 1, max: 2.5, step: 0.01, hint: 'Air 1, water 1.33, glass 1.5' },
+      { id: 'n2', label: 'n₂ (bottom)', unit: '', min: 1, max: 2.5, step: 0.01 },
+      { id: 'th1', label: 'Angle θ₁', unit: '°', k: 180 / Math.PI, min: 0, max: 1.5, step: Math.PI / 360 },
     ] },
     { title: 'Double slit', show: (s) => s.kind === 'slits', items: [
       { id: 'lam', label: 'Wavelength λ', unit: 'cm', k: 100, min: 0.004, max: 0.03, step: 0.0005 },
-      { id: 'd', label: 'Slit separation d', unit: 'cm', k: 100, min: 0.01, max: 0.15, step: 0.001 },
-      { id: 'L', label: 'Distance to the screen L', unit: 'cm', k: 100, min: 0.15, max: 0.44, step: 0.005 },
+      { id: 'd', label: 'Slit gap d', unit: 'cm', k: 100, min: 0.01, max: 0.15, step: 0.001 },
+      { id: 'L', label: 'Screen L', unit: 'cm', k: 100, min: 0.15, max: 0.44, step: 0.005 },
     ] },
   ],
-  display: [{ title: 'Show', items: [{ id: 'rays', label: 'Construction rays', type: 'check', show: (s) => s.kind === 'lens' || s.kind === 'mirror' }] }],
+  display: [{ title: 'Show', items: [{ id: 'rays', label: 'Rays', type: 'check', show: (s) => s.kind === 'lens' || s.kind === 'mirror' }] }],
   plots: [{ id: 'p', title: '', xLabel: '', xUnit: '', yUnit: '' }],
   hud: [{ id: 'a', label: '' }, { id: 'b', label: '' }, { id: 'c', label: '' }, 'sep', { id: 'chk', label: '' }],
 

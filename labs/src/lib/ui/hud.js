@@ -1,4 +1,4 @@
-// Live readouts. rows: [{ id, label }] or 'sep'. set(id, text, cls?) updates one value.
+// Live readouts. rows: [{ id, label }] or 'sep'. set(id, text, cls?) updates one value; ids without a row are ignored.
 export function createHud(el, rows) {
   const vals = {};
   el.setAttribute('aria-live', 'off');
@@ -11,7 +11,7 @@ export function createHud(el, rows) {
     vals[r.id] = { v: row.lastChild, row };
   }
   return {
-    set(id, text, cls = '') { const o = vals[id]; if (o.v.textContent !== text) o.v.textContent = text; o.v.className = `v ${cls}`; },
-    show(id, on) { vals[id].row.classList.toggle('hidden', !on); },
+    set(id, text, cls = '') { const o = vals[id]; if (!o) return; if (o.v.textContent !== text) o.v.textContent = text; o.v.className = `v ${cls}`; },
+    show(id, on) { vals[id]?.row.classList.toggle('hidden', !on); },
   };
 }

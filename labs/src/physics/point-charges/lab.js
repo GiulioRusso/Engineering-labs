@@ -19,24 +19,23 @@ export default {
   timeless: true,
   defaults: { n: 2, q1: 2e-9, x1: -0.15, z1: 0, q2: -2e-9, x2: 0.15, z2: 0, q3: 1e-9, x3: 0, z3: 0.2, q4: -1e-9, x4: 0, z4: -0.2, lines: true, slice: true, contours: true, gauss: false },
   scenarios: [
-    { id: 'single', label: 'One charge', hint: 'Radial lines, spherical equipotentials.', set: { n: 1, q1: 2e-9, x1: 0, z1: 0 } },
-    { id: 'dipole', label: 'Dipole', hint: 'Lines run from + to −.', set: { n: 2, q1: 2e-9, q2: -2e-9 } },
-    { id: 'like', label: 'Two like charges', hint: 'A point of zero field between them.', set: { n: 2, q1: 2e-9, q2: 2e-9 } },
-    { id: 'unequal', label: 'Unequal pair', hint: 'Some lines escape to infinity.', set: { n: 2, q1: 3e-9, q2: -1e-9 } },
-    { id: 'quadrupole', label: 'Quadrupole', hint: 'Four charges, the field cancels far away.', set: { n: 4, q1: 2e-9, x1: -0.15, z1: -0.15, q2: -2e-9, x2: 0.15, z2: -0.15, q3: 2e-9, x3: 0.15, z3: 0.15, q4: -2e-9, x4: -0.15, z4: 0.15 } },
-    { id: 'gauss', label: "Gauss's law", hint: 'Flux through the sphere counts the charge inside.', set: { n: 2, q1: 2e-9, x1: -0.08, q2: -1e-9, x2: 0.25, gauss: true } },
+    { id: 'single', label: 'One charge', hint: 'Drag the charges.', set: { n: 1, q1: 2e-9, x1: 0, z1: 0 } },
+    { id: 'dipole', label: 'Dipole', set: { n: 2, q1: 2e-9, q2: -2e-9 } },
+    { id: 'like', label: 'Like charges', set: { n: 2, q1: 2e-9, q2: 2e-9 } },
+    { id: 'quadrupole', label: 'Four charges', set: { n: 4, q1: 2e-9, x1: -0.15, z1: -0.15, q2: -2e-9, x2: 0.15, z2: -0.15, q3: 2e-9, x3: 0.15, z3: 0.15, q4: -2e-9, x4: -0.15, z4: 0.15 } },
+    { id: 'gauss', label: "Gauss's law", set: { n: 2, q1: 2e-9, x1: -0.08, q2: -1e-9, x2: 0.25, gauss: true } },
   ],
   controls: [
-    { title: 'Charges', hint: 'Drag the charges in the scene (they move in the x–z plane).', items: [
-      { id: 'n', label: 'Number of charges', unit: '', min: 1, max: 4, step: 1 },
+    { title: 'Charges', items: [
+      { id: 'n', label: 'Count', unit: '', min: 1, max: 4, step: 1 },
       ...charge(1), ...charge(2), ...charge(3), ...charge(4),
     ] },
   ],
-  display: [{ title: 'Electric field', items: [
+  display: [{ title: 'Field', items: [
     { id: 'lines', label: 'Field lines', type: 'check', color: '--c-E' },
-    { id: 'slice', label: '|E| slice (log colour)', type: 'check' },
-    { id: 'contours', label: 'Equipotential contours on the slice', type: 'check', show: (s) => s.slice },
-    { id: 'gauss', label: 'Gauss sphere around charge 1', type: 'check', hint: 'Drag charges in and out of it; watch the flux.' },
+    { id: 'slice', label: '|E| slice', type: 'check' },
+    { id: 'contours', label: 'Equipotentials', type: 'check', show: (s) => s.slice },
+    { id: 'gauss', label: 'Gauss sphere', type: 'check' },
   ] }],
   hud: [{ id: 'q', label: 'total charge' }, { id: 'E', label: '|E| at the probe' }, { id: 'V', label: 'V at the probe' }, 'sep', { id: 'flux', label: 'Gauss: flux·ε₀' }, { id: 'qin', label: '  charge inside' }],
 

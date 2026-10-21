@@ -11,21 +11,10 @@ import { MU0 } from '../../lib/physics/loop.js';
 import { si } from '../../lib/ui/format.js';
 import { createModel, scripted, simulateDrop, BOX, DEFAULTS } from './model/coil.js';
 
-const MODE_HINT = {
-  probe: 'The coil is driven by a current. You move a small ring and see the EMF induced in the ring.',
-  magnet: 'Nothing drives the coil: it is a pickup. You move a magnet and see the EMF induced in the coil.',
-};
-const MOTION_HINT = {
-  still: 'The object stays where it is (set its position below).',
-  push: 'The object slides from its start position to the coil centre in the push time.',
-  drop: 'The magnet is released from rest and falls through the coil under gravity.',
-  live: 'Grab the ring or the magnet in the scene and move it yourself.',
-};
 
 export default {
   id: 'coil-induction',
   title: 'Coil: magnetic field and induction',
-  summary: 'Move a magnet or a ring through a coil: flux, EMF, Lenz.',
   size: 0.5,
   cameras: { front: { pos: [0, -1.25, 0.05] }, side: { pos: [1.25, 0, 0.05] }, top: { pos: [0, -0.001, 1.3] }, iso: { pos: [0.75, -0.85, 0.5] } },
   gif: { scenario: 'magnet-push' },
@@ -35,67 +24,60 @@ export default {
     lenz: true, forces: true, labels: true, grid: true,
   },
   scenarios: [
-    { id: 'single-loop', label: 'Single loop', hint: 'One ring of current and its field.', cam: 'iso',
+    { id: 'single-loop', label: 'One loop', hint: 'A ring of current and its field.', cam: 'iso',
       set: { mode: 'probe', N: 1, R: 0.05, L: 0.002, I0: 5, f: 0, a: 0.02, x: 0.13, z: 0.12 } },
-    { id: 'long-solenoid', label: 'Long solenoid', hint: 'Many turns: uniform field inside, weak outside.', cam: 'front',
+    { id: 'long-solenoid', label: 'Solenoid', hint: 'Uniform field inside.', cam: 'front',
       set: { mode: 'probe', N: 150, R: 0.025, L: 0.6, I0: 2, f: 0, a: 0.015, x: 0, z: 0.1 } },
-    { id: 'short-coil', label: 'Short coil', hint: 'A wide, short coil: the field fringes out.', cam: 'front',
-      set: { mode: 'probe', N: 12, R: 0.06, L: 0.03, I0: 4, f: 0, a: 0.02, x: 0, z: 0.09 } },
-    { id: 'magnet-push', label: 'Push the magnet in', hint: 'A changing flux makes an EMF.', cam: 'iso', speed: 0.25,
+    { id: 'magnet-push', label: 'Push a magnet', hint: 'Changing flux makes an EMF.', cam: 'iso', speed: 0.25,
       set: { mode: 'magnet', motion: 'push', N: 40, R: 0.04, L: 0.16, Rc: 0.5, pushT: 0.15, pol: 1, x: 0, z: -0.3 } },
-    { id: 'magnet-still', label: 'Magnet held still', hint: 'Maximum flux, yet zero EMF.', cam: 'iso',
-      set: { mode: 'magnet', N: 40, R: 0.04, L: 0.16, Rc: 0.5, pol: 1, x: 0, z: 0 } },
-    { id: 'ac-coil', label: 'AC coil, nearby ring', hint: 'An alternating current induces without motion.', cam: 'iso', speed: 0.02,
-      set: { mode: 'probe', N: 60, R: 0.03, L: 0.12, I0: 3, f: 50, a: 0.03, Rp: 0.05, x: 0, z: 0.12, sliceField: 'E', arrows: true, arrowField: 'E' } },
-    { id: 'drop', label: 'Drop: magnetic braking', hint: 'The induced current slows the falling magnet.', cam: 'front', speed: 0.5,
+    { id: 'magnet-drag', label: 'Move it yourself', hint: 'Drag the magnet.', cam: 'iso',
+      set: { mode: 'magnet', motion: 'live', N: 40, R: 0.04, L: 0.16, Rc: 0.5, pol: 1, x: 0, z: -0.25 } },
+    { id: 'drop', label: 'Magnetic braking', hint: 'A falling magnet is slowed.', cam: 'front', speed: 0.5,
       set: { mode: 'magnet', motion: 'drop', N: 200, R: 0.02, L: 0.2, Rc: 0.05, mass: 0.05, pol: 1, x: 0, z: 0.3 } },
+    { id: 'ac-coil', label: 'AC coil', hint: 'Induction without motion.', cam: 'iso', speed: 0.02,
+      set: { mode: 'probe', N: 60, R: 0.03, L: 0.12, I0: 3, f: 50, a: 0.03, Rp: 0.05, x: 0, z: 0.12, sliceField: 'E', arrows: true, arrowField: 'E' } },
   ],
   controls: [
-    { title: 'Experiment', items: [
-      { id: 'mode', label: 'What moves', type: 'segmented', options: [['probe', 'Probe ring'], ['magnet', 'Bar magnet']], hint: (s) => MODE_HINT[s.mode] },
-      { id: 'motion', label: 'How it moves', type: 'segmented', options: [['still', 'Hold'], ['push', 'Push in'], ['drop', 'Drop'], ['live', 'Drag']],
-        hint: (s) => (s.mode === 'probe' && s.motion === 'drop' ? 'Drop works with the magnet only.' : MOTION_HINT[s.motion]) },
-    ] },
     { title: 'Coil', items: [
       { id: 'N', label: 'Turns N', unit: '', min: 1, max: 200, step: 1 },
       { id: 'R', label: 'Radius R', unit: 'cm', k: 100, min: 0.01, max: 0.08, step: 0.0005 },
       { id: 'L', label: 'Length L', unit: 'cm', k: 100, min: 0.002, max: 0.7, step: 0.001, log: true },
-      { type: 'readout', label: 'Turns per metre n = N/L', value: (s) => `${(s.N / s.L).toFixed(0)} /m` },
-      { id: 'I0', label: 'Current I', unit: 'A', min: 0, max: 10, step: 0.1, show: (s) => s.mode === 'probe', hint: 'Peak value when the current alternates.' },
-      { id: 'f', label: 'Frequency f', unit: 'Hz', min: 0, max: 100, step: 1, show: (s) => s.mode === 'probe', hint: '0 means a steady (DC) current.' },
-      { id: 'Rc', label: 'Circuit resistance', unit: 'Ω', min: 0.01, max: 100, log: true, show: (s) => s.mode === 'magnet', hint: 'Lower resistance: more induced current, stronger braking.' },
-      { id: 'open', label: 'Open circuit (no current can flow)', type: 'check', show: (s) => s.mode === 'magnet', hint: 'The EMF is still there; the current and the braking are gone.' },
+      { type: 'readout', label: 'n = N/L', value: (s) => `${(s.N / s.L).toFixed(0)} /m` },
+      { id: 'I0', label: 'Current I', unit: 'A', min: 0, max: 10, step: 0.1, show: (s) => s.mode === 'probe' },
+      { id: 'f', label: 'Frequency f', unit: 'Hz', min: 0, max: 100, step: 1, show: (s) => s.mode === 'probe', hint: '0 = DC' },
+      { id: 'Rc', label: 'Resistance', unit: 'Ω', min: 0.01, max: 100, log: true, show: (s) => s.mode === 'magnet' },
+      { id: 'open', label: 'Open circuit', type: 'check', show: (s) => s.mode === 'magnet' },
     ] },
     { title: 'Probe ring', show: (s) => s.mode === 'probe', items: [
-      { id: 'a', label: 'Ring radius a', unit: 'cm', k: 100, min: 0.005, max: 0.05, step: 0.0005 },
-      { id: 'Rp', label: 'Ring resistance', unit: 'Ω', min: 0.001, max: 10, log: true },
+      { id: 'a', label: 'Radius a', unit: 'cm', k: 100, min: 0.005, max: 0.05, step: 0.0005 },
+      { id: 'Rp', label: 'Resistance', unit: 'Ω', min: 0.001, max: 10, log: true },
     ] },
     { title: 'Magnet', show: (s) => s.mode === 'magnet', items: [
-      { id: 'pol', label: 'Polarity', type: 'segmented', options: [[1, 'N pole up'], [-1, 'N pole down']] },
-      { id: 'Br', label: 'Strength (remanence B_r)', unit: 'T', min: 0.1, max: 1.4, step: 0.01, hint: 'About 1.2 T for a neodymium magnet.' },
+      { id: 'pol', label: 'Polarity', type: 'segmented', options: [[1, 'N up'], [-1, 'N down']] },
+      { id: 'Br', label: 'Strength B_r', unit: 'T', min: 0.1, max: 1.4, step: 0.01 },
       { id: 'mass', label: 'Mass', unit: 'kg', min: 0.01, max: 0.5, log: true, show: (s) => s.motion === 'drop' },
     ] },
-    { title: 'Position and timing', open: false, items: [
-      { id: 'x', label: 'Start x (across the axis)', unit: 'cm', k: 100, min: -0.2, max: 0.2, step: 0.001 },
-      { id: 'z', label: 'Start z (along the axis)', unit: 'cm', k: 100, min: -0.35, max: 0.35, step: 0.001 },
-      { id: 'pushT', label: 'Push duration', unit: 's', min: 0.05, max: 3, log: true, show: (s) => s.motion === 'push', hint: 'Faster push: bigger EMF for a shorter time.' },
+    { title: 'Start', show: (s) => s.motion !== 'live', items: [
+      { id: 'x', label: 'x', unit: 'cm', k: 100, min: -0.2, max: 0.2, step: 0.001 },
+      { id: 'z', label: 'z', unit: 'cm', k: 100, min: -0.35, max: 0.35, step: 0.001 },
+      { id: 'pushT', label: 'Push time', unit: 's', min: 0.05, max: 3, log: true, show: (s) => s.motion === 'push' },
     ] },
   ],
   display: [
-    { title: 'Magnetic field', items: [
+    { title: 'Field', items: [
       { id: 'lines', label: 'Field lines', type: 'check', color: '--c-B' },
-      { id: 'particles', label: 'Flowing particles (speed ∝ |B|)', type: 'check' },
-      { id: 'slice', label: 'Colour slice', type: 'check', hint: 'Drag the round knob to slide it.' },
-      { id: 'sliceField', label: 'Slice shows', type: 'select', options: [['B', '|B| magnetic'], ['E', '|E| induced electric']], show: (s) => s.slice },
-      { id: 'sliceOrient', label: 'Slice plane', type: 'select', options: [['xz', 'along the axis'], ['xy', 'across the axis']], show: (s) => s.slice },
-      { id: 'arrows', label: 'Arrow grid', type: 'check' },
-      { id: 'arrowField', label: 'Arrows show', type: 'select', options: [['B', 'B'], ['E', 'E (induced)']], show: (s) => s.arrows },
+      { id: 'particles', label: 'Flow', type: 'check' },
+      { id: 'slice', label: 'Colour slice', type: 'check' },
+      { id: 'sliceField', label: 'Slice', type: 'select', options: [['B', '|B|'], ['E', '|E|']], show: (s) => s.slice },
+      { id: 'sliceOrient', label: 'Plane', type: 'select', options: [['xz', 'along'], ['xy', 'across']], show: (s) => s.slice },
+      { id: 'arrows', label: 'Arrows', type: 'check' },
+      { id: 'arrowField', label: 'Arrows', type: 'select', options: [['B', 'B'], ['E', 'E (induced)']], show: (s) => s.arrows },
     ] },
-    { title: 'Annotations', open: false, items: [
-      { id: 'lenz', label: 'Lenz arrows: dΦ/dt and induced B', type: 'check', color: '--c-ref' },
-      { id: 'forces', label: 'Force and velocity', type: 'check', color: '--c-F' },
-      { id: 'labels', label: 'Labels and axes', type: 'check' },
-      { id: 'grid', label: 'Ground grid', type: 'check' },
+    { title: 'Annotations', items: [
+      { id: 'lenz', label: 'Lenz arrows', type: 'check', color: '--c-ref' },
+      { id: 'forces', label: 'Forces', type: 'check', color: '--c-F' },
+      { id: 'labels', label: 'Labels', type: 'check' },
+      { id: 'grid', label: 'Grid', type: 'check' },
     ] },
   ],
   plots: [
@@ -105,17 +87,9 @@ export default {
   ],
   hud: [
     { id: 'I', label: 'I coil' }, { id: 'B0', label: 'B at coil centre' }, { id: 'phi', label: 'Φ' }, { id: 'emf', label: 'EMF' },
-    { id: 'iind', label: 'I induced' }, { id: 'Fz', label: 'F_z on object' }, { id: 'vz', label: 'v_z' }, { id: 'pj', label: 'Joule power' }, 'sep',
-    { id: 'faraday', label: 'EMF vs −ΔΦ/Δt' }, { id: 'energy', label: 'F·v + I²R' }, { id: 'div', label: '|∇·B| / |∂B|' },
+    { id: 'iind', label: 'I induced' }, 'sep', { id: 'faraday', label: 'EMF vs −ΔΦ/Δt' },
   ],
-  tour: [
-    { title: 'One loop of current', scenario: 'single-loop', text: 'Current in a single ring makes a field that threads the middle and curls back around the wire. The particles flow faster where the field is stronger.' },
-    { title: 'Stack the loops', scenario: 'long-solenoid', text: 'Put 150 rings side by side. Inside, their fields add up to a nearly uniform B = μ0·n·I; outside they almost cancel. The model curve sits on the dashed formula.' },
-    { title: 'Push the magnet in', scenario: 'magnet-push', text: 'The flux through the coil changes, so an EMF appears. The induced field (blue arrow) points against the change in flux (grey arrow): Lenz’s law.' },
-    { title: 'Ten times slower', scenario: 'magnet-push', set: { pushT: 1.5, speed: 1 }, text: 'Same push, ten times slower: the EMF peak is ten times smaller but lasts ten times longer. The area under EMF(t) is the total change in flux.' },
-    { title: 'Hold it still', scenario: 'magnet-still', text: 'Maximum flux, zero EMF: only a change in flux induces anything. Switch “How it moves” to Drag and move the magnet yourself.' },
-    { title: 'Why the magnet is slowed down', scenario: 'drop', text: 'The induced current pushes back on the falling magnet; its kinetic energy becomes heat (F·v + I²R stays zero). Tick “Open circuit” and it falls freely.' },
-  ],
+
 
   setup(ctx) {
     const { scene, stage, state, time, plots, hud, legend, label, cssVar } = ctx;

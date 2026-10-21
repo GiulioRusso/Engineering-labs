@@ -6,33 +6,27 @@ import { si } from '../../lib/ui/format.js';
 import { isa, PLANE, CL, CD, forces, trimAlpha, stallSpeed, stallAlpha, bestLD } from './model.js';
 
 const deg = Math.PI / 180;
-const MODE_HINT = {
-  trim: 'The angle of attack is set for you so that lift balances the load: L = n·W.',
-  free: 'You set the angle of attack: if lift ≠ load, the aircraft would climb or sink.',
-};
 
 export default {
   id: 'flight-envelope', title: 'Flight: lift, drag, envelope', size: 7, timeless: true,
   cameras: { front: { pos: [0, -24, 2] }, side: { pos: [24, 0, 2] }, top: { pos: [0, -0.01, 24] }, iso: { pos: [15, -15, 8] } },
   defaults: { mode: 'trim', V: 55, h: 1000, alpha: 4 * deg, bank: 0, flow: true },
   scenarios: [
-    { id: 'cruise', label: 'Cruise', hint: 'Level flight: lift = weight, thrust = drag.', set: { V: 55, h: 1000 } },
-    { id: 'slow', label: 'Slow flight', hint: 'Near the stall: big angle of attack.', set: { V: 30, h: 1000 } },
-    { id: 'stall', label: 'Stall', hint: 'Past the critical angle, lift collapses.', set: { mode: 'free', V: 30, alpha: 18 * deg } },
-    { id: 'turn', label: '60° banked turn', hint: 'n = 2: twice the lift, stall speed ×√2.', set: { V: 50, bank: 60 * deg } },
-    { id: 'altitude', label: 'High altitude', hint: 'Thin air at 4000 m: more speed or more α.', set: { V: 55, h: 4000 } },
+    { id: 'cruise', label: 'Cruise', set: { V: 55, h: 1000 } },
+    { id: 'slow', label: 'Slow flight', set: { V: 30, h: 1000 } },
+    { id: 'turn', label: 'Banked turn', controls: ['V', 'h', 'bank'], set: { V: 50, bank: 60 * deg } },
+    { id: 'stall', label: 'Stall', hint: 'Set α by hand.', controls: ['V', 'alpha'], set: { mode: 'free', V: 30, alpha: 18 * deg } },
   ],
   controls: [
-    { title: 'Flight condition', items: [
-      { id: 'mode', label: 'Angle of attack', type: 'segmented', options: [['trim', 'Trimmed (L = n·W)'], ['free', 'Set by hand']], hint: (s) => MODE_HINT[s.mode] },
-      { id: 'V', label: 'Airspeed V', unit: 'm/s', min: 20, max: 82, step: 0.5, hint: 'm/s × 1.944 = knots.' },
-      { id: 'h', label: 'Altitude h', unit: 'm', min: 0, max: 6000, step: 50 },
-      { id: 'bank', label: 'Bank angle φ', unit: '°', k: 1 / deg, min: 0, max: 70 * deg, step: deg },
-      { id: 'alpha', label: 'Angle of attack α', unit: '°', k: 1 / deg, min: -5 * deg, max: 22 * deg, step: 0.1 * deg, show: (s) => s.mode === 'free' },
-      { type: 'readout', label: 'Stall speed here', value: (s) => `${stallSpeed(PLANE, s.h, 1 / Math.cos(s.bank)).toFixed(1)} m/s` },
+    { title: 'Flight', items: [
+      { id: 'V', label: 'Airspeed', unit: 'm/s', min: 20, max: 82, step: 0.5 },
+      { id: 'h', label: 'Altitude', unit: 'm', min: 0, max: 6000, step: 50 },
+      { id: 'bank', label: 'Bank', unit: '°', k: 1 / deg, min: 0, max: 70 * deg, step: deg },
+      { id: 'alpha', label: 'Angle of attack', unit: '°', k: 1 / deg, min: -5 * deg, max: 22 * deg, step: 0.1 * deg, show: (s) => s.mode === 'free' },
+      { type: 'readout', label: 'Stall speed', value: (s) => `${stallSpeed(PLANE, s.h, 1 / Math.cos(s.bank)).toFixed(1)} m/s` },
     ] },
   ],
-  display: [{ title: 'Show', items: [{ id: 'flow', label: 'Relative airflow', type: 'check' }] }],
+  display: [{ title: 'Show', items: [{ id: 'flow', label: 'Airflow', type: 'check' }] }],
   plots: [
     { id: 'cl', title: 'Lift curve C_L(α)', xLabel: 'α', xUnit: '°', yUnit: '' },
     { id: 'polar', title: 'Drag polar', xLabel: 'C_D', xUnit: '', yUnit: '' },

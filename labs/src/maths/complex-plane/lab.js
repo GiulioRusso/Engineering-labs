@@ -6,34 +6,25 @@ import { createKnob } from '../../lib/viz/knob.js';
 import { abs, arg, add, mul, div, pow, roots, polar, fmt } from './model.js';
 
 const X = [-4, 4], Y = [-3, 3];
-const OP_HINT = {
-  add: 'z + w: the diagonal of the parallelogram on z and w.',
-  mul: 'z · w: lengths multiply, angles add.',
-  div: 'z / w: lengths divide, angles subtract.',
-  pow: 'z¹ … zⁿ: a spiral, by de Moivre.',
-  roots: 'The n numbers whose n-th power is z.',
-};
 
 export default {
   id: 'complex-plane', title: 'Complex numbers', size: 3.6, ortho: true, plain: true, timeless: true, cam: 'top',
-  defaults: { op: 'mul', zr: 1.4, zi: 0.6, wr: 0.5, wi: 1.1, n: 6, unit: true, arcs: true },
+  defaults: { op: 'add', zr: 2, zi: 1, wr: 1, wi: 2, n: 6, unit: true, arcs: true },
   scenarios: [
-    { id: 'add', label: 'Addition', hint: 'The parallelogram rule.', set: { op: 'add' } },
-    { id: 'mul', label: 'Multiplication', hint: 'Rotate and stretch.', set: { op: 'mul' } },
-    { id: 'times-i', label: 'Multiply by i', hint: 'A quarter turn, no stretch.', set: { op: 'mul', wr: 0, wi: 1 } },
-    { id: 'powers', label: 'Powers spiral', hint: 'z¹ to zⁿ with |z| slightly above 1.', set: { op: 'pow', zr: 0.95, zi: 0.45, n: 10 } },
-    { id: 'roots', label: 'Roots of unity', hint: 'zⁿ = 1: a regular polygon.', set: { op: 'roots', zr: 1, zi: 0, n: 7 } },
+    { id: 'add', label: 'z + w', hint: 'Parallelogram rule.', set: { op: 'add' } },
+    { id: 'mul', label: 'z · w', hint: 'Lengths multiply, angles add.', set: { op: 'mul', zr: 1, zi: 1, wr: 1, wi: 1 } },
+    { id: 'times-i', label: 'z · i', hint: 'A quarter turn.', set: { op: 'mul', wr: 0, wi: 1 } },
+    { id: 'div', label: 'z / w', hint: 'Lengths divide, angles subtract.', set: { op: 'div', zr: 0, zi: 2, wr: 1, wi: 1 } },
+    { id: 'powers', label: 'zⁿ', hint: 'A spiral.', set: { op: 'pow', zr: 0.95, zi: 0.45, n: 10 } },
+    { id: 'roots', label: 'ⁿ√1', hint: 'A regular polygon.', set: { op: 'roots', zr: 1, zi: 0, n: 6 } },
   ],
   controls: [
-    { title: 'Operation', items: [
-      { id: 'op', label: 'Show', type: 'segmented', options: [['add', 'z + w'], ['mul', 'z · w'], ['div', 'z / w'], ['pow', 'zⁿ'], ['roots', 'ⁿ√z']], hint: (s) => OP_HINT[s.op] },
+    { title: 'Numbers', items: [
       { id: 'n', label: 'n', unit: '', min: 2, max: 12, step: 1, show: (s) => s.op === 'pow' || s.op === 'roots' },
-    ] },
-    { title: 'Numbers', hint: 'Or drag the two handles in the plane.', items: [
-      { id: 'zr', label: 'z real part', unit: '', min: -3, max: 3, step: 0.01 },
-      { id: 'zi', label: 'z imaginary part', unit: '', min: -2.5, max: 2.5, step: 0.01 },
-      { id: 'wr', label: 'w real part', unit: '', min: -3, max: 3, step: 0.01, show: (s) => ['add', 'mul', 'div'].includes(s.op) },
-      { id: 'wi', label: 'w imaginary part', unit: '', min: -2.5, max: 2.5, step: 0.01, show: (s) => ['add', 'mul', 'div'].includes(s.op) },
+      { id: 'zr', label: 'Re z', unit: '', min: -3, max: 3, step: 0.01 },
+      { id: 'zi', label: 'Im z', unit: '', min: -2.5, max: 2.5, step: 0.01 },
+      { id: 'wr', label: 'Re w', unit: '', min: -3, max: 3, step: 0.01, show: (s) => ['add', 'mul', 'div'].includes(s.op) },
+      { id: 'wi', label: 'Im w', unit: '', min: -2.5, max: 2.5, step: 0.01, show: (s) => ['add', 'mul', 'div'].includes(s.op) },
     ] },
   ],
   display: [{ title: 'Show', items: [

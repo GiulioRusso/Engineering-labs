@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const only = process.argv[2];
-// labs/catalog.json is the map: topic → original notebook → animations. An animation is built when
+// labs/catalog.json is the map: topic → animations. An animation is built when
 // src/<topic>/<id>/lab.js exists.
 const catalog = JSON.parse(readFileSync(join(root, 'catalog.json'), 'utf8'));
 const hasLab = (topic, id) => existsSync(join(root, 'src', topic, id, 'lab.js'));
@@ -28,16 +28,14 @@ function renderMath(html) {
 }
 
 async function buildTopic(t) {
-  const groups = t.notebooks.map((n) => ({ notebook: n.notebook, labs: n.animations.filter((a) => a.id && hasLab(t.topic, a.id)) })).filter((g) => g.labs.length);
-  if (!groups.length) return;
+  const labs = (t.animations || []).filter((a) => hasLab(t.topic, a.id));
+  if (!labs.length) return;
   const t0 = performance.now();
-  const labs = groups.flatMap((g) => g.labs);
   const entry = [
     "import '../lib/lab.css';",
     "import { startTopic } from '../lib/ui/topic.js';",
     ...labs.map((a, i) => `import L${i} from './${a.id}/lab.js';`),
-    ...labs.map((a, i) => `L${i}.summary ||= ${JSON.stringify(a.what)};`),
-    `startTopic({ name: ${JSON.stringify(t.name)}, groups: [${groups.map((g) => `{ notebook: ${JSON.stringify(g.notebook)}, labs: [${g.labs.map((a) => `L${labs.indexOf(a)}`).join(', ')}] }`).join(', ')}] });`,
+    `startTopic({ name: ${JSON.stringify(t.name)}, labs: [${labs.map((a, i) => `L${i}`).join(', ')}] });`,
   ].join('\n');
   const res = await build({
     stdin: { contents: entry, resolveDir: join(root, 'src', t.topic), sourcefile: `${t.topic}-entry.js`, loader: 'js' },
@@ -65,18 +63,16 @@ async function buildTopic(t) {
 for (const t of catalog) if (!only || only === t.topic) await buildTopic(t);
 
 // catalogue: labs/web/index.html and the repository root index.html
-const featured = 'coil-induction';
-writeFileSync(join(root, 'web', 'index.html'), renderCatalogue({ catalog, labsRoot: root, web: '', repo: '../../', featured }));
-writeFileSync(join(root, '..', 'index.html'), renderCatalogue({ catalog, labsRoot: root, web: 'labs/web/', repo: '', featured }));
+writeFileSync(join(root, 'web', 'index.html'), renderCatalogue({ catalog, labsRoot: root, web: '', repo: '../../' }));
+writeFileSync(join(root, '..', 'index.html'), renderCatalogue({ catalog, labsRoot: root, web: 'labs/web/', repo: '' }));
 const c = counts(catalog, root);
-console.log(`catalogue                  ${c.built} built, ${c.planned} planned, ${c.viaVis} notebooks via visualizers`);
+console.log(`catalogue                  ${c.built} built, ${c.planned} planned`);
 
 // TOPICS.md: the same map, readable on GitHub
 writeFileSync(join(root, 'TOPICS.md'), ['# Topic map', '',
-  'Every original notebook and its animations, grouped like `legacy/notebooks/`. Each topic is one file,',
-  '`web/<topic>.html`. Generated from `catalog.json` by `build.mjs`: edit the JSON, not this file.', '',
-  ...catalog.flatMap((t) => [`## ${t.name}`, '', '| Notebook | Animation | What you do | Status |', '|---|---|---|---|',
-    ...t.notebooks.flatMap((n) => n.animations.map((a) => a.visualizer
-      ? `| \`${n.notebook}\` | ${visTitle(a.visualizer)} | — | ${a.status === 'planned' ? 'planned (in the visualizer)' : 'covered'} |`
-      : `| \`${n.notebook}\` | ${hasLab(t.topic, a.id) ? `[${a.title}](web/${t.topic}.html?lab=${a.id})` : a.title} | ${a.what} | ${hasLab(t.topic, a.id) ? 'done' : 'planned'} |`)), '']),
+  'Each topic is one file, `web/<topic>.html`. Generated from `catalog.json` by `build.mjs`: edit the JSON, not this file.', '',
+  ...catalog.flatMap((t) => [`## ${t.name}`, '',
+    ...(t.visualizer ? [`In the ${visTitle(t.visualizer)}.`, ''] : []),
+    ...(t.animations ? ['| Animation | What you do | Status |', '|---|---|---|',
+      ...t.animations.map((a) => `| ${hasLab(t.topic, a.id) ? `[${a.title}](web/${t.topic}.html?lab=${a.id})` : a.title} | ${a.what} | ${hasLab(t.topic, a.id) ? 'done' : 'planned'} |`), ''] : [])]),
 ].join('\n'));

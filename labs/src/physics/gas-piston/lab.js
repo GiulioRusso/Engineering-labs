@@ -7,34 +7,27 @@ import { si } from '../../lib/ui/format.js';
 import { createGas, step, temperature, readPressure, idealPressure, rescaleTo, maxwell, KB } from './model.js';
 
 const A = 0.1, H0 = 0.1, N = 500, CYCLE = 0.05, DT = 1e-6, K = 10; // box side (m), atoms, cycle (s), step (s), world/m
-const MODE_HINT = {
-  adiabatic: 'Insulated walls: the piston squeezes the gas and lets it expand; watch T rise and fall.',
-  isothermal: 'Walls at fixed temperature: compressing raises the pressure but not T.',
-  heating: 'Fixed volume, the bottom heats the gas: pressure follows temperature.',
-  manual: 'Drag the round handle on the piston yourself. Fast pushes heat the gas more.',
-};
 
 export default {
   id: 'gas-piston', title: 'Gas in a piston', size: 0.9, scrub: false,
   cameras: { front: { pos: [0.5, -2.6, 0.55], target: [0.5, 0.5, 0.55] }, side: { pos: [3, 0.5, 0.55], target: [0.5, 0.5, 0.55] }, top: { pos: [0.5, 0.49, 3], target: [0.5, 0.5, 0.5] }, iso: { pos: [2.1, -1.6, 1.6], target: [0.5, 0.5, 0.5] } },
-  defaults: { mode: 'adiabatic', T0: 300, squeeze: 0.5, moles: 0.01, color: true },
+  defaults: { mode: 'heating', T0: 300, squeeze: 0.5, moles: 0.01, color: true },
   scenarios: [
-    { id: 'adiabatic', label: 'Squeeze it (adiabatic)', hint: 'Work in, temperature up.', set: { mode: 'adiabatic' } },
-    { id: 'isothermal', label: 'Squeeze it (isothermal)', hint: 'Heat out, temperature constant.', set: { mode: 'isothermal' } },
     { id: 'heating', label: 'Heat it', hint: 'Fixed volume: p ∝ T.', set: { mode: 'heating' } },
-    { id: 'manual', label: 'Push it yourself', hint: 'Drag the piston.', set: { mode: 'manual' } },
+    { id: 'isothermal', label: 'Squeeze slowly', hint: 'Isothermal: T constant.', set: { mode: 'isothermal' } },
+    { id: 'adiabatic', label: 'Squeeze insulated', hint: 'Adiabatic: T rises.', set: { mode: 'adiabatic' } },
+    { id: 'manual', label: 'By hand', hint: 'Drag the piston.', set: { mode: 'manual' } },
   ],
   controls: [
-    { title: 'Process', items: [
-      { id: 'mode', label: 'Walls and piston', type: 'segmented', options: [['adiabatic', 'Adiabatic'], ['isothermal', 'Isothermal'], ['heating', 'Heating'], ['manual', 'By hand']], hint: (s) => MODE_HINT[s.mode] },
-      { id: 'squeeze', label: 'Compress to (fraction of the volume)', unit: '', min: 0.25, max: 0.9, step: 0.01, show: (s) => s.mode === 'adiabatic' || s.mode === 'isothermal' },
+    { title: 'Piston', show: (s) => s.mode === 'adiabatic' || s.mode === 'isothermal', items: [
+      { id: 'squeeze', label: 'Compress to', unit: '', min: 0.25, max: 0.9, step: 0.01, show: (s) => s.mode === 'adiabatic' || s.mode === 'isothermal' },
     ] },
     { title: 'Gas', items: [
-      { id: 'T0', label: 'Starting temperature', unit: 'K', min: 100, max: 800, step: 1 },
-      { id: 'moles', label: 'Amount of gas', unit: 'mol', min: 0.002, max: 0.05, log: true, hint: 'Argon. More gas: more pressure, same temperature.' },
+      { id: 'T0', label: 'Temperature', unit: 'K', min: 100, max: 800, step: 1 },
+      { id: 'moles', label: 'Argon', unit: 'mol', min: 0.002, max: 0.05, log: true },
     ] },
   ],
-  display: [{ title: 'Show', items: [{ id: 'color', label: 'Colour atoms by speed', type: 'check' }] }],
+  display: [{ title: 'Show', items: [{ id: 'color', label: 'Colour by speed', type: 'check' }] }],
   plots: [{ id: 'pv', title: 'p–V diagram', xLabel: 'V', xUnit: 'm³', yUnit: 'Pa' }, { id: 'hist', title: 'Speeds', xLabel: 'v', xUnit: 'm/s', yUnit: '' }],
   hud: [{ id: 'V', label: 'volume V' }, { id: 'T', label: 'temperature T' }, { id: 'Pm', label: 'pressure (measured)' }, { id: 'Pi', label: 'NkT/V' }, 'sep', { id: 'chk', label: 'T·V^(2/3) / start' }],
 
