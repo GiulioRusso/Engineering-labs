@@ -1,0 +1,69 @@
+<section data-case="wave3d">
+  <h3>A polarized wave in 3D</h3>
+  <div class="look"><h4>What you are looking at</h4>A plane wave travelling along the long axis. Blue arrows: the electric field at many points along the wave at one instant. Orange: the curve traced by their tips. Red: the shadows of the x and y components on two walls. Drag to rotate.</div>
+  <div class="eq">$$\mathbf E(z,t) = \hat x\,A_x\cos(\omega t - kz) + \hat y\,A_y\cos(\omega t - kz + \delta)$$</div>
+  <p>The field is always perpendicular to the direction of travel, so it has only two components. Each is a simple wave; what makes the polarization is how the two are combined — their amplitude ratio and their phase difference δ.</p>
+  <ol class="steps">
+    <li>δ = 0: both components rise and fall together — the arrows stay in one plane (linear).</li>
+    <li>δ = ±90° with equal amplitudes: one is at its peak when the other is zero — the arrows trace a helix (circular).</li>
+    <li>Anything else: a flattened helix (elliptical).</li>
+  </ol>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a circularly polarized wave "spins" as it travels in some extra way. At a fixed point the field rotates in time; at a fixed time it forms a helix in space — the same thing seen two ways.</div>
+</section>
+<section data-case="wave3d" data-example="linear"><h3>Linear</h3><p>δ = 0: all arrows lie in one tilted plane.</p></section>
+<section data-case="wave3d" data-example="right"><h3>Right-hand circular</h3><p>δ = −90°: a helix; looking at the oncoming wave the field turns clockwise.</p></section>
+<section data-case="ellipse orient">
+  <div class="look"><h4>What you are looking at</h4>Left: the path of the field's tip in the transverse plane, looking at the oncoming wave (x right, y up); dashed: major (green) and minor (orange) axes. Right: the components against time, or the ellipse's angles against δ.</div>
+  <div class="eq">$$\left(\frac{E_x}{A_x}\right)^2 + \left(\frac{E_y}{A_y}\right)^2 - 2\frac{E_xE_y}{A_xA_y}\cos\delta = \sin^2\delta$$</div>
+</section>
+<section data-case="ellipse">
+  <h3>The polarization ellipse</h3>
+  <p>Eliminating time from the two components leaves an ellipse: this is what the tip of E draws at one point in space, once per period. Its shape depends only on Ay/Ax and δ.</p>
+  <div class="worked"><h4>Worked example</h4>Ax = 1, Ay = 0.6, δ = 45°: an ellipse tilted by 26.5°, with axis ratio b/a = 0.35. Change δ to 0: it collapses to a line at atan 0.6 = 31°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading the handedness from the ellipse alone: the same shape is traced either way; only the sign of δ says which.</div>
+</section>
+<section data-case="ellipse" data-example="tilt"><h3>Linear, tilted</h3><p>δ = 0: a line at atan(Ay/Ax) = 26.6°.</p></section>
+<section data-case="ellipse" data-example="axes"><h3>Upright ellipse</h3><p>δ = 90° with unequal amplitudes: the axes of the ellipse are x and y themselves.</p></section>
+<section data-case="orient">
+  <h3>Orientation and ellipticity</h3>
+  <p>Two angles describe the ellipse geometrically: ψ, the tilt of the major axis, and χ, how fat it is (tan |χ| = b/a; the sign gives the handedness).</p>
+  <div class="eq">$$\tan 2\psi = \frac{2A_xA_y\cos\delta}{A_x^2 - A_y^2}, \qquad \sin 2\chi = \frac{2A_xA_y\sin\delta}{A_x^2 + A_y^2}$$</div>
+  <div class="worked"><h4>Worked example</h4>χ = 0: linear. χ = ±45°: circular. Ax = 1, Ay = 0.7, δ = 60°: ψ ≈ 27°, χ ≈ 27°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Trusting ψ near circular states: when Ax = Ay and δ crosses ±90°, the major and minor axes swap and ψ jumps by 90° — the ellipse barely changes.</div>
+</section>
+<section data-case="orient" data-example="swap"><h3>ψ jumps</h3><p>Equal amplitudes: near δ = 90° the ellipse is almost a circle and its "major axis" is ill-defined.</p></section>
+<section data-case="jones">
+  <h3>Jones calculus</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the input state. Right: the state after the element; the red dashed line is the element's axis.</div>
+  <div class="eq">$$\mathbf J = \begin{pmatrix} A_x \\ A_y e^{j\delta} \end{pmatrix}, \qquad \mathbf J_\text{out} = M\,\mathbf J_\text{in}, \qquad M(\theta) = R(\theta)\,M_0\,R(-\theta)$$</div>
+  <p>A fully polarized state is a complex 2-vector; every optical element is a 2 × 2 matrix. Build it in the element's own axes and rotate.</p>
+  <ol class="steps">
+    <li><b>Polarizer</b> \(M_0 = \text{diag}(1, 0)\): keeps the component along its axis — loses power (Malus: cos²).</li>
+    <li><b>Retarder</b> \(M_0 = \text{diag}(1, e^{-j\Gamma})\): delays one axis; power conserved, only the shape changes.</li>
+    <li>Quarter-wave (Γ = 90°) at 45° to a linear input: circular. Half-wave (Γ = 180°): mirrors the state about its axis.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Horizontal light through a polarizer at 60°: cos² 60° = 25 % gets through. Through a half-wave plate at 20°: still 100 %, now linear at 40°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a wave plate absorbs anything. It only shifts phase between two axes.</div>
+</section>
+<section data-case="jones" data-example="malus"><h3>Malus' law</h3><p>At 60° the polarizer passes cos²60° = 25 % of the power, now polarized along its axis.</p></section>
+<section data-case="jones" data-example="qwp"><h3>Quarter-wave at 45°</h3><p>The input splits equally between the fast and slow axes; a 90° delay between them makes a circle.</p></section>
+<section data-case="jones" data-example="hwp"><h3>Half-wave at 20°</h3><p>A mirror image about the 20° axis: horizontal (0°) becomes 40°.</p></section>
+<section data-case="poincare">
+  <h3>Stokes parameters and the Poincaré sphere</h3>
+  <div class="look"><h4>What you are looking at</h4>The sphere of all polarization states; the orange dot is the current one, the orange curve all states with the same Ay/Ax as δ varies. Drag to rotate.</div>
+  <div class="eq">$$S_0 = A_x^2 + A_y^2,\; S_1 = A_x^2 - A_y^2,\; S_2 = 2A_xA_y\cos\delta,\; S_3 = 2A_xA_y\sin\delta$$</div>
+  <p>The Stokes parameters are intensities that a detector with a few filters can measure. Normalised by S₀ they place every fully polarized state on a unit sphere at longitude 2ψ and latitude 2χ: the equator holds the linear states, the poles the two circular ones. Partially polarized light sits inside, at a radius equal to its degree of polarization.</p>
+  <div class="worked"><h4>Worked example</h4>Horizontal: (1, 0, 0). Vertical: (−1, 0, 0) — opposite points are orthogonal states. Right circular: a pole. Sunlight: the centre.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using a Jones vector for partially polarized light: it cannot represent it. Stokes can.</div>
+</section>
+<section data-case="poincare" data-example="partial"><h3>Partially polarized</h3><p>Degree 0.5: the dot is halfway to the centre.</p></section>
+<section data-case="poincare" data-example="pole"><h3>Circular</h3><p>Ax = Ay, δ = 90°: S₁ = S₂ = 0, S₃ = S₀ — a pole.</p></section>
+<section data-case="circular">
+  <h3>The circular basis</h3>
+  <div class="look"><h4>What you are looking at</h4>A right-hand (blue) and a left-hand (orange) circular field turning in opposite directions; the green arrow is their sum, and its path.</div>
+  <p>Two counter-rotating vectors of equal length sum to a vector that only grows and shrinks along a fixed line: linear polarization. A phase difference φ between them rotates that line by φ/2. With unequal lengths the sum opens into an ellipse.</p>
+  <div class="eq">$$\tan\chi = \frac{a_L - a_R}{a_L + a_R}, \qquad \psi = \varphi/2$$</div>
+  <div class="worked"><h4>Worked example</h4>Sugar solutions delay one circular component relative to the other: the plane of linear light rotates as it passes (optical activity). A magnetic field does the same in glass (Faraday rotation).</div>
+</section>
+<section data-case="circular" data-example="rotate"><h3>φ = 120°</h3><p>The resulting line is at 60°.</p></section>
+<section data-case="circular" data-example="ellipse"><h3>Unequal circles</h3><p>0.7 and 0.3: the sum traces an ellipse with axis ratio 0.4/1.0.</p></section>

@@ -1,0 +1,86 @@
+<section data-case="wavefronts">
+  <h3>Wavefronts from delayed elements</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the field radiated by a row of elements (orange dots), each sending out circular ripples. Right: the delay applied to each element.</div>
+  <p>If every element fires at the same instant, the ripples line up parallel to the array and the wave goes straight ahead (broadside). Delay each element a little more than its neighbour and the line along which the ripples add up tilts: the beam turns, with no moving parts.</p>
+  <div class="eq">$$\Delta\tau = \frac{d\sin\theta_0}{c}, \qquad \Delta\varphi = -k\,d\sin\theta_0$$</div>
+  <div class="worked"><h4>Worked example</h4>d = λ/2, θ₀ = 30°: each element lags its neighbour by a quarter period (90°). With 8 elements the last fires 1.75 periods after the first.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the elements point anywhere. Each one radiates broadly; the direction comes only from where their waves add in step.</div>
+  <div class="try"><h4>Try it</h4>Slide θ₀ and watch the front rotate.</div>
+</section>
+<section data-case="wavefronts" data-example="broad"><h3>No delay</h3><p>All elements in phase: the fronts are parallel to the array and the beam is broadside.</p></section>
+<section data-case="wavefronts" data-example="steep"><h3>50°</h3><p>Large delays: the front tilts strongly and the beam (in the pattern below) points to 50°, wider than at broadside.</p></section>
+<section data-case="spacing">
+  <h3>Spacing shapes the beam</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the field of the array. Right: its radiation pattern in dB (polar, broadside up).</div>
+  <div class="eq">$$|AF(\theta)| = \left|\frac{\sin(N\psi/2)}{N\sin(\psi/2)}\right|, \qquad \psi = kd(\sin\theta - \sin\theta_0), \qquad \text{BW} \approx \frac{0.886\,\lambda}{Nd}$$</div>
+  <p>The beam width is set by the total aperture N·d: a bigger array makes a narrower beam. Spreading the elements gives a bigger aperture for free — until the spacing exceeds λ/2 or so, when the pattern repeats inside real space: grating lobes.</p>
+  <div class="worked"><h4>Worked example</h4>8 elements at λ/2: aperture 4 λ, beamwidth ≈ 12.7°. At λ/4: 2 λ, 25°. At 1.2 λ: 9.6 λ, 5.3° — plus grating lobes at ±56°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding elements without checking the spacing: the beam narrows only with aperture, and only if no grating lobes appear.</div>
+</section>
+<section data-case="spacing" data-example="tight"><h3>d = λ/4</h3><p>Small aperture: a wide beam. No grating lobes possible.</p></section>
+<section data-case="spacing" data-example="wide"><h3>d = 1.2 λ</h3><p>The narrowest main beam — and two more full-strength beams. Energy is sent in three directions.</p></section>
+<section data-case="squint">
+  <h3>Phase shifters vs true time delay</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: patterns at three frequencies (f₀/r, f₀, r·f₀) steered with phase shifters (left) and with true delays (right). Bottom: beam direction against frequency.</div>
+  <p>A phase shifter applies a fixed phase, correct for one frequency. At another frequency the same phase corresponds to a different delay, and the beam points elsewhere — it <span class="key">squints</span>. A true delay line delays every frequency by the same time, so it steers all frequencies to the same angle.</p>
+  <div class="eq">$$\sin\theta(f) = \frac{f_0}{f}\sin\theta_0 \quad\text{(phase shifters)}$$</div>
+  <div class="worked"><h4>Worked example</h4>θ₀ = 40°, f = 1.2 f₀: the beam moves to 32.4°. 16 elements have a beam about 8.6° wide at 40°: a wideband radar pulse would be smeared across the beam.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using phase steering for wideband signals (chirps, UWB). Large arrays need true-time-delay, at least at subarray level.</div>
+</section>
+<section data-case="squint" data-example="wideband"><h3>±30 %</h3><p>At 1.3 f₀ the phase-steered beam is at 29.6°, at f₀/1.3 at 56.6°: a 27° spread. The time-delay beam stays at 40°.</p></section>
+<section data-case="nearfield">
+  <h3>The near-field beam</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: time-averaged intensity in front of the array (scaled by r so the far field looks uniform), with the Fraunhofer distance 2D²/λ. Right: cross-sections at three distances.</div>
+  <p>Near the array the beam is as wide as the aperture, with ripples (each element's wave arrives with a different path). Only beyond roughly 2D²/λ do the waves arrive almost parallel, the cross-section settles into the far-field pattern, and the beam spreads at a fixed angle.</p>
+  <div class="worked"><h4>Worked example</h4>16 elements at λ/2: D = 8 λ, far field from 128 λ. A 10 GHz radar 1 m wide: 2·1/0.03 = 67 m.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using the far-field beamwidth to predict the spot size a few metres from a large array.</div>
+</section>
+<section data-case="nearfield" data-example="big"><h3>32 elements</h3><p>D = 16 λ, far field from 512 λ: much further than the view. All you see is near field: a collimated beam.</p></section>
+<section data-case="grating">
+  <h3>Grating lobes</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the plane of spacing against steering angle; bright where a grating lobe is visible. The green curve is the limit. Right: the pattern, with predicted grating lobes as red lines.</div>
+  <div class="eq">$$\sin\theta_\text{GL} = \sin\theta_0 + m\frac{\lambda}{d}, \quad m = \pm 1, \pm 2, \ldots \qquad d < \frac{\lambda}{1 + |\sin\theta_{\max}|}$$</div>
+  <p>The array factor repeats every time ψ grows by 2π. With wide spacing, those repeats land at real angles. Steering moves all of them: an array clean at broadside can grow a grating lobe when steered.</p>
+  <div class="worked"><h4>Worked example</h4>d = 0.6 λ steered to 50°: sin θ_GL = 0.766 − 1.667 = −0.90 → −64°. To scan ±60° you need d < 0.536 λ.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Checking grating lobes only at broadside.</div>
+</section>
+<section data-case="grating" data-example="safe"><h3>d = λ/2</h3><p>Safe for any steering up to 90°: the next repeat is always just outside.</p></section>
+<section data-case="grating" data-example="enter"><h3>A lobe enters</h3><p>d = 0.7 λ at 40°: sin θ = 0.643 − 1.43 = −0.79 → a full beam at −52°.</p></section>
+<section data-case="scan">
+  <h3>Scanning and its cost</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: one pattern per steering angle (columns), including the element's own cos-like pattern. Right: beamwidth and gain against steering.</div>
+  <p>Seen from an angle θ₀, the array looks shorter: its projected aperture is N·d·cos θ₀. So the beam widens as 1/cos θ₀, and the gain falls — further reduced because each element radiates less sideways.</p>
+  <div class="worked"><h4>Worked example</h4>At 60°, cos θ₀ = 0.5: twice the beamwidth, and about 6 dB less gain. Practical arrays scan ±60° at most; for full coverage radars use three or four faces.</div>
+</section>
+<section data-case="scan" data-example="far"><h3>60°</h3><p>The beam is twice as wide as at broadside, and the gain is down by roughly 6 dB.</p></section>
+<section data-case="planar">
+  <h3>The planar array</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the array factor of an Nx × Ny grid in direction-cosine space (u, v); the green circle is the visible region |u, v| ≤ 1. Right: cuts through the beam.</div>
+  <div class="eq">$$AF(u,v) = AF_x(u - u_0)\cdot AF_y(v - v_0), \qquad u = \sin\theta\cos\phi,\; v = \sin\theta\sin\phi$$</div>
+  <p>In (u, v) coordinates steering is just a shift of the whole pattern, and the pattern repeats every λ/d in each direction. Whatever repeat falls inside the circle is a grating lobe.</p>
+  <div class="worked"><h4>Worked example</h4>d = 0.8 λ, steered to u₀ = 0.6: the next repeat is at u = 0.6 − 1.25 = −0.65 — inside the circle.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading (u, v) as angles: they are sines. The rim u² + v² = 1 is the horizon.</div>
+</section>
+<section data-case="planar" data-example="grating"><h3>A lobe through the rim</h3><p>The replica enters the visible circle from the opposite side as the beam is steered.</p></section>
+<section data-case="taper">
+  <h3>Amplitude tapering</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the amplitude of each element. Bottom: the resulting pattern against the uniform one.</div>
+  <p>A uniform array has −13.3 dB sidelobes — the sinc of its rectangular aperture. Weighting the edge elements less smooths the aperture's edges and lowers the sidelobes, at the cost of a wider beam and slightly less gain (the edges are under-used).</p>
+  <ol class="steps">
+    <li>Hamming: about −42 dB, beam 1.5× wider.</li>
+    <li>Dolph–Chebyshev: all sidelobes exactly at the design level (here −40 dB) — the narrowest beam for that level.</li>
+  </ol>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting low sidelobes for free: every taper trades beamwidth and efficiency for sidelobe level.</div>
+</section>
+<section data-case="taper" data-example="cheb"><h3>Chebyshev</h3><p>Equal-ripple sidelobes at −40 dB: the optimum compromise for a fixed level.</p></section>
+<section data-case="taper" data-example="hamming"><h3>Hamming</h3><p>Sidelobes near −42 dB, falling further away from the beam.</p></section>
+<section data-case="nulls">
+  <h3>Null steering</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the complex weights. Bottom: the pattern with nulls (blue) against plain steering (grey); red lines mark the interferers.</div>
+  <p>An array can also choose where <i>not</i> to listen. Take the steering vector and remove from it its component along the steering vector of each interferer: the result is orthogonal to the interferers (a perfect null there) and as close as possible to the original beam.</p>
+  <div class="eq">$$\mathbf w = \mathbf a_0 - \mathbf A(\mathbf A^H\mathbf A)^{-1}\mathbf A^H\mathbf a_0, \qquad \mathbf w^H\mathbf a(\theta_j) = 0$$</div>
+  <div class="worked"><h4>Worked example</h4>12 elements, interferers at 40° and −25°: both nulled below −100 dB, main-beam gain almost unchanged. An interferer at 12°, inside the first sidelobe, costs more gain and shifts the beam.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Putting a null inside the main beam: you cannot both receive and reject the same direction.</div>
+</section>
+<section data-case="nulls" data-example="two"><h3>Two nulls</h3><p>Two interferers suppressed by more than 100 dB with almost no loss on the wanted direction.</p></section>
+<section data-case="nulls" data-example="close"><h3>A close interferer</h3><p>A null at 12°, near the edge of the main beam, distorts it and costs gain.</p></section>

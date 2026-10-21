@@ -1105,42 +1105,140 @@
     "group": "Antennas and propagation"
    },
    {
-    "id": "dipole",
-    "title": "Dipole antennas",
-    "what": "Radiation patterns and directivity from short to long dipoles.",
-    "from": "antennas",
+    "id": "dipole-current",
+    "title": "Dipole: current and fields",
+    "what": "Standing-wave current, E and H radiating, field lines detaching.",
+    "from": "dipole",
     "cases": [
-     "dipole"
+     "current",
+     "fields",
+     "hertz"
     ],
     "group": "Antennas and propagation"
    },
    {
-    "id": "phased-array",
-    "title": "Phased arrays",
-    "what": "Steer a beam with phase steps; beam width and grating lobes.",
-    "from": "antennas",
+    "id": "dipole-pattern",
+    "title": "Dipole: radiation pattern",
+    "what": "E- and H-plane, 3D pattern, pattern against length.",
+    "from": "dipole",
     "cases": [
-     "array"
+     "planes",
+     "pattern3d",
+     "sweep"
+    ],
+    "group": "Antennas and propagation"
+   },
+   {
+    "id": "dipole-impedance",
+    "title": "Dipole: impedance and directivity",
+    "what": "Input impedance, resonance, matching, directivity vs length.",
+    "from": "dipole",
+    "cases": [
+     "impedance",
+     "directivity"
+    ],
+    "group": "Antennas and propagation"
+   },
+   {
+    "id": "near-far-field",
+    "title": "Near and far field",
+    "what": "Reactive, Fresnel and Fraunhofer regions around an antenna.",
+    "from": "dipole",
+    "cases": [
+     "nearfar"
+    ],
+    "group": "Antennas and propagation"
+   },
+   {
+    "id": "array-steering",
+    "title": "Phased array: steering",
+    "what": "Wavefronts from delays, spacing, phase vs true time delay.",
+    "from": "array",
+    "cases": [
+     "wavefronts",
+     "spacing",
+     "squint"
+    ],
+    "group": "Antennas and propagation"
+   },
+   {
+    "id": "array-lobes",
+    "title": "Phased array: beams and lobes",
+    "what": "Near-field beam, grating lobes, scanning, planar arrays.",
+    "from": "array",
+    "cases": [
+     "nearfield",
+     "grating",
+     "scan",
+     "planar"
+    ],
+    "group": "Antennas and propagation"
+   },
+   {
+    "id": "array-weights",
+    "title": "Phased array: tapers and nulls",
+    "what": "Amplitude tapers for low sidelobes; nulls on interferers.",
+    "from": "array",
+    "cases": [
+     "taper",
+     "nulls"
     ],
     "group": "Antennas and propagation"
    },
    {
     "id": "polarization",
     "title": "Polarization",
-    "what": "Linear, circular and elliptical fields through a polarizer.",
-    "from": "antennas",
+    "what": "The wave in 3D, the ellipse, orientation and ellipticity.",
+    "from": "polarization",
     "cases": [
-     "polarization"
+     "wave3d",
+     "ellipse",
+     "orient"
     ],
     "group": "Antennas and propagation"
    },
    {
-    "id": "waveguide",
-    "title": "Waveguide modes",
-    "what": "TE and TM fields in a rectangular guide; cut-off and guide wavelength.",
-    "from": "antennas",
+    "id": "jones-stokes",
+    "title": "Jones and Stokes",
+    "what": "Polarizers and wave plates as matrices; the Poincaré sphere; circular basis.",
+    "from": "polarization",
     "cases": [
-     "waveguide"
+     "jones",
+     "poincare",
+     "circular"
+    ],
+    "group": "Antennas and propagation"
+   },
+   {
+    "id": "transmission-lines",
+    "title": "Transmission lines",
+    "what": "The TEM coax, mismatch, standing waves and the Smith chart.",
+    "from": "guided",
+    "cases": [
+     "tem",
+     "smith"
+    ],
+    "group": "Antennas and propagation"
+   },
+   {
+    "id": "waveguides",
+    "title": "Waveguides",
+    "what": "Cutoff, mode fields and slots, dispersion and pulse spreading.",
+    "from": "guided",
+    "cases": [
+     "cutoff",
+     "mode",
+     "dispersion"
+    ],
+    "group": "Antennas and propagation"
+   },
+   {
+    "id": "optical-guide",
+    "title": "Dielectric guides",
+    "what": "Total internal reflection, modes and evanescent tails.",
+    "from": "guided",
+    "cases": [
+     "fibre"
     ],
     "group": "Antennas and propagation"
    }

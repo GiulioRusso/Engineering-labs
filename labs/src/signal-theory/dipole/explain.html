@@ -1,0 +1,100 @@
+<section data-case="current">
+  <h3>The current on a dipole</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the wire (vertical), fed at the red dot, with the current at each point drawn as a horizontal bar. Right: the current along the wire — its envelope (dashed) and its value now (blue), oscillating in time.</div>
+  <p>A dipole is a transmission line opened out. The current must be zero at the wire's free ends, so it forms a standing wave:</p>
+  <div class="eq">$$I(z,t) = I_0\,\sin\!\big(k(L/2 - |z|)\big)\cos\omega t, \qquad k = 2\pi/\lambda$$</div>
+  <ol class="steps">
+    <li>Short dipole (L ≪ λ): only the start of the sine fits — a nearly triangular current, small everywhere, so the wire radiates weakly.</li>
+    <li>Half-wave (L = λ/2): exactly one half-sine, maximum at the feed. Every part of the wire carries current in the same direction: all contributions add broadside.</li>
+    <li>Full wave (L = λ): the feed is at a current null — the generator sees an enormous impedance.</li>
+    <li>Longer: lobes of current alternate in sign; their radiation partly cancels, which shapes the pattern.</li>
+  </ol>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the current is uniform along the wire like in a DC circuit. At radio frequency the wire is comparable to a wavelength, and the current varies along it.</div>
+  <div class="try"><h4>Try it</h4>Slide L from 0.1 to 1.5 λ and watch the feed point's current fall to zero at L = λ.</div>
+</section>
+<section data-case="current" data-example="short"><h3>Short dipole</h3><p>0.1 λ: the current falls linearly from the feed to the ends. Radiation resistance only ≈ 2 Ω.</p></section>
+<section data-case="current" data-example="full"><h3>Full wave</h3><p>The feed sits at a node of the standing wave: almost no current for a given voltage — a very high input impedance.</p></section>
+<section data-case="current" data-example="long"><h3>1.5 λ</h3><p>Three half-waves of current; the middle one is opposite to the outer ones.</p></section>
+<section data-case="fields">
+  <h3>E and H fields</h3>
+  <div class="look"><h4>What you are looking at</h4>A snapshot of the radiated field in the plane containing the wire (orange): E_θ on the left, H on the right (out of or into the page). Colour = sign and strength; the pattern moves outward over time.</div>
+  <div class="eq">$$E_\theta = \frac{\eta_0 I_0}{2\pi r}\,F(\theta)\,\sin(\omega t - kr), \qquad H_\phi = E_\theta/\eta_0, \qquad \eta_0 = 377\ \Omega$$</div>
+  <p>Far from the wire, the field is a spherical wave: rings that expand at the speed of light, one ring every half wavelength. Their strength depends on direction through F(θ): maximum broadside, zero along the wire's axis — a charge moving along a line cannot radiate along that line.</p>
+  <div class="worked"><h4>Worked example</h4>100 W into a half-wave dipole: at 1 km broadside, |E| ≈ 7√(P·D)/r ≈ 0.09 V/m, |H| = E/377 ≈ 0.24 mA/m.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking E and H are separate waves. In the far field they are locked together: in phase, at right angles, ratio 377 Ω.</div>
+</section>
+<section data-case="fields" data-example="long"><h3>L = 1.25 λ</h3><p>The rings are no longer uniform in angle: the pattern now has a narrow broadside lobe and weak side lobes.</p></section>
+<section data-case="hertz">
+  <h3>How radiation detaches</h3>
+  <div class="look"><h4>What you are looking at</h4>The electric field lines of a tiny oscillating dipole at the centre, as time advances. The red circle is r = λ/2π.</div>
+  <div class="eq">$$E_\theta \propto \Big(\underbrace{\frac{1}{r}}_{\text{radiated}} + \underbrace{\frac{1}{jkr^2} - \frac{1}{k^2r^3}}_{\text{bound}}\Big)\sin\theta\,e^{-jkr}$$</div>
+  <p>Close to the dipole the 1/r² and 1/r³ terms dominate: the field follows the charges like the field of a static dipole, growing and collapsing every half cycle. But the field cannot change everywhere at once — the change travels at c. When the charges reverse, the outer part of each loop cannot get back in time: it pinches off and keeps going. Those closed loops are the radiated wave.</p>
+  <ol class="steps">
+    <li><b>Full</b>: loops grow, pinch off near r = λ/2π and escape.</li>
+    <li><b>Bound only</b>: loops swell and collapse back — energy goes out and returns each cycle, nothing is lost.</li>
+    <li><b>Radiated only</b>: closed loops marching outward.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>At r = λ/2π (kr = 1) all three terms are equal. At r = λ they are 1 : 0.16 : 0.025 — already almost pure radiation.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the near field is "where radiation is strong". It is where energy is stored and sloshes back and forth; it does not travel.</div>
+  <div class="try"><h4>Try it</h4>Switch to "bound" and watch the loops refuse to leave.</div>
+</section>
+<section data-case="hertz" data-example="bound"><h3>Bound term only</h3><p>Loops breathe in and out around the source but never detach: this is the reactive near field — stored, not radiated.</p></section>
+<section data-case="hertz" data-example="rad"><h3>Radiated term only</h3><p>Closed loops travelling outward at c, spaced λ/2: the part that carries power away for ever.</p></section>
+<section data-case="planes">
+  <h3>E-plane and H-plane patterns</h3>
+  <div class="look"><h4>What you are looking at</h4>Left polar plot: the E-plane (the plane containing the wire, drawn vertical) in dB. Right: the H-plane (perpendicular to the wire). Bottom: the E-plane in dB against θ, and directivity against length.</div>
+  <div class="eq">$$F(\theta) = \frac{\cos\!\big(\tfrac{kL}{2}\cos\theta\big) - \cos\tfrac{kL}{2}}{\sin\theta}$$</div>
+  <p>The dipole is symmetric around its axis, so the H-plane pattern is always a circle: it radiates equally in every horizontal direction. All the shaping is in the E-plane.</p>
+  <div class="worked"><h4>Worked example</h4>Half-wave: a figure-of-eight, half-power beamwidth 78°, D = 1.64 (2.15 dBi). Full wave: 47°, 2.41 (3.8 dBi). 1.5 λ: the main lobes tilt to about 45° off broadside.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Calling a dipole omnidirectional without saying in which plane. It is omnidirectional in azimuth only; straight up the wire it radiates nothing.</div>
+</section>
+<section data-case="planes" data-example="one"><h3>L = λ</h3><p>A narrower broadside lobe: the two halves of the current add more coherently broadside.</p></section>
+<section data-case="planes" data-example="tilt"><h3>L = 1.5 λ</h3><p>The opposite-phase middle current cancels broadside: lobes appear at oblique angles.</p></section>
+<section data-case="pattern3d">
+  <h3>The 3D pattern</h3>
+  <div class="look"><h4>What you are looking at</h4>The radiation pattern as a surface: the distance from the centre in each direction is the radiated field there (in dB above the floor). The orange rod is the wire. Drag to rotate.</div>
+  <p>Revolving the E-plane pattern around the wire gives the full 3D pattern: a doughnut for a half-wave dipole, with a hole along the axis.</p>
+  <div class="pitfall"><h4>Common mistake</h4>Reading the size of the surface as gain in linear units. Here it is in dB, so weak sidelobes look bigger than they are.</div>
+</section>
+<section data-case="pattern3d" data-example="one"><h3>L = λ</h3><p>A flatter doughnut: more of the power goes broadside.</p></section>
+<section data-case="pattern3d" data-example="multi"><h3>L = 2 λ</h3><p>The doughnut splits into cones: four current lobes produce lobes at several elevations.</p></section>
+<section data-case="sweep">
+  <h3>The pattern as the length grows</h3>
+  <div class="look"><h4>What you are looking at</h4>Each column of the image is one E-plane pattern (θ from 0 at the bottom to 180° at the top); left to right the dipole gets longer. Bright = strong. The green line is the current length, whose polar pattern is on the right.</div>
+  <p>Up to about 1.25 λ there is a single broadside lobe getting narrower. Beyond, the current develops opposite-phase lobes, the broadside direction weakens, and the beam splits into several lobes.</p>
+  <div class="try"><h4>Try it</h4>Follow the bright band at θ = 90° (the middle row): it narrows, then dies around 2 λ.</div>
+</section>
+<section data-case="sweep" data-example="split"><h3>1.25 λ</h3><p>The narrowest single lobe and the highest broadside directivity of any straight dipole (≈ 5.2 dBi); a little longer and it splits.</p></section>
+<section data-case="impedance">
+  <h3>Input impedance</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: input resistance and reactance against length. Bottom left: how much of a 50 Ω cable's power is reflected (|Γ|). Bottom right: the radiation resistance referred to the current maximum.</div>
+  <p>The generator sees the ratio of voltage to current at the feed. The resistive part accounts for the power radiated; the reactive part for energy stored in the near field. At resonance the reactance vanishes.</p>
+  <div class="eq">$$R_\text{in} = \frac{R_m}{\sin^2(kL/2)}, \quad R_m = \frac{\eta_0}{2\pi}\int_0^\pi F^2\sin\theta\,d\theta, \qquad \Gamma = \frac{Z_\text{in} - 50}{Z_\text{in} + 50}$$</div>
+  <div class="worked"><h4>Worked example</h4>L = 0.5 λ: Z = 73 + j42.5 Ω. Shortening to ≈ 0.48 λ removes the reactance (≈ 70 Ω): that is why real half-wave dipoles are cut about 5 % short. Short dipole 0.1 λ: R ≈ 2 Ω and X ≈ −1800 Ω — nearly impossible to feed efficiently.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using the free-space λ for a thick wire: thicker wires resonate a little shorter and have a flatter reactance curve (wider bandwidth).</div>
+  <div class="try"><h4>Try it</h4>Increase the wire radius: the reactance swings become gentler.</div>
+</section>
+<section data-case="impedance" data-example="res"><h3>Resonance</h3><p>At ≈ 0.48 λ the reactance crosses zero: about 70 Ω, close to a 75 Ω coax.</p></section>
+<section data-case="impedance" data-example="thick"><h3>A thick wire</h3><p>a = 0.008 λ: the reactance varies more slowly with length — the antenna works over a wider band.</p></section>
+<section data-case="directivity">
+  <h3>Directivity</h3>
+  <div class="look"><h4>What you are looking at</h4>Directivity against length (linear and dBi), the half-power beamwidth, and the pattern at the chosen length.</div>
+  <div class="eq">$$D = \frac{4\pi\,U_{\max}}{P_\text{rad}} = \frac{2\,F_{\max}^2}{\int_0^\pi F^2(\theta)\sin\theta\,d\theta}$$</div>
+  <p>Directivity compares the peak intensity with what an isotropic antenna radiating the same total power would give. Narrower beam, higher directivity.</p>
+  <div class="worked"><h4>Worked example</h4>Short dipole: 1.5 (1.76 dBi). Half wave: 1.64 (2.15 dBi). 1.25 λ: 3.3 (5.2 dBi). Gain = efficiency × directivity, so a lossless dipole's gain equals these.</div>
+  <div class="pitfall"><h4>Common mistake</h4>dBi vs dBd: dBd is relative to a half-wave dipole, so 0 dBd = 2.15 dBi.</div>
+</section>
+<section data-case="directivity" data-example="max"><h3>The best broadside dipole</h3><p>1.25 λ: the highest directivity before the lobe splits.</p></section>
+<section data-case="nearfar">
+  <h3>Near field and far field</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the field strength around a finite wire (orange) in dB, computed with all near-field terms. Green circle: r = λ/2π; blue circle: the far-field distance 2D²/λ. Right: field strength broadside against distance on log–log axes.</div>
+  <ol class="steps">
+    <li><b>Reactive near field</b> (r ≲ λ/2π): 1/r³ dominates; energy stored, not radiated.</li>
+    <li><b>Radiating near field (Fresnel)</b>: waves travel outward, but the pattern still changes with distance.</li>
+    <li><b>Far field (Fraunhofer)</b>, r > 2D²/λ: the pattern is fixed and the field falls as 1/r.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>L = λ: far field from 2 λ. A 3 m dish at 10 GHz (λ = 3 cm): 2·9/0.03 = 600 m — antenna ranges must be long.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Measuring a pattern too close: in the Fresnel region the measured shape is wrong (lobes filled in).</div>
+  <div class="try"><h4>Try it</h4>On the right, read the slopes: steep near the wire, −20 dB/decade beyond the blue line.</div>
+</section>
+<section data-case="nearfar" data-example="big"><h3>L = 2 λ</h3><p>The far field starts at 2·2² = 8 λ: bigger antennas need much more distance.</p></section>

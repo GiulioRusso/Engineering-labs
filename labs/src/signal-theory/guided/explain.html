@@ -1,0 +1,66 @@
+<section data-case="tem">
+  <h3>The TEM line</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the cross-section of a coaxial cable — inner and outer conductor, the electric field running radially between them (blue) and the magnetic field in circles (orange), pulsing as the wave goes by. Right: voltage and current along the line. Bottom: the characteristic impedance against the radius ratio.</div>
+  <p>Two conductors can carry a wave whose E and H lie entirely in the cross-section (Transverse ElectroMagnetic). The cross-section pattern is just the static field between the conductors, scaled up and down — which is why it works at any frequency, even DC.</p>
+  <div class="eq">$$v = \frac{1}{\sqrt{LC}} = \frac{c}{\sqrt{\varepsilon_r}}, \qquad Z_0 = \sqrt{\frac{L}{C}} = \frac{\eta_0}{2\pi\sqrt{\varepsilon_r}}\ln\frac{b}{a}$$</div>
+  <ol class="steps">
+    <li>Every frequency travels at the same speed: a pulse keeps its shape (no dispersion).</li>
+    <li>Z₀ is the ratio V/I that a single travelling wave must have. It is not a resistance you can measure with an ohmmeter.</li>
+    <li>Z₀ depends only on b/a: a cable can be made any size with the same impedance.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Polyethylene (εr = 2.25), b/a = 3.5: Z₀ = 40·ln 3.5 = 50 Ω, v = 0.67 c. TV cable with foam (εr ≈ 1.4), b/a ≈ 4.4: 75 Ω.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a longer cable has a higher Z₀. Length changes loss and delay, never Z₀.</div>
+</section>
+<section data-case="tem" data-example="tv"><h3>75 Ω</h3><p>Lower εr and a bigger ratio: higher impedance, lower loss for TV signals.</p></section>
+<section data-case="smith">
+  <h3>Mismatch, standing waves and the Smith chart</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the Smith chart — the plane of the reflection coefficient Γ with the impedance grid drawn on it; red dot: Γ at the load; orange dot: Γ seen at a point moving toward the generator, tracing an arc on the circle |Γ| = const. Right top: the voltage along the line. Right bottom: the impedance seen along the line.</div>
+  <div class="eq">$$\Gamma_L = \frac{Z_L - Z_0}{Z_L + Z_0}, \qquad \Gamma(l) = \Gamma_L e^{-j4\pi l/\lambda}, \qquad \text{VSWR} = \frac{1 + |\Gamma|}{1 - |\Gamma|}$$</div>
+  <p>A load that is not Z₀ cannot absorb the incoming wave with the right V/I, so part of it bounces back. Forward and backward waves interfere: the voltage has maxima and minima λ/2 apart — a standing wave. Moving along the line, Γ only rotates (twice the electrical length, because the wave goes and returns), so the impedance seen keeps changing and repeats every λ/2.</p>
+  <div class="worked"><h4>Worked example</h4>100 + j50 Ω on 50 Ω: |Γ| = 0.45, VSWR 2.6, 20 % of the power reflected. A short is |Γ| = 1: a voltage null at the load, and λ/4 away it looks like an open circuit.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a mismatch "loses" power in the line. The reflected power goes back to the source; the loss is that the load never gets it.</div>
+  <div class="try"><h4>Try it</h4>Set 50 + j0: Γ shrinks to the centre and the standing wave flattens.</div>
+</section>
+<section data-case="smith" data-example="match"><h3>Matched</h3><p>Γ = 0: the dot sits at the centre of the chart and |V| is flat along the line.</p></section>
+<section data-case="smith" data-example="short"><h3>Short circuit</h3><p>Γ = −1, on the left edge. Full standing wave, nulls every λ/2 starting at the load.</p></section>
+<section data-case="smith" data-example="reactive"><h3>A pure reactance</h3><p>|Γ| = 1 on the rim: everything is reflected, only the position of the standing wave changes.</p></section>
+<section data-case="cutoff">
+  <h3>Waveguide cutoff</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the cutoff frequency of each mode (bar starts there); green bars propagate at the chosen frequency. Top right: the propagation constant β of each mode against frequency. Bottom: the TE10 field along the guide — a travelling wave, or an exponential decay below cutoff.</div>
+  <div class="eq">$$f_{c,mn} = \frac{c}{2}\sqrt{\left(\frac{m}{a}\right)^2 + \left(\frac{n}{b}\right)^2}, \qquad \beta = \frac{2\pi}{c}\sqrt{f^2 - f_c^2}$$</div>
+  <p>A hollow pipe has one conductor, so no TEM wave exists. What remains are patterns that fit a whole number of half-waves across the pipe. Each has a cutoff: below it β becomes imaginary and the field decays without carrying power — the guide reflects it. A waveguide is a high-pass filter made of geometry.</p>
+  <div class="worked"><h4>Worked example</h4>WR-90 (22.86 × 10.16 mm): TE10 at 6.56 GHz, TE20 at 13.1 GHz. Between them only one mode exists: used from 8.2 to 12.4 GHz (X band).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the evanescent decay is a loss. Nothing is dissipated: the energy is reflected.</div>
+</section>
+<section data-case="cutoff" data-example="below"><h3>Below cutoff</h3><p>5 GHz in WR-90: the field falls by 1/e every 11 mm — a few centimetres of guide blocks it completely.</p></section>
+<section data-case="cutoff" data-example="multi"><h3>Several modes</h3><p>16 GHz: TE10, TE20 and TE01 propagate (TE11 and TM11 start at 16.1 GHz), each at its own speed: a pulse would arrive in several copies.</p></section>
+<section data-case="mode">
+  <h3>Mode fields and wall currents</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the guide's cross-section with the transverse electric field of the chosen mode (blue). Bottom: the broad wall seen from above, with the surface current of TE10 (orange) and a slot (red).</div>
+  <div class="eq">$$H_z = \cos\frac{m\pi x}{a}\cos\frac{n\pi y}{b}, \qquad \mathbf E_t \propto \hat z \times \nabla_t H_z, \qquad \mathbf J_s = \hat n \times \mathbf H$$</div>
+  <p>TE10 has E vertical, strongest in the middle and zero at the side walls — half a wave across. The field ends on the walls as currents. A slot in the wall radiates only if it cuts across those currents; along the centreline of the broad wall the current runs straight down the guide, so a centred longitudinal slot is invisible. Slotted-waveguide antennas set each slot's offset to control how much it radiates.</p>
+  <div class="worked"><h4>Worked example</h4>Measuring slots (for standing-wave probes) are cut along the centreline precisely because they do not disturb the mode.</div>
+</section>
+<section data-case="mode" data-example="te20"><h3>TE20</h3><p>Two half-waves across: E points up on one side and down on the other, zero in the middle.</p></section>
+<section data-case="mode" data-example="te11"><h3>TE11</h3><p>Half a wave in both directions: a field circulating around the centre.</p></section>
+<section data-case="mode" data-example="offset"><h3>An offset slot</h3><p>Away from the centreline the current has a transverse part: the slot interrupts it and radiates.</p></section>
+<section data-case="dispersion">
+  <h3>Dispersion</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the ω–β diagram; the slope of the line from the origin (orange) is the phase velocity, the slope of the tangent (green) the group velocity. Top right: both against frequency. Bottom: a pulse at the input, after the same length of air line, and after the guide.</div>
+  <div class="eq">$$v_p = \frac{c}{\sqrt{1 - (f_c/f)^2}} > c, \qquad v_g = c\sqrt{1 - (f_c/f)^2} < c, \qquad v_p v_g = c^2$$</div>
+  <p>In a guide β is not proportional to f, so different frequencies travel at different speeds. The phase pattern slides along faster than light (it carries no information); energy and information travel at the group velocity, slower than light. A pulse, being a band of frequencies, spreads out.</p>
+  <div class="worked"><h4>Worked example</h4>WR-90 at 10 GHz: vg = 0.75 c, vp = 1.33 c. A 2 m run delays a pulse by 2.2 ns more than air would.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Concluding relativity is violated because vp > c. Nothing physical moves at vp.</div>
+</section>
+<section data-case="dispersion" data-example="near"><h3>Near cutoff</h3><p>7 GHz: vg drops to 0.35 c, the pulse arrives late and visibly smeared; its lower frequencies are even cut off.</p></section>
+<section data-case="dispersion" data-example="far"><h3>Far above cutoff</h3><p>14 GHz: vg ≈ 0.88 c, the guide behaves almost like a TEM line.</p></section>
+<section data-case="fibre">
+  <h3>The dielectric guide</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: a ray bouncing inside a slab of higher index. Top right: the guided modes across the slab, with their tails in the cladding. Bottom: the number of modes against core thickness.</div>
+  <div class="eq">$$\theta_c = \arcsin\frac{n_2}{n_1}, \qquad \text{NA} = \sqrt{n_1^2 - n_2^2}, \qquad V = \frac{2\pi h}{\lambda}\,\text{NA}$$</div>
+  <p>No conductors at all: a ray hitting the boundary at more than the critical angle is totally reflected. Requiring the wave to add up in phase after a round trip allows only certain angles — the modes — exactly as metal walls did. Unlike metal, the field does not stop at the boundary: it decays exponentially into the cladding (evanescent tail).</p>
+  <div class="worked"><h4>Worked example</h4>n₁ = 1.48, n₂ = 1.46: θc = 80.6°, NA = 0.24. At 1.55 µm a slab of half-thickness 1 µm has V = 0.98 < π/2: single mode. 4 µm: 3 modes.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking light in a fibre is confined like water in a pipe. The tails reach into the cladding: bend the fibre and the outer part cannot keep up — it radiates away.</div>
+</section>
+<section data-case="fibre" data-example="leak"><h3>Below the critical angle</h3><p>78° < 80.6°: at each bounce part of the light refracts out. After a few bounces it is gone.</p></section>
+<section data-case="fibre" data-example="single"><h3>Single mode</h3><p>A thin core supports only the fundamental mode, which has a long tail in the cladding.</p></section>
