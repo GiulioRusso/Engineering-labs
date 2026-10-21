@@ -202,3 +202,13 @@ button, input, select { font: inherit; color: inherit; }
 }
 @media (prefers-reduced-motion: reduce) { .explain { transition: none; } }
 .label3d.tick { background: none; color: var(--ink-dim); font-size: 11px; padding: 0; }
+/* ------------------------------------------------------------------ explanation building blocks */
+.explain h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-dim); margin: 12px 0 4px; }
+.explain .look, .explain .worked, .explain .pitfall, .explain .try { border-radius: 8px; padding: 8px 12px; margin: 10px 0; font-size: 13.5px; }
+.explain .look { background: var(--panel-2); }
+.explain .worked { background: color-mix(in srgb, var(--accent) 9%, transparent); border-left: 3px solid var(--accent); }
+.explain .pitfall { background: color-mix(in srgb, var(--c-north) 9%, transparent); border-left: 3px solid var(--c-north); }
+.explain .try { background: color-mix(in srgb, var(--c-v) 9%, transparent); border-left: 3px solid var(--c-v); }
+.explain .look h4, .explain .worked h4, .explain .pitfall h4, .explain .try h4 { margin-top: 0; }
+.explain ol.steps { padding-left: 20px; margin: 6px 0; } .explain ol.steps li { margin: 4px 0; }
+.explain .key { font-weight: 650; color: var(--ink); }

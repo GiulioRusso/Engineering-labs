@@ -155,14 +155,77 @@
   "name": "Electronic warfare",
   "topics": [
    {
-    "id": "radar-pulses",
-    "title": "Radar pulses",
-    "what": "Pulse length, PRF, echoes, the matched filter and pulse compression; range ambiguity.",
-    "from": "radar",
+    "id": "pulse-echo",
+    "title": "Pulse echo and range",
+    "what": "Watch a pulse fly out and back while the receiver records it; delay, duty cycle, the blind zone.",
+    "from": "pulses",
     "cases": [
-     "pulses"
+     "echo"
     ],
-    "group": "Radar"
+    "group": "Pulses and range"
+   },
+   {
+    "id": "range-resolution",
+    "title": "Range resolution",
+    "what": "Two aircraft, two echoes: when they overlap the radar sees one target.",
+    "from": "pulses",
+    "cases": [
+     "resolution"
+    ],
+    "group": "Pulses and range"
+   },
+   {
+    "id": "pulse-train",
+    "title": "Pulse trains and RTI",
+    "what": "A moving target draws a tilted track on the range–time intensity map.",
+    "from": "pulses",
+    "cases": [
+     "train"
+    ],
+    "group": "Pulses and range"
+   },
+   {
+    "id": "pulses-in-flight",
+    "title": "Pulses in flight",
+    "what": "Raise the PRF until several pulses are airborne and a distant target is reported close.",
+    "from": "pulses",
+    "cases": [
+     "measure"
+    ],
+    "group": "Pulses and range"
+   },
+   {
+    "id": "plain-pulse",
+    "title": "The plain pulse",
+    "what": "Pulse, spectrum, echo and matched filter; then two aircraft in formation split by Doppler.",
+    "from": "waveforms",
+    "cases": [
+     "plain",
+     "formation"
+    ],
+    "group": "Waveforms"
+   },
+   {
+    "id": "chirp",
+    "title": "The LFM chirp",
+    "what": "Bandwidth without a short pulse; compression, weighting, and range–Doppler coupling on a fighter and tanker.",
+    "from": "waveforms",
+    "cases": [
+     "chirp",
+     "refuel"
+    ],
+    "group": "Waveforms"
+   },
+   {
+    "id": "phase-codes",
+    "title": "Phase codes",
+    "what": "Barker-13: compression with a sign switch, and the sidelobe floor that hides a small target.",
+    "from": "waveforms",
+    "cases": [
+     "barker",
+     "masking"
+    ],
+    "group": "Waveforms"
    },
    {
     "id": "range-doppler",

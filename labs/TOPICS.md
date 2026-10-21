@@ -46,7 +46,13 @@ In the Electronics Visualizer.
 
 | Topic | What you do | Status |
 |---|---|---|
-| [Radar pulses](web/electronic-warfare.html?lab=radar-pulses) | Pulse length, PRF, echoes, the matched filter and pulse compression; range ambiguity. | done |
+| [Pulse echo and range](web/electronic-warfare.html?lab=pulse-echo) | Watch a pulse fly out and back while the receiver records it; delay, duty cycle, the blind zone. | done |
+| [Range resolution](web/electronic-warfare.html?lab=range-resolution) | Two aircraft, two echoes: when they overlap the radar sees one target. | done |
+| [Pulse trains and RTI](web/electronic-warfare.html?lab=pulse-train) | A moving target draws a tilted track on the range–time intensity map. | done |
+| [Pulses in flight](web/electronic-warfare.html?lab=pulses-in-flight) | Raise the PRF until several pulses are airborne and a distant target is reported close. | done |
+| [The plain pulse](web/electronic-warfare.html?lab=plain-pulse) | Pulse, spectrum, echo and matched filter; then two aircraft in formation split by Doppler. | done |
+| [The LFM chirp](web/electronic-warfare.html?lab=chirp) | Bandwidth without a short pulse; compression, weighting, and range–Doppler coupling on a fighter and tanker. | done |
+| [Phase codes](web/electronic-warfare.html?lab=phase-codes) | Barker-13: compression with a sign switch, and the sidelobe floor that hides a small target. | done |
 | [Range and Doppler](web/electronic-warfare.html?lab=range-doppler) | A range–Doppler map: velocity from phase shifts, ground clutter, range and velocity folding. | done |
 | [Detection in noise](web/electronic-warfare.html?lab=detection) | Radar equation, threshold, false alarms and probability of detection on an A-scope. | done |
 | [The PPI scope](web/electronic-warfare.html?lab=ppi) | A rotating beam paints aircraft, ground clutter and rain on a plan display. | done |

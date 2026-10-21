@@ -1,0 +1,61 @@
+<section data-case="echo">
+  <h3>Measuring range with a stopwatch</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the radar (left) and an aircraft (right), seen from above. The orange bar is the pulse flying out, the blue bar the echo flying back. Bottom: what the receiver records against time — the grey block is its own transmission, the blue block is the echo. Press play and watch both pictures move together.</div>
+  <p>A radar cannot see a target. It can only <span class="key">time</span> how long its own pulse takes to come back. Light travels 300 m every microsecond, and the pulse makes the trip twice — out and back — so the range is half the distance the pulse covered.</p>
+  <div class="eq">$$R = \frac{c\,\Delta t}{2}, \qquad c \approx 3\times10^8\ \text{m/s} = 0.3\ \text{km/µs}$$</div>
+  <h4>Step by step</h4>
+  <ol class="steps">
+    <li>The transmitter switches on for τ (the pulse width). In space the pulse is a "slab" of radio wave \(c\tau\) long: 1 µs → 300 m.</li>
+    <li>It travels to the target, a part of it bounces back, and travels home: total path \(2R\).</li>
+    <li>The receiver sees the echo start at \(\Delta t = 2R/c\) and last τ.</li>
+    <li>Then the next pulse leaves, one PRI later. The gap between pulses is the listening window.</li>
+  </ol>
+  <div class="worked"><h4>Worked example (the default scene)</h4>Target at 20 km: \(\Delta t = 2 \times 20\,000 / 3\times10^8 = 133\ \text{µs}\). Reading it backwards: an echo at 133 µs means \(R = 3\times10^8 \times 133\times10^{-6} / 2 = 20\ \text{km}\). Memory aid: <b>every microsecond of delay is 150 m of range</b>.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Forgetting the factor 2 (the pulse goes out <i>and</i> back) — you would put the target twice as far. And mixing up the pulse width τ (how long it is on) with the PRI (how often it fires): they are different knobs with different jobs.</div>
+  <div class="try"><h4>Try it</h4>Double the range and check the echo moves to exactly twice the delay. Then make the pulse much longer and bring the target close: when the echo comes back before the pulse has finished, the receiver is still switched off — the radar is blind close in.</div>
+</section>
+<section data-case="echo" data-example="far"><h3>Twice as far</h3><p>40 km → 267 µs: delay is proportional to range. The echo is also weaker: power falls as \(1/R^4\), a factor 16 here (the drawn amplitude is only indicative).</p></section>
+<section data-case="echo" data-example="long"><h3>A longer pulse</h3><p>10 µs on means a 3 km slab of wave and a 10 µs echo. More energy reaches the target (good for detection), but the echo is a long block: its start is less sharp, and two targets close together will overlap (see <i>Range resolution</i>).</p></section>
+<section data-case="echo" data-example="blind"><h3>The blind zone</h3><p>While transmitting, the receiver must be protected from its own kilowatts, so it is off. An echo returning in less than τ is lost: the minimum range is \(c\tau/2\) — 1.5 km for a 10 µs pulse. That is why long-range radars, which use long pulses, cannot see close in.</p></section>
+<section data-case="echo" data-example="duty"><h3>Duty cycle</h3><p>Duty cycle = τ/PRI = 20 %: the transmitter is on a fifth of the time. Average power is peak power × duty cycle. A high duty cycle gives more energy per second but shortens the listening window, and therefore the maximum range \(c\,\text{PRI}/2\).</p></section>
+
+<section data-case="resolution">
+  <h3>Telling two targets apart</h3>
+  <div class="look"><h4>What you are looking at</h4>Two aircraft one behind the other. Each sends back its own echo (blue and yellow lanes). On the receiver timeline the two echoes are blocks τ long, separated by \(2\Delta R/c\).</div>
+  <p>If the second echo starts before the first has ended, the blocks merge and the receiver sees one long blob: <span class="key">one target</span>. The two echoes are separate only if their time gap is longer than the pulse:</p>
+  <div class="eq">$$\frac{2\Delta R}{c} > \tau \iff \Delta R > \frac{c\tau}{2}$$</div>
+  <div class="worked"><h4>Worked example</h4>τ = 2 µs → \(c\tau/2 = 300\) m. Targets 500 m apart: echoes 3.3 µs apart, longer than 2 µs → two targets. At 200 m apart: 1.3 µs < 2 µs → one blob.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a stronger radar resolves better. Resolution depends only on the pulse width (more precisely on the bandwidth, see <i>Radar waveforms</i>), not on power.</div>
+  <div class="try"><h4>Try it</h4>Set the separation exactly at \(c\tau/2\) and watch the blocks just touch. Then shorten the pulse: the same two aircraft split.</div>
+</section>
+<section data-case="resolution" data-example="merge"><h3>One blob</h3><p>200 m apart with a 2 µs pulse (300 m resolution): the echoes overlap for 0.67 µs and form a single 3.3 µs return. The operator sees one, slightly long, target.</p></section>
+<section data-case="resolution" data-example="edge"><h3>The limit</h3><p>Exactly 300 m: the second echo starts the instant the first ends. Any closer and they merge.</p></section>
+<section data-case="resolution" data-example="short"><h3>A shorter pulse</h3><p>0.5 µs → 75 m resolution: 200 m is now plenty. The price: four times less energy per pulse. Chirps get around this (next topic group).</p></section>
+
+<section data-case="train">
+  <h3>Pulse trains and the range–time picture</h3>
+  <div class="look"><h4>What you are looking at</h4>The bottom picture is a <b>range–time intensity</b> (RTI) map: each row is the receive window of one pulse, bright where the echo landed. Rows stack upwards as pulses go out. Top: the aircraft at the current pulse.</div>
+  <p>A radar fires a pulse every PRI. If the target moves, each echo lands a little further (or closer) than the last. Stacked, the echoes draw a track whose <span class="key">slope is the velocity</span>:</p>
+  <div class="eq">$$R_n = R_0 + v_r\, n\,\text{PRI}, \qquad v_r = \frac{\Delta R \text{ per pulse}}{\text{PRI}}$$</div>
+  <div class="worked"><h4>Worked example</h4>v = 300 m/s, PRI = 5 ms: the target moves 1.5 m per pulse, 150 m over 100 pulses — 10 range bins of 15 m. Slope 1.5 m / 5 ms = 300 m/s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting to see real aircraft move between two pulses: at real PRIs (≈1 ms) a jet moves 30 cm per pulse, far less than a range bin. Velocity is normally measured from the echo <i>phase</i> (Doppler), not from range change — this map is the slow, intuitive version.</div>
+  <div class="try"><h4>Try it</h4>Set v = 0: the track is vertical. Reverse the sign: it tilts the other way. Lengthen the pulse: the track gets fatter and the slope harder to read.</div>
+</section>
+<section data-case="train" data-example="still"><h3>At rest</h3><p>Same range every pulse: a straight vertical line. Ground clutter looks exactly like this, which is why moving-target processing removes vertical tracks.</p></section>
+<section data-case="train" data-example="closing"><h3>Closing</h3><p>Negative radial velocity: the range shrinks each pulse and the track leans left.</p></section>
+<section data-case="train" data-example="coarse"><h3>A fat track</h3><p>1 µs → 150 m bins: the track becomes a wide smear, and the range change over the whole burst is barely one bin.</p></section>
+
+<section data-case="measure">
+  <h3>Pulses in flight: range ambiguity</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: plan view with the radar in the centre; each green ring is a pulse still travelling outwards (rings every 20 km). Right, top: the transmit ticks (grey) and the echoes of T1 (orange) and T2 (yellow). Right, bottom: the ranges the receiver reports.</div>
+  <p>The receiver assumes every echo belongs to the <span class="key">latest</span> pulse. That is true only if the echo returns before the next pulse leaves, i.e. if the target is closer than</p>
+  <div class="eq">$$R_u = \frac{c\,\text{PRI}}{2} = \frac{c}{2\,\text{PRF}}, \qquad R_\text{reported} = R \bmod R_u$$</div>
+  <h4>Step by step</h4>
+  <ol class="steps"><li>Count how many PRIs fit into the true delay \(2R/c\): that many pulses left while the echo was in the air.</li><li>The receiver measures the time since the latest of them: what is left over.</li><li>So the reported range is the true range minus a whole number of \(R_u\).</li></ol>
+  <div class="worked"><h4>Worked example</h4>PRF 8 kHz → \(R_u = 3\times10^8 / 16\,000 = 18.7\) km. T1 at 58 km: \(58 / 18.7 = 3.1\): three whole \(R_u\) (56.2 km) disappear and T1 is reported at <b>1.8 km</b>. Nothing about the target changed, only the PRF.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a folded target looks "wrong". It looks perfectly normal — a clean echo at a plausible range. That is what makes ambiguity dangerous. Radars resolve it by switching between several PRFs and checking which true range is consistent with all of them.</div>
+  <div class="try"><h4>Try it</h4>Slide the PRF up slowly and watch more rings appear in flight and T1's reported range jump each time it crosses a multiple of \(R_u\).</div>
+</section>
+<section data-case="measure" data-example="honest"><h3>Low PRF</h3><p>1.5 kHz → \(R_u = 100\) km: at most one wavefront is in flight within the display, and both targets are reported honestly.</p></section>
+<section data-case="measure" data-example="folded"><h3>High PRF</h3><p>8 kHz: three or four pulses are in the air at once, and T1 is reported at 1.8 km — in the clutter right next to the radar.</p></section>
+<section data-case="measure" data-example="both"><h3>Both folded</h3><p>T2 at 30 km also exceeds \(R_u\) (18.7 km) and appears at 11.3 km. Two targets, two wrong ranges, no warning.</p></section>

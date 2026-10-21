@@ -3,12 +3,13 @@
 import * as THREE from 'three';
 import { createCurve } from './curve.js';
 import { cssVar } from '../ui/theme.js';
+import { cmap } from './colormap.js';
 import { niceStep } from './graph2d.js';
 
 const fmt = (v) => String(Number(v.toPrecision(3)));
 
-export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 1], xTitle = '', yTitle = '', z = 0 } = {}) {
-  const { stage, scene } = ctx, [X0, Y0, W, H] = box, curves = {}, labels = [], points = {};
+export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 1], xTitle = '', yTitle = '', z = 0, yTicks = true, grid: showGrid = true } = {}) {
+  const { stage, scene } = ctx, [X0, Y0, W, H] = box, curves = {}, labels = [], points = {}, images = {};
   const frame = createCurve(stage, { max: 8, width: 1.4, color: '--ink-dim' }), grid = createCurve(stage, { max: 60, width: 1, color: '--line' });
   const zero = createCurve(stage, { max: 1, width: 1.2, color: '--ink-dim' });
   const tx = ctx.label(xTitle, 'tick'), ty = ctx.label(yTitle, 'tick'); scene.add(tx, ty);
@@ -20,8 +21,8 @@ export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 
     let k = 0; const g = [], put = (t, px, py) => { if (!labels[k]) { labels[k] = ctx.label('', 'tick'); scene.add(labels[k]); } labels[k].element.textContent = t; labels[k].position.set(px, py, z); labels[k].visible = true; k++; };
     const sx = niceStep(xr[1] - xr[0], 6), sy = niceStep(yr[1] - yr[0], 4);
     for (let v = Math.ceil(xr[0] / sx) * sx; v <= xr[1] + 1e-9; v += sx) { g.push(mx(v), Y0, z, mx(v), Y0 + H, z); put(fmt(v), mx(v), Y0 - 0.18); }
-    for (let v = Math.ceil(yr[0] / sy) * sy; v <= yr[1] + 1e-9; v += sy) { g.push(X0, my(v), z, X0 + W, my(v), z); put(fmt(v), X0 - 0.3, my(v)); }
-    grid.segments(g);
+    if (yTicks) for (let v = Math.ceil(yr[0] / sy) * sy; v <= yr[1] + 1e-9; v += sy) { g.push(X0, my(v), z, X0 + W, my(v), z); put(fmt(v), X0 - 0.3, my(v)); }
+    grid.segments(showGrid ? g : []);
     zero.object.visible = yr[0] < 0 && yr[1] > 0; if (zero.object.visible) zero.segments([X0, my(0), z, X0 + W, my(0), z]);
     tx.position.set(X0 + W - 0.4, Y0 - 0.42, z); ty.position.set(X0 + W - 0.9, Y0 + H + 0.18, z);
   }
@@ -30,9 +31,24 @@ export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 
   return {
     mx, my,
     range(nx, ny) { xr = nx || xr; yr = ny || yr; axes(); },
-    titles(a, b) { tx.element.textContent = a; ty.element.textContent = b; },
+    titles(a, b) { tx.element.textContent = a; ty.element.textContent = b; tx.visible = frame.object.visible && !!a; ty.visible = frame.object.visible && !!b; },
     line(key, xs, ys, o) { const c = curve(key, o), p = []; for (let i = 0; i < xs.length; i++) if (xs[i] >= xr[0] && xs[i] <= xr[1] && Number.isFinite(ys[i])) p.push(mx(xs[i]), my(ys[i]), z + 0.002); c.set(p); c.object.visible = true; return c; },
     stems(key, xs, ys, o) { const c = curve(key, { width: 3, ...o }), p = []; for (let i = 0; i < xs.length; i++) if (xs[i] >= xr[0] && xs[i] <= xr[1]) p.push(mx(xs[i]), my(0), z + 0.002, mx(xs[i]), my(ys[i]), z + 0.002); c.segments(p); c.object.visible = true; return c; },
+    // heatmap filling the box: values[j * nx + i] (i along x, j along y) mapped by norm to [0, 1], then colormap
+    image(key, values, nx, ny, { map = 'magma', norm = (v) => v } = {}) {
+      let I = images[key];
+      if (!I || I.nx !== nx || I.ny !== ny) {
+        if (I) { scene.remove(I.mesh); I.tex.dispose(); }
+        const data = new Uint8Array(nx * ny * 4), tex = new THREE.DataTexture(data, nx, ny, THREE.RGBAFormat);
+        tex.colorSpace = THREE.SRGBColorSpace; tex.magFilter = THREE.LinearFilter; tex.minFilter = THREE.LinearFilter;
+        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.MeshBasicMaterial({ map: tex, depthWrite: false }));
+        mesh.position.set(X0 + W / 2, Y0 + H / 2, z - 0.004); scene.add(mesh);
+        I = images[key] = { mesh, tex, data, nx, ny };
+      }
+      const rgb = [0, 0, 0];
+      for (let k = 0; k < nx * ny; k++) { cmap(map, norm(values[k]), rgb); I.data[4 * k] = rgb[0] * 255; I.data[4 * k + 1] = rgb[1] * 255; I.data[4 * k + 2] = rgb[2] * 255; I.data[4 * k + 3] = 255; }
+      I.tex.needsUpdate = true; I.mesh.visible = true;
+    },
     // scatter: up to 4000 dots of one colour
     dots(key, xs, ys, { color = '--c-B', size = 4 } = {}) {
       let P = points[key];
@@ -42,7 +58,7 @@ export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 
       A.needsUpdate = true; P.geometry.setDrawRange(0, n); P.visible = true;
     },
     hide(key) { if (curves[key]) curves[key].object.visible = false; },
-    clear() { for (const c of Object.values(curves)) c.object.visible = false; for (const P of Object.values(points)) P.visible = false; },
+    clear() { for (const c of Object.values(curves)) c.object.visible = false; for (const P of Object.values(points)) P.visible = false; for (const I of Object.values(images)) I.mesh.visible = false; },
     show(on) { for (const c of [frame, grid, zero]) c.object.visible = on; if (!on) this.clear(); for (const l of [...labels, tx, ty]) l.visible = on && l.element.textContent !== ''; if (on) axes(); },
     theme() { for (const c of [frame, grid, zero, ...Object.values(curves)]) c.theme(); for (const P of Object.values(points)) P.material.color.set(cssVar(P.userData.color)); },
   };

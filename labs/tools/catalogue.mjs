@@ -68,12 +68,17 @@ export function renderCatalogue({ catalog, labsRoot, web, repo }) {
 body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
 .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
-.topbar { display: flex; align-items: center; justify-content: space-between; padding-block: 18px 6px; }
-.brand { font-weight: 700; font-size: 17px; display: flex; align-items: center; gap: 10px; }
-.brand .logo { width: 28px; height: 28px; border-radius: 7px; background: var(--accent); display: grid; place-items: center; color: var(--bg); font-weight: 800; }
+.topbar { display: flex; align-items: flex-start; justify-content: space-between; padding-block: 28px 10px; }
+.brand { display: flex; align-items: center; gap: 18px; }
+.brand h1 { margin: 0; font-size: clamp(28px, 4vw, 40px); letter-spacing: -.02em; line-height: 1.05; }
+.brand .tag { color: var(--dim); font-size: 15px; margin-top: 6px; }
+.brand .logo { width: 76px; height: 76px; flex: none; border-radius: 20px; background: linear-gradient(135deg, var(--accent), hsl(265 80% 66%)); display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 44px; box-shadow: 0 10px 30px color-mix(in srgb, var(--accent) 35%, transparent); }
 .btn { border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 8px; padding: 7px 12px; font: inherit; font-size: 13px; cursor: pointer; }
 .btn:hover { border-color: var(--accent); }
-.intro { color: var(--dim); font-size: 14px; margin: 4px 0 16px; max-width: 680px; }
+.about { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 22px; margin: 18px 0 20px; }
+.about h3 { margin: 0 0 3px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink); }
+.about p { margin: 0; color: var(--dim); font-size: 13.5px; line-height: 1.45; }
+.intro { color: var(--dim); font-size: 13px; margin: 0 0 14px; }
 .intro b { color: var(--ink); font-weight: 600; } .intro a { color: var(--accent); }
 .search { position: relative; margin-bottom: 18px; }
 .search input { width: 100%; padding: 11px 14px 11px 38px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font: inherit; }
@@ -105,9 +110,15 @@ a.card:hover, .card .head:hover img { border-color: hsl(var(--hue) 70% 58%); }
 .list a:hover { background: var(--panel2); color: var(--accent); }
 footer { color: var(--dim); font-size: 12.5px; padding: 0 16px 40px; }
 </style></head><body>
-<div class="wrap topbar"><div class="brand"><span class="logo">∇</span>Engineering Labs</div><button class="btn" id="theme" title="Theme">☀</button></div>
+<div class="wrap topbar"><div class="brand"><span class="logo">∇</span><div><h1>Engineering Labs</h1><div class="tag">Maths, physics and engineering you can move, measure and understand</div></div></div><button class="btn" id="theme" title="Theme">☀</button></div>
 <div class="wrap">
-  <p class="intro">Interactive lessons for <b>${nTopics} topics</b> in maths, physics and engineering: drag things in 3D, change one thing at a time, read the explanation. Everything runs offline, straight from the file. By <b>Giulio Russo</b> · <a href="https://github.com/GiulioRusso/Engineering-scripts">source</a></p>
+  <div class="about">
+    <div><h3>See it move</h3><p>Every topic is a live picture: drag things, change one value at a time and watch the curves, fields and signals respond.</p></div>
+    <div><h3>One idea at a time</h3><p>Each topic starts from the simplest case. Examples add one idea each, with only the controls that idea needs.</p></div>
+    <div><h3>Understand, not memorise</h3><p>Press <b>?</b> for the explanation: what you are looking at, the idea in words, the steps, a worked example and the usual mistakes.</p></div>
+    <div><h3>Works anywhere</h3><p>${nTopics} topics in single files that open straight from the folder, offline, with nothing to install.</p></div>
+  </div>
+  <p class="intro">By <b>Giulio Russo</b> · <a href="https://github.com/GiulioRusso/Engineering-scripts">source</a></p>
   <div class="search"><input id="q" type="search" placeholder="Search topics: pendulum, Bode, eigenvector…" aria-label="Search topics" autocomplete="off"></div>
   <div class="results" id="results" hidden></div>
 </div>

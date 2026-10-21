@@ -1,0 +1,85 @@
+<section data-case="plain chirp barker">
+  <h3>Three quantities decide everything</h3>
+  <p>Every waveform is a compromise between three things the radar wants, and it cannot choose them all freely:</p>
+  <div class="eq">$$\text{energy} \propto P\,\tau \qquad \Delta R = \frac{c}{2B} \qquad \Delta v = \frac{\lambda}{2T}$$</div>
+  <p><b>Detection</b> wants energy, so a long pulse τ. <b>Range resolution</b> wants bandwidth B. <b>Velocity resolution</b> wants a long observation T. A waveform is a decision about which of them you are willing to spend.</p>
+  <table><tr><th>you need</th><th>reach for</th><th>because</th></tr>
+  <tr><td>precise speed</td><td>a long burst of plain pulses</td><td>only dwell time buys Doppler</td></tr>
+  <tr><td>to split two targets far away</td><td>LFM chirp</td><td>bandwidth without a short pulse</td></tr>
+  <tr><td>fine range, simple hardware</td><td>phase code</td><td>just flip a sign</td></tr>
+  <tr><td>a small target beside a big one</td><td>chirp + weighting</td><td>its sidelobes can be lowered</td></tr></table>
+  <div class="look"><h4>How to read the four panels</h4>Top left: the pulse itself in time. Top right: its spectrum (how much bandwidth it occupies). Bottom left: the echo as received, buried in noise. Bottom right: the same echo after the <b>matched filter</b> (pulse compression), in dB, centred on the target. The dashed curve is the noise-free compressed pulse.</div>
+  <h4>What the matched filter does</h4>
+  <p>The receiver slides a copy of the transmitted pulse along the received signal and multiplies-and-adds at every position (a correlation). Where the copy lines up with the echo, everything adds in phase and a peak appears; elsewhere the noise adds randomly. The peak is as tall as the whole pulse's energy and as narrow as \(1/B\).</p>
+</section>
+<section data-case="plain">
+  <h3>The plain pulse</h3>
+  <p>The simplest thing a transmitter can do: switch on at one frequency for τ seconds. Its spectrum is forced by the rectangle shape alone:</p>
+  <div class="eq">$$s(t) = \text{rect}(t/\tau) \;\longrightarrow\; S(f) = \tau\,\text{sinc}(f\tau), \qquad B \approx \frac{1}{\tau}$$</div>
+  <p>So <span class="key">duration and bandwidth are locked together</span>. Finer range means a shorter pulse, which means less energy, which means less detection range. There is no third option — that deadlock is what the chirp and the phase code break.</p>
+  <p>Its matched-filter output is a triangle \(2\tau\) wide with <b>no sidelobes at all</b>: the one thing the plain pulse does better than anything else.</p>
+  <div class="worked"><h4>Worked example</h4>τ = 10 µs: B ≈ 100 kHz, so \(\Delta R = c/2B = 1.5\) km. Two aircraft 500 m apart are one blob. To split them you would need τ < 3.3 µs — and a third of the energy.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Believing "longer pulse = better radar". Longer gives more energy (detection) but worse range resolution. "Better" depends on the question.</div>
+  <div class="try"><h4>Try it</h4>Drag τ and watch the two right-hand panels move together: long pulse → narrow spectrum and fat triangle; short pulse → wide spectrum and sharp triangle.</div>
+</section>
+<section data-case="plain" data-example="short"><h3>Short pulse</h3><p>1 µs: the spectrum widens to about 1 MHz and the triangle shrinks to 150 m. Fine range, but ten times less energy than 10 µs.</p></section>
+<section data-case="plain" data-example="long"><h3>Long pulse</h3><p>20 µs: 50 kHz of bandwidth, a 3 km resolution cell. Plenty of energy for a distant small target, useless for separating close ones.</p></section>
+<section data-case="plain" data-example="noisy"><h3>Compression gain</h3><p>At −5 dB the echo is invisible in the raw signal (bottom left), yet the matched filter adds up the whole pulse coherently while the noise adds randomly: the peak stands out. For a plain pulse the gain is \(B\tau \approx 1\) per sample bandwidth — the real benefit comes from integrating over the pulse.</p></section>
+<section data-case="chirp">
+  <h3>The LFM chirp: bandwidth without a short pulse</h3>
+  <p>Sweep the frequency linearly across the pulse (top left: I and Q rotate faster and faster). Now duration and bandwidth are independent knobs:</p>
+  <div class="eq">$$s(t) = e^{\,j\pi\frac{B}{\tau}t^2}, \qquad f_\text{inst}(t) = \frac{B}{\tau}\,t, \qquad -\tfrac{\tau}{2} \le t \le \tfrac{\tau}{2}$$</div>
+  <p>The matched filter squeezes the whole long pulse into a spike about \(0.886/B\) wide: range resolution from \(B\), energy from \(\tau\). The squeeze factor — the <span class="key">compression ratio</span> — is the time–bandwidth product \(B\tau\), and it is also the SNR gain.</p>
+  <div class="worked"><h4>Worked example</h4>τ = 20 µs, B = 10 MHz: \(B\tau = 200\) → 23 dB of compression gain. Resolution \(c/2B = 15\) m, against 3 km for a plain 20 µs pulse.</div>
+  <h4>The bill</h4>
+  <p>Unweighted, the sidelobes are at −13.3 dB — the same number as a uniformly lit antenna, because it is the same Fourier transform of a rectangle. Weighting the filter (Hamming) brings them to about −42 dB, at the price of a main lobe about 1.5 times wider and a dB or so of SNR.</p>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the chirp's long pulse ruins resolution. Resolution is set by the bandwidth, not the duration — after compression.</div>
+  <div class="try"><h4>Try it</h4>Double B and watch the spike halve. Switch Hamming on and compare the sidelobes in the bottom-right panel.</div>
+</section>
+<section data-case="chirp" data-example="wide"><h3>More bandwidth</h3><p>20 MHz → 7.5 m resolution with the same 20 µs pulse; compression ratio 400 (26 dB).</p></section>
+<section data-case="chirp" data-example="hamming"><h3>Weighting</h3><p>Hamming tapers the filter's reference copy: the −13 dB sidelobes drop to about −42 dB and the main lobe widens. This is the same trade as tapering an antenna array.</p></section>
+<section data-case="chirp" data-example="noisy"><h3>Buried in noise</h3><p>At −10 dB nothing is visible before compression. The filter's gain \(B\tau\) (23 dB) brings the peak well above the noise: that is why long-range radars chirp.</p></section>
+<section data-case="barker">
+  <h3>Phase codes: compression with a switch</h3>
+  <p>Cut the pulse into N equal <b>chips</b> and flip the phase by 180° according to a code. No frequency sweep is needed — the transmitter only switches a sign.</p>
+  <div class="eq">$$s(t) = \sum_{n=0}^{N-1} c_n\,\text{rect}\!\left(\frac{t - n t_c}{t_c}\right), \qquad c_n = \pm1, \qquad B \approx \frac{1}{t_c}$$</div>
+  <p>The bandwidth is set by the chip, so a 13-chip code compresses 13:1. Barker codes are special: every autocorrelation sidelobe has height exactly \(1/N\). Barker-13, the longest one that exists, gives \(1/13 = -22.3\) dB.</p>
+  <div class="worked"><h4>Worked example</h4>τ = 13 µs, 13 chips of 1 µs: B ≈ 1 MHz → 150 m resolution, like a 1 µs plain pulse but with 13 times its energy.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Trying to weight the sidelobes away as with a chirp. They come from the code itself, not from a rectangular envelope: no biphase code beats −22.3 dB at any length.</div>
+  <div class="try"><h4>Try it</h4>Count the sidelobes in the compressed output: they are all the same height. Then see <i>Drone beside a tanker</i> for when that floor matters.</div>
+</section>
+<section data-case="barker" data-example="short"><h3>Shorter chips</h3><p>0.25 µs chips: four times the bandwidth, four times finer range. The sidelobe floor is still −22.3 dB.</p></section>
+<section data-case="barker" data-example="noisy"><h3>Noisy echo</h3><p>The code compresses by 13 (11 dB): the peak emerges from −5 dB of noise.</p></section>
+<section data-case="formation">
+  <h3>Where the plain pulse wins: two aircraft by speed</h3>
+  <div class="look"><h4>What you are looking at</h4>Two aircraft 30 m apart — far less than a 1 µs pulse can resolve (150 m), so the range profile (bottom left) is one blob. Right: the Doppler spectrum from a burst of pulses.</div>
+  <p>They are separated by <b>motion</b>. Across a coherent burst of N pulses the echo phase advances by \(2\pi f_d\,\text{PRI}\) each pulse; the burst is a spectrum analyser of length \(T = N/\text{PRF}\):</p>
+  <div class="eq">$$f_d = \frac{2v}{\lambda}, \qquad \Delta v = \frac{\lambda}{2T}$$</div>
+  <div class="worked"><h4>Worked example</h4>λ = 3 cm, T = 5 ms: \(\Delta v = 0.03/0.01 = 3\) m/s. Aircraft 5 m/s apart: two lines. 1 m/s apart: one line — you need T = 15 ms or more.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting more bandwidth or power to separate them. Only a longer look does. And a long look in one direction is time not spent searching elsewhere.</div>
+</section>
+<section data-case="formation" data-example="merge"><h3>One line</h3><p>1 m/s apart with 3 m/s resolution: the two Doppler lines fuse.</p></section>
+<section data-case="formation" data-example="longer"><h3>Look longer</h3><p>25 ms → 0.6 m/s resolution: the lines split. Nothing about the targets changed, only how long you looked.</p></section>
+<section data-case="refuel">
+  <h3>Where the chirp wins: fighter and tanker</h3>
+  <div class="look"><h4>What you are looking at</h4>Two range profiles from the <b>same 20 µs pulse</b> with the same energy. Bottom left: unmodulated — a 3 km cell, one target. Right: chirped over B — two peaks at the true positions (yellow).</div>
+  <p>At 80 km you need a long pulse to detect anything, and a short one to split 30 m. The chirp is the only waveform here that gives both.</p>
+  <h4>The catch: range–Doppler coupling</h4>
+  <p>Inside a chirp, time and frequency are the same variable. A Doppler shift therefore looks exactly like a small delay, and a moving target is reported at the wrong range:</p>
+  <div class="eq">$$\Delta R_\text{coupling} = -\frac{c\,f_d\,\tau}{2B}$$</div>
+  <div class="worked"><h4>Worked example</h4>300 m/s closing at X-band: \(f_d = 20\) kHz. With τ = 20 µs, B = 10 MHz: \(\Delta R = -3\times10^8 \cdot 2\times10^4 \cdot 2\times10^{-5}/(2\cdot10^7) = -6\) m. It is a bias, not noise: it does not average away.</div>
+  <div class="try"><h4>Try it</h4>Reduce the bandwidth until the two peaks merge (around \(c/2B\) ≈ separation). Then add closing speed and watch both peaks slide off the yellow markers together.</div>
+</section>
+<section data-case="refuel" data-example="narrow"><h3>Less bandwidth</h3><p>3 MHz → 50 m resolution: 30 m is no longer enough, the peaks fuse.</p></section>
+<section data-case="refuel" data-example="coupling"><h3>Coupling error</h3><p>Both peaks read 6 m closer than they are. Radars that care correct it with a separate Doppler measurement or alternate up- and down-sweeps, whose errors cancel.</p></section>
+<section data-case="masking">
+  <h3>Where the phase code fails: a drone beside a tanker</h3>
+  <div class="look"><h4>What you are looking at</h4>The compressed output in dB: a big peak (tanker), its sidelobes, and the drone's true position and level (orange). The red dashed line is the waveform's sidelobe floor.</div>
+  <p>Both waveforms have the resolution. The question is whether the small echo survives the big one's sidelobes. A target weaker than the floor lands <b>underneath</b> them and vanishes — and more SNR does not help, because the sidelobes grow with the tanker, not with the noise.</p>
+  <div class="worked"><h4>Worked example</h4>Barker-13 floor: −22.3 dB. Drone at −25 dB: hidden. At −18 dB: visible. Unweighted chirp: −13 dB, worse. Hamming chirp: −42 dB — the drone at −25 dB reappears.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the chirp is "better" than Barker. Unweighted it is worse; what it has is a <b>knob</b> (weighting) that the phase code does not.</div>
+  <div class="try"><h4>Try it</h4>Drag the drone's level across the red line and watch it disappear and return. Then switch the waveform with the same geometry.</div>
+</section>
+<section data-case="masking" data-example="visible"><h3>Above the floor</h3><p>−18 dB is above Barker's −22.3 dB sidelobes: a separate peak.</p></section>
+<section data-case="masking" data-example="chirp"><h3>Unweighted chirp</h3><p>−13.3 dB sidelobes: even more of the neighbourhood is masked.</p></section>
+<section data-case="masking" data-example="hamming"><h3>Weighted chirp</h3><p>Hamming drops the floor to about −42 dB: the drone is clearly visible, at the cost of a wider main peak.</p></section>

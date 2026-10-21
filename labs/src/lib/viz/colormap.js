@@ -13,6 +13,10 @@ const C = {
 };
 export function cmap(name, t, out = [0, 0, 0]) {
   t = t < 0 ? 0 : t > 1 ? 1 : t;
+  if (name === 'field') { // diverging for signed fields: blue → near-black → orange
+    const u = Math.abs(2 * t - 1), [r, g, b] = t < 0.5 ? [0.27, 0.58, 1] : [1, 0.5, 0.2];
+    out[0] = 0.04 + (r - 0.04) * u; out[1] = 0.05 + (g - 0.05) * u; out[2] = 0.08 + (b - 0.08) * u; return out;
+  }
   const c = C[name];
   for (let k = 0; k < 3; k++) {
     let v = c[6][k];
