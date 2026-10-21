@@ -1,7 +1,16 @@
 <section data-case="line">
   <h3>The line</h3>
-  <p>Two points fix a line. The slope \(m\) is rise over run, the same everywhere; \(q\) is where it crosses the \(y\) axis. Drag the two handles.</p>
-  <div class="eq">$$y = m x + q, \qquad m = \frac{y_2 - y_1}{x_2 - x_1}$$</div>
+  <div class="look"><h4>What you are looking at</h4>A straight line through two points you can drag. The readout gives its slope m, where it crosses the y axis (q) and where it crosses the x axis (the root).</div>
+  <p>A function is a machine: put in x, get out y. For a line the machine is the simplest possible: multiply by m, add q. Because it multiplies by the same number everywhere, every step of 1 to the right changes y by exactly m — that is why the graph is straight.</p>
+  <div class="eq">$$y = m x + q, \qquad m = \frac{y_2 - y_1}{x_2 - x_1} = \frac{\text{rise}}{\text{run}}$$</div>
+  <ol class="steps">
+    <li><b>Slope from two points:</b> subtract the heights, subtract the x positions, divide. The order does not matter, as long as it is the same on top and bottom.</li>
+    <li><b>Intercept:</b> put one point into y = mx + q and solve for q.</li>
+    <li><b>Root:</b> set y = 0: x = −q/m (only if m ≠ 0).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Points (−2, −1) and (2, 2): m = (2 − (−1)) / (2 − (−2)) = 3/4. Then −1 = (3/4)(−2) + q gives q = 0.5. Root: x = −0.5/0.75 = −0.67. Check with the other point: (3/4)·2 + 0.5 = 2 ✓.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Mixing the order: (y₂ − y₁)/(x₁ − x₂) gives the wrong sign. Thinking a steep-looking line has a big slope: it depends on the axis scales — compute it. A vertical line is not a function (one x, many y): its slope is undefined.</div>
+  <div class="try"><h4>Try it</h4>Drag one point and watch m, q and the root update. Make the two heights equal: the slope becomes 0.</div>
 </section>
 <section data-case="line" data-example="flat"><h3>Slope zero</h3><p>Same height at both points: \(m = 0\), the line is horizontal, \(y = q\). It never crosses the \(x\) axis unless \(q = 0\).</p></section>
 <section data-case="line" data-example="origin"><h3>Through the origin</h3><p>\(q = 0\): \(y = m x\). Doubling \(x\) doubles \(y\): direct proportion.</p></section>
@@ -10,8 +19,17 @@
 
 <section data-case="parabola">
   <h3>The parabola</h3>
-  <p>The vertex form shows the turning point \((h, k)\); \(a\) sets the opening. Drag the vertex. The discriminant \(\Delta\) counts the real roots.</p>
-  <div class="eq">$$y = a(x-h)^2 + k = a x^2 + b x + c, \qquad x_{1,2} = \frac{-b \pm \sqrt\Delta}{2a}, \quad \Delta = b^2 - 4ac$$</div>
+  <div class="look"><h4>What you are looking at</h4>A parabola with its vertex (draggable) and its roots marked where it crosses the x axis. The readout shows both forms of the equation and the discriminant Δ.</div>
+  <p>Squaring makes every number positive and grows faster and faster: that is the U shape. The vertex form tells you where the U sits — its turning point (h, k) — and how wide it opens (a). The expanded form ax² + bx + c is the same curve written differently.</p>
+  <div class="eq">$$y = a(x-h)^2 + k = ax^2 + bx + c, \qquad h = -\frac{b}{2a}, \qquad x_{1,2} = \frac{-b \pm\sqrt{\Delta}}{2a}, \quad \Delta = b^2 - 4ac$$</div>
+  <ol class="steps">
+    <li><b>Where does it turn?</b> At x = h; its height there is k.</li>
+    <li><b>Which way?</b> a > 0 opens up (k is a minimum); a < 0 opens down (k is a maximum).</li>
+    <li><b>Does it cross the axis?</b> Only if the vertex and the opening point in opposite directions — that is exactly the sign of Δ.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>y = x² − 4x + 3: a = 1, b = −4, c = 3. Vertex h = 4/2 = 2, k = 4 − 8 + 3 = −1. Δ = 16 − 12 = 4 > 0, roots (4 ± 2)/2 = 1 and 3. They sit symmetrically around h = 2 — the parabola is a mirror image of itself about its vertex.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Forgetting the ± (two roots, not one). Writing y = (x − 2)² and reading the vertex as x = −2: in vertex form the sign flips. Dividing by 2 only the √Δ: the whole numerator is divided by 2a.</div>
+  <div class="try"><h4>Try it</h4>Drag the vertex slowly up through the x axis: the two roots move together, merge (Δ = 0) and disappear (Δ < 0).</div>
 </section>
 <section data-case="parabola" data-example="two"><h3>Two roots</h3><p>The vertex is below the axis and the parabola opens up, so it crosses twice: \(\Delta > 0\). Here \(y = x^2 - 2\), roots \(\pm\sqrt 2\).</p></section>
 <section data-case="parabola" data-example="one"><h3>One root</h3><p>The vertex sits on the axis: \(\Delta = 0\), a double root at \(x = h\). Here \(y = (x-1)^2\).</p></section>
@@ -21,8 +39,17 @@
 
 <section data-case="exponential">
   <h3>The exponential</h3>
-  <p>Every step of 1 in \(x\) multiplies \(y\) by the same factor \(b\). It starts at \(A\) for \(x = 0\) and never reaches zero: the \(x\) axis is an asymptote.</p>
-  <div class="eq">$$y = A\,b^x, \qquad y(x + 1) = b\,y(x)$$</div>
+  <div class="look"><h4>What you are looking at</h4>The curve y = A·bˣ, with dots at whole-number x showing that each step right multiplies the height by b.</div>
+  <p>A line adds the same amount every step; an exponential multiplies by the same factor every step. That is why it starts slowly and then explodes (b > 1), or collapses toward zero without ever reaching it (b < 1). Money with interest, bacteria, radioactive decay and the charge on a capacitor all behave this way.</p>
+  <div class="eq">$$y = A\,b^{x}, \qquad \frac{y(x+1)}{y(x)} = b, \qquad b^{x}b^{y} = b^{x+y}$$</div>
+  <ol class="steps">
+    <li>At x = 0, b⁰ = 1, so y = A: A is the starting value.</li>
+    <li>Each +1 in x multiplies y by b; each −1 divides by b.</li>
+    <li>The doubling time (b > 1) is the x step that doubles y: log_b 2.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A population of 100 that grows 50 % a year: y = 100·1.5ˣ. After 4 years 100·5.06 = 506. Doubling time log₁.₅ 2 = 1.71 years. A linear growth of +50 a year would give only 300.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Confusing 2ˣ with x²: the first doubles at every step, the second grows by adding. Thinking the curve hits zero for b < 1: it only gets closer and closer.</div>
+  <div class="try"><h4>Try it</h4>Count the dots: each is b times the previous one. Change the base to 0.5 and the same dots halve.</div>
 </section>
 <section data-case="exponential" data-example="decay"><h3>Decay</h3><p>\(0 < b < 1\): each step halves \(y\) (here \(b = \tfrac12\)). Same curve as \(2^{-x}\): the growth curve mirrored left to right.</p></section>
 <section data-case="exponential" data-example="e"><h3>Base e</h3><p>\(e \approx 2.718\) is the base whose curve has slope equal to its height at every point: \((e^x)' = e^x\).</p></section>
@@ -31,8 +58,17 @@
 
 <section data-case="logarithm">
   <h3>The logarithm</h3>
-  <p>\(\log_b x\) is the power you raise \(b\) to in order to get \(x\). It exists only for \(x > 0\), crosses the axis at \(x = 1\) and reaches 1 at \(x = b\): drag that handle.</p>
-  <div class="eq">$$y = \log_b x \iff b^y = x, \qquad \log_b(xy) = \log_b x + \log_b y$$</div>
+  <div class="look"><h4>What you are looking at</h4>y = log_b x, with the handle at (b, 1) and the point (1, 0) marked; the dashed curve is the exponential it undoes.</div>
+  <p>The logarithm answers a question: <i>to what power must I raise b to get x?</i> It is the exponential run backwards, which is why its graph is the exponential's mirror image across the line y = x. It turns multiplication into addition, so it squeezes huge ranges into small ones — decibels, pH and the Richter scale are all logarithms.</p>
+  <div class="eq">$$y = \log_b x \iff b^{y} = x, \qquad \log_b(xy) = \log_b x + \log_b y, \qquad \log_b x^n = n\log_b x$$</div>
+  <ol class="steps">
+    <li>log_b 1 = 0 for every base (b⁰ = 1): every log curve passes through (1, 0).</li>
+    <li>log_b b = 1: that is the handle.</li>
+    <li>x must be positive: no power of a positive base gives zero or a negative number.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>log₂ 8 = 3 because 2³ = 8. log₂ 1000 ≈ 9.97 (2¹⁰ = 1024). In decibels: a factor 1000 in power is 10·log₁₀ 1000 = 30 dB; a factor 2 is 3 dB.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Writing log(x + y) = log x + log y — false; the rule is for products. Taking the log of a negative number. Mixing bases: log, ln and log₂ differ by constant factors (ln x = 2.303·log₁₀ x).</div>
+  <div class="try"><h4>Try it</h4>Drag the base handle: the curve always passes through (1, 0) and through (b, 1).</div>
 </section>
 <section data-case="logarithm" data-example="ln"><h3>Natural logarithm</h3><p>\(\ln x = \log_e x\), the inverse of \(e^x\). Its slope at \(x\) is \(1/x\).</p></section>
 <section data-case="logarithm" data-example="below"><h3>Base below 1</h3><p>With \(b < 1\) the logarithm falls: bigger \(x\) needs a more negative power of \(b\).</p></section>

@@ -1,7 +1,14 @@
 <section data-case="dot">
-  <h3>The dot product</h3>
-  <p>How much two vectors point the same way: the length of \(\mathbf a\) times the shadow of \(\mathbf b\) on it (green). A number, not a vector. Drag the tips of \(\mathbf a\) and \(\mathbf b\).</p>
-  <div class="eq">$$\mathbf a\cdot\mathbf b = a_x b_x + a_y b_y + a_z b_z = |\mathbf a||\mathbf b|\cos\theta$$</div>
+  <h3>The dot product: how much two arrows agree</h3>
+  <div class="look"><h4>What you are looking at</h4>Two vectors a and b (drag their tips), the angle between them, and the shadow of b on a.</div>
+  <p>The dot product multiplies the length of a by the part of b that points along a. Same direction: as big as possible. At right angles: zero — they share nothing. Pointing apart: negative. Work in physics (force · displacement) is exactly this.</p>
+  <div class="eq">$$\mathbf a\cdot\mathbf b = a_xb_x + a_yb_y + a_zb_z = |\mathbf a||\mathbf b|\cos\theta$$</div>
+  <ol class="steps">
+    <li>Compute with components: multiply matching components and add.</li>
+    <li>Then the angle: cos θ = a·b / (|a||b|).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>a = (1.6, 0.3), b = (0.6, 1.4): a·b = 0.96 + 0.42 = 1.38; |a| = 1.63, |b| = 1.52; cos θ = 0.557, θ = 56°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting a vector: the dot product is a number.</div>
 </section>
 <section data-case="dot" data-example="perp"><h3>Perpendicular</h3><p>\(\theta = 90°\), \(\cos\theta = 0\): \(\mathbf b\) casts no shadow on \(\mathbf a\), so \(\mathbf a\cdot\mathbf b = 0\). This is the test for perpendicular vectors.</p></section>
 <section data-case="dot" data-example="same"><h3>Same direction</h3><p>\(\theta = 0\), \(\cos\theta = 1\): the dot product is as large as it can be, \(|\mathbf a||\mathbf b|\).</p></section>
@@ -9,9 +16,12 @@
 <section data-case="dot" data-example="opposite"><h3>Opposite</h3><p>\(\theta = 180°\): the most negative value, \(-|\mathbf a||\mathbf b|\).</p></section>
 
 <section data-case="cross">
-  <h3>The cross product</h3>
-  <p>A vector at right angles to both \(\mathbf a\) and \(\mathbf b\), as long as the area of the parallelogram they span. Its direction follows the right-hand rule.</p>
-  <div class="eq">$$|\mathbf a\times\mathbf b| = |\mathbf a||\mathbf b|\sin\theta, \qquad \mathbf a\times\mathbf b = -\,\mathbf b\times\mathbf a$$</div>
+  <h3>The cross product: an arrow out of the plane</h3>
+  <div class="look"><h4>What you are looking at</h4>a, b, the parallelogram they span, and a × b standing perpendicular to both.</div>
+  <p>The cross product of two vectors is a third vector at right angles to both. Its length is the area of the parallelogram they span — biggest at 90°, zero when they are parallel. Its direction follows the right-hand rule. Torque (r × F) and magnetic force (q v × B) are cross products.</p>
+  <div class="eq">$$|\mathbf a\times\mathbf b| = |\mathbf a||\mathbf b|\sin\theta, \qquad \mathbf a\times\mathbf b = -\,\mathbf b\times\mathbf a, \qquad \hat x\times\hat y = \hat z$$</div>
+  <div class="worked"><h4>Worked example</h4>a = (1.5, 0, 0), b = (0.6, 1.4, 0): a × b = (0, 0, 2.1), the area of the parallelogram.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Swapping the order: it flips the direction.</div>
 </section>
 <section data-case="cross" data-example="axes"><h3>The axes</h3><p>Unit vectors along \(x\) and \(y\): the square they span has area 1 and the cross product is the unit vector along \(z\).</p></section>
 <section data-case="cross" data-example="perp"><h3>At 90°</h3><p>\(\sin\theta = 1\): the parallelogram is a rectangle, the area is largest.</p></section>
@@ -19,27 +29,36 @@
 <section data-case="cross" data-example="swap"><h3>Order matters</h3><p>Swapping the vectors flips the result: \(\mathbf b\times\mathbf a = -\mathbf a\times\mathbf b\). Curl the fingers of the right hand from the first to the second: the thumb gives the direction.</p></section>
 
 <section data-case="gravity">
-  <h3>A gravitational field</h3>
-  <p>Every point of space gets an arrow: the pull a 1 kg test mass would feel there. Fields of several masses simply add. Drag the masses and the probe.</p>
-  <div class="eq">$$\mathbf g = -\sum_i \frac{G M_i}{r_i^2}\,\hat{\mathbf r}_i = -\nabla V, \qquad V = -\sum_i \frac{G M_i}{r_i}$$</div>
+  <h3>A vector field: gravity of two masses</h3>
+  <div class="look"><h4>What you are looking at</h4>At every point an arrow for the gravitational field of two masses; a probe point shows the field there and its parts from each mass.</div>
+  <p>A field gives a vector at every point of space. Gravity from several masses simply adds: each pulls toward itself with 1/r² strength. Where the pulls cancel, the field is zero.</p>
+  <div class="eq">$$\mathbf g(\mathbf r) = -\sum_i \frac{G m_i}{|\mathbf r - \mathbf r_i|^2}\,\hat{\mathbf r}_i$$</div>
+  <div class="worked"><h4>Worked example</h4>Equal masses: the null point is exactly midway. With masses 10:1 it sits much closer to the small one (distances in ratio √10 ≈ 3.2:1) — like the Earth–Moon L1 point.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding the strengths instead of the vectors.</div>
 </section>
 <section data-case="gravity" data-example="equal"><h3>Equal masses</h3><p>Midway between them the two pulls are equal and opposite: \(\mathbf g = 0\). A body placed there stays (but any nudge sends it to one side).</p></section>
 <section data-case="gravity" data-example="unequal"><h3>Unequal masses</h3><p>The point where the pulls cancel moves towards the small mass: \(M_1/r_1^2 = M_2/r_2^2\).</p></section>
 <section data-case="gravity" data-example="far"><h3>Far away</h3><p>Seen from far, the two masses act like one mass \(M_1 + M_2\) at their centre of mass.</p></section>
 
 <section data-case="div">
-  <h3>Divergence</h3>
-  <p>Put a tiny circle in the flow. The net flow out of it, per unit area, is the divergence: a source (\(> 0\)) or a sink (\(< 0\)). The tracer dots spread out or crowd in. Drag the circle.</p>
-  <div class="eq">$$\nabla\cdot\mathbf F = \frac{\partial F_x}{\partial x} + \frac{\partial F_y}{\partial y} = \lim_{A\to 0}\frac{1}{A}\oint \mathbf F\cdot\hat{\mathbf n}\,d\ell$$</div>
+  <h3>Divergence: sources and sinks</h3>
+  <div class="look"><h4>What you are looking at</h4>A flow field with tracers; a probe circle shows how much flows out of it.</div>
+  <p>Divergence measures how much more flows out of a tiny region than flows in. Positive: a source (a tap). Negative: a sink (a drain). Zero: whatever comes in goes out.</p>
+  <div class="eq">$$\nabla\cdot\mathbf F = \frac{\partial F_x}{\partial x} + \frac{\partial F_y}{\partial y}$$</div>
+  <div class="worked"><h4>Worked example</h4>F = (x, y) (pointing outward, growing with distance): div F = 2 everywhere. The vortex (−y, x): div = 0 — it only circulates.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking arrows that point outward always mean div > 0: they also have to grow along the way.</div>
 </section>
 <section data-case="div" data-example="sink"><h3>A sink</h3><p>\(\mathbf F = -(x, y)\): everything flows inwards, \(\nabla\cdot\mathbf F = -2\) everywhere.</p></section>
 <section data-case="div" data-example="vortex"><h3>A vortex</h3><p>\(\mathbf F = (-y, x)\) only goes round: as much flows in as out of any circle, so the divergence is 0.</p></section>
 <section data-case="div" data-example="bump"><h3>Changing sign</h3><p>\(\mathbf F = (x, y)e^{-r^2}\) spreads near the centre (div \(> 0\)) but slows down further out, so there the dots crowd (div \(< 0\)). The sign changes at \(r = 1\).</p></section>
 
 <section data-case="curl">
-  <h3>Curl</h3>
-  <p>The flow around the tiny circle, per unit area: would a little paddle wheel spin? The tracer dots turn.</p>
-  <div class="eq">$$(\nabla\times\mathbf F)_z = \frac{\partial F_y}{\partial x} - \frac{\partial F_x}{\partial y} = \lim_{A\to 0}\frac{1}{A}\oint \mathbf F\cdot d\boldsymbol\ell$$</div>
+  <h3>Curl: local spinning</h3>
+  <div class="look"><h4>What you are looking at</h4>A flow with a small paddle wheel at the probe point: it spins if the curl is nonzero.</div>
+  <p>Curl measures how much a tiny paddle wheel placed in the flow would spin. A whirlpool spins it. Surprisingly, a straight shear flow (faster on one side) spins it too, while a vortex that slows as 1/r away from the centre does not.</p>
+  <div class="eq">$$(\nabla\times\mathbf F)_z = \frac{\partial F_y}{\partial x} - \frac{\partial F_x}{\partial y}$$</div>
+  <div class="worked"><h4>Worked example</h4>F = (−y, x): curl = 1 + 1 = 2 everywhere. F = (y, 0) (shear): curl = −1, though every arrow is horizontal.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Judging curl by whether the arrows go round in circles.</div>
 </section>
 <section data-case="curl" data-example="source"><h3>A source</h3><p>Straight out from the centre: nothing goes round, the curl is 0.</p></section>
 <section data-case="curl" data-example="shear"><h3>Shear</h3><p>\(\mathbf F = (y, 0)\): all streamlines are straight, yet the top moves faster than the bottom, so a paddle wheel turns. Curl \(= -1\).</p></section>

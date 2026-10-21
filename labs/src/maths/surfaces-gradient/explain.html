@@ -2,15 +2,45 @@
   <p>A function of two variables is a landscape: height \(z = f(x, y)\) over the floor. Drag the point to walk on it. The gradient (purple) points uphill and is perpendicular to the level curves; the tangent plane is the flat approximation at the point.</p>
   <div class="eq">$$\nabla f = \left(\frac{\partial f}{\partial x},\ \frac{\partial f}{\partial y}\right), \qquad z \approx f(\mathbf x_0) + \nabla f(\mathbf x_0)\cdot(\mathbf x - \mathbf x_0)$$</div>
 </section>
-<section data-case="bowl"><h3>Bowl</h3><p>\(f = (x^2 + y^2)/4\): level curves are circles, the gradient \((x, y)/2\) points straight away from the bottom and grows with the distance.</p></section>
+<section data-case="bowl">
+  <h3>A surface and its gradient</h3>
+  <div class="look"><h4>What you are looking at</h4>A surface z = f(x, y) in 3D with a point on it, its tangent plane, contour lines (on the surface and on the floor), and the gradient arrow on the floor.</div>
+  <p>A function of two variables is a landscape: at every (x, y) a height. At a point, two slopes matter: east–west (∂f/∂x) and north–south (∂f/∂y). Put them together in a vector: the gradient. It points straight uphill, its length is how steep, and it is always at right angles to the contour lines.</p>
+  <div class="eq">$$\nabla f = \left(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right), \qquad z \approx f(x_0, y_0) + \nabla f\cdot(\mathbf x - \mathbf x_0)$$</div>
+  <ol class="steps">
+    <li>∂f/∂x: freeze y, slope in the x direction. Same for y.</li>
+    <li>Walking along a contour, height does not change: the gradient is perpendicular to it.</li>
+    <li>∇f = 0: a flat spot — bottom, top or saddle.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>f = x² + y² at (1.5, 1): ∇f = (3, 2), length 3.6, pointing away from the bottom. Tangent plane: z ≈ 3.25 + 3(x − 1.5) + 2(y − 1).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the gradient lives on the surface: it is a 2D vector on the floor, telling you which way to walk.</div>
+  <div class="try"><h4>Try it</h4>Move the point: the arrow always crosses the floor contours at right angles, and gets longer where the contours are closer.</div>
+</section>
 <section data-case="bowl" data-example="bottom"><h3>At the bottom</h3><p>The tangent plane is horizontal: \(\nabla f = 0\). A point where the gradient vanishes is a critical point; here it is a minimum.</p></section>
 <section data-case="bowl" data-example="far"><h3>Far out</h3><p>Twice as far, twice as steep: \(|\nabla f| = r/2\).</p></section>
-<section data-case="saddle"><h3>Saddle</h3><p>\(f = (x^2 - y^2)/4\): up along \(x\), down along \(y\). The level curves are hyperbolas.</p></section>
+<section data-case="saddle">
+  <h3>The saddle</h3>
+  <div class="look"><h4>What you are looking at</h4>z = x² − y²: up along x, down along y.</div>
+  <p>At the centre the gradient is zero, yet it is neither a top nor a bottom: in one direction it is a minimum, in the other a maximum. A mountain pass. The second derivatives decide (Hessian).</p>
+  <div class="eq">$$f = x^2 - y^2, \qquad \nabla f = (2x, -2y), \qquad f_{xx}f_{yy} - f_{xy}^2 = -4 < 0 \Rightarrow \text{saddle}$$</div>
+  <div class="pitfall"><h4>Common mistake</h4>Concluding "∇f = 0 so it is a minimum".</div>
+</section>
 <section data-case="saddle" data-example="centre"><h3>A saddle point</h3><p>\(\nabla f = 0\) and the tangent plane is flat, yet it is neither a top nor a bottom: a critical point need not be an extremum.</p></section>
 <section data-case="saddle" data-example="x"><h3>Along x</h3><p>On the \(x\) axis \(f = x^2/4\): the gradient points along \(+x\), away from the centre.</p></section>
 <section data-case="saddle" data-example="y"><h3>Along y</h3><p>On the \(y\) axis \(f = -y^2/4\): uphill is back towards the centre.</p></section>
-<section data-case="hills"><h3>Hills and a valley</h3><p>Follow the gradient and you climb the nearest hill. The contour lines crowd where the ground is steep.</p></section>
+<section data-case="hills">
+  <h3>Hills and valleys</h3>
+  <div class="look"><h4>What you are looking at</h4>A landscape with several summits and hollows.</div>
+  <p>Gradient descent — walk against the gradient — finds the bottom of the nearest valley, not necessarily the deepest one. That is how machine learning trains its models, and why it can get stuck.</p>
+  <div class="eq">$$\mathbf x_{k+1} = \mathbf x_k - \eta\,\nabla f(\mathbf x_k)$$</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming a local minimum is the global one.</div>
+</section>
 <section data-case="hills" data-example="top"><h3>On a summit</h3><p>At the top of a hill \(\nabla f = 0\): every direction goes down. A local maximum.</p></section>
 <section data-case="hills" data-example="valley"><h3>In the hollow</h3><p>At the bottom of the hollow, again \(\nabla f \approx 0\): a local minimum.</p></section>
-<section data-case="ripple"><h3>Ripple</h3><p>Circular level curves: the gradient is radial, pointing outward on a rising slope and inward on a falling one.</p></section>
+<section data-case="ripple">
+  <h3>A ripple</h3>
+  <div class="look"><h4>What you are looking at</h4>Circular waves spreading from the centre: contours are circles and the gradient points radially.</div>
+  <p>For a function of the distance r only, the gradient is f′(r) along the radial direction. Where the ring crests or troughs, the gradient vanishes on a whole circle.</p>
+  <div class="eq">$$f = g(r), \quad r = \sqrt{x^2 + y^2} \;\Rightarrow\; \nabla f = g'(r)\,\hat{\mathbf r}$$</div>
+</section>
 <section data-case="ripple" data-example="trough"><h3>In the trough</h3><p>At the bottom of the first ring the gradient vanishes, and along the ring the height is constant: a whole circle of minima, not a single point.</p></section>

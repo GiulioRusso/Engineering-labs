@@ -1,7 +1,15 @@
 <section data-case="galton">
   <h3>The Galton board</h3>
-  <p>Each ball meets \(n\) pegs and bounces right with probability \(p\). Where it lands counts its right bounces \(k\). Many balls pile up into the binomial distribution; the dashed curve in the plot is the exact probability.</p>
-  <div class="eq">$$P(k) = \binom{n}{k} p^k (1-p)^{n-k}, \qquad \mu = np, \quad \sigma = \sqrt{np(1-p)}$$</div>
+  <div class="look"><h4>What you are looking at</h4>Balls falling through n rows of pegs; at each peg they go right with probability p. The histogram counts where they land; the curve is the binomial prediction (and the normal approximation).</div>
+  <p>Each ball makes n independent left/right choices. Its final position is the number of "rights". Many paths lead to the middle, very few to the edges: there is only one way to go right every time, but many ways to go right half the time. Counting those paths gives the binomial distribution.</p>
+  <div class="eq">$$P(k) = \binom{n}{k}p^k(1-p)^{n-k}, \qquad \mu = np, \qquad \sigma = \sqrt{np(1-p)}$$</div>
+  <ol class="steps">
+    <li>One ball is unpredictable; thousands make a predictable shape.</li>
+    <li>With many rows the binomial looks like a bell: the normal curve (central limit theorem).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>n = 10, p = 0.5: the middle bin gets C(10,5)/2¹⁰ = 252/1024 = 24.6 % of the balls; the edges 0.1 % each. σ = 1.58.</div>
+  <div class="pitfall"><h4>Common mistake</h4>The gambler's fallacy: after five "rights" in a row, the next is still 50/50 — the pegs have no memory.</div>
+  <div class="try"><h4>Try it</h4>Drop only 50 balls: the histogram is ragged. 1000 balls: it hugs the curve.</div>
 </section>
 <section data-case="galton" data-example="few"><h3>Few rows</h3><p>Four rows give five bins: \(P = \tfrac1{16}, \tfrac4{16}, \tfrac6{16}, \tfrac4{16}, \tfrac1{16}\). The middle is most likely because the most paths lead there (6 of 16).</p></section>
 <section data-case="galton" data-example="biased"><h3>Biased pegs</h3><p>\(p = 0.7\): the pile moves right to \(np = 7\) and becomes a little lopsided.</p></section>
@@ -9,9 +17,12 @@
 <section data-case="galton" data-example="fewballs"><h3>Few balls</h3><p>50 balls give a ragged histogram: frequencies fluctuate around the probabilities by about \(\sqrt{NP}\) balls per bin. More trials, smaller relative noise (law of large numbers).</p></section>
 
 <section data-case="dice">
-  <h3>Sums of dice: the central limit theorem</h3>
-  <p>One die is flat: every face \(\tfrac16\). The sum of several dice is not: there are more ways to make 7 than 2. The more dice you add, the closer the shape gets to the normal curve, whatever the shape of one die.</p>
-  <div class="eq">$$\mu = 3.5\,k, \qquad \sigma = \sqrt{k\cdot\tfrac{35}{12}}, \qquad \frac{S_k - \mu}{\sigma} \xrightarrow{k\to\infty} \mathcal N(0, 1)$$</div>
+  <h3>Sums of dice</h3>
+  <div class="look"><h4>What you are looking at</h4>The histogram of the sum of k dice over many throws, and the normal curve with the same mean and spread.</div>
+  <p>One die is flat: every face equally likely. Two dice already make a triangle (7 has six combinations, 2 only one). Add more and the shape turns into a bell, whatever the starting distribution: this is the central limit theorem, the reason the normal distribution is everywhere.</p>
+  <div class="eq">$$\mu = 3.5\,k, \qquad \sigma = \sqrt{\tfrac{35}{12}k} \approx 1.71\sqrt k$$</div>
+  <div class="worked"><h4>Worked example</h4>Ten dice: mean 35, σ = 5.4; about 68 % of throws land between 30 and 40.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting the spread to grow like k: it grows like √k, so relative to the mean the sum gets more predictable.</div>
 </section>
 <section data-case="dice" data-example="one"><h3>One die</h3><p>A uniform distribution: six equal bars, nothing bell-shaped.</p></section>
 <section data-case="dice" data-example="three"><h3>Three dice</h3><p>Already a smooth hump: 10 and 11 are the most likely sums (27 ways each out of 216).</p></section>

@@ -1,7 +1,17 @@
 <section data-case="circle">
   <h3>Sine and cosine are coordinates</h3>
-  <p>A point on a circle of radius 1, at angle \(\theta\) from the \(x\) axis: its horizontal position is \(\cos\theta\), its height \(\sin\theta\). The identity is Pythagoras on the triangle under the point. Drag the point.</p>
-  <div class="eq">$$P(\theta) = (\cos\theta,\ \sin\theta), \qquad \cos^2\theta + \sin^2\theta = 1$$</div>
+  <div class="look"><h4>What you are looking at</h4>A circle of radius 1 and a point on it at angle θ from the x axis (drag it). The right triangle under the point has a horizontal side (orange, cos θ) and a vertical side (blue, sin θ).</div>
+  <p>Forget "opposite over hypotenuse" for a moment. On a circle of radius 1, sine and cosine are simply <i>where the point is</i>: cos θ how far right, sin θ how high. Every property you have to memorise follows from this picture.</p>
+  <div class="eq">$$P(\theta) = (\cos\theta,\ \sin\theta), \qquad \cos^2\theta + \sin^2\theta = 1, \qquad \theta_\text{rad} = \theta_\text{deg}\cdot\frac{\pi}{180}$$</div>
+  <ol class="steps">
+    <li>Both lie between −1 and 1, because the point never leaves the circle.</li>
+    <li>cos² + sin² = 1 is Pythagoras on the triangle: legs cos and sin, hypotenuse 1.</li>
+    <li>The signs tell the quadrant: (+, +) first, (−, +) second, (−, −) third, (+, −) fourth.</li>
+    <li>Going round once more (θ + 360°) lands on the same point: sine and cosine are periodic.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>θ = 150°: the point is in the second quadrant, mirrored from 30°. So sin 150° = sin 30° = 0.5 and cos 150° = −cos 30° = −0.866. Check: 0.25 + 0.75 = 1 ✓.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Calculator in the wrong mode: sin(30) in radians is −0.988, not 0.5. Thinking sin 2θ = 2 sin θ: try 90° — sin 180° = 0, not 2.</div>
+  <div class="try"><h4>Try it</h4>Drag the point once round the circle and follow the two sides of the triangle: watch cos change sign at 90° and sin at 180°.</div>
 </section>
 <section data-case="circle" data-example="d30"><h3>30°</h3><p>The triangle is half an equilateral triangle of side 1, so the height is exactly \(\tfrac12\) and \(\cos 30° = \tfrac{\sqrt3}{2}\).</p></section>
 <section data-case="circle" data-example="d45"><h3>45°</h3><p>The triangle is isosceles: both legs equal, \(\sin 45° = \cos 45° = \tfrac{\sqrt2}{2} \approx 0.707\).</p></section>
@@ -11,9 +21,17 @@
 <section data-case="circle" data-example="spin"><h3>Turning</h3><p>At constant angular speed \(\omega\) the angle grows as \(\theta = \omega t\): sine and cosine repeat every \(2\pi/\omega\) seconds.</p></section>
 
 <section data-case="waves">
-  <h3>The helix and its shadows</h3>
-  <p>Unroll the angle along the \(x\) axis and the turning point draws a helix. Its shadow on the side wall is the sine wave, on the floor the cosine wave.</p>
-  <div class="eq">$$\cos\theta = \sin\!\left(\theta + \tfrac{\pi}{2}\right)$$</div>
+  <h3>From a circle to a wave</h3>
+  <div class="look"><h4>What you are looking at</h4>The turning point drawn in 3D: the angle is unrolled along the long axis, so the point draws a helix. Its shadow on the side wall is a sine wave, its shadow on the floor a cosine wave.</div>
+  <p>Every oscillation in physics — a spring, an AC voltage, a radio wave — is a point going round a circle, seen from the side. That is why the same two functions appear everywhere.</p>
+  <div class="eq">$$x(t) = \cos(\omega t), \quad y(t) = \sin(\omega t), \qquad T = \frac{2\pi}{\omega}, \quad f = \frac{1}{T}, \qquad \cos\theta = \sin\!\left(\theta + \tfrac{\pi}{2}\right)$$</div>
+  <ol class="steps">
+    <li>One full turn = one period T; ω is how many radians per second.</li>
+    <li>Sine and cosine are the same wave, a quarter turn apart: the cosine leads by 90°.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Mains electricity at 50 Hz: ω = 2π·50 = 314 rad/s, T = 20 ms. A wheel turning 3 times a second: ω = 18.8 rad/s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Confusing f (turns per second) and ω (radians per second): they differ by 2π.</div>
+  <div class="try"><h4>Try it</h4>Rotate the view to look straight at each wall: you see one pure wave on each.</div>
 </section>
 <section data-case="waves" data-example="side"><h3>Seen from the side</h3><p>Looking along the circle's plane you see only the height: the helix becomes \(y = \sin\theta\).</p></section>
 <section data-case="waves" data-example="shift"><h3>A quarter turn apart</h3><p>At \(\theta = 0\) the cosine is at its top (1) while the sine is at zero. The sine reaches the top a quarter turn (90°) later: same wave, shifted.</p></section>
@@ -21,8 +39,18 @@
 
 <section data-case="tangent">
   <h3>The tangent</h3>
-  <p>Extend the radius until it meets the vertical line \(x = 1\): the height there is \(\tan\theta\), by similar triangles.</p>
-  <div class="eq">$$\tan\theta = \frac{\sin\theta}{\cos\theta}$$</div>
+  <div class="look"><h4>What you are looking at</h4>The radius is extended until it hits the vertical line x = 1. The height where it hits is tan θ.</div>
+  <p>The tangent is the slope of the radius: how much it rises for each unit across. Triangles with the same angle are similar, so the small triangle (cos, sin) and the big one (1, tan) have the same shape.</p>
+  <div class="eq">$$\tan\theta = \frac{\sin\theta}{\cos\theta} = \text{slope of the radius}$$</div>
+  <ol class="steps">
+    <li>At 0° the radius is flat: tan = 0.</li>
+    <li>At 45° it rises as much as it runs: tan = 1.</li>
+    <li>Near 90° it is almost vertical: tan grows without limit; at 90° cos = 0 and tan is undefined.</li>
+    <li>The tangent repeats every 180°, not 360°: the opposite radius has the same slope.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A road sign "10 % gradient" means tan θ = 0.1, θ = 5.7°. A ladder at 75° rises tan 75° = 3.73 m per metre out from the wall.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Treating tan as bounded like sin and cos: it takes every value from −∞ to +∞.</div>
+  <div class="try"><h4>Try it</h4>Drag toward 90° and watch the meeting point shoot up; cross 90° and it reappears from below.</div>
 </section>
 <section data-case="tangent" data-example="t45"><h3>45°</h3><p>\(\sin = \cos\), so \(\tan 45° = 1\): the radius meets the line at height 1.</p></section>
 <section data-case="tangent" data-example="t90"><h3>Near 90°</h3><p>The radius is almost parallel to the line \(x = 1\); they meet very high up. At exactly 90° \(\cos\theta = 0\) and \(\tan\theta\) is undefined.</p></section>

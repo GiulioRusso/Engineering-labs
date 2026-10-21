@@ -1,7 +1,16 @@
 <section data-case="derivative">
-  <h3>The derivative is a limit of slopes</h3>
-  <p>Draw a secant through \(x_0\) and \(x_0 + h\). As \(h\) shrinks it turns into the tangent, and its slope into the derivative. Drag the point.</p>
-  <div class="eq">$$f'(x_0) = \lim_{h\to 0} \frac{f(x_0 + h) - f(x_0)}{h}$$</div>
+  <h3>The derivative: the slope at a point</h3>
+  <div class="look"><h4>What you are looking at</h4>The curve, a point x₀ on it, and a second point h further on. The line through both (the secant) has slope Δy/Δx. Shrink h and the secant turns into the tangent. The bottom plot is the derivative f′(x) drawn for every x, with the current slope marked.</div>
+  <p>For a line the slope is the same everywhere. For a curve it changes from point to point, so we ask: <i>how steep is it right here?</i> Take a second point close by, measure the slope of the chord, and let the second point slide in. The number the slope settles on is the derivative.</p>
+  <div class="eq">$$f'(x_0) = \lim_{h\to 0}\frac{f(x_0 + h) - f(x_0)}{h}$$</div>
+  <ol class="steps">
+    <li>Pick h and compute the chord slope (rise over run between the two points).</li>
+    <li>Halve h, again and again: the slope converges.</li>
+    <li>f′ > 0: the function is rising; f′ < 0: falling; f′ = 0: flat — a top, a bottom or a pause.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>f(x) = x² at x₀ = 1: h = 1 gives (4 − 1)/1 = 3; h = 0.1 gives (1.21 − 1)/0.1 = 2.1; h = 0.01 gives 2.01. The limit is 2 = 2x₀. In general (x²)′ = 2x, (sin x)′ = cos x, (eˣ)′ = eˣ.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Putting h = 0 directly: 0/0 is meaningless — the limit is about what happens as h gets small. Thinking f′ = 0 always means a maximum: x³ is flat at 0 and keeps rising.</div>
+  <div class="try"><h4>Try it</h4>Pull h toward zero and watch the secant swing into the tangent. Then move x₀ and follow the dot on the bottom plot: it traces f′.</div>
 </section>
 <section data-case="derivative" data-example="limit"><h3>h → 0</h3><p>For \(f = x^2/2\) the secant slope is \(x_0 + h/2\): with \(h = 0.01\) it is 1.005, almost exactly \(f'(1) = 1\).</p></section>
 <section data-case="derivative" data-example="flat"><h3>Slope zero</h3><p>At the bottom of the curve the tangent is horizontal: \(f'(0) = 0\). Minima and maxima are where the derivative vanishes.</p></section>
@@ -10,9 +19,18 @@
 <section data-case="derivative" data-example="exp"><h3>Exponential</h3><p>For \(e^{x/2}\) the slope is half the height at every point: \((e^{kx})' = k\,e^{kx}\).</p></section>
 
 <section data-case="integral">
-  <h3>The integral is a limit of sums</h3>
-  <p>Cut the area between \(a\) and \(b\) into \(n\) strips and add their areas. Drag \(a\) and \(b\).</p>
-  <div class="eq">$$\int_a^b f(x)\,dx = \lim_{n\to\infty} \sum_{i=1}^{n} f(x_i^*)\,\Delta x, \qquad \Delta x = \frac{b-a}{n}$$</div>
+  <h3>The integral: adding up strips</h3>
+  <div class="look"><h4>What you are looking at</h4>The area under the curve between a and b, approximated by n strips (left, midpoint or trapezoid). Strips above the axis count positive, below negative. The readout compares the sum with the exact value.</div>
+  <p>The integral is a sum of many tiny products: height × width. Cut the interval into n strips, add their areas, and make the strips thinner and thinner. The sum converges to the area.</p>
+  <div class="eq">$$\int_a^b f(x)\,dx = \lim_{n\to\infty}\sum_{i=1}^{n} f(x_i)\,\Delta x, \qquad \Delta x = \frac{b-a}{n}, \qquad \int_a^b f\,dx = F(b) - F(a) \text{ with } F' = f$$</div>
+  <ol class="steps">
+    <li>Left rule: height at each strip's left edge — always wrong in the same direction on a rising curve.</li>
+    <li>Midpoint and trapezoid: errors fall much faster as n grows (as 1/n² instead of 1/n).</li>
+    <li>The fundamental theorem: instead of summing, find a function whose derivative is f and subtract its values at the ends.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>∫₀² x² dx: four left strips give 0.5·(0 + 0.25 + 1 + 2.25) = 1.75; the exact value is 2³/3 = 2.667. Midpoint with four strips: 2.625 — already within 1.6 %.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Treating "area" as always positive: the integral of sin over a full turn is 0, because the part below the axis subtracts.</div>
+  <div class="try"><h4>Try it</h4>Raise n with the left rule and watch the error shrink slowly; switch to midpoint and see it collapse.</div>
 </section>
 <section data-case="integral" data-example="many"><h3>More strips</h3><p>With the left rule the error shrinks like \(1/n\): 50 strips are 12 times better than 4. The exact area of \(x^2/2\) from 0 to 2 is \(4/3\).</p></section>
 <section data-case="integral" data-example="mid"><h3>Midpoint rule</h3><p>Taking each strip's height in its middle cancels most of the error: it falls like \(1/n^2\).</p></section>
@@ -20,9 +38,17 @@
 <section data-case="integral" data-example="signed"><h3>Signed area</h3><p>Below the axis, area counts negative. Over a full period the sine's positive and negative halves cancel: \(\int_0^{2\pi}\sin x\,dx = 0\).</p></section>
 
 <section data-case="taylor">
-  <h3>Taylor: a polynomial that copies the curve</h3>
-  <p>Match the value, the slope, the curvature… at one point \(x_0\). Each extra term hugs the curve over a wider range. Order 1 is the tangent line.</p>
-  <div class="eq">$$T_N(x) = \sum_{n=0}^{N} \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n$$</div>
+  <h3>Taylor polynomials: copying a function</h3>
+  <div class="look"><h4>What you are looking at</h4>The function (grey) and its Taylor polynomial of order N around x₀ (blue). The bottom plot shows the error.</div>
+  <p>Near a point, any smooth function looks like a line (its tangent). Add a curvature term and it looks like a parabola; keep adding terms and the copy matches over a wider and wider range. Each term matches one more derivative at x₀.</p>
+  <div class="eq">$$f(x) \approx \sum_{k=0}^{N}\frac{f^{(k)}(x_0)}{k!}(x - x_0)^k, \qquad \sin x = x - \frac{x^3}{6} + \frac{x^5}{120} - \cdots$$</div>
+  <ol class="steps">
+    <li>Order 0: the value. Order 1: the tangent line. Order 2: matches the bending too.</li>
+    <li>Near x₀ the error shrinks like |x − x₀|^{N+1}: tiny close in, large far away.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>sin 0.5 with x − x³/6: 0.5 − 0.0208 = 0.4792; the true value is 0.4794. This is how calculators and physics approximations (sin θ ≈ θ for small angles) work.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using a Taylor polynomial far from x₀: for some functions it never works there, however many terms you add.</div>
+  <div class="try"><h4>Try it</h4>Increase the order one step at a time and watch the region of good fit widen.</div>
 </section>
 <section data-case="taylor" data-example="n3"><h3>Order 3</h3><p>\(\sin x \approx x - x^3/6\): good up to about \(|x| = 1.5\).</p></section>
 <section data-case="taylor" data-example="n9"><h3>Order 9</h3><p>Five terms of \(x - \tfrac{x^3}{3!} + \tfrac{x^5}{5!} - \dots\) follow the sine for more than a full half-wave. The series converges for every \(x\).</p></section>
