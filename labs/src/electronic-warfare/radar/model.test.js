@@ -23,3 +23,14 @@ export const tests = {
     near((signalPower({ ...p, R: Rb / 2 }) / jammerPower({ ...p, Rj: Rb / 2 })) / SJ, 4, 1e-9, '×4 at half range');
   },
 };
+
+import { mtiGain, blindSpeed, ledger } from './model.js';
+tests['MTI: zero at DC and at the PRF (blind speeds), peak gain 2^order'] = () => {
+  ok(mtiGain(0, 1e3, 2) < 1e-12 && mtiGain(1e3, 1e3, 2) < 1e-12, 'notches'); near(mtiGain(500, 1e3, 1), 2, 1e-12, 'two-pulse peak');
+  near(blindSpeed(1, 1e3, 0.03), 15, 1e-12, 'first blind speed λ·PRF/2');
+};
+tests['ledger: −12 dB per doubling (radar), −6 dB (link); the sum equals the radar equation'] = () => {
+  const p = { PtW: 1e5, Gdb: 30, lam: 0.03, rcs: 1, R: 50e3, B: 1e6, Fdb: 3 };
+  near(ledger(p).snr - ledger({ ...p, R: 100e3 }).snr, 12.04, 1e-3, 'radar'); near(ledger({ ...p, mode: 'link' }).snr - ledger({ ...p, mode: 'link', R: 100e3 }).snr, 6.02, 1e-3, 'link');
+  near(ledger(p).snr, 10 * Math.log10(snr({ Pt: 1e5, G: 1e3, lam: 0.03, rcs: 1, R: 50e3, B: 1e6, F: 10 ** 0.3 })), 1e-9, 'same as snr()');
+};

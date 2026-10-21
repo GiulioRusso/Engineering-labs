@@ -8,7 +8,7 @@ import { niceStep } from './graph2d.js';
 
 const fmt = (v) => String(Number(v.toPrecision(3)));
 
-export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 1], xTitle = '', yTitle = '', z = 0, yTicks = true, grid: showGrid = true } = {}) {
+export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 1], xTitle = '', yTitle = '', z = 0, xTicks = true, yTicks = true, grid: showGrid = true } = {}) {
   const { stage, scene } = ctx, [X0, Y0, W, H] = box, curves = {}, labels = [], points = {}, images = {};
   const frame = createCurve(stage, { max: 8, width: 1.4, color: '--ink-dim' }), grid = createCurve(stage, { max: 60, width: 1, color: '--line' });
   const zero = createCurve(stage, { max: 1, width: 1.2, color: '--ink-dim' });
@@ -20,7 +20,7 @@ export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 
     for (const l of labels) l.visible = false;
     let k = 0; const g = [], put = (t, px, py) => { if (!labels[k]) { labels[k] = ctx.label('', 'tick'); scene.add(labels[k]); } labels[k].element.textContent = t; labels[k].position.set(px, py, z); labels[k].visible = true; k++; };
     const sx = niceStep(xr[1] - xr[0], 6), sy = niceStep(yr[1] - yr[0], 4);
-    for (let v = Math.ceil(xr[0] / sx) * sx; v <= xr[1] + 1e-9; v += sx) { g.push(mx(v), Y0, z, mx(v), Y0 + H, z); put(fmt(v), mx(v), Y0 - 0.18); }
+    if (xTicks) for (let v = Math.ceil(xr[0] / sx) * sx; v <= xr[1] + 1e-9; v += sx) { g.push(mx(v), Y0, z, mx(v), Y0 + H, z); put(fmt(v), mx(v), Y0 - 0.18); }
     if (yTicks) for (let v = Math.ceil(yr[0] / sy) * sy; v <= yr[1] + 1e-9; v += sy) { g.push(X0, my(v), z, X0 + W, my(v), z); put(fmt(v), X0 - 0.3, my(v)); }
     grid.segments(showGrid ? g : []);
     zero.object.visible = yr[0] < 0 && yr[1] > 0; if (zero.object.visible) zero.segments([X0, my(0), z, X0 + W, my(0), z]);

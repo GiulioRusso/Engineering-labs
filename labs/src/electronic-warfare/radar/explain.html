@@ -1,46 +1,90 @@
-<section data-case="pulses">
-  <h3>Pulse radar</h3>
-  <p>The radar sends a short pulse every PRI \(= 1/\text{PRF}\) and listens. An echo that comes back after \(\Delta t\) is at range \(c\Delta t/2\). Echoes from beyond \(R_u\) arrive after the next pulse has left and are read at the wrong range. The matched filter (bottom) turns each echo into a peak; two targets are separated if they are further apart than the resolution.</p>
-  <div class="eq">$$R = \frac{c\,\Delta t}{2}, \qquad R_u = \frac{c}{2\,\text{PRF}}, \qquad \Delta R = \frac{c\tau}{2} \;\text{ or }\; \frac{c}{2B} \text{ (chirp)}$$</div>
+<section data-case="budget">
+  <h3>The radar equation as a budget</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a waterfall of decibels. Each bar is one factor of the radar equation, green when it adds, red when it takes away. Then the received echo S (blue), the receiver noise N (grey) and their difference, the SNR. Right: the SNR against range, with the 13 dB line a radar typically needs to declare a target.</div>
+  <p>Why decibels? The radar equation is a product of many factors, some huge (a 100 kW transmitter) and some tiny (\(1/R^4\) at 40 km is \(10^{-18}\)). In dB a product becomes a sum, and you can read the whole equation like a bank statement:</p>
+  <div class="eq">$$S = \frac{P_t\,G^2\,\lambda^2\,\sigma}{(4\pi)^3 R^4} \quad\Longrightarrow\quad S_\text{dB} = P_t + 2G + 10\log\lambda^2 + 10\log\sigma - 10\log(4\pi)^3 - 40\log R$$</div>
+  <ol class="steps">
+    <li><b>Out:</b> the transmitter radiates \(P_t\), concentrated by the antenna gain \(G\) towards the target. At range \(R\) it spreads over a sphere of area \(4\pi R^2\).</li>
+    <li><b>Reflect:</b> the target intercepts a power proportional to its radar cross section \(\sigma\) (m²) and re-radiates it — again over a sphere, another \(4\pi R^2\).</li>
+    <li><b>Back:</b> the antenna collects the echo with an effective area \(A = G\lambda^2/4\pi\): that is where the second \(G\) and the \(\lambda^2\) come from.</li>
+    <li><b>Noise:</b> the receiver adds its own noise \(N = kT_0BF\): \(-204\) dBW per Hz at room temperature, plus \(10\log B\), plus the noise figure.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>100 kW = +50 dBW. Gain 35 dBi twice: +70. λ = 3 cm: λ² = −30.5. σ = 1 m²: 0. (4π)³: −33. R = 40 km: −184. Sum: S ≈ −128 dBW. Noise in 1 MHz with F = 3 dB: −204 + 60 + 3 = −141 dBW. SNR ≈ 13 dB: just detectable.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Forgetting that gain counts twice (transmit and receive). Using 20 log for powers (it is 10 log; 20 log is for amplitudes — that is why \(R^4\) becomes 40 log R). Thinking more power is the cheap way to more range: 16× the power buys only 2× the range.</div>
+  <div class="try"><h4>Try it</h4>Double the range and watch only the R⁴ bar move, by 12 dB. Switch to "Link": the R⁴ and σ bars are replaced by R² — the one-way path a warning receiver listens on.</div>
 </section>
-<section data-case="pulses" data-example="resolve"><h3>A shorter pulse</h3><p>0.5 µs gives 75 m resolution: targets 120 m apart become two peaks. But a shorter pulse carries less energy.</p></section>
-<section data-case="pulses" data-example="chirp"><h3>Pulse compression</h3><p>A 10 µs pulse has plenty of energy but on its own would only resolve 1.5 km. Sweeping its frequency over 5 MHz (a chirp) lets the matched filter compress it to the resolution of a 0.2 µs pulse: 30 m.</p></section>
-<section data-case="pulses" data-example="ambig"><h3>Second-time-around echo</h3><p>At 1 kHz, \(R_u = 150\) km. A target at 200 km answers the previous pulse and shows up at 50 km.</p></section>
-<section data-case="pulses" data-example="lowprf"><h3>Lower PRF</h3><p>At 500 Hz, \(R_u = 300\) km: the target is shown at its true range. The price: fewer pulses per second, so less energy and worse Doppler.</p></section>
-
-<section data-case="doppler">
-  <h3>The range–Doppler map</h3>
-  <p>Over a burst of \(N\) pulses a moving target's echo shifts in phase from pulse to pulse at the Doppler frequency \(f_d = 2v/\lambda\). An FFT across the pulses sorts the echoes by velocity, the delay sorts them by range. Ground clutter sits at zero velocity. Both axes are sampled, so both can fold.</p>
-  <div class="eq">$$f_d = \frac{2v}{\lambda}, \qquad v_u = \pm\frac{\lambda\,\text{PRF}}{4}, \qquad \Delta v = \frac{\lambda\,\text{PRF}}{2N}$$</div>
-</section>
-<section data-case="doppler" data-example="fast"><h3>Velocity folding</h3><p>At 10 kHz and 3 cm the unambiguous velocity is ±75 m/s: a target at +100 m/s appears at −50 m/s.</p></section>
-<section data-case="doppler" data-example="far"><h3>Range folding</h3><p>The same high PRF gives only 15 km of unambiguous range: a target at 20 km appears at 5 km. Radars switch between PRFs to resolve both.</p></section>
-<section data-case="doppler" data-example="pulses"><h3>Longer bursts</h3><p>128 pulses instead of 32: the velocity bins are four times finer, the peaks narrower.</p></section>
-<section data-case="doppler" data-example="mti"><h3>Moving-target indication</h3><p>Rejecting the zero-velocity line removes the ground clutter and keeps only what moves.</p></section>
+<section data-case="budget" data-example="double"><h3>Twice as far</h3><p>\(40\log 2 = 12\) dB: the SNR drops from 13 to 1 dB and the target disappears into the noise. Every other bar stays the same.</p></section>
+<section data-case="budget" data-example="link"><h3>One-way</h3><p>A receiver that only listens (an RWR) pays the spreading loss once: \(20\log R\). Doubling the range costs only 6 dB. This is why a warning receiver hears a radar long before the radar can see it.</p></section>
+<section data-case="budget" data-example="power"><h3>Sixteen times the power</h3><p>+12 dB of transmitter, which exactly cancels one doubling of range: \(R_{\max} \propto P_t^{1/4}\). The plot at the bottom shows this fourth-root law.</p></section>
+<section data-case="budget" data-example="antenna"><h3>A bigger antenna</h3><p>+3 dB of gain appears twice: +6 dB of SNR. Antenna gain is worth twice as much as transmitter power, which is why radar antennas are large.</p></section>
 
 <section data-case="detect">
   <h3>Detection in noise</h3>
-  <p>The echo competes with receiver noise. The radar equation gives the signal-to-noise ratio; a threshold decides "target". A high threshold rarely fires on noise (low \(P_{fa}\)) but needs more SNR to detect (\(P_d\)).</p>
-  <div class="eq">$$\text{SNR} = \frac{P_t G^2 \lambda^2 \sigma\, n}{(4\pi)^3 R^4\, k T_0 B F}, \qquad P_{fa} = e^{-T^2/2}$$</div>
+  <div class="look"><h4>What you are looking at</h4>Top: an A-scope — the receiver output along range, re-drawn for every pulse. Grass is noise; the spike is the target; the dashed red line is the detection threshold. Bottom: the probability of detecting the target against range, with the current range marked.</div>
+  <p>Noise never stops. Its amplitude is random (Rayleigh-distributed), so any threshold will sometimes be crossed by noise alone: a <span class="key">false alarm</span>. We choose the threshold from how many false alarms we accept:</p>
+  <div class="eq">$$P_{fa} = e^{-T^2/2} \quad\Longrightarrow\quad T = \sqrt{-2\ln P_{fa}}$$</div>
+  <p>Then the target is detected only if signal plus noise crosses that line. With a strong signal it almost always does; near the noise it is a coin toss.</p>
+  <ol class="steps">
+    <li>Fix \(P_{fa}\) (e.g. 10⁻⁶: one false alarm per million range cells).</li>
+    <li>That fixes the threshold \(T\) — here about 5.3 times the noise rms.</li>
+    <li>The SNR at the target's range decides how often it clears \(T\): that is \(P_d\).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>For \(P_{fa} = 10^{-6}\) and \(P_d = 90\%\) you need about 13 dB. At 12 dB Pd is already far lower: the curve is steep, so a radar goes from "always sees it" to "never sees it" within a few kilometres.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking detection is yes/no at a fixed range. It is a probability; the "detection range" quoted for a radar is where Pd reaches a chosen value (often 50% or 90%) for a stated RCS and Pfa.</div>
+  <div class="try"><h4>Try it</h4>Slide the range out until the spike sinks into the grass. Then integrate more pulses and watch it come back.</div>
 </section>
-<section data-case="detect" data-example="far"><h3>Twice as far</h3><p>The echo has to go out and come back: power falls as \(1/R^4\), 12 dB per doubling.</p></section>
-<section data-case="detect" data-example="integrate"><h3>Integration</h3><p>Adding 16 pulses coherently multiplies the SNR by 16 (+12 dB): exactly what was lost by doubling the range.</p></section>
-<section data-case="detect" data-example="pfa"><h3>A lower threshold</h3><p>\(P_{fa} = 10^{-2}\): more detections, but one range cell in a hundred lights up on noise alone.</p></section>
-<section data-case="detect" data-example="stealth"><h3>A small target</h3><p>An RCS of 0.01 m² (20 dB below 1 m²) shrinks the detection range by \(10^{20/40} \approx 3.2\) times.</p></section>
+<section data-case="detect" data-example="far"><h3>Twice as far</h3><p>The echo has to go out and come back: power falls as \(1/R^4\), 12 dB per doubling. Pd collapses.</p></section>
+<section data-case="detect" data-example="integrate"><h3>Integration</h3><p>Adding 16 pulses coherently multiplies the signal by 16 in amplitude but the noise only by 4 (random phases add as \(\sqrt{n}\)): the SNR grows by 16, +12 dB — exactly what doubling the range cost.</p></section>
+<section data-case="detect" data-example="pfa"><h3>A lower threshold</h3><p>\(P_{fa} = 10^{-2}\): the threshold drops to 3 × the noise. More detections, but one range cell in a hundred lights up on noise alone — count the false alarms in the readout.</p></section>
+<section data-case="detect" data-example="stealth"><h3>A small target</h3><p>0.01 m² is 20 dB below 1 m². Since range goes as the fourth root, detection range shrinks by \(10^{20/40} \approx 3.2\) times. That is the whole point of stealth.</p></section>
+
+<section data-case="mti">
+  <h3>Moving-target indication</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: how much the canceller passes, against target speed. It is zero at 0 m/s (where the ground is) and again at every <span class="key">blind speed</span>. The orange dot is our target. Bottom: the range profile before (grey: clutter everywhere, target lost in it) and after the canceller (blue: clutter gone, the target stands out — if its speed is not blind).</div>
+  <p>The ground does not move: its echo is the same from pulse to pulse. A moving target's echo shifts its phase by \(2\pi f_d T\) between pulses. So subtract consecutive pulses:</p>
+  <div class="eq">$$y_n = x_n - x_{n-1}, \qquad |H(f_d)| = \left|2\sin\frac{\pi f_d}{\text{PRF}}\right|$$</div>
+  <ol class="steps">
+    <li>Stationary clutter: \(x_n = x_{n-1}\), so \(y_n = 0\). Gone.</li>
+    <li>Moving target: the phase has rotated, the difference is not zero. Kept.</li>
+    <li>But if the phase rotated by exactly a full turn (\(f_d = \text{PRF}\)), the radar cannot tell it from stationary: the target is cancelled too.</li>
+  </ol>
+  <div class="eq">$$v_\text{blind} = k\,\frac{\lambda\,\text{PRF}}{2}, \quad k = 1, 2, \dots$$</div>
+  <div class="worked"><h4>Worked example</h4>λ = 3 cm, PRF = 1 kHz: first blind speed 15 m/s. A target at 15 m/s moves exactly half a wavelength (one full round-trip phase turn) between pulses — it looks frozen. At 7.5 m/s it is a half turn: maximum response.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a faster target is always easier. At 30, 45, 60 m/s it is blind again. Cascading cancellers (three-pulse, four-pulse) widens the clutter notch but does not remove blind speeds — only changing the PRF does.</div>
+  <div class="try"><h4>Try it</h4>Slide the target speed to a blind speed and watch it vanish from the blue profile. Then change the PRF: the notches move, the target reappears. Radars stagger their PRF for exactly this reason.</div>
+</section>
+<section data-case="mti" data-example="two"><h3>Two-pulse canceller</h3><p>The simplest filter: one subtraction. Its notch at zero is narrow, so slowly-moving clutter (trees in the wind, sea) leaks through. Compare with three pulses: \((1 - z^{-1})^2\), deeper and wider notch.</p></section>
+<section data-case="mti" data-example="blind"><h3>A blind speed</h3><p>15 m/s at 1 kHz: the target moves λ/2 between pulses, its echo comes back with the same phase every time, and the canceller removes it with the clutter.</p></section>
+<section data-case="mti" data-example="prf"><h3>Change the PRF</h3><p>At 1.4 kHz the first blind speed moves to 21 m/s: the target at 15 m/s is in the passband again. Alternating PRFs from burst to burst fills the holes.</p></section>
 
 <section data-case="ppi">
   <h3>The PPI scope</h3>
-  <p>A plan-position indicator draws echoes at their range and bearing as the antenna turns; the sweep line marks where it points now. Each echo glows and fades until the next pass. Clutter close to the radar comes from the ground.</p>
+  <div class="look"><h4>What you are looking at</h4>A plan-position indicator: the radar is at the centre, north is up, rings every 25 km. The bright line is the beam sweeping round; each echo is painted where it is and fades slowly (phosphor persistence). Near the centre: ground clutter. Each blip is as wide as the beam at that range.</div>
+  <p>The angle on the screen is where the antenna was pointing; the distance from the centre is the echo delay. A blip is not a point: it spreads across the beam width, which grows with range:</p>
+  <div class="eq">$$\theta_{3\,\text{dB}} \approx 0.886\,\frac{\lambda}{D}, \qquad \text{cross-range size} = R\,\theta$$</div>
+  <div class="worked"><h4>Worked example</h4>A 2 m antenna at 3 cm: θ ≈ 0.76°. At 60 km that is 800 m across: two aircraft 1 km apart at that range appear as two blips. With a 0.5 m antenna the beam is 3°, 3.2 km across: they merge into one.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming angular resolution is as good as range resolution. Range resolution is set by bandwidth and is the same everywhere (metres); cross-range resolution gets worse linearly with range.</div>
+  <div class="try"><h4>Try it</h4>Shrink the antenna and watch the pair of aircraft at the top right merge. Slow the rotation: the blips fade before they are refreshed.</div>
 </section>
-<section data-case="ppi" data-example="jet"><h3>A fast jet</h3><p>Between two sweeps the jet moves several kilometres: the tracker must predict where to look for it next.</p></section>
+<section data-case="ppi" data-example="jet"><h3>A fast jet</h3><p>Between two sweeps (5 s) a jet at 300 m/s moves 1.5 km: the tracker must predict where to look for it next.</p></section>
 <section data-case="ppi" data-example="rain"><h3>Rain</h3><p>Raindrops reflect too: a large patch of weak echoes that can hide targets. Doppler processing and circular polarization help remove it.</p></section>
-<section data-case="ppi" data-example="slow"><h3>Slow scan</h3><p>At 4 rpm each target is seen every 15 s: long range and dwell time, but slow updates.</p></section>
+<section data-case="ppi" data-example="small"><h3>A small antenna</h3><p>0.5 m: four times wider beam, four times wider blips. The two aircraft near 60 km become one blob — angular resolution is bought with aperture.</p></section>
+<section data-case="ppi" data-example="slow"><h3>Slow scan</h3><p>At 4 rpm each target is seen every 15 s: more pulses per look (longer dwell, better detection), but slow updates.</p></section>
 
 <section data-case="jam">
   <h3>Jamming and burn-through</h3>
-  <p>A jammer floods the radar's receiver with noise. Its power falls only as \(1/R^2\) (one way), the echo as \(1/R^4\) (two ways): at long range the jammer wins, but as the target gets closer the echo grows faster. The burn-through range is where the signal-to-jamming ratio reaches what the radar needs.</p>
-  <div class="eq">$$\frac{S}{J} = \frac{P_t G \sigma}{4\pi P_j G_j R^2}\,\frac{B_j}{B_r}, \qquad R_{bt} = \sqrt{\frac{P_t G \sigma B_j}{4\pi P_j G_j B_r\,(S/J)_\text{req}}}$$</div>
+  <div class="look"><h4>What you are looking at</h4>The power arriving at the radar from the target's echo (blue) and from the jammer (red), against range on a log axis. Where blue climbs far enough above red the radar sees through the jamming: the dashed line, the <span class="key">burn-through range</span>.</div>
+  <p>A jammer has a huge advantage: its signal travels one way, the echo travels two ways.</p>
+  <div class="eq">$$S \propto \frac{P_t G^2 \sigma}{R^4}, \qquad J \propto \frac{P_j G_j G}{R^2}\cdot\frac{B_r}{B_j}$$</div>
+  <ol class="steps">
+    <li>Far away, \(1/R^4\) is far smaller than \(1/R^2\): the jammer wins easily, even with a tiny power.</li>
+    <li>As the target approaches, S grows 40 dB per decade, J only 20: the lines must cross.</li>
+    <li>Below that crossing (plus the required S/J margin) the radar burns through.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A 1 W jammer against a 100 kW radar looks hopeless — 50 dB weaker. But at 100 km the echo has lost 40 log R ≈ 200 dB and the jammer only 100: the jammer is ahead by a wide margin. The radar wins back only inside a few kilometres.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting bandwidth. Noise spread over 10 MHz into a 1 MHz receiver loses 10 dB. Barrage jamming covers many radars but dilutes itself; spot jamming is efficient but easy to dodge by changing frequency.</div>
+  <div class="try"><h4>Try it</h4>Raise the jammer power: the red line rises and burn-through moves in by √10 per decade. Switch to stand-off: the red line goes flat.</div>
 </section>
-<section data-case="jam" data-example="power"><h3>A stronger jammer</h3><p>Ten times the jammer power (10 W) pulls the burn-through range in by \(\sqrt{10} \approx 3.2\) times.</p></section>
+<section data-case="jam" data-example="power"><h3>A stronger jammer</h3><p>Ten times the jammer power (10 W) pulls the burn-through range in by \(\sqrt{10} \approx 3.2\) times, because S/J grows as \(1/R^2\).</p></section>
 <section data-case="jam" data-example="spot"><h3>Spot jamming</h3><p>Concentrating the noise in the radar's own 1 MHz instead of 10 MHz puts ten times more of it where it matters. Radars answer by hopping frequency.</p></section>
-<section data-case="jam" data-example="standoff"><h3>Stand-off jamming</h3><p>A jammer far away, outside the radar's beam, must come in through the sidelobes (here −30 dB). Its power at the radar is constant while the target's echo grows as it approaches.</p></section>
+<section data-case="jam" data-example="standoff"><h3>Stand-off jamming</h3><p>A jammer far away, outside the radar's beam, must come in through the sidelobes (here −30 dB). Its power at the radar is constant while the target's echo grows as it approaches: low sidelobes are the radar's defence.</p></section>

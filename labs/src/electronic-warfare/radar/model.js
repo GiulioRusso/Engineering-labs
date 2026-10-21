@@ -33,3 +33,15 @@ export function burnThrough(p, needDb) {
   // S/J = Pt G rcs Bj / (4π Pj Gj R² Br) (for Bj ≥ Br) = need  →  R = sqrt(Pt G rcs Bj / (4π Pj Gj Br need))
   return Math.sqrt(p.Pt * p.G * p.rcs * Math.max(p.Bj, p.Br) / (4 * Math.PI * p.Pj * p.Gj * p.Br * lin(needDb)));
 }
+
+// MTI: an n-pulse canceller (1 − z⁻¹)^(n−1); gain vs Doppler, zero at multiples of the PRF (blind speeds)
+export const mtiGain = (fd, prf, order) => Math.abs(2 * Math.sin(Math.PI * fd / prf)) ** order;
+export const blindSpeed = (k, prf, lam) => k * lam * prf / 2;
+// the radar range equation as a ledger of dB terms: returns [[label, dB], …] and the resulting SNR
+export function ledger({ PtW, Gdb, lam, rcs, R, B, Fdb, mode = 'radar' }) {
+  const t = [['transmit power', db(PtW)], ['transmit gain', Gdb], ['receive gain', Gdb], ['λ²', db(lam * lam)]];
+  if (mode === 'radar') t.push(['target σ', db(rcs)], ['(4π)³', -db((4 * Math.PI) ** 3)], ['R⁴', -40 * Math.log10(R)]);
+  else t.push(['(4π)²', -db((4 * Math.PI) ** 2)], ['R²', -20 * Math.log10(R)]);
+  const S = t.reduce((a, [, v]) => a + v, 0), N = db(KB * T0) + db(B) + Fdb;
+  return { terms: t, S, N, snr: S - N };
+}

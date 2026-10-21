@@ -360,12 +360,32 @@
     "group": "Airborne radar"
    },
    {
+    "id": "radar-equation",
+    "title": "The radar equation",
+    "what": "The range equation as a dB budget: every factor, the noise floor, SNR against range.",
+    "from": "radar",
+    "cases": [
+     "budget"
+    ],
+    "group": "Radar"
+   },
+   {
     "id": "detection",
     "title": "Detection in noise",
     "what": "Radar equation, threshold, false alarms and probability of detection on an A-scope.",
     "from": "radar",
     "cases": [
      "detect"
+    ],
+    "group": "Radar"
+   },
+   {
+    "id": "mti",
+    "title": "Moving-target indication",
+    "what": "Pulse cancellers remove the ground and reveal blind speeds.",
+    "from": "radar",
+    "cases": [
+     "mti"
     ],
     "group": "Radar"
    },
