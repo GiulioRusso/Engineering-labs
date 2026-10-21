@@ -1,17 +1,16 @@
-<h2>Surfaces and the gradient</h2>
-<p>A function of two variables is a landscape: height \(z = f(x, y)\) over the floor. Drag the point to walk on it.</p>
-<section data-highlight="gradient">
-  <h3>The gradient points uphill</h3>
-  <p>Its components are the slopes in the \(x\) and \(y\) directions. Together they point the way the ground rises fastest, and their length is that steepest slope.</p>
-  <div class="eq">$$\nabla f = \left(\frac{\partial f}{\partial x},\ \frac{\partial f}{\partial y}\right)$$</div>
+<section data-case="bowl saddle hills ripple">
+  <p>A function of two variables is a landscape: height \(z = f(x, y)\) over the floor. Drag the point to walk on it. The gradient (purple) points uphill and is perpendicular to the level curves; the tangent plane is the flat approximation at the point.</p>
+  <div class="eq">$$\nabla f = \left(\frac{\partial f}{\partial x},\ \frac{\partial f}{\partial y}\right), \qquad z \approx f(\mathbf x_0) + \nabla f(\mathbf x_0)\cdot(\mathbf x - \mathbf x_0)$$</div>
 </section>
-<section data-highlight="contours">
-  <h3>…and it is perpendicular to the level curves</h3>
-  <p>Walking along a contour line keeps the height constant, so the slope along it is zero: the gradient has no component along the contour.</p>
-  <div class="eq">$$\nabla f \cdot \mathbf t = 0 \quad\text{for any } \mathbf t \text{ tangent to } f = \text{const}$$</div>
-</section>
-<section data-highlight="plane">
-  <h3>The tangent plane</h3>
-  <p>Close to the point the surface is almost flat. The best flat approximation uses the value and the gradient there. Its error grows like the square of the distance.</p>
-  <div class="eq">$$z \approx f(x_0, y_0) + \nabla f(x_0, y_0)\cdot(x - x_0,\ y - y_0)$$</div>
-</section>
+<section data-case="bowl"><h3>Bowl</h3><p>\(f = (x^2 + y^2)/4\): level curves are circles, the gradient \((x, y)/2\) points straight away from the bottom and grows with the distance.</p></section>
+<section data-case="bowl" data-example="bottom"><h3>At the bottom</h3><p>The tangent plane is horizontal: \(\nabla f = 0\). A point where the gradient vanishes is a critical point; here it is a minimum.</p></section>
+<section data-case="bowl" data-example="far"><h3>Far out</h3><p>Twice as far, twice as steep: \(|\nabla f| = r/2\).</p></section>
+<section data-case="saddle"><h3>Saddle</h3><p>\(f = (x^2 - y^2)/4\): up along \(x\), down along \(y\). The level curves are hyperbolas.</p></section>
+<section data-case="saddle" data-example="centre"><h3>A saddle point</h3><p>\(\nabla f = 0\) and the tangent plane is flat, yet it is neither a top nor a bottom: a critical point need not be an extremum.</p></section>
+<section data-case="saddle" data-example="x"><h3>Along x</h3><p>On the \(x\) axis \(f = x^2/4\): the gradient points along \(+x\), away from the centre.</p></section>
+<section data-case="saddle" data-example="y"><h3>Along y</h3><p>On the \(y\) axis \(f = -y^2/4\): uphill is back towards the centre.</p></section>
+<section data-case="hills"><h3>Hills and a valley</h3><p>Follow the gradient and you climb the nearest hill. The contour lines crowd where the ground is steep.</p></section>
+<section data-case="hills" data-example="top"><h3>On a summit</h3><p>At the top of a hill \(\nabla f = 0\): every direction goes down. A local maximum.</p></section>
+<section data-case="hills" data-example="valley"><h3>In the hollow</h3><p>At the bottom of the hollow, again \(\nabla f \approx 0\): a local minimum.</p></section>
+<section data-case="ripple"><h3>Ripple</h3><p>Circular level curves: the gradient is radial, pointing outward on a rising slope and inward on a falling one.</p></section>
+<section data-case="ripple" data-example="trough"><h3>In the trough</h3><p>At the bottom of the first ring the gradient vanishes, and along the ring the height is constant: a whole circle of minima, not a single point.</p></section>

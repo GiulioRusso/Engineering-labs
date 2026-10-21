@@ -15,11 +15,25 @@ export default {
     top: { pos: [target[0], -0.01, 7], target }, iso: { pos: [target[0] + 3.8, -5.5, 3.4], target },
   },
   defaults: { theta: 0.8, omega: 1, units: 'deg', helix: false, shadows: false, tangent: false, triangle: true },
-  scenarios: [
-    { id: 'circle', label: 'Circle', hint: 'Drag the point: sin and cos are its coordinates.', cam: 'side', set: { omega: 0, theta: 0.6 } },
-    { id: 'spin', label: 'Spin', cam: 'side', set: { omega: 1 } },
-    { id: 'waves', label: 'Sine and cosine waves', hint: 'Unroll the angle along x.', cam: 'iso', set: { omega: 1, helix: true, shadows: true } },
-    { id: 'tangent', label: 'Tangent', hint: 'tan θ blows up at 90°.', cam: 'side', set: { omega: 0.25, theta: 1.25, tangent: true } },
+  cases: [
+    { id: 'circle', label: 'Unit circle', cam: 'side', set: { omega: 0, theta: 0.6 }, examples: [
+      { id: 'd30', label: '30°: sin = ½', set: { theta: Math.PI / 6 } },
+      { id: 'd45', label: '45°: sin = cos', set: { theta: Math.PI / 4 } },
+      { id: 'd90', label: '90°: cos = 0', set: { theta: Math.PI / 2 } },
+      { id: 'q2', label: 'Second quadrant: cos < 0', set: { theta: 2.3 } },
+      { id: 'rad', label: 'One radian', set: { theta: 1, units: 'rad' } },
+      { id: 'spin', label: 'Let it turn', set: { omega: 1 } },
+    ] },
+    { id: 'waves', label: 'Waves', cam: 'iso', set: { omega: 1, helix: true, shadows: true }, examples: [
+      { id: 'side', label: 'From the side: a sine', cam: 'front' },
+      { id: 'shift', label: 'Cosine leads by 90°', set: { omega: 0, theta: 0 } },
+      { id: 'fast', label: 'Faster: higher frequency', set: { omega: 2.5 } },
+    ] },
+    { id: 'tangent', label: 'Tangent', cam: 'side', set: { omega: 0, theta: 0.6, tangent: true }, examples: [
+      { id: 't45', label: '45°: tan = 1', set: { theta: Math.PI / 4 } },
+      { id: 't90', label: 'Near 90°: it blows up', set: { theta: 1.5 } },
+      { id: 'neg', label: 'Second quadrant: tan < 0', set: { theta: 2.4 } },
+    ] },
   ],
   controls: [
     { title: 'Angle', items: [

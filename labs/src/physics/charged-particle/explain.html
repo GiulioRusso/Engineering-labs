@@ -1,20 +1,20 @@
-<h2>A charged particle in E and B</h2>
-<p>The particle feels the Lorentz force. The electric part pushes along \(\mathbf E\); the magnetic part pushes sideways, at right angles to both the velocity and \(\mathbf B\).</p>
-<section data-highlight="lorentz">
+<section data-case="circle helix drift accel">
   <h3>The Lorentz force</h3>
+  <p>The electric part pushes along \(\mathbf E\); the magnetic part pushes sideways, at right angles to both the velocity and \(\mathbf B\). The magnetic force bends the path but never changes the speed: it does no work.</p>
   <div class="eq">$$\cF{\mathbf F} = q\left(\cE{\mathbf E} + \cv{\mathbf v}\times\cB{\mathbf B}\right)$$</div>
-  <p>Because the magnetic force is always perpendicular to the velocity, it does no work: it bends the path but never changes the speed.</p>
 </section>
-<section data-highlight="gyration">
-  <h3>Circles and helices</h3>
-  <p>In a uniform \(\mathbf B\) the particle circles at the cyclotron frequency, which does not depend on its speed. Faster particles just make bigger circles. Any velocity along \(\mathbf B\) is untouched, so the circle stretches into a helix.</p>
-  <div class="eq">$$\omega_c = \frac{|q| B}{m}, \qquad r_L = \frac{m\,v_\perp}{|q| B}$$</div>
-</section>
-<section data-highlight="drift">
-  <h3>The E × B drift</h3>
-  <p>Add an electric field across \(\mathbf B\). The particle speeds up on one half of its circle and slows down on the other, so the loops do not close: it drifts sideways, at right angles to \(\mathbf E\). The drift has the same speed and direction for any charge or mass.</p>
-  <div class="eq">$$\mathbf v_d = \frac{\cE{\mathbf E}\times\cB{\mathbf B}}{B^2}$$</div>
-</section>
+<section data-case="circle"><h3>Circles</h3><p>Velocity at right angles to a uniform \(\mathbf B\): the force always points to the same centre, so the particle circles at the cyclotron frequency, whatever its speed.</p><div class="eq">$$\omega_c = \frac{|q| B}{m}, \qquad r_L = \frac{m\,v_\perp}{|q| B}$$</div></section>
+<section data-case="circle" data-example="strong"><h3>Stronger field</h3><p>Three times \(B\): a circle three times smaller, turned three times faster.</p></section>
+<section data-case="circle" data-example="speed"><h3>Faster particle</h3><p>The radius grows with \(v\), but the period does not change: this is what makes a cyclotron work.</p></section>
+<section data-case="circle" data-example="anti"><h3>Opposite charge</h3><p>\(q \to -q\) flips the force: the antiparticle circles the other way, same size.</p></section>
+<section data-case="circle" data-example="electron"><h3>An electron</h3><p>1836 times lighter than a proton: it circles 1836 times faster, on a much smaller circle at the same speed.</p></section>
+<section data-case="helix"><h3>Helices</h3><p>The part of the velocity along \(\mathbf B\) feels no force, so the circle is stretched along \(\mathbf B\) into a helix. This is how charged particles spiral along the Earth's field lines into the aurora.</p><div class="eq">$$p = v_\parallel \cdot \frac{2\pi}{\omega_c}$$</div></section>
+<section data-case="helix" data-example="shallow"><h3>Almost along B</h3><p>A small angle: tiny circles, long pitch. The particle is guided by the field line.</p></section>
+<section data-case="drift"><h3>The E × B drift</h3><p>With \(\mathbf E\) across \(\mathbf B\), the particle speeds up on one half of its circle and slows on the other, so the loops do not close: it drifts at right angles to both fields.</p><div class="eq">$$\mathbf v_d = \frac{\cE{\mathbf E}\times\cB{\mathbf B}}{B^2}$$</div></section>
+<section data-case="drift" data-example="pair"><h3>Same drift for both</h3><p>The antiparticle circles the opposite way but drifts in the same direction at the same speed: \(\mathbf v_d\) contains neither \(q\) nor \(m\).</p></section>
+<section data-case="drift" data-example="strong"><h3>Stronger E</h3><p>The drift speed is \(E/B\): three times the field, three times faster.</p></section>
+<section data-case="accel"><h3>E along B</h3><p>Now the electric force pushes along the axis: the helix stretches as the particle speeds up. The kinetic energy rises, all from \(q\mathbf E\cdot\mathbf v\).</p></section>
+<section data-case="accel" data-example="brake"><h3>E against the motion</h3><p>The particle slows along \(\mathbf B\), stops, and is pushed back: the helix closes up and reverses.</p></section>
 <details><summary>About the model</summary>
   <p>Boris pusher with 200 steps per gyration: half electric kick, exact magnetic rotation, half kick. In a pure magnetic field it conserves the speed to round-off (test: \(10^{-12}\)), and the drift matches \(E/B\) within 0.2 %.</p>
 </details>

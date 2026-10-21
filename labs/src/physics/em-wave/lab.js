@@ -11,10 +11,16 @@ export default {
   id: 'em-wave', title: 'Electromagnetic waves', size: 1.5,
   cameras: { front: { pos: [0, -4.2, 0.3] }, side: { pos: [4.5, 0, 0.3] }, top: { pos: [0, -0.01, 4.4] }, iso: { pos: [2.6, -3.2, 1.8] } },
   defaults: { mode: 'travel', f: 1e9, E0: 10, n2: 1.5, showB: true, glyphs: true },
-  scenarios: [
-    { id: 'travel', label: 'Free space', set: { mode: 'travel' } },
-    { id: 'glass', label: 'Into glass', set: { mode: 'interface', n2: 1.5 } },
-    { id: 'mirror', label: 'Mirror', hint: 'Standing wave.', set: { mode: 'conductor' } },
+  cases: [
+    { id: 'travel', label: 'Free space', set: { mode: 'travel' }, examples: [
+      { id: 'high', label: 'Ten times the frequency', set: { f: 1e10 } },
+      { id: 'strong', label: 'Double the amplitude', set: { E0: 20 } },
+    ] },
+    { id: 'interface', label: 'Into a material', set: { mode: 'interface', n2: 1.5 }, examples: [
+      { id: 'matched', label: 'n₂ = 1: no reflection', set: { n2: 1 } },
+      { id: 'dense', label: 'n₂ = 4: strong reflection', set: { n2: 4 } },
+    ] },
+    { id: 'mirror', label: 'Mirror', set: { mode: 'conductor' } },
   ],
   controls: [
     { title: 'Wave', items: [

@@ -1,6 +1,6 @@
 // Loads every topic page from file:// in headless Chrome and runs every animation and every scenario.
-// Fails on a console error, an uncaught exception, any network request, a WebGL context loss or a
-// blank scene; checks that both catalogues link every built animation. Prints frame times.
+// Fails on a console error, an uncaught exception, any network request, a WebGL context loss, a
+// blank scene or a case/example without its explanation; checks that both catalogues link every built animation. Prints frame times.
 // Usage: node tools/smoke.mjs [topic]
 import { readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -52,6 +52,10 @@ for (const topic of topics) {
       const frac = await blankFraction(p);
       if (frac < 0.02) fail(`${topic}/${id}/${s}: blank scene (${(frac * 100).toFixed(1)} %)`);
       if (await p.evaluate(() => !!window.__labContextLost)) fail(`${topic}/${id}/${s}: WebGL context lost`);
+      // every case and every example is explained in the ? drawer
+      const ex = await p.evaluate((x) => { const d = document.querySelector('.explain'), vis = [...d.querySelectorAll('[data-case]')].filter((e) => !e.hidden);
+        return { cs: vis.some((e) => !e.dataset.example), ex: !x.includes('/') || vis.some((e) => e.dataset.example) }; }, s);
+      if (!ex.cs || !ex.ex) fail(`${topic}/${id}/${s}: no explanation for this ${ex.cs ? 'example' : 'case'}`);
       drawn.push(`${s} ${(frac * 100).toFixed(0)}%`);
     }
     await sleep(1500);

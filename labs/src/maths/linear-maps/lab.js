@@ -16,13 +16,31 @@ export default {
   id: 'linear-maps', title: 'Linear maps on the unit cube', size: 1.6, duration: 4,
   cameras: { front: { pos: [0.4, -5, 0.6], target: [0.4, 0.4, 0.4] }, side: { pos: [5, 0.4, 0.6], target: [0.4, 0.4, 0.4] }, top: { pos: [0.4, 0.39, 5], target: [0.4, 0.4, 0.4] }, iso: { pos: [3.2, -3.4, 2.6], target: [0.4, 0.4, 0.4] } },
   defaults: { ...I, morph: true, eigen: true, ghost: true },
-  scenarios: [
-    { id: 'stretch', label: 'Stretch', hint: 'Diagonal: the axes are eigenvectors.', controls: ['a11', 'a22', 'a33'], set: { ...I, a11: 1.8, a22: 0.6, a33: 1.2 } },
-    { id: 'rotation', label: 'Rotation', hint: 'The axis is the only real eigenvector.', controls: [], set: rot(0.8) },
-    { id: 'shear', label: 'Shear', hint: 'Volume stays 1.', controls: ['a12', 'a13', 'a23'], set: { ...I, a12: 1 } },
-    { id: 'reflection', label: 'Reflection', hint: 'det < 0.', controls: ['a11', 'a22', 'a33'], set: { ...I, a11: -1 } },
-    { id: 'projection', label: 'Projection', hint: 'det = 0.', controls: ['a13', 'a23', 'a33'], set: { ...I, a33: 0, a13: 0.4, a23: 0.3 } },
-    { id: 'general', label: 'Any matrix', set: { a11: 1.5, a12: 0.5, a13: 0.2, a21: 0.5, a22: 1, a23: 0.4, a31: 0.2, a32: 0.4, a33: 0.7 } },
+  cases: [
+    { id: 'stretch', label: 'Stretch', controls: ['a11', 'a22', 'a33'], set: { ...I, a11: 1.8, a22: 0.6, a33: 1.2 }, examples: [
+      { id: 'identity', label: 'Identity: nothing moves', set: { a11: 1, a22: 1, a33: 1 } },
+      { id: 'uniform', label: 'Uniform ×1.5', set: { a11: 1.5, a22: 1.5, a33: 1.5 } },
+      { id: 'squash', label: 'Squash one axis', set: { a11: 1, a22: 1, a33: 0.3 } },
+    ] },
+    { id: 'rotation', label: 'Rotation', controls: [], set: rot(0.8), examples: [
+      { id: 'r90', label: '90°', set: rot(Math.PI / 2) },
+      { id: 'r180', label: '180°', set: rot(Math.PI) },
+    ] },
+    { id: 'shear', label: 'Shear', controls: ['a12', 'a13', 'a23'], set: { ...I, a12: 1 }, examples: [
+      { id: 'small', label: 'Gentle shear', set: { a12: 0.4 } },
+      { id: 'two', label: 'Shear along z', set: { a12: 0, a13: 0.6, a23: 0.6 } },
+    ] },
+    { id: 'reflection', label: 'Reflection', controls: ['a11', 'a22', 'a33'], set: { ...I, a11: -1 }, examples: [
+      { id: 'floor', label: 'Mirror in the floor', set: { a11: 1, a33: -1 } },
+      { id: 'point', label: 'Through the origin: −I', set: { a11: -1, a22: -1, a33: -1 } },
+    ] },
+    { id: 'projection', label: 'Projection', controls: ['a13', 'a23', 'a33'], set: { ...I, a33: 0, a13: 0.4, a23: 0.3 }, examples: [
+      { id: 'floor', label: 'Straight onto the floor', set: { a13: 0, a23: 0 } },
+      { id: 'line', label: 'Onto a line: rank 1', set: { a22: 0, a13: 0, a23: 0 } },
+    ] },
+    { id: 'general', label: 'Any', set: { a11: 1.5, a12: 0.5, a13: 0.2, a21: 0.5, a22: 1, a23: 0.4, a31: 0.2, a32: 0.4, a33: 0.7 }, examples: [
+      { id: 'inverse', label: 'Undo it: the inverse', set: { a11: 0.8, a12: -0.4, a13: 0, a21: -0.4, a22: 1.496, a23: -0.741, a31: 0, a32: -0.741, a33: 1.852 } },
+    ] },
   ],
   controls: [
     { title: 'Matrix', items: [

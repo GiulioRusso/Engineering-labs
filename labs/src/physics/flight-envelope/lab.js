@@ -11,11 +11,20 @@ export default {
   id: 'flight-envelope', title: 'Flight: lift, drag, envelope', size: 7, timeless: true,
   cameras: { front: { pos: [0, -24, 2] }, side: { pos: [24, 0, 2] }, top: { pos: [0, -0.01, 24] }, iso: { pos: [15, -15, 8] } },
   defaults: { mode: 'trim', V: 55, h: 1000, alpha: 4 * deg, bank: 0, flow: true },
-  scenarios: [
-    { id: 'cruise', label: 'Cruise', set: { V: 55, h: 1000 } },
-    { id: 'slow', label: 'Slow flight', set: { V: 30, h: 1000 } },
-    { id: 'turn', label: 'Banked turn', controls: ['V', 'h', 'bank'], set: { V: 50, bank: 60 * deg } },
-    { id: 'stall', label: 'Stall', hint: 'Set α by hand.', controls: ['V', 'alpha'], set: { mode: 'free', V: 30, alpha: 18 * deg } },
+  cases: [
+    { id: 'level', label: 'Level flight', controls: ['V', 'h'], set: { V: 55, h: 1000 }, examples: [
+      { id: 'slow', label: 'Slow: big angle of attack', set: { V: 30 } },
+      { id: 'fast', label: 'Fast: small angle', set: { V: 80 } },
+      { id: 'high', label: 'Thin air at 4000 m', set: { h: 4000 } },
+    ] },
+    { id: 'turn', label: 'Turn', controls: ['V', 'h', 'bank'], set: { V: 50, bank: 60 * deg }, examples: [
+      { id: 'b30', label: '30° bank: n = 1.15', set: { bank: 30 * deg } },
+      { id: 'slow', label: 'Too slow for this bank', set: { V: 34 } },
+    ] },
+    { id: 'stall', label: 'Stall', controls: ['V', 'h', 'alpha'], set: { mode: 'free', V: 30, alpha: 18 * deg }, examples: [
+      { id: 'before', label: 'Just below the stall', set: { alpha: 13 * deg } },
+      { id: 'neg', label: 'Negative angle: pushes down', set: { alpha: -3 * deg } },
+    ] },
   ],
   controls: [
     { title: 'Flight', items: [

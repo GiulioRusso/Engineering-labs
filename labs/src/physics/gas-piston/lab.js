@@ -12,11 +12,20 @@ export default {
   id: 'gas-piston', title: 'Gas in a piston', size: 0.9, scrub: false,
   cameras: { front: { pos: [0.5, -2.6, 0.55], target: [0.5, 0.5, 0.55] }, side: { pos: [3, 0.5, 0.55], target: [0.5, 0.5, 0.55] }, top: { pos: [0.5, 0.49, 3], target: [0.5, 0.5, 0.5] }, iso: { pos: [2.1, -1.6, 1.6], target: [0.5, 0.5, 0.5] } },
   defaults: { mode: 'heating', T0: 300, squeeze: 0.5, moles: 0.01, color: true },
-  scenarios: [
-    { id: 'heating', label: 'Heat it', hint: 'Fixed volume: p ∝ T.', set: { mode: 'heating' } },
-    { id: 'isothermal', label: 'Squeeze slowly', hint: 'Isothermal: T constant.', set: { mode: 'isothermal' } },
-    { id: 'adiabatic', label: 'Squeeze insulated', hint: 'Adiabatic: T rises.', set: { mode: 'adiabatic' } },
-    { id: 'manual', label: 'By hand', hint: 'Drag the piston.', set: { mode: 'manual' } },
+  cases: [
+    { id: 'heating', label: 'Heating', set: { mode: 'heating' }, examples: [
+      { id: 'more', label: 'Twice the gas', set: { moles: 0.02 } },
+      { id: 'cold', label: 'Start cold: 150 K', set: { T0: 150 } },
+    ] },
+    { id: 'isothermal', label: 'Isothermal', set: { mode: 'isothermal' }, examples: [
+      { id: 'half', label: 'Squeeze to half', set: { squeeze: 0.5 } },
+      { id: 'quarter', label: 'Squeeze to a quarter', set: { squeeze: 0.25 } },
+    ] },
+    { id: 'adiabatic', label: 'Adiabatic', set: { mode: 'adiabatic' }, examples: [
+      { id: 'half', label: 'To half: T × 1.59', set: { squeeze: 0.5 } },
+      { id: 'quarter', label: 'To a quarter: T × 2.52', set: { squeeze: 0.25 } },
+    ] },
+    { id: 'manual', label: 'By hand', set: { mode: 'manual' } },
   ],
   controls: [
     { title: 'Piston', show: (s) => s.mode === 'adiabatic' || s.mode === 'isothermal', items: [

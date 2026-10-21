@@ -12,11 +12,24 @@ const KF = 0.12; // world units per newton for force arrows
 export default {
   id: 'forces-torque', title: 'Forces and torque', size: 4.6, ortho: true, plain: true, cam: 'top', duration: 4,
   defaults: { kind: 'resultant', f1x: 12, f1y: 6, f2x: -4, f2y: 10, f3x: -6, f3y: -8, m: 2, F: 10, r: 0.6, alpha: Math.PI / 2, L: 1, M: 2, s: 0.4, rb: 600, rf: 1000, tiptail: true },
-  scenarios: [
-    { id: 'sum', label: 'Adding forces', hint: 'Drag the force tips.', set: { kind: 'resultant' } },
-    { id: 'balance', label: 'Equilibrium', set: { kind: 'resultant', f1x: 12, f1y: 0, f2x: -6, f2y: 10.39, f3x: -6, f3y: -10.39 } },
-    { id: 'lever', label: 'Torque', set: { kind: 'torque' } },
-    { id: 'float', label: 'Buoyancy', set: { kind: 'buoyancy', rb: 600 } },
+  cases: [
+    { id: 'sum', label: 'Adding forces', set: { kind: 'resultant' }, examples: [
+      { id: 'line', label: 'Along one line', set: { f1x: 10, f1y: 0, f2x: -4, f2y: 0, f3x: 0, f3y: 0 } },
+      { id: 'right', label: 'At right angles: 3-4-5', set: { f1x: 12, f1y: 0, f2x: 0, f2y: 9, f3x: 0, f3y: 0 } },
+      { id: 'balance', label: 'Equilibrium: they cancel', set: { f1x: 12, f1y: 0, f2x: -6, f2y: 10.39, f3x: -6, f3y: -10.39 } },
+    ] },
+    { id: 'torque', label: 'Torque', set: { kind: 'torque' }, examples: [
+      { id: 'end', label: 'Push at the end', set: { r: 1 } },
+      { id: 'near', label: 'Near the pivot', set: { r: 0.1 } },
+      { id: 'along', label: 'Along the bar: no torque', set: { alpha: 0 } },
+      { id: 'd30', label: 'At 30°: half the torque', set: { alpha: Math.PI / 6 } },
+    ] },
+    { id: 'buoyancy', label: 'Buoyancy', set: { kind: 'buoyancy', rb: 600 }, examples: [
+      { id: 'ice', label: 'Ice in water', set: { rb: 917 } },
+      { id: 'sea', label: 'Ice in sea water', set: { rb: 917, rf: 1025 } },
+      { id: 'same', label: 'Same density as water', set: { rb: 1000 } },
+      { id: 'sink', label: 'Aluminium sinks', set: { rb: 2700 } },
+    ] },
   ],
   controls: [
     { title: 'Forces', show: (s) => s.kind === 'resultant', items: [

@@ -10,10 +10,26 @@ const X = [-5, 5], Y = [-3, 3.5];
 export default {
   id: 'calculus', title: 'Derivative, integral, Taylor', size: 4.4, ortho: true, plain: true, timeless: true, cam: 'top',
   defaults: { mode: 'derivative', fn: 'sq', x0: 0.8, h: 1.2, a: -1, b: 2.5, n: 8, rule: 'mid', N: 3 },
-  scenarios: [
-    { id: 'derivative', label: 'Derivative', hint: 'Shrink h: the secant becomes the tangent.', set: { mode: 'derivative', fn: 'sq', x0: 1, h: 1 } },
-    { id: 'integral', label: 'Integral', hint: 'Add strips: the sum becomes the area.', set: { mode: 'integral', fn: 'sq', a: 0, b: 2, n: 4, rule: 'left' } },
-    { id: 'taylor', label: 'Taylor', hint: 'Raise N: the polynomial hugs the curve.', set: { mode: 'taylor', fn: 'sin', x0: 0, N: 1 } },
+  cases: [
+    { id: 'derivative', label: 'Derivative', set: { mode: 'derivative', fn: 'sq', x0: 1, h: 1 }, examples: [
+      { id: 'limit', label: 'h → 0: the tangent', set: { h: 0.01 } },
+      { id: 'flat', label: 'At the bottom: slope 0', set: { x0: 0, h: 0.01 } },
+      { id: 'sin', label: 'sin′ = cos', set: { fn: 'sin', x0: 0, h: 0.01 } },
+      { id: 'peak', label: 'Top of sin: slope 0', set: { fn: 'sin', x0: 1.5708, h: 0.01 } },
+      { id: 'exp', label: 'Exponential: slope = height', set: { fn: 'exp', x0: 1, h: 0.01 } },
+    ] },
+    { id: 'integral', label: 'Integral', set: { mode: 'integral', fn: 'sq', a: 0, b: 2, n: 4, rule: 'left' }, examples: [
+      { id: 'many', label: 'More strips: n = 50', set: { n: 50 } },
+      { id: 'mid', label: 'Midpoint rule', set: { rule: 'mid' } },
+      { id: 'trap', label: 'Trapezoids', set: { rule: 'trap' } },
+      { id: 'signed', label: 'sin over a full turn: 0', set: { fn: 'sin', a: 0, b: 6.283, n: 20, rule: 'mid' } },
+    ] },
+    { id: 'taylor', label: 'Taylor', set: { mode: 'taylor', fn: 'sin', x0: 0, N: 1 }, examples: [
+      { id: 'n3', label: 'Order 3', set: { N: 3 } },
+      { id: 'n9', label: 'Order 9: a wide fit', set: { N: 9 } },
+      { id: 'exp', label: 'Exponential', set: { fn: 'exp', N: 4 } },
+      { id: 'fail', label: 'Far from x₀ it fails', set: { fn: 'gauss', N: 8 } },
+    ] },
   ],
   controls: [
     { title: 'Function', items: [

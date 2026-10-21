@@ -1,17 +1,30 @@
-<h2>Derivative, integral, Taylor</h2>
-<p>Three ideas built on one picture: a smooth curve, looked at very close up (derivative), added up in thin strips (integral), or copied by a polynomial (Taylor).</p>
-<section data-highlight="derivative">
+<section data-case="derivative">
   <h3>The derivative is a limit of slopes</h3>
-  <p>Draw a secant through \(x_0\) and \(x_0 + h\). As \(h\) shrinks, the secant turns into the tangent and its slope into the derivative.</p>
+  <p>Draw a secant through \(x_0\) and \(x_0 + h\). As \(h\) shrinks it turns into the tangent, and its slope into the derivative. Drag the point.</p>
   <div class="eq">$$f'(x_0) = \lim_{h\to 0} \frac{f(x_0 + h) - f(x_0)}{h}$$</div>
 </section>
-<section data-highlight="integral">
+<section data-case="derivative" data-example="limit"><h3>h → 0</h3><p>For \(f = x^2/2\) the secant slope is \(x_0 + h/2\): with \(h = 0.01\) it is 1.005, almost exactly \(f'(1) = 1\).</p></section>
+<section data-case="derivative" data-example="flat"><h3>Slope zero</h3><p>At the bottom of the curve the tangent is horizontal: \(f'(0) = 0\). Minima and maxima are where the derivative vanishes.</p></section>
+<section data-case="derivative" data-example="sin"><h3>The derivative of sine</h3><p>At \(x = 0\) the sine rises with slope 1 \(= \cos 0\). Everywhere, \((\sin x)' = \cos x\).</p></section>
+<section data-case="derivative" data-example="peak"><h3>Top of the sine</h3><p>At \(x = \pi/2\) the sine peaks: slope \(\cos(\pi/2) = 0\).</p></section>
+<section data-case="derivative" data-example="exp"><h3>Exponential</h3><p>For \(e^{x/2}\) the slope is half the height at every point: \((e^{kx})' = k\,e^{kx}\).</p></section>
+
+<section data-case="integral">
   <h3>The integral is a limit of sums</h3>
-  <p>Cut the area into \(n\) strips and add their areas. More strips, smaller error. Taking the height at the strip's midpoint is much better than at its edge: the error falls like \(1/n^2\) instead of \(1/n\).</p>
+  <p>Cut the area between \(a\) and \(b\) into \(n\) strips and add their areas. Drag \(a\) and \(b\).</p>
   <div class="eq">$$\int_a^b f(x)\,dx = \lim_{n\to\infty} \sum_{i=1}^{n} f(x_i^*)\,\Delta x, \qquad \Delta x = \frac{b-a}{n}$$</div>
 </section>
-<section data-highlight="taylor">
+<section data-case="integral" data-example="many"><h3>More strips</h3><p>With the left rule the error shrinks like \(1/n\): 50 strips are 12 times better than 4. The exact area of \(x^2/2\) from 0 to 2 is \(4/3\).</p></section>
+<section data-case="integral" data-example="mid"><h3>Midpoint rule</h3><p>Taking each strip's height in its middle cancels most of the error: it falls like \(1/n^2\).</p></section>
+<section data-case="integral" data-example="trap"><h3>Trapezoids</h3><p>Join the curve's values at the strip edges with straight lines. Also \(1/n^2\), about twice the midpoint error with the opposite sign.</p></section>
+<section data-case="integral" data-example="signed"><h3>Signed area</h3><p>Below the axis, area counts negative. Over a full period the sine's positive and negative halves cancel: \(\int_0^{2\pi}\sin x\,dx = 0\).</p></section>
+
+<section data-case="taylor">
   <h3>Taylor: a polynomial that copies the curve</h3>
-  <p>Match the value, the slope, the curvature… at one point. Each extra term hugs the curve over a wider range.</p>
+  <p>Match the value, the slope, the curvature… at one point \(x_0\). Each extra term hugs the curve over a wider range. Order 1 is the tangent line.</p>
   <div class="eq">$$T_N(x) = \sum_{n=0}^{N} \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n$$</div>
 </section>
+<section data-case="taylor" data-example="n3"><h3>Order 3</h3><p>\(\sin x \approx x - x^3/6\): good up to about \(|x| = 1.5\).</p></section>
+<section data-case="taylor" data-example="n9"><h3>Order 9</h3><p>Five terms of \(x - \tfrac{x^3}{3!} + \tfrac{x^5}{5!} - \dots\) follow the sine for more than a full half-wave. The series converges for every \(x\).</p></section>
+<section data-case="taylor" data-example="exp"><h3>Exponential</h3><p>\(e^{x/2} = \sum (x/2)^n / n!\): all terms positive, the fit improves fastest on the right.</p></section>
+<section data-case="taylor" data-example="fail"><h3>Far from the centre</h3><p>Near \(x_0\) the polynomial is excellent, but a polynomial must eventually shoot off to \(\pm\infty\) while the bell curve goes to 0. More terms widen the good region slowly.</p></section>

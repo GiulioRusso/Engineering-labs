@@ -1,0 +1,40 @@
+<section data-case="spring">
+  <h3>Simple harmonic motion</h3>
+  <p>The spring pulls back in proportion to the stretch (Hooke's law). The result is a sine wave in time, with a period set only by the mass and the stiffness, not by how far you pull. Energy swaps between the spring and the motion; the total stays fixed.</p>
+  <div class="eq">$$m\ddot x = -k x \;\Rightarrow\; x = x_0\cos\omega_0 t, \qquad \omega_0 = \sqrt{\frac{k}{m}}, \quad T = 2\pi\sqrt{\frac{m}{k}}$$</div>
+</section>
+<section data-case="spring" data-example="heavy"><h3>Four times the mass</h3><p>More inertia, same pull: \(T \propto \sqrt m\), so the period doubles.</p></section>
+<section data-case="spring" data-example="stiff"><h3>Four times stiffer</h3><p>\(T \propto 1/\sqrt k\): half the period.</p></section>
+<section data-case="spring" data-example="wide"><h3>A bigger swing</h3><p>Twice as far means twice the force, so it moves twice as fast: the period is the same (isochronism). The energy goes up four times, \(\tfrac12 k x_0^2\).</p></section>
+
+<section data-case="pendulum">
+  <h3>The pendulum</h3>
+  <p>Gravity pulls the bob back along its arc with \(mg\sin\theta\). For small angles \(\sin\theta \approx \theta\) and the pendulum is a harmonic oscillator whose period depends only on the length.</p>
+  <div class="eq">$$\ddot\theta = -\frac{g}{L}\sin\theta, \qquad T \approx 2\pi\sqrt{\frac{L}{g}} \quad (\theta_0 \ll 1)$$</div>
+</section>
+<section data-case="pendulum" data-example="long"><h3>Four times longer</h3><p>\(T \propto \sqrt L\): twice the period. A 1 m pendulum ticks about once a second each way.</p></section>
+<section data-case="pendulum" data-example="heavy"><h3>Heavier bob</h3><p>Weight and inertia both grow with \(m\) and cancel: the period does not depend on the mass (Galileo).</p></section>
+<section data-case="pendulum" data-example="big"><h3>A big swing</h3><p>At large angles \(\sin\theta < \theta\): the pull is weaker than the linear law, so the pendulum is slower. At 115° the period is about 30 % longer. The exact period uses the arithmetic–geometric mean:</p><div class="eq">$$T = \frac{2\pi\sqrt{L/g}}{\operatorname{AGM}\!\left(1, \cos\tfrac{\theta_0}{2}\right)}$$</div></section>
+<section data-case="pendulum" data-example="top"><h3>Almost over the top</h3><p>Released near the top, it lingers there before falling: the period grows without limit as \(\theta_0 \to 180°\). The motion is far from a sine wave.</p></section>
+
+<section data-case="damped">
+  <h3>Damping</h3>
+  <p>Friction proportional to the speed drains energy: the oscillation keeps its rhythm but its amplitude shrinks as \(e^{-\gamma t}\) (dashed envelope).</p>
+  <div class="eq">$$\ddot x + 2\gamma\dot x + \omega_0^2 x = 0, \qquad x \approx x_0 e^{-\gamma t}\cos\omega_1 t, \quad \omega_1 = \sqrt{\omega_0^2 - \gamma^2}$$</div>
+</section>
+<section data-case="damped" data-example="light"><h3>Light damping</h3><p>\(\gamma \ll \omega_0\): many swings, each slightly smaller. A guitar string or a swing.</p></section>
+<section data-case="damped" data-example="critical"><h3>Critical damping</h3><p>\(\gamma = \omega_0\): the fastest return to rest without overshooting. Car suspensions and door closers are tuned close to this.</p></section>
+<section data-case="damped" data-example="over"><h3>Overdamped</h3><p>\(\gamma > \omega_0\): no oscillation at all, it creeps back slowly, as if moving through honey.</p></section>
+
+<section data-case="driven">
+  <h3>Driven oscillations and resonance</h3>
+  <p>Push periodically at \(\omega_d\). After the start-up dies away, the mass follows the drive, with an amplitude that peaks when the drive matches the natural frequency (right plot).</p>
+  <div class="eq">$$\ddot x + 2\gamma\dot x + \omega_0^2 x = \frac{F_0}{m}\cos\omega_d t, \qquad A = \frac{F_0/m}{\sqrt{(\omega_0^2 - \omega_d^2)^2 + (2\gamma\omega_d)^2}}$$</div>
+</section>
+<section data-case="driven" data-example="resonance"><h3>At resonance</h3><p>Each push arrives just when it helps most: the amplitude grows until the damping removes energy as fast as the drive adds it, \(A = F_0/(2m\gamma\omega_0)\).</p></section>
+<section data-case="driven" data-example="above"><h3>Far above resonance</h3><p>The mass cannot keep up: tiny amplitude, moving opposite to the push (180° out of phase).</p></section>
+<section data-case="driven" data-example="sharp"><h3>Less damping</h3><p>The peak grows taller and narrower: its width is about \(2\gamma\). This is how a radio tunes to one station, and how soldiers marching in step can shake a bridge.</p></section>
+
+<details><summary>About the model</summary>
+  <p>RK4 at \(\Delta t = 2\) ms over 20 s. Tests: spring period vs \(2\pi\sqrt{m/k}\) (10⁻⁵) and energy (10⁻⁹); pendulum at 115° vs the AGM period (10⁻⁵); damped envelope vs \(e^{-\gamma t}\) (2 %); steady driven amplitude vs the resonance formula at three frequencies (0.2 %).</p>
+</details>

@@ -1,18 +1,30 @@
-<h2>Motion, momentum and energy</h2>
-<p>Three motions, three conservation stories. The green arrow is the velocity, the violet one the acceleration (lengths are scaled to stay readable).</p>
-<section data-highlight="projectile">
+<section data-case="projectile">
   <h3>Projectile: two independent motions</h3>
-  <p>Without air, nothing pushes sideways, so the horizontal speed never changes; vertically, gravity removes the same speed every second. Kinetic energy turns into height and back, and their sum stays fixed.</p>
-  <div class="eq">$$x = v_0\cos\theta\, t, \quad y = h_0 + v_0\sin\theta\, t - \tfrac12 g t^2, \qquad \tfrac12 m v^2 + m g y = \text{const}$$</div>
-  <p>With air drag the total energy only goes down: the missing part has heated the air.</p>
+  <p>Without air, nothing pushes sideways, so the horizontal speed never changes; vertically, gravity removes 9.81 m/s of speed every second. Kinetic energy turns into height and back; their sum stays fixed. Drag the arrow tip to aim.</p>
+  <div class="eq">$$x = v_0\cos\theta\, t, \quad y = h_0 + v_0\sin\theta\, t - \tfrac12 g t^2, \qquad R = \frac{v_0^2\sin 2\theta}{g}$$</div>
 </section>
-<section data-highlight="circular">
+<section data-case="projectile" data-example="d45"><h3>45°</h3><p>On flat ground the range \(v_0^2\sin 2\theta/g\) is largest when \(\sin 2\theta = 1\): \(\theta = 45°\).</p></section>
+<section data-case="projectile" data-example="d30"><h3>30°</h3><p>A flatter, faster flight. Note the range, then try 60°.</p></section>
+<section data-case="projectile" data-example="d60"><h3>60°: the same range</h3><p>\(\sin(2\cdot 60°) = \sin(2\cdot 30°)\): complementary angles land at the same spot. The high shot just takes longer.</p></section>
+<section data-case="projectile" data-example="up"><h3>Straight up</h3><p>No horizontal motion. It rises to \(v_0^2/2g\), stops for an instant (\(v = 0\), but \(a = g\) still) and falls back.</p></section>
+<section data-case="projectile" data-example="cliff"><h3>From a cliff</h3><p>Thrown level, it falls exactly like a dropped stone: the time to land, \(\sqrt{2h_0/g}\), does not depend on the horizontal speed.</p></section>
+<section data-case="projectile" data-example="drag"><h3>Air drag</h3><p>Drag pushes against the velocity and grows like \(v^2\). The path is no longer a parabola, it lands short and steep, and the total energy (dashed) goes down: it heats the air.</p></section>
+
+<section data-case="circular">
   <h3>Circular motion: always falling inward</h3>
-  <p>At constant speed the velocity still changes direction, so there is an acceleration, pointing to the centre.</p>
-  <div class="eq">$$a = \frac{v^2}{r} = \omega^2 r, \qquad v = \omega r$$</div>
+  <p>At constant speed the velocity still changes direction, so there is an acceleration, pointing to the centre. Something must provide the force \(m a\): a string, friction, gravity.</p>
+  <div class="eq">$$v = \omega r, \qquad a = \frac{v^2}{r} = \omega^2 r, \qquad T = \frac{2\pi}{\omega}$$</div>
 </section>
-<section data-highlight="collision">
+<section data-case="circular" data-example="fast"><h3>Twice as fast</h3><p>Doubling \(\omega\) doubles the speed and quadruples the acceleration: \(a = \omega^2 r\).</p></section>
+<section data-case="circular" data-example="big"><h3>A bigger circle</h3><p>Same turning rate on twice the radius: twice the speed, twice the acceleration. The period stays the same.</p></section>
+
+<section data-case="collision">
   <h3>Collisions: momentum always, energy sometimes</h3>
-  <p>During the impact the two carts push on each other equally and oppositely, so their total momentum cannot change. Kinetic energy survives only if the collision is elastic (\(e = 1\)).</p>
+  <p>During the impact the carts push on each other equally and oppositely (Newton's third law), so the total momentum cannot change. Kinetic energy survives only if the collision is elastic, \(e = 1\).</p>
   <div class="eq">$$m_1 u_1 + m_2 u_2 = m_1 v_1 + m_2 v_2, \qquad v_2 - v_1 = e\,(u_1 - u_2)$$</div>
 </section>
+<section data-case="collision" data-example="heavy"><h3>Heavy hits light</h3><p>The heavy cart barely slows down; the light one shoots off at almost twice the incoming speed.</p></section>
+<section data-case="collision" data-example="light"><h3>Light hits heavy</h3><p>The light cart bounces back, the heavy one moves off slowly. Like a ball against a wall, when \(m_2 \gg m_1\).</p></section>
+<section data-case="collision" data-example="head"><h3>Head-on</h3><p>Total momentum is zero before, so it is zero after: equal masses simply swap velocities and fly apart.</p></section>
+<section data-case="collision" data-example="half"><h3>Partly elastic</h3><p>They separate at half the approach speed. Momentum is kept; 75 % of the kinetic energy in the centre-of-mass frame is lost (\(1 - e^2\)).</p></section>
+<section data-case="collision" data-example="stick"><h3>Perfectly inelastic</h3><p>They move on together at \(\frac{m_1 u_1 + m_2 u_2}{m_1 + m_2}\). The largest possible energy loss, still with momentum kept.</p></section>

@@ -1,22 +1,29 @@
-<h2>The unit circle</h2>
-<p>A point goes round a circle of radius 1. Its height is the sine of the angle, its horizontal position the cosine. Unroll the angle along a third axis and the point traces a helix whose shadows are the familiar waves.</p>
-<section data-highlight="circle">
+<section data-case="circle">
   <h3>Sine and cosine are coordinates</h3>
+  <p>A point on a circle of radius 1, at angle \(\theta\) from the \(x\) axis: its horizontal position is \(\cos\theta\), its height \(\sin\theta\). The identity is Pythagoras on the triangle under the point. Drag the point.</p>
   <div class="eq">$$P(\theta) = (\cos\theta,\ \sin\theta), \qquad \cos^2\theta + \sin^2\theta = 1$$</div>
-  <p>The identity is just Pythagoras on the right triangle under the point.</p>
 </section>
-<section data-highlight="helix">
+<section data-case="circle" data-example="d30"><h3>30°</h3><p>The triangle is half an equilateral triangle of side 1, so the height is exactly \(\tfrac12\) and \(\cos 30° = \tfrac{\sqrt3}{2}\).</p></section>
+<section data-case="circle" data-example="d45"><h3>45°</h3><p>The triangle is isosceles: both legs equal, \(\sin 45° = \cos 45° = \tfrac{\sqrt2}{2} \approx 0.707\).</p></section>
+<section data-case="circle" data-example="d90"><h3>90°</h3><p>The point is at the top: \(\sin 90° = 1\), \(\cos 90° = 0\).</p></section>
+<section data-case="circle" data-example="q2"><h3>Second quadrant</h3><p>Past 90° the point is left of the axis, so \(\cos\theta < 0\) while \(\sin\theta\) is still positive. The signs of (cos, sin) tell the quadrant.</p></section>
+<section data-case="circle" data-example="rad"><h3>Radians</h3><p>An angle in radians is the arc length it cuts on the unit circle. One radian is an arc as long as the radius, about 57.3°; a full turn is \(2\pi\).</p><div class="eq">$$\theta_{\text{rad}} = \theta_{\text{deg}}\cdot\frac{\pi}{180}$$</div></section>
+<section data-case="circle" data-example="spin"><h3>Turning</h3><p>At constant angular speed \(\omega\) the angle grows as \(\theta = \omega t\): sine and cosine repeat every \(2\pi/\omega\) seconds.</p></section>
+
+<section data-case="waves">
   <h3>The helix and its shadows</h3>
-  <p>Move the angle along the \(x\) axis and the point draws a helix. Seen from the side it is the sine wave; seen from below, the cosine wave: the same motion, a quarter turn apart.</p>
+  <p>Unroll the angle along the \(x\) axis and the turning point draws a helix. Its shadow on the side wall is the sine wave, on the floor the cosine wave.</p>
   <div class="eq">$$\cos\theta = \sin\!\left(\theta + \tfrac{\pi}{2}\right)$$</div>
 </section>
-<section data-highlight="tangent">
+<section data-case="waves" data-example="side"><h3>Seen from the side</h3><p>Looking along the circle's plane you see only the height: the helix becomes \(y = \sin\theta\).</p></section>
+<section data-case="waves" data-example="shift"><h3>A quarter turn apart</h3><p>At \(\theta = 0\) the cosine is at its top (1) while the sine is at zero. The sine reaches the top a quarter turn (90°) later: same wave, shifted.</p></section>
+<section data-case="waves" data-example="fast"><h3>Higher frequency</h3><p>A faster turn packs more waves into the same time: the frequency is \(f = \omega / 2\pi\), the period \(T = 1/f\).</p></section>
+
+<section data-case="tangent">
   <h3>The tangent</h3>
-  <p>Extend the radius until it meets the vertical line \(x = 1\): the height there is \(\tan\theta\). It blows up at \(90°\), where the radius is parallel to that line.</p>
+  <p>Extend the radius until it meets the vertical line \(x = 1\): the height there is \(\tan\theta\), by similar triangles.</p>
   <div class="eq">$$\tan\theta = \frac{\sin\theta}{\cos\theta}$$</div>
 </section>
-<section data-highlight="radians">
-  <h3>Radians</h3>
-  <p>An angle in radians is the length of arc it cuts on the unit circle: a full turn is \(2\pi\).</p>
-  <div class="eq">$$\theta_{\text{rad}} = \theta_{\text{deg}}\cdot\frac{\pi}{180}$$</div>
-</section>
+<section data-case="tangent" data-example="t45"><h3>45°</h3><p>\(\sin = \cos\), so \(\tan 45° = 1\): the radius meets the line at height 1.</p></section>
+<section data-case="tangent" data-example="t90"><h3>Near 90°</h3><p>The radius is almost parallel to the line \(x = 1\); they meet very high up. At exactly 90° \(\cos\theta = 0\) and \(\tan\theta\) is undefined.</p></section>
+<section data-case="tangent" data-example="neg"><h3>Second quadrant</h3><p>\(\sin > 0\), \(\cos < 0\): the tangent is negative. Extended backwards, the radius meets the line below the axis.</p></section>

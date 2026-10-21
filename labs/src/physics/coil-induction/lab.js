@@ -17,25 +17,40 @@ export default {
   title: 'Coil: magnetic field and induction',
   size: 0.5,
   cameras: { front: { pos: [0, -1.25, 0.05] }, side: { pos: [1.25, 0, 0.05] }, top: { pos: [0, -0.001, 1.3] }, iso: { pos: [0.75, -0.85, 0.5] } },
-  gif: { scenario: 'magnet-push' },
+  gif: { scenario: 'push' },
   defaults: {
     ...DEFAULTS, open: false, pushT: 0.15, x: 0, z: 0, motion: 'still',
     lines: true, particles: true, arrows: false, arrowField: 'B', slice: true, sliceField: 'B', sliceOrient: 'xz',
     lenz: true, forces: true, labels: true, grid: true,
   },
-  scenarios: [
-    { id: 'single-loop', label: 'One loop', hint: 'A ring of current and its field.', cam: 'iso',
-      set: { mode: 'probe', N: 1, R: 0.05, L: 0.002, I0: 5, f: 0, a: 0.02, x: 0.13, z: 0.12 } },
-    { id: 'long-solenoid', label: 'Solenoid', hint: 'Uniform field inside.', cam: 'front',
-      set: { mode: 'probe', N: 150, R: 0.025, L: 0.6, I0: 2, f: 0, a: 0.015, x: 0, z: 0.1 } },
-    { id: 'magnet-push', label: 'Push a magnet', hint: 'Changing flux makes an EMF.', cam: 'iso', speed: 0.25,
-      set: { mode: 'magnet', motion: 'push', N: 40, R: 0.04, L: 0.16, Rc: 0.5, pushT: 0.15, pol: 1, x: 0, z: -0.3 } },
-    { id: 'magnet-drag', label: 'Move it yourself', hint: 'Drag the magnet.', cam: 'iso',
-      set: { mode: 'magnet', motion: 'live', N: 40, R: 0.04, L: 0.16, Rc: 0.5, pol: 1, x: 0, z: -0.25 } },
-    { id: 'drop', label: 'Magnetic braking', hint: 'A falling magnet is slowed.', cam: 'front', speed: 0.5,
-      set: { mode: 'magnet', motion: 'drop', N: 200, R: 0.02, L: 0.2, Rc: 0.05, mass: 0.05, pol: 1, x: 0, z: 0.3 } },
-    { id: 'ac-coil', label: 'AC coil', hint: 'Induction without motion.', cam: 'iso', speed: 0.02,
-      set: { mode: 'probe', N: 60, R: 0.03, L: 0.12, I0: 3, f: 50, a: 0.03, Rp: 0.05, x: 0, z: 0.12, sliceField: 'E', arrows: true, arrowField: 'E' } },
+  cases: [
+    { id: 'loop', label: 'One loop', cam: 'iso', set: { mode: 'probe', N: 1, R: 0.05, L: 0.002, I0: 5, f: 0, a: 0.02, x: 0.13, z: 0.12 }, examples: [
+      { id: 'double', label: 'Double the current', set: { I0: 10 } },
+      { id: 'wide', label: 'Wider loop: weaker centre', set: { R: 0.08 } },
+    ] },
+    { id: 'solenoid', label: 'Solenoid', cam: 'front', set: { mode: 'probe', N: 150, R: 0.025, L: 0.6, I0: 2, f: 0, a: 0.015, x: 0, z: 0.1 }, examples: [
+      { id: 'turns', label: 'More turns per metre', set: { N: 200, L: 0.4 } },
+      { id: 'radius', label: 'Wider coil, same n', set: { R: 0.05 } },
+      { id: 'short', label: 'Short and wide: fringing', set: { N: 12, R: 0.06, L: 0.03, I0: 4, a: 0.02, z: 0.09 } },
+    ] },
+    { id: 'push', label: 'Push a magnet', cam: 'iso', speed: 0.25, set: { mode: 'magnet', motion: 'push', N: 40, R: 0.04, L: 0.16, Rc: 0.5, pushT: 0.15, pol: 1, x: 0, z: -0.3 }, examples: [
+      { id: 'slow', label: 'Ten times slower', speed: 1, set: { pushT: 1.5 } },
+      { id: 'flip', label: 'Flip the magnet', set: { pol: -1 } },
+      { id: 'turns', label: 'More turns: more EMF', set: { N: 160 } },
+      { id: 'open', label: 'Open circuit', set: { open: true } },
+    ] },
+    { id: 'drag', label: 'By hand', cam: 'iso', set: { mode: 'magnet', motion: 'live', N: 40, R: 0.04, L: 0.16, Rc: 0.5, pol: 1, x: 0, z: -0.25 }, examples: [
+      { id: 'still', label: 'Held still inside', set: { motion: 'still', z: 0 } },
+    ] },
+    { id: 'drop', label: 'Braking', cam: 'front', speed: 0.5, set: { mode: 'magnet', motion: 'drop', N: 200, R: 0.02, L: 0.2, Rc: 0.05, mass: 0.05, pol: 1, x: 0, z: 0.3 }, examples: [
+      { id: 'open', label: 'Open circuit: free fall', set: { open: true } },
+      { id: 'strong', label: 'Less resistance: stronger braking', set: { Rc: 0.01 } },
+    ] },
+    { id: 'ac', label: 'AC coil', cam: 'iso', speed: 0.02, set: { mode: 'probe', N: 60, R: 0.03, L: 0.12, I0: 3, f: 50, a: 0.03, Rp: 0.05, x: 0, z: 0.12, sliceField: 'E', arrows: true, arrowField: 'E' }, examples: [
+      { id: 'f100', label: 'Double frequency: double EMF', set: { f: 100 } },
+      { id: 'dc', label: 'Direct current: nothing', set: { f: 0 } },
+      { id: 'far', label: 'Ring further away', set: { z: 0.25 } },
+    ] },
   ],
   controls: [
     { title: 'Coil', items: [

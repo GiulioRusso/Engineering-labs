@@ -11,11 +11,23 @@ export default {
   id: 'charged-particle', title: 'Charged particle in E and B', size: 0.35,
   cameras: { front: { pos: [0, -1, 0.1] }, side: { pos: [1, 0, 0.1] }, top: { pos: [0, -0.001, 1] }, iso: { pos: [0.6, -0.75, 0.5] } },
   defaults: { species: 'proton', v: 1e4, pitch: Math.PI / 2, B: 1e-3, Ex: 0, Ey: 0, Ez: 0, anti: false, fields: true, vectors: true },
-  scenarios: [
-    { id: 'circle', label: 'Circle', hint: 'v ⟂ B.', set: {} },
-    { id: 'helix', label: 'Helix', hint: 'v at an angle to B.', set: { pitch: Math.PI / 3 } },
-    { id: 'drift', label: 'E × B drift', set: { Ex: 1, v: 4e3 } },
-    { id: 'accelerate', label: 'E along B', set: { Ez: 2, pitch: Math.PI / 2 } },
+  cases: [
+    { id: 'circle', label: 'Circle', set: {}, examples: [
+      { id: 'strong', label: 'Stronger B: tighter, faster', set: { B: 3e-3 } },
+      { id: 'speed', label: 'Faster particle: same period', set: { v: 3e4 } },
+      { id: 'anti', label: 'Opposite charge: other way', set: { anti: true } },
+      { id: 'electron', label: 'An electron', set: { species: 'electron', v: 3e6 } },
+    ] },
+    { id: 'helix', label: 'Helix', set: { pitch: Math.PI / 3 }, examples: [
+      { id: 'shallow', label: 'Almost along B', set: { pitch: 0.3 } },
+    ] },
+    { id: 'drift', label: 'E × B drift', set: { Ex: 1, v: 4e3 }, examples: [
+      { id: 'pair', label: 'Same drift for ±q', set: { anti: true } },
+      { id: 'strong', label: 'Stronger E: faster drift', set: { Ex: 3 } },
+    ] },
+    { id: 'accel', label: 'E along B', set: { Ez: 2 }, examples: [
+      { id: 'brake', label: 'E against: slows, turns back', set: { Ez: -2, pitch: 1.2 } },
+    ] },
   ],
   controls: [
     { title: 'Particle', items: [

@@ -1,17 +1,13 @@
-<h2>Lagrange points</h2>
-<p>Ride along with two bodies orbiting each other: in that turning frame they stand still. A small third body feels their gravity plus the centrifugal push outward. The surface shows that combined potential: deep wells at the two bodies, and five places where the forces balance.</p>
-<section data-highlight="potential">
+<section data-case="stable unstable" data-highlight="potential">
   <h3>The effective potential</h3>
+  <p>Ride along with two bodies orbiting each other: in that turning frame they stand still. A small third body feels their gravity plus the centrifugal push outward. The surface shows the combined potential, with five places where the forces balance.</p>
   <div class="eq">$$\Omega(x,y) = \tfrac12(x^2+y^2) + \frac{1-\mu}{r_1} + \frac{\mu}{r_2}, \qquad \ddot x - 2\dot y = \Omega_x,\quad \ddot y + 2\dot x = \Omega_y$$</div>
-  <p>Units: the separation is 1 and one orbit takes \(2\pi\). The \(2\dot y,\ 2\dot x\) terms are the Coriolis force.</p>
 </section>
-<section data-highlight="points">
-  <h3>Five equilibria</h3>
-  <p>L1, L2 and L3 lie on the line through the two bodies: they are saddles, and a body placed there drifts away. L4 and L5 sit at the tips of two equilateral triangles: they are tops of hills, yet they are stable. The Coriolis force turns a body that rolls downhill back around the point, as long as the small mass is less than about 4 % of the total.</p>
-  <div class="eq">$$\mu < \tfrac12\left(1 - \sqrt{23/27}\right) \approx 0.0385$$</div>
-</section>
-<section data-highlight="jacobi">
-  <h3>The Jacobi constant</h3>
-  <p>In the turning frame energy is not conserved, but this combination is. It keeps a body inside the regions it can reach.</p>
-  <div class="eq">$$C = 2\Omega - v^2$$</div>
-</section>
+<section data-case="stable"><h3>L4 and L5: stable hilltops</h3><p>They sit at the tips of two equilateral triangles. They are tops of hills, yet stable: the Coriolis force turns a body that rolls downhill back around the point, as long as the small mass is less than about 4 % of the total.</p><div class="eq">$$\mu < \tfrac12\left(1 - \sqrt{23/27}\right) \approx 0.0385$$</div></section>
+<section data-case="stable" data-example="l5"><h3>L5</h3><p>The mirror image of L4, 60° behind the small body: just as stable.</p></section>
+<section data-case="stable" data-example="trojans"><h3>Jupiter Trojans</h3><p>Thousands of asteroids circle the Sun–Jupiter L4 and L5 points, trapped there for billions of years.</p></section>
+<section data-case="stable" data-example="routh"><h3>Too heavy</h3><p>With \(\mu = 0.06\), above the Routh limit, the Coriolis force can no longer hold the body: it spirals away.</p></section>
+<section data-case="unstable"><h3>L1, L2, L3: saddles</h3><p>On the line through the two bodies: along the line they are hilltops, across it valleys. A nudged body drifts away, so spacecraft there need small corrections.</p></section>
+<section data-case="unstable" data-example="l2"><h3>L2</h3><p>Beyond the small body. Sun–Earth L2, 1.5 million km out, hosts JWST: Sun, Earth and Moon all stay behind its shield.</p></section>
+<section data-case="unstable" data-example="l3"><h3>L3</h3><p>On the far side of the big body. The slowest to drift away, but still unstable.</p></section>
+<section data-case="stable unstable" data-highlight="jacobi"><h3>The Jacobi constant</h3><p>In the turning frame energy is not conserved, but this combination is. It keeps a body inside the regions it can reach.</p><div class="eq">$$C = 2\Omega - v^2$$</div></section>

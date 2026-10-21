@@ -11,12 +11,26 @@ import { projectile, range, apex, circular, collide, G } from './model.js';
 export default {
   id: 'motion-energy', title: 'Motion, momentum and energy', size: 5, ortho: true, plain: true, cam: 'top',
   defaults: { kind: 'projectile', v0: 15, angle: 0.8, h0: 0, m: 1, drag: false, cd: 0.02, r: 2, w: 1.5, m1: 2, m2: 1, u1: 2, u2: -1, e: 1, trail: true, vectors: true },
-  scenarios: [
-    { id: 'projectile', label: 'Projectile', hint: 'Drag the arrow tip to aim.', set: { kind: 'projectile' } },
-    { id: 'air', label: 'With air drag', set: { kind: 'projectile', v0: 30, drag: true, cd: 0.01 } },
-    { id: 'circle', label: 'Circular motion', set: { kind: 'circular' } },
-    { id: 'elastic', label: 'Elastic collision', set: { kind: 'collision', e: 1 } },
-    { id: 'stick', label: 'Carts that stick', set: { kind: 'collision', e: 0 } },
+  cases: [
+    { id: 'projectile', label: 'Projectile', set: { kind: 'projectile' }, examples: [
+      { id: 'd45', label: '45°: the longest range', set: { angle: Math.PI / 4 } },
+      { id: 'd30', label: '30°…', set: { angle: Math.PI / 6 } },
+      { id: 'd60', label: '…and 60°: same range', set: { angle: Math.PI / 3 } },
+      { id: 'up', label: 'Straight up', set: { angle: Math.PI / 2 } },
+      { id: 'cliff', label: 'Thrown level from a cliff', set: { angle: 0, h0: 15 } },
+      { id: 'drag', label: 'With air drag', set: { v0: 30, drag: true, cd: 0.01 } },
+    ] },
+    { id: 'circular', label: 'Circular', set: { kind: 'circular' }, examples: [
+      { id: 'fast', label: 'Double ω: 4× acceleration', set: { w: 3 } },
+      { id: 'big', label: 'Bigger circle, same ω', set: { r: 4 } },
+    ] },
+    { id: 'collision', label: 'Collision', set: { kind: 'collision', m1: 1, m2: 1, u1: 2, u2: 0, e: 1 }, examples: [
+      { id: 'heavy', label: 'Heavy hits light', set: { m1: 5 } },
+      { id: 'light', label: 'Light hits heavy: bounces back', set: { m2: 5 } },
+      { id: 'head', label: 'Head-on, equal and opposite', set: { u1: 2, u2: -2 } },
+      { id: 'half', label: 'Half bouncy: e = 0.5', set: { e: 0.5 } },
+      { id: 'stick', label: 'They stick: e = 0', set: { e: 0 } },
+    ] },
   ],
   controls: [
     { title: 'Body', show: (s) => s.kind !== 'collision', items: [

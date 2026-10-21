@@ -1,10 +1,10 @@
 # Topic map
 
-Each topic is one file, `web/<topic>.html`. Generated from `catalog.json` by `build.mjs`: edit the JSON, not this file.
+Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by `build.mjs`: edit the JSON, not this file.
 
 ## Analog electronics
 
-| Animation | What you do | Status |
+| Topic | What you do | Status |
 |---|---|---|
 | Transistors: the device curves | Drag the operating point over the 3D I_C(V_BE, V_CE) surface; small-signal gain appears as the slope. | planned |
 | Amplifier stages | Common emitter, emitter follower, differential pair: drag the bias and watch the signal swing, invert and clip. | planned |
@@ -13,7 +13,7 @@ Each topic is one file, `web/<topic>.html`. Generated from `catalog.json` by `bu
 
 ## Circuits
 
-| Animation | What you do | Status |
+| Topic | What you do | Status |
 |---|---|---|
 | R, C, L and the diode | One component at a time: drive it, see voltage and current, and where the energy goes. | planned |
 | Circuits as a potential landscape | Nodes lifted to their potential, carriers flowing downhill: Kirchhoff, Thévenin, superposition. | planned |
@@ -27,7 +27,7 @@ In the Algorithm Visualizer.
 
 ## Control systems
 
-| Animation | What you do | Status |
+| Topic | What you do | Status |
 |---|---|---|
 | Step response from the poles | Drag first- and second-order poles; the step response, overshoot and settling time follow. | planned |
 | The s-plane and the z-plane | Poles over a 3D |H(s)| surface; natural modes grow or decay with their position. | planned |
@@ -45,7 +45,7 @@ In the Electronics Visualizer.
 
 ## Electronic warfare
 
-| Animation | What you do | Status |
+| Topic | What you do | Status |
 |---|---|---|
 | Radar pulses and the ambiguity function | Plain, chirp and Barker pulses; the matched filter and the 3D ambiguity surface. | planned |
 | Range, Doppler and PRF | Targets in 3D airspace; the range–Doppler map and what a PRF folds. | planned |
@@ -55,7 +55,7 @@ In the Electronics Visualizer.
 
 ## Machine learning
 
-| Animation | What you do | Status |
+| Topic | What you do | Status |
 |---|---|---|
 | A neuron is a plane, a layer is a fold | Drag a neuron's weights over 2D data lifted to 3D; ReLU layers fold the plane. | planned |
 | Inside a convolution | Slide a filter over an image volume; stride, padding, dilation and channels. | planned |
@@ -64,36 +64,43 @@ In the Electronics Visualizer.
 
 ## Maths
 
-| Animation | What you do | Status |
+| Topic | What you do | Status |
 |---|---|---|
-| [Functions](web/maths.html?lab=function-explorer) | Linear, quadratic, exponential, logarithmic: drag the parameters, watch the graph and its key points. | done |
-| [The unit circle](web/maths.html?lab=unit-circle) | A point on the circle unrolls into sine, cosine and tangent waves in 3D. | done |
-| [Complex numbers](web/maths.html?lab=complex-plane) | Drag z and w; sums, products and powers as rotations and scalings. | done |
-| [Derivative, integral, Taylor](web/maths.html?lab=calculus) | A tangent that slides, Riemann sums that converge, Taylor polynomials that hug. | done |
-| [Linear maps on the unit cube](web/maths.html?lab=linear-maps) | Drag the matrix columns; the cube deforms, eigenvectors light up, det is the volume. | done |
-| [Surfaces, gradient, div and curl](web/maths.html?lab=surfaces-gradient) | Drag a point on z = f(x, y): tangent plane, gradient, level curves. | done |
+| [Functions](web/maths.html?lab=functions) | Lines, parabolas, exponentials and logarithms: drag the graph, read the equation. | done |
+| [Trigonometry](web/maths.html?lab=trigonometry) | A point on the unit circle: sine, cosine, tangent and the waves they make. | done |
+| [Complex numbers](web/maths.html?lab=complex-numbers) | Sums, products, powers and roots as arrows in the plane. | done |
+| [Vectors](web/maths.html?lab=vectors) | Dot and cross product of two arrows you drag in 3D. | done |
+| [Calculus](web/maths.html?lab=calculus) | Derivative as a limit of slopes, integral as a limit of sums, Taylor polynomials. | done |
+| [Matrices and linear maps](web/maths.html?lab=matrices) | A 3×3 matrix deforms the unit cube: determinant, eigenvectors. | done |
+| [Functions of two variables](web/maths.html?lab=surfaces) | Walk on a surface: gradient, tangent plane, level curves. | done |
+| [Divergence and curl](web/maths.html?lab=vector-calculus) | Tracers in a flow: spreading is divergence, turning is curl. | done |
 
 ## Physics
 
-| Animation | What you do | Status |
+| Topic | What you do | Status |
 |---|---|---|
-| [Motion, momentum and energy](web/physics.html?lab=motion-energy) | Trajectories with velocity and acceleration vectors, energy bars, circular motion. | done |
-| [Forces and torque](web/physics.html?lab=forces-torque) | Drag forces on a body; resultant, torque, equilibrium and buoyancy. | done |
-| [Vectors and vector fields](web/physics.html?lab=vector-fields) | Dot and cross product in 3D; divergence and curl of a field you can probe. | done |
-| [Gas in a piston](web/physics.html?lab=gas-piston) | Particles in a 3D box, a P–V diagram linked, Carnot and Otto cycles. | done |
-| [Optics bench](web/physics.html?lab=optics-bench) | Drag lenses and mirrors; rays, images and the double slit. | done |
-| [Point charges](web/physics.html?lab=point-charges) | Drag charges in 3D; field lines and equipotential surfaces reshape live. | done |
-| [Coil: magnetic field and induction](web/physics.html?lab=coil-induction) | Drag a magnet or a probe ring through a coil; flux, EMF and Lenz's law live. | done |
-| [Charged particle in E and B](web/physics.html?lab=charged-particle) | Drag E and B; helix, cycloid and E×B drift. | done |
-| [Electromagnetic wave and reflection](web/physics.html?lab=em-wave) | E and B travelling together, standing waves, Fresnel and Brewster. | done |
-| [Flight: lift, drag, envelope](web/physics.html?lab=flight-envelope) | A 3D aircraft with its forces; drag polar, ISA and the V–n diagram. | done |
-| [Orbits and ground tracks](web/physics.html?lab=orbits) | Drag i, Ω, ω; the ground track and J2 precession follow. | done |
-| [Transfers and staging](web/physics.html?lab=orbital-transfers) | Hohmann, bi-elliptic and gravity assists with the Δv budget. | done |
-| [Lagrange points](web/physics.html?lab=lagrange-points) | The rotating-frame potential as a 3D surface, five equilibria. | done |
+| [Motion](web/physics.html?lab=kinematics) | Projectiles and circular motion: position, velocity, acceleration. | done |
+| [Momentum and collisions](web/physics.html?lab=momentum) | Two carts collide: momentum always survives, kinetic energy not always. | done |
+| [Forces and torque](web/physics.html?lab=forces) | Add forces tip to tail; turn a lever. | done |
+| [Buoyancy](web/physics.html?lab=fluids) | A block in a liquid bobs and settles where buoyancy equals weight. | done |
+| [Oscillations](web/physics.html?lab=oscillations) | Spring and pendulum: period, energy, damping and resonance. | done |
+| [Gravitational field](web/physics.html?lab=gravity-field) | The field of two masses, arrow by arrow. | done |
+| [Gas and heat](web/physics.html?lab=thermodynamics) | Atoms in a piston: pressure from impacts, heating, isothermal and adiabatic squeezes. | done |
+| [Rays: refraction, lenses, mirrors](web/physics.html?lab=geometric-optics) | Snell’s law, total reflection and image formation. | done |
+| [Interference](web/physics.html?lab=interference) | Two slits, two waves: bright and dark fringes. | done |
+| [Electric charges](web/physics.html?lab=electrostatics) | Field lines, equipotentials and Gauss’s law for point charges. | done |
+| [Magnetic field of currents](web/physics.html?lab=magnetic-field) | A loop and a solenoid: field lines, B on the axis. | done |
+| [Electromagnetic induction](web/physics.html?lab=induction) | Move a magnet through a coil: flux, EMF, Lenz, magnetic braking. | done |
+| [Charges in E and B](web/physics.html?lab=charged-particle) | Circles, helices and drifts of a charged particle. | done |
+| [Electromagnetic waves](web/physics.html?lab=em-wave) | E and B travelling together; reflection and standing waves. | done |
+| [Flight](web/physics.html?lab=flight) | Lift, drag, the stall and the flight envelope of a light aircraft. | done |
+| [Orbits](web/physics.html?lab=orbits) | Kepler orbits around a turning Earth, ground tracks, J2. | done |
+| [Orbital transfers](web/physics.html?lab=orbital-transfers) | Hohmann and bi-elliptic transfers, Δv and the rocket equation. | done |
+| [Lagrange points](web/physics.html?lab=lagrange-points) | The rotating two-body potential and its five equilibria. | done |
 
 ## Signal theory
 
-| Animation | What you do | Status |
+| Topic | What you do | Status |
 |---|---|---|
 | Signals in time and frequency | Pulses, sinc, chirp: the signal and its spectrum side by side, time–bandwidth. | planned |
 | Fourier series as epicycles | Harmonics rebuild a waveform; the (t, Re, Im) helix and Gibbs. | planned |

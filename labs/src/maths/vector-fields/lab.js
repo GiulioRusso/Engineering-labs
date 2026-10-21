@@ -15,11 +15,34 @@ export default {
   cameras: { front: { pos: [0, -6, 0.3] }, side: { pos: [6, 0, 0.3] }, top: { pos: [0, -0.01, 6.5] }, iso: { pos: [3.5, -4.2, 3] } },
   duration: 2.5,
   defaults: { kind: 'products', ax: 1.6, ay: 0.3, az: 0.2, bx: 0.6, by: 1.4, bz: 0.4, m1: 4e10, m2: 2e10, x1: -0.9, y1: 0.2, x2: 1, y2: -0.3, px: 0.1, py: 0.9, field: 'vortex', qx: 0.8, qy: 0.4, tracers: true },
-  scenarios: [
-    { id: 'products', label: 'Dot and cross', hint: 'Drag the tips of a and b.', set: { kind: 'products' } },
-    { id: 'gravity', label: 'Gravity field', cam: 'top', set: { kind: 'gravity' } },
-    { id: 'source', label: 'Divergence', cam: 'top', set: { kind: 'divcurl', field: 'source' } },
-    { id: 'vortex', label: 'Curl', cam: 'top', set: { kind: 'divcurl', field: 'vortex' } },
+  cases: [
+    { id: 'dot', label: 'Dot product', set: { kind: 'products', ax: 1.6, ay: 0.3, az: 0, bx: 0.6, by: 1.4, bz: 0 }, examples: [
+      { id: 'perp', label: 'At 90°: a·b = 0', set: { ax: 1.5, ay: 0, bx: 0, by: 1.5 } },
+      { id: 'same', label: 'Same direction: |a||b|', set: { ax: 1.5, ay: 0, bx: 1, by: 0 } },
+      { id: 'obtuse', label: 'Obtuse angle: a·b < 0', set: { ax: 1.5, ay: 0, bx: -0.8, by: 1.2 } },
+      { id: 'opposite', label: 'Opposite: −|a||b|', set: { ax: 1.5, ay: 0, bx: -1, by: 0 } },
+    ] },
+    { id: 'cross', label: 'Cross product', set: { kind: 'products', ax: 1.5, ay: 0, az: 0, bx: 0.6, by: 1.4, bz: 0 }, examples: [
+      { id: 'axes', label: 'x̂ × ŷ = ẑ', set: { ax: 1, bx: 0, by: 1 } },
+      { id: 'perp', label: 'At 90°: largest', set: { bx: 0, by: 1.5 } },
+      { id: 'parallel', label: 'Parallel: a × b = 0', set: { bx: 1, by: 0 } },
+      { id: 'swap', label: 'Swap a and b: it flips', set: { ax: 0.6, ay: 1.4, bx: 1.5, by: 0 } },
+    ] },
+    { id: 'gravity', label: 'Gravity field', cam: 'top', set: { kind: 'gravity' }, examples: [
+      { id: 'equal', label: 'Equal masses: g = 0 midway', set: { m1: 3e10, m2: 3e10, x1: -0.9, y1: 0, x2: 0.9, y2: 0, px: 0, py: 0 } },
+      { id: 'unequal', label: 'Unequal: null point moves', set: { m1: 1e11, m2: 1e10, x1: -0.9, y1: 0, x2: 0.9, y2: 0, px: 0.5, py: 0 } },
+      { id: 'far', label: 'Far away: like one mass', set: { px: 2.1, py: 1.7 } },
+    ] },
+    { id: 'div', label: 'Divergence', cam: 'top', set: { kind: 'divcurl', field: 'source' }, examples: [
+      { id: 'sink', label: 'A sink: div < 0', set: { field: 'sink' } },
+      { id: 'vortex', label: 'A vortex: div = 0', set: { field: 'vortex' } },
+      { id: 'bump', label: 'Div changes sign', set: { field: 'gauss', qx: 1.2, qy: 0 } },
+    ] },
+    { id: 'curl', label: 'Curl', cam: 'top', set: { kind: 'divcurl', field: 'vortex' }, examples: [
+      { id: 'source', label: 'A source: curl = 0', set: { field: 'source' } },
+      { id: 'shear', label: 'Shear: straight but curl ≠ 0', set: { field: 'shear', qx: 0, qy: 0.4 } },
+      { id: 'spiral', label: 'Spiral: both at once', set: { field: 'swirl' } },
+    ] },
   ],
   controls: [
     { title: 'Vectors', show: (s) => s.kind === 'products', items: [
@@ -30,7 +53,7 @@ export default {
       { id: 'm2', label: 'Mass 2', unit: 'kg', min: 1e9, max: 1e11, log: true },
     ] },
     { title: 'Field', show: (s) => s.kind === 'divcurl', items: [
-      { id: 'field', label: 'Field', type: 'select', options: Object.entries(FIELDS).map(([k, v]) => [k, v.label]) },
+      { id: 'field', label: 'Field F', type: 'select', options: Object.entries(FIELDS).map(([k, v]) => [k, v.label]) },
     ] },
   ],
   display: [{ title: 'Show', items: [{ id: 'tracers', label: 'Tracers', type: 'check', show: (s) => s.kind === 'divcurl' }] }],

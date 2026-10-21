@@ -9,11 +9,31 @@ const X = [-6, 6], Y = [-4.5, 4.5];
 export default {
   id: 'function-explorer', title: 'Functions', size: 5, ortho: true, plain: true, timeless: true, cam: 'top',
   defaults: { family: 'linear', x1: -2, y1: -1, x2: 2, y2: 2, a: 1, h: 0, k: 0, A: 1, base: 2, inverse: false, points: true },
-  scenarios: [
-    { id: 'linear', label: 'Line', set: { family: 'linear' } },
-    { id: 'parabola', label: 'Parabola', set: { family: 'quadratic' } },
-    { id: 'exponential', label: 'Exponential', set: { family: 'exponential' } },
-    { id: 'logarithm', label: 'Logarithm', set: { family: 'logarithm' } },
+  cases: [
+    { id: 'line', label: 'Line', set: { family: 'linear' }, examples: [
+      { id: 'flat', label: 'Slope zero', set: { x1: -2, y1: 1, x2: 2, y2: 1 } },
+      { id: 'origin', label: 'Through the origin', set: { x1: -2, y1: -2, x2: 2, y2: 2 } },
+      { id: 'down', label: 'Negative slope', set: { x1: -2, y1: 2, x2: 2, y2: -1 } },
+      { id: 'steep', label: 'Steep: m = 4', set: { x1: 0, y1: -2, x2: 1, y2: 2 } },
+    ] },
+    { id: 'parabola', label: 'Parabola', set: { family: 'quadratic' }, examples: [
+      { id: 'two', label: 'Two roots: Δ > 0', set: { k: -2 } },
+      { id: 'one', label: 'One root: Δ = 0', set: { h: 1, k: 0 } },
+      { id: 'none', label: 'No roots: Δ < 0', set: { k: 1 } },
+      { id: 'down', label: 'Opens down: a < 0', set: { a: -0.5, k: 2 } },
+      { id: 'wide', label: 'Wider: small a', set: { a: 0.25, k: -1 } },
+    ] },
+    { id: 'exponential', label: 'Exponential', set: { family: 'exponential' }, examples: [
+      { id: 'decay', label: 'Decay: b < 1', set: { base: 0.5 } },
+      { id: 'e', label: 'Base e', set: { base: 2.718 } },
+      { id: 'scale', label: 'Start at A = 3', set: { A: 3 } },
+      { id: 'inverse', label: 'Its inverse: log', set: { inverse: true } },
+    ] },
+    { id: 'logarithm', label: 'Logarithm', set: { family: 'logarithm' }, examples: [
+      { id: 'ln', label: 'Natural log: base e', set: { base: 2.718 } },
+      { id: 'below', label: 'Base below 1', set: { base: 0.5 } },
+      { id: 'inverse', label: 'Mirror of 2ˣ', set: { inverse: true } },
+    ] },
   ],
   controls: [
     { title: 'Function', items: [

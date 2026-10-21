@@ -14,13 +14,29 @@ const WAVE_SPEED = 0.3;  // ripple-tank wave speed, m/s
 export default {
   id: 'optics-bench', title: 'Optics bench', size: 4.4, ortho: true, plain: true, cam: 'top',
   defaults: { kind: 'snell', f: 0.1, dobj: 0.25, ho: 0.04, conv: true, n1: 1, n2: 1.5, th1: 0.6, lam: 0.012, d: 0.05, L: 0.42, rays: true },
-  scenarios: [
-    { id: 'snell', label: 'Refraction', hint: 'Drag the source.', set: { kind: 'snell', n1: 1, n2: 1.5, th1: 0.7 } },
-    { id: 'tir', label: 'Total reflection', set: { kind: 'snell', n1: 1.5, n2: 1, th1: 0.85 } },
-    { id: 'real', label: 'Lens', hint: 'Drag the object.', set: { kind: 'lens', dobj: 0.25 } },
-    { id: 'magnifier', label: 'Magnifier', set: { kind: 'lens', dobj: 0.06 } },
-    { id: 'mirror', label: 'Mirror', set: { kind: 'mirror', f: 0.12, dobj: 0.3 } },
-    { id: 'slits', label: 'Double slit', set: { kind: 'slits' } },
+  cases: [
+    { id: 'snell', label: 'Refraction', set: { kind: 'snell', n1: 1, n2: 1.5, th1: 0.7 }, examples: [
+      { id: 'normal', label: 'Straight in: no bending', set: { th1: 0 } },
+      { id: 'water', label: 'Into water', set: { n2: 1.33 } },
+      { id: 'out', label: 'Glass to air', set: { n1: 1.5, n2: 1, th1: 0.6 } },
+      { id: 'tir', label: 'Total internal reflection', set: { n1: 1.5, n2: 1, th1: 0.85 } },
+      { id: 'diamond', label: 'Diamond: critical angle 24°', set: { n1: 2.42, n2: 1, th1: 0.5 } },
+    ] },
+    { id: 'lens', label: 'Lens', set: { kind: 'lens', dobj: 0.25 }, examples: [
+      { id: 'f2', label: 'At 2F: same size', set: { dobj: 0.2 } },
+      { id: 'nearf', label: 'Just beyond F: large', set: { dobj: 0.12 } },
+      { id: 'magnifier', label: 'Inside F: magnifier', set: { dobj: 0.06 } },
+      { id: 'diverging', label: 'Diverging lens', set: { conv: false, dobj: 0.2 } },
+    ] },
+    { id: 'mirror', label: 'Mirror', set: { kind: 'mirror', f: 0.12, dobj: 0.3 }, examples: [
+      { id: 'f2', label: 'At 2F: same size', set: { dobj: 0.24 } },
+      { id: 'inside', label: 'Inside F: virtual', set: { dobj: 0.08 } },
+    ] },
+    { id: 'slits', label: 'Double slit', set: { kind: 'slits' }, examples: [
+      { id: 'close', label: 'Slits closer: fringes spread', set: { d: 0.025 } },
+      { id: 'apart', label: 'Slits apart: fringes crowd', set: { d: 0.1 } },
+      { id: 'red', label: 'Longer wavelength', set: { lam: 0.02 } },
+    ] },
   ],
   controls: [
     { title: 'Lens or mirror', show: (s) => s.kind === 'lens' || s.kind === 'mirror', items: [

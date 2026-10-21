@@ -3,7 +3,9 @@
 // A definition (src/<topic>/<id>/lab.js, default export) is plain data plus one setup function:
 //   { id, title, size, cameras, cam, speed, duration, loop,
 //     defaults: { …state },                         every parameter and display toggle, in SI
-//     scenarios: [{ id, label, hint, cam, speed, controls?: [ids], set: { …state } }],
+//     cases: [{ id, label, cam, speed, controls?: [ids], set: { …state },     the parts of the topic (line, parabola…)
+//              examples: [{ id, label, cam, speed, set }] }],                 didactic presets inside a case
+//     (explain.html: <section data-case="…" [data-example="…"]>; untagged elements always show)
 //     controls: [group], display: [group],           see panel.js
 //     plots: [{ id, title, xLabel, xUnit, yUnit, y2Unit }], hud: [rows],
 //     setup(ctx) -> { update(dt), changed?(id), highlight?(key), theme?(), dispose?() } }
@@ -38,7 +40,9 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
 
   const stage = createStage(el.stage, { size: def.size ?? 0.5, presets: def.cameras || PRESETS(def.size ?? 0.5) });
   const handles = createHandles(stage, el.hint);
-  const state = { scenario: def.scenarios[0].id, ...structuredClone(def.defaults) };
+  const state = { case: def.cases[0].id, example: '', ...structuredClone(def.defaults) };
+  const caseOf = (id) => def.cases.find((c) => c.id === id) || def.cases[0];
+  const exOf = (c, id) => c.examples?.find((e) => e.id === id) || null;
   // time.t is simulated time (shown in the play bar); it advances by dt·speed·scale per frame, so a lab
   // whose physics lives in µs sets scale = 1e-5 and keeps SI units everywhere.
   const time = { t: 0, D: def.duration || 0, playing: !stage.reducedMotion, speed: def.speed ?? 1, scale: def.timeScale ?? 1, live: false, scrubbable: def.scrub !== false };
@@ -52,7 +56,7 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     THREE, def, stage, scene: stage.scene, state, time, handles, plots, hud, legend, label, cssVar, el, highlight: null,
     timings: {},
     requestUpdate() { if (impl && !time.playing) impl.update(0); stage.requestRender(); bar(); },
-    setPlaying, loadScenario,
+    setPlaying, load,
     panelSync() { panel?.sync(); writeUrl(); },
     setDuration(D) { time.D = D; if (D && time.t > D) time.t = 0; bar(); },
   };
@@ -60,16 +64,18 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
   function setPlaying(on) { time.playing = on; stage.setAnimating(on); bar(); }
   function bar() { playbar?.set({ playing: time.playing, t: time.t, D: time.live ? 0 : time.D, scrubbable: time.scrubbable && !time.live, speed: time.speed }); }
 
-  function loadScenario(id, extra = {}) {
-    const sc = def.scenarios.find((s) => s.id === id) || def.scenarios[0];
+  // A case starts from its own basic state; an example adds its preset on top.
+  function load(caseId, exId, extra = {}) {
+    const c = caseOf(caseId), e = exOf(c, exId);
     for (const k of Object.keys(state)) delete state[k];
-    Object.assign(state, structuredClone(def.defaults), structuredClone(sc.set || {}), extra, { scenario: sc.id });
-    time.t = 0; time.live = false; time.speed = extra.speed ?? sc.speed ?? def.speed ?? 1; delete state.speed;
+    Object.assign(state, structuredClone(def.defaults), structuredClone(c.set || {}), structuredClone(e?.set || {}), extra, { case: c.id, example: e?.id || '' });
+    time.t = 0; time.live = false; time.speed = extra.speed ?? e?.speed ?? c.speed ?? def.speed ?? 1; delete state.speed;
     impl.changed?.('*');
-    panel.sync();
-    stage.preset(sc.cam || def.cam || 'iso');
+    panel.sync(); explain?.show(c.id, e?.id);
+    stage.preset(camOf());
     impl.update(0); stage.requestRender(); bar(); writeUrl();
   }
+  const camOf = () => { const c = caseOf(state.case); return exOf(c, state.example)?.cam || c.cam || def.cam || 'iso'; };
 
   function onChange(id) {
     impl.changed?.(id);
@@ -77,15 +83,16 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
   }
 
   function urlParams() {
-    const sc = def.scenarios.find((s) => s.id === state.scenario) || {}, ref = { ...def.defaults, ...(sc.set || {}) }, diff = {};
+    const c = caseOf(state.case), e = exOf(c, state.example), ref = { ...def.defaults, ...(c.set || {}), ...(e?.set || {}) }, diff = {};
     for (const k of Object.keys(def.defaults)) if (JSON.stringify(state[k]) !== JSON.stringify(ref[k])) diff[k] = state[k];
-    if (time.speed !== (sc.speed ?? def.speed ?? 1)) diff.speed = time.speed;
-    return { scenario: state.scenario, diff };
+    if (time.speed !== (e?.speed ?? c.speed ?? def.speed ?? 1)) diff.speed = time.speed;
+    return { case: c.id, example: e?.id, diff };
   }
   function writeUrl() { onUrl(urlParams()); }
 
   impl = def.setup(ctx);
-  panel = createPanel(el.panel, { scenarios: def.scenarios, onScenario: (id) => loadScenario(id), controls: def.controls, display: def.display }, state, onChange);
+  let explain = null;
+  panel = createPanel(el.panel, { cases: def.cases, onPick: (c, e) => load(c, e), controls: def.controls, display: def.display }, state, onChange);
   playbar = createPlaybar(el.playbar, {
     onPlay: () => setPlaying(!time.playing),
     onRestart: () => { time.t = 0; impl.changed?.('restart'); ctx.requestUpdate(); },
@@ -103,10 +110,10 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     if (++frames % 6 === 0) bar();
   });
 
-  // explain drawer: pre-rendered theory from <template id="explain-<id>">
+  // theory drawer: pre-rendered theory from <template id="explain-<id>">, filtered to the case and example
   const tpl = document.getElementById(`explain-${def.id}`);
-  el.explain.innerHTML = `<button class="btn close" aria-label="Close explanation">Close</button>${tpl ? tpl.innerHTML : '<p>No explanation yet.</p>'}`;
-  const explain = initExplain(el.explain, (k) => { ctx.highlight = k; impl.highlight?.(k); ctx.requestUpdate(); });
+  el.explain.innerHTML = `<button class="btn close" aria-label="Close">✕</button><h2>${def.title}</h2>${tpl ? tpl.innerHTML : ''}`;
+  explain = initExplain(el.explain, (k) => { ctx.highlight = k; impl.highlight?.(k); ctx.requestUpdate(); });
 
   // initial state from the URL
   const keep = {};
@@ -114,8 +121,7 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     if (!(k in def.defaults) && k !== 'speed') continue;
     keep[k] = v === 'true' ? true : v === 'false' ? false : Number.isFinite(Number(v)) && v !== '' ? Number(v) : v;
   }
-  loadScenario(url.scenario && def.scenarios.some((s) => s.id === url.scenario) ? url.scenario : def.scenarios[0].id, keep);
-  const camOf = () => (def.scenarios.find((s) => s.id === state.scenario) || {}).cam || def.cam || 'iso';
+  load(url.params?.case, url.params?.ex, keep);
   stage.preset(camOf(), { instant: true });
   if (def.ortho) stage.toggleOrtho();
   if (def.plain) { stage.grid.visible = false; stage.axes.visible = false; }
@@ -131,13 +137,13 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     theme() { stage.setTheme(); impl.theme?.(); for (const p of Object.values(plots)) p.redraw(); ctx.requestUpdate(); },
     key(e) {
       if (e.key === ' ' && !def.timeless) { e.preventDefault(); setPlaying(!time.playing); }
-      else if (e.key === 'r' || e.key === 'R') loadScenario(state.scenario);
+      else if (e.key === 'r' || e.key === 'R') load(state.case, state.example);
       else if (e.key === 'Escape') explain.close();
       else if (e.key.length === 1 && '1234'.includes(e.key)) stage.preset(['front', 'side', 'top', 'iso'][Number(e.key) - 1]);
     },
     // test hooks (smoke, capture)
-    get scenarios() { return def.scenarios.map((s) => s.id); },
-    load: (id) => loadScenario(id), setPlaying, stage, state, get timings() { return ctx.timings; }, gif: def.gif,
+    get scenarios() { return def.cases.flatMap((c) => [c.id, ...(c.examples || []).map((e) => `${c.id}/${e.id}`)]); },
+    load: (id) => load(...id.split('/')), setPlaying, stage, state, get timings() { return ctx.timings; }, gif: def.gif,
     dispose() { impl.dispose?.(); stage.dispose(); root.innerHTML = ''; },
   };
 }

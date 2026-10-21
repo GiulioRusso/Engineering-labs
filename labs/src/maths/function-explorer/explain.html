@@ -1,17 +1,39 @@
-<h2>Functions</h2>
-<p>A function gives one output \(y\) for each input \(x\). Drag the round handles: the graph, its equation and its key points follow.</p>
-<section data-highlight="curve">
-  <h3>Linear: a constant rate</h3>
-  <p>Two points fix a line. Its slope is the rise over the run, the same everywhere.</p>
+<section data-case="line">
+  <h3>The line</h3>
+  <p>Two points fix a line. The slope \(m\) is rise over run, the same everywhere; \(q\) is where it crosses the \(y\) axis. Drag the two handles.</p>
   <div class="eq">$$y = m x + q, \qquad m = \frac{y_2 - y_1}{x_2 - x_1}$$</div>
 </section>
-<section data-highlight="points">
-  <h3>Quadratic: a parabola</h3>
-  <p>The vertex form shows the turning point \((h, k)\) directly; \(a\) sets how steep and which way it opens. The discriminant counts the real roots.</p>
-  <div class="eq">$$y = a(x-h)^2 + k, \qquad \Delta = b^2 - 4ac, \qquad x_{1,2} = \frac{-b \pm \sqrt\Delta}{2a}$$</div>
+<section data-case="line" data-example="flat"><h3>Slope zero</h3><p>Same height at both points: \(m = 0\), the line is horizontal, \(y = q\). It never crosses the \(x\) axis unless \(q = 0\).</p></section>
+<section data-case="line" data-example="origin"><h3>Through the origin</h3><p>\(q = 0\): \(y = m x\). Doubling \(x\) doubles \(y\): direct proportion.</p></section>
+<section data-case="line" data-example="down"><h3>Negative slope</h3><p>\(m < 0\): the line falls to the right. The root is at \(x = -q/m\).</p></section>
+<section data-case="line" data-example="steep"><h3>Steep</h3><p>One step right, four steps up: \(m = 4\). The bigger \(|m|\), the steeper.</p></section>
+
+<section data-case="parabola">
+  <h3>The parabola</h3>
+  <p>The vertex form shows the turning point \((h, k)\); \(a\) sets the opening. Drag the vertex. The discriminant \(\Delta\) counts the real roots.</p>
+  <div class="eq">$$y = a(x-h)^2 + k = a x^2 + b x + c, \qquad x_{1,2} = \frac{-b \pm \sqrt\Delta}{2a}, \quad \Delta = b^2 - 4ac$$</div>
 </section>
-<section data-highlight="inverse">
-  <h3>Exponential and logarithm</h3>
-  <p>An exponential multiplies by the same factor for every step in \(x\): it never reaches zero. The logarithm undoes it: its graph is the mirror image across \(y = x\).</p>
-  <div class="eq">$$y = A\,b^x \quad\Longleftrightarrow\quad x = \log_b \frac{y}{A}, \qquad \log_b b = 1$$</div>
+<section data-case="parabola" data-example="two"><h3>Two roots</h3><p>The vertex is below the axis and the parabola opens up, so it crosses twice: \(\Delta > 0\). Here \(y = x^2 - 2\), roots \(\pm\sqrt 2\).</p></section>
+<section data-case="parabola" data-example="one"><h3>One root</h3><p>The vertex sits on the axis: \(\Delta = 0\), a double root at \(x = h\). Here \(y = (x-1)^2\).</p></section>
+<section data-case="parabola" data-example="none"><h3>No roots</h3><p>Vertex above the axis, opening up: the curve never reaches \(y = 0\). \(\Delta < 0\): the roots are complex.</p></section>
+<section data-case="parabola" data-example="down"><h3>Opens down</h3><p>\(a < 0\) flips the parabola: the vertex is now a maximum.</p></section>
+<section data-case="parabola" data-example="wide"><h3>Wider</h3><p>Small \(|a|\): \(y\) grows slowly away from the vertex, so the parabola is wide. Large \(|a|\) makes it narrow.</p></section>
+
+<section data-case="exponential">
+  <h3>The exponential</h3>
+  <p>Every step of 1 in \(x\) multiplies \(y\) by the same factor \(b\). It starts at \(A\) for \(x = 0\) and never reaches zero: the \(x\) axis is an asymptote.</p>
+  <div class="eq">$$y = A\,b^x, \qquad y(x + 1) = b\,y(x)$$</div>
 </section>
+<section data-case="exponential" data-example="decay"><h3>Decay</h3><p>\(0 < b < 1\): each step halves \(y\) (here \(b = \tfrac12\)). Same curve as \(2^{-x}\): the growth curve mirrored left to right.</p></section>
+<section data-case="exponential" data-example="e"><h3>Base e</h3><p>\(e \approx 2.718\) is the base whose curve has slope equal to its height at every point: \((e^x)' = e^x\).</p></section>
+<section data-case="exponential" data-example="scale"><h3>Starting value</h3><p>\(A\) is the value at \(x = 0\). Changing it stretches the curve vertically; the doubling stays the same.</p></section>
+<section data-case="exponential" data-example="inverse"><h3>The inverse</h3><p>Swap \(x\) and \(y\): the mirror across \(y = x\) is the logarithm. It answers “which power gives \(y\)?”.</p><div class="eq">$$y = A b^x \iff x = \log_b \frac{y}{A}$$</div></section>
+
+<section data-case="logarithm">
+  <h3>The logarithm</h3>
+  <p>\(\log_b x\) is the power you raise \(b\) to in order to get \(x\). It exists only for \(x > 0\), crosses the axis at \(x = 1\) and reaches 1 at \(x = b\): drag that handle.</p>
+  <div class="eq">$$y = \log_b x \iff b^y = x, \qquad \log_b(xy) = \log_b x + \log_b y$$</div>
+</section>
+<section data-case="logarithm" data-example="ln"><h3>Natural logarithm</h3><p>\(\ln x = \log_e x\), the inverse of \(e^x\). Its slope at \(x\) is \(1/x\).</p></section>
+<section data-case="logarithm" data-example="below"><h3>Base below 1</h3><p>With \(b < 1\) the logarithm falls: bigger \(x\) needs a more negative power of \(b\).</p></section>
+<section data-case="logarithm" data-example="inverse"><h3>Mirror of the exponential</h3><p>The dashed curve is \(2^x\), the mirror image across \(y = x\). Every point \((a, b)\) of one is \((b, a)\) on the other.</p></section>

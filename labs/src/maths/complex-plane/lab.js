@@ -10,13 +10,33 @@ const X = [-4, 4], Y = [-3, 3];
 export default {
   id: 'complex-plane', title: 'Complex numbers', size: 3.6, ortho: true, plain: true, timeless: true, cam: 'top',
   defaults: { op: 'add', zr: 2, zi: 1, wr: 1, wi: 2, n: 6, unit: true, arcs: true },
-  scenarios: [
-    { id: 'add', label: 'z + w', hint: 'Parallelogram rule.', set: { op: 'add' } },
-    { id: 'mul', label: 'z · w', hint: 'Lengths multiply, angles add.', set: { op: 'mul', zr: 1, zi: 1, wr: 1, wi: 1 } },
-    { id: 'times-i', label: 'z · i', hint: 'A quarter turn.', set: { op: 'mul', wr: 0, wi: 1 } },
-    { id: 'div', label: 'z / w', hint: 'Lengths divide, angles subtract.', set: { op: 'div', zr: 0, zi: 2, wr: 1, wi: 1 } },
-    { id: 'powers', label: 'zⁿ', hint: 'A spiral.', set: { op: 'pow', zr: 0.95, zi: 0.45, n: 10 } },
-    { id: 'roots', label: 'ⁿ√1', hint: 'A regular polygon.', set: { op: 'roots', zr: 1, zi: 0, n: 6 } },
+  cases: [
+    { id: 'add', label: 'Sum', set: { op: 'add' }, examples: [
+      { id: 'real', label: 'Two real numbers', set: { zr: 2, zi: 0, wr: 1, wi: 0 } },
+      { id: 'conj', label: 'z + z̄ is real', set: { zr: 2, zi: 1, wr: 2, wi: -1 } },
+      { id: 'opp', label: 'z + (−z) = 0', set: { wr: -2, wi: -1 } },
+    ] },
+    { id: 'mul', label: 'Product', set: { op: 'mul', zr: 1, zi: 1, wr: 1, wi: 1 }, examples: [
+      { id: 'real', label: 'Times 2: stretch only', set: { wr: 2, wi: 0 } },
+      { id: 'i', label: 'Times i: quarter turn', set: { zr: 2, zi: 1, wr: 0, wi: 1 } },
+      { id: 'ii', label: 'i · i = −1', set: { zr: 0, zi: 1, wr: 0, wi: 1 } },
+      { id: 'conj', label: 'z · z̄ = |z|²', set: { wr: 1, wi: -1 } },
+    ] },
+    { id: 'div', label: 'Quotient', set: { op: 'div', zr: 0, zi: 2, wr: 1, wi: 1 }, examples: [
+      { id: 'self', label: 'z / z = 1', set: { zr: 1, zi: 1 } },
+      { id: 'i', label: 'Divide by i: turn back', set: { zr: 1, zi: 1, wr: 0, wi: 1 } },
+    ] },
+    { id: 'pow', label: 'Powers', set: { op: 'pow', zr: 0.825, zi: 0.565, n: 8 }, examples: [
+      { id: 'out', label: '|z| > 1: spirals out', set: { zr: 0.95, zi: 0.45, n: 10 } },
+      { id: 'in', label: '|z| < 1: spirals in', set: { zr: 0.8, zi: 0.4, n: 12 } },
+      { id: 'i', label: 'Powers of i', set: { zr: 0, zi: 1, n: 4 } },
+    ] },
+    { id: 'roots', label: 'Roots', set: { op: 'roots', zr: 1, zi: 0, n: 3 }, examples: [
+      { id: 'square', label: 'Square roots of 1: ±1', set: { n: 2 } },
+      { id: 'hex', label: 'Sixth roots: a hexagon', set: { n: 6 } },
+      { id: 'i', label: 'Square roots of i', set: { zr: 0, zi: 1, n: 2 } },
+      { id: 'minus', label: 'Cube roots of −1', set: { zr: -1 } },
+    ] },
   ],
   controls: [
     { title: 'Numbers', items: [

@@ -1,22 +1,29 @@
-<h2>Complex numbers</h2>
-<p>A complex number \(z = a + bi\) is a point in the plane: real part across, imaginary part up. Every operation is a piece of geometry. Drag \(z\) and \(w\).</p>
-<section data-highlight="add">
-  <h3>Adding is joining arrows</h3>
-  <div class="eq">$$z + w = (a + c) + (b + d)\,i$$</div>
-  <p>The sum is the diagonal of the parallelogram built on the two arrows.</p>
+<section data-case="add mul div pow roots">
+  <p>A complex number \(z = a + bi\) is a point in the plane: real part across, imaginary part up. In polar form it is a length and an angle. Drag \(z\) and \(w\).</p>
+  <div class="eq">$$z = a + bi = r\,e^{i\theta}, \qquad r = |z| = \sqrt{a^2 + b^2}, \quad i^2 = -1$$</div>
 </section>
-<section data-highlight="mul">
-  <h3>Multiplying is rotating and stretching</h3>
-  <p>In polar form a number is a length and an angle. Multiplying multiplies the lengths and adds the angles; multiplying by \(i\) is a quarter turn.</p>
-  <div class="eq">$$z = r e^{i\theta}, \qquad z\,w = r_z r_w\, e^{i(\theta_z + \theta_w)}$$</div>
-</section>
-<section data-highlight="pow">
-  <h3>Powers spiral</h3>
-  <div class="eq">$$z^n = r^n e^{i n\theta} \quad\text{(de Moivre)}$$</div>
-  <p>If \(|z| > 1\) the powers spiral out, if \(|z| < 1\) they spiral in, and on the unit circle they just turn.</p>
-</section>
-<section data-highlight="roots">
-  <h3>Roots sit on a regular polygon</h3>
-  <div class="eq">$$\sqrt[n]{z} = r^{1/n} e^{i(\theta + 2\pi k)/n}, \quad k = 0, \dots, n-1$$</div>
-  <p>Every non-zero number has exactly \(n\) different \(n\)-th roots, evenly spaced around a circle. They add up to zero.</p>
-</section>
+<section data-case="add"><h3>Adding is joining arrows</h3><p>Add real parts and imaginary parts separately. The sum is the diagonal of the parallelogram on the two arrows.</p><div class="eq">$$z + w = (a + c) + (b + d)\,i$$</div></section>
+<section data-case="add" data-example="real"><h3>Two real numbers</h3><p>On the real axis, complex addition is ordinary addition: \(2 + 1 = 3\).</p></section>
+<section data-case="add" data-example="conj"><h3>Number plus conjugate</h3><p>\(\bar z = a - bi\) is the mirror image across the real axis. The imaginary parts cancel: \(z + \bar z = 2a\).</p></section>
+<section data-case="add" data-example="opp"><h3>Opposite numbers</h3><p>\(-z\) points the other way; the parallelogram collapses and the sum is 0.</p></section>
+
+<section data-case="mul"><h3>Multiplying: rotate and stretch</h3><p>Lengths multiply, angles add.</p><div class="eq">$$z\,w = r_z r_w\, e^{i(\theta_z + \theta_w)}$$</div></section>
+<section data-case="mul" data-example="real"><h3>Times a real number</h3><p>\(w = 2\) has angle 0: the product is \(z\) stretched twice as long, same direction.</p></section>
+<section data-case="mul" data-example="i"><h3>Times i</h3><p>\(i\) has length 1 and angle 90°: multiplying by it is a quarter turn, no stretch. \((2 + i)\,i = -1 + 2i\).</p></section>
+<section data-case="mul" data-example="ii"><h3>i times i</h3><p>Two quarter turns make a half turn: \(i^2 = -1\). This is why \(i\) is needed: no real number squares to \(-1\).</p></section>
+<section data-case="mul" data-example="conj"><h3>Number times conjugate</h3><p>The angles \(\theta\) and \(-\theta\) cancel: the product is real and equals \(|z|^2\). Here \((1 + i)(1 - i) = 2\).</p></section>
+
+<section data-case="div"><h3>Dividing: rotate back and shrink</h3><p>Lengths divide, angles subtract.</p><div class="eq">$$\frac{z}{w} = \frac{r_z}{r_w}\, e^{i(\theta_z - \theta_w)} = \frac{z\,\bar w}{|w|^2}$$</div></section>
+<section data-case="div" data-example="self"><h3>A number over itself</h3><p>Same length, same angle: the quotient is 1.</p></section>
+<section data-case="div" data-example="i"><h3>Divide by i</h3><p>Undo a quarter turn: \(z / i = -i\,z\), a turn of −90°.</p></section>
+
+<section data-case="pow"><h3>Powers spiral</h3><p>Each power multiplies by \(z\) again: the angle steps by \(\theta\), the length by \(r\) (de Moivre).</p><div class="eq">$$z^n = r^n e^{i n\theta}$$</div></section>
+<section data-case="pow" data-example="out"><h3>Spiralling out</h3><p>\(|z| > 1\): every power is longer than the last.</p></section>
+<section data-case="pow" data-example="in"><h3>Spiralling in</h3><p>\(|z| < 1\): the powers shrink towards 0.</p></section>
+<section data-case="pow" data-example="i"><h3>Powers of i</h3><p>\(i, -1, -i, 1\): four quarter turns bring you back. The powers repeat every 4.</p></section>
+
+<section data-case="roots"><h3>Roots sit on a regular polygon</h3><p>Every non-zero number has exactly \(n\) different \(n\)-th roots, evenly spaced around a circle of radius \(r^{1/n}\). They add up to zero.</p><div class="eq">$$\sqrt[n]{z} = r^{1/n} e^{i(\theta + 2\pi k)/n}, \quad k = 0, \dots, n-1$$</div></section>
+<section data-case="roots" data-example="square"><h3>Square roots of 1</h3><p>\(1\) and \(-1\): both square to 1, half a turn apart.</p></section>
+<section data-case="roots" data-example="hex"><h3>Sixth roots of unity</h3><p>Six points 60° apart: a regular hexagon.</p></section>
+<section data-case="roots" data-example="i"><h3>Square roots of i</h3><p>\(i\) is at 90°, so its roots are at 45° and 225°: \(\pm\tfrac{\sqrt2}{2}(1 + i)\).</p></section>
+<section data-case="roots" data-example="minus"><h3>Cube roots of −1</h3><p>\(-1\) itself is one of them; the other two are \(\tfrac12 \pm \tfrac{\sqrt3}{2} i\).</p></section>

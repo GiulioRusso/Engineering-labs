@@ -19,9 +19,16 @@ export default {
   id: 'orbital-transfers', title: 'Orbital transfers and staging', size: 2.4, cam: 'top',
   cameras: { front: { pos: [0, -6.5, 1.2] }, side: { pos: [6.5, 0, 1.2] }, top: { pos: [0, -0.01, 6.8] }, iso: { pos: [3.6, -4.4, 3.4] } },
   defaults: { kind: 'hohmann', h1: 300 * km, r2: 42164 * km, rb: 3e8, isp: 320, dry: 1000 },
-  scenarios: [
-    { id: 'geo', label: 'Hohmann to GEO', set: {} },
-    { id: 'far', label: 'Bi-elliptic', hint: 'Cheaper for far targets.', set: { kind: 'bielliptic', r2: 15 * (RE + 300 * km), rb: 6e8 } },
+  cases: [
+    { id: 'hohmann', label: 'Hohmann', set: { kind: 'hohmann' }, examples: [
+      { id: 'small', label: 'A small hop', set: { r2: 10000 * km } },
+      { id: 'moon', label: 'Out to the Moon’s distance', set: { r2: 384400 * km } },
+      { id: 'far', label: 'A far target: r₂/r₁ = 15', set: { r2: 15 * (RE + 300 * km) } },
+      { id: 'hydrogen', label: 'Hydrogen engine', set: { isp: 450 } },
+    ] },
+    { id: 'bielliptic', label: 'Bi-elliptic', set: { kind: 'bielliptic', r2: 15 * (RE + 300 * km), rb: 6e8 }, examples: [
+      { id: 'geo', label: 'To GEO: not worth it', set: { r2: 42164 * km, rb: 1.2e8 } },
+    ] },
   ],
   controls: [
     { title: 'Mission', items: [

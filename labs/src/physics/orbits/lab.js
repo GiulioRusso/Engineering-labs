@@ -11,13 +11,22 @@ export default {
   id: 'orbits', title: 'Orbits and ground tracks', size: 3,
   cameras: { front: { pos: [0, -9, 1.5] }, side: { pos: [9, 0, 1.5] }, top: { pos: [0, -0.01, 9.5] }, iso: { pos: [5.5, -6, 4] } },
   defaults: { alt: 420 * km, e: 0.0005, i: 51.6 * deg, raan: 30 * deg, argp: 0, j2: true, graticule: true, nodes: true },
-  scenarios: [
-    { id: 'circular', label: 'Circular orbit', hint: 'Equatorial, low.', controls: ['alt'], set: { alt: 420 * km, e: 0, i: 0, j2: false } },
-    { id: 'iss', label: 'ISS', set: {} },
-    { id: 'polar', label: 'Polar', set: { alt: 700 * km, i: 90 * deg } },
-    { id: 'geo', label: 'Geostationary', set: { alt: 35786 * km, e: 0, i: 0 } },
-    { id: 'molniya', label: 'Elliptical (Molniya)', cam: 'iso', set: { alt: 20230 * km, e: 0.74, i: 63.4 * deg, argp: 270 * deg } },
-    { id: 'sso', label: 'Sun-synchronous', hint: 'J2 turns the plane.', set: { alt: 800 * km, i: 98.6 * deg, e: 0.001 } },
+  cases: [
+    { id: 'circular', label: 'Circular', controls: ['alt'], set: { alt: 420 * km, e: 0, i: 0, j2: false }, examples: [
+      { id: 'high', label: 'Higher: slower', set: { alt: 5000 * km } },
+      { id: 'geo', label: 'Geostationary: one day', set: { alt: 35786 * km } },
+    ] },
+    { id: 'inclined', label: 'Inclined', controls: ['alt', 'i', 'raan'], set: { alt: 420 * km, e: 0, i: 51.6 * deg, j2: false }, examples: [
+      { id: 'polar', label: 'Polar: every latitude', set: { alt: 700 * km, i: 90 * deg } },
+      { id: 'retro', label: 'Retrograde: i > 90°', set: { i: 140 * deg } },
+    ] },
+    { id: 'elliptical', label: 'Elliptical', controls: ['alt', 'e', 'i', 'argp'], cam: 'iso', set: { alt: 12000 * km, e: 0.4, i: 30 * deg, argp: 0, j2: false }, examples: [
+      { id: 'molniya', label: 'Molniya: apogee over the north', set: { alt: 20230 * km, e: 0.74, i: 63.4 * deg, argp: 270 * deg } },
+    ] },
+    { id: 'j2', label: "Earth's bulge", set: { alt: 800 * km, i: 98.6 * deg, e: 0.001, j2: true }, examples: [
+      { id: 'none', label: 'Without the bulge', set: { j2: false } },
+      { id: 'iss', label: 'ISS: plane turns west', set: { alt: 420 * km, i: 51.6 * deg } },
+    ] },
   ],
   controls: [
     { title: 'Shape', items: [

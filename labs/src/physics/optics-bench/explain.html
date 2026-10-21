@@ -1,17 +1,37 @@
-<h2>Optics</h2>
-<section data-highlight="lens">
-  <h3>Lenses and mirrors form images</h3>
-  <p>Three easy rays find the image: one parallel to the axis (it bends through the focus), one through the centre (it goes straight), one through the near focus (it leaves parallel). Where they meet is the image; if they only meet when extended backwards, the image is virtual.</p>
-  <div class="eq">$$\frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i}, \qquad m = -\frac{d_i}{d_o}, \qquad f_\text{mirror} = \frac{R}{2}$$</div>
-</section>
-<section data-highlight="snell">
+<section data-case="snell">
   <h3>Refraction: Snell's law</h3>
-  <p>Light is slower in glass or water (by the factor \(n\)), so a ray crossing at an angle bends toward the normal going in and away from it coming out. From the dense side beyond the critical angle nothing gets out: total internal reflection.</p>
+  <p>Light is slower in glass or water (by the factor \(n\)), so a ray crossing at an angle bends toward the normal going in and away from it coming out. Drag the source.</p>
   <div class="eq">$$n_1 \sin\theta_1 = n_2\sin\theta_2, \qquad \sin\theta_c = \frac{n_2}{n_1}$$</div>
 </section>
-<section data-highlight="slits">
-  <h3>Two slits: light as a wave</h3>
-  <p>Waves from two openings overlap. Where their paths differ by a whole number of wavelengths they add (bright); half a wavelength, they cancel (dark).</p>
-  <div class="eq">$$r_2 - r_1 = m\lambda \;\Rightarrow\; \text{bright}, \qquad \Delta y \approx \frac{\lambda L}{d}$$</div>
-  <p>This bench uses ripple-tank wavelengths (centimetres) so you can see the waves themselves.</p>
+<section data-case="snell" data-example="normal"><h3>Straight in</h3><p>\(\theta_1 = 0\): \(\sin\theta_2 = 0\) too. A ray along the normal slows down but does not bend.</p></section>
+<section data-case="snell" data-example="water"><h3>Into water</h3><p>\(n = 1.33\) bends less than glass: a straw looks broken at the surface.</p></section>
+<section data-case="snell" data-example="out"><h3>Glass to air</h3><p>Going out into a faster medium, the ray bends away from the normal: \(\theta_2 > \theta_1\).</p></section>
+<section data-case="snell" data-example="tir"><h3>Total internal reflection</h3><p>Beyond the critical angle (41.8° for glass to air) \(\sin\theta_2\) would exceed 1: no ray gets out, all light is reflected. This keeps light inside optical fibres.</p></section>
+<section data-case="snell" data-example="diamond"><h3>Diamond</h3><p>\(n = 2.42\): the critical angle is only 24°, so light entering a cut diamond bounces around inside before escaping: the sparkle.</p></section>
+
+<section data-case="lens">
+  <h3>Lenses form images</h3>
+  <p>Three easy rays find the image: one parallel to the axis bends through the focus, one through the centre goes straight, one through the near focus leaves parallel. If they only meet when extended backwards, the image is virtual. Drag the object.</p>
+  <div class="eq">$$\frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i}, \qquad m = -\frac{d_i}{d_o}$$</div>
 </section>
+<section data-case="lens" data-example="f2"><h3>At twice the focal length</h3><p>\(d_o = 2f \Rightarrow d_i = 2f\), \(m = -1\): real, inverted, same size.</p></section>
+<section data-case="lens" data-example="nearf"><h3>Just beyond F</h3><p>The image moves far away and grows: a projector puts the slide just beyond F.</p></section>
+<section data-case="lens" data-example="magnifier"><h3>Magnifier</h3><p>Inside F the rays leave diverging: the eye sees an upright, larger, virtual image on the same side as the object.</p></section>
+<section data-case="lens" data-example="diverging"><h3>Diverging lens</h3><p>\(f < 0\): the image is always virtual, upright and smaller, as in glasses for short sight.</p></section>
+
+<section data-case="mirror">
+  <h3>Concave mirrors</h3>
+  <p>The same equation as a lens, folded back: \(f = R/2\), and a real image forms in front of the mirror.</p>
+  <div class="eq">$$\frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i}, \qquad f = \frac{R}{2}$$</div>
+</section>
+<section data-case="mirror" data-example="f2"><h3>At the centre of curvature</h3><p>\(d_o = 2f = R\): the image is real, inverted, same size, at the same place.</p></section>
+<section data-case="mirror" data-example="inside"><h3>Inside F</h3><p>Upright and magnified behind the mirror: a shaving or make-up mirror.</p></section>
+
+<section data-case="slits">
+  <h3>Two slits: light as a wave</h3>
+  <p>Waves from two openings overlap. Where their paths differ by a whole number of wavelengths they add (bright); by half a wavelength, they cancel (dark). Ripple-tank wavelengths (centimetres) let you see the waves themselves.</p>
+  <div class="eq">$$r_2 - r_1 = m\lambda \;\Rightarrow\; \text{bright}, \qquad \Delta y \approx \frac{\lambda L}{d}$$</div>
+</section>
+<section data-case="slits" data-example="close"><h3>Slits closer</h3><p>Halving \(d\) doubles the fringe spacing \(\lambda L/d\).</p></section>
+<section data-case="slits" data-example="apart"><h3>Slits apart</h3><p>Twice the separation, half the spacing: the fringes crowd together.</p></section>
+<section data-case="slits" data-example="red"><h3>Longer wavelength</h3><p>Fringe spacing grows with \(\lambda\): red light makes wider fringes than blue.</p></section>

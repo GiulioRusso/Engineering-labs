@@ -1,16 +1,28 @@
-<h2>Forces and torque</h2>
-<section data-highlight="resultant">
+<section data-case="sum">
   <h3>Forces add as arrows</h3>
-  <p>Several forces on one body act like a single force, their vector sum. Place them tip to tail: the arrow from the first tail to the last tip is the resultant. If they close into a loop, the body is in equilibrium.</p>
+  <p>Several forces on one body act like a single force, their vector sum. Place them tip to tail: the arrow from the first tail to the last tip is the resultant, and it sets the acceleration. Drag the force tips.</p>
   <div class="eq">$$\cF{\mathbf F_\text{net}} = \sum_i \cF{\mathbf F_i} = m\,\mathbf a$$</div>
 </section>
-<section data-highlight="torque">
+<section data-case="sum" data-example="line"><h3>Along one line</h3><p>10 N to the right and 4 N to the left: forces on one line just add with signs, net 6 N to the right.</p></section>
+<section data-case="sum" data-example="right"><h3>At right angles</h3><p>12 N and 9 N at 90° give \(\sqrt{12^2 + 9^2} = 15\) N, not 21 N: perpendicular forces add like the sides of a right triangle.</p></section>
+<section data-case="sum" data-example="balance"><h3>Equilibrium</h3><p>Three 12 N forces 120° apart close into a triangle: the net force is zero, so the puck does not accelerate (it can still move at constant velocity).</p></section>
+
+<section data-case="torque">
   <h3>Torque turns</h3>
-  <p>A force far from the pivot and at right angles to the bar turns it hardest. Pushing along the bar does nothing.</p>
+  <p>What turns the bar is not the force alone but the force times its lever arm: the distance from the pivot, times the part of the force at right angles to the bar.</p>
   <div class="eq">$$\tau = r\,F\sin\alpha, \qquad \tau = I\,\ddot\varphi, \qquad I_\text{bar} = \tfrac13 M L^2$$</div>
 </section>
-<section data-highlight="buoyancy">
+<section data-case="torque" data-example="end"><h3>At the end</h3><p>Largest \(r\), force at 90°: the most torque. That is why door handles are far from the hinges.</p></section>
+<section data-case="torque" data-example="near"><h3>Near the pivot</h3><p>Same force, a tenth of the lever arm: a tenth of the torque.</p></section>
+<section data-case="torque" data-example="along"><h3>Along the bar</h3><p>\(\alpha = 0\): the force pulls straight through the pivot and has no lever arm. Zero torque however strong it is.</p></section>
+<section data-case="torque" data-example="d30"><h3>At 30°</h3><p>\(\sin 30° = \tfrac12\): only half the force is at right angles to the bar.</p></section>
+
+<section data-case="buoyancy">
   <h3>Buoyancy: the weight of the displaced liquid</h3>
-  <p>Pressure grows with depth, so the liquid pushes harder on the bottom of the block than on its top. The difference is the buoyant force, the weight of the liquid displaced (Archimedes). A block floats where that equals its own weight.</p>
+  <p>Pressure grows with depth, so the liquid pushes harder on the bottom of the block than on its top. The difference is the weight of the liquid displaced (Archimedes). The block floats where that equals its own weight: the submerged fraction is the density ratio.</p>
   <div class="eq">$$p = p_0 + \rho_f g h, \qquad F_B = \rho_f g V_\text{sub}, \qquad \frac{d}{s} = \frac{\rho_b}{\rho_f}$$</div>
 </section>
+<section data-case="buoyancy" data-example="ice"><h3>Ice</h3><p>\(917/1000\): 92 % of an iceberg is under water.</p></section>
+<section data-case="buoyancy" data-example="sea"><h3>Sea water</h3><p>Denser water (1025 kg/m³) lifts more: 89 % under.</p></section>
+<section data-case="buoyancy" data-example="same"><h3>Same density</h3><p>Fully submerged, buoyancy exactly balances weight: it floats at any depth (neutral buoyancy, like a fish or a submarine).</p></section>
+<section data-case="buoyancy" data-example="sink"><h3>Denser than water</h3><p>Even fully under, the displaced water weighs less than the block: it sinks.</p></section>

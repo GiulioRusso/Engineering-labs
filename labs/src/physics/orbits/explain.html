@@ -1,17 +1,15 @@
-<h2>Orbits and ground tracks</h2>
-<p>An orbit is an ellipse with the Earth's centre at one focus. Six numbers place it in space; the satellite then moves along it by Kepler's laws, while the Earth turns underneath.</p>
-<section data-highlight="elements">
-  <h3>The orbital elements</h3>
-  <p>Size and shape: semi-major axis \(a\) and eccentricity \(e\). Orientation: inclination \(i\) (tilt to the equator), right ascension of the ascending node \(\Omega\) (where it crosses the equator going north), argument of perigee \(\omega\) (where in the plane the closest point is).</p>
+<section data-case="circular inclined elliptical j2">
+  <p>An orbit is an ellipse with the Earth's centre at one focus. The satellite moves along it by Kepler's laws while the Earth turns underneath; the plot shows the ground track.</p>
   <div class="eq">$$T = 2\pi\sqrt{\frac{a^3}{\mu}}, \qquad v = \sqrt{\mu\left(\frac{2}{r} - \frac{1}{a}\right)}$$</div>
 </section>
-<section data-highlight="track">
-  <h3>The ground track drifts west</h3>
-  <p>During one orbit the Earth turns eastward by \(\omega_E T\), so each pass crosses the equator further west. A geostationary orbit has \(T\) equal to one sidereal day: its ground track is a single point.</p>
-  <div class="eq">$$\Delta\lambda = -\omega_E T \approx -22.9° \text{ for the ISS}$$</div>
-</section>
-<section data-highlight="j2">
-  <h3>The Earth's bulge turns the orbit (J2)</h3>
-  <p>The equatorial bulge pulls on the orbit and makes its plane precess slowly. A retrograde orbit (\(i > 90°\)) at the right height turns exactly once a year, keeping the same angle to the Sun: sun-synchronous.</p>
-  <div class="eq">$$\dot\Omega = -\frac32 n J_2 \left(\frac{R_E}{p}\right)^2 \cos i, \qquad p = a(1 - e^2)$$</div>
-</section>
+<section data-case="circular"><h3>Circular orbits</h3><p>Gravity provides exactly the centripetal force: \(v = \sqrt{\mu/r}\). Lower is faster: the ISS does a lap in 93 minutes at 7.7 km/s.</p></section>
+<section data-case="circular" data-example="high"><h3>Higher</h3><p>Further out, gravity is weaker: slower speed, longer path, a period of several hours (\(T \propto a^{3/2}\)).</p></section>
+<section data-case="circular" data-example="geo"><h3>Geostationary</h3><p>At 35 786 km the period equals one sidereal day: above the equator the satellite stays over one point, and its ground track is a dot.</p></section>
+<section data-case="inclined"><h3>Inclination</h3><p>The orbit plane is tilted by \(i\) to the equator; the ground track swings between latitudes \(\pm i\). During each orbit the Earth turns east, so each pass crosses the equator further west.</p><div class="eq">$$\Delta\lambda = -\omega_E T \approx -22.9° \text{ for the ISS}$$</div></section>
+<section data-case="inclined" data-example="polar"><h3>Polar orbit</h3><p>\(i = 90°\): over both poles. As the Earth turns beneath, the satellite sees the whole planet: mapping and weather.</p></section>
+<section data-case="inclined" data-example="retro"><h3>Retrograde</h3><p>\(i > 90°\): the satellite moves westward, against the Earth's spin. Launching there costs more fuel.</p></section>
+<section data-case="elliptical"><h3>Elliptical orbits</h3><p>Fast at perigee, slow at apogee (Kepler's second law: equal areas in equal times). The argument of perigee \(\omega\) turns the ellipse in its plane.</p></section>
+<section data-case="elliptical" data-example="molniya"><h3>Molniya</h3><p>\(e = 0.74\), \(i = 63.4°\), apogee over the north: the satellite hangs over Russia for most of its 12-hour orbit. At 63.4° the bulge does not rotate the ellipse.</p></section>
+<section data-case="j2"><h3>The Earth's bulge (J2)</h3><p>The equatorial bulge pulls on the orbit and makes its plane precess. At 98.6° and 800 km it turns about 1° a day, once a year: the orbit keeps the same angle to the Sun (sun-synchronous).</p><div class="eq">$$\dot\Omega = -\frac32 n J_2 \left(\frac{R_E}{p}\right)^2 \cos i$$</div></section>
+<section data-case="j2" data-example="none"><h3>Without the bulge</h3><p>For a perfect sphere the orbit plane stays fixed in space.</p></section>
+<section data-case="j2" data-example="iss"><h3>The ISS</h3><p>\(\cos i > 0\): the plane turns west, about 5° a day.</p></section>

@@ -34,7 +34,7 @@ for (const topic of topics) {
     for (const s of meta.scenarios) {
       await p.evaluate((x) => { window.__lab.load(x); window.__lab.setPlaying(true); }, s);
       await sleep(1400);
-      writeFileSync(join(web, 'media', id, `${s}${suffix}.png`), await p.screenshot());
+      writeFileSync(join(web, 'media', id, `${s.replace("/", "--")}${suffix}.png`), await p.screenshot());
     }
     const g = meta.gif || { scenario: meta.scenarios[0] };
     await p.evaluate((x) => { window.__lab.load(x); window.__lab.setPlaying(true); }, g.scenario);

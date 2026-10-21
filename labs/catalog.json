@@ -1,8 +1,8 @@
 [
  {
-  "topic": "analog-electronics",
+  "subject": "analog-electronics",
   "name": "Analog electronics",
-  "animations": [
+  "topics": [
    {
     "id": "transistor-curves",
     "title": "Transistors: the device curves",
@@ -26,9 +26,9 @@
   ]
  },
  {
-  "topic": "circuits",
+  "subject": "circuits",
   "name": "Circuits",
-  "animations": [
+  "topics": [
    {
     "id": "rlc-components",
     "title": "R, C, L and the diode",
@@ -57,14 +57,14 @@
   ]
  },
  {
-  "topic": "computer-science",
+  "subject": "computer-science",
   "name": "Computer science",
   "visualizer": "algorithm"
  },
  {
-  "topic": "control-systems",
+  "subject": "control-systems",
   "name": "Control systems",
-  "animations": [
+  "topics": [
    {
     "id": "step-response",
     "title": "Step response from the poles",
@@ -113,14 +113,14 @@
   ]
  },
  {
-  "topic": "digital-electronics",
+  "subject": "digital-electronics",
   "name": "Digital electronics",
   "visualizer": "electronics"
  },
  {
-  "topic": "electronic-warfare",
+  "subject": "electronic-warfare",
   "name": "Electronic warfare",
-  "animations": [
+  "topics": [
    {
     "id": "radar-pulses",
     "title": "Radar pulses and the ambiguity function",
@@ -149,9 +149,9 @@
   ]
  },
  {
-  "topic": "machine-learning",
+  "subject": "machine-learning",
   "name": "Machine learning",
-  "animations": [
+  "topics": [
    {
     "id": "neuron-layers",
     "title": "A neuron is a plane, a layer is a fold",
@@ -175,116 +175,213 @@
   ]
  },
  {
-  "topic": "maths",
+  "subject": "maths",
   "name": "Maths",
-  "animations": [
+  "topics": [
    {
-    "id": "function-explorer",
+    "id": "functions",
     "title": "Functions",
-    "what": "Linear, quadratic, exponential, logarithmic: drag the parameters, watch the graph and its key points."
+    "what": "Lines, parabolas, exponentials and logarithms: drag the graph, read the equation.",
+    "from": "function-explorer"
    },
    {
-    "id": "unit-circle",
-    "title": "The unit circle",
-    "what": "A point on the circle unrolls into sine, cosine and tangent waves in 3D."
+    "id": "trigonometry",
+    "title": "Trigonometry",
+    "what": "A point on the unit circle: sine, cosine, tangent and the waves they make.",
+    "from": "unit-circle"
    },
    {
-    "id": "complex-plane",
+    "id": "complex-numbers",
     "title": "Complex numbers",
-    "what": "Drag z and w; sums, products and powers as rotations and scalings."
+    "what": "Sums, products, powers and roots as arrows in the plane.",
+    "from": "complex-plane"
+   },
+   {
+    "id": "vectors",
+    "title": "Vectors",
+    "what": "Dot and cross product of two arrows you drag in 3D.",
+    "from": "vector-fields",
+    "cases": [
+     "dot",
+     "cross"
+    ]
    },
    {
     "id": "calculus",
-    "title": "Derivative, integral, Taylor",
-    "what": "A tangent that slides, Riemann sums that converge, Taylor polynomials that hug."
+    "title": "Calculus",
+    "what": "Derivative as a limit of slopes, integral as a limit of sums, Taylor polynomials."
    },
    {
-    "id": "linear-maps",
-    "title": "Linear maps on the unit cube",
-    "what": "Drag the matrix columns; the cube deforms, eigenvectors light up, det is the volume."
+    "id": "matrices",
+    "title": "Matrices and linear maps",
+    "what": "A 3×3 matrix deforms the unit cube: determinant, eigenvectors.",
+    "from": "linear-maps"
    },
    {
-    "id": "surfaces-gradient",
-    "title": "Surfaces, gradient, div and curl",
-    "what": "Drag a point on z = f(x, y): tangent plane, gradient, level curves."
+    "id": "surfaces",
+    "title": "Functions of two variables",
+    "what": "Walk on a surface: gradient, tangent plane, level curves.",
+    "from": "surfaces-gradient"
+   },
+   {
+    "id": "vector-calculus",
+    "title": "Divergence and curl",
+    "what": "Tracers in a flow: spreading is divergence, turning is curl.",
+    "from": "vector-fields",
+    "cases": [
+     "div",
+     "curl"
+    ]
    }
   ]
  },
  {
-  "topic": "physics",
+  "subject": "physics",
   "name": "Physics",
-  "animations": [
+  "topics": [
    {
-    "id": "motion-energy",
-    "title": "Motion, momentum and energy",
-    "what": "Trajectories with velocity and acceleration vectors, energy bars, circular motion."
+    "id": "kinematics",
+    "title": "Motion",
+    "what": "Projectiles and circular motion: position, velocity, acceleration.",
+    "from": "motion-energy",
+    "cases": [
+     "projectile",
+     "circular"
+    ]
    },
    {
-    "id": "forces-torque",
+    "id": "momentum",
+    "title": "Momentum and collisions",
+    "what": "Two carts collide: momentum always survives, kinetic energy not always.",
+    "from": "motion-energy",
+    "cases": [
+     "collision"
+    ]
+   },
+   {
+    "id": "forces",
     "title": "Forces and torque",
-    "what": "Drag forces on a body; resultant, torque, equilibrium and buoyancy."
+    "what": "Add forces tip to tail; turn a lever.",
+    "from": "forces-torque",
+    "cases": [
+     "sum",
+     "torque"
+    ]
    },
    {
-    "id": "vector-fields",
-    "title": "Vectors and vector fields",
-    "what": "Dot and cross product in 3D; divergence and curl of a field you can probe."
+    "id": "fluids",
+    "title": "Buoyancy",
+    "what": "A block in a liquid bobs and settles where buoyancy equals weight.",
+    "from": "forces-torque",
+    "cases": [
+     "buoyancy"
+    ]
    },
    {
-    "id": "gas-piston",
-    "title": "Gas in a piston",
-    "what": "Particles in a 3D box, a P–V diagram linked, Carnot and Otto cycles."
+    "id": "oscillations",
+    "title": "Oscillations",
+    "what": "Spring and pendulum: period, energy, damping and resonance."
    },
    {
-    "id": "optics-bench",
-    "title": "Optics bench",
-    "what": "Drag lenses and mirrors; rays, images and the double slit."
+    "id": "gravity-field",
+    "title": "Gravitational field",
+    "what": "The field of two masses, arrow by arrow.",
+    "from": "maths/vector-fields",
+    "cases": [
+     "gravity"
+    ]
    },
    {
-    "id": "point-charges",
-    "title": "Point charges",
-    "what": "Drag charges in 3D; field lines and equipotential surfaces reshape live."
+    "id": "thermodynamics",
+    "title": "Gas and heat",
+    "what": "Atoms in a piston: pressure from impacts, heating, isothermal and adiabatic squeezes.",
+    "from": "gas-piston"
    },
    {
-    "id": "coil-induction",
-    "title": "Coil: magnetic field and induction",
-    "what": "Drag a magnet or a probe ring through a coil; flux, EMF and Lenz's law live."
+    "id": "geometric-optics",
+    "title": "Rays: refraction, lenses, mirrors",
+    "what": "Snell’s law, total reflection and image formation.",
+    "from": "optics-bench",
+    "cases": [
+     "snell",
+     "lens",
+     "mirror"
+    ]
+   },
+   {
+    "id": "interference",
+    "title": "Interference",
+    "what": "Two slits, two waves: bright and dark fringes.",
+    "from": "optics-bench",
+    "cases": [
+     "slits"
+    ]
+   },
+   {
+    "id": "electrostatics",
+    "title": "Electric charges",
+    "what": "Field lines, equipotentials and Gauss’s law for point charges.",
+    "from": "point-charges"
+   },
+   {
+    "id": "magnetic-field",
+    "title": "Magnetic field of currents",
+    "what": "A loop and a solenoid: field lines, B on the axis.",
+    "from": "coil-induction",
+    "cases": [
+     "loop",
+     "solenoid"
+    ]
+   },
+   {
+    "id": "induction",
+    "title": "Electromagnetic induction",
+    "what": "Move a magnet through a coil: flux, EMF, Lenz, magnetic braking.",
+    "from": "coil-induction",
+    "cases": [
+     "push",
+     "drag",
+     "drop",
+     "ac"
+    ]
    },
    {
     "id": "charged-particle",
-    "title": "Charged particle in E and B",
-    "what": "Drag E and B; helix, cycloid and E×B drift."
+    "title": "Charges in E and B",
+    "what": "Circles, helices and drifts of a charged particle."
    },
    {
     "id": "em-wave",
-    "title": "Electromagnetic wave and reflection",
-    "what": "E and B travelling together, standing waves, Fresnel and Brewster."
+    "title": "Electromagnetic waves",
+    "what": "E and B travelling together; reflection and standing waves."
    },
    {
-    "id": "flight-envelope",
-    "title": "Flight: lift, drag, envelope",
-    "what": "A 3D aircraft with its forces; drag polar, ISA and the V–n diagram."
+    "id": "flight",
+    "title": "Flight",
+    "what": "Lift, drag, the stall and the flight envelope of a light aircraft.",
+    "from": "flight-envelope"
    },
    {
     "id": "orbits",
-    "title": "Orbits and ground tracks",
-    "what": "Drag i, Ω, ω; the ground track and J2 precession follow."
+    "title": "Orbits",
+    "what": "Kepler orbits around a turning Earth, ground tracks, J2."
    },
    {
     "id": "orbital-transfers",
-    "title": "Transfers and staging",
-    "what": "Hohmann, bi-elliptic and gravity assists with the Δv budget."
+    "title": "Orbital transfers",
+    "what": "Hohmann and bi-elliptic transfers, Δv and the rocket equation."
    },
    {
     "id": "lagrange-points",
     "title": "Lagrange points",
-    "what": "The rotating-frame potential as a 3D surface, five equilibria."
+    "what": "The rotating two-body potential and its five equilibria."
    }
   ]
  },
  {
-  "topic": "signal-theory",
+  "subject": "signal-theory",
   "name": "Signal theory",
-  "animations": [
+  "topics": [
    {
     "id": "signal-gallery",
     "title": "Signals in time and frequency",

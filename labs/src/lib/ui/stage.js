@@ -92,7 +92,8 @@ export function createStage(container, { size = 0.5, presets }) {
   io.observe(container);
   const onVis = () => { visible = !document.hidden; if (visible) requestRender(); };
   document.addEventListener('visibilitychange', onVis);
-  renderer.domElement.addEventListener('webglcontextlost', (e) => { e.preventDefault(); window.__labContextLost = true; });
+  let disposed = false;
+  renderer.domElement.addEventListener('webglcontextlost', (e) => { e.preventDefault(); if (!disposed) window.__labContextLost = true; });
 
   // the orthographic view frames what the perspective camera would see at the current distance
   function fitOrtho() {
@@ -145,6 +146,7 @@ export function createStage(container, { size = 0.5, presets }) {
       controls.dispose();
       scene.traverse((o) => { o.geometry?.dispose?.(); const m = o.material; (Array.isArray(m) ? m : m ? [m] : []).forEach((x) => { x.map?.dispose?.(); x.dispose?.(); }); });
       renderer.dispose();
+      disposed = true; renderer.forceContextLoss(); // browsers cap live WebGL contexts (~16): free this one now
       renderer.domElement.remove(); labels.domElement.remove();
     },
     toggleOrtho() {

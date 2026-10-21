@@ -1,4 +1,4 @@
-// The catalogue page: one card per topic, listing its animations.
+// The catalogue page: one card per subject, listing its topics.
 // Written twice by build.mjs: labs/web/index.html and the repository's root index.html (`base` differs).
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -19,20 +19,20 @@ const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 
 // labsRoot: absolute path of labs/; web: path from the page to labs/web/; repo: path from the page to the repo root.
 export function renderCatalogue({ catalog, labsRoot, web, repo }) {
-  const isBuilt = (topic, id) => existsSync(join(labsRoot, 'src', topic, id, 'lab.js'));
+  const isBuilt = built(labsRoot);
   const hasMedia = (f) => existsSync(join(labsRoot, 'web', 'media', f));
 
-  const cards = catalog.map((t) => {
-    const built = (t.animations || []).filter((a) => isBuilt(t.topic, a.id));
-    const style = `--hue:${HUE[t.topic] ?? 210}`;
-    if (t.visualizer) {
-      const v = VIS[t.visualizer];
-      return `<a class="card" style="${style}" href="${repo}${v.href}"><span class="name"><i></i>${esc(t.name)}</span><span class="sub">${v.title}</span></a>`;
+  const cards = catalog.map((S) => {
+    const done = (S.topics || []).filter((t) => isBuilt(S.subject, t));
+    const style = `--hue:${HUE[S.subject] ?? 210}`;
+    if (S.visualizer) {
+      const v = VIS[S.visualizer];
+      return `<a class="card" style="${style}" href="${repo}${v.href}"><span class="name"><i></i>${esc(S.name)}</span><span class="sub">${v.title}</span></a>`;
     }
-    if (!built.length) return `<div class="card soon" style="${style}"><span class="name"><i></i>${esc(t.name)}</span><span class="sub">coming soon</span></div>`;
-    const img = hasMedia(`${built[0].id}.png`) ? `<img src="${web}media/${built[0].id}.png" alt="" loading="lazy">` : '';
-    return `<div class="card big" style="${style}"><a class="head" href="${web}${t.topic}.html">${img}<span class="name"><i></i>${esc(t.name)}</span><span class="sub">${built.length} animations</span></a>
-      <div class="list">${built.map((a) => `<a href="${web}${t.topic}.html?lab=${a.id}">${esc(a.title)}</a>`).join('')}</div></div>`;
+    if (!done.length) return `<div class="card soon" style="${style}"><span class="name"><i></i>${esc(S.name)}</span><span class="sub">coming soon</span></div>`;
+    const img = hasMedia(`${done[0].id}.png`) ? `<img src="${web}media/${done[0].id}.png" alt="" loading="lazy">` : '';
+    return `<div class="card big" style="${style}"><a class="head" href="${web}${S.subject}.html">${img}<span class="name"><i></i>${esc(S.name)}</span><span class="sub">${done.length} topics</span></a>
+      <div class="list">${done.map((t) => `<a href="${web}${S.subject}.html?lab=${t.id}">${esc(t.title)}</a>`).join('')}</div></div>`;
   });
 
   return `<!doctype html>
@@ -79,8 +79,12 @@ apply();
 `;
 }
 
+// built(labsRoot)(subject, topic): does src/<subject>/<from or id>/lab.js exist (see build.mjs)
+export const built = (labsRoot) => (subject, t) => { const f = t.from || t.id; return existsSync(join(labsRoot, 'src', ...(f.includes('/') ? f.split('/') : [subject, f]), 'lab.js')); };
+
 export function counts(catalog, labsRoot) {
-  let built = 0, planned = 0;
-  for (const t of catalog) for (const a of t.animations || []) existsSync(join(labsRoot, 'src', t.topic, a.id, 'lab.js')) ? built++ : planned++;
-  return { built, planned };
+  const isBuilt = built(labsRoot);
+  let done = 0, planned = 0;
+  for (const S of catalog) for (const t of S.topics || []) isBuilt(S.subject, t) ? done++ : planned++;
+  return { built: done, planned };
 }

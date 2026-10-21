@@ -12,11 +12,23 @@ export default {
   id: 'surfaces-gradient', title: 'Surfaces and the gradient', size: 3, timeless: true, plain: true,
   cameras: { front: { pos: [0, -9, 2.2] }, side: { pos: [9, 0, 2.2] }, top: { pos: [0, -0.01, 9.5] }, iso: { pos: [6, -6.5, 5] } },
   defaults: { surf: 'bowl', x: 0.4, y: -0.3, plane: true, contours: true, floor: true, grad: true },
-  scenarios: [
-    { id: 'bowl', label: 'Bowl', set: { surf: 'bowl', x: 1.5, y: 1 } },
-    { id: 'saddle', label: 'Saddle', set: { surf: 'saddle', x: 0.6, y: 0.3 } },
-    { id: 'hills', label: 'Hills', set: { surf: 'hills', x: 0.2, y: -0.2 } },
-    { id: 'ripple', label: 'Ripple', set: { surf: 'ripple', x: 1.2, y: 0.8 } },
+  cases: [
+    { id: 'bowl', label: 'Bowl', set: { surf: 'bowl', x: 1.5, y: 1 }, examples: [
+      { id: 'bottom', label: 'At the bottom: ∇f = 0', set: { x: 0, y: 0 } },
+      { id: 'far', label: 'Far out: steeper', set: { x: 2.5, y: 0 } },
+    ] },
+    { id: 'saddle', label: 'Saddle', set: { surf: 'saddle', x: 0.6, y: 0.3 }, examples: [
+      { id: 'centre', label: 'Centre: flat, not an extremum', set: { x: 0, y: 0 } },
+      { id: 'x', label: 'Along x it rises', set: { x: 1.5, y: 0 } },
+      { id: 'y', label: 'Along y it falls', set: { x: 0, y: 1.5 } },
+    ] },
+    { id: 'hills', label: 'Hills', set: { surf: 'hills', x: 0.2, y: -0.2 }, examples: [
+      { id: 'top', label: 'On a summit', set: { x: 1, y: 0.6 } },
+      { id: 'valley', label: 'In the hollow', set: { x: -0.3, y: 1.6 } },
+    ] },
+    { id: 'ripple', label: 'Ripple', set: { surf: 'ripple', x: 1.2, y: 0.8 }, examples: [
+      { id: 'trough', label: 'In the trough ring', set: { x: 1.644, y: 0 } },
+    ] },
   ],
   controls: [
     { title: 'Point', items: [

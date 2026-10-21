@@ -1,18 +1,21 @@
-<h2>Point charges</h2>
-<p>Drag the charges. Field lines start on positive charges and end on negative ones; the coloured slice is the field strength, the dark rings are equipotentials.</p>
-<section data-highlight="lines">
+<section data-case="one two four gauss">
   <h3>Coulomb's law and superposition</h3>
-  <p>Each charge makes a field pointing away from it (if positive) and fading as \(1/r^2\). Several charges: add the arrows.</p>
-  <div class="eq">$$\cE{\mathbf E}(\mathbf r) = \sum_i \frac{q_i}{4\pi\varepsilon_0}\frac{\mathbf r - \mathbf r_i}{|\mathbf r - \mathbf r_i|^3}$$</div>
-  <p>The number of lines leaving a charge is drawn in proportion to its size, so the line density follows the field.</p>
+  <p>Each charge makes a field pointing away from it if positive, towards it if negative, fading as \(1/r^2\). Several charges: add the arrows. Lines start on + and end on −; their number is in proportion to the charge. Drag the charges.</p>
+  <div class="eq">$$\cE{\mathbf E}(\mathbf r) = \sum_i \frac{q_i}{4\pi\varepsilon_0}\frac{\mathbf r - \mathbf r_i}{|\mathbf r - \mathbf r_i|^3}, \qquad \cE{\mathbf E} = -\nabla V$$</div>
 </section>
-<section data-highlight="equipotentials">
-  <h3>Equipotentials cross the field at right angles</h3>
-  <p>The potential is the energy per coulomb. Moving along an equipotential costs no work, so the field has no component along it.</p>
-  <div class="eq">$$V(\mathbf r) = \sum_i \frac{q_i}{4\pi\varepsilon_0 |\mathbf r - \mathbf r_i|}, \qquad \cE{\mathbf E} = -\nabla V$$</div>
-</section>
-<section data-highlight="gauss">
+<section data-case="one"><h3>One charge</h3><p>Radial lines, spherical equipotentials. The field at distance \(r\) is \(kq/r^2\), the potential \(kq/r\).</p></section>
+<section data-case="one" data-example="neg"><h3>Negative</h3><p>Same pattern, arrows reversed: the lines come in from far away and end on the charge.</p></section>
+<section data-case="one" data-example="big"><h3>More charge</h3><p>2.5 times the charge, 2.5 times as many lines and a field 2.5 times stronger everywhere.</p></section>
+<section data-case="two"><h3>A pair of opposite charges</h3><p>Every line from the + charge lands on the − charge. Between them the field is strong and points from + to −.</p></section>
+<section data-case="two" data-example="like"><h3>Like charges</h3><p>The lines push away from each other. Midway the two fields cancel: a point of zero field, a saddle of the potential.</p></section>
+<section data-case="two" data-example="unequal"><h3>Unequal charges</h3><p>The −1 nC charge can absorb only a third of the lines from the +3 nC one; the rest escape to infinity. From far away the pair looks like a single +2 nC charge.</p></section>
+<section data-case="two" data-example="close"><h3>A dipole</h3><p>Seen from a distance much larger than the separation, the fields nearly cancel: a dipole field, fading as \(1/r^3\).</p></section>
+<section data-case="four"><h3>A quadrupole</h3><p>Alternating charges on a square: total charge 0 and no net dipole either. Far away the field fades even faster, as \(1/r^4\).</p></section>
+<section data-case="four" data-example="same"><h3>All positive</h3><p>+8 nC in total: from far away, the field of a single charge at the centre, where the four fields cancel.</p></section>
+<section data-case="gauss">
   <h3>Gauss's law</h3>
-  <p>Count the field flowing out of any closed surface: it only depends on the charge inside. Charges outside send in as much as they let out.</p>
+  <p>Count the field flowing out of a closed surface: it depends only on the charge inside. A charge outside sends in as much as it lets out.</p>
   <div class="eq">$$\oint \cE{\mathbf E}\cdot d\mathbf A = \frac{Q_\text{inside}}{\varepsilon_0}$$</div>
 </section>
+<section data-case="gauss" data-example="inside"><h3>Both inside</h3><p>The flux counts \(+2 - 1 = +1\) nC, however the charges are arranged inside the sphere.</p></section>
+<section data-case="gauss" data-example="alone"><h3>One charge</h3><p>Remove the outside charge: the field lines change, the flux does not.</p></section>
