@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo.svg" width="96" alt="Engineering Labs logo">
+  <img src="docs/logo.png" width="96" alt="Engineering Labs logo">
 </p>
 
 <h1 align="center">Engineering Labs</h1>
@@ -15,8 +15,8 @@
 ## 🚀 Quick Start
 
 ```bash
-git clone https://github.com/GiulioRusso/engineering-labs.git
-cd engineering-labs
+git clone https://github.com/GiulioRusso/Engineering-labs.git
+cd Engineering-labs
 ```
 
 Open **`index.html`** in any browser. Catalogue self-contained, runs offline.
