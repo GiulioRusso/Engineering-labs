@@ -1,0 +1,36 @@
+<section data-case="neuron">
+  <h3>A neuron is a tilted sheet</h3>
+  <div class="look"><h4>What you are looking at</h4>A 3D view: the floor is the input plane (x₁, x₂). Blue crosses are class 0 (drawn on the floor), yellow crosses class 1 (drawn at height 1). The coloured sheet is the neuron's output p for every point of the plane; the orange line is where p = ½ — the decision boundary. Drag to rotate.</div>
+  <p>A neuron does two things. It <b>projects</b> each point onto the direction of its weights, collapsing the plane to one number z = w·x + b; then it <b>squashes</b> z into a probability with the sigmoid. Lines of equal z are straight, so the boundary is always a straight line.</p>
+  <div class="eq">$$p=\sigma(w_1x_1+w_2x_2+b),\qquad \sigma(z)=\frac{1}{1+e^{-z}}$$</div>
+  <ol class="steps"><li>The direction of (w₁, w₂) is the direction the sheet climbs.</li><li>Its length |w| is how steeply: large weights make a cliff, small weights a gentle ramp.</li><li>The bias b slides the whole sheet sideways without turning it.</li></ol>
+  <div class="worked"><h4>Worked example</h4>w = (1, 1), b = 0: the boundary is x₁ + x₂ = 0. The point (1, 1) has z = 2, p = σ(2) = 0.88: "88% class 1".</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading p as certainty. With huge weights every point gets p near 0 or 1, even points far from any data the neuron has seen.</div>
+  <div class="try"><h4>Try it</h4>Turn the weights until the sheet rises under the yellow crosses and stays low under the blue ones; watch the accuracy and the loss.</div>
+</section>
+<section data-case="neuron" data-example="steep"><h3>Large weights</h3><p>Same line, much steeper sheet: a sharp yes/no.</p></section>
+<section data-case="neuron" data-example="flat"><h3>Small weights</h3><p>p stays close to ½ everywhere: the neuron is unsure about every point.</p></section>
+<section data-case="neuron" data-example="bias"><h3>The bias</h3><p>b = 2 moves the line by b/|w| towards the lower-left: more points are called class 1.</p></section>
+<section data-case="neuron" data-example="wrong"><h3>The wrong way</h3><p>The sheet climbs away from the yellow points: low accuracy, high loss.</p></section>
+<section data-case="descent">
+  <h3>Learning is walking downhill</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the data and the neuron's current boundary (background shading = p). Top right: the loss for every pair of weights — a landscape, dark = low — and the path the weights take. Bottom right: the loss step by step.</div>
+  <p>Turning the line by hand does not scale. Instead, give every possible line a score — the loss, low when the neuron is right and confident — and roll downhill. The gradient ∇L points uphill; step the other way.</p>
+  <div class="eq">$$L=-\frac1N\sum_i\big[y_i\log p_i+(1-y_i)\log(1-p_i)\big],\qquad \nabla_wL=\frac1N\sum_i(p_i-y_i)\,\mathbf x_i,\qquad w\leftarrow w-\eta\nabla L$$</div>
+  <div class="worked"><h4>Worked example</h4>A point with y = 1 and p = 0.3 contributes (0.3 − 1)·x = −0.7x to the gradient: the weights move by +0.7ηx, towards that point.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Too small η: many tiny steps. Too large: the steps overshoot. And on the moons no setting helps: the problem is the shape of the boundary, not the training.</div>
+</section>
+<section data-case="descent" data-example="slow"><h3>η = 0.05</h3><p>The path is correct but slow: after 300 steps it is still on the way.</p></section>
+<section data-case="descent" data-example="fast"><h3>η = 3</h3><p>Big steps reach the valley quickly; on this smooth loss they do not blow up.</p></section>
+<section data-case="descent" data-example="moons"><h3>Moons</h3><p>The best straight line still misclassifies the tips of both moons: accuracy stalls around 85%.</p></section>
+<section data-case="hidden">
+  <h3>A hidden layer bends the plane</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the network's decision region on the moons, with each hidden unit's own line in grey. Top right: with 2 hidden units, the data as the output neuron sees it (the hidden space); otherwise the accuracy. Bottom right: the loss as training goes on.</div>
+  <p>One line cannot cut the moons apart. A hidden layer draws H lines at once and passes each through a non-linearity: the plane is bent (tanh) or folded (ReLU) along those lines. In the bent space a single straight line can separate the classes — and mapped back to the input it is a curve.</p>
+  <div class="eq">$$h_j=f(\mathbf w_j\cdot\mathbf x+b_j),\qquad p=\sigma\Big(\sum_j v_jh_j+c\Big)$$</div>
+  <div class="worked"><h4>Worked example</h4>With 2 hidden units the hidden space is a plane again: watch the two moons get pulled apart in the top-right chart until the orange line separates them.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking more units is always better: 16 units fit these 200 points easily, but with noisy data they also fit the noise (see Generalization).</div>
+</section>
+<section data-case="hidden" data-example="two"><h3>Two units</h3><p>The smallest network that can do it: the hidden plane shows the bending directly.</p></section>
+<section data-case="hidden" data-example="relu"><h3>ReLU</h3><p>ReLU is zero on one side of its line and straight on the other: the boundary is made of straight pieces with corners.</p></section>
+<section data-case="hidden" data-example="wide"><h3>Sixteen units</h3><p>Many lines: a smoother, more flexible boundary, learned faster.</p></section>

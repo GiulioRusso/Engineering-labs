@@ -199,10 +199,25 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 
 | Topic | What you do | Status |
 |---|---|---|
-| A neuron is a plane, a layer is a fold | Drag a neuron's weights over 2D data lifted to 3D; ReLU layers fold the plane. | planned |
-| Inside a convolution | Slide a filter over an image volume; stride, padding, dilation and channels. | planned |
-| Loss landscapes and optimizers | SGD, momentum and Adam racing on a 3D loss surface. | planned |
-| Bias, variance and model selection | Drag degree and regularization; fits fan out, train and test errors split. | planned |
+| [A neuron is a tilted sheet](web/machine-learning.html?lab=neuron-sheet) | Weights tilt it, the bias slides it; the boundary is a straight line. | done |
+| [Learning by gradient descent](web/machine-learning.html?lab=gradient-descent) | The loss landscape and the path of the weights. | done |
+| [A hidden layer bends the plane](web/machine-learning.html?lab=hidden-layer) | Two moons: what one line cannot do, a hidden layer can. | done |
+| [Loss landscapes and optimizers](web/machine-learning.html?lab=loss-landscapes) | GD, momentum, RMSProp and Adam racing on 3D loss surfaces: ravine, banana valley, saddle, two valleys. | done |
+| [Squared, absolute, Huber](web/machine-learning.html?lab=regression-losses) | What a line fit does with an outlier, with the squares drawn. | done |
+| [The sigmoid trap](web/machine-learning.html?lab=sigmoid-trap) | Why cross-entropy, not squared error, trains a classifier. | done |
+| [Softmax and temperature](web/machine-learning.html?lab=softmax) | From scores to probabilities. | done |
+| [Losses vs the margin](web/machine-learning.html?lab=margin-losses) | 0–1, hinge, logistic, exponential, squared in one picture. | done |
+| [Overfitting and capacity](web/machine-learning.html?lab=capacity) | Training error always falls; test error is U-shaped. | done |
+| [Bias and variance](web/machine-learning.html?lab=bias-variance) | Forty fits on forty datasets: average error and scatter. | done |
+| [Ridge regularization](web/machine-learning.html?lab=ridge) | Penalise the coefficients instead of the degree. | done |
+| [Early stopping](web/machine-learning.html?lab=early-stopping) | Gradient descent learns the shape first, the wiggles last. | done |
+| [Cross-validation](web/machine-learning.html?lab=cross-validation) | Choosing the model without the test set. | done |
+| [Accuracy, precision, recall](web/machine-learning.html?lab=imbalance) | Rare classes: why accuracy lies. | done |
+| [The dense layer](web/machine-learning.html?lab=dense-layer) | One dot product per output, drawn step by step. | done |
+| [Inside a convolution](web/machine-learning.html?lab=conv-layers) | Slide a kernel over an image: stride, padding, dilation. | done |
+| [Pooling](web/machine-learning.html?lab=pooling) | Max and average, no parameters. | done |
+| [Channels in 3D](web/machine-learning.html?lab=channels) | A filter is a k×k×C block collapsing into one map. | done |
+| [A whole CNN](web/machine-learning.html?lab=cnn-stack) | Shapes and where the parameters live. | done |
 
 ## Maths
 

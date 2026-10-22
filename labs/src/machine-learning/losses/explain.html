@@ -1,0 +1,40 @@
+<section>
+  <p>A loss does two jobs. Its <b>minimum</b> decides what the model converges to; its <b>derivative</b> decides how hard each example pushes, and whether training moves at all.</p>
+</section>
+<section data-case="regress">
+  <h3>Squared, absolute and Huber</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: twelve points with one outlier and the straight line each loss fits (bold = selected). For the squared loss each residual is drawn as a real square — its area is the penalty. Bottom: penalty against residual for the three losses, with the points of the selected fit.</div>
+  <div class="eq">$$\ell_2=r^2,\qquad \ell_1=|r|,\qquad \ell_\delta=\begin{cases}\tfrac12r^2&|r|\le\delta\\ \delta(|r|-\tfrac12\delta)&|r|>\delta\end{cases}$$</div>
+  <ol class="steps"><li>Squared: the gradient 2r grows with the residual, so one far point pulls as hard as many near ones. Its minimum is the <b>mean</b>.</li><li>Absolute: every point pulls with force ±1, however far. Its minimum is the <b>median</b>: robust to outliers.</li><li>Huber: squared (smooth, precise) near the line, absolute (robust) far from it.</li></ol>
+  <div class="worked"><h4>Worked example</h4>An outlier 8 units off contributes 64 to the squared loss — as much as 64 points 1 unit off. The squared fit tilts towards it; the absolute fit hardly moves.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using squared error on data with occasional gross errors (sensor glitches, typos): one bad point ruins the fit.</div>
+</section>
+<section data-case="regress" data-example="abs"><h3>Absolute error</h3><p>The line follows the other eleven points.</p></section>
+<section data-case="regress" data-example="huber"><h3>Huber</h3><p>Squares only for residuals within δ; beyond, the penalty grows linearly.</p></section>
+<section data-case="regress" data-example="none"><h3>No outlier</h3><p>With clean data all three lines coincide.</p></section>
+<section data-case="trap">
+  <h3>The sigmoid trap</h3>
+  <div class="look"><h4>What you are looking at</h4>One example with true label 1 and a neuron that starts confidently wrong (z = −6, p ≈ 0.002). Top: the loss as a function of the score z for squared error (blue) and cross-entropy (orange), with each one's current position. Bottom: how z moves during training.</div>
+  <p>Squared error on a probability looks reasonable — its minimum is in the right place. But differentiate through the sigmoid and a factor p(1 − p) appears, which is almost zero when p is near 0 or 1. Exactly when the model is confidently wrong, it barely learns. Cross-entropy's derivative is simply p − y: largest when most wrong.</p>
+  <div class="eq">$$\frac{\partial}{\partial z}(1-p)^2=-2(1-p)\,p(1-p),\qquad \frac{\partial}{\partial z}(-\log p)=p-1$$</div>
+  <div class="worked"><h4>Worked example</h4>At z = −6: the squared-error gradient is about −0.005; cross-entropy's is −0.998 — two hundred times stronger.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Training a classifier with MSE and blaming the learning rate for the plateau.</div>
+</section>
+<section data-case="softmax">
+  <h3>Softmax and temperature</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: four raw scores (logits). Bottom: the probabilities softmax makes of them; the true class in orange. Bottom plot: each probability as the temperature changes.</div>
+  <div class="eq">$$p_k=\frac{e^{z_k/T}}{\sum_je^{z_j/T}},\qquad \ell=-\log p_\text{true}$$</div>
+  <ol class="steps"><li>Exponentiate (all positive), normalise (sum to 1).</li><li>Only differences between scores matter: adding the same number to all changes nothing.</li><li>T &lt; 1 sharpens towards the largest; T &gt; 1 flattens towards uniform.</li></ol>
+  <div class="worked"><h4>Worked example</h4>Scores (2, 1, 0.5, −1) at T = 1: p ≈ (0.57, 0.21, 0.13, 0.03). If class 1 is true, loss = −log 0.57 = 0.56.</div>
+</section>
+<section data-case="softmax" data-example="cold"><h3>T = 0.2</h3><p>The biggest score takes nearly all the probability (used in sampling to be conservative).</p></section>
+<section data-case="softmax" data-example="hot"><h3>T = 5</h3><p>All classes nearly equal (used in distillation to show the "dark knowledge" between classes).</p></section>
+<section data-case="softmax" data-example="wrong"><h3>True class scored low</h3><p>p_true ≈ 0.03: loss ≈ 3.5, a strong push.</p></section>
+<section data-case="margin">
+  <h3>One picture of every classification loss</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: each loss as a function of the margin m = y·f(x) (y = ±1): positive means correct, larger means more confident. Bottom: the value of each at your margin; bottom plot: their slopes.</div>
+  <p>What we actually want is the 0–1 loss — count the mistakes. But it is a step: zero gradient everywhere, nothing to follow. Every practical loss is a smooth stand-in above it.</p>
+  <div class="eq">$$\text{hinge}=\max(0,1-m),\quad \text{logistic}=\log_2(1+e^{-m}),\quad \text{exponential}=e^{-m},\quad \text{squared}=(1-m)^2$$</div>
+  <div class="pitfall"><h4>Common mistake</h4>Squared loss rises again for m &gt; 1: it penalises points for being too correct. Exponential explodes for m &lt; 0: one mislabelled point dominates.</div>
+</section>
+<section data-case="margin" data-example="wrongside"><h3>m = −1</h3><p>A clear mistake: exponential e ≈ 2.7, hinge 2, logistic 1.9 — all pushing back.</p></section>

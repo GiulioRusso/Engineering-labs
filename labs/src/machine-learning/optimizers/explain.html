@@ -1,0 +1,16 @@
+<section>
+  <div class="look"><h4>What you are looking at</h4>A loss surface over two parameters: height = loss (log-compressed so walls and floor both show), contour lines drawn on the surface, the red cross = the common starting point. Four optimizers walk down from it: gradient descent (grey), momentum (blue), RMSProp (green), Adam (orange). Bottom: each one's loss against the step. Drag to rotate.</div>
+  <div class="eq">$$\text{GD: } w\leftarrow w-\eta g\qquad \text{Momentum: } v\leftarrow\beta v+g,\ w\leftarrow w-\eta v\qquad \text{RMSProp: } s\leftarrow0.9s+0.1g^2,\ w\leftarrow w-\eta\,\frac{g}{\sqrt s}\qquad \text{Adam: momentum}\ \div\ \sqrt{s}$$</div>
+  <ol class="steps"><li><b>GD</b> steps straight down the steepest slope: fine on round bowls, slow and bouncy in long narrow valleys.</li><li><b>Momentum</b> keeps a running sum of past gradients: the bounces cancel, the consistent direction builds up speed.</li><li><b>RMSProp</b> divides each direction by its typical gradient size: steep directions get small steps, flat ones big steps.</li><li><b>Adam</b> does both.</li></ol>
+  <div class="pitfall"><h4>Common mistake</h4>Comparing optimizers at one learning rate. Each has its own good range: the fairest picture is each at its best η.</div>
+</section>
+<section data-case="ravine"><h3>A narrow ravine</h3><p>Curvature 12 across, 1 along. GD's step must be small for the steep direction, so it crawls along the gentle one. Rule: GD diverges if η &gt; 2/λ_max = 2/12 ≈ 0.17.</p></section>
+<section data-case="ravine" data-example="zig"><h3>η = 0.15</h3><p>Close to the limit: GD jumps from wall to wall; momentum is also oscillating but moves along the valley.</p></section>
+<section data-case="ravine" data-example="blow"><h3>η = 0.18</h3><p>Above 2/12: each bounce is larger than the last — GD diverges. RMSProp and Adam, which rescale the steep direction, stay stable.</p></section>
+<section data-case="rosen"><h3>The banana valley</h3><p>Rosenbrock's function: finding the valley is easy, following its curved floor to the minimum at (1, 1) takes most of the time.</p></section>
+<section data-case="rosen" data-example="adam"><h3>Adam alone</h3><p>Normalised steps of size ≈ η: it follows the floor at a steady pace.</p></section>
+<section data-case="saddle"><h3>A saddle point</h3><p>Starting almost exactly on the ridge, the gradient across is tiny. GD needs many steps for the small offset to grow; momentum and Adam leave sooner. In high-dimensional networks saddles are far more common than bad local minima.</p></section>
+<section data-case="saddle" data-example="noise"><h3>Noisy gradients</h3><p>Mini-batch noise knocks the point off the ridge immediately: noise can help.</p></section>
+<section data-case="wells"><h3>Two valleys</h3><p>A shallow valley near the start and a deeper one further away. Which one an optimizer ends in depends on its path.</p></section>
+<section data-case="wells" data-example="mom"><h3>β = 0.95</h3><p>Built-up speed carries momentum over the ridge between the valleys.</p></section>
+<section data-case="wells" data-example="sgd"><h3>Noise</h3><p>Noisy steps explore: each optimizer may end in a different valley than without noise.</p></section>

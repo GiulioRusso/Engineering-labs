@@ -1,0 +1,41 @@
+<section>
+  <p>A layer is not a black box: it is a small amount of arithmetic applied in a pattern. Here every multiply and add is drawn. Cell colours: yellow = positive, blue = negative, grey = zero.</p>
+</section>
+<section data-case="dense">
+  <h3>The dense layer: one dot product per output</h3>
+  <div class="look"><h4>What you are looking at</h4>The input vector x, the weight matrix W, the bias b and the output y. Output j is built step by step from row j of W (orange) times the whole input; the current pair is outlined in white.</div>
+  <div class="eq">$$y_j=\sum_iW_{ji}x_i+b_j$$</div>
+  <div class="worked"><h4>Worked example</h4>y₁ = 0.5·1 + (−1)·2 + 0.3·(−1) + 2·0.5 + 0.1 = −0.7.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Feeding an image to a dense layer flattens it: neighbouring pixels end up far apart in the vector, and the layer has to learn every position separately — 784 × 100 weights for a small MNIST layer.</div>
+</section>
+<section data-case="conv">
+  <h3>Convolution: one small window, reused everywhere</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a 7×7 image of a "7" (padding cells darker). Middle: the 3×3 kernel. Right: the output map filling in as the window (outlined) slides. The bottom line spells out the sum for the current output.</div>
+  <div class="eq">$$O_{mn}=\sum_{u,v}K_{uv}\,X_{m s+u d-p,\;n s+v d-p},\qquad N_\text{out}=\left\lfloor\frac{N+2p-d(k-1)-1}{s}\right\rfloor+1$$</div>
+  <ol class="steps"><li>Place the kernel on a patch; multiply cell by cell; add: one output number.</li><li>Slide by the stride s and repeat.</li><li>Padding p adds a border of zeros; dilation d spaces the taps apart.</li></ol>
+  <div class="worked"><h4>Worked example</h4>N = 7, k = 3: no padding, stride 1 → 5×5; padding 1 → 7×7; stride 2 → 3×3; dilation 2 → 3×3.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting that the same 9 weights are used at every position: that is what makes convolution cheap and translation-equivariant.</div>
+</section>
+<section data-case="conv" data-example="stride"><h3>Stride 2</h3><p>The window jumps two cells at a time: output 3×3.</p></section>
+<section data-case="conv" data-example="pad"><h3>Padding 1</h3><p>A ring of zeros: the kernel can centre on border pixels, the output stays 7×7.</p></section>
+<section data-case="conv" data-example="dil"><h3>Dilation 2</h3><p>The taps are spread over a 5×5 area: a wider view without more weights.</p></section>
+<section data-case="conv" data-example="blur"><h3>Blur</h3><p>All weights 1/9: each output is the average of its patch.</p></section>
+<section data-case="pool">
+  <h3>Pooling: summarise each window</h3>
+  <div class="look"><h4>What you are looking at</h4>A 6×6 feature map and the 3×3 result of 2×2 pooling with stride 2; the current window is outlined.</div>
+  <p>Pooling has no parameters. It keeps the strongest (max) or the average response in each window, halving the size. It discards exact position: a feature that moves by one pixel often gives the same output.</p>
+</section>
+<section data-case="pool" data-example="avg"><h3>Average pooling</h3><p>Smoother, keeps more of the weak responses; max keeps only the peaks.</p></section>
+<section data-case="channels">
+  <h3>Channels: a filter is a block</h3>
+  <div class="look"><h4>What you are looking at</h4>A 3D view: three input channels stacked as slabs, the 3×3×3 filter block (orange posts, white outlines on each slab), and the single output map it produces. Drag to rotate.</div>
+  <p>The step most often misunderstood. With C input channels, one filter is a k × k × C block. It multiplies every cell of all channels at that position and adds everything into <b>one</b> number. F filters give F output maps — the next layer's channels.</p>
+  <div class="eq">$$O_{mn}=\sum_{c=1}^{C}\sum_{u,v}K^{(c)}_{uv}X^{(c)}_{m+u,n+v}+b,\qquad \text{parameters}=(k^2C+1)F$$</div>
+</section>
+<section data-case="stack">
+  <h3>A whole CNN: shapes and parameters</h3>
+  <div class="look"><h4>What you are looking at</h4>Each block is a layer's output: height ∝ spatial size, width ∝ channels; underneath, its shape and parameter count.</div>
+  <p>Two patterns appear at once: spatial size shrinks while channels grow — the network trades resolution for description. And most parameters usually sit in the final dense layer, not in the convolutions.</p>
+  <div class="worked"><h4>Worked example</h4>28×28 input, 8 then 16 filters: conv1 has (9·1 + 1)·8 = 80 parameters, conv2 (9·8 + 1)·16 = 1168, and the dense layer (7·7·16 + 1)·10 = 7850.</div>
+</section>
+<section data-case="stack" data-example="wide"><h3>More filters</h3><p>32 and 64 filters: the conv layers grow quadratically with the channel counts.</p></section>

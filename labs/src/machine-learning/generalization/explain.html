@@ -1,0 +1,49 @@
+<section>
+  <p>A model is useful only on data it has not seen. Everything here uses polynomial fits to 20–30 noisy samples of a smooth curve (dashed), and a large separate <b>test set</b> (grey dots) that the fits never touch.</p>
+</section>
+<section data-case="capacity">
+  <h3>Capacity: training error always improves</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: training points (yellow), test points (grey), the true curve (dashed) and the fit (blue). Bottom: training and test error against the polynomial degree, on a log scale.</div>
+  <p>A degree-d polynomial contains every lower-degree one, so raising d can only lower the <i>training</i> error. Training error measures capacity, not quality. The test error falls while the model learns the curve, then rises when it starts fitting the noise.</p>
+  <div class="worked"><h4>Worked example</h4>20 points: degree 3 gives test error ≈ 0.1 (close to the noise σ² = 0.09); degree 12 drives training error toward zero and test error up about fivefold.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reporting the training score. More data (the "60 points" example) pushes the overfitting point to higher degrees.</div>
+</section>
+<section data-case="capacity" data-example="under"><h3>Degree 1</h3><p>A straight line cannot follow the curve: both errors high — underfitting.</p></section>
+<section data-case="capacity" data-example="over"><h3>Degree 12</h3><p>The fit threads every training point and swings wildly between them.</p></section>
+<section data-case="capacity" data-example="more"><h3>60 points</h3><p>Same degree, three times the data: the swings mostly disappear.</p></section>
+<section data-case="biasvar">
+  <h3>Where the error comes from: bias and variance</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the same model trained on 40 different noisy datasets (grey), their average (blue) and the truth (dashed). Bottom: bias², variance and their sum against the degree.</div>
+  <div class="eq">$$\mathbb E\big[(y-\hat f(x))^2\big]=\underbrace{\big(\mathbb E[\hat f(x)]-f(x)\big)^2}_{\text{bias}^2}+\underbrace{\mathbb E\big[(\hat f(x)-\mathbb E[\hat f(x)])^2\big]}_{\text{variance}}+\underbrace{\sigma^2}_{\text{noise}}$$</div>
+  <p>Bias is how wrong the model is on average; variance is how much it changes with the particular sample. Flexible models trade one for the other.</p>
+</section>
+<section data-case="biasvar" data-example="rigid"><h3>Degree 1</h3><p>All 40 lines nearly identical (low variance) and all equally wrong (high bias).</p></section>
+<section data-case="biasvar" data-example="wild"><h3>Degree 10</h3><p>The average is close to the truth (low bias), but each single fit is wild, especially near the edges (high variance).</p></section>
+<section data-case="ridge">
+  <h3>Ridge: keep the capacity, penalise the coefficients</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a degree-12 fit with penalty λ. Bottom: training and test error against log λ. Bottom plot: the size of each coefficient.</div>
+  <div class="eq">$$\hat{\mathbf w}=\arg\min_{\mathbf w}\ \|A\mathbf w-\mathbf y\|^2+\lambda\|\mathbf w\|^2=(A^\top A+\lambda I)^{-1}A^\top\mathbf y$$</div>
+  <p>Wiggles need large coefficients; making them expensive smooths the fit without lowering the degree. λ is a dial from overfitting (λ → 0) to underfitting (λ large).</p>
+</section>
+<section data-case="ridge" data-example="none"><h3>λ ≈ 0</h3><p>No penalty: the degree-12 wiggles of plain least squares.</p></section>
+<section data-case="ridge" data-example="strong"><h3>λ = 10</h3><p>Everything shrunk: the fit flattens toward zero.</p></section>
+<section data-case="early">
+  <h3>Early stopping: a regularizer for free</h3>
+  <div class="look"><h4>What you are looking at</h4>The same degree-12 model trained by gradient descent from all-zero weights. Top: the fit as training goes on. Bottom: training and test error against iteration; green = the best moment to stop.</div>
+  <p>Gradient descent learns the directions the data constrains best first — the broad shape — and the poorly constrained wiggles last. Stopping when the test (validation) error is lowest keeps the weights small, much like ridge.</p>
+</section>
+<section data-case="cv">
+  <h3>Choosing without touching the test set</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the training points coloured by fold. Bottom: k-fold cross-validation error against degree (green), compared with the real test error (blue).</div>
+  <p>Picking d or λ by looking at the test error is cheating: the test set becomes part of training. k-fold cross-validation splits the <i>training</i> data into k parts, trains k times leaving one part out, and averages the errors on the left-out parts.</p>
+  <div class="pitfall"><h4>Common mistake</h4>Shuffling time series or groups (the same patient in train and validation): the folds must be independent.</div>
+</section>
+<section data-case="cv" data-example="loo"><h3>k = 10</h3><p>More folds: each model sees 90% of the data; the estimate is less biased but costs 10 fits.</p></section>
+<section data-case="imbalance">
+  <h3>When classes are rare, accuracy lies</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the classifier's score for 920 healthy (blue) and 80 ill (orange) people, and the decision threshold. Bottom: true positives, false negatives, false positives, true negatives. Bottom plot: accuracy, precision and recall against the threshold.</div>
+  <div class="eq">$$\text{precision}=\frac{TP}{TP+FP},\qquad \text{recall}=\frac{TP}{TP+FN},\qquad \text{accuracy}=\frac{TP+TN}{N}$$</div>
+  <div class="worked"><h4>Worked example</h4>With 8% positives, answering "healthy" to everyone is 92% accurate and finds no one: recall 0.</div>
+</section>
+<section data-case="imbalance" data-example="never"><h3>Always negative</h3><p>Accuracy 92%, recall 0%: useless, and accuracy hides it.</p></section>
+<section data-case="imbalance" data-example="low"><h3>Low threshold</h3><p>Nearly every ill person found (high recall), at the cost of many false alarms (low precision).</p></section>
