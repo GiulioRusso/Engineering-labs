@@ -35,7 +35,7 @@ export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 
     line(key, xs, ys, o) { const c = curve(key, o), p = []; for (let i = 0; i < xs.length; i++) if (xs[i] >= xr[0] && xs[i] <= xr[1] && Number.isFinite(ys[i])) p.push(mx(xs[i]), my(ys[i]), z + 0.002); c.set(p); c.object.visible = true; return c; },
     stems(key, xs, ys, o) { const c = curve(key, { width: 3, ...o }), p = []; for (let i = 0; i < xs.length; i++) if (xs[i] >= xr[0] && xs[i] <= xr[1]) p.push(mx(xs[i]), my(0), z + 0.002, mx(xs[i]), my(ys[i]), z + 0.002); c.segments(p); c.object.visible = true; return c; },
     // heatmap filling the box: values[j * nx + i] (i along x, j along y) mapped by norm to [0, 1], then colormap
-    image(key, values, nx, ny, { map = 'magma', norm = (v) => v } = {}) {
+    image(key, values, nx, ny, { map = 'magma', norm = (v) => v, rgb = null } = {}) { // rgb(k, out): own colour per pixel
       let I = images[key];
       if (!I || I.nx !== nx || I.ny !== ny) {
         if (I) { scene.remove(I.mesh); I.tex.dispose(); }
@@ -45,8 +45,8 @@ export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 
         mesh.position.set(X0 + W / 2, Y0 + H / 2, z - 0.004); scene.add(mesh);
         I = images[key] = { mesh, tex, data, nx, ny };
       }
-      const rgb = [0, 0, 0];
-      for (let k = 0; k < nx * ny; k++) { cmap(map, norm(values[k]), rgb); I.data[4 * k] = rgb[0] * 255; I.data[4 * k + 1] = rgb[1] * 255; I.data[4 * k + 2] = rgb[2] * 255; I.data[4 * k + 3] = 255; }
+      const out = [0, 0, 0];
+      for (let k = 0; k < nx * ny; k++) { if (rgb) rgb(k, out); else cmap(map, norm(values[k]), out); I.data[4 * k] = out[0] * 255; I.data[4 * k + 1] = out[1] * 255; I.data[4 * k + 2] = out[2] * 255; I.data[4 * k + 3] = 255; }
       I.tex.needsUpdate = true; I.mesh.visible = true;
     },
     // scatter: up to 4000 dots of one colour

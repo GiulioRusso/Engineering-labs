@@ -1,0 +1,38 @@
+<section data-case="euler">
+  <h3>Euler's formula</h3>
+  <div class="look"><h4>What you are looking at</h4>The terms of the series for e^{iθ} drawn as arrows, each starting where the previous one ended. The red dot is cos θ + i sin θ on the unit circle; the orange dot is the sum so far.</div>
+  <p>The exponential has the series eˣ = 1 + x + x²/2! + x³/3! + … Put in x = iθ. Multiplying by i is a quarter turn, so each term is turned 90° from the previous one and shrunk by θ/k. The arrows curl around and land exactly on the unit circle, at angle θ.</p>
+  <div class="eq">$$e^{i\theta} = \sum_{k=0}^{\infty}\frac{(i\theta)^k}{k!} = \cos\theta + i\sin\theta, \qquad e^{i\pi} + 1 = 0$$</div>
+  <ol class="steps">
+    <li>Real terms (even k) give the cosine series 1 − θ²/2 + θ⁴/24 − …</li>
+    <li>Imaginary terms (odd k) give the sine series θ − θ³/6 + …</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>θ = π: 1, then 3.14i, −4.93, −5.17i, 4.06, … The spiral overshoots but settles on −1 after about 14 terms.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking e^{iθ} grows like eˣ: its size is always 1 — it only turns.</div>
+</section>
+<section data-case="euler" data-example="pi"><h3>e^{iπ} = −1</h3><p>Half a turn: the most famous equation in mathematics, linking e, i, π, 1 and 0.</p></section>
+<section data-case="euler" data-example="quarter"><h3>e^{iπ/2} = i</h3><p>A quarter turn lands on the imaginary unit.</p></section>
+<section data-case="domain">
+  <h3>Domain colouring</h3>
+  <div class="look"><h4>What you are looking at</h4>Every point z of the plane is coloured by the value f(z): the hue shows its direction (red = positive real, cyan = negative real), the shading rings show its size (one ring per factor e).</div>
+  <p>A complex function takes a 2D input and gives a 2D output, so its graph would need four dimensions. Colouring the input plane by the output is a way to see it all at once. Zeros and poles jump out as points where every colour meets.</p>
+  <ol class="steps">
+    <li>Going once round a zero of order n, the colours cycle n times.</li>
+    <li>Round a pole they cycle the other way, and the rings crowd in (|f| → ∞).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>z³ − 1: three points where all colours meet, at 1 and at −½ ± (√3/2)i — the cube roots of unity, 120° apart.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading brightness as height: the rings show log|f|, so equal spacing means multiplying by e.</div>
+</section>
+<section data-case="domain" data-example="sq"><h3>z²</h3><p>A double zero at the origin: the colours go round twice.</p></section>
+<section data-case="domain" data-example="pole"><h3>1/z</h3><p>A pole: colours go round in the opposite order, and the size grows toward the centre.</p></section>
+<section data-case="domain" data-example="exp"><h3>eᶻ</h3><p>No zeros at all; the colours repeat every 2π along the imaginary direction, and brightness grows to the right.</p></section>
+<section data-case="mapping">
+  <h3>How a function bends the plane</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a square grid of vertical (blue) and horizontal (orange) lines. Right: where f sends it.</div>
+  <p>A complex function moves every point of the plane. Watching a grid shows how: stretched, rotated, bent. Remarkably, wherever f′ ≠ 0, small squares stay square — they are only rotated and scaled. Angles are preserved, which is why complex functions are used to map flows around wings and fields around electrodes.</p>
+  <div class="eq">$$w = f(z), \qquad dw = f'(z)\,dz \;(\text{a rotation and a stretch})$$</div>
+  <div class="worked"><h4>Worked example</h4>eᶻ sends the vertical line Re z = 0 to the unit circle, and the horizontal line Im z = 0 to the positive real axis.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting angles kept where f′ = 0: z² doubles the angles at the origin.</div>
+</section>
+<section data-case="mapping" data-example="exp"><h3>eᶻ</h3><p>Vertical lines wrap into circles, horizontal lines fan out into rays — polar coordinates appear.</p></section>
+<section data-case="mapping" data-example="inv"><h3>1/z</h3><p>Lines become circles through the origin; the outside of the unit circle goes inside.</p></section>

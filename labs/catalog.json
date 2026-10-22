@@ -510,10 +510,43 @@
     "group": "Trigonometry"
    },
    {
+    "id": "conics",
+    "title": "Conic sections",
+    "what": "Cutting a cone; focus and directrix; the reflection property.",
+    "from": "conics",
+    "cases": [
+     "cone",
+     "focus",
+     "reflect"
+    ],
+    "group": "Trigonometry"
+   },
+   {
     "id": "complex-numbers",
     "title": "Complex numbers",
     "what": "Sums, products, powers and roots as arrows in the plane.",
     "from": "complex-plane",
+    "group": "Complex numbers"
+   },
+   {
+    "id": "euler-formula",
+    "title": "Euler’s formula",
+    "what": "e^{iθ} built term by term: the series that lands on the circle.",
+    "from": "complex-functions",
+    "cases": [
+     "euler"
+    ],
+    "group": "Complex numbers"
+   },
+   {
+    "id": "complex-functions",
+    "title": "Complex functions",
+    "what": "Domain colouring, zeros and poles, and conformal maps.",
+    "from": "complex-functions",
+    "cases": [
+     "domain",
+     "mapping"
+    ],
     "group": "Complex numbers"
    },
    {

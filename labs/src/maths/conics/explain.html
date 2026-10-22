@@ -1,0 +1,32 @@
+<section data-case="cone">
+  <h3>Cutting a cone</h3>
+  <div class="look"><h4>What you are looking at</h4>A double cone (two nappes meeting at the tip) and a flat plane slicing through it; the orange curve is where they meet. Drag to rotate.</div>
+  <p>The Greeks found that circles, ellipses, parabolas and hyperbolas are all the same thing: the shape you get when you slice a cone. Only the angle of the cut changes. Flat: a circle. Tilted a little: an ellipse. Tilted exactly as steeply as the cone's side: the curve never closes — a parabola. Steeper still: the plane cuts both nappes — a hyperbola with two branches.</p>
+  <div class="eq">$$e = \frac{\sin\beta}{\cos\alpha}: \quad e = 0 \text{ circle}, \; e < 1 \text{ ellipse}, \; e = 1 \text{ parabola}, \; e > 1 \text{ hyperbola}$$</div>
+  <div class="worked"><h4>Worked example</h4>Cone of half-angle 30°: a plane tilted 25° gives an ellipse (e = 0.49); at 60° a parabola; at 80° a hyperbola (e = 1.14).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the parabola is "half an ellipse": it is the boundary case, open for ever.</div>
+  <div class="try"><h4>Try it</h4>Slowly raise the tilt from 0: watch the closed curve stretch, open at exactly 90° − α, and jump to the other nappe.</div>
+</section>
+<section data-case="cone" data-example="circle"><h3>A flat cut</h3><p>Perpendicular to the axis: a circle.</p></section>
+<section data-case="cone" data-example="parabola"><h3>Parallel to the side</h3><p>The plane never meets the far side of the cone: the curve runs off to infinity, a parabola.</p></section>
+<section data-case="cone" data-example="hyperbola"><h3>A steep cut</h3><p>Both nappes are cut: two separate branches.</p></section>
+<section data-case="focus">
+  <h3>Focus and directrix</h3>
+  <div class="look"><h4>What you are looking at</h4>A conic with its focus (red dot at the origin) and directrix (dashed line). The orange lines join a moving point to the focus and to the directrix.</div>
+  <p>Every conic has a single definition: the points whose distance to a fixed point (focus) is e times their distance to a fixed line (directrix). The number e — the eccentricity — decides the shape.</p>
+  <div class="eq">$$PF = e\cdot PD, \qquad r(\theta) = \frac{p}{1 + e\cos\theta}$$</div>
+  <div class="worked"><h4>Worked example</h4>Planet orbits are ellipses with the Sun at one focus (Kepler): Earth e = 0.017 (almost a circle), Halley's comet e = 0.97. A probe escaping the Sun follows a hyperbola (e > 1).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Putting the Sun at the centre of an elliptical orbit: it sits at a focus.</div>
+</section>
+<section data-case="focus" data-example="circle"><h3>e → 0</h3><p>The directrix runs away to infinity and the curve becomes a circle around the focus.</p></section>
+<section data-case="focus" data-example="parabola"><h3>e = 1</h3><p>Every point is exactly as far from the focus as from the line.</p></section>
+<section data-case="focus" data-example="hyper"><h3>e = 1.5</h3><p>Closer to the line than to the focus is impossible on this branch: it opens away, a hyperbola.</p></section>
+<section data-case="reflect">
+  <h3>The reflection property</h3>
+  <div class="look"><h4>What you are looking at</h4>Rays leaving the focus (green) and bouncing off the curve as off a mirror.</div>
+  <p>The shape of a conic makes every bounce do the same thing. A parabola sends every ray from its focus out parallel — and, reversed, gathers a parallel beam into the focus: satellite dishes, telescopes, headlights. An ellipse sends every ray from one focus to the other: whisper at one focus of an elliptical room and you are heard at the other.</p>
+  <div class="eq">$$\text{angle of incidence} = \text{angle of reflection, measured from the normal}$$</div>
+  <div class="pitfall"><h4>Common mistake</h4>Placing the receiver of a dish at its centre of curvature instead of at the focus (half that distance).</div>
+</section>
+<section data-case="reflect" data-example="dish"><h3>A dish</h3><p>All rays leave parallel: a perfectly collimated beam.</p></section>
+<section data-case="reflect" data-example="gallery"><h3>Focus to focus</h3><p>Every ray from the right focus passes through the left focus.</p></section>

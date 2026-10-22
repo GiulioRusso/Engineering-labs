@@ -92,7 +92,10 @@ In the Electronics Visualizer.
 | [Trigonometry](web/maths.html?lab=trigonometry) | A point on the unit circle: sine, cosine, tangent and the waves they make. | done |
 | [Solving triangles](web/maths.html?lab=triangles) | SOH-CAH-TOA, laws of sines and cosines. | done |
 | [Parametric and polar curves](web/maths.html?lab=parametric-polar) | Lissajous figures, roses, cardioids and spirals. | done |
+| [Conic sections](web/maths.html?lab=conics) | Cutting a cone; focus and directrix; the reflection property. | done |
 | [Complex numbers](web/maths.html?lab=complex-numbers) | Sums, products, powers and roots as arrows in the plane. | done |
+| [Euler’s formula](web/maths.html?lab=euler-formula) | e^{iθ} built term by term: the series that lands on the circle. | done |
+| [Complex functions](web/maths.html?lab=complex-functions) | Domain colouring, zeros and poles, and conformal maps. | done |
 | [Limits and continuity](web/maths.html?lab=limits) | Approaching a point from both sides: holes, jumps and asymptotes. | done |
 | [Calculus](web/maths.html?lab=calculus) | Derivative as a limit of slopes, integral as a limit of sums, Taylor polynomials. | done |
 | [Curve sketching](web/maths.html?lab=curve-sketching) | Rising, falling, maxima, minima and inflection from f′ and f″. | done |
