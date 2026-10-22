@@ -79,7 +79,7 @@ export default {
           const g = []; for (let k = 1; k <= 4; k++) for (let i = 0; i < 90; i++) { const a = 2 * Math.PI * i / 90, b = 2 * Math.PI * (i + 1) / 90, r = pvR * k / 4; g.push(pvC[0] + r * Math.cos(a), pvC[1] + r * Math.sin(a), -0.001, pvC[0] + r * Math.cos(b), pvC[1] + r * Math.sin(b), -0.001); }
           ringsHi.segments(g);
         }
-        ctx.setClock(c === 'measure' ? 0 : 6);
+        ctx.setClock(c === 'measure' ? 0 : c === 'train' ? 20 : 6, { ambient: true });
       },
       update() {
         const c = state.case, u = Math.min(1, time.t / 5.5);
@@ -112,15 +112,21 @@ export default {
           }
           const ts = Array.from({ length: 100 }, (_, i) => 0.1 + 0.4 * i); plots.aux.draw({ xlim: [0, 40], cursor: tau / us, series: [{ x: ts, y: ts.map((v) => C0 * v * us / 2), color: '--c-B', label: 'range resolution cτ/2 (m) vs pulse width (µs)' }] });
         } else if (c === 'train') {
-          const N = state.N, k = Math.min(N - 1, Math.floor(u * N)), res = resolution(state.tau2), W = Math.max(200, Math.abs(state.v) * N * state.pri2 * 1.4 + 6 * res);
+          // the first 4 pulses fly slowly (2 s each) so the round trip is visible, then the rest fill the RTI in 12 s
+          const N = state.N, tt0 = time.t, kf = tt0 < 8 ? tt0 / 2 : Math.min(N - 1e-6, 4 + (tt0 - 8) / 12 * (N - 4)), k = Math.min(N - 1, Math.floor(kf)), res = resolution(state.tau2), W = Math.max(200, Math.abs(state.v) * N * state.pri2 * 1.4 + 6 * res);
           const Rk = rangeAt(state.R0, state.v, k, state.pri2);
           scene.range([0, state.R0 * 1.3 / km], [-1, 1]); radar.set(scene.mx(0) + 0.1, scene.my(0), 0, 0.32); ac[0].set(scene.mx(Rk / km), scene.my(0), state.v > 0 ? 0 : Math.PI, 0.22);
-          scene.line('axis', [0, state.R0 * 1.3 / km], [0, 0], { color: '--line', width: 1 }); scene.hide('out'); scene.hide('back0');
-          const nx = 160, img = new Float32Array(nx * N), x0 = -W / 2;
-          for (let j = 0; j <= k; j++) { const r = rangeAt(state.R0, state.v, j, state.pri2) - state.R0; for (let i = 0; i < nx; i++) { const x = x0 + W * (i + 0.5) / nx, d = Math.abs(x - r) / res; img[j * nx + i] = d < 1 ? 1 - d : 0; } }
+          scene.line('axis', [0, state.R0 * 1.3 / km], [0, 0], { color: '--line', width: 1 });
+          // this pulse flies out and back: local phase within pulse k (the picture slows each flight down)
+          const ph = kf - k, Td = echoDelay(Rk), tv = Math.max(state.tau2, 0.05 * Td), tt = ph * (Td + tv) * 1.05, pk = packet(tt, Rk, tv), back = ph > Td / ((Td + tv) * 1.05);
+          if (pk.out) scene.line('out', [pk.out[0] / km, pk.out[1] / km], [0.45, 0.45], { color: '--c-I', width: 9 }); else scene.hide('out');
+          if (pk.back) scene.line('back0', [pk.back[0] / km, pk.back[1] / km], [-0.45, -0.45], { color: '--c-B', width: 9 }); else scene.hide('back0');
+          const nx = 160, img = new Float32Array(nx * N), x0 = -W / 2, rows = back && ph > 0.97 ? k + 1 : k;
+          for (let j = 0; j < rows; j++) { const r = rangeAt(state.R0, state.v, j, state.pri2) - state.R0; for (let i = 0; i < nx; i++) { const x = x0 + W * (i + 0.5) / nx, d = Math.abs(x - r) / res; img[j * nx + i] = d < 1 ? 1 - d : 0; } }
+          rti.line('row', [x0, -x0], [k + 0.5, k + 0.5], { color: '--accent', width: 1, dashed: true });
           rti.range([x0, -x0], [0, N]); rti.image('rti', img, nx, N, { map: 'magma' });
           const vel = state.v, slope = vel * state.pri2; // metres per pulse
-          hud.set('a', `pulse ${k + 1} of ${N}: target at ${fmt(Rk / km, 6)} km`); hud.set('b', `track slope ${fmt(slope)} m per pulse → v = slope / PRI = ${fmt(vel)} m/s`);
+          hud.set('a', `pulse ${k + 1} of ${N}: ${back ? 'echo coming back' : 'flying out'} — target at ${fmt(Rk / km, 6)} km; each echo writes one row of the RTI`); hud.set('b', `track slope ${fmt(slope)} m per pulse → v = slope / PRI = ${fmt(vel)} m/s`);
           hud.set('c', `range bin cτ/2 = ${fmt(res)} m; the target crosses ${fmt(Math.abs(vel) * N * state.pri2 / res)} bins`);
           plots.aux.draw({ xlim: [0, N], cursor: k, series: [{ x: Array.from({ length: N }, (_, j) => j), y: Array.from({ length: N }, (_, j) => rangeAt(state.R0, state.v, j, state.pri2) - state.R0), color: '--c-I', label: 'range change (m) vs pulse number' }] });
         } else {

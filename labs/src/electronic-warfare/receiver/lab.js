@@ -25,24 +25,24 @@ const NOTE = {
 };
 
 export default {
-  id: 'receiver', title: 'Receivers', size: 4.4, ortho: true, plain: true, cam: 'top', timeless: true,
-  defaults: { arch: 'superhet', stage: 0, fLO: 330, bwRF: 60, bwIF: 20, aImg: 0.5, aInt: 1, bits: 12, fsIF: 100, dLO: 0, dc: 0, fc: 100, det: 0, bw: 16, phi: 40 },
+  id: 'receiver', title: 'Receivers', size: 4.4, ortho: true, plain: true, cam: 'top', duration: 8,
+  defaults: { arch: 'superhet', auto: true, stage: 0, fLO: 330, bwRF: 60, bwIF: 20, aImg: 0.5, aInt: 1, bits: 12, fsIF: 100, dLO: 0, dc: 0, fc: 100, det: 0, bw: 16, phi: 40 },
   cases: [
     { id: 'superhet', label: 'Superheterodyne', set: { arch: 'superhet' }, examples: [
-      { id: 'mixer', label: 'At the mixer: sum and difference', controls: ['stage', 'fLO'], set: { stage: 3 } },
-      { id: 'image', label: 'The image problem', controls: ['stage', 'aImg', 'bwRF'], set: { stage: 4, aImg: 1, bwRF: 200 } },
-      { id: 'iq', label: 'The IQ output', controls: ['stage'], set: { stage: 5 } },
-      { id: 'adc', label: 'A 4-bit ADC', controls: ['stage', 'bits'], set: { stage: 6, bits: 4 } },
+      { id: 'mixer', label: 'At the mixer: sum and difference', controls: ['stage', 'fLO'], set: { auto: false, stage: 3 } },
+      { id: 'image', label: 'The image problem', controls: ['stage', 'aImg', 'bwRF'], set: { auto: false, stage: 4, aImg: 1, bwRF: 200 } },
+      { id: 'iq', label: 'The IQ output', controls: ['stage'], set: { auto: false, stage: 5 } },
+      { id: 'adc', label: 'A 4-bit ADC', controls: ['stage', 'bits'], set: { auto: false, stage: 6, bits: 4 } },
     ] },
     { id: 'digitalif', label: 'Digital IF', set: { arch: 'digitalif' }, examples: [
-      { id: 'adc', label: 'ADC at IF: bandpass sampling', controls: ['stage', 'fsIF'], set: { stage: 5 } },
-      { id: 'ddc', label: 'Digital down-conversion', controls: ['stage'], set: { stage: 6 } },
-      { id: 'dec', label: 'Filter and decimate', controls: ['stage'], set: { stage: 7 } },
+      { id: 'adc', label: 'ADC at IF: bandpass sampling', controls: ['stage', 'fsIF'], set: { auto: false, stage: 5 } },
+      { id: 'ddc', label: 'Digital down-conversion', controls: ['stage'], set: { auto: false, stage: 6 } },
+      { id: 'dec', label: 'Filter and decimate', controls: ['stage'], set: { auto: false, stage: 7 } },
     ] },
     { id: 'homodyne', label: 'Homodyne', set: { arch: 'homodyne' }, examples: [
-      { id: 'mix', label: 'Straight to baseband', controls: ['stage'], set: { stage: 2 } },
-      { id: 'lo', label: 'LO 200 kHz off: the pulse rotates', controls: ['stage', 'dLO'], set: { stage: 3, dLO: 200 } },
-      { id: 'dc', label: 'LO leakage: a DC offset', controls: ['stage', 'dc'], set: { stage: 3, dc: 2 } },
+      { id: 'mix', label: 'Straight to baseband', controls: ['stage'], set: { auto: false, stage: 2 } },
+      { id: 'lo', label: 'LO 200 kHz off: the pulse rotates', controls: ['stage', 'dLO'], set: { auto: false, stage: 3, dLO: 200 } },
+      { id: 'dc', label: 'LO leakage: a DC offset', controls: ['stage', 'dc'], set: { auto: false, stage: 3, dc: 2 } },
     ] },
     { id: 'iqdemod', label: 'IQ demodulator', set: {}, examples: [
       { id: 'detune', label: 'LO detuned 2 MHz: I and Q rotate', controls: ['det'], set: { det: 2 } },
@@ -53,7 +53,8 @@ export default {
   ],
   controls: [
     { title: 'Follow the pulse', show: (s) => s.case !== 'iqdemod', items: [
-      { id: 'stage', label: 'Stage', unit: '', min: 0, max: 7, step: 1, hint: 'Pick a block in the diagram' },
+      { id: 'auto', label: 'Follow the pulse through the chain', type: 'check' },
+      { id: 'stage', label: 'Stage', unit: '', min: 0, max: 7, step: 1, hint: 'Pick a block in the diagram', show: (s) => !s.auto },
     ] },
     { title: 'Receiver', show: (s) => s.case !== 'iqdemod', items: [
       { id: 'fLO', label: 'LO frequency', unit: 'MHz', min: 250, max: 380, step: 1, show: (s) => s.arch !== 'homodyne' },
@@ -77,20 +78,27 @@ export default {
   hud: [{ id: 'a', label: '' }, { id: 'b', label: '' }, { id: 'c', label: '' }],
 
   setup(ctx) {
-    const { scene, state, hud, plots, stage } = ctx;
+    const { scene, state, hud, plots, stage, time } = ctx;
     stage.controls.enableRotate = false;
     const tc = createChart(ctx, { box: [-4.3, -2.4, 4.2, 3.2], xTitle: 'time (µs)' }), sc = createChart(ctx, { box: [0.4, -2.4, 4.1, 3.2], xTitle: 'frequency (MHz)', yTitle: 'spectrum (dB)' });
     const q4 = [[-4.3, 0.5, 4.1, 2.0], [0.5, 0.5, 4.0, 2.0], [-4.3, -2.35, 4.1, 2.0], [0.5, -2.35, 4.0, 2.0]].map((b) => createChart(ctx, { box: b }));
-    const boxes = createCurve(stage, { max: 200, width: 1.6, color: '--ink-dim' }), sel = createCurve(stage, { max: 8, width: 3, color: '--accent' }), arrows = createCurve(stage, { max: 80, width: 1.4, color: '--ink-dim' });
+    const boxes = createCurve(stage, { max: 200, width: 1.6, color: '--ink-dim' }), sel = createCurve(stage, { max: 8, width: 3, color: '--accent' }), arrows = createCurve(stage, { max: 80, width: 1.4, color: '--ink-dim' }), spark = createCurve(stage, { max: 900, width: 1.2, color: '--c-ref' }), sparkOn = createCurve(stage, { max: 120, width: 2, color: '--c-B' }), tok = createCurve(stage, { max: 20, width: 3, color: '--accent' });
     const names = []; for (let i = 0; i < 8; i++) { const l = ctx.label('', 'tick'); scene.add(l); names.push(l); }
     let S = null;
 
-    function diagram(list) {
+    // block diagram with a small trace of the signal inside every block; k = the stage being shown
+    function diagram(list, k, f) {
       const n = list.length, W = 8.6 / n, y0 = 1.35, h = 0.75, b = [], a = [];
-      names.forEach((l, i) => { l.visible = i < n; if (i < n) { l.element.textContent = SHORT[list[i].name] || list[i].name; l.position.set(-4.3 + W * (i + 0.5), y0 + h / 2, 0); } });
+      names.forEach((l, i) => { l.visible = i < n; if (i < n) { l.element.textContent = SHORT[list[i].name] || list[i].name; l.position.set(-4.3 + W * (i + 0.5), y0 + h * 0.72, 0); } });
       for (let i = 0; i < n; i++) { const x0 = -4.3 + W * i + 0.08, x1 = x0 + W - 0.16; b.push(x0, y0, 0, x1, y0, 0, x1, y0, 0, x1, y0 + h, 0, x1, y0 + h, 0, x0, y0 + h, 0, x0, y0 + h, 0, x0, y0, 0); if (i) a.push(x0 - 0.16, y0 + h / 2, 0, x0, y0 + h / 2, 0, x0 - 0.05, y0 + h / 2 + 0.05, 0, x0, y0 + h / 2, 0, x0 - 0.05, y0 + h / 2 - 0.05, 0, x0, y0 + h / 2, 0); }
       boxes.segments(b); arrows.segments(a);
-      const k = Math.min(state.stage, n - 1), x0 = -4.3 + W * k + 0.05, x1 = x0 + W - 0.1;
+      const sp = [], so = [];
+      list.forEach((st, i) => { const re = st.x.re, m = re.length, xa = -4.3 + W * i + 0.14, xb = xa + W - 0.28, M = Math.max(1e-9, ...Array.from(re, Math.abs)), P = 40, ya = y0 + 0.24;
+        for (let j = 0; j < P; j++) { const v = (q) => re[Math.min(m - 1, Math.floor(q * m / P))] / M * 0.17; (i === k ? so : sp).push(xa + (xb - xa) * j / P, ya + v(j), 0.004, xa + (xb - xa) * (j + 1) / P, ya + v(j + 1), 0.004); } });
+      spark.segments(sp); sparkOn.segments(so);
+      // the pulse token: moving from the centre of block k toward the next
+      const tx = -4.3 + W * (k + 0.5) + W * f * (k < n - 1 ? 1 : 0) * 0.5, ty = y0 - 0.12, tk = []; for (let i = 0; i < 6; i++) { const p = Math.PI * i / 3, q = Math.PI * (i + 1) / 3; tk.push(tx + 0.07 * Math.cos(p), ty + 0.07 * Math.sin(p), 0.01, tx + 0.07 * Math.cos(q), ty + 0.07 * Math.sin(q), 0.01); } tok.segments(tk);
+      const x0 = -4.3 + W * k + 0.05, x1 = x0 + W - 0.1;
       sel.set([x0, y0 - 0.04, 0.01, x1, y0 - 0.04, 0.01, x1, y0 + h + 0.04, 0.01, x0, y0 + h + 0.04, 0.01], true);
     }
     const params = () => ({ ...BASE, fLO: state.fLO * MHz, bwRF: state.bwRF * MHz, bwIF: state.bwIF * MHz, aImg: state.aImg, aInt: state.aInt, bits: state.bits, fsIF: state.fsIF * MHz, dLO: state.dLO * 1e3, dc: state.dc });
@@ -98,8 +106,9 @@ export default {
     return {
       changed() {
         const iqc = state.case === 'iqdemod';
-        tc.show(!iqc); sc.show(!iqc); for (const k of q4) k.show(iqc); boxes.object.visible = sel.object.visible = arrows.object.visible = !iqc; names.forEach((l) => { l.visible = !iqc && l.element.textContent; });
+        tc.show(!iqc); sc.show(!iqc); for (const k of q4) k.show(iqc); boxes.object.visible = sel.object.visible = arrows.object.visible = spark.object.visible = sparkOn.object.visible = !iqc; tok.object.visible = !iqc && state.auto; names.forEach((l) => { l.visible = !iqc && l.element.textContent; });
         if (!iqc) S = chain(state.arch, params());
+        ctx.setClock(!iqc && state.auto ? 8 : 0);
       },
       update() {
         if (state.case === 'iqdemod') {
@@ -118,17 +127,19 @@ export default {
           const bws = Array.from({ length: 40 }, (_, i) => 1 + i); plots.aux.draw({ xlim: [1, 40], cursor: state.bw, series: [{ x: bws, y: bws.map((w) => 0.48 / w * 1e3), color: '--c-v', label: 'rise time (ns) ≈ 0.48 / bandwidth (MHz)' }] });
           return;
         }
-        diagram(S); const k = Math.min(state.stage, S.length - 1), st = S[k], cplx = st.x.im.some((v) => Math.abs(v) > 1e-9);
+        const seg = 8 / S.length, k = state.auto ? Math.min(S.length - 1, Math.floor(time.t / seg)) : Math.min(state.stage, S.length - 1), f = state.auto ? (time.t % seg) / seg : 1;
+        diagram(S, k, f); const st = S[k], cplx = st.x.im.some((v) => Math.abs(v) > 1e-9);
         const n = st.x.re.length, t = Array.from({ length: n }, (_, i) => i / st.fs / us);
         const amp = Math.max(1e-9, ...Array.from(st.x.re, Math.abs), ...Array.from(st.x.im, Math.abs));
-        tc.range([0, t[n - 1]], [-amp * 1.15, amp * 1.15]); tc.titles('time (µs)', cplx ? 'I (blue) and Q (orange)' : 'real signal');
-        tc.line('re', t, Array.from(st.x.re), { color: '--c-B', width: cplx ? 2 : 1 }); if (cplx) tc.line('im', t, Array.from(st.x.im), { color: '--c-I', width: 2 }); else tc.hide('im');
+        tc.range([0, t[n - 1]], [-amp * 1.15, amp * 1.15]); tc.titles('time (µs)', cplx ? 'voltage (norm.): I blue, Q orange' : 'voltage (norm.): the real signal at this stage');
+        const upto = Math.max(2, Math.round(n * Math.min(1, f * 1.6))), cut = (a) => Array.from(a).slice(0, upto), tt = t.slice(0, upto); // the pulse arrives: the trace is drawn as it comes in
+        tc.line('re', tt, cut(st.x.re), { color: '--c-B', width: cplx ? 2 : 1 }); if (cplx) tc.line('im', tt, cut(st.x.im), { color: '--c-I', width: 2 }); else tc.hide('im');
         const sp = spectrumDb(st.x, st.fs), fm = sp.f.map((f) => f / MHz), span = st.fs / 2 / MHz;
         sc.range([cplx ? -span : 0, span], [-80, 2]); sc.line('s', fm, sp.dB, { color: '--c-E' });
         hud.set('a', `${k + 1}. ${st.name} — sampled at ${fmt(st.fs / MHz)} MS/s`); hud.set('b', NOTE[st.name] || ''); hud.set('c', state.arch === 'homodyne' ? 'no IF: cheap and small, but DC offsets and IQ imbalance land right on the signal' : `IF = |${fmt(BASE.fRF / MHz)} − ${state.fLO}| = ${fmt(Math.abs(BASE.fRF / MHz - state.fLO))} MHz; image at ${fmt(2 * state.fLO - BASE.fRF / MHz)} MHz`);
         plots.aux.draw({ xlim: [0, S.length - 1], cursor: k, series: [{ x: S.map((_, i) => i), y: S.map((s) => 20 * Math.log10(Math.max(1e-6, ...Array.from(s.x.re, Math.abs)))), color: '--c-B', label: 'peak level (dB) stage by stage' }] });
       },
-      theme() { for (const k of [tc, sc, ...q4]) k.theme(); for (const k of [boxes, sel, arrows]) k.theme(); },
+      theme() { for (const k of [tc, sc, ...q4]) k.theme(); for (const k of [boxes, sel, arrows, spark, sparkOn, tok]) k.theme(); },
     };
   },
 };

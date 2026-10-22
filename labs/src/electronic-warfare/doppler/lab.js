@@ -79,9 +79,9 @@ export default {
         const c = state.case;
         if (c === 'wavefronts') { wave.show(true); sig.show(true); out.object.visible = back.object.visible = true; }
         if (c === 'dashboard') for (const k of P3) k.show(true);
-        if (c === 'rdmap') { rd.show(true); top.show(true); }
+        if (c === 'rdmap') { rd.show(true); top.show(true); out.object.visible = true; }
         if (c === 'ambiguity') { for (const k of amb) k.show(true); radar.object.visible = false; }
-        ctx.setClock(c === 'wavefronts' ? 12 : 0);
+        ctx.setClock(c === 'wavefronts' ? 12 : c === 'rdmap' ? 10 : 0);
       },
       update() {
         const c = state.case, f0 = state.f0 * 1e9, lam = C0 / f0;
@@ -112,20 +112,24 @@ export default {
           hud.set('c', Math.abs(state.v) > vu ? `true ${state.v} m/s appears at ${fmt(va)} m/s ✗` : `measured ${fmt(va)} m/s ✓`, Math.abs(state.v) > vu ? 'bad' : 'good');
           const Ns = Array.from({ length: 64 }, (_, i) => 8 * (i + 1)); plots.aux.draw({ xlim: [8, 512], cursor: state.N, series: [{ x: Ns, y: Ns.map((n) => dv(state.prf, n, f0)), color: '--c-B', label: 'velocity resolution (m/s) vs pulses N' }] });
         } else if (c === 'rdmap') {
-          const Ru = rUnamb(state.prf), vu = vUnamb(state.prf, f0), dR = C0 * state.tau / 2, dV = dv(state.prf, state.N, f0), nx = 200, ny = 128;
+          // the map is built pulse by pulse: after k pulses the Doppler cells are λ·PRF/2k wide and the echoes
+          // have k times the energy over the noise — watch the blobs shrink in velocity and rise out of the floor
+          const kf = Math.min(1, time.t / 9), kp = Math.max(1, Math.round(1 + kf * (state.N - 1))), ph = (time.t * 6) % 1;
+          const Ru = rUnamb(state.prf), vu = vUnamb(state.prf, f0), dR = C0 * state.tau / 2, dV = dv(state.prf, kp, f0), nx = 200, ny = 128;
           const tg = [[state.R1, state.v1], [state.R2, state.v2], [state.R3, state.v3]].map(([R, v]) => [apparentRange(R, state.prf), apparentVelocity(v, state.prf, f0)]);
           const img = new Float32Array(nx * ny);
           for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
             const R = Ru * (i + 0.5) / nx, v = -vu + 2 * vu * (j + 0.5) / ny;
-            let p = 1e-3 * (0.6 + 0.4 * Math.sin(i * 12.9898 + j * 78.233) ** 2); for (const [r, w] of tg) p += sinc2((R - r) / dR) * sinc2((v - w) / dV);
-            img[j * nx + i] = 10 * Math.log10(p);
+            let p = 1e-3 * (0.6 + 0.4 * Math.sin(i * 12.9898 + j * 78.233 + kp) ** 2) * state.N; for (const [r, w] of tg) p += kp * sinc2((R - r) / dR) * sinc2((v - w) / dV);
+            img[j * nx + i] = 10 * Math.log10(p / state.N);
           }
           rd.range([0, Ru / km], [-vu, vu]); rd.image('rd', img, nx, ny, { map: 'magma', norm: (d) => (d + 30) / 30 });
           top.range([-1, 1], [0, 42]); radar.set(top.mx(0), top.my(1.2), Math.PI / 2, 0.22);
+          const pr = 1.2 + ph * 40, arc = []; for (let i = 0; i < 20; i++) { const a = -0.5 + i / 20, b = -0.5 + (i + 1) / 20; arc.push(top.mx(a * 1.6), top.my(pr - 0.6 * a * a * 4), 0.004, top.mx(b * 1.6), top.my(pr - 0.6 * b * b * 4), 0.004); } out.segments(kf < 1 ? arc : []);
           [[state.R1, state.v1], [state.R2, state.v2], [state.R3, state.v3]].forEach(([R, v], i) => acs[i].set(top.mx(-0.4 + 0.4 * i), top.my(R / km), v > 0 ? -Math.PI / 2 : Math.PI / 2, 0.17));
           hud.set('a', `PRF ${fmt(state.prf / 1e3)} kHz at ${state.f0} GHz: R_u = ${fmt(Ru / km)} km, v_u = ±${fmt(vu)} m/s`);
-          hud.set('b', `cells: ${fmt(dR)} m × ${fmt(dV)} m/s`); hud.set('c', tg.map(([r, w], i) => `${'ABC'[i]} at ${fmt(r / km)} km, ${fmt(w)} m/s`).join(' · '));
-          plots.aux.draw({ xlim: [1, 40], cursor: state.prf / 1e3, series: [{ x: Array.from({ length: 40 }, (_, i) => i + 1), y: Array.from({ length: 40 }, (_, i) => rUnamb((i + 1) * 1e3) / km), color: '--c-B', label: 'R_u (km)' }, { x: Array.from({ length: 40 }, (_, i) => i + 1), y: Array.from({ length: 40 }, (_, i) => vUnamb((i + 1) * 1e3, f0)), color: '--c-E', label: 'v_u (m/s) vs PRF (kHz)' }] });
+          hud.set('b', `pulse ${kp} of ${state.N}: cells ${fmt(dR)} m × ${fmt(dV)} m/s${kf < 1 ? ' — still sharpening' : ''}`); hud.set('c', tg.map(([r, w], i) => `${'ABC'[i]} at ${fmt(r / km)} km, ${fmt(w)} m/s`).join(' · '));
+          const vv = Array.from({ length: 300 }, (_, q) => -vu + 2 * vu * q / 299); plots.aux.draw({ xlim: [-vu, vu], series: [{ x: vv, y: vv.map((v) => 10 * Math.log10(1e-3 + kp / state.N * sinc2((v - tg[0][1]) / dV))), color: '--c-B', label: `Doppler cut through A (dB) after ${kp} pulses vs radial velocity (m/s)` }] });
         } else {
           const Ru = rUnamb(state.prf), vu = vUnamb(state.prf, f0), [ar, av] = amb;
           const rs = Array.from({ length: 600 }, (_, i) => 60 * i / 599), vs = Array.from({ length: 601 }, (_, i) => -300 + i);
