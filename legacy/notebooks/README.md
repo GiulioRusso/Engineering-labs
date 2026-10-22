@@ -3,7 +3,7 @@
 Interactive Jupyter notebooks (matplotlib + ipywidgets), one folder per topic.
 Widgets don't render on GitHub: open a notebook in JupyterLab (`pip install -r legacy/requirements.txt`) or Colab to play with it.
 
-These notebooks are frozen (git tag `notebooks-final`). New work happens in [`labs/`](../../labs/).
+These notebooks are frozen (git tag `notebooks-final`). New work happens in the Engineering Labs at the repository root ([`index.html`](../../index.html)).
 
 ## Analog Electronics
 

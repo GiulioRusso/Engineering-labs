@@ -54,5 +54,5 @@ yarn-error.log
 .env.local
 
 # Labs: per-scenario review screenshots (tools/capture.mjs); only thumbnails and GIFs are committed
-labs/web/media/*/
-labs/.out-trace.css
+web/media/*/
+.out-trace.css

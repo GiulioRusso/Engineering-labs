@@ -1,73 +1,74 @@
-# ⚙️ Engineering Scripts
+# ∇ Engineering Labs
 
-**Interactive 3D labs for physics and engineering.** Drag something in the scene and watch the law at
-work: pull a magnet through a coil and see the flux, the EMF and the induced current respond live, with
-Lenz's law drawn in the scene and the equations one click away.
+**A collection of interactive tutorials for engineering subjects.** Every topic is a picture you can
+move: drag a magnet through a coil and watch the flux and the induced current respond, slide a filter
+over an image, step a sorting algorithm through real C++ code, or watch a flip-flop's waveform as its
+gates switch — with the explanation one click away.
 
 <p align="center">
-  <img src="labs/web/media/induction.gif" width="85%" alt="Coil and induction lab: a magnet pushed into a coil, with field lines and live EMF plots">
+  <img src="web/media/induction.gif" width="85%" alt="A magnet pushed into a coil, with field lines and live EMF plots">
 </p>
 
-## ▶️ How to open
+**Author:** Giulio Russo · [GitHub](https://github.com/GiulioRusso) · [LinkedIn](https://www.linkedin.com/in/giuliorusso)
 
-Clone or download the repository, then double-click **`index.html`** at the top of the folder (on a Mac
-you can also run `open index.html`). It opens the catalogue: one card per subject, and a search box over every topic.
+## ▶️ Open it
 
-**One file per subject**, holding all its topics:
+Clone or download the repository and double-click **`index.html`**. It opens the catalogue: one card per
+subject and a search box over every topic. Each subject is a single self-contained file in `web/` that
+runs in any browser, offline, with nothing to install.
 
-| Subject | Open this file | Topics |
+| Subject | File | What is inside |
 |---|---|---|
-| Maths | [`labs/web/maths.html`](labs/web/maths.html) | functions and transformations · polynomials · limits · curve sketching · Newton's method · trigonometry, triangles, polar curves · conic sections · complex numbers, Euler's formula, complex functions · calculus and its applications · sequences and series · differential equations · vectors · matrices, linear systems, determinant, eigenvectors, least squares · functions of two variables · double and line integrals · Lagrange multipliers · divergence and curl · probability, distributions, Bayes, central limit theorem, random walks |
-| Physics | [`labs/web/physics.html`](labs/web/physics.html) | motion · momentum · forces · buoyancy · oscillations · waves · gravitational field · gas and heat · rays · interference · electric charges · magnetic field · induction · charges in E and B · EM waves · flight · orbits · orbital transfers · Lagrange points |
-| Control systems | [`labs/web/control-systems.html`](labs/web/control-systems.html) | time response · poles and stability · steady-state error · root locus · PID · Bode · Nyquist and margins · lead/lag compensation |
-| Signal theory | [`labs/web/signal-theory.html`](labs/web/signal-theory.html) | pulses and spectra · time–bandwidth · Fourier series and Gibbs · DFT as winding · FFT · leakage and windows · sampling and aliasing · convolution · LTI systems and poles · filtering and FIR design · spectral analysis and frequency estimation · AM/FM/PM · PSK/QAM, BER, eye diagram, Shannon · IQ demodulation · dipoles · phased arrays · polarization · transmission lines and waveguides · fibres · Vivaldi · links and propagation · Yagi and patch |
-| Electronic warfare | [`labs/web/electronic-warfare.html`](labs/web/electronic-warfare.html) | pulse echo and range resolution · pulse trains and RTI · waveforms (chirp, Barker) and pulse compression · Doppler and the range–Doppler map · receivers and IQ · phased arrays, FDTD, pointing, lobing, search · airborne radar and ground clutter · radar equation · detection · MTI · PPI · jamming and burn-through |
-| Analog electronics | [`labs/web/analog-electronics.html`](labs/web/analog-electronics.html) | diodes, rectifiers, Zener · BJT and MOSFET (with a 3D view) · transconductance · bias point · small-signal model · current mirror · common emitter · emitter follower · differential pair · Miller effect · negative feedback · cascading · op-amps: virtual short, finite gain, bandwidth and slew, offset, stability, Sallen-Key · CMOS inverter, noise margins, delay, power, latch |
-| Circuits | [`labs/web/circuits.html`](labs/web/circuits.html) | resistor, capacitor, inductor, diode with moving charges · phase under a sine · LC energy · series and parallel · Kirchhoff · Thévenin · superposition · the circuit as a 3D potential landscape · RLC step · phasors and 3D helices · impedance · resonance · parallel tank · AC power · RC filters · selectivity and LC ladders · matching · transmission lines · envelope detector · mixer · feed to antenna |
-| Machine learning | [`labs/web/machine-learning.html`](labs/web/machine-learning.html) | a neuron as a 3D sheet · gradient descent on the loss landscape · a hidden layer bending the plane · optimizers racing on 3D loss surfaces · squared/absolute/Huber · the sigmoid trap · softmax · margin losses · capacity · bias–variance · ridge · early stopping · cross-validation · precision and recall · dense layers · convolution, stride, padding, dilation · pooling · channels in 3D · a whole CNN |
-| Computer science | [`labs/web/computer-science.html`](labs/web/computer-science.html) | arrays · sorting · stack and queue · linked lists · trees · heaps · BST · graphs (BFS, DFS, Dijkstra, Bellman-Ford, A*, Kruskal, Ford-Fulkerson) · CPU scheduling · synchronization — real C++ runs, step by step |
-| Digital electronics | [`labs/web/digital-electronics.html`](labs/web/digital-electronics.html) | logic gates · adders · latches · flip-flops · counters · state machines · timing — gate by gate, with waveforms |
+| Maths | [`web/maths.html`](web/maths.html) | functions and transformations · polynomials · limits · curve sketching · Newton · trigonometry and triangles · conic sections · complex numbers and functions · calculus and its applications · series · differential equations · vectors · matrices, eigenvectors, least squares · surfaces · multiple and line integrals · Lagrange multipliers · divergence and curl · probability and statistics |
+| Physics | [`web/physics.html`](web/physics.html) | motion · momentum · forces · oscillations · waves · gravity · gas and heat · optics · electric charges · magnetic fields · induction · charges in fields · EM waves · flight · orbits · Lagrange points |
+| Circuits | [`web/circuits.html`](web/circuits.html) | R, C, L with moving charges · Kirchhoff · Thévenin · superposition · the circuit as a 3D potential landscape · RLC transients · phasors · impedance and resonance · AC power · filters · matching · mixers and detectors |
+| Analog electronics | [`web/analog-electronics.html`](web/analog-electronics.html) | diodes and rectifiers · BJT and MOSFET · bias and small signal · current mirror · amplifier stages · feedback · op-amps and their limits · Sallen-Key · CMOS inverter, delay, power, latch |
+| Digital electronics | [`web/digital-electronics.html`](web/digital-electronics.html) | gates · adders · latches · flip-flops · counters · state machines — each circuit with its timing diagram |
+| Computer science | [`web/computer-science.html`](web/computer-science.html) | arrays · sorting · stacks and queues · linked lists · trees and heaps · graphs (BFS, DFS, Dijkstra, Bellman-Ford, A*, Kruskal, max flow) · CPU scheduling · synchronization — real C++ runs, line by line |
+| Signal theory | [`web/signal-theory.html`](web/signal-theory.html) | spectra · Fourier series and transform · DFT and FFT · windows · sampling · convolution · LTI systems · filters · spectral estimation · modulation · digital links · IQ · antennas and arrays · polarization · guided waves · propagation |
+| Control systems | [`web/control-systems.html`](web/control-systems.html) | time response · poles · steady-state error · root locus · PID · Bode · Nyquist · compensators |
+| Electronic warfare | [`web/electronic-warfare.html`](web/electronic-warfare.html) | pulses and range · waveforms and pulse compression · Doppler and range–Doppler maps · receivers · beams and arrays · clutter · radar equation · detection · MTI · PPI · jamming |
+| Machine learning | [`web/machine-learning.html`](web/machine-learning.html) | the neuron · layers one at a time (activations, dense, hidden, convolution, pooling, softmax) · loss functions · optimizers on 3D loss surfaces · overfitting and regularization · classification metrics |
 
-No install, no server,
-no internet connection.
+The full topic list is in [`docs/TOPICS.md`](docs/TOPICS.md).
 
 ## 🧪 How a topic works
 
-Pick a topic in the left bar (drag its edge to resize, ‹ to hide it). On the right: the **cases** of the topic as tabs (e.g. Line,
-Parabola…), then **Free** (every control, full explanation) and **examples** that each show one idea
-(e.g. *At 90°: a·b = 0*) with only its own controls and explanation (**?**). **View** is folded at the
-bottom. In the scene: things to drag, live readouts (✓ when a physical check holds), a play bar.
+Pick a topic in the left bar. On the right: its **cases** as tabs, then **Free** (every control) and
+**examples**, each showing one idea with only its own controls. **?** opens the explanation for exactly
+what is on screen: what you are looking at, the idea in plain words, the formula, a worked example and
+the common mistakes. Every axis is labelled with its quantity and unit; a play bar appears only when
+something evolves in time. The address bar always holds the exact view, so any moment can be shared as
+a link.
 
-The full map, including planned topics, is in [`labs/TOPICS.md`](labs/TOPICS.md).
+## 🔨 Build
 
-## 🔨 How to build
-
-Only needed if you change an animation's source. The built pages are committed, and everything needed to
-rebuild them is in the repository: the source (`labs/src/<subject>/<lab>/`), the shared library
-(`labs/src/lib/`), the build script and exact dependency versions (`labs/package-lock.json`). A fresh
-clone rebuilds byte-identical pages.
+Only needed after changing a topic. The built pages are committed, and a fresh clone rebuilds them
+byte-identically.
 
 ```bash
-cd labs
 npm install
-npm test          # physics tests
-npm run build     # src/ → web/
-npm run smoke     # headless-Chrome check of every page
+npm test          # model tests (physics, maths, circuits, ML…)
+npm run build     # src/ + tracer/ → web/ and index.html
+npm run smoke     # headless-Chrome run of every case and example of every page
 ```
 
-Architecture, lab anatomy, testing rules and how to add a lab: [`labs/GUIDE.md`](labs/GUIDE.md).
+The computer science and digital electronics topics are recorded from real C++ programs. To change one,
+edit it under `tracer/algorithms/cpp/` or `tracer/electronics/cpp/` and run that folder's `./build.sh`
+(it compiles, records the trace and checks it), then `npm run build`.
 
-## 🎞️ Visualizers
+How the code is organised and how to add a topic: [`docs/GUIDE.md`](docs/GUIDE.md).
 
-Two step-by-step animated players for discrete topics, also openable by double-click:
+## 📂 Repository
 
-* [`visualizations/algorithm-visualization/`](visualizations/algorithm-visualization/) → **Algorithm Visualizer**: the whole *Algorithms and Data Structures* programme, traced from real C++. Docs: [GUIDE.md](visualizations/algorithm-visualization/GUIDE.md).
-* [`visualizations/electronics-visualization/`](visualizations/electronics-visualization/) → **Electronics Visualizer**: digital logic circuits, gate by gate.
-
-## 📂 Repository structure
-
-* `index.html` → the launcher: double-click it.
-* `labs/` → the animations: `catalog.json` (the subject → topic map), `src/<subject>/<lab>/` (source), `web/<subject>.html` (built pages, one per subject), `tools/` (tests, smoke, capture).
-* `visualizations/` → the algorithm and electronics visualizers.
-* `legacy/` → archive, not part of the labs.
-* `doc/` → images for this README.
+```
+index.html        the catalogue: double-click it
+web/              built pages, one per subject (+ media/)
+src/              source: src/lib/ (runtime, drawing helpers), src/<subject>/<lab>/ (model, lab, explanation)
+tracer/           C++ programs recorded step by step (algorithms, electronics) and their renderers
+tools/            tests, smoke test, screenshot capture, catalogue
+catalog.json      the map: subject → topics
+build.mjs         the build
+docs/             guide and topic list
+legacy/           archive: the original Jupyter notebooks and the old stand-alone visualizers
+```
