@@ -2,7 +2,7 @@
 // θ from the vertical (rad); m θ̈ L² = m g L sin θ − b θ̇ + τ_motor + τ_disturbance
 // controller (setpoint 0), running at 1 kHz on the measured angle (with noise):
 //   τ = −Kp·θm − Ki·∫θm dt − Kd·dθm/dt (derivative filtered, time constant 10 ms), clamped to ±τmax
-import { rng } from '../../maths/probability/model.js';
+import { rng } from '../../lib/random.js';
 export const G = 9.81;
 
 export function simulate(s, T = 10, dt = 1e-3) {

@@ -1,0 +1,46 @@
+<section data-case="knn">
+  <h3>k-nearest neighbours</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the training points (blue class 0, yellow class 1) and the shading the method gives every spot of the plane. The orange point is a query: grey lines join it to its k nearest neighbours, the circle reaches the farthest of them. Top right: accuracy on the training points and on new points against k. Bottom right: the neighbours' distances, coloured by class.</div>
+  <p>The simplest classifier there is: to label a new point, look at the k closest labelled points and take a vote. There is no training — the data itself is the model.</p>
+  <div class="eq">$$\hat p(\text{class 1}\mid\mathbf x)=\frac{\#\{\text{class-1 points among the }k\text{ nearest}\}}{k}$$</div>
+  <ol class="steps"><li>Measure the distance from the query to every training point.</li><li>Keep the k smallest.</li><li>The majority class wins.</li></ol>
+  <div class="worked"><h4>Worked example</h4>k = 5, neighbours: 3 yellow and 2 blue → class 1, with p̂ = 0.6.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Judging k on the training points: k = 1 is always 100% right there, because every point is its own nearest neighbour. And forgetting to scale the inputs: a feature in metres and one in millimetres do not weigh the same in a distance.</div>
+</section>
+<section data-case="knn" data-example="one"><h3>k = 1</h3><p>Islands around every noisy point: perfect on training data, worse on new data. Overfitting.</p></section>
+<section data-case="knn" data-example="many"><h3>k = 41</h3><p>The vote spans a wide area: the border is smooth and ignores single noisy points. Push k much higher and the tips of the moons get outvoted by the other class: underfitting.</p></section>
+<section data-case="knn" data-example="edge"><h3>On the border</h3><p>Near the boundary the vote is close and changes as k changes: these are the uncertain points.</p></section>
+<section data-case="tree">
+  <h3>Decision trees</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the boxes the tree cuts the plane into, shaded by their majority class, with the cut lines in grey. Top right: accuracy on training and new points against the maximum depth. Bottom right: the tree itself (top levels), with the question at each node and the class of each leaf.</div>
+  <p>A tree asks yes/no questions of the form "is x₁ below 0.3?", one after another. Each question is chosen so that the two groups it creates are as pure as possible.</p>
+  <div class="eq">$$\text{Gini}=2p(1-p),\qquad \text{split}=\arg\min\;\frac{n_L\,\text{Gini}_L+n_R\,\text{Gini}_R}{n}$$</div>
+  <div class="worked"><h4>Worked example</h4>A node with 10 points, 5 of each class: Gini = 0.5. A split into (5 blue, 1 yellow) and (0 blue, 4 yellow) gives (6·0.28 + 4·0)/10 = 0.17: a large drop, a good question.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Growing the tree until every leaf is pure. It then has a box for every noisy point. Limit the depth, or average many trees (a random forest).</div>
+</section>
+<section data-case="tree" data-example="stump"><h3>A stump</h3><p>One question, two boxes: easy to read, but far too simple for the moons.</p></section>
+<section data-case="tree" data-example="deep"><h3>Depth 10</h3><p>Training accuracy reaches 100%; accuracy on new data drops. The tiny boxes are memorized noise.</p></section>
+<section data-case="tree" data-example="blobs"><h3>A diagonal border</h3><p>Trees can only cut along the axes, so a slanted border becomes a staircase of boxes.</p></section>
+<section data-case="kmeans">
+  <h3>k-means clustering</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the points coloured by the centre they belong to; the black dots are the centres, and their grey trails show how they move. Top right: the inertia (total squared distance of points to their centre) iteration by iteration. Bottom right: the final inertia for every k — the "elbow" plot.</div>
+  <p>No labels this time: the algorithm must find groups by itself. It alternates two simple steps until nothing changes.</p>
+  <ol class="steps"><li>Assign every point to its nearest centre.</li><li>Move every centre to the mean of its points.</li></ol>
+  <div class="eq">$$J=\sum_i\big\|\mathbf x_i-\boldsymbol\mu_{c(i)}\big\|^2\quad\text{never increases}$$</div>
+  <div class="worked"><h4>Choosing k</h4>J always falls when k grows (k = number of points gives J = 0). Look for the elbow: the k after which adding a cluster gains little.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Trusting one run. The result depends on where the centres start; run it several times and keep the lowest J.</div>
+</section>
+<section data-case="kmeans" data-example="badstart"><h3>Unlucky start</h3><p>Two centres start in the same group: they split it, and two real groups are merged. A local minimum.</p></section>
+<section data-case="kmeans" data-example="uneven"><h3>Uneven clusters</h3><p>The border sits halfway between the centres, so the big cluster loses points to the small one.</p></section>
+<section data-case="kmeans" data-example="moons"><h3>Moons</h3><p>k-means borders are straight lines: it cuts the moons in the wrong place.</p></section>
+<section data-case="pca">
+  <h3>Principal component analysis</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a cloud of points. A line sweeps through all directions θ, and every point is projected onto it (thin grey lines, orange dots). Green and red arrows: the principal components, 2 standard deviations long. Top right: the variance along θ (blue) and what is left over across it (orange). Bottom right: the share of variance each component keeps. Bottom: the projected points as a histogram.</div>
+  <p>PCA finds the directions along which the data spreads most. Keeping only the first few compresses the data with the smallest possible loss.</p>
+  <div class="eq">$$\Sigma=\frac1n\sum_i(\mathbf x_i-\bar{\mathbf x})(\mathbf x_i-\bar{\mathbf x})^\top,\qquad \Sigma\mathbf v_k=\lambda_k\mathbf v_k$$</div>
+  <ol class="steps"><li>Centre the data.</li><li>Compute the covariance matrix.</li><li>Its eigenvectors are the principal directions, its eigenvalues the variances along them.</li></ol>
+  <div class="worked"><h4>Two views of the same thing</h4>At every θ, variance along + left over = total. So the direction with the largest variance is also the one with the smallest error after squashing to 1D.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Running PCA on features with different units without standardizing: the feature with the largest numbers wins regardless of its meaning.</div>
+</section>
+<section data-case="pca" data-example="thin"><h3>Almost a line</h3><p>PC1 keeps over 99% of the variance: one number per point describes it.</p></section>
+<section data-case="pca" data-example="round"><h3>A round cloud</h3><p>The variance is the same in every direction: the blue curve is flat and PC1 is arbitrary.</p></section>

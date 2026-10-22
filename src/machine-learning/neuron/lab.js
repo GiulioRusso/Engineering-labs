@@ -90,7 +90,7 @@ export default {
           // loss landscape over (w₁, w₂), the bias held at its final value (computed once per run)
           const n = 60, W = 5;
           if (!land) { const bF = D.at(-1)[2], img = new Float64Array(n * n); let lo = Infinity, hi = -Infinity; for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const L = logLoss(P, -W + 2 * W * (i + 0.5) / n, -W + 2 * W * (j + 0.5) / n, bF); img[j * n + i] = L; lo = Math.min(lo, L); hi = Math.max(hi, L); } land = { img, lo, hi }; }
-          tr.range([-W, W], [-W, W]); tr.titles('w₁', 'w₂: loss landscape (dark = low), path of the weights'); tr.image('L', land.img, n, n, { map: 'magma', norm: (L) => 1 - Math.sqrt((L - land.lo) / (land.hi - land.lo || 1)) });
+          tr.range([-W, W], [-W, W]); tr.titles('w₁', 'w₂: loss landscape (dark = low), path of the weights'); tr.image('L', land.img, n, n, { map: 'magma', norm: (L) => Math.sqrt((L - land.lo) / (land.hi - land.lo || 1)) });
           tr.line('path', D.slice(0, k + 1).map((q) => q[0]), D.slice(0, k + 1).map((q) => q[1]), { color: '--c-v', width: 2 }); tr.dots('now', [a], [cc], { color: '--accent', size: 11 });
           const Ls = D.map((q) => logLoss(P, ...q)); br.range([0, D.length - 1], [0, Math.max(...Ls) * 1.1]); br.titles('step', 'loss (cross-entropy)'); br.line('l', Ls.map((_, i) => i).slice(0, k + 1), Ls.slice(0, k + 1), { color: '--c-north' });
           hud.set('a', `step ${k}: w = (${fmt(a)}, ${fmt(cc)}), b = ${fmt(bb)}, loss ${fmt(Ls[k])}`); hud.set('b', `each step: w ← w − η ∇L, with η = ${fmt(state.lr)}`);

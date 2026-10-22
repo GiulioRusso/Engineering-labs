@@ -1,0 +1,22 @@
+<section data-case="backprop">
+  <h3>Backpropagation</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a network with 2 inputs, 2 tanh hidden units and a sigmoid output, trained on one example. Blue edges are positive weights, red negative. Each step plays in four phases: blue pulses carry values forward, the loss is computed, red pulses carry the error back (edges then show ∂L/∂w), and the weights glide to their new values. Top right: the output p step by step. Bottom right: the gradient of every parameter.</div>
+  <p>To train, we need ∂L/∂w for every weight. The chain rule gives it, and the trick is to apply it from the output backwards: each unit receives the error from the layer above, multiplies it by its own local slope, and passes it on.</p>
+  <div class="eq">$$\delta_\text{out}=p-y,\qquad \delta_j=\delta_\text{out}\,v_j\,(1-h_j^2),\qquad \frac{\partial L}{\partial w_{jk}}=\delta_j\,x_k,\qquad \frac{\partial L}{\partial v_j}=\delta_\text{out}\,h_j$$</div>
+  <ol class="steps"><li>Forward: compute and store every z and h.</li><li>Output error: δ = p − y (sigmoid with cross-entropy).</li><li>Backward: δ of each hidden unit = δ above × weight × local slope.</li><li>Gradient of a weight = δ of the unit it enters × value it carries.</li><li>Update: w ← w − η ∂L/∂w.</li></ol>
+  <div class="worked"><h4>Worked example</h4>p = 0.6, y = 1: δ_out = −0.4. With v₁ = 0.7 and h₁ = 0.5: δ₁ = −0.4 · 0.7 · 0.75 = −0.21. With x₁ = 1: ∂L/∂w₁₁ = −0.21, so w₁₁ grows by 0.21η.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking backprop is a different learning rule. It is only an efficient way to compute the gradient; gradient descent does the learning.</div>
+</section>
+<section data-case="backprop" data-example="leap"><h3>η = 2.5</h3><p>Same gradients, bigger steps: p jumps towards the target in one or two steps.</p></section>
+<section data-case="backprop" data-example="zero"><h3>x₁ = 0</h3><p>The gradient of a weight is δ × the value it carries: a zero input leaves its weights untouched.</p></section>
+<section data-case="backprop" data-example="target0"><h3>Target 0</h3><p>δ_out = p is now positive: every gradient changes sign and p is pushed down.</p></section>
+<section data-case="minibatch">
+  <h3>Mini-batches</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the loss of a logistic neuron for every pair of weights (dark = low), with two paths from the same start: the full gradient (green) and mini-batches of B random points (orange). Top right: the loss on all data along both paths. Bottom right: how far a mini-batch gradient is from the full one, against B.</div>
+  <p>The full gradient averages over every training point: exact but expensive on millions of examples. A mini-batch averages over B random points instead. The answer is right on average, with noise that shrinks like 1/√B.</p>
+  <div class="eq">$$\mathbf g_B=\frac1B\sum_{i\in\text{batch}}\nabla L_i,\qquad \mathbb E[\mathbf g_B]=\nabla L,\qquad \operatorname{sd}(\mathbf g_B)\propto\frac1{\sqrt B}$$</div>
+  <div class="worked"><h4>Worked example</h4>1 000 000 examples, B = 100: 10 000 cheap steps in the time of one full-gradient step, each about 10 times noisier than with B = 10 000.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Treating the noise as pure harm. A little noise helps escape flat regions and sharp minima; that is part of why SGD trains deep networks well.</div>
+</section>
+<section data-case="minibatch" data-example="one"><h3>B = 1</h3><p>Every step follows one point: a zig-zag around the green path, but it gets there.</p></section>
+<section data-case="minibatch" data-example="all"><h3>B = 80</h3><p>All the points (drawn with replacement): almost the green path.</p></section>

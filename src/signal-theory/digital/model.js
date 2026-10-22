@@ -1,7 +1,7 @@
 // Digital communications: Gray-coded PSK and square QAM constellations, Monte Carlo over AWGN with BER
 // against theory, raised-cosine pulses and eye diagrams, and the Shannon limit. Pure, no DOM.
 import { erfc } from '../modulation/model.js';
-import { rng } from '../../maths/probability/model.js';
+import { rng } from '../../lib/random.js';
 
 const gray = (i) => i ^ (i >> 1);
 // unit average energy; label (bits) of point j is pts[j].bits

@@ -4,7 +4,7 @@
 // a drone beside a tanker (sidelobe masking).
 import { createChart } from '../../lib/viz/chart.js';
 import { createAircraft } from '../../lib/viz/glyphs.js';
-import { rng } from '../../maths/probability/model.js';
+import { rng } from '../../lib/random.js';
 import { C0, waveform, echo, compress, metrics, spectrum, coupling, dopplerSpectrum } from './model.js';
 
 const us = 1e-6, MHz = 1e6, LAM = 0.03, fmt = (v, d = 3) => (Number.isFinite(v) ? String(Number(v.toPrecision(d))) : '∞');

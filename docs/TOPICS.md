@@ -199,6 +199,8 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 
 | Topic | What you do | Status |
 |---|---|---|
+| [Nearest neighbours and decision trees](web/machine-learning.html?lab=neighbours-trees) | Classify by a vote of neighbours, or by a few yes/no questions. | done |
+| [Clustering and PCA](web/machine-learning.html?lab=clustering-pca) | No labels: k-means finds groups, PCA finds the main directions. | done |
 | [The neuron](web/machine-learning.html?lab=neuron) | Weights tilt it, the bias slides it, gradient descent learns them. | done |
 | [Activation functions](web/machine-learning.html?lab=activations) | Sigmoid, tanh, ReLU, GELU: the bend in every layer and the gradient it lets through. | done |
 | [Dense layer](web/machine-learning.html?lab=dense-layer) | One dot product per output. | done |
@@ -208,6 +210,7 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Softmax output layer](web/machine-learning.html?lab=softmax) | From scores to probabilities, with temperature. | done |
 | [Putting the layers together](web/machine-learning.html?lab=cnn-stack) | A whole CNN: shapes and where the parameters live. | done |
 | [Loss functions](web/machine-learning.html?lab=loss-functions) | Squared, absolute, Huber; the sigmoid trap; every loss vs the margin. | done |
+| [Backpropagation and mini-batches](web/machine-learning.html?lab=backpropagation) | The chain rule run backwards through a network; noisy cheap steps with SGD. | done |
 | [Optimizers](web/machine-learning.html?lab=optimizers) | GD, momentum, RMSProp and Adam on 3D loss surfaces. | done |
 | [Overfitting and how to fight it](web/machine-learning.html?lab=overfitting) | Capacity, bias and variance, ridge, early stopping, cross-validation. | done |
 | [Classification metrics](web/machine-learning.html?lab=metrics) | Accuracy, precision, recall on rare classes. | done |
@@ -245,11 +248,27 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Double integrals](web/maths.html?lab=double-integrals) | Volume under a surface as a stack of boxes. | done |
 | [Constrained optimisation](web/maths.html?lab=lagrange) | Lagrange multipliers: where ∇f is parallel to ∇g. | done |
 | [Line integrals and work](web/maths.html?lab=line-integrals) | Work along a path; conservative and rotational fields. | done |
-| [Probability](web/maths.html?lab=probability) | A Galton board: random falls build the binomial and then the normal curve. | done |
-| [Probability distributions](web/maths.html?lab=distributions) | Normal, exponential, Poisson, binomial: probability as area. | done |
-| [Bayes’ theorem](web/maths.html?lab=bayes) | Why most positive tests for a rare disease are false. | done |
-| [Sample means and the CLT](web/maths.html?lab=central-limit) | Averages become normal and narrower as 1/√n. | done |
-| [Random walks and Monte Carlo](web/maths.html?lab=random-walk) | Diffusion as √n; estimating π with random darts. | done |
+
+## Probability and statistics
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Outcomes and events](web/probability.html?lab=events) | Two dice: events as sets of outcomes, the addition rule. | done |
+| [Counting](web/probability.html?lab=counting) | Pascal’s triangle, combinations and the birthday problem. | done |
+| [Conditional probability](web/probability.html?lab=conditional) | Areas of a square and a tree diagram; independence. | done |
+| [The law of large numbers](web/probability.html?lab=law-large-numbers) | Frequencies settle to the probability, error ∝ 1/√n. | done |
+| [Expected value and variance](web/probability.html?lab=expected-value) | The long-run average of a game, and its spread. | done |
+| [The Galton board](web/probability.html?lab=galton) | Binomial rows of pegs turning into a bell; sums of dice. | done |
+| [Probability distributions](web/probability.html?lab=distributions) | Normal, uniform, exponential, Poisson, binomial: probability as area. | done |
+| [Sample means and the CLT](web/probability.html?lab=central-limit) | Averages of anything become normal. | done |
+| [Bayes’ theorem](web/probability.html?lab=bayes) | 1000 people and a screening test. | done |
+| [Monte Carlo: areas and π](web/probability.html?lab=monte-carlo-area) | Random points estimate an area. | done |
+| [How fast Monte Carlo converges](web/probability.html?lab=monte-carlo-error) | Error ∝ 1/√N, whatever the dimension. | done |
+| [Buffon’s needle](web/probability.html?lab=buffon) | Needles on a ruled floor estimate π. | done |
+| [Importance sampling](web/probability.html?lab=importance-sampling) | Sample where the function matters. | done |
+| [Random walks](web/probability.html?lab=random-walk) | Coin-flip walks spread as √n; Monte Carlo π by darts. | done |
+| [Confidence intervals](web/probability.html?lab=confidence-intervals) | How often the interval catches the truth. | done |
+| [Hypothesis tests](web/probability.html?lab=hypothesis-tests) | α, p-value and power. | done |
 
 ## Physics
 

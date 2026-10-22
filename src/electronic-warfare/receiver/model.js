@@ -1,6 +1,6 @@
 // Radar receiver chains, sample by sample: an RF pulse (with an interferer, a signal at the image
 // frequency and noise) through filters, amplifiers, mixers, IQ demodulation and the ADC. Pure, no DOM.
-import { rng } from '../../maths/probability/model.js';
+import { rng } from '../../lib/random.js';
 
 import { fft } from '../../lib/dsp.js';
 export { fft };

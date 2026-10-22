@@ -1,0 +1,51 @@
+<section data-case="space">
+  <h3>Outcomes and events</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the 36 outcomes of rolling two dice, one dot each. Event A is blue, event B orange, outcomes in both green. Top right: the probability of each sum. Bottom right: P(A), P(B), P(A and B), P(A or B).</div>
+  <p>An <b>experiment</b> has a set of possible <b>outcomes</b> (the sample space). An <b>event</b> is a set of outcomes — "the sum is 7" is six of the 36 dots. When every outcome is equally likely, a probability is just counting.</p>
+  <div class="eq">$$P(A)=\frac{\text{outcomes in }A}{\text{all outcomes}},\qquad P(A\cup B)=P(A)+P(B)-P(A\cap B)$$</div>
+  <ol class="steps"><li>List (or picture) all outcomes, making sure they are equally likely.</li><li>Count those in the event.</li><li>Divide. For "A or B", add the two counts but subtract the green ones, counted twice.</li></ol>
+  <div class="worked"><h4>Worked example</h4>"At least one 6": 6 + 6 − 1 = 11 cells (the (6,6) cell is in both rows), so 11/36 ≈ 0.31 — not 2/6.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Treating the sums 2…12 as equally likely. They are not: 7 has six outcomes, 2 has one.</div>
+</section>
+<section data-case="space" data-example="seven"><h3>Sum = 7</h3><p>The diagonal of six cells: 6/36 = 1/6, the most likely sum.</p></section>
+<section data-case="space" data-example="six"><h3>At least one 6</h3><p>The last row and column: 11 cells.</p></section>
+<section data-case="space" data-example="disjoint"><h3>Disjoint</h3><p>A sum of 7 can never be a double: no green cells, so P(A or B) = P(A) + P(B).</p></section>
+<section data-case="counting">
+  <h3>Counting: choices and the birthday problem</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: Pascal's triangle, with C(n, k) outlined. Top right: all C(n, k) for your n. Bottom right: the probability that two people in a room share a birthday.</div>
+  <p>When outcomes are too many to draw, we count them. The number of ways to choose k objects out of n, ignoring order, is the binomial coefficient — row n, position k of Pascal's triangle.</p>
+  <div class="eq">$$\binom nk=\frac{n!}{k!\,(n-k)!},\qquad P(\text{shared birthday})=1-\frac{365\cdot364\cdots(365-g+1)}{365^g}$$</div>
+  <div class="worked"><h4>Worked example</h4>Lottery 6 of 49: C(49, 6) ≈ 14 million tickets. Birthday: with 23 people there are 253 pairs, enough to make a match more likely than not.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Counting "at least one" directly. Count the complement ("none") and subtract from 1.</div>
+</section>
+<section data-case="counting" data-example="pascal"><h3>C(10, 5)</h3><p>252 ways to pick 5 of 10 — the middle of row 10.</p></section>
+<section data-case="counting" data-example="bday"><h3>23 people</h3><p>P ≈ 0.507: the famous surprise.</p></section>
+<section data-case="conditional">
+  <h3>Conditional probability, as areas</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a unit square of probability. The left column is A (width P(A)), the right "not A". Inside each column the lower part is B, with height P(B | that column). Right: the same as a tree diagram, and the key numbers.</div>
+  <p>P(B | A) is the probability of B once we know A happened: we zoom into the A column and look at the share that is B. Areas are joint probabilities: P(A and B) = P(A)·P(B | A).</p>
+  <div class="eq">$$P(B)=P(A)P(B\mid A)+P(\bar A)P(B\mid\bar A),\qquad P(A\mid B)=\frac{P(A)P(B\mid A)}{P(B)}$$</div>
+  <ol class="steps"><li>Multiply along a branch of the tree to get a joint probability.</li><li>Add the branches that end in B to get P(B).</li><li>Divide one branch by the total to reverse the condition (Bayes).</li></ol>
+  <div class="worked"><h4>Worked example</h4>P(A) = 0.3, P(B|A) = 0.8, P(B|¬A) = 0.1: P(B) = 0.24 + 0.07 = 0.31, P(A|B) = 0.24/0.31 ≈ 0.77.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Confusing P(B | A) with P(A | B) — "most smokers don't get cancer" vs "most lung-cancer patients smoked".</div>
+</section>
+<section data-case="conditional" data-example="indep"><h3>Independent</h3><p>The B parts have the same height in both columns: knowing A changes nothing, and P(A and B) = P(A)·P(B).</p></section>
+<section data-case="conditional" data-example="rare"><h3>Rare A</h3><p>Even with a reliable B, most of the B area lies in "not A": P(A | B) stays low (see Bayes' theorem).</p></section>
+<section data-case="lln">
+  <h3>The law of large numbers</h3>
+  <div class="look"><h4>What you are looking at</h4>Five runs of repeated trials (a coin with P(success) = p). Each line is the fraction of successes so far, against the number of trials on a log scale; the dashed band is p ± 2 standard errors.</div>
+  <p>Probability is what relative frequency settles to in the long run. Early frequencies are wild; as n grows they squeeze toward p, with a typical error that shrinks like 1/√n.</p>
+  <div class="eq">$$\frac{S_n}{n}\xrightarrow{n\to\infty}p,\qquad \text{typical error}\approx\sqrt{\frac{p(1-p)}{n}}$$</div>
+  <div class="pitfall"><h4>Common mistake</h4>The gambler's fallacy: after five tails, heads is not "due". The frequency converges because later trials swamp the early ones, not because the coin compensates.</div>
+</section>
+<section data-case="lln" data-example="rare"><h3>p = 0.05</h3><p>Rare successes: many trials pass before the first one, and the relative error stays large for longer.</p></section>
+<section data-case="expect">
+  <h3>Expected value and spread</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the outcomes of a game and their probabilities; the triangle and orange line mark the mean (the balance point), the green bar ± one standard deviation. Right: the average winnings per play as you keep playing.</div>
+  <div class="eq">$$E[X]=\sum_x x\,P(x),\qquad \sigma^2=\sum_x(x-E[X])^2P(x)$$</div>
+  <p>The expected value is the long-run average per play. The standard deviation measures how far single outcomes typically land from it.</p>
+  <div class="worked"><h4>Worked example</h4>Roulette, €1 on red: E = 1·18/37 − 1·19/37 = −1/37 ≈ −€0.027 per play.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Judging a game by its best prize or its most likely outcome. A lottery's top prize is huge, its mean still negative.</div>
+</section>
+<section data-case="expect" data-example="roulette"><h3>Roulette</h3><p>The running average sinks toward −0.027.</p></section>
+<section data-case="expect" data-example="lottery"><h3>Lottery</h3><p>The average jumps up at each rare prize and drifts back down.</p></section>

@@ -1,6 +1,6 @@
 // Shared signal processing: radix-2 complex FFT, the continuous Fourier transform approximated on a grid,
 // windows and Gaussian noise. Pure, no DOM.
-import { rng } from '../maths/probability/model.js';
+import { rng } from './random.js';
 
 // in-place iterative radix-2 complex FFT (inverse when inv = true, scaled by 1/N)
 export function fft(re, im, inv = false) {

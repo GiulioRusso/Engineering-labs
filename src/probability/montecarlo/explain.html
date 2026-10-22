@@ -1,0 +1,37 @@
+<section>
+  <p><b>Monte Carlo</b> methods answer a question about numbers by asking it of random samples: an area, an integral, a probability, the behaviour of a whole system. The price is randomness in the answer, shrinking like 1/√N.</p>
+</section>
+<section data-case="hitmiss">
+  <h3>Areas with random points</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: random points in the unit square, orange if they fall under the curve. Top right: the running estimate, with the true value (dashed) and a ±2 standard-error band (green). Bottom right: the error on log–log axes.</div>
+  <p>The fraction of uniformly scattered points that fall in a region estimates the region's area. With the quarter circle, the area is π/4, so 4 × fraction estimates π.</p>
+  <div class="eq">$$\hat A=\frac{\#\text{hits}}{N},\qquad \text{standard error}=\sqrt{\frac{A(1-A)}{N}}$$</div>
+  <div class="worked"><h4>Worked example</h4>1000 points: the standard error on π is 4·√(0.785·0.215/1000) ≈ 0.05 — typically two correct digits.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting one more correct digit per ten times the points: it takes a hundred times.</div>
+</section>
+<section data-case="hitmiss" data-example="bell"><h3>e^(−x²)</h3><p>This integral has no closed form; Monte Carlo does not care.</p></section>
+<section data-case="error">
+  <h3>How fast Monte Carlo converges</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: 200 independent estimates of ∫₀¹ f, each the average of f at n random points; orange = the true value. Top right: f. Bottom right: the spread of the estimates against n, log–log.</div>
+  <p>The sample mean of f at random points estimates its integral. Each estimate is random; their spread is σ_f/√n — the central limit theorem at work.</p>
+  <div class="eq">$$\hat I=\frac1n\sum_{i=1}^nf(x_i),\qquad \operatorname{sd}(\hat I)=\frac{\sigma_f}{\sqrt n}$$</div>
+  <p>Slow in one dimension (a simple grid beats it), but the rate is the same in any dimension — which is why Monte Carlo rules physics simulations, finance and rendering.</p>
+</section>
+<section data-case="error" data-example="small"><h3>n = 10</h3><p>A wide histogram: single estimates can be far off.</p></section>
+<section data-case="error" data-example="big"><h3>n = 1000</h3><p>100× the points: the histogram is 10× narrower.</p></section>
+<section data-case="buffon">
+  <h3>Buffon's needle</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: needles dropped at random on a floor ruled with lines 1 apart (the latest 400 shown; orange = crossing a line). Top right: the estimate of π as needles accumulate. Bottom right: the probability of crossing for each angle.</div>
+  <p>A needle of length l ≤ 1 crosses a line with probability depending on its angle; averaging over all angles brings in π:</p>
+  <div class="eq">$$P(\text{cross})=\frac{2l}{\pi d}\quad\Rightarrow\quad \pi\approx\frac{2l\,N}{d\cdot\#\text{crossings}}$$</div>
+</section>
+<section data-case="buffon" data-example="short"><h3>Shorter needles</h3><p>Fewer crossings: each one carries more weight, the estimate is noisier.</p></section>
+<section data-case="importance">
+  <h3>Importance sampling</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a narrow peak g to integrate (blue) and the proposal density we sample from (green). Top right: 200 estimates with uniform points. Bottom right: 200 estimates with points from the proposal, each weighted by g/q.</div>
+  <p>Uniform points mostly land where g ≈ 0 and waste effort. Drawing points from a density q that follows g, and weighting each by g/q, keeps the estimate unbiased while cutting its spread.</p>
+  <div class="eq">$$\int g\,dx=\mathbb E_q\!\left[\frac{g(X)}{q(X)}\right]\approx\frac1n\sum\frac{g(x_i)}{q(x_i)},\quad x_i\sim q$$</div>
+  <div class="pitfall"><h4>Common mistake</h4>A proposal narrower than the target, or in the wrong place: rare points get enormous weights and the variance explodes.</div>
+</section>
+<section data-case="importance" data-example="off"><h3>Wrong place</h3><p>q puts its points away from the peak: the few that hit it get huge weights.</p></section>
+<section data-case="importance" data-example="narrow"><h3>Too narrow</h3><p>The tails of the peak are almost never sampled: occasional huge weights.</p></section>

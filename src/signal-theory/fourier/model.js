@@ -1,5 +1,5 @@
 // Signals: waveforms, Fourier series, sampling, the DFT and windows. Pure, no DOM.
-import { rng } from '../../maths/probability/model.js';
+import { rng } from '../../lib/random.js';
 
 const frac = (u) => u - Math.floor(u);
 export const WAVES = {

@@ -3,7 +3,7 @@
 // diagrams with raised-cosine pulses, and the Shannon limit.
 import { createChart } from '../../lib/viz/chart.js';
 import { createCurve } from '../../lib/viz/curve.js';
-import { rng } from '../../maths/probability/model.js';
+import { rng } from '../../lib/random.js';
 import { scheme, berTheory, simulate, rcos, shaped, shannonEbN0 } from './model.js';
 
 const fmt = (v, d = 3) => (Number.isFinite(v) ? String(Number(v.toPrecision(d))) : '∞');

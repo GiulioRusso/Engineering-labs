@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import { createChart } from '../../lib/viz/chart.js';
 import { createCurve } from '../../lib/viz/curve.js';
-import { rng } from '../../maths/probability/model.js';
+import { rng } from '../../lib/random.js';
 import { C0, db, lin, snr, pd, thresholdFor, signalPower, jammerPower, burnThrough, mtiGain, blindSpeed, ledger } from './model.js';
 
 const km = 1e3, deg = Math.PI / 180, fmt = (v, d = 3) => (Number.isFinite(v) ? String(Number(v.toPrecision(d))) : '∞');

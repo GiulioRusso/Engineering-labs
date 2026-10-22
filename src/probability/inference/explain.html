@@ -1,0 +1,21 @@
+<section data-case="ci">
+  <h3>Confidence intervals</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: 60 repetitions of the same experiment (n measurements of a quantity whose true mean is 10). Each bar is that experiment's interval x̄ ± z·σ/√n; red bars miss the true mean. Right: how the width depends on the confidence level and on n.</div>
+  <p>From one sample we cannot know μ, but we can build an interval by a recipe that catches μ a known fraction of the time. Each new experiment gives a new interval; about 95% of 95% intervals contain μ.</p>
+  <div class="eq">$$\bar x\pm z_{1-\alpha/2}\,\frac{\sigma}{\sqrt n},\qquad z_{0.975}=1.96$$</div>
+  <ol class="steps"><li>Compute the sample mean x̄.</li><li>Its standard error is σ/√n.</li><li>Go z standard errors each way.</li></ol>
+  <div class="worked"><h4>Worked example</h4>σ = 2, n = 10, x̄ = 10.4: 10.4 ± 1.96·0.63 = [9.16, 11.64].</div>
+  <div class="pitfall"><h4>Common mistake</h4>"μ is in this interval with probability 95%." μ is fixed; it is either in or not. The 95% is about the method.</div>
+</section>
+<section data-case="ci" data-example="c80"><h3>80%</h3><p>Shorter bars, and about one in five misses.</p></section>
+<section data-case="ci" data-example="n100"><h3>n = 100</h3><p>√10 ≈ 3.2 times narrower, still 95% coverage.</p></section>
+<section data-case="test">
+  <h3>Hypothesis tests</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the distribution of the test statistic if there is no effect (H₀, blue) and if the true effect is d (orange). The black line is the rejection threshold; the red area under the blue curve is α; the dashed line is an observed value. Bottom: the power against sample size.</div>
+  <p>A test fixes in advance how often we accept a false alarm (α) and rejects H₀ when the data would be too surprising under it. The <b>p-value</b> measures that surprise; the <b>power</b> is the chance of detecting an effect that is really there.</p>
+  <div class="eq">$$\text{reject }H_0\iff z>z_{1-\alpha},\qquad p=P(Z\ge z_\text{obs}\mid H_0),\qquad \text{power}=1-\Phi(z_{1-\alpha}-d\sqrt n)$$</div>
+  <div class="worked"><h4>Worked example</h4>d = 0.4σ, n = 25: the orange curve sits at 2; with α = 0.05 (z > 1.645) the power is 1 − Φ(−0.355) ≈ 0.64.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Reading p as P(H₀ true). Concluding "no effect" from a non-significant result with low power: absence of evidence is not evidence of absence.</div>
+</section>
+<section data-case="test" data-example="big"><h3>n = 100</h3><p>The orange curve moves to d√n = 4: almost always detected.</p></section>
+<section data-case="test" data-example="strict"><h3>α = 0.01</h3><p>The threshold moves right: fewer false alarms, but more real effects missed.</p></section>

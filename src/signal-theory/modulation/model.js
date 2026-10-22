@@ -1,5 +1,5 @@
 // Modulation: AM and FM, digital constellations over AWGN with their bit error rates, IQ demodulation.
-import { rng } from '../../maths/probability/model.js';
+import { rng } from '../../lib/random.js';
 
 // complementary error function (Numerical Recipes, |error| < 1.2e-7) and the Gaussian tail Q
 export function erfc(x) {

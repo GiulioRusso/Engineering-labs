@@ -6,11 +6,12 @@ import { join } from 'node:path';
 
 const HUE = {
   'analog-electronics': 28, circuits: 45, 'computer-science': 200, 'control-systems': 160, 'digital-electronics': 260,
-  'electronic-warfare': 0, 'machine-learning': 300, maths: 220, physics: 190, 'signal-theory': 130,
+  'electronic-warfare': 0, 'machine-learning': 300, maths: 220, probability: 330, physics: 190, 'signal-theory': 130,
 };
 // one simple line icon per subject (24×24, stroke = currentColor)
 const ICON = {
   maths: '<path d="M18 5H7l6 7-6 7h11"/>',
+  probability: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.3"/><circle cx="16" cy="8" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="8" cy="16" r="1.3"/><circle cx="16" cy="16" r="1.3"/>',
   physics: '<circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>',
   'control-systems': '<rect x="9" y="3.5" width="6" height="5" rx="1"/><path d="M3 6h6M15 6h6v12H3V6"/><path d="M3 18l3-3m-3 3l3 3"/>',
   'computer-science': '<path d="M8 6l-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/>',

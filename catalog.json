@@ -896,6 +896,28 @@
   "name": "Machine learning",
   "topics": [
    {
+    "id": "neighbours-trees",
+    "title": "Nearest neighbours and decision trees",
+    "what": "Classify by a vote of neighbours, or by a few yes/no questions.",
+    "from": "classic",
+    "cases": [
+     "knn",
+     "tree"
+    ],
+    "group": "1 · Classic methods"
+   },
+   {
+    "id": "clustering-pca",
+    "title": "Clustering and PCA",
+    "what": "No labels: k-means finds groups, PCA finds the main directions.",
+    "from": "classic",
+    "cases": [
+     "kmeans",
+     "pca"
+    ],
+    "group": "1 · Classic methods"
+   },
+   {
     "id": "neuron",
     "title": "The neuron",
     "what": "Weights tilt it, the bias slides it, gradient descent learns them.",
@@ -904,7 +926,7 @@
      "neuron",
      "descent"
     ],
-    "group": "1 · The neuron"
+    "group": "2 · The neuron"
    },
    {
     "id": "activations",
@@ -914,7 +936,7 @@
     "cases": [
      "activation"
     ],
-    "group": "2 · Layers, one at a time"
+    "group": "3 · Layers, one at a time"
    },
    {
     "id": "dense-layer",
@@ -924,7 +946,7 @@
     "cases": [
      "dense"
     ],
-    "group": "2 · Layers, one at a time"
+    "group": "3 · Layers, one at a time"
    },
    {
     "id": "hidden-layer",
@@ -934,7 +956,7 @@
     "cases": [
      "hidden"
     ],
-    "group": "2 · Layers, one at a time"
+    "group": "3 · Layers, one at a time"
    },
    {
     "id": "conv-layer",
@@ -945,7 +967,7 @@
      "conv",
      "channels"
     ],
-    "group": "2 · Layers, one at a time"
+    "group": "3 · Layers, one at a time"
    },
    {
     "id": "pooling",
@@ -955,7 +977,7 @@
     "cases": [
      "pool"
     ],
-    "group": "2 · Layers, one at a time"
+    "group": "3 · Layers, one at a time"
    },
    {
     "id": "softmax",
@@ -965,7 +987,7 @@
     "cases": [
      "softmax"
     ],
-    "group": "2 · Layers, one at a time"
+    "group": "3 · Layers, one at a time"
    },
    {
     "id": "cnn-stack",
@@ -975,7 +997,7 @@
     "cases": [
      "stack"
     ],
-    "group": "2 · Layers, one at a time"
+    "group": "3 · Layers, one at a time"
    },
    {
     "id": "loss-functions",
@@ -987,14 +1009,25 @@
      "trap",
      "margin"
     ],
-    "group": "3 · Training"
+    "group": "4 · Training"
+   },
+   {
+    "id": "backpropagation",
+    "title": "Backpropagation and mini-batches",
+    "what": "The chain rule run backwards through a network; noisy cheap steps with SGD.",
+    "from": "backprop",
+    "cases": [
+     "backprop",
+     "minibatch"
+    ],
+    "group": "4 · Training"
    },
    {
     "id": "optimizers",
     "title": "Optimizers",
     "what": "GD, momentum, RMSProp and Adam on 3D loss surfaces.",
     "from": "optimizers",
-    "group": "3 · Training"
+    "group": "4 · Training"
    },
    {
     "id": "overfitting",
@@ -1008,7 +1041,7 @@
      "early",
      "cv"
     ],
-    "group": "4 · Generalization"
+    "group": "5 · Generalization"
    },
    {
     "id": "metrics",
@@ -1018,7 +1051,7 @@
     "cases": [
      "imbalance"
     ],
-    "group": "4 · Generalization"
+    "group": "5 · Generalization"
    }
   ]
  },
@@ -1298,53 +1331,170 @@
      "line"
     ],
     "group": "Multivariable calculus"
+   }
+  ]
+ },
+ {
+  "subject": "probability",
+  "name": "Probability and statistics",
+  "topics": [
+   {
+    "id": "events",
+    "title": "Outcomes and events",
+    "what": "Two dice: events as sets of outcomes, the addition rule.",
+    "from": "basics",
+    "group": "1 · Basics",
+    "cases": [
+     "space"
+    ]
    },
    {
-    "id": "probability",
-    "title": "Probability",
-    "what": "A Galton board: random falls build the binomial and then the normal curve.",
-    "group": "Probability"
+    "id": "counting",
+    "title": "Counting",
+    "what": "Pascal’s triangle, combinations and the birthday problem.",
+    "from": "basics",
+    "group": "1 · Basics",
+    "cases": [
+     "counting"
+    ]
+   },
+   {
+    "id": "conditional",
+    "title": "Conditional probability",
+    "what": "Areas of a square and a tree diagram; independence.",
+    "from": "basics",
+    "group": "1 · Basics",
+    "cases": [
+     "conditional"
+    ]
+   },
+   {
+    "id": "law-large-numbers",
+    "title": "The law of large numbers",
+    "what": "Frequencies settle to the probability, error ∝ 1/√n.",
+    "from": "basics",
+    "group": "1 · Basics",
+    "cases": [
+     "lln"
+    ]
+   },
+   {
+    "id": "expected-value",
+    "title": "Expected value and variance",
+    "what": "The long-run average of a game, and its spread.",
+    "from": "basics",
+    "group": "2 · Random variables",
+    "cases": [
+     "expect"
+    ]
+   },
+   {
+    "id": "galton",
+    "title": "The Galton board",
+    "what": "Binomial rows of pegs turning into a bell; sums of dice.",
+    "from": "galton",
+    "group": "2 · Random variables"
    },
    {
     "id": "distributions",
     "title": "Probability distributions",
-    "what": "Normal, exponential, Poisson, binomial: probability as area.",
+    "what": "Normal, uniform, exponential, Poisson, binomial: probability as area.",
     "from": "statistics",
+    "group": "2 · Random variables",
     "cases": [
      "dist"
-    ],
-    "group": "Probability"
-   },
-   {
-    "id": "bayes",
-    "title": "Bayes’ theorem",
-    "what": "Why most positive tests for a rare disease are false.",
-    "from": "statistics",
-    "cases": [
-     "bayes"
-    ],
-    "group": "Probability"
+    ]
    },
    {
     "id": "central-limit",
     "title": "Sample means and the CLT",
-    "what": "Averages become normal and narrower as 1/√n.",
+    "what": "Averages of anything become normal.",
     "from": "statistics",
+    "group": "2 · Random variables",
     "cases": [
      "clt"
-    ],
-    "group": "Probability"
+    ]
+   },
+   {
+    "id": "bayes",
+    "title": "Bayes’ theorem",
+    "what": "1000 people and a screening test.",
+    "from": "statistics",
+    "group": "3 · Bayes",
+    "cases": [
+     "bayes"
+    ]
+   },
+   {
+    "id": "monte-carlo-area",
+    "title": "Monte Carlo: areas and π",
+    "what": "Random points estimate an area.",
+    "from": "montecarlo",
+    "group": "4 · Monte Carlo",
+    "cases": [
+     "hitmiss"
+    ]
+   },
+   {
+    "id": "monte-carlo-error",
+    "title": "How fast Monte Carlo converges",
+    "what": "Error ∝ 1/√N, whatever the dimension.",
+    "from": "montecarlo",
+    "group": "4 · Monte Carlo",
+    "cases": [
+     "error"
+    ]
+   },
+   {
+    "id": "buffon",
+    "title": "Buffon’s needle",
+    "what": "Needles on a ruled floor estimate π.",
+    "from": "montecarlo",
+    "group": "4 · Monte Carlo",
+    "cases": [
+     "buffon"
+    ]
+   },
+   {
+    "id": "importance-sampling",
+    "title": "Importance sampling",
+    "what": "Sample where the function matters.",
+    "from": "montecarlo",
+    "group": "4 · Monte Carlo",
+    "cases": [
+     "importance"
+    ]
    },
    {
     "id": "random-walk",
-    "title": "Random walks and Monte Carlo",
-    "what": "Diffusion as √n; estimating π with random darts.",
+    "title": "Random walks",
+    "what": "Coin-flip walks spread as √n; Monte Carlo π by darts.",
     "from": "statistics",
+    "group": "4 · Monte Carlo",
     "cases": [
      "walk",
      "pi"
-    ],
-    "group": "Probability"
+    ]
+   },
+   {
+    "id": "confidence-intervals",
+    "title": "Confidence intervals",
+    "what": "How often the interval catches the truth.",
+    "from": "inference",
+    "group": "5 · Statistics",
+    "cases": [
+     "ci"
+    ]
+   },
+   {
+    "id": "hypothesis-tests",
+    "title": "Hypothesis tests",
+    "what": "α, p-value and power.",
+    "from": "inference",
+    "group": "5 · Statistics",
+    "cases": [
+     "test"
+    ]
    }
   ]
  },

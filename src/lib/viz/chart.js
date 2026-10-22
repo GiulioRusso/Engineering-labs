@@ -21,12 +21,12 @@ export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 
   function axes() {
     frame.segments([X0, Y0, z, X0 + W, Y0, z, X0, Y0, z, X0, Y0 + H, z]);
     for (const l of labels) l.visible = false;
-    let k = 0; const g = [], put = (t, px, py) => { if (!labels[k]) { labels[k] = ctx.label('', 'tick'); scene.add(labels[k]); } labels[k].element.textContent = t; labels[k].position.set(px, py, z); labels[k].visible = true; k++; };
+    let k = 0; const g = [], put = (t, px, py) => { if (!labels[k]) { labels[k] = ctx.label('', 'tick'); scene.add(labels[k]); } labels[k].element.textContent = t; labels[k].position.set(px, py, z); labels[k].visible = frame.object.visible; k++; };
     const sx = niceStep(xr[1] - xr[0], 6), sy = niceStep(yr[1] - yr[0], 4);
     if (xTicks) for (let v = Math.ceil(xr[0] / sx) * sx; v <= xr[1] + 1e-9; v += sx) { g.push(mx(v), Y0, z, mx(v), Y0 + H, z); put(fmt(v), mx(v), Y0 - 0.18); }
     if (yTicks) for (let v = Math.ceil(yr[0] / sy) * sy; v <= yr[1] + 1e-9; v += sy) { g.push(X0, my(v), z, X0 + W, my(v), z); put(fmt(v), X0 - 0.3, my(v)); }
     grid.segments(showGrid ? g : []);
-    zero.object.visible = yr[0] < 0 && yr[1] > 0; if (zero.object.visible) zero.segments([X0, my(0), z, X0 + W, my(0), z]);
+    zero.object.visible = frame.object.visible && yr[0] < 0 && yr[1] > 0; if (zero.object.visible) zero.segments([X0, my(0), z, X0 + W, my(0), z]);
     tx.position.set(X0 + W / 2, Y0 - 0.42, z); ty.position.set(X0 - 0.62, Y0 + H / 2, z); cap.position.set(X0 + W / 2, Y0 + H + 0.18, z);
   }
   axes();
@@ -35,7 +35,9 @@ export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 
     mx, my,
     range(nx, ny) { xr = nx || xr; yr = ny || yr; axes(); },
     // titles('x name (unit)', 'y name (unit): caption'): text after the first ': ' becomes the caption
-    titles(a, b = '') { const i = b.indexOf(': '), yn = i < 0 ? b : b.slice(0, i), c = i < 0 ? '' : b.slice(i + 2); tx.element.textContent = a; setY(yn); cap.element.textContent = c;
+    titles(a, b = '') { const i = b.indexOf(': '); let yn = i < 0 ? b : b.slice(0, i), c = i < 0 ? '' : b.slice(i + 2);
+      // a long description does not fit along the axis: it becomes the caption above the chart
+      if (yn.length > 26) { c = c ? `${yn} — ${c}` : yn; yn = ''; } tx.element.textContent = a; setY(yn); cap.element.textContent = c;
       const on = frame.object.visible; tx.visible = on && !!a; ty.visible = on && !!yn; cap.visible = on && !!c; },
     line(key, xs, ys, o) { const c = curve(key, o), p = []; for (let i = 0; i < xs.length; i++) if (xs[i] >= xr[0] && xs[i] <= xr[1] && Number.isFinite(ys[i])) p.push(mx(xs[i]), my(ys[i]), z + 0.002); c.set(p); c.object.visible = true; return c; },
     stems(key, xs, ys, o) { const c = curve(key, { width: 3, ...o }), p = []; for (let i = 0; i < xs.length; i++) if (xs[i] >= xr[0] && xs[i] <= xr[1]) p.push(mx(xs[i]), my(0), z + 0.002, mx(xs[i]), my(ys[i]), z + 0.002); c.segments(p); c.object.visible = true; return c; },

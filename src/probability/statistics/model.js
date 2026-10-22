@@ -1,6 +1,6 @@
 // Statistics: common distributions (pdf/pmf and cdf), Bayes' theorem on a screening test, the sampling
 // distribution of the mean, random walks, and Monte Carlo estimation of π. Pure, no DOM.
-import { rng } from '../probability/model.js';
+import { rng } from '../../lib/random.js';
 const erf = (x) => { const t = 1 / (1 + 0.3275911 * Math.abs(x)), y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; };
 const fact = (n) => { let f = 1; for (let i = 2; i <= n; i++) f *= i; return f; };
 export const DIST = {
