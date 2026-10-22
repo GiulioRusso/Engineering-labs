@@ -5,7 +5,21 @@ const STEP = 0.8; // seconds per step at speed 1
 // a few input names were recorded in Italian
 const EN = { casuale: 'random', 'quasi ordinato': 'nearly sorted', 'invertito (caso peggiore)': 'reversed (worst case)', 'con duplicati': 'with duplicates', 'gia ordinato': 'already sorted' };
 
-export function traceLab(trace, { id, title, group }) {
+// C++ colouring like an editor: comments, strings, keywords, types, numbers, function names
+const KW = new Set('if else for while do return break continue switch case default new delete const static struct class public private protected using namespace template typename auto true false nullptr sizeof typedef enum'.split(' '));
+const TY = new Set('int bool char void double float long short unsigned size_t string vector map set pair queue stack deque std'.split(' '));
+const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+function cpp(line) {
+  if (!line) return ' ';
+  return line.replace(/(\/\/.*$)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|(#\s*\w+)|\b(\d+(?:\.\d+)?)\b|([A-Za-z_]\w*)(\s*\()?|([&<>])/g, (m, com, str, pre, num, id, call, ch) => {
+    if (com) return `<i class="c-com">${esc(com)}</i>`; if (str) return `<i class="c-str">${esc(str)}</i>`; if (pre) return `<i class="c-pre">${esc(pre)}</i>`; if (num) return `<i class="c-num">${num}</i>`;
+    if (ch) return esc(ch);
+    if (KW.has(id)) return `<i class="c-kw">${id}</i>${call || ''}`; if (TY.has(id)) return `<i class="c-ty">${id}</i>${call || ''}`;
+    return call ? `<i class="c-fn">${id}</i>${call}` : id;
+  });
+}
+
+export function traceLab(trace, { id, title, group, code = true }) {
   const inputs = trace.inputs;
   return {
     id, title, group, size: 1, ortho: true, plain: true, cam: 'top', duration: inputs[0].steps.length * STEP, loop: false,
@@ -15,12 +29,13 @@ export function traceLab(trace, { id, title, group }) {
     setup(ctx) {
       const { state, time } = ctx, view = ctx.el.stage.parentElement;
       const root = document.createElement('div'); root.className = 'trace'; view.append(root);
+      if (!code) root.classList.add('nocode');
       root.innerHTML = `<section class="tcode"><h3>C++ source <span class="fn"></span></h3><pre></pre></section>
         <section class="tview"><div class="tbadges"></div><div class="tcard"><div class="viewbox tprimary"></div><div class="tlegend"></div></div>
         <div class="tpanels"></div><div class="tcard tvars"></div><div class="tnote"></div></section>`;
       const $ = (s) => root.querySelector(s), pre = $('pre');
       pre.innerHTML = trace.displaySource.map((l, i) => `<div class="row"><span class="gut">${i + 1}</span><span></span></div>`).join('');
-      [...pre.children].forEach((r, i) => { r.lastChild.textContent = trace.displaySource[i] || ' '; });
+      [...pre.children].forEach((r, i) => { r.lastChild.innerHTML = cpp(trace.displaySource[i]); });
       $('.tbadges').innerHTML = [trace.chapter.replace(/^\d+\s*·\s*/, ''), `time ${trace.complexity.time}`, `space ${trace.complexity.space}`].map((b) => `<span>${b}</span>`).join('');
       let primary = null, panels = [], shown = -1;
       const steps = () => inputs[state.input].steps;

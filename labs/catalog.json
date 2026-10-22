@@ -627,7 +627,8 @@
  {
   "subject": "digital-electronics",
   "name": "Digital electronics",
-  "trace": "electronics-visualization"
+  "trace": "electronics-visualization",
+  "code": false
  },
  {
   "subject": "electronic-warfare",

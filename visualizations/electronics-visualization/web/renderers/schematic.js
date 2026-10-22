@@ -1,6 +1,6 @@
 // Renderer: schematic
 //
-// Gate boxes, elbow-free straight wires, pins. Wire colour and pin colour
+// Gate boxes, right-angle wires, pins. Wire colour and pin colour
 // follow the logic level (the same convention the source notebooks used:
 // red = driven high, grey = driven low). Coordinates come straight from the
 // C++ (Schematic::json in cpp/sim/circuit.hpp) — never computed here.
@@ -38,7 +38,10 @@
       const dot = ref.indexOf('.');
       if (dot === -1) {
         const p = (C.pins || []).find((p) => p.name === ref);
-        return p ? { x: p.x, y: p.y } : null;
+        if (p) return { x: p.x, y: p.y };
+        // a bare gate id means that gate's output
+        const g = (C.gates || []).find((g) => g.id === ref);
+        return g ? port(g, 'out') : null;
       }
       const gid = ref.slice(0, dot), pname = ref.slice(dot + 1);
       const g = (C.gates || []).find((g) => g.id === gid);
@@ -87,8 +90,12 @@
       for (const w of C.wires || []) {
         const a = endpoint(C, w.from), b = endpoint(C, w.to);
         if (!a || !b) continue;
-        el('line', { class: 'wire ' + cls(w.bit),
-          x1: px(a.x), y1: py(a.y), x2: px(b.x), y2: py(b.y) }, gWires);
+        // right-angle routing: out horizontally, turn halfway, in horizontally (backward runs loop round)
+        const x1 = px(a.x), y1 = py(a.y), x2 = px(b.x), y2 = py(b.y);
+        let d;
+        if (x2 >= x1 + 4) { const xm = (x1 + x2) / 2; d = `M${x1},${y1} H${xm} V${y2} H${x2}`; }
+        else { const ym = Math.max(y1, y2) + scale * 0.55, o = scale * 0.25; d = `M${x1},${y1} H${x1 + o} V${ym} H${x2 - o} V${y2} H${x2}`; }
+        el('path', { class: 'wire ' + cls(w.bit), d }, gWires);
       }
 
       for (const g of C.gates || []) {

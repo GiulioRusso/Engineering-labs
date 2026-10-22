@@ -37,11 +37,11 @@ function rendererCss() {
   return `${keys.join('\n')}\n.trace {\n${rest}\n}\n`;
 }
 // the explanation drawer: the comment block heading the C++ source, complexity, and one line per input
-function traceExplain(T) {
+function traceExplain(T, code) {
   const lines = []; for (const l of T.displaySource) { if (/^\s*\/\//.test(l)) lines.push(l.replace(/^\s*\/\/\s?/, '')); else if (lines.length) break; }
   const paras = lines.join('\n').split(/\n\s*\n/).map((p) => p.replace(/\n/g, ' ').trim()).filter(Boolean), [head, ...more] = paras;
   return `<section><h3>${escHtml(T.name)}</h3>${more.length ? '' : ''}${(more.length ? more : [head]).map((p) => `<p>${escHtml(p)}</p>`).join('')}
-<div class="look"><h4>What you are looking at</h4>Left: the real C++ code, with the line being executed highlighted. Right: the data (or the circuit) at this step, the variables that just changed, and a sentence explaining the step. Press play, or step forward and back with the play bar.</div>
+<div class="look"><h4>What you are looking at</h4>${code ? 'Left: the real C++ code, with the line being executed highlighted. Right: the data at this step, the variables that just changed, and a sentence explaining the step.' : 'The circuit (or its timing diagram) at this step: wires at logic 1 are highlighted, the gate just evaluated is marked; beside it the truth table or second view, the signal values, and a sentence explaining the step.'} Press play, or step forward and back with the play bar.</div>
 <div class="eq">time ${escHtml(T.complexity.time)} · space ${escHtml(T.complexity.space)}</div></section>
 ${T.inputs.map((inp, i) => `<section data-case="in${i}"><p><b>This input:</b> ${escHtml(inp.label)} — ${inp.steps.length} steps.</p></section>`).join('\n')}`;
 }
@@ -52,7 +52,7 @@ async function buildTraceSubject(S) {
   const entry = [
     "import '../lab.css';", "import './trace.css';", `import ${JSON.stringify(join(root, '.out-trace.css'))};`,
     "import { startTopic } from '../ui/topic.js';", "import { traceLab } from './trace-lab.js';",
-    `startTopic({ name: ${JSON.stringify(S.name)}, labs: [${topics.map((t) => `traceLab(window.TRACES[${JSON.stringify(t.id)}], ${JSON.stringify({ id: t.id, title: t.title, group: t.group })})`).join(', ')}] });`,
+    `startTopic({ name: ${JSON.stringify(S.name)}, labs: [${topics.map((t) => `traceLab(window.TRACES[${JSON.stringify(t.id)}], ${JSON.stringify({ id: t.id, title: t.title, group: t.group, code: S.code !== false })})`).join(', ')}] });`,
   ].join('\n');
   const res = await build({
     stdin: { contents: entry, resolveDir: join(root, 'src', 'lib', 'trace'), sourcefile: `${S.subject}-entry.js`, loader: 'js' },
@@ -62,7 +62,7 @@ async function buildTraceSubject(S) {
   const css = res.outputFiles.find((f) => f.path.endsWith('.css'))?.text || '';
   const rdir = join(VIS, dir, 'web', 'renderers'), { readdirSync } = await import('node:fs');
   const classic = [...readdirSync(rdir).filter((f) => f.endsWith('.js')).sort().map((f) => readFileSync(join(rdir, f), 'utf8')), ...topics.map((t) => readFileSync(join(VIS, dir, 'traces', `${t.id}.js`), 'utf8'))].join('\n;\n').replace(/<\/script/gi, '<\\/script');
-  const templates = topics.map((t, i) => `<template id="explain-${t.id}">${traceExplain(traces[i])}</template>`).join('\n') + `\n<script>${classic}</script>`;
+  const templates = topics.map((t, i) => `<template id="explain-${t.id}">${traceExplain(traces[i], S.code !== false)}</template>`).join('\n') + `\n<script>${classic}</script>`;
   const html = readFileSync(join(root, 'src', 'lib', 'topic.html'), 'utf8')
     .replace(/<!-- source-only -->[\s\S]*?<!-- \/source-only -->\n?/, '')
     .replace('{{TITLE}}', `${S.name} · Engineering Labs`).replace('{{DESCRIPTION}}', `Interactive ${S.name.toLowerCase()}: ${topics.map((t) => t.title).join(', ')}.`)

@@ -37,3 +37,16 @@
 .trace .tnote { padding: 10px 13px; line-height: 1.55; border-left: 3px solid var(--accent); background: var(--panel); border-radius: 0 10px 10px 0; min-height: 44px; }
 @media (max-width: 1000px) { .trace { grid-template-columns: 1fr; grid-template-rows: 34% 1fr; } }
 .trace .tprimary svg { width: min(100%, 760px); }
+/* editor colours (dark / light) */
+.trace { --k-kw: #c792ea; --k-ty: #82aaff; --k-fn: #ffcb6b; --k-str: #c3e88d; --k-num: #f78c6c; --k-com: #6b7a8f; --k-pre: #89ddff; }
+:root[data-theme="light"] .trace { --k-kw: #7c3aed; --k-ty: #1d4ed8; --k-fn: #b45309; --k-str: #15803d; --k-num: #c2410c; --k-com: #8a94a3; --k-pre: #0e7490; }
+.trace pre i { font-style: normal; } .trace .c-kw { color: var(--k-kw); } .trace .c-ty { color: var(--k-ty); } .trace .c-fn { color: var(--k-fn); }
+.trace .c-str { color: var(--k-str); } .trace .c-num { color: var(--k-num); } .trace .c-com { color: var(--k-com); font-style: italic; } .trace .c-pre { color: var(--k-pre); }
+/* circuits: no code, the view takes the stage and the side panels (truth table, schematic) sit beside it */
+.trace.nocode { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr); }
+.trace.nocode .tcode { display: none; }
+.trace.nocode .tview { height: 100%; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-rows: auto auto auto 1fr; grid-template-areas: "b b" "n n" "v p" "v x"; gap: 12px; }
+.trace.nocode .tbadges { grid-area: b; } .trace.nocode .tnote { grid-area: n; font-size: 15px; }
+.trace.nocode .tview > .tcard:first-of-type { grid-area: v; display: flex; flex-direction: column; min-height: 0; }
+.trace.nocode .tprimary { flex: 1; display: flex; align-items: center; min-height: 0; } .trace.nocode .tprimary svg { width: 100%; height: 100%; max-height: 60vh; }
+.trace.nocode .tpanels { grid-area: p; flex-direction: column; } .trace.nocode .tvars { grid-area: x; align-self: start; }
