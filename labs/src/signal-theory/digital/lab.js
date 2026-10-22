@@ -101,7 +101,7 @@ export default {
           square(sql, SQL, L); sql.titles('I', `ideal ${pts.length}-point constellation, Gray coded (${bits} bits each)`); sql.dots('p', pts.map((p) => p.x), pts.map((p) => p.y), { color: '--accent', size: small ? 12 : 7 });
           const lines = (ch) => { const lv = [...new Set(pts.map((p) => p.x))].sort((a, b) => a - b); lv.slice(1).forEach((v, i) => { const m = (v + lv[i]) / 2; ch.line(`v${i}`, [m, m], [-L * 2, L * 2], { color: '--line', width: 1 }); ch.line(`h${i}`, [-L * 2, L * 2], [m, m], { color: '--line', width: 1 }); }); for (let i = lv.length - 1; i < 16; i++) { ch.hide(`v${i}`); ch.hide(`h${i}`); } };
           lines(sql); putLabels(sql, pts, bits, pts.length <= 16);
-          square(sqr, SQR, L); sqr.titles('I', `received: ${state.ns} symbols at Eb/N0 = ${state.ebn0} dB`); lines(sqr);
+          square(sqr, SQR, L); sqr.titles('I', `Q: received ${state.ns} symbols at Eb/N0 = ${state.ebn0} dB`); lines(sqr);
           sqr.dots('ok', S.rx.filter((p) => p[2]).map((p) => p[0]), S.rx.filter((p) => p[2]).map((p) => p[1]), { color: '--c-B', size: 4 }); sqr.dots('bad', S.rx.filter((p) => !p[2]).map((p) => p[0]), S.rx.filter((p) => !p[2]).map((p) => p[1]), { color: '--c-north', size: 6 });
           const d = 2 / Math.sqrt((2 / 3) * (pts.length - 1));
           hud.set('a', `${pts.length}-QAM: ${bits} bits/symbol, neighbours ${fmt(d)} apart (unit power)`); hud.set('b', `measured BER ${S.ber.toExponential(1)} (theory ${berTheory(state.M, e).toExponential(1)}), symbol errors red`, S.ber < 1e-3 ? 'good' : 'bad');
@@ -118,9 +118,9 @@ export default {
           plots.aux.draw({ xlim: [-2, 24], cursor: state.ebn0, series: [{ x: xs, y: xs.map((x) => Math.max(-9, Math.log10(berTheory(state.sch, 10 ** (x / 10))))), color: SCHEMES.find((s) => s[0] === state.sch)[2], label: `${lab}: log₁₀ BER` }] });
         } else if (c === 'eye') {
           const a = state.alpha, tp = Array.from({ length: 401 }, (_, i) => -5 + i / 40), sps = 32, lv = state.pam === 4 ? [-3, -1, 1, 3].map((v) => v / Math.sqrt(5)) : [-1, 1];
-          tl.range([-5, 5], [-0.3, 1.1]); tl.titles('t / T', `raised-cosine pulse, α = ${a}: zero at every other symbol instant`); tl.line('p', tp, tp.map((t) => rcos(t, a)), { color: '--c-B' }); tl.dots('z', [-4, -3, -2, -1, 1, 2, 3, 4], [0, 0, 0, 0, 0, 0, 0, 0], { color: '--accent', size: 7 });
+          tl.range([-5, 5], [-0.3, 1.1]); tl.titles('t / T', `p(t): raised-cosine pulse α = ${a}, zero at every other symbol instant`); tl.line('p', tp, tp.map((t) => rcos(t, a)), { color: '--c-B' }); tl.dots('z', [-4, -3, -2, -1, 1, 2, 3, 4], [0, 0, 0, 0, 0, 0, 0, 0], { color: '--accent', size: 7 });
           const fs = Array.from({ length: 300 }, (_, i) => i / 200), H = fs.map((f) => (f <= (1 - a) / 2 ? 1 : f <= (1 + a) / 2 ? 0.5 * (1 + Math.cos(Math.PI / a * (f - (1 - a) / 2))) : 0));
-          tr.range([0, 1.5], [0, 1.1]); tr.titles('f · T', `spectrum: band (1 + α)/2T = ${fmt((1 + a) / 2)}/T`); tr.line('H', fs, H, { color: '--c-I' });
+          tr.range([0, 1.5], [0, 1.1]); tr.titles('f · T', `|P(f)| (norm.): band (1 + α)/2T = ${fmt((1 + a) / 2)}/T`); tr.line('H', fs, H, { color: '--c-I' });
           const eye = (ch, cv, sigma, title) => { const { y } = shaped(160, sps, a, lv, sigma); ch.range([0, 2], [-2, 2]); ch.titles('t / T (two symbols)', title); const seg = []; for (let k = 8; k < 150; k++) for (let i = 0; i < 2 * sps; i++) { const u = y[(k - 1) * sps + i + sps / 2], v = y[(k - 1) * sps + i + 1 + sps / 2]; seg.push(ch.mx(i / sps), ch.my(u), 0.002, ch.mx((i + 1) / sps), ch.my(v), 0.002); } cv.segments(seg); cv.object.visible = true; };
           eye(bl, eyes[0], 0, 'eye, no noise: the opening is the margin'); const sg = Math.sqrt(1 / (2 * Math.log2(state.pam) * e)); eye(br, eyes[1], sg, `eye at Eb/N0 = ${state.ebn0} dB`);
           hud.set('a', `α = ${a}: ${fmt(100 * a)} % excess bandwidth, tails decay ${a > 0.5 ? 'fast' : a > 0 ? 'moderately' : 'as 1/t — very slowly'}`); hud.set('b', 'sample in the middle of the eye: there, every pulse but one is zero (no ISI)');

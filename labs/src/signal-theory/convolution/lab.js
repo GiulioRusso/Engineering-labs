@@ -93,8 +93,8 @@ export default {
           tl.range([-1, L], [-2.5, 3.5]); tl.titles('k', 'x[k]'); tl.stems('x', x.map((_, i) => i), x, { color: '--c-B', width: 3 }); tl.dots('xd', x.map((_, i) => i), x, { color: '--c-B', size: 8 });
           const hk = h.map((_, j) => n - j); tr.range([-1, L], [-1.5, 1.5]); tr.titles('k', `h[${n} − k]: the kernel flipped and moved to n = ${n}`); tr.stems('h', hk, h, { color: '--c-I', width: 3 }); tr.dots('hd', hk, h, { color: '--c-I', size: 8 });
           const terms = h.map((v, j) => [n - j, v, x[n - j] ?? 0]).filter(([k]) => k >= 0 && k < x.length), pr = terms.map(([k, v, xv]) => [k, v * xv]);
-          bl.range([-1, L], [-4, 4]); bl.titles('k', 'products x[k]·h[n − k]'); bl.stems('p', pr.map((p) => p[0]), pr.map((p) => p[1]), { color: '--c-v', width: 4 });
-          br.range([-1, L], [Math.min(...y) - 1, Math.max(...y) + 1]); br.titles('n', 'y[n] = sum of the products'); br.stems('y', idx.filter((i) => i <= n), y.slice(0, n + 1), { color: '--c-E', width: 3 }); br.dots('now', [n], [y[n]], { color: '--accent', size: 11 });
+          bl.range([-1, L], [-4, 4]); bl.titles('k', 'x[k]·h[n − k]: the products'); bl.stems('p', pr.map((p) => p[0]), pr.map((p) => p[1]), { color: '--c-v', width: 4 });
+          br.range([-1, L], [Math.min(...y) - 1, Math.max(...y) + 1]); br.titles('n', 'y[n]: sum of the products'); br.stems('y', idx.filter((i) => i <= n), y.slice(0, n + 1), { color: '--c-E', width: 3 }); br.dots('now', [n], [y[n]], { color: '--accent', size: 11 });
           hud.set('a', `y[${n}] = ${terms.map(([k, v, xv]) => `${fmt(xv)}·${fmt(v)}`).join(' + ') || '0'} = ${fmt(y[n])}`);
           hud.set('b', { h3: 'three neighbours added: a smoothed copy', diff: 'each sample minus the previous: only changes survive', echo: 'the input plus half of it 3 samples later' }[state.k]);
           hud.set('c', `${x.length} + ${h.length} − 1 = ${L} output samples`);
@@ -103,7 +103,7 @@ export default {
           // h, g, their spectra, and the spectrum of h * g = product of spectra
           const N = 1024, d = 0.02, ts = Array.from({ length: N }, (_, i) => (i - N / 2) * d), hv = ts.map(SIGS[state.h].f), gv = ts.map(SIGS[state.g].f), { ys } = outOf(state.h, state.g), yts = grid(5, 0.02);
           tl.range([-3, 3], [-0.2, 1.2]); tl.titles('t (s)', 'h (blue) and g (orange)'); tl.line('h', ts, hv, { color: '--c-B' }); tl.line('g', ts, gv, { color: '--c-I' });
-          tr.range([-3, 3], [-0.1, Math.max(...ys) * 1.2]); tr.titles('t (s)', 'h * g, computed by sliding'); tr.line('y', yts, ys, { color: '--c-E' });
+          tr.range([-3, 3], [-0.1, Math.max(...ys) * 1.2]); tr.titles('t (s)', '(h * g)(t): computed by sliding'); tr.line('y', yts, ys, { color: '--c-E' });
           const spec = (v) => { const re = Float64Array.from(v), im = new Float64Array(N); fft(re, im); const f = [], m = []; for (let i = 0; i < N; i++) { const k = (i + N / 2) % N; f.push((k < N / 2 ? k : k - N) / (N * d)); m.push(Math.hypot(re[k], im[k]) * d); } return { f, m }; };
           const H = spec(hv), G = spec(gv), F = 4, sel = (S) => S.f.map((f, i) => [f, S.m[i]]).filter(([f]) => Math.abs(f) <= F);
           bl.range([-F, F], [0, Math.max(...H.m, ...G.m) * 1.15]); bl.titles('f (Hz)', '|H(f)| (blue) and |G(f)| (orange)'); bl.line('H', sel(H).map((p) => p[0]), sel(H).map((p) => p[1]), { color: '--c-B' }); bl.line('G', sel(G).map((p) => p[0]), sel(G).map((p) => p[1]), { color: '--c-I' });

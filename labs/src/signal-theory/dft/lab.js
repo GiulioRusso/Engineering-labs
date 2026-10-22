@@ -109,7 +109,7 @@ export default {
           const f = state.auto ? 15 * (t % 12) / 12 : state.f, ts = Array.from({ length: 800 }, (_, i) => i / 800 * 2), x = ts.map(sig), p = ts.map((v) => Math.cos(2 * Math.PI * f * v)), prod = x.map((v, i) => v * p[i]);
           tl.range([0, 2], [-1.8, 1.8]); tl.titles('t (s)', `signal (blue: tones at 4 and 9 Hz) and probe cos 2π·${fmt(f)}·t (orange)`); tl.line('x', ts, x, { color: '--c-B', width: 1.6 }); tl.line('p', ts, p, { color: '--c-I', width: 1.2 });
           let re = 0, im = 0; for (let i = 0; i < ts.length; i++) { re += prod[i] / 800 * 2; im -= x[i] * Math.sin(2 * Math.PI * f * ts[i]) / 800 * 2; }
-          bl.range([0, 2], [-1.8, 1.8]); bl.titles('t (s)', `product: net area Re X = ${fmt(re)}`);
+          bl.range([0, 2], [-1.8, 1.8]); bl.titles('t (s)', `x(t)·cos: net area Re X = ${fmt(re)}`);
           bl.stems('pos', ts.filter((_, i) => i % 2 === 0 && prod[i] > 0), ts.map((_, i) => prod[i]).filter((v, i) => i % 2 === 0 && v > 0), { color: '--c-v', width: 1.2 });
           bl.stems('neg', ts.filter((_, i) => i % 2 === 0 && prod[i] < 0), ts.map((_, i) => prod[i]).filter((v, i) => i % 2 === 0 && v < 0), { color: '--c-north', width: 1.2 });
           const fs = SWEEP.f, mag = SWEEP.m;
@@ -125,20 +125,20 @@ export default {
           const W = drawPlane(x, f);
           if (c === 'wind') {
             const fs = Array.from({ length: 401 }, (_, i) => i * 0.05), m = fs.map((ff) => Math.hypot(...wind(x, ff).com));
-            bl.range([0, 20], [0, 0.6]); bl.titles('winding frequency (cycles per record)', '|centre of mass| = |X|/N'); bl.line('m', fs, m, { color: '--c-E' }); bl.dots('now', [f], [Math.hypot(...W.com)], { color: '--accent', size: 12 });
+            bl.range([0, 20], [0, 0.6]); bl.titles('winding frequency (cycles per record)', '|centre of mass|: = |X|/N'); bl.line('m', fs, m, { color: '--c-E' }); bl.dots('now', [f], [Math.hypot(...W.com)], { color: '--accent', size: 12 });
             hud.set('a', `wound at ${fmt(f)} cycles per record`); hud.set('b', `centre of mass (${fmt(W.com[0])}, ${fmt(W.com[1])}) → |X| = N·|com| = ${fmt(N * Math.hypot(...W.com))}`, Math.hypot(...W.com) > 0.1 ? 'good' : '');
             hud.set('c', Math.abs(f - Math.round(f)) > 0.02 ? 'not an integer: it is between DFT bins' : Number(Math.round(f)) === 5 || Number(Math.round(f)) === 12 ? 'a tone: the points bunch on one side' : 'an integer, no tone: perfectly balanced');
             plots.aux.draw({ xlim: [0, 20], cursor: f, series: [{ x: fs, y: m.map((v) => v * N), color: '--c-E', label: '|X| vs winding frequency' }] });
           } else {
             const D = dftDirect(x), ks = n.filter((k) => k <= f), mg = ks.map((k) => Math.hypot(D.re[k], D.im[k]));
-            bl.range([-0.5, N - 0.5], [0, 26]); bl.titles('bin k', `spectrum filled up to bin ${f}`); bl.stems('X', ks, mg, { color: '--c-E', width: 3 });
+            bl.range([-0.5, N - 0.5], [0, 26]); bl.titles('bin k', `|X[k]|: filled up to bin ${f}`); bl.stems('X', ks, mg, { color: '--c-E', width: 3 });
             hud.set('a', `bin k = ${f}: wind exactly ${f} turns per record`); hud.set('b', `|X[${f}]| = ${fmt(Math.hypot(D.re[f], D.im[f]))}`, Math.hypot(D.re[f], D.im[f]) > 1 ? 'good' : '');
             hud.set('c', f > N / 2 ? `k > N/2: bin ${f} is the mirror of bin ${N - f} (negative frequency)` : 'integer turns: everything except a tone cancels exactly');
             plots.aux.draw({ xlim: [0, N - 1], cursor: f, series: [{ x: n, y: n.map((k) => Math.hypot(D.re[k], D.im[k])), color: '--c-E', label: '|X[k]| (all bins)' }] });
           }
         } else if (c === 'bridge') {
           const N = state.Nb, T = 4, dt = T / N, ts = Array.from({ length: N }, (_, i) => -T / 2 + i * dt), x = ts.map((v) => (Math.abs(v) <= state.pw / 2 ? 1 : 0));
-          top.range([-2, 2], [-0.2, 1.3]); top.titles('t (s)', `rect of width ${state.pw} s, ${N} samples over 4 s`); top.stems('x', ts, x, { color: '--c-B', width: N > 128 ? 1.2 : 2.4 });
+          top.range([-2, 2], [-0.2, 1.3]); top.titles('t (s)', `x[n]: rect of width ${state.pw} s, ${N} samples over 4 s`); top.stems('x', ts, x, { color: '--c-B', width: N > 128 ? 1.2 : 2.4 });
           const re = Float64Array.from(x), im = new Float64Array(N); fft(re, im);
           const fk = [], Xr = []; for (let i = 0; i < N; i++) { const k = (i + N / 2) % N, f = (k < N / 2 ? k : k - N) / T, ph = 2 * Math.PI * f * T / 2; fk.push(f); Xr.push((re[k] * Math.cos(ph) - im[k] * Math.sin(ph)) * dt); }
           const F = Math.min(N / (2 * T), 16), fx = Array.from({ length: 1000 }, (_, i) => -F + 2 * F * i / 999), w = Math.round(state.pw / dt) * dt;

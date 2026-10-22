@@ -86,14 +86,14 @@ export default {
       update() {
         const c = state.case, N = state.N, d = state.d, t0 = state.steer * deg, wt = 2 * Math.PI * (time.t % 4) / 4, fl = state.floor, opts = { N, d, steer: t0, taper: 'uniform' };
         if (c === 'wavefronts') {
-          const W = Math.max(3, N * d * 0.8); fieldMap(sql, SQL, wt, opts, W, 0); sql.titles('x (λ)', `E_z: ${N} elements, each delayed to steer to ${state.steer}°`);
+          const W = Math.max(3, N * d * 0.8); fieldMap(sql, SQL, wt, opts, W, 0); sql.titles('x (λ)', `y (λ): field E_z, ${N} elements, each delayed to steer to ${state.steer}°`);
           const xs = elements(N, d), delay = xs.map((x) => -x * Math.sin(t0)), mn = Math.min(...delay);
           sqr.range([-0.5, N - 0.5], [-0.05, Math.max(0.5, N * d * Math.abs(Math.sin(t0))) * 1.2]); sqr.titles('element n', 'delay per element (periods)'); sqr.stems('dl', xs.map((_, n) => n), delay.map((v) => v - mn), { color: '--c-I', width: 6 });
           hud.set('a', `Δτ = d sin θ₀ / c = ${fmt(d * Math.sin(t0))} periods between neighbours`); hud.set('b', 'each element’s ripples start a little later: they line up into a tilted front');
           hud.set('c', `front tilted by ${state.steer}°: the beam goes where the delays line up`);
           plots.aux.draw({ xlim: [-90, 90], cursor: state.steer, series: [{ x: ths, y: pat(N, d, steerWeights(N, d, t0)).map((v) => Math.max(fl, dB(v))), color: '--c-B', label: 'pattern (dB) vs θ (°)' }] });
         } else if (c === 'spacing') {
-          const W = Math.max(2.5, N * d * 0.7); fieldMap(sql, SQL, wt, opts, W, 0); sql.titles('x (λ)', `E_z: ${N} elements spaced ${d} λ`);
+          const W = Math.max(2.5, N * d * 0.7); fieldMap(sql, SQL, wt, opts, W, 0); sql.titles('x (λ)', `y (λ): field E_z, ${N} elements spaced ${d} λ`);
           const p = pat(N, d, steerWeights(N, d, t0)), m = metrics(p), g = gratingAngles(d, t0);
           pol.line('p', ths, p.map((v) => dbToR(dB(v), -fl)), { color: '--c-B' }); pol.ray('s', state.steer, { color: '--c-v' });
           hud.set('a', `aperture N·d = ${fmt(N * d)} λ → beamwidth ≈ 0.886/(N d) = ${fmt(0.886 / (N * d) / deg)}° (measured ${fmt(m.bw)}°)`); hud.set('b', g.length ? `grating lobe${g.length > 1 ? 's' : ''} at ${g.map((a) => fmt(a / deg)).join(', ')}° ✗` : 'no grating lobes ✓', g.length ? 'bad' : 'good');
@@ -101,7 +101,7 @@ export default {
           const ds = Array.from({ length: 141 }, (_, i) => 0.1 + i * 0.01); plots.aux.draw({ xlim: [0.1, 1.5], cursor: d, series: [{ x: ds, y: ds.map((q) => 0.886 / (N * q) / deg), color: '--c-B', label: 'beamwidth (°) vs spacing (λ)' }] });
         } else if (c === 'squint') {
           const fr = state.fr, fs = [1 / fr, 1, fr], cols = ['--c-north', '--c-v', '--c-B'];
-          tl.range([-90, 90], [fl, 2]); tl.titles('θ (°)', 'phase shifters: the beam squints with frequency'); tr.range([-90, 90], [fl, 2]); tr.titles('θ (°)', 'true time delay: the beam stays put');
+          tl.range([-90, 90], [fl, 2]); tl.titles('θ (°)', 'pattern (dB): phase shifters, the beam squints with frequency'); tr.range([-90, 90], [fl, 2]); tr.titles('θ (°)', 'pattern (dB): true time delay, the beam stays put');
           fs.forEach((f, j) => { tl.line(`p${j}`, ths, pat(N, d, steerWeights(N, d, t0, { mode: 'phase', fr: f }), f).map((v) => Math.max(fl, dB(v))), { color: cols[j], width: 1.6 }); tr.line(`p${j}`, ths, pat(N, d, steerWeights(N, d, t0, { mode: 'ttd', fr: f }), f).map((v) => Math.max(fl, dB(v))), { color: cols[j], width: 1.6 }); });
           const frs = Array.from({ length: 91 }, (_, i) => 0.6 + i * 0.01); bot.range([0.6, 1.5], [0, 90]); bot.titles('f / f₀', 'beam direction (°): phase shifters (orange) vs time delay (blue)');
           bot.line('ph', frs, frs.map((f) => squint(t0, f) / deg), { color: '--c-I' }); bot.line('td', [0.6, 1.5], [state.steer, state.steer], { color: '--c-B' }); bot.dots('now', [fr, 1 / fr], [squint(t0, fr) / deg, squint(t0, 1 / fr) / deg], { color: '--accent', size: 10 });
@@ -116,7 +116,7 @@ export default {
           let mx = -Infinity; for (const v of img) mx = Math.max(mx, v); sql.range([-W, W], [0.1, Ymax + 0.1]); sql.image('i', img, n, n, { map: 'magma', norm: (v) => Math.max(0, 1 + (v - mx) / 25) }); sql.titles('x (λ)', 'intensity × r (dB)');
           if (Rff < Ymax) sql.line('ff', [-W, W], [Rff, Rff], { color: '--c-v', dashed: true, width: 1.4 }); else sql.hide('ff');
           const cut = (y) => Array.from({ length: 201 }, (_, i) => { const x = -W + 2 * W * i / 200; let re = 0, im = 0; for (const e of xs) { const R = Math.hypot(x - e, y), p = -K * R; re += Math.cos(p) / Math.sqrt(R); im += Math.sin(p) / Math.sqrt(R); } return Math.hypot(re, im); });
-          sqr.range([-W, W], [0, 1.1]); sqr.titles('x (λ)', 'near · mid · far cross-sections'); [[D / 4, '--c-I'], [D, '--c-v'], [Ymax, '--c-B']].forEach(([y, col], j) => { const q = cut(y), m = Math.max(...q); sqr.line(`c${j}`, Array.from({ length: 201 }, (_, i) => -W + 2 * W * i / 200), q.map((v) => v / m), { color: col, width: 1.6 }); });
+          sqr.range([-W, W], [0, 1.1]); sqr.titles('x (λ)', '|E_z| (norm.): near · mid · far cross-sections'); [[D / 4, '--c-I'], [D, '--c-v'], [Ymax, '--c-B']].forEach(([y, col], j) => { const q = cut(y), m = Math.max(...q); sqr.line(`c${j}`, Array.from({ length: 201 }, (_, i) => -W + 2 * W * i / 200), q.map((v) => v / m), { color: col, width: 1.6 }); });
           hud.set('a', `aperture D = ${fmt(D)} λ → Fraunhofer distance 2D²/λ = ${fmt(Rff)} λ${Rff > Ymax ? ' (beyond the view)' : ' (green line)'}`); hud.set('b', 'close in, the beam is as wide as the array and ripples across'); hud.set('c', 'far away it spreads at a fixed angle: that is the far-field pattern');
           plots.aux.draw({ xlim: [-W, W], series: [{ x: Array.from({ length: 201 }, (_, i) => -W + 2 * W * i / 200), y: cut(Ymax).map((v, i, a) => v / Math.max(...a)), color: '--c-B', label: 'far cross-section' }] });
         } else if (c === 'grating') {
@@ -151,14 +151,14 @@ export default {
           plots.aux.draw({ xlim: [-1, 1], series: [{ x: us, y: us.map((u) => Math.max(fl, dB(planarAF(u, v0, Nx, Ny, d, u0, v0)))), color: '--c-B', label: 'u cut (dB)' }] });
         } else if (c === 'taper') {
           const a = TAPER[state.taper](N), w = steerWeights(N, d, t0, { taper: state.taper }), p = pat(N, d, w), m = metrics(p), mu = metrics(pat(N, d, steerWeights(N, d, t0)));
-          tl.range([-0.5, N - 0.5], [0, 1.15]); tl.titles('element n', `amplitude weights: ${TAPERS.find((q) => q[0] === state.taper)[1]}`); tl.stems('a', a.map((_, n) => n), a, { color: '--c-I', width: 6 });
+          tl.range([-0.5, N - 0.5], [0, 1.15]); tl.titles('element n', `weight (norm.): ${TAPERS.find((q) => q[0] === state.taper)[1]} taper`); tl.stems('a', a.map((_, n) => n), a, { color: '--c-I', width: 6 });
           bot.range([-90, 90], [fl, 2]); bot.titles('θ (°)', 'pattern (dB): this taper (blue) vs uniform (grey)'); bot.line('u', ths, pat(N, d, steerWeights(N, d, t0)).map((v) => Math.max(fl, dB(v))), { color: '--c-ref', width: 1.2 }); bot.line('p', ths, p.map((v) => Math.max(fl, dB(v))), { color: '--c-B' }); bot.line('sl', [-90, 90], [m.sl, m.sl], { color: '--c-north', dashed: true, width: 1 });
           const eff = a.reduce((s, v) => s + v, 0) ** 2 / (N * a.reduce((s, v) => s + v * v, 0));
           hud.set('a', `peak sidelobe ${fmt(m.sl)} dB (uniform ${fmt(mu.sl)} dB)`); hud.set('b', `beamwidth ${fmt(m.bw)}° = ${fmt(m.bw / mu.bw)}× uniform`); hud.set('c', `taper efficiency ${fmt(100 * eff)} %: the edges are under-used`);
           plots.aux.draw({ xlim: [0, N - 1], series: TAPERS.map(([k, l], j) => ({ x: a.map((_, n) => n), y: TAPER[k](N), color: ['--c-ref', '--c-B', '--c-I', '--c-v'][j], label: l })) });
         } else {
           const nulls = [state.n1, state.n2].slice(0, state.nn).map((v) => v * deg), w = nullWeights(N, d, t0, nulls), p = pat(N, d, w), p0 = pat(N, d, steerWeights(N, d, t0));
-          tl.range([-0.5, N - 0.5], [-1.5, 1.5]); tl.titles('element n', 'weights: real (blue) and imaginary (orange) parts'); tl.stems('re', w.map((_, n) => n - 0.1), w.map((q) => q[0] / Math.max(...w.map(cx.abs))), { color: '--c-B', width: 4 }); tl.stems('im', w.map((_, n) => n + 0.1), w.map((q) => q[1] / Math.max(...w.map(cx.abs))), { color: '--c-I', width: 4 });
+          tl.range([-0.5, N - 0.5], [-1.5, 1.5]); tl.titles('element n', 'weight (norm.): real (blue) and imaginary (orange) parts'); tl.stems('re', w.map((_, n) => n - 0.1), w.map((q) => q[0] / Math.max(...w.map(cx.abs))), { color: '--c-B', width: 4 }); tl.stems('im', w.map((_, n) => n + 0.1), w.map((q) => q[1] / Math.max(...w.map(cx.abs))), { color: '--c-I', width: 4 });
           bot.range([-90, 90], [-80, 2]); bot.titles('θ (°)', 'pattern (dB): with nulls (blue), plain steering (grey); interferers red');
           bot.line('u', ths, p0.map((v) => Math.max(-80, dB(v))), { color: '--c-ref', width: 1.2 }); bot.line('p', ths, p.map((v) => Math.max(-80, dB(v))), { color: '--c-B' });
           for (let i = 0; i < 2; i++) { if (i < nulls.length) bot.line(`n${i}`, [nulls[i] / deg, nulls[i] / deg], [-80, 2], { color: '--c-north', dashed: true, width: 1.4 }); else bot.hide(`n${i}`); }

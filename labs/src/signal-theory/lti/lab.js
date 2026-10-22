@@ -87,7 +87,7 @@ export default {
           const x1 = ts.map((t) => (t >= 1 ? 1 : 0)), x2 = ts.map((t) => Math.sin(2 * t)), x = x1.map((v, i) => state.a * v + state.b * x2[i]);
           const y1 = sim(x1), y2 = sim(x2), y = sim(x), sup = y1.map((v, i) => state.a * v + state.b * y2[i]), e = y.map((v, i) => Math.abs(v - sup[i]));
           const s = every(ts), lim = (...a) => Math.max(1.2, ...a.map((q) => Math.max(...q.map(Math.abs)))) * 1.1;
-          tl.range([0, T], [-lim(x), lim(x)]); tl.titles('t (s)', `inputs: x₁ step (blue), x₂ sine (orange), a·x₁ + b·x₂ (grey)`); tl.line('x1', s, every(x1), { color: '--c-B', width: 1.2 }); tl.line('x2', s, every(x2), { color: '--c-I', width: 1.2 }); tl.line('x', s, every(x), { color: '--c-ref' });
+          tl.range([0, T], [-lim(x), lim(x)]); tl.titles('t (s)', `x(t): x₁ step (blue), x₂ sine (orange), a·x₁ + b·x₂ (grey)`); tl.line('x1', s, every(x1), { color: '--c-B', width: 1.2 }); tl.line('x2', s, every(x2), { color: '--c-I', width: 1.2 }); tl.line('x', s, every(x), { color: '--c-ref' });
           tr.range([0, T], [-lim(y1, y2), lim(y1, y2)]); tr.titles('t (s)', 'responses y₁ (blue) and y₂ (orange), separately'); tr.line('y1', s, every(y1), { color: '--c-B' }); tr.line('y2', s, every(y2), { color: '--c-I' });
           bl.range([0, T], [-lim(y, sup), lim(y, sup)]); bl.titles('t (s)', 'response to the sum (solid) vs a·y₁ + b·y₂ (dashed)'); bl.line('y', s, every(y), { color: '--c-v', width: 3 }); bl.line('s', s, every(sup), { color: '--c-north', dashed: true, width: 1.6 });
           const le = e.map((v) => Math.log10(v + 1e-18)); br.range([0, T], [-18, 0]); br.titles('t (s)', 'log₁₀ |difference|: rounding errors only'); br.line('e', s, every(le), { color: '--c-E', width: 1.2 });
@@ -97,14 +97,14 @@ export default {
           const p = (t, d) => (t >= d && t < d + 0.6 ? 1 : 0), x0 = ts.map((t) => p(t, 0.5)), xd = ts.map((t) => p(t, 0.5 + state.d)), y0 = sim(x0), yd = sim(xd), s = every(ts);
           const shifted = ts.map((t) => { const i = Math.round((t - state.d) / dt); return i >= 0 ? y0[i] : 0; });
           top.range([0, T], [-0.2, 1.3]); top.titles('t (s)', `input pulse (blue) and the same pulse ${state.d} s later (orange)`); top.line('a', s, every(x0), { color: '--c-B' }); top.line('b', s, every(xd), { color: '--c-I' });
-          const m = Math.max(...y0.map(Math.abs)) * 1.3; bot.range([0, T], [-m, m]); bot.titles('t (s)', 'outputs: y(t) (blue), response to the late pulse (orange), y(t − d) (dashed)');
+          const m = Math.max(...y0.map(Math.abs)) * 1.3; bot.range([0, T], [-m, m]); bot.titles('t (s)', 'y(t): blue, response to the late pulse orange, y(t − d) dashed');
           bot.line('a', s, every(y0), { color: '--c-B' }); bot.line('b', s, every(yd), { color: '--c-I', width: 3 }); bot.line('c', s, every(shifted), { color: '--c-north', dashed: true, width: 1.6 });
           const err = Math.max(...yd.map((v, i) => Math.abs(v - shifted[i])));
           hud.set('a', name()); hud.set('b', `delay the input by ${state.d} s → the output is the same, ${state.d} s later (max diff ${err.toExponential(1)})`, 'good'); hud.set('c', 'time-invariant: the system does not care what time it is');
           plots.aux.draw({ xlim: [0, T], series: [{ x: s, y: every(yd), color: '--c-I', label: 'response to the delayed pulse' }] });
         } else if (c === 'impulse') {
           const w = state.w, x = ts.map((t) => (t >= 0.5 && t < 0.5 + w ? 1 / w : 0)), y = sim(x), h = ts.map((t) => hOf(t - 0.5)), s = every(ts, 2);
-          top.range([0, T], [-0.1 * Math.min(1 / w, 30), Math.min(1 / w, 30) * 1.1]); top.titles('t (s)', `input: a pulse ${w} s wide and ${fmt(1 / w)} tall — area always 1`); top.line('x', s, every(x, 2), { color: '--c-B' });
+          top.range([0, T], [-0.1 * Math.min(1 / w, 30), Math.min(1 / w, 30) * 1.1]); top.titles('t (s)', `x(t): a pulse ${w} s wide and ${fmt(1 / w)} tall — area always 1`); top.line('x', s, every(x, 2), { color: '--c-B' });
           const m = Math.max(...h.map(Math.abs)) * 1.3; bot.range([0, T], [-m, m]); bot.titles('t (s)', 'output (blue) and the impulse response h(t) (dashed)'); bot.line('y', s, every(y, 2), { color: '--c-B' }); bot.line('h', s, every(h, 2), { color: '--c-north', dashed: true, width: 1.6 });
           const err = Math.max(...y.map((v, i) => Math.abs(v - h[i]))) / (m / 1.3);
           hud.set('a', name()); hud.set('b', `difference from h(t): ${fmt(100 * err)} % of its peak`, err < 0.05 ? 'good' : ''); hud.set('c', 'δ(t) = the limit of narrower and taller pulses of area 1');
@@ -134,7 +134,7 @@ export default {
           const step = ts.map(() => 1), y = second(step, dt, state.zeta, state.wn), h = ts.map(hOf), s = every(ts), env = ts.map((t) => Math.exp(-state.zeta * state.wn * t));
           const mh = Math.min(20, Math.max(...h.map(Math.abs)) * 1.2); tr.range([0, T], [-mh, mh]); tr.titles('t (s)', 'impulse response h(t), envelope e^(−ζωn·t)'); tr.line('h', s, every(h), { color: '--c-B' });
           tr.line('e1', s, every(env.map((v) => Math.min(mh, v * state.wn))), { color: '--c-ref', dashed: true, width: 1 }); tr.line('e2', s, every(env.map((v) => Math.max(-mh, -v * state.wn))), { color: '--c-ref', dashed: true, width: 1 });
-          const my = Math.min(6, Math.max(1.6, ...y.map(Math.abs)) * 1.1); br.range([0, T], [state.zeta < 0 ? -my : 0, my]); br.titles('t (s)', 'step response'); br.line('y', s, every(y), { color: '--c-v' }); br.line('one', [0, T], [1, 1], { color: '--ink-dim', dashed: true, width: 1 });
+          const my = Math.min(6, Math.max(1.6, ...y.map(Math.abs)) * 1.1); br.range([0, T], [state.zeta < 0 ? -my : 0, my]); br.titles('t (s)', 'y(t): step response'); br.line('y', s, every(y), { color: '--c-v' }); br.line('one', [0, T], [1, 1], { color: '--ink-dim', dashed: true, width: 1 });
           const si = stepInfo(state.zeta, state.wn);
           hud.set('a', `poles ${P.map((p) => `${fmt(p[0])} ${p[1] >= 0 ? '+' : '−'} j${fmt(Math.abs(p[1]))}`).join(', ')}`);
           hud.set('b', state.zeta < 0 ? 'right half-plane: the response grows without bound ✗' : state.zeta < 1 ? `complex poles: rings at ω_d = ${fmt(state.wn * Math.sqrt(1 - state.zeta ** 2))} rad/s, overshoot ${fmt(100 * si.os)} %` : 'real poles: no oscillation', state.zeta < 0 ? 'bad' : 'good');
@@ -154,7 +154,7 @@ export default {
           const w = state.om, x = ts.map((t) => Math.sin(w * t)), y = second(x, dt, state.zeta, state.wn), Hs = H2(w, state.zeta, state.wn), yss = ts.map((t) => Hs.mag * Math.sin(w * t + Hs.ph)), s = every(ts, 2);
           const m = Math.max(1.2, Hs.mag * 1.3, ...y.map(Math.abs)); top.range([0, T], [-m, m]); top.titles('t (s)', 'input sin ωt (grey), output (blue), predicted |H| sin(ωt + ∠H) (dashed)');
           top.line('x', s, every(x, 2), { color: '--c-ref', width: 1.2 }); top.line('y', s, every(y, 2), { color: '--c-B' }); top.line('ss', s, every(yss, 2), { color: '--c-north', dashed: true, width: 1.4 });
-          const res = y.map((v, i) => v - yss[i]), mr = Math.max(0.05, ...res.map(Math.abs)) * 1.2; bot.range([0, T], [-mr, mr]); bot.titles('t (s)', 'transient = output − steady state: dies as e^(−ζωn·t)'); bot.line('r', s, every(res, 2), { color: '--c-E' });
+          const res = y.map((v, i) => v - yss[i]), mr = Math.max(0.05, ...res.map(Math.abs)) * 1.2; bot.range([0, T], [-mr, mr]); bot.titles('t (s)', 'output − steady state: the transient, dies as e^(−ζωn·t)'); bot.line('r', s, every(res, 2), { color: '--c-E' });
           bot.line('e1', s, every(ts.map((t) => Math.min(mr, mr / 1.2 * Math.exp(-state.zeta * state.wn * t))), 2), { color: '--c-ref', dashed: true, width: 1 }); bot.line('e2', s, every(ts.map((t) => Math.max(-mr, -mr / 1.2 * Math.exp(-state.zeta * state.wn * t))), 2), { color: '--c-ref', dashed: true, width: 1 });
           hud.set('a', `ω = ${w} rad/s: |H| = ${fmt(Hs.mag)} (${fmt(20 * Math.log10(Hs.mag))} dB), ∠H = ${fmt(Hs.ph * 180 / Math.PI)}°`);
           hud.set('b', `after ≈ ${fmt(4 / (state.zeta * state.wn))} s (4/ζωn) only the steady state is left`); hud.set('c', 'same frequency out as in: only amplitude and phase change');

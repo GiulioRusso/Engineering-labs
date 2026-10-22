@@ -88,11 +88,11 @@ export default {
           const M = margins(state.r), Vm = threshold(state.r), xs = [-4.1, -3.2, -2.3, -1.4, -0.5];
           xs.slice(0, 4).forEach((x, i) => { const gg = gate(sch, [x + 0.45, 0]); sch.wire([x, 0], gg.in); if (i === 0) sch.text('noisy in', [x - 0.1, 0.45]); sch.text(`${i + 1}`, [x + 0.4, -0.55]); });
           sch.wire([-0.6, 0], [-0.4, 0]).text('clean', [-0.5, 0.45]);
-          const vi = lin(0, V, 300), vtc = vi.map((v) => invOut(v, state.r)); tr.range([0, V], [0, V]); tr.titles('v_in (V)', 'transfer curve: slope −1 at V_IL and V_IH');
+          const vi = lin(0, V, 300), vtc = vi.map((v) => invOut(v, state.r)); tr.range([0, V], [0, V]); tr.titles('v_in (V)', 'v_out (V): transfer curve, slope −1 at V_IL and V_IH');
           tr.line('vtc', vi, vtc, { color: '--c-B' }); tr.dots('m', [M.VIL, M.VIH], [M.VOH, M.VOL], { color: '--accent', size: 11 }); tr.line('il', [M.VIL, M.VIL], [0, V], { color: '--c-v', dashed: true, width: 1 }); tr.line('ih', [M.VIH, M.VIH], [0, V], { color: '--c-v', dashed: true, width: 1 });
           const ts = lin(0, 4, 800), n = state.noise / 1000, sig = ts.map((x, i) => Math.min(V, Math.max(0, (Math.floor(x) % 2 ? V : 0) + n * (Math.sin(37 * x + 1) * 0.6 + Math.sin(91 * x) * 0.4) * (Math.floor(x) % 2 ? -1 : 1) * (0.6 + 0.4 * Math.sin(i)))));
           const s1 = sig.map((v) => invOut(v, state.r)), s2 = s1.map((v) => invOut(v, state.r)), s4 = s2.map((v) => invOut(invOut(v, state.r), state.r));
-          br.range([0, 4], [-0.2, V + 0.2]); br.titles('t', 'in grey → 2 gates orange → 4 gates blue'); br.line('i', ts, sig, { color: '--c-ref', width: 1 }); br.line('2', ts, s2, { color: '--c-I', width: 1.3 }); br.line('4', ts, s4, { color: '--c-B' });
+          br.range([0, 4], [-0.2, V + 0.2]); br.titles('t (bit periods)', 'voltage (V): input grey → after 2 gates orange → after 4 blue'); br.line('i', ts, sig, { color: '--c-ref', width: 1 }); br.line('2', ts, s2, { color: '--c-I', width: 1.3 }); br.line('4', ts, s4, { color: '--c-B' });
           hud.set('a', `NM_L = V_IL − V_OL = ${fmt(M.NML)} V · NM_H = V_OH − V_IH = ${fmt(M.NMH)} V`, Math.min(M.NML, M.NMH) > 0.5 ? 'good' : 'bad'); hud.set('b', `V_IL ${fmt(M.VIL)} V, V_IH ${fmt(M.VIH)} V, V_M ${fmt(Vm)} V`);
           hud.set('c', 'outside the steep middle the gain is below 1: each gate squeezes noise out instead of passing it on');
           plots.aux.draw({ xlim: [0.5, 4], cursor: state.r, series: [{ x: lin(0.5, 4, 40), y: lin(0.5, 4, 40).map((r) => margins(r).NML), color: '--c-B', label: 'NM_L (V) vs PMOS/NMOS width' }, { x: lin(0.5, 4, 40), y: lin(0.5, 4, 40).map((r) => margins(r).NMH), color: '--c-I', label: 'NM_H (V)' }] });
@@ -123,7 +123,7 @@ export default {
           const g1 = gate(sch, [-2.6, 0.6], 1), g2 = gate(sch, [-2.6, -0.6], -1); sch.wire(g1.out, [-1.6, 0.6], [-1.6, -0.6], g2.in).wire(g2.out, [-3.6, -0.6], [-3.6, 0.6], g1.in).dot([-1.6, 0.6]).dot([-3.6, -0.6]).text('A', [-1.35, 0.6]).text('B', [-3.85, -0.6]).text(`A = ${fmt(A.at(-1), 2)} V, B = ${fmt(B.at(-1), 2)} V`, [-2.6, -1.4]);
           tr.range([0, tps.at(-1)], [0, V]); tr.titles('t (ps)', 'node A (blue), node B (orange)');
           tr.line('a', tps, A, { color: '--c-B' }); tr.line('b', tps, B, { color: '--c-I' }); if (Number.isFinite(L.res)) tr.dots('r', [L.res * 1e12], [V / 2], { color: '--accent', size: 11 }); else tr.hide('r');
-          const vi = lin(0, V, 200); br.range([0, V], [0, V]); br.titles('V_A (V)', 'butterfly: both curves cross 3 times');
+          const vi = lin(0, V, 200); br.range([0, V], [0, V]); br.titles('V_A (V)', 'V_B (V): butterfly, the curves cross 3 times');
           br.line('f', vi, vi.map((v) => invOut(v, state.r)), { color: '--c-B' }); br.line('g', vi.map((v) => invOut(v, state.r)), vi, { color: '--c-I' }); br.dots('fp', [0, L.Vm, V], [V, L.Vm, 0], { color: '--accent', size: 11 });
           hud.set('a', Number.isFinite(L.res) ? `decided in ${ps(L.res)}: A went ${A.at(-1) > V / 2 ? 'high' : 'low'}` : 'still undecided (metastable)', Number.isFinite(L.res) ? 'good' : 'bad');
           hud.set('b', 'two stable points (the rails) and one unstable in the middle: a bit of memory'); hud.set('c', 'resolution time grows only with log(1/imbalance) — but a perfect tie never resolves');

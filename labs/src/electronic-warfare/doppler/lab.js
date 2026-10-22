@@ -101,12 +101,12 @@ export default {
           const vs = Array.from({ length: 101 }, (_, i) => -1000 + 20 * i); plots.aux.draw({ xlim: [-1000, 1000], cursor: state.v, series: [{ x: vs, y: vs.map((v) => dopplerShift(v, f0) / 1e3), color: '--c-B', label: `Doppler (kHz) vs closing speed (m/s) at ${state.f0} GHz` }] });
         } else if (c === 'dashboard') {
           const [sc, rp, ds] = P3, vu = vUnamb(state.prf, f0), dR = C0 * state.tau / 2, dV = dv(state.prf, state.N, f0), va = apparentVelocity(state.v, state.prf, f0);
-          sc.range([-1, 1], [0, 45]); sc.titles('', 'scene: range (km)'); radar.set(sc.mx(0), sc.my(1.5), Math.PI / 2, 0.25); acs[0].set(sc.mx(0), sc.my(state.R / km), state.v > 0 ? -Math.PI / 2 : Math.PI / 2, 0.2);
+          sc.range([-1, 1], [0, 45]); sc.titles('', 'range (km): the scene seen from above'); radar.set(sc.mx(0), sc.my(1.5), Math.PI / 2, 0.25); acs[0].set(sc.mx(0), sc.my(state.R / km), state.v > 0 ? -Math.PI / 2 : Math.PI / 2, 0.2);
           vec.object.visible = true; vec.segments([sc.mx(0.25), sc.my(state.R / km), 0.01, sc.mx(0.25), sc.my(state.R / km - state.v / 60), 0.01]);
           const xs = Array.from({ length: 400 }, (_, i) => state.R / km - 1.5 + 3 * i / 399), pr = xs.map((x) => Math.max(0, 1 - Math.abs(x * km - state.R) / dR));
-          rp.range([state.R / km - 1.5, state.R / km + 1.5], [0, 1.1]); rp.titles('range (km)', `range profile: ΔR = cτ/2 = ${fmt(dR)} m`); rp.line('p', xs, pr, { color: '--c-E' });
+          rp.range([state.R / km - 1.5, state.R / km + 1.5], [0, 1.1]); rp.titles('range (km)', `echo amplitude (norm.): ΔR = cτ/2 = ${fmt(dR)} m`); rp.line('p', xs, pr, { color: '--c-E' });
           const D = dopplerSpectrum([dopplerShift(state.v, f0)], state.N, state.prf, 512), vs = D.f.map((f) => f * lam / 2);
-          ds.range([-vu, vu], [0, 1.1]); ds.titles('radial velocity (m/s)', `Doppler: Δv = ${fmt(dV)} m/s, ±${fmt(vu)} m/s`); ds.line('D', vs, D.A, { color: '--c-B' });
+          ds.range([-vu, vu], [0, 1.1]); ds.titles('radial velocity (m/s)', `spectrum amplitude (norm.): Δv = ${fmt(dV)} m/s, unambiguous ±${fmt(vu)} m/s`); ds.line('D', vs, D.A, { color: '--c-B' });
           hud.set('a', `range ${fmt(state.R / km)} km from the delay; velocity from ${state.N} pulses (FFT over slow time)`);
           hud.set('b', `velocity resolution λ·PRF/2N = ${fmt(dV)} m/s; unambiguous ±λ·PRF/4 = ±${fmt(vu)} m/s`);
           hud.set('c', Math.abs(state.v) > vu ? `true ${state.v} m/s appears at ${fmt(va)} m/s ✗` : `measured ${fmt(va)} m/s ✓`, Math.abs(state.v) > vu ? 'bad' : 'good');

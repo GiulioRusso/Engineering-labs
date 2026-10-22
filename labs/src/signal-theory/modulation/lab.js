@@ -81,7 +81,7 @@ export default {
           tr.range([W[0][0], W[W.length - 1][0]], [0, 1.15]); tr.titles('f (Hz)', state.dsb ? 'spectrum: two sidebands, no carrier' : 'spectrum: carrier + two sidebands at fc ± fm'); tr.stems('S', W.map((q) => q[0]), W.map((q) => q[1]), { color: '--c-E', width: 2.4 });
           bl.range([0, state.span], [-0.2, ym]); bl.titles('t (s)', 'envelope detector (rectify + low-pass, blue) vs 1 + μm (dashed)'); bl.line('d', t, det.slice(0, n), { color: '--c-B' }); bl.line('m', t, env.slice(0, n).map(Math.abs), { color: '--c-ref', dashed: true, width: 1.2 });
           const Pc = state.dsb ? 0 : 0.5, Ps = state.dsb ? 0.25 : state.mu ** 2 / 4, eff = Ps / (Pc + Ps);
-          br.range([-0.5, 1.5], [0, 0.6]); br.titles('carrier · sidebands', 'average power'); br.line('pc', [0, 0], [0, Pc], { color: '--c-ref', width: 24 }); br.line('ps', [1, 1], [0, Math.min(0.6, Ps)], { color: '--c-v', width: 24 });
+          br.range([-0.5, 1.5], [0, 0.6]); br.titles('carrier · sidebands', 'average power (norm.)'); br.line('pc', [0, 0], [0, Pc], { color: '--c-ref', width: 24 }); br.line('ps', [1, 1], [0, Math.min(0.6, Ps)], { color: '--c-v', width: 24 });
           const over = !state.dsb && state.mu > 1;
           hud.set('a', state.dsb ? 'DSB-SC: all power in the sidebands — but the envelope is |m|, so a plain detector fails' : `μ = ${state.mu}: sidebands at ${state.fc - state.fm} and ${state.fc + state.fm} Hz, each μ/2 = ${fmt(state.mu / 2)}`);
           hud.set('b', over ? 'μ > 1: the envelope crosses zero → the detector distorts ✗' : `bandwidth 2·fm = ${2 * state.fm} Hz`, over ? 'bad' : '');
@@ -92,7 +92,7 @@ export default {
           tl.range([0, state.span], [-1.4, 1.4]); tl.titles('t (s)', `FM: constant amplitude, the zero crossings bunch and spread`); tl.line('s', t, F.s.slice(0, n), { color: '--c-v', width: 1.1 }); tl.line('m', t, F.m.slice(0, n).map((v) => 1.2 * v), { color: '--c-B', dashed: true, width: 1 });
           tr.range([0, state.span], [state.fc - state.df * 1.5 - 2, state.fc + state.df * 1.5 + 2]); tr.titles('t (s)', `instantaneous frequency fᵢ = fc + Δf·m(t)`); tr.line('fi', t, F.fi.slice(0, n), { color: '--c-I' }); tr.line('fc', [0, state.span], [state.fc, state.fc], { color: '--ink-dim', dashed: true, width: 1 });
           const S = spec(F.s), lo = Math.max(0, state.fc - carson), hi = state.fc + carson, W = win(S, lo, hi);
-          bl.range([lo, hi], [0, 1.1]); bl.titles('f (Hz)', `spectrum: lines every fm, heights |Jₙ(β)| (dots); Carson band dashed`); bl.stems('S', W.map((q) => q[0]), W.map((q) => q[1]), { color: '--c-E', width: 2 });
+          bl.range([lo, hi], [0, 1.1]); bl.titles('f (Hz)', `|X| (norm.): lines every fm, heights |Jₙ(β)| (dots), Carson band dashed`); bl.stems('S', W.map((q) => q[0]), W.map((q) => q[1]), { color: '--c-E', width: 2 });
           const ns = []; for (let k = -30; k <= 30; k++) if (state.fc + k * state.fm >= lo && state.fc + k * state.fm <= hi) ns.push(k);
           bl.dots('J', ns.map((k) => state.fc + k * state.fm), ns.map((k) => Math.abs(besselJ(Math.abs(k), beta))), { color: '--accent', size: 7 });
           bl.line('c1', [state.fc - carson / 2, state.fc - carson / 2], [0, 1.1], { color: '--c-north', dashed: true, width: 1 }); bl.line('c2', [state.fc + carson / 2, state.fc + carson / 2], [0, 1.1], { color: '--c-north', dashed: true, width: 1 });
@@ -108,9 +108,9 @@ export default {
           tl.range([0, state.span], [-1.4, 1.4]); tl.titles('t (s)', `PM: phase = kp·m(t), kp = ${state.kp} rad`); tl.line('s', t, P.s.slice(0, n), { color: '--c-v', width: 1.1 }); tl.line('m', t, P.m.slice(0, n).map((v) => 1.2 * v), { color: '--c-B', dashed: true, width: 1 });
           tr.range([0, state.span], [-1.4, 1.4]); tr.titles('t (s)', `FM: frequency = fc + Δf·m(t), Δf = ${state.df} Hz`); tr.line('s', t, F.s.slice(0, n), { color: '--c-I', width: 1.1 }); tr.line('m', t, F.m.slice(0, n).map((v) => 1.2 * v), { color: '--c-B', dashed: true, width: 1 });
           const clip = (v) => Math.max(state.fc - 150, Math.min(state.fc + 150, v)), r = Math.max(state.df, state.kp * state.fm) * 1.6 + 5;
-          bl.range([0, state.span], [state.fc - r, state.fc + r]); bl.titles('t (s)', 'instantaneous frequency: PM (green) follows dm/dt, FM (orange) follows m'); bl.line('p', t, P.fi.slice(0, n).map(clip), { color: '--c-v', width: 1.6 }); bl.line('f', t, F.fi.slice(0, n), { color: '--c-I', width: 1.6 });
+          bl.range([0, state.span], [state.fc - r, state.fc + r]); bl.titles('t (s)', 'instantaneous frequency (Hz): PM (green) follows dm/dt, FM (orange) follows m'); bl.line('p', t, P.fi.slice(0, n).map(clip), { color: '--c-v', width: 1.6 }); bl.line('f', t, F.fi.slice(0, n), { color: '--c-I', width: 1.6 });
           const SP = spec(P.s), SF = spec(F.s), lo = Math.max(0, state.fc - 3 * r), hi = state.fc + 3 * r, WP = win(SP, lo, hi), WF = win(SF, lo, hi);
-          br.range([lo, hi], [0, 1.1]); br.titles('f (Hz)', 'spectra: PM (green), FM (orange)'); br.line('P', WP.map((q) => q[0]), WP.map((q) => q[1]), { color: '--c-v', width: 1.4 }); br.line('F', WF.map((q) => q[0]), WF.map((q) => q[1]), { color: '--c-I', width: 1.4 });
+          br.range([lo, hi], [0, 1.1]); br.titles('f (Hz)', '|X| (norm.): PM (green), FM (orange)'); br.line('P', WP.map((q) => q[0]), WP.map((q) => q[1]), { color: '--c-v', width: 1.4 }); br.line('F', WF.map((q) => q[0]), WF.map((q) => q[1]), { color: '--c-I', width: 1.4 });
           hud.set('a', `peak frequency swing: PM kp·fm = ${fmt(state.kp * state.fm)} Hz (grows with fm), FM Δf = ${state.df} Hz (fixed)`);
           hud.set('b', state.msg === 'square' ? 'square m: PM makes phase jumps (spikes in fᵢ), FM makes frequency jumps' : 'PM of m(t) is FM of dm/dt: the same family, angle modulation');
           hud.set('c', 'digital PSK (BPSK, QPSK) is PM with a square message');

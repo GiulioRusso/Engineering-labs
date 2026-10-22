@@ -1,0 +1,67 @@
+<section data-case="phasor">
+  <h3>Phasors: a sine wave is a turning arrow</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: an arrow turning steadily in the complex plane. Right: its horizontal shadow (the real part) plotted against time — a cosine. Add a second arrow and the sum is just the two arrows tip to tail.</div>
+  <p>Every sine at a given frequency is the shadow of an arrow of length A, starting at angle φ, turning at ω. In a circuit every voltage and current has the same ω, so all arrows turn together and their relative angles never change. We can freeze the picture: the frozen arrow (a complex number) is the <b>phasor</b>.</p>
+  <div class="eq">$$A\cos(\omega t+\varphi)=\mathrm{Re}\{\underbrace{Ae^{j\varphi}}_{\text{phasor}}\,e^{j\omega t}\}$$</div>
+  <ol class="steps"><li>Write each sine as an arrow (A, φ).</li><li>Add arrows as vectors (tip to tail).</li><li>Read the result: length = amplitude, angle = phase.</li></ol>
+  <div class="worked"><h4>Worked example</h4>cos ωt + cos(ωt + 90°): arrows of length 1 at 0° and 90° → √2 at 45°. Amplitudes do not simply add (1 + 1 ≠ √2).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding amplitudes of sines with different phases. They only add arithmetically when in phase.</div>
+</section>
+<section data-case="phasor" data-example="sum"><h3>Two sines</h3><p>The purple arrow (the sum) is the diagonal of the parallelogram; its shadow is the purple wave.</p></section>
+<section data-case="phasor" data-example="cancel"><h3>180° apart</h3><p>Equal arrows pointing opposite ways: the sum is zero at every instant.</p></section>
+<section data-case="helix">
+  <h3>Phasors in 3D: helices in time</h3>
+  <div class="look"><h4>What you are looking at</h4>A 3D view: time runs to the right; the voltage arrow (blue) and current arrow (orange) of a series RLC turn at the left end and trace helices. Their shadows on the floor are the cosines you see on a scope; on the back wall, the sines. Drag to rotate.</div>
+  <p>The helix is the complete picture of a sinusoid: a rotation in the complex plane carried along in time. Looking from the side (the floor shadow) you see the real waveform; looking down the time axis you see the phasor. The angle between the two helices is the phase between voltage and current, set by the circuit's impedance.</p>
+  <div class="try"><h4>Try it</h4>Move f/f₀ through 1: below resonance the current helix runs ahead (capacitive), at resonance the two line up, above it the current falls behind (inductive). Its radius is largest at resonance.</div>
+</section>
+<section data-case="helix" data-example="res"><h3>At resonance</h3><p>Same angle: the circuit looks like a pure resistor.</p></section>
+<section data-case="helix" data-example="low"><h3>Below resonance</h3><p>The capacitor dominates: the current leads and is smaller.</p></section>
+<section data-case="impedance">
+  <h3>Impedance: resistance with a direction</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a series R, L, C driven by a sine; the charges swing with the current. Top right: the impedance as arrows — R to the right, X_L up, X_C down — and their sum Z (yellow). Bottom right: |Z| against frequency.</div>
+  <p>With phasors, d/dt becomes multiplication by jω, so each part becomes a complex number. In series they simply add, as arrows:</p>
+  <div class="eq">$$Z_R=R,\quad Z_L=j\omega L,\quad Z_C=\frac{1}{j\omega C}=-\frac{j}{\omega C},\qquad Z=R+j\left(\omega L-\frac1{\omega C}\right),\qquad I=\frac VZ$$</div>
+  <div class="worked"><h4>Worked example</h4>R = 10 Ω, L = 10 mH, C = 1 µF at 1 kHz: X_L = 62.8 Ω, X_C = 159 Ω → Z = 10 − j96.3 Ω, |Z| = 96.8 Ω, angle −84°: capacitive.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding |Z| values: 10 + 62.8 + 159 is not the impedance. X_L and X_C point in opposite directions.</div>
+</section>
+<section data-case="impedance" data-example="low"><h3>Low frequency</h3><p>The down arrow (X_C) is long: the capacitor blocks.</p></section>
+<section data-case="impedance" data-example="high"><h3>High frequency</h3><p>The up arrow (X_L) wins: the inductor blocks.</p></section>
+<section data-case="resonance">
+  <h3>Series resonance</h3>
+  <div class="look"><h4>What you are looking at</h4>Top right: the current against frequency (a peak). Bottom right: the voltages across R, L and C as arrows, taking the current as reference. Watch how large V_L and V_C get near resonance.</div>
+  <p>At f₀ the reactances are equal and opposite: they cancel, Z = R, and the current is largest. How sharp the peak is depends on Q:</p>
+  <div class="eq">$$f_0=\frac{1}{2\pi\sqrt{LC}},\qquad Q=\frac1R\sqrt{\frac LC},\qquad \text{bandwidth}=\frac{f_0}{Q},\qquad |V_L|=|V_C|=Q\,V\ \text{at}\ f_0$$</div>
+  <div class="worked"><h4>Worked example</h4>10 mH, 1 µF, 10 Ω: f₀ = 1.59 kHz, Q = 10, bandwidth 159 Hz. With 1 V in, 10 V appears across L and across C (in opposite directions).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming no part sees more than the supply: at resonance the capacitor must be rated for Q times the source voltage.</div>
+</section>
+<section data-case="resonance" data-example="sharp"><h3>R = 2 Ω</h3><p>Q = 50: a narrow, tall peak — radio tuning.</p></section>
+<section data-case="resonance" data-example="flat"><h3>R = 60 Ω</h3><p>Q below 2: a broad hump, not very selective.</p></section>
+<section data-case="tank">
+  <h3>The parallel tank</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: R, L and C side by side across the source. Top right: the impedance — now a peak. Bottom right: the branch currents as arrows.</div>
+  <p>In parallel the admittances (1/Z) add. At f₀ the inductor's and capacitor's currents are equal and opposite: they cancel at the source and circulate between L and C. The source only supplies the resistor's current, so the impedance peaks at R.</p>
+  <div class="eq">$$Y=\frac1R+j\left(\omega C-\frac1{\omega L}\right),\qquad Z(f_0)=R$$</div>
+  <div class="worked"><h4>Worked example</h4>1 kΩ, 10 mH, 1 µF at f₀ = 1.59 kHz: I_L = I_C = 10 mA circulating, but only 1 mA from the source.</div>
+</section>
+<section data-case="tank" data-example="off"><h3>Off resonance</h3><p>I_L and I_C no longer cancel: the source must supply the difference, |Z| falls.</p></section>
+<section data-case="power">
+  <h3>AC power</h3>
+  <div class="look"><h4>What you are looking at</h4>Top right: voltage, current and their product p = v·i in time; the dashed line is its average. Bottom right: real power P, reactive power Q and apparent power S.</div>
+  <p>When current and voltage are out of step, p(t) dips below zero for part of each cycle: energy stored in a reactance flows back to the source. Only the average does useful work.</p>
+  <div class="eq">$$P=\tfrac12VI\cos\varphi\ [\text{W}],\qquad Q=\tfrac12VI\sin\varphi\ [\text{var}],\qquad S=\tfrac12VI\ [\text{VA}],\qquad \text{pf}=\cos\varphi$$</div>
+  <div class="worked"><h4>Worked example</h4>10 V, 2 A peak, φ = 40°: S = 10 VA, P = 7.66 W, Q = 6.43 var. Power companies charge factories with low power factor because the wires carry S.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Multiplying peak values without the ½ (or RMS values with it).</div>
+</section>
+<section data-case="power" data-example="reactive"><h3>φ = 90°</h3><p>p(t) is positive half the time and negative half the time: zero average. A pure inductor or capacitor dissipates nothing.</p></section>
+<section data-case="power" data-example="resistive"><h3>φ = 0</h3><p>p(t) never goes negative: everything delivered is used.</p></section>
+<section data-case="filter">
+  <h3>RC filters</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a resistor and capacitor as a voltage divider. Top right: gain in dB against log frequency (the Bode plot). Bottom right: phase.</div>
+  <p>A filter is just a divider with Z_C instead of a resistor. Since Z_C falls with frequency, the output across C (low-pass) loses the highs; across R (high-pass) it loses the lows.</p>
+  <div class="eq">$$H_\text{LP}=\frac{1}{1+jf/f_c},\qquad H_\text{HP}=\frac{jf/f_c}{1+jf/f_c},\qquad f_c=\frac1{2\pi RC}$$</div>
+  <div class="worked"><h4>Worked example</h4>1 kΩ, 100 nF: f_c = 1.59 kHz. At f_c: −3 dB, −45°. Ten times higher (16 kHz): −20 dB, the output is a tenth.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Loading the output: a load resistor in parallel with C changes f_c — buffer it (an op-amp follower).</div>
+</section>
+<section data-case="filter" data-example="high"><h3>High-pass</h3><p>Swap R and C: the curve mirrors around f_c.</p></section>
+<section data-case="filter" data-example="above"><h3>Ten times f_c</h3><p>−20 dB and almost −90°.</p></section>

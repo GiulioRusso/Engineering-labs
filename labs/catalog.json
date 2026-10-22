@@ -271,29 +271,267 @@
   "name": "Circuits",
   "topics": [
    {
-    "id": "rlc-components",
-    "title": "R, C, L and the diode",
-    "what": "One component at a time: drive it, see voltage and current, and where the energy goes."
+    "id": "ohm",
+    "title": "Source and resistor",
+    "what": "Ohm’s law, power, and charges drifting round the loop.",
+    "from": "components",
+    "cases": [
+     "resistor"
+    ],
+    "group": "Components"
+   },
+   {
+    "id": "capacitor",
+    "title": "The capacitor",
+    "what": "Charging and discharging: i = C dv/dt and the time constant.",
+    "from": "components",
+    "cases": [
+     "capacitor"
+    ],
+    "group": "Components"
+   },
+   {
+    "id": "inductor",
+    "title": "The inductor",
+    "what": "The current cannot jump: v = L di/dt.",
+    "from": "components",
+    "cases": [
+     "inductor"
+    ],
+    "group": "Components"
+   },
+   {
+    "id": "diode",
+    "title": "The diode",
+    "what": "The first part that is not a straight line.",
+    "from": "analog-electronics/diodes",
+    "cases": [
+     "iv"
+    ],
+    "group": "Components"
+   },
+   {
+    "id": "sine-phase",
+    "title": "Parts under a sine",
+    "what": "Phase: why the capacitor leads and the inductor lags.",
+    "from": "components",
+    "cases": [
+     "sine"
+    ],
+    "group": "Components"
+   },
+   {
+    "id": "lc-energy",
+    "title": "LC energy exchange",
+    "what": "Electric and magnetic energy trading places.",
+    "from": "components",
+    "cases": [
+     "lc"
+    ],
+    "group": "Components"
+   },
+   {
+    "id": "series-parallel",
+    "title": "Series and parallel",
+    "what": "Sharing a current or sharing a voltage.",
+    "from": "networks",
+    "cases": [
+     "sp"
+    ],
+    "group": "Networks"
+   },
+   {
+    "id": "kcl",
+    "title": "Kirchhoff’s current law",
+    "what": "What flows into a node flows out.",
+    "from": "networks",
+    "cases": [
+     "kcl"
+    ],
+    "group": "Networks"
+   },
+   {
+    "id": "thevenin",
+    "title": "Thévenin and maximum power",
+    "what": "Any network is one source and one resistor.",
+    "from": "networks",
+    "cases": [
+     "thevenin"
+    ],
+    "group": "Networks"
+   },
+   {
+    "id": "superposition",
+    "title": "Superposition",
+    "what": "One source at a time, then add.",
+    "from": "networks",
+    "cases": [
+     "super"
+    ],
+    "group": "Networks"
    },
    {
     "id": "circuit-landscape",
     "title": "Circuits as a potential landscape",
-    "what": "Nodes lifted to their potential, carriers flowing downhill: Kirchhoff, Thévenin, superposition."
+    "what": "Nodes lifted to their voltage in 3D: resistors are slopes, the source is a lift.",
+    "from": "networks",
+    "cases": [
+     "landscape"
+    ],
+    "group": "Networks"
+   },
+   {
+    "id": "rlc-step",
+    "title": "RLC step response",
+    "what": "Underdamped, critical, overdamped: one number ζ.",
+    "from": "networks",
+    "cases": [
+     "rlc"
+    ],
+    "group": "Networks"
+   },
+   {
+    "id": "phasors",
+    "title": "Phasors",
+    "what": "A sine is a turning arrow; sines add like arrows.",
+    "from": "ac",
+    "cases": [
+     "phasor"
+    ],
+    "group": "AC circuits"
    },
    {
     "id": "rlc-phasors",
-    "title": "RLC resonance with phasors",
-    "what": "Phasors rotating in 3D and unrolling into waves; drag the frequency through resonance."
+    "title": "RLC phasors in 3D",
+    "what": "Voltage and current helices unrolling in time.",
+    "from": "ac",
+    "cases": [
+     "helix"
+    ],
+    "group": "AC circuits"
+   },
+   {
+    "id": "impedance",
+    "title": "Impedance",
+    "what": "R, X_L and X_C as arrows; |Z| against frequency.",
+    "from": "ac",
+    "cases": [
+     "impedance"
+    ],
+    "group": "AC circuits"
+   },
+   {
+    "id": "series-resonance",
+    "title": "Series resonance",
+    "what": "Q, bandwidth, and Q times the voltage across L and C.",
+    "from": "ac",
+    "cases": [
+     "resonance"
+    ],
+    "group": "AC circuits"
+   },
+   {
+    "id": "parallel-tank",
+    "title": "Parallel tank",
+    "what": "The same resonance inside out: impedance peaks.",
+    "from": "ac",
+    "cases": [
+     "tank"
+    ],
+    "group": "AC circuits"
+   },
+   {
+    "id": "ac-power",
+    "title": "AC power",
+    "what": "Real, reactive and apparent power; power factor.",
+    "from": "ac",
+    "cases": [
+     "power"
+    ],
+    "group": "AC circuits"
+   },
+   {
+    "id": "rc-filter",
+    "title": "RC filters",
+    "what": "Low-pass and high-pass: Bode plot and phase.",
+    "from": "ac",
+    "cases": [
+     "filter"
+    ],
+    "group": "AC circuits"
+   },
+   {
+    "id": "selectivity",
+    "title": "Selectivity",
+    "what": "How many poles it takes to reject the neighbouring channel.",
+    "from": "telecom",
+    "cases": [
+     "select"
+    ],
+    "group": "Radio circuits"
+   },
+   {
+    "id": "lc-ladder",
+    "title": "LC ladder",
+    "what": "From a Butterworth response to component values.",
+    "from": "telecom",
+    "cases": [
+     "ladder"
+    ],
+    "group": "Radio circuits"
+   },
+   {
+    "id": "matching",
+    "title": "Impedance matching",
+    "what": "An L-network that makes a load look like the source.",
+    "from": "telecom",
+    "cases": [
+     "match"
+    ],
+    "group": "Radio circuits"
    },
    {
     "id": "transmission-line",
     "title": "Transmission lines and the Smith chart",
-    "what": "Drag the load on a Smith chart; the standing wave on the line follows."
+    "what": "When the wire is long enough that time matters.",
+    "from": "signal-theory/guided",
+    "cases": [
+     "tem",
+     "smith"
+    ],
+    "group": "Radio circuits"
+   },
+   {
+    "id": "envelope-detector",
+    "title": "Envelope detector",
+    "what": "Getting the message back off an AM carrier.",
+    "from": "telecom",
+    "cases": [
+     "envelope"
+    ],
+    "group": "Radio circuits"
+   },
+   {
+    "id": "mixer",
+    "title": "The mixer",
+    "what": "Moving a signal to another frequency.",
+    "from": "telecom",
+    "cases": [
+     "mixer"
+    ],
+    "group": "Radio circuits"
    },
    {
     "id": "feed-to-antenna",
     "title": "From the feed to the antenna",
-    "what": "Lengthen a line until it radiates: where the circuit stops being a circuit."
+    "what": "Where the circuit stops being a circuit: current on a dipole, the field leaving it.",
+    "from": "signal-theory/dipole",
+    "cases": [
+     "current",
+     "hertz",
+     "impedance"
+    ],
+    "group": "Radio circuits"
    }
   ]
  },

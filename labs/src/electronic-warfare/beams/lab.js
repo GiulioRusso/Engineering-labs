@@ -173,7 +173,7 @@ export default {
           const planes = [[45 - 3 * t % 40, 3], [20 + 2 * t % 35, 6], [55 - 1.5 * t % 50, 9]];
           planes.forEach(([x, z], i) => { const el = Math.atan2(z, x) / deg, inBar = el > els[k] - state.bel / 2 && el < els[k] + state.bel / 2, inAz = Math.abs(u - 0.5) < 0.12; acs[i].set(vcut.mx(x), vcut.my(z), Math.PI, 0.17); acs[i].color(ctx.cssVar(inBar && inAz ? '--c-v' : '--c-ref')); if (inBar && inAz && (!hist.length || hist[hist.length - 1].t < t - 0.15 || hist[hist.length - 1].i !== i)) hist.push({ t, i }); });
           const recent = hist.filter((h) => h.t > t - 20);
-          r1.range([Math.max(0, t - 20), Math.max(20, t)], [-0.5, 2.5]); r1.titles('time (s)', 'hits on aircraft 0, 1, 2'); r1.dots('hits', recent.map((h) => h.t), recent.map((h) => h.i), { color: '--c-v', size: 8 });
+          r1.range([Math.max(0, t - 20), Math.max(20, t)], [-0.5, 2.5]); r1.titles('time (s)', 'aircraft number: a dot for each hit'); r1.dots('hits', recent.map((h) => h.t), recent.map((h) => h.i), { color: '--c-v', size: 8 });
           hud.set('a', `${bars} bars of ${state.bel}°, ${state.dwell} s each → frame time ${fmt(bars * state.dwell)} s`); hud.set('b', `bar height at 5 km ${fmt(barHeight(5e3, state.bel))} m, at 50 km ${fmt(barHeight(50e3, state.bel))} m`);
           hud.set('c', `covered up to ${fmt(el0 + bars * state.bel)}° elevation; above it nothing is seen`);
           plots.aux.draw({ xlim: [1, 10], cursor: bars, series: [{ x: Array.from({ length: 10 }, (_, i) => i + 1), y: Array.from({ length: 10 }, (_, i) => (i + 1) * state.dwell), color: '--c-E', label: 'frame time (s) vs number of bars' }] });

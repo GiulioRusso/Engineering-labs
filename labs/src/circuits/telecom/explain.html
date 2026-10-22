@@ -1,0 +1,48 @@
+<section data-case="select">
+  <h3>Selectivity: how many poles a radio needs</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the LC filter that realises the chosen order. Top right: the filter's gain against frequency for every order (grey) and yours (blue); the red line is a neighbouring channel. Bottom right: how much each order attenuates that neighbour.</div>
+  <p>One RC pole falls by 20 dB per decade — hopeless for separating two radio stations a few percent apart. Each extra pole adds another 20 dB/decade. The Butterworth response places n poles so the passband is as flat as possible:</p>
+  <div class="eq">$$|H(f)|^2=\frac{1}{1+(f/f_c)^{2n}}\qquad\Rightarrow\qquad -3\ \text{dB at}\ f_c,\ \ -20n\ \text{dB/decade beyond}$$</div>
+  <div class="worked"><h4>Worked example</h4>Neighbour at 2 f_c. n = 1: −7 dB (barely). n = 3: −18 dB. n = 7: −42 dB.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Cascading identical RC stages to get order n: they load each other and the corner softens. An LC ladder (next case) or active stages do it properly.</div>
+</section>
+<section data-case="select" data-example="n1"><h3>One pole</h3><p>The neighbour is only a few dB down: you would hear both stations.</p></section>
+<section data-case="select" data-example="n7"><h3>Seven poles</h3><p>A steep wall: the neighbour is 42 dB down, but the filter needs seven parts.</p></section>
+<section data-case="ladder">
+  <h3>The LC ladder</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: shunt capacitors and series inductors between a source and a load resistance, with their values. Right: the response they produce.</div>
+  <p>A Butterworth response is a recipe; the ladder turns it into parts. Tables give normalised values g_k for a 1 Ω, 1 rad/s prototype; scale them to your impedance and corner frequency:</p>
+  <div class="eq">$$g_k=2\sin\frac{(2k-1)\pi}{2n},\qquad L_k=\frac{g_kR_0}{2\pi f_c},\qquad C_k=\frac{g_k}{R_0\,2\pi f_c}$$</div>
+  <div class="worked"><h4>Worked example</h4>n = 3, 50 Ω, 1 MHz: g = 1, 2, 1 → C = 3.18 nF, L = 15.9 µH, C = 3.18 nF.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using the values with a different load: the response is only Butterworth when terminated in R₀ at both ends.</div>
+</section>
+<section data-case="ladder" data-example="n5"><h3>Fifth order</h3><p>g = 0.618, 1.618, 2, 1.618, 0.618: five parts, 100 dB per decade.</p></section>
+<section data-case="match">
+  <h3>Impedance matching with an L-network</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a source with resistance R_s, an inductor and a capacitor, and the load. Top right: power delivered against frequency, with the match (blue) and without (grey). Bottom right: at f₀, for any load.</div>
+  <p>Maximum power flows when the load equals the source resistance. An antenna rarely obliges, and adding a resistor would just burn power. Reactances waste nothing: one in series and one in parallel can make R_L <i>look like</i> R_s — at one frequency.</p>
+  <div class="eq">$$Q=\sqrt{\frac{R_\text{high}}{R_\text{low}}-1},\qquad X_\text{series}=Q\,R_\text{low},\qquad X_\text{shunt}=\frac{R_\text{high}}{Q}$$</div>
+  <div class="worked"><h4>Worked example</h4>50 Ω source, 200 Ω load at 10 MHz: Q = √3 = 1.73, X_s = 86.6 Ω (L = 1.38 µH), X_p = 115 Ω (C = 138 pF). Direct connection would deliver 64%; the match gives 100% at f₀.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting it is narrow-band: the bigger the ratio, the higher Q and the narrower the match (bandwidth ≈ f₀/Q).</div>
+</section>
+<section data-case="match" data-example="big"><h3>50 Ω → 1 kΩ</h3><p>Q ≈ 4.4: the blue peak gets narrow.</p></section>
+<section data-case="match" data-example="off"><h3>At 1.5 f₀</h3><p>The reactances have the wrong values: part of the power reflects.</p></section>
+<section data-case="envelope">
+  <h3>The envelope detector</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a diode feeding a capacitor and resistor. Right: the AM wave (grey), the detector output (blue) and the true envelope (dashed); bottom: the error against the RC time constant.</div>
+  <p>An AM signal carries the message in its amplitude. The diode lets the capacitor charge to each carrier peak; between peaks it discharges slowly through R. If RC is chosen well, the capacitor voltage traces the envelope — the message.</p>
+  <div class="eq">$$\frac1{f_\text{carrier}}\ll RC\ll\frac1{f_\text{message}}$$</div>
+  <div class="worked"><h4>Worked example</h4>AM radio: carrier 1 MHz (1 µs), audio up to 5 kHz (200 µs). RC ≈ 20 µs sits nicely between them.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Too large RC: the output cannot fall as fast as the envelope (diagonal clipping). Too small: carrier ripple everywhere.</div>
+</section>
+<section data-case="envelope" data-example="slow"><h3>τ too long</h3><p>The output hangs on the peaks and misses the dips.</p></section>
+<section data-case="envelope" data-example="fast"><h3>τ too short</h3><p>The capacitor empties between carrier cycles: a jagged output.</p></section>
+<section data-case="mixer">
+  <h3>The mixer</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a signal multiplied by a local oscillator (LO), then filtered. Top right: the product in time — a fast wiggle under a slow beat. Bottom right: the spectrum, inputs dashed and outputs blue.</div>
+  <p>A linear circuit never creates new frequencies. A multiplier does: the product of two sines is two sines at the sum and the difference of their frequencies, and nothing at the original ones.</p>
+  <div class="eq">$$\cos(2\pi f_1t)\cos(2\pi f_2t)=\tfrac12\cos 2\pi(f_1-f_2)t+\tfrac12\cos 2\pi(f_1+f_2)t$$</div>
+  <div class="worked"><h4>Worked example</h4>A 10 MHz station with a 10.7 MHz LO: lines at 0.7 MHz and 20.7 MHz. Tune the LO and any station lands at the same intermediate frequency, where one fixed sharp filter does the selection: the superheterodyne.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting the image: a station at 11.4 MHz would also give 0.7 MHz. It must be filtered out before the mixer.</div>
+</section>
+<section data-case="mixer" data-example="if"><h3>IF = 0.7 MHz</h3><p>The slow beat in the top chart is the IF; the filter keeps it.</p></section>

@@ -133,10 +133,10 @@ export default {
           const S = snr(p), T = thresholdFor(state.pfa), Rmax = 1.6 * state.R, rn = rng(7 + Math.floor(t * 6)), n = 600, xs = [], ys = [];
           let fa = 0;
           for (let i = 0; i < n; i++) { const R = Rmax * i / n, a = Math.abs(R - state.R) < Rmax / n * 1.5 ? Math.sqrt(2 * S) : 0, g1 = Math.sqrt(-2 * Math.log(1 - rn())) * Math.cos(2 * Math.PI * rn()), g2 = Math.sqrt(-2 * Math.log(1 - rn())) * Math.cos(2 * Math.PI * rn()), v = Math.hypot(a + g1, g2); xs.push(R / km); ys.push(v); if (!a && v > T) fa++; }
-          top.range([0, Rmax / km], [0, Math.max(T * 1.5, Math.sqrt(2 * S) * 1.3, 6)]); top.titles('range (km)', 'A-scope: receiver output / noise rms');
+          top.range([0, Rmax / km], [0, Math.max(T * 1.5, Math.sqrt(2 * S) * 1.3, 6)]); top.titles('range (km)', 'output / noise rms: A-scope');
           top.line('y', xs, ys, { color: '--c-v', width: 1.2 }); top.line('T', [0, Rmax / km], [T, T], { color: '--c-north', dashed: true, width: 1.6 });
           const Rs = Array.from({ length: 200 }, (_, i) => 5 * km + (300 - 5) * km * i / 199), P = Rs.map((R) => pd(snr({ ...p, R }), state.pfa));
-          bot.range([0, 300], [0, 1.05]); bot.titles('range (km)', 'probability of detection'); bot.line('pd', Rs.map((r) => r / km), P, { color: '--c-B' }); bot.dots('now', [state.R / km], [pd(S, state.pfa)], { color: '--accent', size: 11 });
+          bot.range([0, 300], [0, 1.05]); bot.titles('range (km)', 'probability of detection P_d'); bot.line('pd', Rs.map((r) => r / km), P, { color: '--c-B' }); bot.dots('now', [state.R / km], [pd(S, state.pfa)], { color: '--accent', size: 11 });
           hud.set('a', `SNR = ${fmt(db(S))} dB at ${fmt(state.R / km)} km${state.n > 1 ? ` (${state.n} pulses integrated)` : ''}`);
           hud.set('b', `threshold ${fmt(T)} × noise for Pfa = ${state.pfa.toExponential(0)}; ${fa} false alarm${fa === 1 ? '' : 's'} on this trace`); hud.set('c', `Pd = ${fmt(100 * pd(S, state.pfa))} %`, pd(S, state.pfa) > 0.9 ? 'good' : pd(S, state.pfa) < 0.5 ? 'bad' : '');
           plots.aux.draw({ xlim: [0, 25], series: [1e-2, 1e-4, 1e-6, 1e-8].map((f, j) => ({ x: Array.from({ length: 101 }, (_, i) => i / 4), y: Array.from({ length: 101 }, (_, i) => pd(lin(i / 4), f)), color: ['--c-B', '--c-E', '--c-I', '--c-F'][j], label: `Pd vs SNR (dB), Pfa ${f.toExponential(0)}` })) });

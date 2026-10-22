@@ -1,0 +1,53 @@
+<section data-case="resistor">
+  <h3>Source and resistor: Ohm's law</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a voltage source and a resistor in a loop. The yellow dots are charges drifting round the loop — the faster they move, the larger the current. Top right: current against voltage, a straight line. Bottom right: the power turned into heat.</div>
+  <p>The source pushes (voltage, in volts); the resistor opposes (resistance, in ohms); the result is a flow of charge (current, in amperes). For a resistor the three are tied by the simplest rule there is, with no memory and no delay:</p>
+  <div class="eq">$$I=\frac{V}{R},\qquad P=VI=\frac{V^2}{R}=I^2R$$</div>
+  <ol class="steps"><li>Read V and R.</li><li>I = V/R. Check the units: volts over ohms gives amperes.</li><li>Power P = V·I: all of it becomes heat in the resistor.</li></ol>
+  <div class="worked"><h4>Worked example</h4>5 V across 100 Ω: I = 50 mA, P = 0.25 W. A quarter-watt resistor would be at its limit. At 10 V: 100 mA and 1 W — four times the heat for twice the voltage.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking current is "used up" in the resistor: the same current comes out as goes in (the dots never pile up); what is used up is energy. Reversing V reverses the current, not the heat.</div>
+  <div class="try"><h4>Try it</h4>Make V negative and watch the dots run the other way.</div>
+</section>
+<section data-case="resistor" data-example="double"><h3>Double V</h3><p>Current doubles (straight line), power quadruples (parabola).</p></section>
+<section data-case="resistor" data-example="small"><h3>10 Ω</h3><p>5 V / 10 Ω = 0.5 A and 2.5 W: this is why shorting a battery makes it hot.</p></section>
+<section data-case="capacitor">
+  <h3>The capacitor: current only while the voltage changes</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a source switching between V and 0 (a square wave) charging a capacitor through a resistor. Top right: the source and the capacitor voltage in units of the time constant τ. Bottom right: the current — big at each switch, then fading. Watch the dots: they rush at each switch and slow down as the capacitor fills.</div>
+  <p>A capacitor is two plates with an insulator between. No charge crosses it; charge piles up on one plate and leaves the other. The current is the rate at which that charge changes, so it is proportional to how fast the voltage changes:</p>
+  <div class="eq">$$i=C\frac{dv}{dt},\qquad v_C(t)=V\left(1-e^{-t/\tau}\right),\qquad \tau=RC$$</div>
+  <ol class="steps"><li>At the switch the capacitor is empty: all of V is across R, so the current starts at V/R.</li><li>As v_C grows, less is left across R: the current shrinks, and so does the rate of charging.</li><li>After one τ: 63%. After 5τ: over 99% — practically full, current ≈ 0.</li></ol>
+  <div class="worked"><h4>Worked example</h4>1 kΩ and 10 µF: τ = 10 ms. With 5 V the initial current is 5 mA; after 10 ms v_C = 3.16 V and i = 1.84 mA.</div>
+  <div class="pitfall"><h4>Common mistake</h4>"A capacitor blocks current." It blocks <i>steady</i> current; changing voltages drive plenty through it. And its voltage cannot jump: that would need infinite current.</div>
+</section>
+<section data-case="capacitor" data-example="big"><h3>47 µF</h3><p>τ almost five times longer: same curve shape, stretched in time.</p></section>
+<section data-case="capacitor" data-example="smallr"><h3>220 Ω</h3><p>Faster charging, and a larger initial current V/R.</p></section>
+<section data-case="inductor">
+  <h3>The inductor: the current cannot jump</h3>
+  <div class="look"><h4>What you are looking at</h4>The same square-wave source, now with an inductor (a coil). Top right: the voltage across the coil. Bottom right: the current, which rises and falls smoothly. The dots start slowly and pick up speed.</div>
+  <p>An inductor stores energy in a magnetic field. Changing that field induces a voltage that opposes the change, so the current can only change gradually. It is the capacitor's mirror image, with voltage and current swapped:</p>
+  <div class="eq">$$v=L\frac{di}{dt},\qquad i(t)=\frac{V}{R}\left(1-e^{-t/\tau}\right),\qquad \tau=\frac LR$$</div>
+  <div class="worked"><h4>Worked example</h4>100 mH and 100 Ω: τ = 1 ms, final current 50 mA. At the switch-on the whole 5 V appears across the coil; it fades as the current builds.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Opening a switch in series with an inductor: the current wants to continue, di/dt becomes enormous and so does the voltage — the spark you see in relays. Here the source goes to 0 V instead, so the current decays smoothly.</div>
+</section>
+<section data-case="inductor" data-example="bigl"><h3>470 mH</h3><p>τ = L/R grows: the current takes longer to reach V/R.</p></section>
+<section data-case="sine">
+  <h3>The three parts under a sine</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: one part driven by a sine source; the dots swing back and forth. Top right: voltage and current (each scaled to its own peak) in time. Bottom right: the same two as rotating arrows (phasors) — the angle between them is the phase.</div>
+  <p>Feed each part the same sine and the differences between their rules become differences in <b>timing</b>. For the capacitor, current = C·(slope of v): a sine's slope is largest at the zero crossing, so the current peaks a quarter cycle early. The inductor is the opposite.</p>
+  <div class="eq">$$Z_R=R,\qquad |Z_C|=\frac1{\omega C}\ (i\ \text{leads}\ 90°),\qquad |Z_L|=\omega L\ (i\ \text{lags}\ 90°)$$</div>
+  <div class="worked"><h4>Worked example</h4>10 µF at 50 Hz: 1/(2π·50·10⁻⁵) = 318 Ω. At 500 Hz: 32 Ω. 100 mH at 50 Hz: 31 Ω; at 500 Hz: 314 Ω.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding magnitudes of R and X directly. Because they are 90° apart they add like the sides of a right triangle — see the AC lab.</div>
+  <div class="try"><h4>Try it</h4>Move the frequency and watch the bottom plot: the capacitor's opposition falls, the inductor's rises.</div>
+</section>
+<section data-case="sine" data-example="R"><h3>Resistor</h3><p>The two arrows lie on top of each other: no phase.</p></section>
+<section data-case="sine" data-example="L"><h3>Inductor</h3><p>The current arrow trails the voltage arrow by a right angle.</p></section>
+<section data-case="sine" data-example="hf"><h3>Capacitor at 500 Hz</h3><p>Ten times the frequency, a tenth of the reactance: ten times the current.</p></section>
+<section data-case="lc">
+  <h3>LC: energy sloshing between two stores</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a charged capacitor connected to an inductor — no source. The dots swing round and back. Top right: capacitor voltage and current. Bottom right: electric energy, magnetic energy and their sum.</div>
+  <p>The capacitor pushes current into the coil and empties. The coil's current keeps going (it cannot stop suddenly) and charges the capacitor the other way. Then everything repeats in reverse. Energy moves between the electric field and the magnetic field at the natural frequency:</p>
+  <div class="eq">$$f_0=\frac{1}{2\pi\sqrt{LC}},\qquad \tfrac12Cv^2+\tfrac12Li^2=\text{const}$$</div>
+  <div class="worked"><h4>Worked example</h4>100 mH, 10 µF: f₀ = 159 Hz. Starting at 5 V: 125 µJ, all electric; a quarter period later it is all magnetic, with i = 5√(C/L) = 50 mA.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting it to run forever: any resistance turns some energy into heat each cycle — an oscillator needs an amplifier to top it up.</div>
+</section>
+<section data-case="lc" data-example="lossy"><h3>2 Ω of loss</h3><p>The total-energy bar shrinks a little every cycle; the swings decay exponentially.</p></section>

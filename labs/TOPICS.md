@@ -37,11 +37,32 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 
 | Topic | What you do | Status |
 |---|---|---|
-| R, C, L and the diode | One component at a time: drive it, see voltage and current, and where the energy goes. | planned |
-| Circuits as a potential landscape | Nodes lifted to their potential, carriers flowing downhill: Kirchhoff, Thévenin, superposition. | planned |
-| RLC resonance with phasors | Phasors rotating in 3D and unrolling into waves; drag the frequency through resonance. | planned |
-| Transmission lines and the Smith chart | Drag the load on a Smith chart; the standing wave on the line follows. | planned |
-| From the feed to the antenna | Lengthen a line until it radiates: where the circuit stops being a circuit. | planned |
+| [Source and resistor](web/circuits.html?lab=ohm) | Ohm’s law, power, and charges drifting round the loop. | done |
+| [The capacitor](web/circuits.html?lab=capacitor) | Charging and discharging: i = C dv/dt and the time constant. | done |
+| [The inductor](web/circuits.html?lab=inductor) | The current cannot jump: v = L di/dt. | done |
+| [The diode](web/circuits.html?lab=diode) | The first part that is not a straight line. | done |
+| [Parts under a sine](web/circuits.html?lab=sine-phase) | Phase: why the capacitor leads and the inductor lags. | done |
+| [LC energy exchange](web/circuits.html?lab=lc-energy) | Electric and magnetic energy trading places. | done |
+| [Series and parallel](web/circuits.html?lab=series-parallel) | Sharing a current or sharing a voltage. | done |
+| [Kirchhoff’s current law](web/circuits.html?lab=kcl) | What flows into a node flows out. | done |
+| [Thévenin and maximum power](web/circuits.html?lab=thevenin) | Any network is one source and one resistor. | done |
+| [Superposition](web/circuits.html?lab=superposition) | One source at a time, then add. | done |
+| [Circuits as a potential landscape](web/circuits.html?lab=circuit-landscape) | Nodes lifted to their voltage in 3D: resistors are slopes, the source is a lift. | done |
+| [RLC step response](web/circuits.html?lab=rlc-step) | Underdamped, critical, overdamped: one number ζ. | done |
+| [Phasors](web/circuits.html?lab=phasors) | A sine is a turning arrow; sines add like arrows. | done |
+| [RLC phasors in 3D](web/circuits.html?lab=rlc-phasors) | Voltage and current helices unrolling in time. | done |
+| [Impedance](web/circuits.html?lab=impedance) | R, X_L and X_C as arrows; |Z| against frequency. | done |
+| [Series resonance](web/circuits.html?lab=series-resonance) | Q, bandwidth, and Q times the voltage across L and C. | done |
+| [Parallel tank](web/circuits.html?lab=parallel-tank) | The same resonance inside out: impedance peaks. | done |
+| [AC power](web/circuits.html?lab=ac-power) | Real, reactive and apparent power; power factor. | done |
+| [RC filters](web/circuits.html?lab=rc-filter) | Low-pass and high-pass: Bode plot and phase. | done |
+| [Selectivity](web/circuits.html?lab=selectivity) | How many poles it takes to reject the neighbouring channel. | done |
+| [LC ladder](web/circuits.html?lab=lc-ladder) | From a Butterworth response to component values. | done |
+| [Impedance matching](web/circuits.html?lab=matching) | An L-network that makes a load look like the source. | done |
+| [Transmission lines and the Smith chart](web/circuits.html?lab=transmission-line) | When the wire is long enough that time matters. | done |
+| [Envelope detector](web/circuits.html?lab=envelope-detector) | Getting the message back off an AM carrier. | done |
+| [The mixer](web/circuits.html?lab=mixer) | Moving a signal to another frequency. | done |
+| [From the feed to the antenna](web/circuits.html?lab=feed-to-antenna) | Where the circuit stops being a circuit: current on a dipole, the field leaving it. | done |
 
 ## Computer science
 

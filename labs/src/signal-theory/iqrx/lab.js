@@ -66,10 +66,10 @@ export default {
           const zoom = Math.min(0.5, 4 * state.w), s = ts.map((t, i) => [t, x[i]]).filter(([t]) => Math.abs(t) <= zoom);
           tl.range([-zoom, zoom], [-1.2, 1.2]); tl.titles('t (s)', `x(t): ${state.fc} Hz under a Gaussian envelope (σ = ${state.w * 1000} ms)`); tl.line('x', s.map((q) => q[0]), s.map((q) => q[1]), { color: '--c-B', width: 1.2 }); tl.line('e', s.map((q) => q[0]), s.map((q) => Math.exp(-(q[0] ** 2) / (2 * state.w ** 2))), { color: '--c-I', dashed: true, width: 1.2 });
           const S = spectrum(x), W = sel(S, -2000, 2000, 2), m = Math.max(...W.a);
-          tr.range([-2000, 2000], [0, m * 1.15]); tr.titles('f (Hz)', 'two mirror lobes at ±fc'); tr.line('S', W.f, W.a, { color: '--c-E' });
-          const Z = sel(S, state.fc - 6 / state.w / 6.28 * 3, state.fc + 6 / state.w / 6.28 * 3); bl.range([Z.f[0], Z.f[Z.f.length - 1]], [0, m * 1.15]); bl.titles('f (Hz)', 'zoom on +fc: the lobe is the envelope’s spectrum'); bl.line('S', Z.f, Z.a, { color: '--c-E' });
+          tr.range([-2000, 2000], [0, m * 1.15]); tr.titles('f (Hz)', '|X| (norm.): two mirror lobes at ±fc'); tr.line('S', W.f, W.a, { color: '--c-E' });
+          const Z = sel(S, state.fc - 6 / state.w / 6.28 * 3, state.fc + 6 / state.w / 6.28 * 3); bl.range([Z.f[0], Z.f[Z.f.length - 1]], [0, m * 1.15]); bl.titles('f (Hz)', '|X| (norm.): zoom on +fc, the lobe is the envelope’s spectrum'); bl.line('S', Z.f, Z.a, { color: '--c-E' });
           const sf = 1 / (2 * Math.PI * state.w); bl.line('w1', [state.fc - sf, state.fc - sf], [0, m * 1.15], { color: '--c-north', dashed: true, width: 1 }); bl.line('w2', [state.fc + sf, state.fc + sf], [0, m * 1.15], { color: '--c-north', dashed: true, width: 1 });
-          const E = sel(spectrum(x.map((_, i) => Math.exp(-(ts[i] ** 2) / (2 * state.w ** 2)))), -3 * sf, 3 * sf); br.range([-3 * sf, 3 * sf], [0, Math.max(...E.a) * 1.15]); br.titles('f (Hz)', 'the envelope alone: a lobe centred on 0'); br.line('E', E.f, E.a, { color: '--c-I' });
+          const E = sel(spectrum(x.map((_, i) => Math.exp(-(ts[i] ** 2) / (2 * state.w ** 2)))), -3 * sf, 3 * sf); br.range([-3 * sf, 3 * sf], [0, Math.max(...E.a) * 1.15]); br.titles('f (Hz)', '|E| (norm.): the envelope alone, a lobe centred on 0'); br.line('E', E.f, E.a, { color: '--c-I' });
           hud.set('a', `X(f) = ½[E(f − fc) + E(f + fc)]`); hud.set('b', `lobe width σf = 1/(2πσ) = ${fmt(sf)} Hz`); hud.set('c', 'a real signal always has both lobes: they carry the same information');
           plots.aux.draw({ xlim: [-2000, 2000], series: [{ x: W.f, y: W.a, color: '--c-E', label: '|X(f)|' }] });
         } else if (c === 'mixing') {
@@ -89,9 +89,9 @@ export default {
           const zoom = Math.min(0.5, 4 * state.w), k = ts.map((t, i) => [t, z.re[i], z.im[i]]).filter(([t]) => Math.abs(t) <= zoom);
           tr.range([-zoom, zoom], [-1.15, 1.15]); tr.titles('t (s)', `I (blue), Q (orange): rotating at ${df} Hz`); tr.line('I', k.map((q) => q[0]), k.map((q) => q[1]), { color: '--c-B' }); tr.line('Q', k.map((q) => q[0]), k.map((q) => q[2]), { color: '--c-I' }); tr.line('e', k.map((q) => q[0]), k.map((q) => Math.hypot(q[1], q[2])), { color: '--ink-dim', dashed: true, width: 1 });
           const S = spectrum(z), W = sel(S, -state.cut, state.cut), m = Math.max(...W.a);
-          bl.range([-state.cut, state.cut], [0, m * 1.15]); bl.titles('f (Hz)', `baseband: one lobe at Δf = ${df} Hz`); bl.line('S', W.f, W.a, { color: '--c-E' }); bl.line('z', [0, 0], [0, m * 1.15], { color: '--ink-dim', dashed: true, width: 1 });
+          bl.range([-state.cut, state.cut], [0, m * 1.15]); bl.titles('f (Hz)', `|I + jQ| spectrum (norm.): one lobe at Δf = ${df} Hz`); bl.line('S', W.f, W.a, { color: '--c-E' }); bl.line('z', [0, 0], [0, m * 1.15], { color: '--ink-dim', dashed: true, width: 1 });
           const ph = k.map((q) => Math.atan2(q[2], q[1])), env = k.map((q) => Math.hypot(q[1], q[2])), pk = Math.max(...env), pi = k.filter((_, i) => env[i] > 0.1 * pk);
-          br.range([-zoom, zoom], [-3.3, 3.3]); br.titles('t (s)', 'phase of I + jQ: slope 2π·Δf'); br.dots('p', pi.map((q) => q[0]), pi.map((q) => Math.atan2(q[2], q[1])), { color: '--c-v', size: 3 });
+          br.range([-zoom, zoom], [-3.3, 3.3]); br.titles('t (s)', 'phase of I + jQ (rad): slope 2π·Δf'); br.dots('p', pi.map((q) => q[0]), pi.map((q) => Math.atan2(q[2], q[1])), { color: '--c-v', size: 3 });
           hud.set('a', `Δf = fc − fLO = ${df} Hz${df === 0 ? ' — tuned' : ''}`, df === 0 ? 'good' : ''); hud.set('b', df === 0 ? `carrier phase ${state.phi}° appears as a fixed rotation: I = cos, Q = sin of it` : `I and Q oscillate ${fmt(Math.abs(df) * 2 * state.w * 2.355)} times under the envelope`);
           hud.set('c', 'the magnitude √(I² + Q²) is the envelope whatever Δf and phase are');
           plots.aux.draw({ xlim: [-zoom, zoom], series: [{ x: k.map((q) => q[0]), y: env, color: '--ink-dim', label: '|I + jQ| = envelope' }] });
@@ -101,9 +101,9 @@ export default {
           const kk = idx.map((k) => (k < n / 2 ? k : k - n)), ord = idx.slice().sort((a, b) => kk[a] - kk[b]);
           tr.range([-n / 2, n / 2], [0, 1.1]); tr.titles('bin k', `all bins (width fs/N = ${fmt(bw)} Hz)`); tr.stems('b', ord.map((i) => kk[i]), ord.map((i) => B.mag[i]), { color: '--c-E', width: 2 });
           const near = ord.filter((i) => Math.abs(kk[i] - state.dfb) <= 6);
-          bl.range([state.dfb - 6.5, state.dfb + 6.5], [0, 1.1]); bl.titles('bin k', 'zoom on the tone: dashed line = its true position'); bl.stems('b', near.map((i) => kk[i]), near.map((i) => B.mag[i]), { color: '--c-E', width: 5 }); bl.line('t', [state.dfb, state.dfb], [0, 1.1], { color: '--c-north', dashed: true, width: 1.2 });
+          bl.range([state.dfb - 6.5, state.dfb + 6.5], [0, 1.1]); bl.titles('bin k', '|X[k]| (norm.): dashed = the tone’s true position'); bl.stems('b', near.map((i) => kk[i]), near.map((i) => B.mag[i]), { color: '--c-E', width: 5 }); bl.line('t', [state.dfb, state.dfb], [0, 1.1], { color: '--c-north', dashed: true, width: 1.2 });
           const fr = Array.from({ length: 200 }, (_, i) => i / 199), peak = fr.map((d) => Math.abs(Math.sin(Math.PI * d) / (n * Math.sin(Math.PI * d / n))) || 1);
-          br.range([0, 1], [0, 1.05]); br.titles('offset from a bin centre (bins)', 'height of the nearest bin: the scalloping loss'); br.line('p', fr, peak, { color: '--c-I' }); br.dots('now', [state.dfb % 1], [Math.max(...B.mag)], { color: '--accent', size: 11 });
+          br.range([0, 1], [0, 1.05]); br.titles('offset from a bin centre (bins)', 'highest bin (norm.): the scalloping loss'); br.line('p', fr, peak, { color: '--c-I' }); br.dots('now', [state.dfb % 1], [Math.max(...B.mag)], { color: '--accent', size: 11 });
           const on = Math.abs(state.dfb - Math.round(state.dfb)) < 0.01;
           hud.set('a', `Δf = ${fmt(state.dfb)} bins × ${fmt(bw)} Hz`); hud.set('b', on ? 'integer number of turns in the record: all energy in one bin ✓' : `between bins: peak ${fmt(Math.max(...B.mag))} (${fmt(20 * Math.log10(Math.max(...B.mag)))} dB), energy in neighbours ✗`, on ? 'good' : 'bad');
           hud.set('c', 'complex baseband: positive and negative Δf are different bins');

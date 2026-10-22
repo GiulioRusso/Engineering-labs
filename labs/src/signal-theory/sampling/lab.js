@@ -84,7 +84,7 @@ export default {
         if (c === 'tone') {
           const f0 = state.f0, fs = state.fs, T = 1, ok = fs > 2 * f0, fa = aliasOf(f0, fs), xs = Array.from({ length: 1000 }, (_, i) => T * i / 999);
           const S = []; for (let n = 0; n <= T * fs; n++) S.push([n / fs, Math.sin(2 * Math.PI * f0 * n / fs)]);
-          tl.range([0, T], [-1.4, 1.4]); tl.titles('t (s)', `${S.length} samples at fs = ${fs} Hz`); tl.line('x', xs, xs.map((v) => Math.sin(2 * Math.PI * f0 * v)), { color: '--c-ref', width: 1.4 }); tl.stems('s', S.map((p) => p[0]), S.map((p) => p[1]), { color: '--c-B', width: 2.4 }); tl.dots('d', S.map((p) => p[0]), S.map((p) => p[1]), { color: '--c-B', size: 7 });
+          tl.range([0, T], [-1.4, 1.4]); tl.titles('t (s)', `x(t): ${S.length} samples at fs = ${fs} Hz`); tl.line('x', xs, xs.map((v) => Math.sin(2 * Math.PI * f0 * v)), { color: '--c-ref', width: 1.4 }); tl.stems('s', S.map((p) => p[0]), S.map((p) => p[1]), { color: '--c-B', width: 2.4 }); tl.dots('d', S.map((p) => p[0]), S.map((p) => p[1]), { color: '--c-B', size: 7 });
           const Sx = []; for (let n = -60; n <= T * fs + 60; n++) Sx.push([n / fs, Math.sin(2 * Math.PI * f0 * n / fs)]);
           tr.range([0, T], [-1.4, 1.4]); tr.titles('t (s)', ok ? 'sinc reconstruction = the original ✓' : `sinc reconstruction = a ${fmt(fa)} Hz tone ✗`);
           tr.line('x', xs, xs.map((v) => Math.sin(2 * Math.PI * f0 * v)), { color: '--c-ref', width: 1.2, dashed: true }); tr.line('r', xs, xs.map((v) => reconstruct(Sx, 1 / fs, v)), { color: ok ? '--c-v' : '--c-north' });
@@ -92,7 +92,7 @@ export default {
           const fk = [], A = []; for (let k = 0; k <= N / 2; k++) { fk.push(k * fs / N); A.push(4 * Math.hypot(re[k], im[k]) / N); }
           bl.range([0, fs / 2], [0, 1.15]); bl.titles(`f (Hz), up to fs/2 = ${fmt(fs / 2)}`, ok ? 'DFT of the samples: peak at f₀' : `DFT: the peak is at ${fmt(fa)} Hz, not ${f0}`); bl.line('A', fk, A, { color: '--c-E' });
           const F = Math.max(3 * fs, 2.2 * f0), lines = [], lh = []; for (let k = -4; k <= 4; k++) for (const s of [-1, 1]) { const f = s * f0 + k * fs; if (Math.abs(f) <= F) { lines.push(f); lh.push(k === 0 ? 1 : 0.8); } }
-          br.range([-F, F], [0, 1.2]); br.titles('f (Hz)', 'sampled spectrum: ±f₀ repeated every fs'); br.stems('rep', lines, lh, { color: '--c-I', width: 2.4 }); br.stems('orig', [-f0, f0], [1, 1], { color: '--c-B', width: 3.4 });
+          br.range([-F, F], [0, 1.2]); br.titles('f (Hz)', '|X| (norm.): ±f₀ repeated every fs'); br.stems('rep', lines, lh, { color: '--c-I', width: 2.4 }); br.stems('orig', [-f0, f0], [1, 1], { color: '--c-B', width: 3.4 });
           br.line('n1', [-fs / 2, -fs / 2], [0, 1.2], { color: '--c-north', dashed: true, width: 1.2 }); br.line('n2', [fs / 2, fs / 2], [0, 1.2], { color: '--c-north', dashed: true, width: 1.2 });
           hud.set('a', `f₀ = ${f0} Hz, fs = ${fs} Hz → ${fmt(fs / f0)} samples per cycle`); hud.set('b', ok ? `fs > 2f₀ = ${2 * f0} Hz: recoverable ✓` : `fs < 2f₀ = ${2 * f0} Hz: aliased to ${fmt(fa)} Hz ✗`, ok ? 'good' : 'bad');
           hud.set('c', 'dashed red: the Nyquist band ±fs/2 that the reconstruction keeps');
@@ -117,7 +117,7 @@ export default {
           top.range([0, T], [-1.4, 1.4]); top.titles('t (s)', `${f} Hz (grey) and ${fmt(Math.abs(fa))} Hz (orange) through the same samples`);
           top.line('f', xs, xs.map((v) => Math.cos(2 * Math.PI * f * v)), { color: '--c-ref', width: 1.2 }); top.line('a', xs, xs.map((v) => Math.cos(2 * Math.PI * fa * v)), { color: '--c-I', width: 2 }); top.dots('s', S.map((p) => p[0]), S.map((p) => p[1]), { color: '--c-B', size: 9 });
           const fx = Array.from({ length: 600 }, (_, i) => 25 * i / 599);
-          bot.range([0, 25], [0, Math.max(fs / 2, 1) * 1.3]); bot.titles('true frequency (Hz)', `apparent frequency: rises to fs/2 = ${fmt(fs / 2)}, then folds back`);
+          bot.range([0, 25], [0, Math.max(fs / 2, 1) * 1.3]); bot.titles('true frequency (Hz)', `apparent frequency (Hz): rises to fs/2 = ${fmt(fs / 2)}, then folds back`);
           bot.line('roof', fx, fx.map((v) => aliasOf(v, fs)), { color: '--c-I' }); bot.line('id', [0, fs / 2], [0, fs / 2], { color: '--line', dashed: true, width: 1.2 }); bot.dots('now', [f], [aliasOf(f, fs)], { color: '--accent', size: 12 });
           for (let k = 1; k <= 4; k++) bot.line(`m${k}`, [k * fs / 2, k * fs / 2], [0, fs / 2], { color: '--c-north', dashed: true, width: 1 });
           hud.set('a', `f = ${f} Hz sampled at ${fs} Hz → appears at ${fmt(Math.abs(fa))} Hz`, f < fs / 2 ? 'good' : 'bad'); hud.set('b', `f̂ = |f − n·fs| with n = round(f/fs) = ${Math.round(f / fs)}`);
@@ -146,11 +146,11 @@ export default {
           for (let k = -4; k <= 4; k++) { if (k) tr.line(`r${k}`, fx, fx.map((f) => X(f - k * fs)), { color: '--c-I', dashed: true, width: 1.2 }); } tr.line('o', fx, fx.map(X), { color: '--c-B' });
           tr.line('n1', [-fs / 2, -fs / 2], [0, 1.6], { color: '--c-north', dashed: true, width: 1 }); tr.line('n2', [fs / 2, fs / 2], [0, 1.6], { color: '--c-north', dashed: true, width: 1 });
           const sum = fx.map((f) => replicas(X, f, fs)), over = fx.map((f, i) => sum[i] - X(f));
-          bl.range([-F, F], [0, 1.6]); bl.titles('f (Hz)', 'what the samples actually contain: the sum'); bl.line('s', fx, sum, { color: '--c-E' });
+          bl.range([-F, F], [0, 1.6]); bl.titles('f (Hz)', '|X| (norm.): what the samples contain, the sum'); bl.line('s', fx, sum, { color: '--c-E' });
           bl.stems('over', fx.filter((f, i) => Math.abs(f) <= fs / 2 && over[i] > 0.01 && i % 3 === 0), fx.map((f, i) => [f, sum[i], over[i]]).filter(([f, , o], i) => Math.abs(f) <= fs / 2 && o > 0.01 && i % 3 === 0).map((a) => a[1]), { color: '--c-north', width: 1.2 });
           // rebuild by keeping only |f| < fs/2 of the sum, compare with the original pulse
           const rec = ts.map((v) => reconstruct(S, 1 / fs, v)), err = Math.sqrt(ts.reduce((a, v, i) => a + (rec[i] - gpulse(v, B)) ** 2, 0) / ts.length);
-          br.range([-1, 1], [-0.2, 1.2]); br.titles('t (s)', `rebuilt from the samples: RMS error ${fmt(err)}`); br.line('o', ts, ts.map((v) => gpulse(v, B)), { color: '--c-ref', dashed: true, width: 1.4 }); br.line('r', ts, rec, { color: err < 0.01 ? '--c-v' : '--c-north' });
+          br.range([-1, 1], [-0.2, 1.2]); br.titles('t (s)', `x(t): rebuilt from the samples, RMS error ${fmt(err)}`); br.line('o', ts, ts.map((v) => gpulse(v, B)), { color: '--c-ref', dashed: true, width: 1.4 }); br.line('r', ts, rec, { color: err < 0.01 ? '--c-v' : '--c-north' });
           const inband = (() => { let a = 0, b = 0; for (const f of fx) { const o = replicas(X, f, fs) - X(f); if (Math.abs(f) <= fs / 2) { a += o; b += X(f); } } return a / b; })();
           hud.set('a', `fs = ${fs} Hz vs 2·(3B) = ${6 * B} Hz (the pulse's spectrum is ~0 beyond 3B)`, fs >= 6 * B ? 'good' : fs >= 4 * B ? '' : 'bad');
           hud.set('b', `aliased energy in the band: ${fmt(100 * inband)} % (red stems)`); hud.set('c', err < 0.01 ? 'replicas apart: an ideal low-pass rebuilds the pulse' : 'replicas overlap: the extra is folded in for good');

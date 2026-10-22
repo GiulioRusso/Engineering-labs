@@ -110,7 +110,7 @@ export default {
           for (let n = 1; n <= 12; n++) { const b = bn(state.kind, n); if (state.comps && b && n <= state.N) trace.line(`c${n}`, xs, xs.map((v) => b * Math.sin(2 * Math.PI * n * v)), { color: '--c-I', width: 1 }); else trace.hide(`c${n}`); }
           link.segments([x, y, 0.001, trace.mx(u), trace.my(partialSum(state.kind, state.N, u)), 0.001]);
           const M = Math.max(state.N, 15), ns = Array.from({ length: M }, (_, i) => i + 1);
-          spec.range([0, M + 1], [0, 1.4]); spec.titles('harmonic n', 'line spectrum |bₙ|');
+          spec.range([0, M + 1], [0, 1.4]); spec.titles('harmonic n', '|bₙ|: line spectrum');
           spec.stems('b', ns, ns.map((n) => Math.abs(bn(state.kind, n))), { color: '--c-ref', width: 3 }); spec.stems('used', ns.filter((n) => n <= state.N), ns.filter((n) => n <= state.N).map((n) => Math.abs(bn(state.kind, n))), { color: '--c-E', width: 4 });
           let err = 0; for (let i = 0; i < 500; i++) err += (ys[i] - tg[i]) ** 2; err = Math.sqrt(err / 500);
           hud.set('a', `${WAVES[state.kind].label}: ${state.N} harmonic${state.N > 1 ? 's' : ''} → ${ns.filter((n) => n <= state.N && bn(state.kind, n)).length} circles`);
@@ -123,12 +123,12 @@ export default {
           const reveal = Math.min(1, (t % 8) / 6), upto = xs.filter((v) => v <= reveal);
           tl.range([0, 1], [-1.4, 1.4]); tl.titles('one period', 'the square wave x(t)'); tl.line('x', xs, sq, { color: '--c-B' });
           tr.range([0, 1], [-1.4, 1.4]); tr.titles('one period', `the probe sin(2π·${n}·t)`); tr.line('p', xs, pr, { color: '--c-I' });
-          bl.range([0, 1], [-1.4, 1.4]); bl.titles('one period', 'their product: area above minus area below');
+          bl.range([0, 1], [-1.4, 1.4]); bl.titles('one period', 'x(t)·probe: area above minus area below');
           bl.line('prod', xs, prod, { color: '--c-ref', width: 1.2 });
           bl.stems('pos', upto.filter((_, i) => prod[i] > 0), upto.map((_, i) => prod[i]).filter((p) => p > 0), { color: '--c-v', width: 1.4 }); bl.stems('neg', upto.filter((_, i) => prod[i] < 0), upto.map((_, i) => prod[i]).filter((p) => p < 0), { color: '--c-north', width: 1.4 });
           let area = 0; for (let i = 0; i < upto.length - 1; i++) area += prod[i] / 600; const bcalc = 2 * area;
           const cum = upto.map((_, i) => { let s = 0; for (let j = 0; j <= i; j++) s += prod[j] / 600; return 2 * s; });
-          br.range([0, 1], [-0.5, 1.6]); br.titles('one period', `running 2∫x·probe → b${n}`); br.line('cum', upto, cum, { color: '--c-E' }); br.line('true', [0, 1], [bn('square', n), bn('square', n)], { color: '--c-north', dashed: true, width: 1.4 });
+          br.range([0, 1], [-0.5, 1.6]); br.titles('one period', `running 2∫x·probe: → b${n}`); br.line('cum', upto, cum, { color: '--c-E' }); br.line('true', [0, 1], [bn('square', n), bn('square', n)], { color: '--c-north', dashed: true, width: 1.4 });
           hud.set('a', `measuring b${n}: multiply, then add up the area over one period`);
           hud.set('b', `so far 2∫ = ${fmt(bcalc)}${reveal >= 1 ? ` → b${n} = ${fmt(bn('square', n))}` : ''}`, reveal >= 1 ? 'good' : '');
           hud.set('c', n % 2 ? `odd n: green beats red, b${n} = 4/(${n}π)` : 'even n: green and red cancel exactly, bₙ = 0');
@@ -136,15 +136,15 @@ export default {
         } else if (c === 'gibbs') {
           const N = state.G, M = (k) => 2 * k - 1, sum = (v) => { let s = 0; for (let k = 1; k <= N; k++) s += 4 / (Math.PI * M(k)) * Math.sin(2 * Math.PI * M(k) * v); return s; };
           const xs = Array.from({ length: 1500 }, (_, i) => -0.5 + i / 1499), ys = xs.map(sum), tg = xs.map((v) => WAVES.square.f(v));
-          top.range([-0.5, 0.5], [-1.5, 1.5]); top.titles('one period', `square wave and its first ${N} odd harmonics`); top.line('t', xs, tg, { color: '--c-ref', dashed: true, width: 1.4 }); top.line('s', xs, ys, { color: '--c-B', width: 1.8 });
+          top.range([-0.5, 0.5], [-1.5, 1.5]); top.titles('one period', `x(t): square wave and its first ${N} odd harmonics`); top.line('t', xs, tg, { color: '--c-ref', dashed: true, width: 1.4 }); top.line('s', xs, ys, { color: '--c-B', width: 1.8 });
           const span = Math.max(0.01, 3 / (2 * N)), zx = Array.from({ length: 800 }, (_, i) => -span / 4 + (span * 1.25) * i / 799), zy = zx.map(sum), pk = Math.max(...zy);
-          bot.range([zx[0], zx[zx.length - 1]], [0.6, 1.25]); bot.titles(`zoom on the jump: the first ${fmt(span * 1000)} ms`, 'overshoot'); bot.line('z', zx, zy, { color: '--c-B' }); bot.line('one', [zx[0], zx[zx.length - 1]], [1, 1], { color: '--ink-dim', width: 1 }); bot.line('pk', [zx[0], zx[zx.length - 1]], [pk, pk], { color: '--c-north', dashed: true, width: 1.4 });
+          bot.range([zx[0], zx[zx.length - 1]], [0.6, 1.25]); bot.titles(`time after the jump (periods), first ${fmt(span * 1000)} thousandths`, 'x(t): the overshoot'); bot.line('z', zx, zy, { color: '--c-B' }); bot.line('one', [zx[0], zx[zx.length - 1]], [1, 1], { color: '--ink-dim', width: 1 }); bot.line('pk', [zx[0], zx[zx.length - 1]], [pk, pk], { color: '--c-north', dashed: true, width: 1.4 });
           hud.set('a', `peak ${fmt(pk, 4)}: overshoot ${fmt(100 * (pk - 1) / 2, 3)} % of the jump (2)`); hud.set('b', `the spike sits 1/(2·${2 * N}) of a period from the jump and gets narrower`); hud.set('c', 'its height never goes to zero: ≈ 8.95 %', 'bad');
           const Gs = [1, 2, 3, 5, 8, 12, 20, 30, 50, 80, 120, 200]; plots.aux.draw({ xlim: [1, 200], cursor: N, series: [{ x: Gs, y: Gs.map((g) => { let m = 0; for (let i = 1; i < 400; i++) { const v = i / (400 * 2 * g) * 1.5; let s = 0; for (let k = 1; k <= g; k++) s += 4 / (Math.PI * M(k)) * Math.sin(2 * Math.PI * M(k) * v); m = Math.max(m, s); } return 100 * (m - 1) / 2; }), color: '--c-north', label: 'overshoot (% of the jump) vs N: flat at 8.95' }] });
         } else if (c === 'transform') {
           // a pulse train of width τ and period T: lines at n/T, under the envelope (τ/T)·sinc(fτ)
           const tau = state.tau, T = Math.max(state.T, tau * 1.01), xs = Array.from({ length: 1600 }, (_, i) => -10 + 20 * i / 1599);
-          top.range([-10, 10], [-0.2, 1.3]); top.titles('t (s)', `pulses of width τ = ${tau} s repeating every T = ${T} s`); top.line('x', xs, xs.map((v) => (Math.abs(((v % T) + 1.5 * T) % T - T / 2) <= tau / 2 ? 1 : 0)), { color: '--c-B' });
+          top.range([-10, 10], [-0.2, 1.3]); top.titles('t (s)', `x(t): pulses of width τ = ${tau} s every T = ${T} s`); top.line('x', xs, xs.map((v) => (Math.abs(((v % T) + 1.5 * T) % T - T / 2) <= tau / 2 ? 1 : 0)), { color: '--c-B' });
           const F = 6, ns = [], cs = []; for (let n = -Math.floor(F * T); n <= F * T; n++) { ns.push(n / T); cs.push(T * (tau / T) * Math.abs(sinc(n * tau / T))); }
           bot.range([-F, F], [0, tau * 1.15]); bot.titles('f (Hz)', 'T·|cₙ| at n/T (stems) and the transform τ·|sinc(fτ)| (dashed)');
           bot.stems('c', ns, cs, { color: '--c-E', width: T > 10 ? 1.4 : 3 }); const fx = Array.from({ length: 800 }, (_, i) => -F + 2 * F * i / 799); bot.line('env', fx, fx.map((f) => tau * Math.abs(sinc(f * tau))), { color: '--c-north', dashed: true, width: 1.4 });
@@ -156,14 +156,14 @@ export default {
           tl.range([rn[0], rn[rn.length - 1]], [-1.4, 1.4]); tl.titles('sample n', state.copies ? 'the DFT assumes the record repeats: see the seams' : 'the record and the window');
           tl.line('x', rn, rn.map((i) => x[((i % N) + N) % N]), { color: '--c-B', width: 1.4 }); tl.line('w', n, w, { color: '--c-I', dashed: true, width: 1.4 });
           if (state.copies) { tl.line('s1', [0, 0], [-1.4, 1.4], { color: '--c-north', width: 1 }); tl.line('s2', [N, N], [-1.4, 1.4], { color: '--c-north', width: 1 }); } else { tl.hide('s1'); tl.hide('s2'); }
-          tr.range([0, N - 1], [-1.4, 1.4]); tr.titles('sample n', 'windowed record: ends brought smoothly to zero'); tr.stems('xw', n, xw, { color: '--c-v', width: 2 });
+          tr.range([0, N - 1], [-1.4, 1.4]); tr.titles('sample n', 'x[n]·w[n]: ends brought smoothly to zero'); tr.stems('xw', n, xw, { color: '--c-v', width: 2 });
           const re = Float64Array.from(xw), im = new Float64Array(N); fft(re, im); const g = w.reduce((a, b) => a + b, 0) / N;
           const k = Array.from({ length: N / 2 + 1 }, (_, i) => i), A = k.map((i) => (i === 0 ? 1 : 2) * Math.hypot(re[i], im[i]) / (N * g));
-          bl.range([0, N / 2], [0, 1.1]); bl.titles('bin k (cycles per record)', 'DFT bins |X[k]|'); bl.stems('A', k, A, { color: '--c-E' }); bl.line('true', [state.f1, state.f1], [0, 1.1], { color: '--c-north', dashed: true, width: 1.2 });
+          bl.range([0, N / 2], [0, 1.1]); bl.titles('bin k (cycles per record)', '|X[k]|: DFT bins'); bl.stems('A', k, A, { color: '--c-E' }); bl.line('true', [state.f1, state.f1], [0, 1.1], { color: '--c-north', dashed: true, width: 1.2 });
           // dense spectrum (zero-padded) in dB to show the window's own shape
           const P = 4096, pr = new Float64Array(P), pi = new Float64Array(P); for (let i = 0; i < N; i++) pr[i] = xw[i]; fft(pr, pi);
           const fk = [], fd = []; for (let i = 0; i <= P / 2; i++) { fk.push(i * N / P); fd.push(Math.max(-100, 20 * Math.log10(2 * Math.hypot(pr[i], pi[i]) / (N * g) + 1e-9))); }
-          br.range([0, N / 2], [-100, 5]); br.titles('frequency (bins)', 'in dB: the window’s main lobe and sidelobes'); br.line('d', fk, fd, { color: '--c-E', width: 1.4 }); br.dots('bins', k, A.map((v) => 20 * Math.log10(v + 1e-9)), { color: '--c-B', size: 6 });
+          br.range([0, N / 2], [-100, 5]); br.titles('frequency (bins)', '|X| (dB): the window’s main lobe and sidelobes'); br.line('d', fk, fd, { color: '--c-E', width: 1.4 }); br.dots('bins', k, A.map((v) => 20 * Math.log10(v + 1e-9)), { color: '--c-B', size: 6 });
           const on = Math.abs(state.f1 - Math.round(state.f1)) < 0.02, peak = Math.max(...A);
           hud.set('a', on ? `${state.f1} cycles exactly: the repeats join seamlessly → one bin` : `${state.f1} cycles: a jump at the seam → energy leaks into every bin`, on ? 'good' : 'bad');
           hud.set('b', `${WINDOWS[state.win].label}: peak reads ${fmt(peak)} (true amplitude 1)${on ? '' : `, scalloping loss ${fmt(20 * Math.log10(peak))} dB`}`);
@@ -172,10 +172,10 @@ export default {
         } else {
           // Gaussian tone burst: σt in time, σf = 1/(4πσt) in frequency
           const s = state.sig, fc = state.fc, xs = Array.from({ length: 1200 }, (_, i) => -6 + 12 * i / 1199), env = xs.map((v) => Math.exp(-v * v / (4 * s * s)));
-          tl.range([-6, 6], [-1.2, 1.2]); tl.titles('t (s)', `tone burst: ${fc} Hz under a Gaussian envelope`); tl.line('x', xs, xs.map((v, i) => env[i] * Math.cos(2 * Math.PI * fc * v)), { color: '--c-B', width: 1.2 }); tl.line('e', xs, env, { color: '--c-I', dashed: true, width: 1.2 });
+          tl.range([-6, 6], [-1.2, 1.2]); tl.titles('t (s)', `x(t): ${fc} Hz tone under a Gaussian envelope`); tl.line('x', xs, xs.map((v, i) => env[i] * Math.cos(2 * Math.PI * fc * v)), { color: '--c-B', width: 1.2 }); tl.line('e', xs, env, { color: '--c-I', dashed: true, width: 1.2 });
           const sf = 1 / (4 * Math.PI * s), fx = Array.from({ length: 800 }, (_, i) => fc - 4 + 8 * i / 799), Xf = fx.map((f) => Math.exp(-((f - fc) ** 2) / (4 * sf * sf)));
           tr.range([fc - 4, fc + 4], [0, 1.15]); tr.titles('f (Hz)', `|X(f)|: σf = ${fmt(sf)} Hz`); tr.line('X', fx, Xf, { color: '--c-E' }); tr.line('a', [fc - sf, fc - sf], [0, 1.15], { color: '--c-north', dashed: true, width: 1 }); tr.line('b', [fc + sf, fc + sf], [0, 1.15], { color: '--c-north', dashed: true, width: 1 });
-          bl.range([-6, 6], [0, 1.1]); bl.titles('t (s)', `energy |x|² envelope: σt = ${fmt(s)} s`); bl.line('E', xs, env.map((v) => v * v), { color: '--c-I' }); bl.line('a', [-s, -s], [0, 1.1], { color: '--c-north', dashed: true, width: 1 }); bl.line('b', [s, s], [0, 1.1], { color: '--c-north', dashed: true, width: 1 });
+          bl.range([-6, 6], [0, 1.1]); bl.titles('t (s)', `|x|²: energy envelope, σt = ${fmt(s)} s`); bl.line('E', xs, env.map((v) => v * v), { color: '--c-I' }); bl.line('a', [-s, -s], [0, 1.1], { color: '--c-north', dashed: true, width: 1 }); bl.line('b', [s, s], [0, 1.1], { color: '--c-north', dashed: true, width: 1 });
           br.range([0, 3], [0, 1.6]); br.titles('σt (s)', 'σf (Hz): σt·σf = 1/4π'); const ss = Array.from({ length: 200 }, (_, i) => 0.04 + i * 0.015); br.line('h', ss, ss.map((v) => 1 / (4 * Math.PI * v)), { color: '--c-north' }); br.dots('now', [s], [sf], { color: '--accent', size: 11 });
           hud.set('a', `σt = ${fmt(s)} s, σf = ${fmt(sf)} Hz, product ${fmt(s * sf)} = 1/4π`); hud.set('b', s < 0.3 ? 'a click: sharp in time, smeared over many frequencies' : s > 1 ? 'a long note: its pitch is very precise' : 'halve the burst, double the spread in frequency');
           hud.set('c', `to tell two tones ${fmt(2 * sf)} Hz apart you must listen ≈ ${fmt(2 * s)} s`);

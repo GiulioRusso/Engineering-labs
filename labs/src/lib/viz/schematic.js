@@ -4,9 +4,9 @@
 import { createCurve } from './curve.js';
 
 export function createSchematic(ctx, { width = 2, color = '--ink', max = 4000, labelPool = 24 } = {}) {
-  const { stage, scene } = ctx, lines = createCurve(stage, { max, width, color }), hot = createCurve(stage, { max: 600, width: width + 1.2, color: '--c-I' }), labels = [];
+  const { stage, scene } = ctx, lines = createCurve(stage, { max, width, color }), hot = createCurve(stage, { max: 600, width: width + 1.2, color: '--c-I' }), dots = createCurve(stage, { max: 6000, width: 2.6, color: '--c-E' }), labels = [];
   for (let i = 0; i < labelPool; i++) { const l = ctx.label('', 'tick'); scene.add(l); l.visible = false; labels.push(l); }
-  let seg = [], hs = [], nl = 0;
+  let seg = [], hs = [], ds = [], nl = 0;
   // a two-terminal part whose label (its value) changed since the last draw pulses for FLASH ms: it swells
   // across its axis and turns the accent colour, so the eye catches what the control just changed
   const FLASH = 600, prev = new Map(), since = new Map(), seen = new Set(); let pending = false;
@@ -28,8 +28,8 @@ export function createSchematic(ctx, { width = 2, color = '--ink', max = 4000, l
   // component label on its left side; beside a vertical part it is pushed out by half its (centred) width
   const tag = (F, t, m, d = 0.32) => { const c = F.at(m), n = F.at(m, 1); const nx = n[0] - c[0]; if (Math.abs(nx) > 0.7) text(t, [c[0] + Math.sign(nx) * (d - 0.14 + 0.05 * (t || '').length), c[1]]); else text(t, F.at(m, d)); };
   const api = {
-    begin() { seg = []; hs = []; nl = 0; pending = false; seen.clear(); labels.forEach((l) => { l.visible = false; }); return api; },
-    end() { lines.segments(seg); hot.segments(hs); for (const k of prev.keys()) if (!seen.has(k)) { prev.delete(k); since.delete(k); } if (pending) requestAnimationFrame(() => ctx.requestUpdate()); return api; },
+    begin() { seg = []; hs = []; ds = []; nl = 0; pending = false; seen.clear(); labels.forEach((l) => { l.visible = false; }); return api; },
+    end() { lines.segments(seg); hot.segments(hs); dots.segments(ds); for (const k of prev.keys()) if (!seen.has(k)) { prev.delete(k); since.delete(k); } if (pending) requestAnimationFrame(() => ctx.requestUpdate()); return api; },
     wire(...pts) { poly(pts); return api; },
     hotWire(...pts) { poly(pts, true); return api; },
     dot(p, r = 0.05) { for (let i = 0; i < 8; i++) { const a = Math.PI * i / 4, b = Math.PI * (i + 1) / 4; L([p[0] + r * Math.cos(a), p[1] + r * Math.sin(a)], [p[0] + r * Math.cos(b), p[1] + r * Math.sin(b)]); } return api; },
@@ -47,13 +47,25 @@ export function createSchematic(ctx, { width = 2, color = '--ink', max = 4000, l
     mos(c, name = '', p = false) { const g = [c[0] - 0.32, c[1]], x0 = c[0] - 0.12, x1 = c[0] - 0.04; L(g, [x0 - (p ? 0.08 : 0), c[1]]); if (p) { for (let i = 0; i < 8; i++) { const a = Math.PI * i / 4, bb = Math.PI * (i + 1) / 4; L([x0 - 0.04 + 0.04 * Math.cos(a), c[1] + 0.04 * Math.sin(a)], [x0 - 0.04 + 0.04 * Math.cos(bb), c[1] + 0.04 * Math.sin(bb)]); } } L([x0, c[1] - 0.2], [x0, c[1] + 0.2]); L([x1, c[1] - 0.22], [x1, c[1] + 0.22]); L([x1, c[1] + 0.16], [c[0] + 0.14, c[1] + 0.16]); L([x1, c[1] - 0.16], [c[0] + 0.14, c[1] - 0.16]); L([c[0] + 0.14, c[1] + 0.16], [c[0] + 0.14, c[1] + 0.42]); L([c[0] + 0.14, c[1] - 0.16], [c[0] + 0.14, c[1] - 0.42]); text(name, c, 0.42, 0); return { G: g, D: [c[0] + 0.14, c[1] + 0.42], S: [c[0] + 0.14, c[1] - 0.42] }; },
     // op-amp triangle with − input on top-left, + bottom-left, output right; returns pins
     opamp(c, s = 0.6) { const A = [c[0] - s, c[1] + s], B = [c[0] - s, c[1] - s], O = [c[0] + s, c[1]]; poly([A, B, O, A]); text('−', [c[0] - s + 0.15, c[1] + s * 0.45]); text('+', [c[0] - s + 0.15, c[1] - s * 0.45]); return { inN: [c[0] - s, c[1] + s * 0.45], inP: [c[0] - s, c[1] - s * 0.45], out: O }; },
+    // inductor: four half-turn bumps between a and b
+    inductor(a, b, name = '') { pulse('inductor', a, b, name, () => { const F = frame(a, b), z = Math.min(0.7, F.len * 0.7), s0 = (F.len - z) / 2, r = z / 8, pts = [a, F.at(s0)]; for (let k = 0; k < 4; k++) for (let j = 1; j <= 8; j++) { const th = Math.PI * j / 8; pts.push(F.at(s0 + r * (2 * k + 1 - Math.cos(th)), r * 1.4 * Math.sin(th))); } pts.push(F.at(s0 + z), b); poly(pts); tag(F, name, F.len / 2, 0.36); }); return api; },
+    // switch: a lever from a, closed onto b or lifted open
+    switch(a, b, closed, name = '') { const F = frame(a, b), m = F.len; L(a, F.at(m * 0.25)); L(F.at(m * 0.75), b); L(F.at(m * 0.25), closed ? F.at(m * 0.75) : F.at(m * 0.7, 0.25)); tag(F, name, m / 2, 0.36); return api; },
+    // moving charges along a wire path: spacing sp, displaced by `shift` (= ∫ speed dt, sign = direction)
+    flow(pts, shift, { sp = 0.32, r = 0.045 } = {}) {
+      const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+      const tot = cum.at(-1), off = ((shift % sp) + sp) % sp; let j = 0;
+      for (let d = off; d < tot; d += sp) { while (cum[j + 1] < d) j++; const u = (d - cum[j]) / (cum[j + 1] - cum[j] || 1), x = pts[j][0] + u * (pts[j + 1][0] - pts[j][0]), y = pts[j][1] + u * (pts[j + 1][1] - pts[j][1]);
+        for (let k = 0; k < 6; k++) { const p = Math.PI * k / 3, q = Math.PI * (k + 1) / 3; ds.push(x + r * Math.cos(p), y + r * Math.sin(p), 0.008, x + r * Math.cos(q), y + r * Math.sin(q), 0.008); } }
+      return api;
+    },
     // rectangle centred at c (a block in a diagram); returns its side midpoints
     box(c, w, h, name = '') { const [x, y] = c, a = w / 2, b = h / 2; poly([[x - a, y - b], [x + a, y - b], [x + a, y + b], [x - a, y + b], [x - a, y - b]]); text(name, c); return { l: [x - a, y], r: [x + a, y], t: [x, y + b], b: [x, y - b] }; },
     // summing junction: circle with a cross
-    sum(c, r = 0.18) { for (let i = 0; i < 16; i++) { const p = Math.PI * i / 8, q = Math.PI * (i + 1) / 8; L([c[0] + r * Math.cos(p), c[1] + r * Math.sin(p)], [c[0] + r * Math.cos(q), c[1] + r * Math.sin(q)]); } L([c[0] - r * 0.7, c[1]], [c[0] + r * 0.7, c[1]]); L([c[0], c[1] - r * 0.7], [c[0], c[1] + r * 0.7]); return { l: [c[0] - r, c[1]], r: [c[0] + r, c[1]], b: [c[0], c[1] - r], t: [c[0], c[1] + r] }; },
+    sum(c, r = 0.18, times = false) { for (let i = 0; i < 16; i++) { const p = Math.PI * i / 8, q = Math.PI * (i + 1) / 8; L([c[0] + r * Math.cos(p), c[1] + r * Math.sin(p)], [c[0] + r * Math.cos(q), c[1] + r * Math.sin(q)]); } const a = times ? r * 0.7 * Math.SQRT1_2 : 0, b = times ? a : r * 0.7; L([c[0] - b, c[1] - a], [c[0] + b, c[1] + a]); L([c[0] - a, c[1] + b], [c[0] + a, c[1] - b]); return { l: [c[0] - r, c[1]], r: [c[0] + r, c[1]], b: [c[0], c[1] - r], t: [c[0], c[1] + r] }; },
     arrowI(a, b, name = '') { const F = frame(a, b), m = F.len / 2; L(F.at(m - 0.12, 0.18), F.at(m + 0.12, 0.18), true); L(F.at(m + 0.12, 0.18), F.at(m + 0.04, 0.24), true); L(F.at(m + 0.12, 0.18), F.at(m + 0.04, 0.12), true); tag(F, name, m, 0.42); return api; },
-    show(on) { lines.object.visible = hot.object.visible = on; if (!on) labels.forEach((l) => { l.visible = false; }); },
-    theme() { lines.theme(); hot.theme(); },
+    show(on) { lines.object.visible = hot.object.visible = dots.object.visible = on; if (!on) labels.forEach((l) => { l.visible = false; }); },
+    theme() { lines.theme(); hot.theme(); dots.theme(); },
   };
   return api;
 }

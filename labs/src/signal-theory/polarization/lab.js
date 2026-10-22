@@ -106,7 +106,7 @@ export default {
           const ds = Array.from({ length: 361 }, (_, i) => -180 + i); plots.aux.draw({ xlim: [-180, 180], cursor: state.dl, series: [{ x: ds, y: ds.map((q) => ellipse(Ax, Ay, q * deg).chi / deg), color: '--c-I', label: 'χ (°) vs δ (°)' }] });
         } else if (c === 'jones') {
           const G = state.el === 'qwp' ? Math.PI / 2 : state.el === 'hwp' ? Math.PI : state.G * deg, M = element(state.el === 'polarizer' ? 'polarizer' : 'retarder', state.th * deg, G), J = jones(Ax, Ay, d), O = apply(M, J), o = fromJones(O), Pi = power(J), Po = power(O);
-          drawEllipse(sql, Ax, Ay, d, 'in', '--c-B'); sql.titles('Ex', 'input state'); drawEllipse(sqr, o.Ax, o.Ay, o.d, 'out', '--c-v'); sqr.titles('Ex', `after the ${ELEMENTS.find((q) => q[0] === state.el)[1].toLowerCase()}`);
+          drawEllipse(sql, Ax, Ay, d, 'in', '--c-B'); sql.titles('Ex', 'Ey: input state'); drawEllipse(sqr, o.Ax, o.Ay, o.d, 'out', '--c-v'); sqr.titles('Ex', `after the ${ELEMENTS.find((q) => q[0] === state.el)[1].toLowerCase()}`);
           const th = state.th * deg; for (const ch of [sql, sqr]) ch.line('ax', [-1.2 * Math.cos(th), 1.2 * Math.cos(th)], [-1.2 * Math.sin(th), 1.2 * Math.sin(th)], { color: '--c-north', dashed: true, width: 1.2 });
           const ein = ellipse(Ax, Ay, d), eo = ellipse(o.Ax, o.Ay, o.d);
           hud.set('a', `in: ψ = ${fmt(ein.psi / deg)}°, χ = ${fmt(ein.chi / deg)}° → out: ψ = ${fmt(eo.psi / deg)}°, χ = ${fmt(eo.chi / deg)}°`);

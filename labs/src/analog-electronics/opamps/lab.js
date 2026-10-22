@@ -84,7 +84,7 @@ export default {
         if (c === 'ideal') {
           const G = idealGain(state.cfg, state.R1, state.R2), t = time.t % 4, ts = lin(0, 4, 400), sin = (x) => state.vin * Math.sin(Math.PI * x), out = (v) => Math.max(-RAIL, Math.min(RAIL, G * v));
           drawAmp(sch, state.cfg, `R1 ${kOhm(state.R1)}`, `R2 ${kOhm(state.R2)}`);
-          const M = Math.min(13, Math.max(Math.abs(G) * state.vin, state.vin) * 1.15); tr.range([0, 4], [-M, M]); tr.titles('t', 'v_in (grey) and v_out (blue), V');
+          const M = Math.min(13, Math.max(Math.abs(G) * state.vin, state.vin) * 1.15); tr.range([0, 4], [-M, M]); tr.titles('time (one period = 2)', 'v_in (grey) and v_out (blue), V');
           tr.line('i', ts, ts.map(sin), { color: '--c-ref', width: 1.2 }); tr.line('o', ts, ts.map((x) => out(sin(x))), { color: '--c-B' }); tr.dots('n', [t], [out(sin(t))], { color: '--accent', size: 10 });
           const W = Math.max(state.vin * 1.3, RAIL / Math.abs(G) * 1.3), vi = lin(-W, W, 300); br.range([-W, W], [-13, 13]); br.titles('v_in (V)', 'v_out (V): slope = gain, flat = rails ±12 V');
           br.line('tf', vi, vi.map(out), { color: '--c-B' }); br.dots('n', [sin(t)], [out(sin(t))], { color: '--accent', size: 11 });
@@ -96,9 +96,9 @@ export default {
         } else if (c === 'finite') {
           const A = 10 ** (state.A / 20), b = 1 / state.G, Acl = finiteGain(A, b), err = (Acl / state.G - 1) * 100;
           drawAmp(sch, 'non', 'R1', `R2 = ${fmt(state.G - 1)}·R1`); sch.text(`A = ${fmt(state.A)} dB`, [-1.6, -1.0]);
-          const la = lin(1, 6, 200); tr.range([1, 6], [0, state.G * 1.15]); tr.titles('log₁₀ A', 'closed-loop gain: approaches 1 + R2/R1 (dashed)');
+          const la = lin(1, 6, 200); tr.range([1, 6], [0, state.G * 1.15]); tr.titles('log₁₀ A', 'closed-loop gain (V/V): approaches 1 + R2/R1 (dashed)');
           tr.line('g', la, la.map((l) => finiteGain(10 ** l, b)), { color: '--c-B' }); tr.line('i', [1, 6], [state.G, state.G], { color: '--ink-dim', dashed: true, width: 1.2 }); tr.dots('q', [Math.log10(A)], [Acl], { color: '--accent', size: 12 });
-          br.range([1, 6], [-4, 2]); br.titles('log₁₀ A', 'log₁₀ |error %|: drops one decade per decade of A');
+          br.range([1, 6], [-4, 2]); br.titles('log₁₀ A', 'log₁₀ |gain error| (%): one decade per decade of A');
           br.line('e', la, la.map((l) => Math.log10(100 / (1 + 10 ** l * b))), { color: '--c-north' }); br.dots('q', [Math.log10(A)], [Math.log10(Math.abs(err))], { color: '--accent', size: 11 });
           hud.set('a', `gain ${fmt(Acl, 5)} instead of ${fmt(state.G)}: ${fmt(err, 3)}% error`, Math.abs(err) < 0.1 ? 'good' : 'bad'); hud.set('b', `loop gain Aβ = ${fmt(A * b)}; error = −1/(1 + Aβ)`);
           hud.set('c', `v₊ − v₋ = v_out/A = ${fmt(1e6 / A)} µV per volt out: tiny, but not zero`);
@@ -144,7 +144,7 @@ export default {
             .wire([-3.5, p], [-3.5, 1.3]).capacitor([-3.5, 1.3], [-0.7, 1.3], 'C').wire([-0.7, 1.3], [-0.7, 0]).wire(P.out, [-0.5, 0]).text('v_out', [-0.5, 0.25]).wire(P.inN, [-2.3, P.inN[1]], [-2.3, 0.75]).text(`gain K = ${fmt(state.K)}`, [-1.4, -0.85]);
           const lf = lin(1, 6, 300); tr.range([1, 6], [-60, 30]); tr.titles('log₁₀ f (Hz)', '|H| (dB): −40 dB/decade past f₀');
           tr.line('h', lf, lf.map((l) => dB(F.H(10 ** l))), { color: '--c-B' }); tr.dots('f0', [Math.log10(F.f0)], [dB(F.H(F.f0))], { color: '--accent', size: 11 });
-          const W = F.w0 * 1.2, X = W * 4.3; br.range([-X * 0.82, X * 0.18], [-W, W]); br.titles('σ (rad/s)', 's-plane: the two poles (left half = stable)');
+          const W = F.w0 * 1.2, X = W * 4.3; br.range([-X * 0.82, X * 0.18], [-W, W]); br.titles('σ (rad/s)', 'jω (rad/s): the two poles (left half = stable)');
           br.line('ax', [0, 0], [-W, W], { color: '--ink-dim', width: 1 }); br.line('c', lin(0, 2 * Math.PI, 100).map((a) => F.w0 * Math.cos(a)), lin(0, 2 * Math.PI, 100).map((a) => F.w0 * Math.sin(a)), { color: '--c-ref', dashed: true, width: 1 }); br.dots('p', F.poles.map((q) => q[0]), F.poles.map((q) => q[1]), { color: '--c-north', size: 12 });
           hud.set('a', `f₀ = 1/(2πRC) = ${hz(F.f0)}, Q = 1/(3 − K) = ${fmt(F.Q)}`, F.Q > 2 ? 'bad' : 'good'); hud.set('b', F.Q > 0.71 ? `peaking: ${fmt(dB(F.Q))} dB at f₀` : F.Q > 0.7 ? 'Butterworth: the flattest possible response' : 'no peaking: gentle roll-off, clean step response');
           hud.set('c', 'the capacitor to the output is positive feedback: more K, poles move toward the jω axis (K = 3: oscillator)');

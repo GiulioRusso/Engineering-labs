@@ -78,7 +78,7 @@ export default {
         if (c === 'kernel') {
           const h = kernel(state.kern, state.M), y = convSame(x, h); shared(x, y, 'input (grey) and smoothed output (blue)');
           const m = (h.length - 1) / 2, hk = h.map((_, i) => (i - m) / FS * 1000);
-          tr.range([Math.min(-20, hk[0] * 1.2), Math.max(20, hk[hk.length - 1] * 1.2)], [0, Math.max(...h) * 1.2]); tr.titles('lag (ms)', `kernel h[n]: ${state.M} samples = ${fmt(1000 * state.M / FS)} ms`); tr.stems('h', hk, h, { color: '--c-I', width: state.M > 60 ? 1.2 : 2.4 });
+          tr.range([Math.min(-20, hk[0] * 1.2), Math.max(20, hk[hk.length - 1] * 1.2)], [0, Math.max(...h) * 1.2]); tr.titles('lag (ms)', `h[n]: kernel of ${state.M} samples = ${fmt(1000 * state.M / FS)} ms`); tr.stems('h', hk, h, { color: '--c-I', width: state.M > 60 ? 1.2 : 2.4 });
           const fs = Array.from({ length: 400 }, (_, i) => i * 150 / 399), H = fs.map((f) => Math.max(-90, 20 * Math.log10(response(h, f / FS) + 1e-9)));
           br.range([0, 150], [-90, 5]); br.titles('f (Hz)', `|H(f)| (dB): ${state.kern === 'rect' ? 'a sinc — zeros at multiples of fs/M' : 'a Gaussian — no sidelobes'}`); br.line('H', fs, H, { color: '--c-I' }); br.line('hum', [60, 60], [-90, 5], { color: '--c-north', dashed: true, width: 1 });
           const g60 = 20 * Math.log10(response(h, 60 / FS) + 1e-9), edge = 1000 * (state.kern === 'rect' ? state.M : state.M / 3) / FS;
@@ -88,7 +88,7 @@ export default {
         } else if (c === 'mask') {
           const M = mask(state.mk, state.fc, state.order), y = applyMask(x, FS, M); shared(x, y, 'input (grey) and masked output (blue): look at the edges');
           const m = maskImpulse(FS, N, M), lag = m.map((_, i) => (i - N / 2) / FS * 1000), W = Math.min(400, 3000 / state.fc);
-          tr.range([-W, W], [Math.min(...m) * 1.3, Math.max(...m) * 1.15]); tr.titles('lag (ms)', 'equivalent impulse response m = F⁻¹{M}'); tr.line('m', lag, m, { color: '--c-I', width: 1.6 });
+          tr.range([-W, W], [Math.min(...m) * 1.3, Math.max(...m) * 1.15]); tr.titles('lag (ms)', 'm(t): equivalent impulse response F⁻¹{M}'); tr.line('m', lag, m, { color: '--c-I', width: 1.6 });
           const fs = Array.from({ length: 400 }, (_, i) => i * 150 / 399); br.range([0, 150], [0, 1.1]); br.titles('f (Hz)', state.mk === 'brick' ? `mask: 1 below ${state.fc} Hz, 0 above` : `mask 1/√(1 + (f/fc)^${2 * state.order})`); br.line('M', fs, fs.map(M), { color: '--c-I' });
           const under = -Math.min(...m) / Math.max(...m), clean = applyMask(signal(0, 0), FS, M), over = Math.max(...clean.slice(FS / 4 - 40, FS / 4 + 120));
           hud.set('a', `${state.mk === 'brick' ? 'brick wall' : `Butterworth n = ${state.order}`} at ${state.fc} Hz: Y = M·X  ↔  y = m * x`);
@@ -97,7 +97,7 @@ export default {
         } else if (c === 'gauss') {
           const s = state.sig / 1000, L = Math.max(3, 2 * Math.ceil(4 * s * FS) + 1), m = (L - 1) / 2, h = Array.from({ length: L }, (_, i) => Math.exp(-(((i - m) / FS) ** 2) / (2 * s * s))), tot = h.reduce((a, b) => a + b, 0), hn = h.map((v) => v / tot);
           const y = convSame(x, hn); shared(x, y, 'input (grey) and Gaussian-smoothed output (blue): no ringing');
-          const lag = hn.map((_, i) => (i - m) / FS * 1000); tr.range([-Math.max(5, 4 * state.sig), Math.max(5, 4 * state.sig)], [0, Math.max(...hn) * 1.2]); tr.titles('lag (ms)', `kernel: Gaussian with σt = ${state.sig} ms`); tr.line('h', lag, hn, { color: '--c-I' });
+          const lag = hn.map((_, i) => (i - m) / FS * 1000); tr.range([-Math.max(5, 4 * state.sig), Math.max(5, 4 * state.sig)], [0, Math.max(...hn) * 1.2]); tr.titles('lag (ms)', `h(t): Gaussian kernel, σt = ${state.sig} ms`); tr.line('h', lag, hn, { color: '--c-I' });
           const sf = 1 / (2 * Math.PI * s), fs = Array.from({ length: 400 }, (_, i) => i * 150 / 399);
           br.range([0, 150], [0, 1.1]); br.titles('f (Hz)', `|H(f)| = Gaussian with σf = 1/(2πσt) = ${fmt(sf)} Hz`); br.line('H', fs, fs.map((f) => response(hn, f / FS)), { color: '--c-I' }); br.line('sf', [sf, sf], [0, 1.1], { color: '--c-north', dashed: true, width: 1 });
           hud.set('a', `σt = ${state.sig} ms ↔ σf = ${fmt(sf)} Hz: σt·σf = 1/2π for the amplitude`); hud.set('b', 'Gaussian in, Gaussian out: no sidelobes in frequency, no ringing in time', 'good');
@@ -105,7 +105,7 @@ export default {
           const ss = Array.from({ length: 60 }, (_, i) => 0.5 + i * 0.5); plots.aux.draw({ xlim: [0.5, 30], cursor: state.sig, series: [{ x: ss, y: ss.map((q) => 1000 / (2 * Math.PI * q)), color: '--c-I', label: 'σf (Hz) vs σt (ms)' }] });
         } else {
           const h = fir(state.ftype, state.ffc, state.ffc2, FS, state.taps), y = convSame(x, h); shared(x, y, `input (grey) and ${state.ftype} output (blue)`);
-          const m = (h.length - 1) / 2, lag = h.map((_, i) => (i - m) / FS * 1000); tr.range([lag[0] * 1.1, lag[lag.length - 1] * 1.1], [Math.min(...h) * 1.3, Math.max(...h) * 1.2]); tr.titles('lag (ms)', `${state.taps} taps: a windowed sinc`); tr.stems('h', lag, h, { color: '--c-I', width: state.taps > 80 ? 1 : 2 });
+          const m = (h.length - 1) / 2, lag = h.map((_, i) => (i - m) / FS * 1000); tr.range([lag[0] * 1.1, lag[lag.length - 1] * 1.1], [Math.min(...h) * 1.3, Math.max(...h) * 1.2]); tr.titles('lag (ms)', `h[n]: ${state.taps} taps, a windowed sinc`); tr.stems('h', lag, h, { color: '--c-I', width: state.taps > 80 ? 1 : 2 });
           const fs = Array.from({ length: 400 }, (_, i) => i * 250 / 399); br.range([0, 250], [-90, 5]); br.titles('f (Hz)', '|H(f)| (dB)'); br.line('H', fs, fs.map((f) => Math.max(-90, 20 * Math.log10(response(h, f / FS) + 1e-9))), { color: '--c-I' }); br.line('hum', [60, 60], [-90, 5], { color: '--c-north', dashed: true, width: 1 });
           const tw = 3.3 * FS / state.taps;
           hud.set('a', `${state.ftype}, ${state.taps} taps (${fmt(1000 * state.taps / FS)} ms): transition band ≈ 3.3·fs/M = ${fmt(tw)} Hz`); hud.set('b', `60 Hz: ${fmt(20 * Math.log10(response(h, 60 / FS) + 1e-12))} dB`); hud.set('c', 'Hamming window: stop band about −53 dB');

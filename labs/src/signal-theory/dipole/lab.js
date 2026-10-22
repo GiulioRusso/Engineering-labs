@@ -94,7 +94,7 @@ export default {
         const c = state.case, L = state.L, wt = 2 * Math.PI * (time.t % 4) / 4;
         if (c === 'current') {
           const zs = Array.from({ length: 201 }, (_, i) => -L / 2 + L * i / 200), I = zs.map((z) => current(z, L)), m = Math.max(...I.map(Math.abs)), ph = Math.cos(wt);
-          left.range([-1.3, 1.3], [-Math.max(0.8, L * 0.6), Math.max(0.8, L * 0.6)]); left.titles('', `the wire, L = ${L} λ`);
+          left.range([-1.3, 1.3], [-Math.max(0.8, L * 0.6), Math.max(0.8, L * 0.6)]); left.titles('', `z (λ): the wire, L = ${L} λ`);
           const seg = []; zs.forEach((z, i) => { if (i % 4 === 0) seg.push(left.mx(0), left.my(z), 0.003, left.mx(I[i] / m * ph), left.my(z), 0.003); }); wire.segments(seg);
           left.line('w', [0, 0], [-L / 2, L / 2], { color: '--ink', width: 4 }); left.dots('feed', [0], [0], { color: '--c-north', size: 10 });
           mid.range([-Math.max(0.8, L * 0.6), Math.max(0.8, L * 0.6)], [-1.15, 1.15]); mid.titles('z (λ)', 'current I(z) = I₀ sin(k(L/2 − |z|)): envelope (dashed) and now (blue)');
@@ -117,7 +117,7 @@ export default {
           const R = state.rmax, n = 160, ar = SQR[3] / SQR[2], v = new Float64Array(n * n), fn = PSI[state.part];
           for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const x = -R + 2 * R * i / (n - 1), z = -R * ar + 2 * R * ar * j / (n - 1), r = Math.hypot(x, z), u = K * r, th = Math.atan2(Math.abs(x), z); v[j * n + i] = r < 0.04 ? NaN : fn(u, th, wt); }
           sqr.range([-R, R], [-R * ar, R * ar]); sqr.titles('x (λ)', `E-field lines (${state.part}), ωt = ${fmt(wt * 180 / Math.PI, 3)}°`);
-          const rr = Array.from({ length: 300 }, (_, i) => 0.03 + i * (R - 0.03) / 299); sql.range([0, R], [-3, 3]); sql.titles('r (λ), broadside', 'Ψ now: bound (orange), radiated (blue), full (green)');
+          const rr = Array.from({ length: 300 }, (_, i) => 0.03 + i * (R - 0.03) / 299); sql.range([0, R], [-3, 3]); sql.titles('r (λ), broadside', 'Ψ (field lines): bound (orange), radiated (blue), full (green)');
           sql.line('b', rr, rr.map((r) => Math.max(-3, Math.min(3, PSI.bound(K * r, Math.PI / 2, wt)))), { color: '--c-I', width: 1.4 }); sql.line('r', rr, rr.map((r) => PSI.radiated(K * r, Math.PI / 2, wt)), { color: '--c-B', width: 1.4 }); sql.line('f', rr, rr.map((r) => Math.max(-3, Math.min(3, PSI.full(K * r, Math.PI / 2, wt)))), { color: '--c-v' }); sql.line('k', [1 / K, 1 / K], [-3, 3], { color: '--c-north', dashed: true, width: 1 });
           const lv = [-0.6, -0.35, -0.2, -0.1, -0.04, 0.04, 0.1, 0.2, 0.35, 0.6], seg = contours(v, n, n, [-R, R], [-R * ar, R * ar], lv), out = [];
           for (let q = 0; q < seg.length; q += 4) out.push(sqr.mx(seg[q]), sqr.my(seg[q + 1]), 0.003, sqr.mx(seg[q + 2]), sqr.my(seg[q + 3]), 0.003); lines.segments(out);
@@ -144,7 +144,7 @@ export default {
           const nx = 146, ny = 91, img = new Float64Array(nx * ny), fl = state.floor;
           CACHE.sweep ??= (() => { const a = new Float64Array(nx * ny); for (let i = 0; i < nx; i++) { const LL = 0.1 + 2.9 * i / (nx - 1), m = Fmax(LL); for (let j = 0; j < ny; j++) a[j * nx + i] = 20 * Math.log10(Math.abs(F(LL, Math.PI * j / (ny - 1))) / m + 1e-9); } return a; })();
           for (let k = 0; k < nx * ny; k++) img[k] = CACHE.sweep[k];
-          sql.range([0.1, 3], [0, 180]); sql.image('s', img, nx, ny, { map: 'magma', norm: (v) => Math.max(0, 1 + v / -fl) }); sql.titles('L (λ)', 'pattern in dB: θ from the wire (vertical) vs length'); sql.line('cur', [L, L], [0, 180], { color: '--c-v', width: 1.6 });
+          sql.range([0.1, 3], [0, 180]); sql.image('s', img, nx, ny, { map: 'magma', norm: (v) => Math.max(0, 1 + v / -fl) }); sql.titles('L (λ)', 'θ from the wire (°): pattern in dB against length'); sql.line('cur', [L, L], [0, 180], { color: '--c-v', width: 1.6 });
           const ths = Array.from({ length: 721 }, (_, i) => -180 + i * 0.5); polS.line('p', ths, ths.map((t) => patR(L, Math.abs(t) * deg, fl)), { color: '--c-v' });
           hud.set('a', `L = ${L} λ`); hud.set('b', L < 1.2 ? 'one main lobe broadside, narrowing as L grows' : 'past ≈ 1.25 λ the broadside lobe splits: current lobes start cancelling'); hud.set('c', 'bright = strong; each column is one pattern');
           plots.aux.draw({ xlim: [0.1, 3], cursor: L, series: [{ x: Ls, y: sweepD().map((d) => 10 * Math.log10(d)), color: '--c-E', label: 'directivity (dBi) vs L (λ)' }] });
@@ -153,7 +153,7 @@ export default {
           tl.range([0.1, 3], [0, 1000]); tl.titles('L (λ)', 'input resistance R_in (Ω)'); tl.line('R', Ls, R, { color: '--c-B' }); tl.dots('now', [L], [Math.min(1000, z.R)], { color: '--accent', size: 10 }); tl.line('73', [0.1, 3], [73, 73], { color: '--ink-dim', dashed: true, width: 1 });
           tr.range([0.1, 3], [-1000, 1000]); tr.titles('L (λ)', `input reactance X_in (Ω), a = ${state.a} λ`); tr.line('X', Ls, X, { color: '--c-I' }); tr.dots('now', [L], [Math.max(-1000, Math.min(1000, z.X))], { color: '--accent', size: 10 });
           const Zs = Ls.map((_, i) => [Z[i].R, Z[i].X]), G = Zs.map(([r, x]) => { const nr = r - 50, d = (r + 50) ** 2 + x * x; return Math.sqrt((nr * nr + x * x) / d); });
-          bl.range([0.1, 3], [0, 1.05]); bl.titles('L (λ)', '|Γ| against a 50 Ω cable: 0 = all power accepted'); bl.line('g', Ls, G, { color: '--c-v' }); bl.dots('now', [L], [Math.sqrt(((z.R - 50) ** 2 + z.X ** 2) / ((z.R + 50) ** 2 + z.X ** 2))], { color: '--accent', size: 10 });
+          bl.range([0.1, 3], [0, 1.05]); bl.titles('L (λ)', '|Γ| on a 50 Ω cable: 0 = all power accepted'); bl.line('g', Ls, G, { color: '--c-v' }); bl.dots('now', [L], [Math.sqrt(((z.R - 50) ** 2 + z.X ** 2) / ((z.R + 50) ** 2 + z.X ** 2))], { color: '--accent', size: 10 });
           br.range([0.1, 3], [0, 300]); br.titles('L (λ)', 'radiation resistance at the current maximum (Ω)'); br.line('Rm', Ls, Z.map((q) => q.Rm), { color: '--c-E' });
           hud.set('a', `Z_in = ${fmt(z.R)} ${z.X >= 0 ? '+' : '−'} j${fmt(Math.abs(z.X))} Ω`); hud.set('b', Math.abs(z.X) < 10 ? 'resonant: purely resistive ✓' : z.X < 0 ? 'too short: capacitive' : 'too long: inductive', Math.abs(z.X) < 10 ? 'good' : '');
           hud.set('c', L > 0.9 && L < 1.1 ? 'near L = λ the feed sits at a current null: R and X blow up' : 'resonances near 0.48 λ (series, ~70 Ω) and 0.95 λ (parallel, kΩ)');

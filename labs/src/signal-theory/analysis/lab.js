@@ -82,8 +82,8 @@ export default {
           if (state.win !== 'rect') tl.line('w', tt, tt.map((_, n) => 2 * WINDOWS[state.win].w(n, N)), { color: '--c-I', dashed: true, width: 1.2 }); else tl.hide('w');
           const F = rawFFT(x, P, state.win), k = F.mag.map((_, i) => i), fk = k.map((i) => i * fs / P), df = fs / N;
           if (c === 'bins') {
-            tr.range([0, fs], [0, 1.2]); tr.titles('f (Hz): raw fft order 0 … fs', 'the upper half is the negative frequencies'); tr.line('r', fk, F.mag, { color: '--c-E', width: 1.2 }); tr.line('ny', [fs / 2, fs / 2], [0, 1.2], { color: '--c-north', dashed: true, width: 1 });
-            const sh = shift(F.mag), fsh = k.map((i) => (i - P / 2) * fs / P); bl.range([-fs / 2, fs / 2], [0, 1.2]); bl.titles('f (Hz): after fftshift, −fs/2 … fs/2', 'centred on DC'); bl.line('s', fsh, sh, { color: '--c-E', width: 1.2 });
+            tr.range([0, fs], [0, 1.2]); tr.titles('f (Hz): raw fft order 0 … fs', '|X| (norm.): the upper half is the negative frequencies'); tr.line('r', fk, F.mag, { color: '--c-E', width: 1.2 }); tr.line('ny', [fs / 2, fs / 2], [0, 1.2], { color: '--c-north', dashed: true, width: 1 });
+            const sh = shift(F.mag), fsh = k.map((i) => (i - P / 2) * fs / P); bl.range([-fs / 2, fs / 2], [0, 1.2]); bl.titles('f (Hz): after fftshift, −fs/2 … fs/2', '|X| (norm.): centred on DC'); bl.line('s', fsh, sh, { color: '--c-E', width: 1.2 });
             const lo = Math.min(state.f1, state.f2) - 6 * df, hi = Math.max(state.f1, state.f2) + 6 * df, z = fk.map((f, i) => [f, F.mag[i]]).filter(([f]) => f >= lo && f <= hi), Fu = rawFFT(x, pow2(N), state.win), zu = Fu.mag.map((v, i) => [i * fs / pow2(N), v]).filter(([f]) => f >= lo && f <= hi);
             br.range([lo, hi], [0, 1.2]); br.titles('f (Hz)', 'zoom: padded (line), unpadded bins (dots), tones (dashed)'); br.line('z', z.map((q) => q[0]), z.map((q) => q[1]), { color: '--c-E', width: 1.4 }); br.dots('u', zu.map((q) => q[0]), zu.map((q) => q[1]), { color: '--c-B', size: 7 });
             br.line('t1', [state.f1, state.f1], [0, 1.2], { color: '--c-north', dashed: true, width: 1 }); br.line('t2', [state.f2, state.f2], [0, 1.2], { color: '--c-north', dashed: true, width: 1 });
@@ -93,7 +93,7 @@ export default {
             const Ts = Array.from({ length: 50 }, (_, i) => 0.02 + i * 0.02); plots.aux.draw({ xlim: [0, 1], cursor: state.T, series: [{ x: Ts, y: Ts.map((q) => 1 / q), color: '--c-E', label: 'resolution 1/T (Hz) vs T (s)' }] });
           } else {
             const R = rawFFT(x, P * 4, 'rect'), H = rawFFT(x, P * 4, 'hamming'), fx = R.mag.map((_, i) => i * fs / (P * 4)), lo = Math.max(0, state.f1 - 60), hi = state.f1 + 80, sel = (M) => fx.map((f, i) => [f, M[i]]).filter(([f]) => f >= lo && f <= hi);
-            tr.range([lo, hi], [0, 1.2]); tr.titles('f (Hz)', 'linear: rectangular (grey), Hamming (blue)'); tr.line('r', sel(R.mag).map((q) => q[0]), sel(R.mag).map((q) => q[1]), { color: '--c-ref', width: 1.4 }); tr.line('h', sel(H.mag).map((q) => q[0]), sel(H.mag).map((q) => q[1]), { color: '--c-B', width: 1.6 });
+            tr.range([lo, hi], [0, 1.2]); tr.titles('f (Hz)', '|X| (linear): rectangular (grey), Hamming (blue)'); tr.line('r', sel(R.mag).map((q) => q[0]), sel(R.mag).map((q) => q[1]), { color: '--c-ref', width: 1.4 }); tr.line('h', sel(H.mag).map((q) => q[0]), sel(H.mag).map((q) => q[1]), { color: '--c-B', width: 1.6 });
             const dbs = (M) => sel(M).map((q) => Math.max(-100, 20 * Math.log10(q[1] + 1e-9)));
             bot.range([lo, hi], [-100, 5]); bot.titles('f (Hz)', `dB: tone 2 at ${state.f2} Hz is ${fmt(20 * Math.log10(state.a2))} dB — rect sidelobes (grey) vs Hamming (blue)`); bot.line('r', sel(R.mag).map((q) => q[0]), dbs(R.mag), { color: '--c-ref', width: 1.4 }); bot.line('h', sel(H.mag).map((q) => q[0]), dbs(H.mag), { color: '--c-B', width: 1.8 }); bot.line('t2', [state.f2, state.f2], [-100, 5], { color: '--c-north', dashed: true, width: 1 });
             const side = (f) => { const d = Math.abs(f - state.f1) * N / fs; return d < 1 ? 0 : 20 * Math.log10(Math.abs(Math.sin(Math.PI * d) / (Math.PI * d)) + 1e-9); };
@@ -104,21 +104,21 @@ export default {
         } else if (c === 'shift') {
           const fs = 2048, N = 2048, fc = 400, x = Array.from({ length: N }, (_, n) => { const t = n / fs - 0.5; return Math.exp(-t * t / (2 * 0.02 ** 2)) * Math.cos(2 * Math.PI * fc * t); });
           const I = x.map((v, n) => v * Math.cos(2 * Math.PI * state.fLO * n / fs)), Q = x.map((v, n) => -v * Math.sin(2 * Math.PI * state.fLO * n / fs)), tt = x.map((_, n) => n / fs - 0.5), zi = tt.map((t, i) => [t, x[i], I[i], Q[i]]).filter(([t]) => Math.abs(t) < 0.08);
-          tl.range([-0.08, 0.08], [-1.2, 1.2]); tl.titles('t (s)', `RF pulse at fc = ${fc} Hz`); tl.line('x', zi.map((q) => q[0]), zi.map((q) => q[1]), { color: '--c-B', width: 1.2 });
+          tl.range([-0.08, 0.08], [-1.2, 1.2]); tl.titles('t (s)', `x(t) (norm.): RF pulse at fc = ${fc} Hz`); tl.line('x', zi.map((q) => q[0]), zi.map((q) => q[1]), { color: '--c-B', width: 1.2 });
           tr.range([-0.08, 0.08], [-1.2, 1.2]); tr.titles('t (s)', `× e^(−j2π·${state.fLO}·t): I (blue), Q (orange)`); tr.line('i', zi.map((q) => q[0]), zi.map((q) => q[2]), { color: '--c-B', width: 1.2 }); tr.line('q', zi.map((q) => q[0]), zi.map((q) => q[3]), { color: '--c-I', width: 1.2 });
           const R1 = rawFFT(x, N), sx = shift(R1.mag), fk = sx.map((_, i) => (i - N / 2) * fs / N);
-          bl.range([-1000, 1000], [0, Math.max(...sx) * 1.2]); bl.titles('f (Hz)', 'RF spectrum: ±fc'); bl.line('s', fk, sx, { color: '--c-E' });
+          bl.range([-1000, 1000], [0, Math.max(...sx) * 1.2]); bl.titles('f (Hz)', '|X| (norm.): RF spectrum, lobes at ±fc'); bl.line('s', fk, sx, { color: '--c-E' });
           // complex spectrum of I + jQ by direct shifting of the RF lobes
           const shifted = fk.map((f) => { const a = Math.round((f + state.fLO) * N / fs) + N / 2; return a >= 0 && a < N ? sx[a] : 0; });
-          br.range([-1000, 1000], [0, Math.max(...sx) * 1.2]); br.titles('f (Hz)', `after mixing: everything moved down by ${state.fLO} Hz`); br.line('s', fk, shifted, { color: '--c-v' }); br.line('z', [0, 0], [0, Math.max(...sx) * 1.2], { color: '--ink-dim', dashed: true, width: 1 });
+          br.range([-1000, 1000], [0, Math.max(...sx) * 1.2]); br.titles('f (Hz)', `|X| (norm.): after mixing, everything moved down by ${state.fLO} Hz`); br.line('s', fk, shifted, { color: '--c-v' }); br.line('z', [0, 0], [0, Math.max(...sx) * 1.2], { color: '--ink-dim', dashed: true, width: 1 });
           hud.set('a', `IF = fc − fLO = ${fc - state.fLO} Hz; image at −fc − fLO = ${-fc - state.fLO} Hz`); hud.set('b', 'y(t) = x(t)·e^(−j2πfLO t) ⇔ Y(f) = X(f + fLO): a pure shift'); hud.set('c', 'a low-pass then keeps only the lobe near 0');
           plots.aux.draw({ xlim: [-1000, 1000], series: [{ x: fk, y: shifted, color: '--c-v', label: 'shifted spectrum' }] });
         } else if (c === 'resample') {
           const fs = 1000, N = 1024, tones = [[50, 1], [180, 0.6], [320, 0.4]], x = Array.from({ length: N }, (_, n) => tones.reduce((a, [f, A]) => a + A * Math.cos(2 * Math.PI * f * n / fs), 0)), D = state.D, fn = fs / D, y = decimate(x, D, state.aa);
-          const tt = x.map((_, n) => n / fs), w = 0.1; tl.range([0, w], [-2.2, 2.2]); tl.titles('t (s)', `original: 50, 180, 320 Hz at ${fs} Hz`); tl.line('x', tt.filter((t) => t <= w), x.filter((_, n) => tt[n] <= w), { color: '--c-B', width: 1.2 });
+          const tt = x.map((_, n) => n / fs), w = 0.1; tl.range([0, w], [-2.2, 2.2]); tl.titles('t (s)', `x(t): original, 50 + 180 + 320 Hz sampled at ${fs} Hz`); tl.line('x', tt.filter((t) => t <= w), x.filter((_, n) => tt[n] <= w), { color: '--c-B', width: 1.2 });
           const ty = y.map((_, n) => n / fn); tr.range([0, w], [-2.2, 2.2]); tr.titles('t (s)', `resampled to ${fmt(fn)} Hz${state.aa ? ' after the anti-alias filter' : ''}`); tr.stems('y', ty.filter((t) => t <= w), y.filter((_, n) => ty[n] <= w), { color: state.aa ? '--c-v' : '--c-north', width: 2 });
           const X = rawFFT(x, 1024, 'hann'); bl.range([0, fs / 2], [0, 1.2]); bl.titles('f (Hz)', 'original spectrum; new Nyquist fs/2D (dashed)'); bl.line('X', X.mag.slice(0, 513).map((_, i) => i * fs / 1024), X.mag.slice(0, 513), { color: '--c-B' }); bl.line('ny', [fn / 2, fn / 2], [0, 1.2], { color: '--c-north', dashed: true, width: 1.2 });
-          const P = pow2(y.length), Y = rawFFT(y, P, 'hann'); br.range([0, fn / 2], [0, 1.2]); br.titles('f (Hz)', 'resampled spectrum: aliases where tones folded (red)'); br.line('Y', Y.mag.slice(0, P / 2 + 1).map((_, i) => i * fn / P), Y.mag.slice(0, P / 2 + 1), { color: state.aa ? '--c-v' : '--c-E' });
+          const P = pow2(y.length), Y = rawFFT(y, P, 'hann'); br.range([0, fn / 2], [0, 1.2]); br.titles('f (Hz)', '|X| (norm.): resampled spectrum, aliases in red'); br.line('Y', Y.mag.slice(0, P / 2 + 1).map((_, i) => i * fn / P), Y.mag.slice(0, P / 2 + 1), { color: state.aa ? '--c-v' : '--c-E' });
           const al = tones.filter(([f]) => f > fn / 2).map(([f]) => { const r = ((f % fn) + fn) % fn; return Math.min(r, fn - r); }); br.stems('al', al, al.map(() => (state.aa ? 0 : 1.1)), { color: '--c-north', width: 2 });
           hud.set('a', `new rate ${fmt(fn)} Hz → Nyquist ${fmt(fn / 2)} Hz`); hud.set('b', al.length ? (state.aa ? `${al.length} tone(s) above Nyquist removed by the filter ✓` : `${al.length} tone(s) folded to ${al.map((v) => fmt(v)).join(', ')} Hz ✗`) : 'all tones below the new Nyquist ✓', al.length && !state.aa ? 'bad' : 'good');
           hud.set('c', 'filter first, then keep every D-th sample');
@@ -138,14 +138,14 @@ export default {
         } else if (c === 'crlb') {
           const fs = 1000, N = state.Ne, P = 4 * pow2(N), snr = 10 ** (state.snr / 10), sigma = Math.sqrt(1 / (2 * snr)), f0 = 123.4, key = `${N}`;
           const g = gaussian(3), x = Array.from({ length: N }, (_, n) => Math.cos(2 * Math.PI * f0 * n / fs + 0.3) + sigma * g()), tt = x.map((_, n) => n / fs * 1000);
-          tl.range([0, tt[N - 1]], [-2.5, 2.5]); tl.titles('t (ms)', `one noisy pulse, N = ${N}, SNR = ${state.snr} dB`); tl.line('x', tt, x, { color: '--c-B', width: 1 });
+          tl.range([0, tt[N - 1]], [-2.5, 2.5]); tl.titles('t (ms)', `x(t): one noisy pulse, N = ${N}, SNR = ${state.snr} dB`); tl.line('x', tt, x, { color: '--c-B', width: 1 });
           const F = rawFFT(x, P, 'hann'), df = fs / N, fk = F.mag.map((_, i) => i * fs / P), z = fk.map((f, i) => [f, F.mag[i]]).filter(([f]) => Math.abs(f - f0) < 4 * df), e = estimate(x, fs, P);
-          tr.range([f0 - 4 * df, f0 + 4 * df], [0, Math.max(...z.map((q) => q[1])) * 1.2]); tr.titles('f (Hz)', `spectrum near the peak: bin ${fmt(df)} Hz wide`); tr.line('S', z.map((q) => q[0]), z.map((q) => q[1]), { color: '--c-E' });
+          tr.range([f0 - 4 * df, f0 + 4 * df], [0, Math.max(...z.map((q) => q[1])) * 1.2]); tr.titles('f (Hz)', `|X| (linear): near the peak, bins ${fmt(df)} Hz wide`); tr.line('S', z.map((q) => q[0]), z.map((q) => q[1]), { color: '--c-E' });
           tr.line('t', [f0, f0], [0, 2], { color: '--c-north', dashed: true, width: 1 }); tr.line('e', [e.fine, e.fine], [0, 2], { color: '--c-v', width: 1.6 });
           const M = monteCarlo(f0, 1, sigma, N, fs, P, 200, 4), bins = 41, w = Math.max(3 * M.sdFine, 0.2 * df), hist = (k) => { const h = new Array(bins).fill(0); M.est.forEach((q) => { const i = Math.round((q[k] - f0) / w * 20 + 20); if (i >= 0 && i < bins) h[i]++; }); return h; }, hx = Array.from({ length: bins }, (_, i) => f0 + (i - 20) * w / 20);
-          bl.range([f0 - w, f0 + w], [0, 200 / 4]); bl.titles('estimated f (Hz)', '200 interpolated estimates'); bl.stems('h', hx, hist('fine'), { color: '--c-v', width: 4 });
+          bl.range([f0 - w, f0 + w], [0, 200 / 4]); bl.titles('estimated f (Hz)', 'count: 200 interpolated estimates'); bl.stems('h', hx, hist('fine'), { color: '--c-v', width: 4 });
           const snrs = Array.from({ length: 10 }, (_, i) => -5 + i * 5); MCC[key] ??= snrs.map((s) => monteCarlo(f0, 1, Math.sqrt(1 / (2 * 10 ** (s / 10))), N, fs, P, 120, 7));
-          br.range([-5, 40], [-5, 2]); br.titles('SNR (dB)', 'log₁₀ σf: CRLB red · interpolated green · bin grey');
+          br.range([-5, 40], [-5, 2]); br.titles('SNR (dB)', 'log₁₀ σf (Hz): CRLB red · interpolated green · bin grey');
           const sx = Array.from({ length: 91 }, (_, i) => -5 + i / 2); br.line('c', sx, sx.map((s) => Math.log10(crlb(10 ** (s / 10), N, fs))), { color: '--c-north' });
           br.dots('f', snrs, MCC[key].map((r) => Math.log10(r.sdFine)), { color: '--c-v', size: 9 }); br.dots('k', snrs, MCC[key].map((r) => Math.log10(r.sdCoarse)), { color: '--c-ref', size: 7 }); br.dots('now', [state.snr], [Math.log10(M.sdFine)], { color: '--accent', size: 12 });
           const cb = crlb(snr, N, fs);

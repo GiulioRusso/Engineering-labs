@@ -79,9 +79,9 @@ export default {
           if (state.Re > 0) sch.resistor(Q.E, [Q.E[0], -1.6], `R_E ${kOhm(state.Re)}`); else sch.wire(Q.E, [Q.E[0], -1.6]);
           sch.ground([Q.E[0], -1.6]).wire(Q.C, [-0.8, Q.C[1]]).dot(Q.C).text('v_out', [-0.8, 0.7]);
           const ts = lin(0, 4, 400), vo = ts.map((x) => ceOut(A * Math.sin(Math.PI * x), p)), vl = ts.map((x) => Vq + S.Av * A * Math.sin(Math.PI * x));
-          tr.range([0, 4], [0, state.Vcc * 1.05]); tr.titles('t', 'v_out (V): real blue, linear dashed'); tr.line('o', ts, vo, { color: '--c-B' }); tr.line('l', ts, vl.map((v) => Math.max(-1, Math.min(state.Vcc + 1, v))), { color: '--c-I', dashed: true, width: 1.3 });
+          tr.range([0, 4], [0, state.Vcc * 1.05]); tr.titles('time (one period = 2)', 'v_out (V): real blue, linear dashed'); tr.line('o', ts, vo, { color: '--c-B' }); tr.line('l', ts, vl.map((v) => Math.max(-1, Math.min(state.Vcc + 1, v))), { color: '--c-I', dashed: true, width: 1.3 });
           tr.line('rail', [0, 4], [state.Vcc, state.Vcc], { color: '--ink-dim', dashed: true, width: 1 }); tr.dots('n', [t], [ceOut(A * Math.sin(Math.PI * t), p)], { color: '--accent', size: 10 });
-          const W = Math.max(A * 1.5, 0.02), vi = lin(-W, W, 300); br.range([-W * 1e3, W * 1e3], [0, state.Vcc * 1.05]); br.titles('v_in (mV)', 'transfer: v_out (V) vs v_in — slope = gain');
+          const W = Math.max(A * 1.5, 0.02), vi = lin(-W, W, 300); br.range([-W * 1e3, W * 1e3], [0, state.Vcc * 1.05]); br.titles('v_in (mV)', 'v_out (V): transfer curve, slope = gain');
           br.line('tf', vi.map((v) => v * 1e3), vi.map((v) => ceOut(v, p)), { color: '--c-B' }); br.line('sw', [-A * 1e3, A * 1e3], [0.15, 0.15], { color: '--accent', width: 4 }); br.dots('n', [A * Math.sin(Math.PI * t) * 1e3], [ceOut(A * Math.sin(Math.PI * t), p)], { color: '--accent', size: 11 });
           const hi = Math.max(...vo), lo = Math.min(...vo), up = hi - Vq, dn = Vq - lo, clip = hi >= state.Vcc - 1e-6 || lo <= 0.2 + 1e-6;
           hud.set('a', `A_v = −g_m(R_C‖r_o)/(1 + g_m R_E) = ${fmt(S.Av)}  (${fmt(dB(S.Av))} dB) — inverted`); hud.set('b', `Q point V_C = ${fmt(Vq)} V; output swings +${fmt(up)} / −${fmt(dn)} V`, clip || Math.abs(up - dn) / (up + dn) > 0.1 ? 'bad' : 'good');
@@ -91,9 +91,9 @@ export default {
           const F = follower({ Ic: state.Ic * 1e-3, Re: state.fRe, RL: state.RL, Rs: state.Rs }), direct = state.RL / (state.Rs + state.RL), withF = F.Rin / (state.Rs + F.Rin) * F.Av, Q = sch.npn([-2.2, 0.3]);
           sch.source([-4.3, -1.6], [-4.3, 0.3], 'v_s', true).resistor([-4.3, 0.3], [-3.0, 0.3], `R_s ${kOhm(state.Rs)}`).wire([-3.0, 0.3], Q.B).wire(Q.C, [Q.C[0], 1.6]).supply([Q.C[0], 1.6], 'V_CC')
             .resistor(Q.E, [Q.E[0], -1.6], `R_E ${kOhm(state.fRe)}`).wire(Q.E, [-0.8, Q.E[1]]).dot(Q.E).resistor([-0.8, Q.E[1]], [-0.8, -1.6], `R_L ${kOhm(state.RL)}`).wire([-4.3, -1.6], [-0.8, -1.6]).ground([-2.6, -1.6]).text('v_out', [-0.8, 0.15]);
-          const ts = lin(0, 4, 300); tr.range([0, 4], [-1.2, 1.2]); tr.titles('t', 'source grey · follower blue · direct red');
+          const ts = lin(0, 4, 300); tr.range([0, 4], [-1.2, 1.2]); tr.titles('time (one period = 2)', 'voltage (V, ÷ source peak): source grey · follower blue · direct red');
           tr.line('s', ts, ts.map((x) => Math.sin(Math.PI * x)), { color: '--c-ref', width: 1.2 }); tr.line('f', ts, ts.map((x) => withF * Math.sin(Math.PI * x)), { color: '--c-B' }); tr.line('d', ts, ts.map((x) => direct * Math.sin(Math.PI * x)), { color: '--c-north' }); tr.dots('n', [t], [withF * Math.sin(Math.PI * t)], { color: '--accent', size: 10 });
-          const rl = lin(1, 5, 200); br.range([1, 5], [0, 1.05]); br.titles('log₁₀ load (Ω)', 'fraction of the source reaching the load');
+          const rl = lin(1, 5, 200); br.range([1, 5], [0, 1.05]); br.titles('log₁₀ load (Ω)', 'v_load / v_source: fraction reaching the load');
           br.line('f', rl, rl.map((l) => { const f = follower({ Ic: state.Ic * 1e-3, Re: state.fRe, RL: 10 ** l, Rs: state.Rs }); return f.Rin / (state.Rs + f.Rin) * f.Av; }), { color: '--c-B' }); br.line('d', rl, rl.map((l) => 10 ** l / (state.Rs + 10 ** l)), { color: '--c-north' }); br.dots('q', [Math.log10(state.RL), Math.log10(state.RL)], [withF, direct], { color: '--accent', size: 11 });
           hud.set('a', `gain ${fmt(F.Av)}: the emitter follows the base, one V_BE lower`); hud.set('b', `R_in = ${kOhm(F.Rin)} (the source sees a big load) · R_out = ${kOhm(F.Rout)} (the load sees a strong source)`);
           hud.set('c', `load gets ${fmt(withF * 100)}% with the follower, ${fmt(direct * 100)}% connected directly`, withF > direct ? 'good' : '');
@@ -106,7 +106,7 @@ export default {
           tr.range([-150, 150], [0, state.It * 1.05]); tr.titles('v₁ − v₂ (mV)', 'I_C1 blue, I_C2 orange (mA): sum = I_tail');
           tr.line('1', vd, vd.map((v) => pairI1(v * 1e-3, It) * 1e3), { color: '--c-B' }); tr.line('2', vd, vd.map((v) => pairI1(-v * 1e-3, It) * 1e3), { color: '--c-I' }); tr.line('sw', [-state.vid, state.vid], [0.02 * state.It, 0.02 * state.It], { color: '--accent', width: 4 }); tr.dots('n', [vnow * 1e3, vnow * 1e3], [pairI1(vnow, It) * 1e3, pairI1(-vnow, It) * 1e3], { color: '--accent', size: 10 });
           const ts = lin(0, 4, 400), cm = (x) => state.vcm * 1e-3 * Math.sin(2 * Math.PI * 3.3 * x), dd = (x) => A * Math.sin(Math.PI * x), out = ts.map((x) => 5000 * (pairI1(dd(x), It) - pairI1(-dd(x), It))), se = ts.map((x) => -5000 * (pairI1(dd(x), It) - It / 2) - D.Acm * cm(x));
-          const M = Math.max(...out.map(Math.abs), ...se.map(Math.abs), 0.01) * 1.1; br.range([0, 4], [-M, M]); br.titles('t', 'out₂ − out₁ blue (clean) · out₁ grey (noisy)');
+          const M = Math.max(...out.map(Math.abs), ...se.map(Math.abs), 0.01) * 1.1; br.range([0, 4], [-M, M]); br.titles('time (one period = 2)', 'out₂ − out₁ blue (clean) · out₁ grey (noisy)');
           br.line('se', ts, se, { color: '--c-ref', width: 1.2 }); br.line('d', ts, out, { color: '--c-B' });
           hud.set('a', `differential gain g_m R_C = ${fmt(D.Adm)} · common-mode gain ${fmt(D.Acm)} → CMRR ${fmt(D.cmrr)} dB`, D.cmrr > 40 ? 'good' : 'bad');
           hud.set('b', 'both inputs moving together just shares I_tail the same way: nothing changes at the output'); hud.set('c', state.vid > 2 * VT * 1e3 * 2 ? 'beyond ±4V_T ≈ ±100 mV all the current goes to one side: the pair limits (tanh)' : `linear range about ±${fmt(2 * VT * 1e3)} mV (I₁ − I₂ = I_tail tanh(v/2V_T))`);
@@ -138,7 +138,7 @@ export default {
           C.chain.forEach(([name, g], i) => { const bx = sch.box([xs[i], 0.4], 0.62, 0.5, ''); sch.text(name, [xs[i], 1.0]).text(`×${fmt(Math.abs(g), 2)}`, [xs[i], 0.4]); if (i) sch.wire([xs[i - 1] + 0.31, 0.4], bx.l); });
           sch.text(`R_out1 ${kOhm(C.Rout1)} drives R_in2 ${kOhm(C.Rin2)}`, [-2.5, -0.6]).text(`load ${kOhm(state.cRL)}`, [-0.9, -0.2]);
           let acc = 1; const cum = [0, ...C.chain.map(([, g]) => dB(acc *= g))], ix = lin(0, n, n + 1), idl = dB(C.ideal);
-          tr.range([0, n], [Math.min(0, ...cum) - 5, Math.max(idl, ...cum) + 8]); tr.titles('step along the chain', 'running gain (dB); dashed = ideal');
+          tr.range([0, n], [Math.min(0, ...cum) - 5, Math.max(idl, ...cum) + 8]); tr.titles('block along the chain', 'running gain (dB); dashed = ideal');
           tr.line('s', ix, cum, { color: '--c-B' }); tr.dots('sd', ix, cum, { color: '--accent', size: 10 }); tr.line('i', [0, n], [idl, idl], { color: '--ink-dim', dashed: true, width: 1.2 });
           const rl = lin(2, 6, 200); br.range([2, 6], [0, Math.max(dB(cascade({ Ic: state.cIc * 1e-3, buffer: true, RL: 1e6 }).total), dB(cascade({ Ic: state.cIc * 1e-3, RL: 1e6 }).total)) + 6]); br.titles('log₁₀ final load (Ω)', 'total gain (dB): direct red, follower blue');
           br.line('d', rl, rl.map((l) => dB(cascade({ Ic: state.cIc * 1e-3, RL: 10 ** l }).total)), { color: '--c-north' }); br.line('b', rl, rl.map((l) => dB(cascade({ Ic: state.cIc * 1e-3, buffer: true, RL: 10 ** l }).total)), { color: '--c-B' }); br.dots('q', [Math.log10(state.cRL)], [dB(C.total)], { color: '--accent', size: 11 });

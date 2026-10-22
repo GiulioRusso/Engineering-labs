@@ -1,0 +1,60 @@
+<section data-case="sp">
+  <h3>Series and parallel: sharing a current or sharing a voltage</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: two resistors, one after the other (series) or side by side (parallel). The dots are charges; their speed is the current in each wire. Top right: the voltage across each resistor. Bottom right: the current in each.</div>
+  <p>Two parts can be connected so that the same <b>current</b> must pass through both (series), or so that they sit across the same two nodes and share the same <b>voltage</b> (parallel). Which one decides everything else.</p>
+  <div class="eq">$$R_\text{series}=R_1+R_2,\qquad R_\text{parallel}=\frac{R_1R_2}{R_1+R_2},\qquad V_2=V\frac{R_2}{R_1+R_2}\ (\text{divider})$$</div>
+  <ol class="steps"><li>Series: one path, so one current I = V/(R1 + R2); the voltage splits in proportion to each R.</li><li>Parallel: each branch sees the full V and takes V/R; the currents add.</li><li>Parallel is always less than the smallest resistor: you added another path.</li></ol>
+  <div class="worked"><h4>Worked example</h4>10 V, 100 Ω and 200 Ω. Series: 300 Ω, 33 mA, 3.3 V + 6.7 V. Parallel: 66.7 Ω, 100 mA + 50 mA = 150 mA.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Calling two resistors "in series" because they are drawn in a line. Check: is there any junction between them where current could leave? If yes, they are not in series.</div>
+</section>
+<section data-case="sp" data-example="par"><h3>Parallel</h3><p>Watch the dots split at the junction: more go through the smaller resistor, and they rejoin at the bottom.</p></section>
+<section data-case="sp" data-example="big"><h3>Big R2</h3><p>900 Ω out of 1000: R2 takes 90% of the voltage. The bigger resistor gets the bigger share.</p></section>
+<section data-case="kcl">
+  <h3>Kirchhoff's current law</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a source feeding three branches from one node; branch 3 has a switch. Top right: each branch current and the total. Bottom right: power in each branch.</div>
+  <p>Charge does not appear or disappear and cannot pile up in a wire. So at every junction, whatever flows in flows out. Watch the dots: the stream from the source splits, but never bunches up or thins out at the node.</p>
+  <div class="eq">$$\sum I_\text{in}=\sum I_\text{out}$$</div>
+  <div class="worked"><h4>Worked example</h4>10 V across 100, 200, 300 Ω: 100 + 50 + 33 = 183 mA from the source. Open branch 3: 150 mA — the other branches don't change at all.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a new branch "steals" current from the others. With an ideal source each branch is independent; only the total changes.</div>
+</section>
+<section data-case="kcl" data-example="open"><h3>Branch 3 open</h3><p>No dots in branch 3; total current drops by exactly its share.</p></section>
+<section data-case="thevenin">
+  <h3>Thévenin: any network is one source and one resistor</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a network (source, R1, R2) feeding a load R_L. Bottom: its Thévenin equivalent driving the same load. The load's dots move at exactly the same speed in both. Right: the load voltage and power for any load.</div>
+  <p>Seen from two terminals, any network of sources and resistors behaves <b>exactly</b> like a single source V_th behind a single resistor R_th. Not approximately: for every possible load.</p>
+  <ol class="steps"><li>V_th: remove the load and measure the open-circuit voltage (here a divider: V·R2/(R1 + R2)).</li><li>R_th: switch the sources off (voltage source → wire) and look back into the terminals (here R1‖R2).</li><li>Now any load is a two-resistor problem.</li></ol>
+  <div class="eq">$$V_\text{th}=V\frac{R_2}{R_1+R_2},\qquad R_\text{th}=R_1\parallel R_2,\qquad P_L\ \text{max when}\ R_L=R_\text{th}$$</div>
+  <div class="worked"><h4>Worked example</h4>10 V, 100 Ω, 200 Ω: V_th = 6.67 V, R_th = 66.7 Ω. A 470 Ω load gets 5.84 V. Maximum power with 66.7 Ω: 3.33 V, 167 mW.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking maximum power means maximum efficiency: at the match only half the power reaches the load (aux plot).</div>
+</section>
+<section data-case="thevenin" data-example="match"><h3>Matched load</h3><p>The dot sits at the top of the power curve.</p></section>
+<section data-case="super">
+  <h3>Superposition: one source at a time</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: two sources feeding a middle node through R1 and R2, with R3 to ground. Switch either source off (it becomes a plain wire). Top right: the middle-node voltage from each source alone, their sum, and both together.</div>
+  <p>In a linear circuit, every voltage and current is a weighted sum of the sources. So you can solve with one source at a time and add the results. The third and fourth bars are always equal.</p>
+  <div class="worked"><h4>Worked example</h4>V1 = 10 V alone: 5.45 V at the middle. V2 = 5 V alone: 1.36 V. Together: 6.82 V = 5.45 + 1.36.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Removing a voltage source by leaving a gap: it must be replaced by a wire (0 V). Adding powers: power is not linear (it goes as V²).</div>
+</section>
+<section data-case="super" data-example="one"><h3>Only V1</h3><p>V2 is replaced by a wire: R2 now goes to ground, in parallel with R3.</p></section>
+<section data-case="super" data-example="two"><h3>Only V2</h3><p>Now R1 is in parallel with R3.</p></section>
+<section data-case="landscape">
+  <h3>The circuit as a landscape of potential</h3>
+  <div class="look"><h4>What you are looking at</h4>A 3D picture: the circuit's floor plan in grey, and every wire lifted to the height of its voltage. Wires are flat (no voltage drop along a wire); resistors are orange ramps; the source is the red lift. Charges ride up the lift and roll down the ramps. Drag to rotate.</div>
+  <p>Voltage is height. A battery is a pump lifting charge from the floor (0 V) to the top (V). Each resistor lets it down by I·R. Two key rules become obvious: every wire is level (same node, same potential), and going round any loop you come back to where you started — every metre climbed is descended (Kirchhoff's voltage law).</p>
+  <div class="eq">$$\sum_\text{loop}\Delta V=0,\qquad \Delta V_R=IR$$</div>
+  <div class="worked"><h4>Worked example</h4>10 V, R1 = 100, R2 = 200, R3 = 300, R4 = 150 Ω: R3 + R4 = 450 Ω in parallel with R2 gives 138 Ω; node 2 sits at 10·138/238 = 5.8 V; node 3 at 5.8·150/450 = 1.9 V.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking current "uses up" voltage in wires: in an ideal wire there is no slope at all.</div>
+</section>
+<section data-case="landscape" data-example="steep"><h3>Big R1</h3><p>R1 takes most of the drop: a long steep ramp, and everything after it sits low.</p></section>
+<section data-case="rlc">
+  <h3>The RLC step response</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a 1 V step applied to R, L and C in series. Top right: the capacitor voltage against ω₀t. Bottom right: the two poles of the circuit in the complex plane.</div>
+  <p>One storage element gives an exponential. Two give the possibility of oscillation, because energy can slosh between L and C. Whether it does depends on one number, the damping ratio ζ:</p>
+  <div class="eq">$$\omega_0=\frac1{\sqrt{LC}},\qquad \zeta=\frac R2\sqrt{\frac CL},\qquad s=-\zeta\omega_0\pm\omega_0\sqrt{\zeta^2-1}$$</div>
+  <ol class="steps"><li>ζ &lt; 1: complex poles, overshoot and ringing at about ω₀.</li><li>ζ = 1: critically damped, the fastest response with no overshoot.</li><li>ζ &gt; 1: two real poles, a slow creep.</li></ol>
+  <div class="worked"><h4>Worked example</h4>L = 10 mH, C = 1 µF: ω₀ = 10 000 rad/s. Critical R = 2√(L/C) = 200 Ω. With 20 Ω, ζ = 0.1: overshoot ≈ 73%.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading "more R → more oscillation". It is the opposite: R damps.</div>
+</section>
+<section data-case="rlc" data-example="under"><h3>ζ = 0.1</h3><p>Poles close to the imaginary axis: long ringing.</p></section>
+<section data-case="rlc" data-example="crit"><h3>ζ = 1</h3><p>The two poles meet on the real axis.</p></section>
+<section data-case="rlc" data-example="over"><h3>ζ = 4</h3><p>One pole slides toward 0: the slow one sets the creep.</p></section>

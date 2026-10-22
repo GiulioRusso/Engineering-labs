@@ -138,7 +138,7 @@ export default {
           const vc = lin(0, state.Vcc, 200), Imax = 1.25 * state.Vcc / (state.Rc + state.Re) * 1e3; tr.range([0, state.Vcc], [0, Imax]); tr.titles('V_CE (V)', 'I_C (mA): load line meets the device curve');
           tr.line('ll', [0, state.Vcc], [state.Vcc / (state.Rc + state.Re) * 1e3, 0], { color: '--c-I', width: 1.6 }); tr.line('dev', vc, vc.map((x) => B.Ic * 1e3 * (1 + x / VA) / (1 + Vce / VA) * (1 - Math.exp(-x / 0.06))), { color: '--c-B' }); tr.dots('q', [Vce], [B.Ic * 1e3], { color: '--accent', size: 12 });
           const dts = lin(-40, 100, 141), re = Math.max(state.Re, 1), base = solveBias({ Vcc: 1e3, Rc: 0, Re: re, Vb: state.Vb }).Ic, now = solveBias({ Vcc: 1e3, Rc: 0, Re: state.Re, Vb: state.Vb, dT: state.dT }).Ic / solveBias({ Vcc: 1e3, Rc: 0, Re: state.Re, Vb: state.Vb }).Ic;
-          br.range([-40, 100], [0, 3]); br.titles('warming (K)', 'I_C ÷ I_C at 0 K: with R_E (blue), without (red)');
+          br.range([-40, 100], [0, 3]); br.titles('warming (K)', 'I_C / I_C(0 K): with R_E (blue), without (red)');
           br.line('re', dts, dts.map((d) => solveBias({ Vcc: 1e3, Rc: 0, Re: re, Vb: state.Vb, dT: d }).Ic / base), { color: '--c-B' });
           br.line('no', dts, dts.map((d) => Math.min(3.2, Math.exp(2e-3 * d / VT))), { color: '--c-north' }); br.dots('q', [state.dT], [Math.min(3, now)], { color: '--accent', size: 11 });
           hud.set('a', B.sat ? `saturated: V_CE ≈ ${fmt(Math.max(B.Vce, 0))} V — no room to swing` : `I_C = ${fmt(B.Ic * 1e3)} mA, V_CE = ${fmt(B.Vce)} V`, B.sat ? 'bad' : 'good');
@@ -153,7 +153,7 @@ export default {
           tr.range([V0 - W, V0 + W], [0, f(V0 + W) * 1.05]); tr.titles(bjt ? 'V_BE (V)' : 'V_GS (V)', 'curve (blue) and its tangent at the bias (orange)');
           tr.line('c', vv, vv.map(f), { color: '--c-B' }); tr.line('t', vv, vv.map((x) => (I0 + gm * (x - V0)) * 1e3), { color: '--c-I', width: 1.4 }); tr.line('sw', [V0 - A, V0 + A], [0, 0], { color: '--accent', width: 4 }); tr.dots('q', [V0 + v], [(I0 + S.exact) * 1e3], { color: '--accent', size: 12 });
           const ts = lin(0, 4, 400), ex = ts.map((t) => smallSignal(state.dev, I0, A * Math.sin(Math.PI * t)).exact * 1e3), ln = ts.map((t) => gm * A * Math.sin(Math.PI * t) * 1e3), M = Math.max(...ex.map(Math.abs), ...ln.map(Math.abs)) * 1.1;
-          br.range([0, 4], [-M, M]); br.titles('t', 'signal current (mA): real (blue) vs g_m·v (orange)'); br.line('e', ts, ex, { color: '--c-B' }); br.line('l', ts, ln, { color: '--c-I', dashed: true, width: 1.4 }); br.dots('n', [time.t % 4], [S.exact * 1e3], { color: '--accent', size: 10 });
+          br.range([0, 4], [-M, M]); br.titles('time (one period = 2)', 'signal current (mA): real (blue) vs g_m·v (orange)'); br.line('e', ts, ex, { color: '--c-B' }); br.line('l', ts, ln, { color: '--c-I', dashed: true, width: 1.4 }); br.dots('n', [time.t % 4], [S.exact * 1e3], { color: '--accent', size: 10 });
           const up = smallSignal(state.dev, I0, A).exact, dn = -smallSignal(state.dev, I0, -A).exact, asym = (up - dn) / (up + dn) * 100;
           hud.set('a', `g_m = ${fmt(gm * 1e3)} mS at ${fmt(state.Ic0)} mA: the slope of the curve at the bias point`); hud.set('b', `peak up ${fmt(up * 1e3)} mA vs peak down ${fmt(dn * 1e3)} mA: ${fmt(Math.abs(asym), 2)}% lopsided`, Math.abs(asym) < 5 ? 'good' : 'bad');
           hud.set('c', bjt ? `linear only while v ≪ V_T = ${VT * 1e3} mV` : `linear while v ≪ 2V_ov = ${fmt(2 * Math.sqrt(2 * I0 / KN) * 1e3)} mV — much wider than the BJT`);

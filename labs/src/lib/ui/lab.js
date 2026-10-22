@@ -74,13 +74,14 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     panelSync() { panel?.sync(); writeUrl(); },
     setDuration(D) { time.D = D; if (D && time.t > D) time.t = 0; bar(); },
     // a case with an animation gets a clock of D seconds; D = 0 means nothing evolves in time:
-    // no play bar, render on demand only (the controls drive it)
-    setClock(D) { ctx.setDuration(D); setStill(!D); },
+    // no play bar, render on demand only (the controls drive it). ambient: no play bar either, but keep
+    // drawing frames for a steady motion that is not a story in time (charges drifting along a DC wire)
+    setClock(D, { ambient = false } = {}) { ctx.setDuration(D); setStill(!D, ambient && !D); },
   };
-  let still = false;
-  function setStill(on) {
-    if (def.timeless || on === still) return; still = on;
-    el.playbar.hidden = on; time.t = 0; setPlaying(!on && !stage.reducedMotion);
+  let still = false, amb = false;
+  function setStill(on, ambient) {
+    if (def.timeless || (on === still && ambient === amb)) return; still = on; amb = ambient;
+    el.playbar.hidden = on; time.t = 0; setPlaying((ambient || !on) && !stage.reducedMotion);
   }
 
   function setPlaying(on) { time.playing = on; stage.setAnimating(on); bar(); }

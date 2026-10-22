@@ -106,11 +106,11 @@ export default {
           const p = { fs: 1e9, n: 4096, fc: state.fc * MHz, fLO: (state.fc + state.det) * MHz, phi: state.phi * Math.PI / 180, tau: 0.5 * us, t0: 1 * us, bw: state.bw * MHz };
           const r = iq(p), t = Array.from({ length: p.n }, (_, i) => i / p.fs / us), mag = r.I.map((v, i) => Math.hypot(v, r.Q[i]));
           const [a, b, c, d] = q4, win = (arr) => arr.slice(800, 2000), tw = win(t);
-          a.range([tw[0], tw[tw.length - 1]], [-1.3, 1.3]); a.titles('time (µs)', `RF at the antenna: carrier ${state.fc} MHz`); a.line('rf', tw, win(Array.from(r.rf)), { color: '--c-ref', width: 1.2 });
+          a.range([tw[0], tw[tw.length - 1]], [-1.3, 1.3]); a.titles('time (µs)', `RF voltage (norm.): at the antenna, carrier ${state.fc} MHz`); a.line('rf', tw, win(Array.from(r.rf)), { color: '--c-ref', width: 1.2 });
           const sp = spectrumDb({ re: r.rf, im: new Float64Array(p.n) }, p.fs), fm = sp.f.map((f) => f / MHz);
-          b.range([0, 2.5 * state.fc], [-60, 2]); b.titles('frequency (MHz)', 'spectrum: the LO (red) sets what lands at 0 Hz'); b.line('s', fm, sp.dB, { color: '--c-E' }); b.stems('lo', [state.fc + state.det], [0], { color: '--c-north', width: 1.6 });
+          b.range([0, 2.5 * state.fc], [-60, 2]); b.titles('frequency (MHz)', 'power (dB): the LO (red) sets what lands at 0 Hz'); b.line('s', fm, sp.dB, { color: '--c-E' }); b.stems('lo', [state.fc + state.det], [0], { color: '--c-north', width: 1.6 });
           c.range([tw[0], tw[tw.length - 1]], [-1.3, 1.3]); c.titles('time (µs)', 'I (blue) and Q (orange) after the low-pass'); c.line('I', tw, win(Array.from(r.I)), { color: '--c-B' }); c.line('Q', tw, win(Array.from(r.Q)), { color: '--c-I' });
-          d.range([tw[0], tw[tw.length - 1]], [0, 1.3]); d.titles('time (µs)', '|I + jQ|²: the pulse envelope'); d.line('m', tw, win(mag.map((v) => v * v)), { color: '--c-v' });
+          d.range([tw[0], tw[tw.length - 1]], [0, 1.3]); d.titles('time (µs)', '|I + jQ|² (norm.): the pulse envelope'); d.line('m', tw, win(mag.map((v) => v * v)), { color: '--c-v' });
           const mid = Math.round((p.t0 + p.tau / 2) * p.fs), rt = riseTime(mag.slice(0, mid), p.fs);
           hud.set('a', `at the pulse centre: |z| = ${fmt(mag[mid])}, ∠z = ${fmt(Math.atan2(r.Q[mid], r.I[mid]) * 180 / Math.PI)}° (true ${state.phi}°)`);
           hud.set('b', state.det ? `LO off by ${state.det} MHz: I and Q rotate at ${state.det} MHz` : 'LO on frequency: I and Q are flat during the pulse ✓', state.det ? '' : 'good');

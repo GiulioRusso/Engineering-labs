@@ -90,7 +90,7 @@ export default {
         tr.line('X', fi, fm, { color: '--c-E' }); if (PULSES[k].X) tr.line('F', fi, fi.map((f) => PULSES[k].X(f, p)), { color: '--ink-dim', dashed: true, width: 1.4 }); else tr.hide('F');
         // dB on a log-frequency axis, normalised to the peak
         const lf = [], ld = [], X0 = Math.max(...S.mag); for (let i = 0; i < S.f.length; i++) if (S.f[i] > 0.05 && S.f[i] <= 40) { lf.push(Math.log10(S.f[i])); ld.push(Math.max(-90, 20 * Math.log10(S.mag[i] / X0 + 1e-12))); }
-        bl.range([-1, 1.6], [-90, 5]); bl.titles('log₁₀ f (Hz)', `|X| in dB: ${ROLL[k]}`); bl.line('d', lf, ld, { color: '--c-E', width: 1.6 });
+        bl.range([-1, 1.6], [-90, 5]); bl.titles('log₁₀ f (Hz)', `|X| (dB): ${ROLL[k]}`); bl.line('d', lf, ld, { color: '--c-E', width: 1.6 });
         if (ENV[k]) { const g = lf.map((l) => Math.max(-90, 20 * Math.log10(Math.min(1, ENV[k](10 ** l, p))))); bl.line('g', lf, g, { color: '--c-north', dashed: true, width: 1.4 }); } else bl.hide('g');
         // phase where the spectrum is not negligible
         // unwrapped phase from f = 0 outwards, where the spectrum is not negligible

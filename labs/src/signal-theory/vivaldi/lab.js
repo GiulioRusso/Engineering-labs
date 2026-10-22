@@ -82,8 +82,8 @@ export default {
           } else {
             const nx = 180, ny = 110, H = (L + 0.6) * ar / 2, img = new Float64Array(nx * ny);
             for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) { const x = -0.3 + (L + 0.6) * i / (nx - 1), y = -H + 2 * H * j / (ny - 1); if (x < 0) { img[j * nx + i] = 0; continue; } if (x > L) { const r = Math.hypot(x - L, y); img[j * nx + i] = env[env.length - 1] * Math.cos(kk * (L + r) - wt) * Math.exp(-((Math.atan2(y, x - L)) ** 2) * 3) / Math.sqrt(1 + 2 * r) * 1.2; continue; } const hw = halfWidth(x, p), e = env[Math.min(env.length - 1, Math.round(x / L * (env.length - 1)))]; img[j * nx + i] = Math.abs(y) <= hw + 0.15 ? e * Math.exp(-Math.abs(y) / (hw + 0.05)) / Math.sqrt(2 * hw + 0.05) * 0.25 * Math.cos(kk * x - wt) : 0; }
-            top.image('img', img, nx, ny, { map: 'field', norm: (v) => 0.5 + Math.max(-0.5, Math.min(0.5, v)) }); outline(top, p); top.hide('j'); top.titles('x (λ₀)', `E across the slot at ${fr} f₀: bound near the throat, spreading out into free space`);
-            bot.range([0, L], [0, 1.05]); bot.titles('x (λ₀)', 'fraction of the wave still guided'); bot.line('j', ex, env.map((v) => v * v), { color: '--c-v' }); bot.hide('e1'); bot.hide('e2');
+            top.image('img', img, nx, ny, { map: 'field', norm: (v) => 0.5 + Math.max(-0.5, Math.min(0.5, v)) }); outline(top, p); top.hide('j'); top.titles('x (λ₀)', `y (λ₀): E at ${fr} f₀, bound near the throat, spreading into free space`);
+            bot.range([0, L], [0, 1.05]); bot.titles('x (λ₀)', 'guided fraction: of the wave still in the slot'); bot.line('j', ex, env.map((v) => v * v), { color: '--c-v' }); bot.hide('e1'); bot.hide('e2');
             hud.set('a', 'near the throat the field is squeezed in a narrow slot: a guided slot-line wave'); hud.set('b', 'as the slot opens, the field spreads and its speed approaches c: it peels off into free space'); hud.set('c', `wavelength along the slot at ${fr} f₀: ${fmt(1 / fr)} λ₀`);
           }
           plots.aux.draw({ xlim: [0, L], series: [{ x: ex, y: env, color: '--c-I', label: 'guided amplitude vs x (λ₀)' }] });
