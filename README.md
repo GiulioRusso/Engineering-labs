@@ -1,4 +1,8 @@
-# Engineering Labs
+<p align="center">
+  <img src="docs/logo.svg" width="96" alt="Engineering Labs logo">
+</p>
+
+<h1 align="center">Engineering Labs</h1>
 
 **Interactive tutorials for engineering subjects.** Every topic is a visual experiment: drag magnets, step through C++ code, or tune filters—with deep explanations one click away.
 
