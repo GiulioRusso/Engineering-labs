@@ -1,0 +1,56 @@
+<section data-case="right">
+  <h3>The right triangle: SOH-CAH-TOA</h3>
+  <div class="look"><h4>What you are looking at</h4>A right triangle with the angle θ at the bottom left. The side opposite θ (orange), the adjacent side (green) and the hypotenuse (blue); drag the top corner.</div>
+  <p>All right triangles with the same angle θ have the same shape — only their size differs. So the ratios between their sides depend only on θ. Those ratios are sine, cosine and tangent. This is how you find a height you cannot reach, or the angle of a slope.</p>
+  <div class="eq">$$\sin\theta = \frac{\text{opp}}{\text{hyp}}, \quad \cos\theta = \frac{\text{adj}}{\text{hyp}}, \quad \tan\theta = \frac{\text{opp}}{\text{adj}}, \qquad \text{opp}^2 + \text{adj}^2 = \text{hyp}^2$$</div>
+  <ol class="steps">
+    <li>Identify the angle you know or want.</li>
+    <li>Label the sides relative to that angle: opposite, adjacent, hypotenuse (always opposite the right angle).</li>
+    <li>Pick the ratio that links the two sides you have.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A ladder 4 m long leans at 70°: its top is 4 sin 70° = 3.76 m high and its foot 4 cos 70° = 1.37 m from the wall. A tree casting a 12 m shadow when the sun is at 35°: height 12 tan 35° = 8.4 m.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using "opposite" and "adjacent" for the wrong angle: they change if you look from the other acute angle.</div>
+  <div class="try"><h4>Try it</h4>Drag the corner keeping the angle the same (move along the hypotenuse): the sides change, the ratios do not.</div>
+</section>
+<section data-case="right" data-example="d30"><h3>30°</h3><p>Half an equilateral triangle: the opposite side is exactly half the hypotenuse, sin 30° = ½.</p></section>
+<section data-case="right" data-example="d45"><h3>45°</h3><p>An isosceles right triangle: opposite = adjacent, tan 45° = 1, sin = cos = 0.707.</p></section>
+<section data-case="right" data-example="steep"><h3>A steep angle</h3><p>The opposite side is longer than the adjacent: tan θ > 1, θ > 45°.</p></section>
+<section data-case="solve">
+  <h3>Solving any triangle</h3>
+  <div class="look"><h4>What you are looking at</h4>A triangle with draggable corners; each angle and side is labelled, and the dashed circle through the corners (circumcircle) is drawn with its centre.</div>
+  <p>Without a right angle, SOH-CAH-TOA does not apply directly, but two laws do. The law of sines links each side to the angle opposite it. The law of cosines is Pythagoras with a correction for the angle not being 90°.</p>
+  <div class="eq">$$\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R, \qquad a^2 = b^2 + c^2 - 2bc\cos A, \qquad \text{Area} = \tfrac12 ab\sin C$$</div>
+  <ol class="steps">
+    <li>Two angles and a side (AAS): third angle by 180°, then sines.</li>
+    <li>Two sides and the angle between (SAS): cosines for the third side.</li>
+    <li>Three sides (SSS): cosines for each angle.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>b = 5, c = 7, A = 60°: a² = 25 + 49 − 70·0.5 = 39, a = 6.24. Then sin B = 5 sin 60°/6.24 = 0.694, B = 44°, C = 76°.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Pairing a side with the wrong angle in the law of sines (always opposite). Forgetting the second solution when using arcsin with two sides and a non-included angle.</div>
+</section>
+<section data-case="solve" data-example="equi"><h3>Equilateral</h3><p>All sides equal, all angles 60°; the circumcentre is the centre of the triangle.</p></section>
+<section data-case="solve" data-example="obtuse"><h3>Obtuse</h3><p>One angle above 90°: its cosine is negative, so a² is larger than b² + c². The circumcentre falls outside.</p></section>
+<section data-case="solve" data-example="flat"><h3>Almost flat</h3><p>The top corner sits near the base: one angle near 180°, area near zero, huge circumcircle.</p></section>
+<section data-case="lissajous">
+  <h3>Parametric curves</h3>
+  <div class="look"><h4>What you are looking at</h4>A point whose x and y each oscillate on their own, drawing a curve; the guide lines show its two coordinates.</div>
+  <p>Instead of y as a function of x, give both coordinates as functions of a third variable t (time). Two oscillations at right angles, with frequencies a and b, draw Lissajous figures — the patterns of an oscilloscope in XY mode.</p>
+  <div class="eq">$$x(t) = A\sin(at + \delta), \qquad y(t) = B\sin(bt)$$</div>
+  <div class="worked"><h4>Worked example</h4>Same frequency, phase 90°: x = cos t, y = sin t, a circle. Phase 0: x = y, a straight line. Ratio 3:2: a closed knot with 2 lobes across and 3 up.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking every curve must be y = f(x): a circle is not, but it is easy in parametric form.</div>
+</section>
+<section data-case="lissajous" data-example="circle"><h3>A circle</h3><p>cos and sin of the same angle: the point goes round a circle.</p></section>
+<section data-case="lissajous" data-example="line"><h3>A line</h3><p>In phase: x and y move together, the point slides back and forth along a diagonal.</p></section>
+<section data-case="lissajous" data-example="r32"><h3>3 : 2</h3><p>The curve closes after 2 x-cycles and 3 y-cycles.</p></section>
+<section data-case="polar">
+  <h3>Polar curves</h3>
+  <div class="look"><h4>What you are looking at</h4>A curve drawn by sweeping an angle θ and placing a point at distance r(θ) from the centre; the orange line is the current radius.</div>
+  <p>Polar coordinates describe a point by "which direction" (θ) and "how far" (r). Curves that are awkward as y = f(x) become simple: circles, spirals, flowers.</p>
+  <div class="eq">$$x = r(\theta)\cos\theta, \qquad y = r(\theta)\sin\theta$$</div>
+  <div class="worked"><h4>Worked example</h4>r = cos 3θ: three petals, each where cos 3θ > 0. r = 2 cos θ is a circle of radius 1 through the origin.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Ignoring negative r: it points the opposite way — that is how even-k roses get 2k petals.</div>
+</section>
+<section data-case="polar" data-example="rose4"><h3>k = 2</h3><p>Even k: the negative-r parts land in new places, giving four petals.</p></section>
+<section data-case="polar" data-example="cardioid"><h3>Cardioid</h3><p>A heart shape: r goes from 2 to 0 and back.</p></section>
+<section data-case="polar" data-example="loop"><h3>Limaçon</h3><p>With b < 1, r becomes negative for part of the turn: a small inner loop.</p></section>
+<section data-case="polar" data-example="spiral"><h3>Archimedes spiral</h3><p>r grows steadily with θ: the turns are evenly spaced, like a rolled carpet.</p></section>

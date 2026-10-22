@@ -79,7 +79,7 @@ a { color: inherit; text-decoration: none; }
 .about h3 { margin: 0 0 3px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink); }
 .about p { margin: 0; color: var(--dim); font-size: 13.5px; line-height: 1.45; }
 .intro { color: var(--dim); font-size: 13px; margin: 0 0 14px; }
-.intro b { color: var(--ink); font-weight: 600; } .intro a { color: var(--accent); }
+.intro b { color: var(--ink); font-weight: 600; } .intro a, .about a { color: var(--accent); }
 .search { position: relative; margin-bottom: 18px; }
 .search input { width: 100%; padding: 11px 14px 11px 38px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font: inherit; }
 .search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
@@ -110,15 +110,14 @@ a.card:hover, .card .head:hover img { border-color: hsl(var(--hue) 70% 58%); }
 .list a:hover { background: var(--panel2); color: var(--accent); }
 footer { color: var(--dim); font-size: 12.5px; padding: 0 16px 40px; }
 </style></head><body>
-<div class="wrap topbar"><div class="brand"><span class="logo">∇</span><div><h1>Engineering Labs</h1><div class="tag">Maths, physics and engineering you can move, measure and understand</div></div></div><button class="btn" id="theme" title="Theme">☀</button></div>
+<div class="wrap topbar"><div class="brand"><span class="logo">∇</span><div><h1>Engineering Labs</h1><div class="tag">Interactive tutorials for engineering students</div></div></div><button class="btn" id="theme" title="Theme">☀</button></div>
 <div class="wrap">
   <div class="about">
-    <div><h3>See it move</h3><p>Every topic is a live picture: drag things, change one value at a time and watch the curves, fields and signals respond.</p></div>
-    <div><h3>One idea at a time</h3><p>Each topic starts from the simplest case. Examples add one idea each, with only the controls that idea needs.</p></div>
-    <div><h3>Understand, not memorise</h3><p>Press <b>?</b> for the explanation: what you are looking at, the idea in words, the steps, a worked example and the usual mistakes.</p></div>
-    <div><h3>Works anywhere</h3><p>${nTopics} topics in single files that open straight from the folder, offline, with nothing to install.</p></div>
+    <div><h3>What it is</h3><p>A collection of interactive tutorials on maths, physics and engineering: ${nTopics} topics, each a picture you can move.</p></div>
+    <div><h3>Author</h3><p>Giulio Russo, for his students. Free and open: <a href="https://github.com/GiulioRusso/Engineering-scripts">source on GitHub</a>.</p></div>
+    <div><h3>How to use it</h3><p>Pick a subject, then a topic. Try the examples one by one; press <b>?</b> for the explanation.</p></div>
+    <div><h3>Where it runs</h3><p>In any browser, offline: every subject is a single file, nothing to install.</p></div>
   </div>
-  <p class="intro">By <b>Giulio Russo</b> · <a href="https://github.com/GiulioRusso/Engineering-scripts">source</a></p>
   <div class="search"><input id="q" type="search" placeholder="Search topics: pendulum, Bode, eigenvector…" aria-label="Search topics" autocomplete="off"></div>
   <div class="results" id="results" hidden></div>
 </div>

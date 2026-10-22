@@ -86,9 +86,18 @@ In the Electronics Visualizer.
 | Topic | What you do | Status |
 |---|---|---|
 | [Functions](web/maths.html?lab=functions) | Lines, parabolas, exponentials and logarithms: drag the graph, read the equation. | done |
+| [Transforming graphs](web/maths.html?lab=graph-transformations) | Shift, stretch and reflect any graph. | done |
+| [Composition and inverses](web/maths.html?lab=composition-inverse) | Functions in a chain, and running them backwards. | done |
+| [Polynomials and rational functions](web/maths.html?lab=polynomials) | Roots, multiplicity, end behaviour, asymptotes and holes. | done |
 | [Trigonometry](web/maths.html?lab=trigonometry) | A point on the unit circle: sine, cosine, tangent and the waves they make. | done |
+| [Solving triangles](web/maths.html?lab=triangles) | SOH-CAH-TOA, laws of sines and cosines. | done |
+| [Parametric and polar curves](web/maths.html?lab=parametric-polar) | Lissajous figures, roses, cardioids and spirals. | done |
 | [Complex numbers](web/maths.html?lab=complex-numbers) | Sums, products, powers and roots as arrows in the plane. | done |
+| [Limits and continuity](web/maths.html?lab=limits) | Approaching a point from both sides: holes, jumps and asymptotes. | done |
 | [Calculus](web/maths.html?lab=calculus) | Derivative as a limit of slopes, integral as a limit of sums, Taylor polynomials. | done |
+| [Curve sketching](web/maths.html?lab=curve-sketching) | Rising, falling, maxima, minima and inflection from f′ and f″. | done |
+| [Newton’s method](web/maths.html?lab=newton) | Solving equations by following tangents. | done |
+| [Areas and volumes](web/maths.html?lab=integral-applications) | Area between curves and solids of revolution. | done |
 | [Sequences and series](web/maths.html?lab=sequences) | Partial sums that converge or not: geometric, harmonic, alternating, and the limit. | done |
 | [Differential equations](web/maths.html?lab=differential-equations) | Slope fields and solution curves; Euler steps against the exact solution. | done |
 | [Vectors](web/maths.html?lab=vectors) | Dot and cross product of two arrows you drag in 3D. | done |

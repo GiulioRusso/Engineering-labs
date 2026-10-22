@@ -449,23 +449,118 @@
     "group": "Functions"
    },
    {
+    "id": "graph-transformations",
+    "title": "Transforming graphs",
+    "what": "Shift, stretch and reflect any graph.",
+    "from": "transformations",
+    "cases": [
+     "shift"
+    ],
+    "group": "Functions"
+   },
+   {
+    "id": "composition-inverse",
+    "title": "Composition and inverses",
+    "what": "Functions in a chain, and running them backwards.",
+    "from": "transformations",
+    "cases": [
+     "compose",
+     "inverse"
+    ],
+    "group": "Functions"
+   },
+   {
+    "id": "polynomials",
+    "title": "Polynomials and rational functions",
+    "what": "Roots, multiplicity, end behaviour, asymptotes and holes.",
+    "from": "transformations",
+    "cases": [
+     "polynomial",
+     "rational"
+    ],
+    "group": "Functions"
+   },
+   {
     "id": "trigonometry",
     "title": "Trigonometry",
     "what": "A point on the unit circle: sine, cosine, tangent and the waves they make.",
     "from": "unit-circle",
-    "group": "Functions"
+    "group": "Trigonometry"
+   },
+   {
+    "id": "triangles",
+    "title": "Solving triangles",
+    "what": "SOH-CAH-TOA, laws of sines and cosines.",
+    "from": "triangles",
+    "cases": [
+     "right",
+     "solve"
+    ],
+    "group": "Trigonometry"
+   },
+   {
+    "id": "parametric-polar",
+    "title": "Parametric and polar curves",
+    "what": "Lissajous figures, roses, cardioids and spirals.",
+    "from": "triangles",
+    "cases": [
+     "lissajous",
+     "polar"
+    ],
+    "group": "Trigonometry"
    },
    {
     "id": "complex-numbers",
     "title": "Complex numbers",
     "what": "Sums, products, powers and roots as arrows in the plane.",
     "from": "complex-plane",
-    "group": "Functions"
+    "group": "Complex numbers"
+   },
+   {
+    "id": "limits",
+    "title": "Limits and continuity",
+    "what": "Approaching a point from both sides: holes, jumps and asymptotes.",
+    "from": "calculus-apps",
+    "cases": [
+     "limit"
+    ],
+    "group": "Calculus"
    },
    {
     "id": "calculus",
     "title": "Calculus",
     "what": "Derivative as a limit of slopes, integral as a limit of sums, Taylor polynomials.",
+    "group": "Calculus"
+   },
+   {
+    "id": "curve-sketching",
+    "title": "Curve sketching",
+    "what": "Rising, falling, maxima, minima and inflection from f′ and f″.",
+    "from": "calculus-apps",
+    "cases": [
+     "sketch"
+    ],
+    "group": "Calculus"
+   },
+   {
+    "id": "newton",
+    "title": "Newton’s method",
+    "what": "Solving equations by following tangents.",
+    "from": "calculus-apps",
+    "cases": [
+     "newton"
+    ],
+    "group": "Calculus"
+   },
+   {
+    "id": "integral-applications",
+    "title": "Areas and volumes",
+    "what": "Area between curves and solids of revolution.",
+    "from": "calculus-apps",
+    "cases": [
+     "area",
+     "revolve"
+    ],
     "group": "Calculus"
    },
    {

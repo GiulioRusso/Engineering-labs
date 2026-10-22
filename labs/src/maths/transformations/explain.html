@@ -1,0 +1,83 @@
+<section data-case="shift">
+  <h3>Shifting, stretching and reflecting a graph</h3>
+  <div class="look"><h4>What you are looking at</h4>A base function f (dashed) and the transformed one y = a·f(b(x − h)) + k (blue). The knob is the point that started at the origin: drag it to shift the graph.</div>
+  <p>You do not need to learn a new graph for every formula. Most functions are a familiar one moved and reshaped. The rule to remember is: <b>changes outside f act on y the way you expect; changes inside f act on x the opposite way</b>.</p>
+  <div class="eq">$$y = a\,f\big(b(x - h)\big) + k$$</div>
+  <ol class="steps">
+    <li><b>k</b>: add to every output — the graph moves up by k.</li>
+    <li><b>a</b>: multiply every output — stretches vertically; a negative a flips it upside down.</li>
+    <li><b>h</b>: the graph does at x what f did at x − h, i.e. h later — it moves <i>right</i> by h.</li>
+    <li><b>b</b>: f(2x) reaches each value at half the x — squeezed toward the y axis; b negative mirrors left–right.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>y = −2(x − 1)² + 3: start from x², move right 1, stretch ×2, flip, move up 3. Vertex (1, 3), opening down, roots where (x − 1)² = 1.5: x = 1 ± 1.22.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Moving f(x + 2) to the right: it moves <i>left</i>. Doing the steps in a random order: stretch about the axis first, then shift.</div>
+  <div class="try"><h4>Try it</h4>Drag the knob around: the whole graph follows. Then change one slider at a time and say in words what happened.</div>
+</section>
+<section data-case="shift" data-example="right"><h3>Right by 2</h3><p>f(x − 2) reaches at x = 2 what f had at 0: the graph moves right, not left.</p></section>
+<section data-case="shift" data-example="up"><h3>Up by 2</h3><p>Every output is 2 bigger: the whole graph lifts by 2.</p></section>
+<section data-case="shift" data-example="tall"><h3>Twice as tall</h3><p>Each y doubles; points on the x axis stay put.</p></section>
+<section data-case="shift" data-example="flip"><h3>Upside down</h3><p>−f(x) reflects in the x axis: the parabola now opens downward.</p></section>
+<section data-case="shift" data-example="squeeze"><h3>Squeezed</h3><p>sin(2x) completes a cycle in π instead of 2π: twice the frequency.</p></section>
+<section data-case="shift" data-example="mirror"><h3>Mirrored</h3><p>√(−x) exists only for x ≤ 0: the graph is reflected in the y axis.</p></section>
+<section data-case="compose">
+  <h3>Composition: one function after another</h3>
+  <div class="look"><h4>What you are looking at</h4>f (grey) and g (green, dashed), then f(g(x)) (blue) and g(f(x)) (orange). The probe follows one input x through g and then f.</div>
+  <p>Composition is a production line: x goes into machine g, its output goes into machine f. Write it f(g(x)) or (f∘g)(x) and read it from the inside out. Changing the order usually changes the result completely.</p>
+  <div class="eq">$$(f\circ g)(x) = f\big(g(x)\big), \qquad f\circ g \neq g\circ f \text{ in general}$$</div>
+  <div class="worked"><h4>Worked example</h4>f = x², g = x + 1, x = 2: g gives 3, f gives 9. The other way: f gives 4, g gives 5. (x + 1)² ≠ x² + 1.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Applying f first because it is written first. The function nearest to x acts first.</div>
+  <div class="try"><h4>Try it</h4>Drag the probe and read the chain x → g → f in the HUD.</div>
+</section>
+<section data-case="compose" data-example="order"><h3>Order matters</h3><p>(x + 1)² is the parabola moved left by 1; x² + 1 is it moved up by 1.</p></section>
+<section data-case="compose" data-example="sin"><h3>sin(x²) vs (sin x)²</h3><p>sin(x²) oscillates faster and faster as x grows; (sin x)² keeps a steady rhythm and never goes negative.</p></section>
+<section data-case="compose" data-example="undo"><h3>√ after ²</h3><p>√(x²) = |x|, not x: squaring forgets the sign and the square root cannot bring it back.</p></section>
+<section data-case="inverse">
+  <h3>Inverse functions</h3>
+  <div class="look"><h4>What you are looking at</h4>f (blue), its inverse (orange) when it exists, the mirror line y = x, and a probe point with its mirror image. The horizontal line through the probe tests whether an inverse exists.</div>
+  <p>The inverse runs the machine backwards: given the output, find the input. Swapping input and output means swapping x and y — reflecting the graph in the line y = x. It only works if every output comes from exactly one input: every horizontal line must hit the graph at most once.</p>
+  <div class="eq">$$y = f(x) \iff x = f^{-1}(y), \qquad f\big(f^{-1}(y)\big) = y$$</div>
+  <ol class="steps">
+    <li>Solve y = f(x) for x, then rename the variables.</li>
+    <li>Check with the horizontal-line test; if it fails, restrict the domain.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>y = x³ → x = ∛y, so f⁻¹(x) = ∛x. y = x² fails (y = 4 comes from ±2); restricted to x ≥ 0 its inverse is √x.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Confusing f⁻¹(x) with 1/f(x). The inverse of x³ is ∛x, not 1/x³.</div>
+</section>
+<section data-case="inverse" data-example="exp"><h3>Exponential and logarithm</h3><p>ln is the inverse of eˣ: their graphs are mirror images across y = x.</p></section>
+<section data-case="inverse" data-example="square"><h3>x² has no inverse</h3><p>The horizontal line hits twice: from the output alone you cannot tell whether the input was positive or negative.</p></section>
+<section data-case="inverse" data-example="restrict"><h3>Restricting the domain</h3><p>Keep only x ≥ 0: now the test passes, and the inverse is √x.</p></section>
+<section data-case="polynomial">
+  <h3>Polynomials from their roots</h3>
+  <div class="look"><h4>What you are looking at</h4>The polynomial a(x − r₁)(x − r₂)…, its roots on the axis (drag the first one) and its y-intercept. The HUD shows the expanded form.</div>
+  <p>Writing a polynomial as a product of factors tells you its roots immediately: the product is zero exactly when one factor is. The leading coefficient and the degree decide what happens far away.</p>
+  <div class="eq">$$p(x) = a\prod_{i=1}^{n}(x - r_i), \qquad p(0) = a\prod(-r_i)$$</div>
+  <ol class="steps">
+    <li>Roots: where the graph meets the axis.</li>
+    <li>A root repeated an even number of times: the graph touches and turns back. Odd: it crosses (a triple root crosses flat).</li>
+    <li>End behaviour: like a·xⁿ — odd degree goes opposite ways, even degree the same way.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>0.5(x + 2)(x − 0.5)(x − 2): roots −2, 0.5, 2; y-intercept 0.5·2·(−0.5)·(−2) = 1; down on the left, up on the right.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Sign of the roots: the factor (x + 2) gives the root x = −2.</div>
+</section>
+<section data-case="polynomial" data-example="double"><h3>A double root</h3><p>(x + 2)² does not change sign: the graph touches the axis and turns back.</p></section>
+<section data-case="polynomial" data-example="neg"><h3>Negative leading coefficient</h3><p>The whole graph is flipped: now up on the left, down on the right.</p></section>
+<section data-case="polynomial" data-example="quartic"><h3>Degree 4</h3><p>Even degree, positive lead: both ends go up, with up to three turns in between.</p></section>
+<section data-case="polynomial" data-example="triple"><h3>A triple root</h3><p>(x − 1)³ crosses the axis but is flat there, like x³ at the origin.</p></section>
+<section data-case="rational">
+  <h3>Rational functions</h3>
+  <div class="look"><h4>What you are looking at</h4>A ratio of polynomials, with vertical asymptotes (dashed) where the denominator is zero, the horizontal or slanted line it approaches far away, its zeros, and holes.</div>
+  <p>Dividing by something that gets close to zero produces huge numbers: near each zero of the denominator the graph shoots off to ±∞ — a vertical asymptote. Far away the highest powers win, and their ratio says what the graph flattens toward.</p>
+  <div class="eq">$$f(x) = a\frac{(x - z_1)\cdots}{(x - p_1)\cdots}$$</div>
+  <ol class="steps">
+    <li>Bottom degree bigger: f → 0.</li>
+    <li>Same degree: f → a (ratio of the leading coefficients).</li>
+    <li>Top degree one more: f follows a slanted line (found by long division).</li>
+    <li>A factor on top and bottom cancels, leaving a hole, not an asymptote.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>(x − 1)/(x − 2): vertical asymptote x = 2, horizontal y = 1, zero at x = 1. At x = 2.01 it is 101; at 1.99, −99.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a graph can never cross its horizontal asymptote: it can, in the middle; the asymptote is only about the far ends.</div>
+</section>
+<section data-case="rational" data-example="recip"><h3>1/x</h3><p>Two branches, asymptotes on both axes.</p></section>
+<section data-case="rational" data-example="two"><h3>Two walls</h3><p>1/(x² − 1): asymptotes at ±1; between them the graph is negative.</p></section>
+<section data-case="rational" data-example="hole"><h3>A hole</h3><p>(x − 2)/((x + 1)(x − 2)) = 1/(x + 1) except at x = 2, where it is undefined: a single missing point.</p></section>
+<section data-case="rational" data-example="slant"><h3>A slanted asymptote</h3><p>Quadratic over linear: far away the graph follows a straight, tilted line.</p></section>

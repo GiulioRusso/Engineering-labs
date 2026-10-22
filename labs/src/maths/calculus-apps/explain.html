@@ -1,0 +1,66 @@
+<section data-case="limit">
+  <h3>Limits</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a function near a point a where it is not defined; two dots approach a from the left (orange) and from the right (blue). Bottom: the values at a − 10ᵏ and a + 10ᵏ as k grows: do they settle on one number?</div>
+  <p>Sometimes you cannot just plug in: (x² − 1)/(x − 1) at x = 1 is 0/0. The limit asks a gentler question: <i>where are the values heading</i> as x gets closer and closer to a? If both sides head to the same number, that number is the limit — whatever happens exactly at a.</p>
+  <div class="eq">$$\lim_{x\to a} f(x) = L \iff \lim_{x\to a^-} f(x) = \lim_{x\to a^+} f(x) = L$$</div>
+  <ol class="steps">
+    <li>Try to simplify: (x² − 1)/(x − 1) = x + 1 for x ≠ 1, so the limit is 2.</li>
+    <li>Check both sides separately when there is a jump or an absolute value.</li>
+    <li>If the values grow without bound, the limit is ±∞; if they keep oscillating, there is none.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>sin x / x: at 0.1 → 0.99833, at 0.01 → 0.9999833. The limit is 1 — the reason sin θ ≈ θ for small angles.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Saying "the limit is undefined" because f(a) is. Checking only one side.</div>
+  <div class="try"><h4>Try it</h4>Switch to the jump: the two dots stay on different heights however close they get.</div>
+</section>
+<section data-case="limit" data-example="jump"><h3>A jump</h3><p>|x|/x is −1 on the left and +1 on the right: the one-sided limits differ, so the limit does not exist.</p></section>
+<section data-case="limit" data-example="inf"><h3>An infinite limit</h3><p>1/x² gets bigger and bigger from both sides: limit +∞, a vertical asymptote.</p></section>
+<section data-case="limit" data-example="sinc"><h3>sin x / x</h3><p>Both sides approach 1: a hole in the graph, filled by the limit.</p></section>
+<section data-case="limit" data-example="wild"><h3>sin(1/x)</h3><p>Closer to 0 it oscillates faster and faster between −1 and 1: no value to settle on.</p></section>
+<section data-case="sketch">
+  <h3>Curve sketching with derivatives</h3>
+  <div class="look"><h4>What you are looking at</h4>Three stacked graphs: f (green where rising, red where falling), f′ and f″. Critical points (f′ = 0) and inflection points (f″ = 0) are marked and lined up across the three.</div>
+  <p>The derivative is a slope detector. Where f′ > 0 the graph climbs, where f′ < 0 it falls, and where it changes sign the graph turns: a maximum or a minimum. The second derivative says how the slope itself changes: positive means the curve bends up like a cup, negative like a cap.</p>
+  <div class="eq">$$f'(x_0) = 0, \; f''(x_0) > 0 \Rightarrow \text{minimum}, \qquad f''(x_0) < 0 \Rightarrow \text{maximum}$$</div>
+  <ol class="steps">
+    <li>Solve f′(x) = 0: the candidate points.</li>
+    <li>Look at the sign of f′ on either side, or at f″ there.</li>
+    <li>Solve f″ = 0 (with a sign change): the inflection points, where the bending flips.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>f = x³ − 3x: f′ = 3x² − 3 = 0 at x = ±1; f″ = 6x: at −1 it is −6 (maximum, f = 2), at +1 +6 (minimum, f = −2); inflection at 0.</div>
+  <div class="pitfall"><h4>Common mistake</h4>"f′ = 0 means a maximum or minimum": x³ has f′(0) = 0 but keeps rising — a flat inflection.</div>
+</section>
+<section data-case="sketch" data-example="quartic"><h3>x⁴ − 2x²</h3><p>Two minima at ±1 and a maximum at 0: f′ = 4x³ − 4x has three zeros.</p></section>
+<section data-case="sketch" data-example="flat"><h3>x³</h3><p>f′ touches zero without changing sign: no turn, just a pause.</p></section>
+<section data-case="sketch" data-example="bump"><h3>x e^(−x²)</h3><p>A maximum at 1/√2 and a minimum at −1/√2, three inflection points.</p></section>
+<section data-case="newton">
+  <h3>Newton's method</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the curve, and the zig-zag of the method — from each guess go up to the curve, then slide down the tangent to the axis. Bottom: the error after each step on a log scale.</div>
+  <p>Solving f(x) = 0 exactly is often impossible. Newton's idea: near a guess, the curve looks like its tangent line, and a line is easy to solve. Take that solution as the next guess and repeat. Close to the root the number of correct digits roughly doubles every step.</p>
+  <div class="eq">$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$</div>
+  <div class="worked"><h4>Worked example</h4>√2 from x² − 2 = 0, start at 1: 1.5, 1.41667, 1.4142157, 1.41421356237… — 12 correct digits in 4 steps.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Starting where f′ ≈ 0 (the tangent is flat and shoots far away). Assuming it always converges: x³ − 2x + 2 from 0 bounces between 0 and 1 forever.</div>
+</section>
+<section data-case="newton" data-example="far"><h3>A far start</h3><p>From 4 the first steps are big; once close, the error collapses.</p></section>
+<section data-case="newton" data-example="cube"><h3>A cycle</h3><p>From 0 the tangent sends it to 1, and from 1 straight back to 0.</p></section>
+<section data-case="newton" data-example="cos"><h3>cos x = x</h3><p>No formula exists for this root, but Newton finds 0.7390851 in four steps.</p></section>
+<section data-case="area">
+  <h3>The area between two curves</h3>
+  <div class="look"><h4>What you are looking at</h4>Two curves and the region between them from a to b (shaded); below, the running integral of f − g.</div>
+  <p>Slice the region into thin vertical strips. Each strip has width dx and height top − bottom. Adding them all is an integral. Where the curves cross, top and bottom swap: split the integral there (or integrate |f − g|).</p>
+  <div class="eq">$$A = \int_a^b |f(x) - g(x)|\,dx$$</div>
+  <div class="worked"><h4>Worked example</h4>Between y = x and y = x² on [0, 1]: ∫(x − x²) dx = 1/2 − 1/3 = 1/6.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Integrating f − g across a crossing: the parts cancel and the "area" comes out too small, even zero.</div>
+</section>
+<section data-case="area" data-example="sincos"><h3>sin and cos on [0, π]</h3><p>They cross at π/4: the signed integral is 2, the true area 2√2 ≈ 2.83.</p></section>
+<section data-case="area" data-example="sqrt"><h3>√x and x²</h3><p>Mirror images across y = x: the area between them is 1/3.</p></section>
+<section data-case="revolve">
+  <h3>Solids of revolution</h3>
+  <div class="look"><h4>What you are looking at</h4>A profile r(x) (orange) spun around the x axis into a solid; the disc marks one slice. Drag to rotate the view.</div>
+  <p>Spin a curve around an axis and you get a solid. Cut it across and every slice is a disc of radius r(x): area πr², thickness dx. Stack the discs — integrate — and you have the volume.</p>
+  <div class="eq">$$V = \pi\int_a^b r(x)^2\,dx$$</div>
+  <div class="worked"><h4>Worked example</h4>Cone r = x on [0, h]: π∫x² dx = πh³/3 = (1/3)πr²h with r = h. Sphere r = √(1 − x²): π∫(1 − x²) dx from −1 to 1 = 4π/3.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting to square the radius.</div>
+</section>
+<section data-case="revolve" data-example="cyl"><h3>Cylinder</h3><p>Constant radius: V = πr²h = 3π for r = 1, h = 3.</p></section>
+<section data-case="revolve" data-example="sphere"><h3>Sphere</h3><p>A half-circle spun round: 4π/3 for radius 1.</p></section>
+<section data-case="revolve" data-example="vase"><h3>A vase</h3><p>Any profile works: the disc method needs only r(x).</p></section>
