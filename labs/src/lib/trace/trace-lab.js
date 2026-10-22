@@ -2,6 +2,8 @@
 // lab: each input is a case, the play bar walks the steps, and the trace's own renderers draw the view next
 // to the source code with the current line highlighted. Renderers are classic scripts on window.RENDERERS.
 const STEP = 0.8; // seconds per step at speed 1
+// circuits: blocks first, then the timing diagram, then tables and the rest (one column, top to bottom)
+const RANK = { schematic: 1, graph: 2, array: 3, waveform: 4, matrix: 5, table: 6 };
 // a few input names were recorded in Italian
 const EN = { casuale: 'random', 'quasi ordinato': 'nearly sorted', 'invertito (caso peggiore)': 'reversed (worst case)', 'con duplicati': 'with duplicates', 'gia ordinato': 'already sorted' };
 
@@ -60,10 +62,10 @@ export function traceLab(trace, { id, title, group, code = true }) {
       const seek = (i) => { ctx.setPlaying(false); time.t = i * STEP + 1e-3; ctx.requestUpdate(); };
       function mountViews() {
         const list = steps(), layout = inputs[state.input].layout || null;
-        $('.tprimary').innerHTML = ''; primary = make(trace.view, $('.tprimary'), { steps: list, compact: false, layout, seek });
+        $('.tprimary').innerHTML = ''; primary = make(trace.view, $('.tprimary'), { steps: list, compact: false, layout, seek }); $('.tmain').style.order = RANK[trace.view] ?? 7;
         $('.tpanels').innerHTML = ''; panels = [];
-        for (const p of trace.panels || []) { const card = document.createElement('div'); card.className = 'tcard'; card.innerHTML = `<h3></h3><div class="viewbox"></div>`; card.firstChild.textContent = p.title || p.view; $('.tpanels').append(card);
-          const r = make(p.view, card.lastChild, { steps: list, compact: true, source: p.source, marks: p.marks, layout, seek }); if (r) panels.push({ r, source: p.source }); }
+        for (const p of trace.panels || []) { const card = document.createElement('div'); card.className = 'tcard'; card.innerHTML = `<h3></h3><div class="viewbox"></div>`; card.firstChild.textContent = p.title || p.view; card.style.order = RANK[p.view] ?? 7; $('.tpanels').append(card);
+          const r = make(p.view, card.lastChild, { steps: list, compact: code, source: p.source, marks: p.marks, layout, seek }); if (r) panels.push({ r, source: p.source }); }
         $('.tlegend').innerHTML = (primary?.legend?.() || []).map((e) => `<span><i style="background:${e.color}"></i>${e.label}</span>`).join('');
         shown = -1;
       }

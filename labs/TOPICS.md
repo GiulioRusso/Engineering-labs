@@ -199,25 +199,18 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 
 | Topic | What you do | Status |
 |---|---|---|
-| [A neuron is a tilted sheet](web/machine-learning.html?lab=neuron-sheet) | Weights tilt it, the bias slides it; the boundary is a straight line. | done |
-| [Learning by gradient descent](web/machine-learning.html?lab=gradient-descent) | The loss landscape and the path of the weights. | done |
-| [A hidden layer bends the plane](web/machine-learning.html?lab=hidden-layer) | Two moons: what one line cannot do, a hidden layer can. | done |
-| [Loss landscapes and optimizers](web/machine-learning.html?lab=loss-landscapes) | GD, momentum, RMSProp and Adam racing on 3D loss surfaces: ravine, banana valley, saddle, two valleys. | done |
-| [Squared, absolute, Huber](web/machine-learning.html?lab=regression-losses) | What a line fit does with an outlier, with the squares drawn. | done |
-| [The sigmoid trap](web/machine-learning.html?lab=sigmoid-trap) | Why cross-entropy, not squared error, trains a classifier. | done |
-| [Softmax and temperature](web/machine-learning.html?lab=softmax) | From scores to probabilities. | done |
-| [Losses vs the margin](web/machine-learning.html?lab=margin-losses) | 0–1, hinge, logistic, exponential, squared in one picture. | done |
-| [Overfitting and capacity](web/machine-learning.html?lab=capacity) | Training error always falls; test error is U-shaped. | done |
-| [Bias and variance](web/machine-learning.html?lab=bias-variance) | Forty fits on forty datasets: average error and scatter. | done |
-| [Ridge regularization](web/machine-learning.html?lab=ridge) | Penalise the coefficients instead of the degree. | done |
-| [Early stopping](web/machine-learning.html?lab=early-stopping) | Gradient descent learns the shape first, the wiggles last. | done |
-| [Cross-validation](web/machine-learning.html?lab=cross-validation) | Choosing the model without the test set. | done |
-| [Accuracy, precision, recall](web/machine-learning.html?lab=imbalance) | Rare classes: why accuracy lies. | done |
-| [The dense layer](web/machine-learning.html?lab=dense-layer) | One dot product per output, drawn step by step. | done |
-| [Inside a convolution](web/machine-learning.html?lab=conv-layers) | Slide a kernel over an image: stride, padding, dilation. | done |
-| [Pooling](web/machine-learning.html?lab=pooling) | Max and average, no parameters. | done |
-| [Channels in 3D](web/machine-learning.html?lab=channels) | A filter is a k×k×C block collapsing into one map. | done |
-| [A whole CNN](web/machine-learning.html?lab=cnn-stack) | Shapes and where the parameters live. | done |
+| [The neuron](web/machine-learning.html?lab=neuron) | Weights tilt it, the bias slides it, gradient descent learns them. | done |
+| [Activation functions](web/machine-learning.html?lab=activations) | Sigmoid, tanh, ReLU, GELU: the bend in every layer and the gradient it lets through. | done |
+| [Dense layer](web/machine-learning.html?lab=dense-layer) | One dot product per output. | done |
+| [Hidden layers](web/machine-learning.html?lab=hidden-layer) | A hidden layer bends the plane: two moons. | done |
+| [Convolutional layer](web/machine-learning.html?lab=conv-layer) | A kernel sliding over an image; stride, padding, dilation; channels in 3D. | done |
+| [Pooling layer](web/machine-learning.html?lab=pooling) | Max and average, no parameters. | done |
+| [Softmax output layer](web/machine-learning.html?lab=softmax) | From scores to probabilities, with temperature. | done |
+| [Putting the layers together](web/machine-learning.html?lab=cnn-stack) | A whole CNN: shapes and where the parameters live. | done |
+| [Loss functions](web/machine-learning.html?lab=loss-functions) | Squared, absolute, Huber; the sigmoid trap; every loss vs the margin. | done |
+| [Optimizers](web/machine-learning.html?lab=optimizers) | GD, momentum, RMSProp and Adam on 3D loss surfaces. | done |
+| [Overfitting and how to fight it](web/machine-learning.html?lab=overfitting) | Capacity, bias and variance, ridge, early stopping, cross-validation. | done |
+| [Classification metrics](web/machine-learning.html?lab=metrics) | Accuracy, precision, recall on rare classes. | done |
 
 ## Maths
 

@@ -1,6 +1,15 @@
 <section>
   <p>A layer is not a black box: it is a small amount of arithmetic applied in a pattern. Here every multiply and add is drawn. Cell colours: yellow = positive, blue = negative, grey = zero.</p>
 </section>
+<section data-case="activation">
+  <h3>Activation functions: the bend in every layer</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: five common activation functions f(z), the selected one in bold, with your input z marked. Bottom: their slopes f′(z) — the factor by which gradients are multiplied on the way back during training.</div>
+  <p>Each layer computes a weighted sum z = w·x + b and passes it through an activation. Without it, any stack of layers would collapse into a single linear map: the activation is what lets a network bend the space.</p>
+  <ol class="steps"><li><b>Sigmoid, tanh</b>: smooth and bounded, but flat for large |z| — their slope tends to 0 (vanishing gradients).</li><li><b>ReLU</b>: max(0, z). Slope 1 or 0: simple, fast, the default; a unit stuck at z &lt; 0 stops learning ("dead ReLU").</li><li><b>Leaky ReLU, GELU</b>: keep a little slope for z &lt; 0.</li></ol>
+  <div class="worked"><h4>Worked example</h4>Ten sigmoid layers each pass back at most 0.25 of the gradient: 0.25¹⁰ ≈ 10⁻⁶. Ten ReLU layers in their active region pass back 1.</div>
+</section>
+<section data-case="activation" data-example="sig"><h3>Sigmoid at z = 4</h3><p>Output 0.98, slope 0.018: nearly no gradient.</p></section>
+<section data-case="activation" data-example="dead"><h3>ReLU at z = −2</h3><p>Output 0 and slope 0: this unit contributes nothing and receives no update.</p></section>
 <section data-case="dense">
   <h3>The dense layer: one dot product per output</h3>
   <div class="look"><h4>What you are looking at</h4>The input vector x, the weight matrix W, the bias b and the output y. Output j is built step by step from row j of W (orange) times the whole input; the current pair is outlined in white.</div>

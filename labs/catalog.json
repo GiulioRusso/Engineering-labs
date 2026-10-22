@@ -896,191 +896,129 @@
   "name": "Machine learning",
   "topics": [
    {
-    "id": "neuron-sheet",
-    "title": "A neuron is a tilted sheet",
-    "what": "Weights tilt it, the bias slides it; the boundary is a straight line.",
+    "id": "neuron",
+    "title": "The neuron",
+    "what": "Weights tilt it, the bias slides it, gradient descent learns them.",
     "from": "neuron",
     "cases": [
-     "neuron"
-    ],
-    "group": "Neurons"
-   },
-   {
-    "id": "gradient-descent",
-    "title": "Learning by gradient descent",
-    "what": "The loss landscape and the path of the weights.",
-    "from": "neuron",
-    "cases": [
+     "neuron",
      "descent"
     ],
-    "group": "Neurons"
+    "group": "1 · The neuron"
    },
    {
-    "id": "hidden-layer",
-    "title": "A hidden layer bends the plane",
-    "what": "Two moons: what one line cannot do, a hidden layer can.",
-    "from": "neuron",
+    "id": "activations",
+    "title": "Activation functions",
+    "what": "Sigmoid, tanh, ReLU, GELU: the bend in every layer and the gradient it lets through.",
+    "from": "layers",
     "cases": [
-     "hidden"
+     "activation"
     ],
-    "group": "Neurons"
-   },
-   {
-    "id": "loss-landscapes",
-    "title": "Loss landscapes and optimizers",
-    "what": "GD, momentum, RMSProp and Adam racing on 3D loss surfaces: ravine, banana valley, saddle, two valleys.",
-    "from": "optimizers",
-    "group": "Training"
-   },
-   {
-    "id": "regression-losses",
-    "title": "Squared, absolute, Huber",
-    "what": "What a line fit does with an outlier, with the squares drawn.",
-    "from": "losses",
-    "cases": [
-     "regress"
-    ],
-    "group": "Loss functions"
-   },
-   {
-    "id": "sigmoid-trap",
-    "title": "The sigmoid trap",
-    "what": "Why cross-entropy, not squared error, trains a classifier.",
-    "from": "losses",
-    "cases": [
-     "trap"
-    ],
-    "group": "Loss functions"
-   },
-   {
-    "id": "softmax",
-    "title": "Softmax and temperature",
-    "what": "From scores to probabilities.",
-    "from": "losses",
-    "cases": [
-     "softmax"
-    ],
-    "group": "Loss functions"
-   },
-   {
-    "id": "margin-losses",
-    "title": "Losses vs the margin",
-    "what": "0–1, hinge, logistic, exponential, squared in one picture.",
-    "from": "losses",
-    "cases": [
-     "margin"
-    ],
-    "group": "Loss functions"
-   },
-   {
-    "id": "capacity",
-    "title": "Overfitting and capacity",
-    "what": "Training error always falls; test error is U-shaped.",
-    "from": "generalization",
-    "cases": [
-     "capacity"
-    ],
-    "group": "Generalization"
-   },
-   {
-    "id": "bias-variance",
-    "title": "Bias and variance",
-    "what": "Forty fits on forty datasets: average error and scatter.",
-    "from": "generalization",
-    "cases": [
-     "biasvar"
-    ],
-    "group": "Generalization"
-   },
-   {
-    "id": "ridge",
-    "title": "Ridge regularization",
-    "what": "Penalise the coefficients instead of the degree.",
-    "from": "generalization",
-    "cases": [
-     "ridge"
-    ],
-    "group": "Generalization"
-   },
-   {
-    "id": "early-stopping",
-    "title": "Early stopping",
-    "what": "Gradient descent learns the shape first, the wiggles last.",
-    "from": "generalization",
-    "cases": [
-     "early"
-    ],
-    "group": "Generalization"
-   },
-   {
-    "id": "cross-validation",
-    "title": "Cross-validation",
-    "what": "Choosing the model without the test set.",
-    "from": "generalization",
-    "cases": [
-     "cv"
-    ],
-    "group": "Generalization"
-   },
-   {
-    "id": "imbalance",
-    "title": "Accuracy, precision, recall",
-    "what": "Rare classes: why accuracy lies.",
-    "from": "generalization",
-    "cases": [
-     "imbalance"
-    ],
-    "group": "Generalization"
+    "group": "2 · Layers, one at a time"
    },
    {
     "id": "dense-layer",
-    "title": "The dense layer",
-    "what": "One dot product per output, drawn step by step.",
+    "title": "Dense layer",
+    "what": "One dot product per output.",
     "from": "layers",
     "cases": [
      "dense"
     ],
-    "group": "Inside the layers"
+    "group": "2 · Layers, one at a time"
    },
    {
-    "id": "conv-layers",
-    "title": "Inside a convolution",
-    "what": "Slide a kernel over an image: stride, padding, dilation.",
+    "id": "hidden-layer",
+    "title": "Hidden layers",
+    "what": "A hidden layer bends the plane: two moons.",
+    "from": "neuron",
+    "cases": [
+     "hidden"
+    ],
+    "group": "2 · Layers, one at a time"
+   },
+   {
+    "id": "conv-layer",
+    "title": "Convolutional layer",
+    "what": "A kernel sliding over an image; stride, padding, dilation; channels in 3D.",
     "from": "layers",
     "cases": [
-     "conv"
+     "conv",
+     "channels"
     ],
-    "group": "Inside the layers"
+    "group": "2 · Layers, one at a time"
    },
    {
     "id": "pooling",
-    "title": "Pooling",
+    "title": "Pooling layer",
     "what": "Max and average, no parameters.",
     "from": "layers",
     "cases": [
      "pool"
     ],
-    "group": "Inside the layers"
+    "group": "2 · Layers, one at a time"
    },
    {
-    "id": "channels",
-    "title": "Channels in 3D",
-    "what": "A filter is a k×k×C block collapsing into one map.",
-    "from": "layers",
+    "id": "softmax",
+    "title": "Softmax output layer",
+    "what": "From scores to probabilities, with temperature.",
+    "from": "losses",
     "cases": [
-     "channels"
+     "softmax"
     ],
-    "group": "Inside the layers"
+    "group": "2 · Layers, one at a time"
    },
    {
     "id": "cnn-stack",
-    "title": "A whole CNN",
-    "what": "Shapes and where the parameters live.",
+    "title": "Putting the layers together",
+    "what": "A whole CNN: shapes and where the parameters live.",
     "from": "layers",
     "cases": [
      "stack"
     ],
-    "group": "Inside the layers"
+    "group": "2 · Layers, one at a time"
+   },
+   {
+    "id": "loss-functions",
+    "title": "Loss functions",
+    "what": "Squared, absolute, Huber; the sigmoid trap; every loss vs the margin.",
+    "from": "losses",
+    "cases": [
+     "regress",
+     "trap",
+     "margin"
+    ],
+    "group": "3 · Training"
+   },
+   {
+    "id": "optimizers",
+    "title": "Optimizers",
+    "what": "GD, momentum, RMSProp and Adam on 3D loss surfaces.",
+    "from": "optimizers",
+    "group": "3 · Training"
+   },
+   {
+    "id": "overfitting",
+    "title": "Overfitting and how to fight it",
+    "what": "Capacity, bias and variance, ridge, early stopping, cross-validation.",
+    "from": "generalization",
+    "cases": [
+     "capacity",
+     "biasvar",
+     "ridge",
+     "early",
+     "cv"
+    ],
+    "group": "4 · Generalization"
+   },
+   {
+    "id": "metrics",
+    "title": "Classification metrics",
+    "what": "Accuracy, precision, recall on rare classes.",
+    "from": "generalization",
+    "cases": [
+     "imbalance"
+    ],
+    "group": "4 · Generalization"
    }
   ]
  },

@@ -1,6 +1,7 @@
 // Inside the layers, every multiply and add drawn: a dense layer row by row, a convolution sliding over an
 // image (stride, padding, dilation), pooling, a filter spanning all channels (3D), and a whole CNN's shapes.
 import { createCurve } from '../../lib/viz/curve.js';
+import { createChart } from '../../lib/viz/chart.js';
 import { cssVar } from '../../lib/ui/theme.js';
 import * as THREE from 'three';
 import { outSize, conv2d, pool, dense, IMG, KERNELS, stack } from './model.js';
@@ -8,14 +9,26 @@ import { outSize, conv2d, pool, dense, IMG, KERNELS, stack } from './model.js';
 const fmt = (v, d = 2) => (Math.abs(v) < 5e-3 ? '0' : String(Number(v.toFixed(d))));
 const KOPT = Object.entries(KERNELS).map(([k, v]) => [k, v.label]);
 const W8 = [[0.5, -1, 0.3, 2], [1, 0.2, -0.5, 0], [-0.7, 0.4, 1, -1]], X4 = [1, 2, -1, 0.5], B3 = [0.1, -0.3, 0.2];
+const ACT = {
+  sigmoid: { label: 'sigmoid', f: (z) => 1 / (1 + Math.exp(-z)) },
+  tanh: { label: 'tanh', f: Math.tanh },
+  relu: { label: 'ReLU', f: (z) => Math.max(0, z) },
+  leaky: { label: 'leaky ReLU', f: (z) => (z > 0 ? z : 0.1 * z) },
+  gelu: { label: 'GELU', f: (z) => 0.5 * z * (1 + Math.tanh(0.7978845608 * (z + 0.044715 * z ** 3))) },
+};
+const ACOL = { sigmoid: '--c-B', tanh: '--c-v', relu: '--c-I', leaky: '--c-F', gelu: '--c-E' };
 const FM = [[1, 3, 2, 0, 1, 4], [0, 5, 1, 2, 2, 1], [2, 1, 0, 6, 3, 0], [1, 2, 4, 1, 0, 2], [3, 0, 1, 2, 5, 1], [0, 2, 1, 0, 1, 3]];
 
 export default {
   id: 'layers', title: 'Inside a layer', size: 4.4, ortho: true, plain: true, cam: 'top', duration: 12, loop: false,
   cameras: { top: { pos: [0, -0.01, 12] }, iso: { pos: [7, -8, 7], target: [0, 0, 0.6] } },
   camOf: (s) => (s.case === 'channels' ? 'iso' : 'top'),
-  defaults: { kern: 'vertical', stride: 1, pad: 0, dil: 1, pk: 'max', N: 28, F1: 8, F2: 16, ks: 3 },
+  defaults: { act: 'relu', z: 1, kern: 'vertical', stride: 1, pad: 0, dil: 1, pk: 'max', N: 28, F1: 8, F2: 16, ks: 3 },
   cases: [
+    { id: 'activation', label: 'Activation functions', set: {}, examples: [
+      { id: 'sig', label: 'Sigmoid: saturates at both ends', controls: ['act', 'z'], set: { act: 'sigmoid', z: 4 } },
+      { id: 'dead', label: 'ReLU at z < 0: no gradient at all', controls: ['act', 'z'], set: { act: 'relu', z: -2 } },
+    ] },
     { id: 'dense', label: 'Dense layer', set: {}, examples: [] },
     { id: 'conv', label: 'Convolution', set: {}, examples: [
       { id: 'stride', label: 'Stride 2: skip positions', controls: ['stride'], set: { stride: 2 } },
@@ -28,6 +41,7 @@ export default {
     { id: 'stack', label: 'A whole CNN', set: {}, examples: [{ id: 'wide', label: 'More filters', controls: ['F1', 'F2'], set: { F1: 32, F2: 64 } }] },
   ],
   controls: [
+    { title: 'Activation', show: (s) => s.case === 'activation', items: [{ id: 'act', label: 'Function', type: 'select', options: Object.entries(ACT).map(([k, v]) => [k, v.label]) }, { id: 'z', label: 'Input z = w·x + b', unit: '', min: -5, max: 5, step: 0.01 }] },
     { title: 'Convolution', show: (s) => s.case === 'conv', items: [
       { id: 'kern', label: 'Kernel', type: 'select', options: KOPT }, { id: 'stride', label: 'Stride', unit: '', min: 1, max: 3, step: 1 }, { id: 'pad', label: 'Padding', unit: '', min: 0, max: 2, step: 1 }, { id: 'dil', label: 'Dilation', unit: '', min: 1, max: 3, step: 1 },
     ] },
@@ -46,6 +60,7 @@ export default {
     quad.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(MAX * 3), 3); quad.frustumCulled = false; scene.add(quad);
     const lines = createCurve(stage, { max: 9000, width: 1, color: '--line' }), hi = createCurve(stage, { max: 3000, width: 3, color: '--accent' }), hi2 = createCurve(stage, { max: 3000, width: 2.4, color: '--c-I' });
     const pool_ = []; const lab = () => { const l = ctx.label('', 'tick'); scene.add(l); pool_.push(l); return l; }; for (let i = 0; i < 220; i++) lab();
+    const top = createChart(ctx, { box: [-4.4, 0.55, 8.8, 2.0] }), bot = createChart(ctx, { box: [-4.4, -2.35, 8.8, 2.0] });
     let nq = 0, nl = 0, L = [], H = [], H2 = [];
     const m4 = new THREE.Matrix4(), col = new THREE.Color(), c0 = new THREE.Color(), c1 = new THREE.Color(), c2 = new THREE.Color();
     const begin = () => { nq = 0; nl = 0; L = []; H = []; H2 = []; pool_.forEach((l) => { l.visible = false; }); c0.set(cssVar('--c-B')); c1.set(cssVar('--panel-2')); c2.set(cssVar('--c-E')); };
@@ -66,11 +81,22 @@ export default {
     return {
       changed() {
         const v3 = state.case === 'channels'; stage.setOrtho(!v3); stage.controls.enableRotate = v3; stage.preset(v3 ? 'iso' : 'top');
-        ctx.setClock(state.case === 'stack' ? 0 : 12);
+        top.show(state.case === 'activation'); bot.show(state.case === 'activation');
+        ctx.setClock(state.case === 'stack' || state.case === 'activation' ? 0 : 12);
       },
       update() {
         const c = state.case, u = Math.min(1, time.t / 11.5); begin();
-        if (c === 'dense') {
+        if (c === 'activation') {
+          const zs = Array.from({ length: 401 }, (_, i) => -5 + i / 40), A = ACT[state.act], d = (f, z) => (f(z + 1e-4) - f(z - 1e-4)) / 2e-4;
+          top.range([-5, 5], [-1.5, 5]); top.titles('z = w·x + b (the neuron’s sum)', 'f(z): the activation (selected in bold)');
+          bot.range([-5, 5], [-0.2, 1.2]); bot.titles('z', 'f′(z): how much gradient passes back through it');
+          for (const [k, F] of Object.entries(ACT)) { const w = k === state.act ? 3.2 : 1; top.line(k, zs, zs.map(F.f), { color: ACOL[k], width: w }); bot.line(k, zs, zs.map((z) => d(F.f, z)), { color: ACOL[k], width: w }); }
+          top.dots('p', [state.z], [A.f(state.z)], { color: '--accent', size: 12 }); bot.dots('p', [state.z], [d(A.f, state.z)], { color: '--accent', size: 12 });
+          hud.set('a', `${A.label}(${fmt(state.z)}) = ${fmt(A.f(state.z), 3)}, slope ${fmt(d(A.f, state.z), 3)}`);
+          hud.set('b', 'without a non-linearity, layers stacked on layers collapse into one linear map: the activation is what lets a network bend');
+          hud.set('c', state.act === 'sigmoid' || state.act === 'tanh' ? 'saturating: for large |z| the slope is ~0, so gradients vanish in deep stacks' : state.act === 'relu' ? 'ReLU: slope 1 for z > 0, exactly 0 for z < 0 — cheap, and the default in deep networks' : 'non-zero slope for z < 0: units never “die”');
+          const ns = Array.from({ length: 10 }, (_, i) => i + 1); plots.aux.draw({ xlim: [1, 10], series: Object.entries(ACT).map(([k, F]) => ({ x: ns, y: ns.map((n) => Math.max(-12, n * Math.log10(Math.abs(d(F.f, state.z)) + 1e-12))), color: ACOL[k], label: F.label })).concat([{ x: [], y: [], color: '--ink-dim', label: `log₁₀ gradient surviving n layers at z = ${fmt(state.z)} vs n` }]) });
+        } else if (c === 'dense') {
           const y = dense(W8, X4, B3), steps = 3 * 4, s = Math.min(steps - 1, Math.floor(u * steps)), j = Math.floor(s / 4), i = s % 4, cs = 0.62;
           grid(X4.map((v) => [v]), -4.4, 1.4, cs, { scale: 2 }); text('x', -4.4 + cs / 2, 1.65); text('input (4)', -4.4 + cs / 2, -1.25);
           grid(W8, -3.2, 1.4, cs, { scale: 2 }); text('W (3 × 4)', -3.2 + 2 * cs, 1.65);
@@ -128,7 +154,7 @@ export default {
         }
         end();
       },
-      theme() { lines.theme(); hi.theme(); hi2.theme(); },
+      theme() { lines.theme(); hi.theme(); hi2.theme(); top.theme(); bot.theme(); },
     };
   },
 };

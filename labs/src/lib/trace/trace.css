@@ -42,13 +42,10 @@
 :root[data-theme="light"] .trace { --k-kw: #7c3aed; --k-ty: #1d4ed8; --k-fn: #b45309; --k-str: #15803d; --k-num: #c2410c; --k-com: #8a94a3; --k-pre: #0e7490; }
 .trace pre i { font-style: normal; } .trace .c-kw { color: var(--k-kw); } .trace .c-ty { color: var(--k-ty); } .trace .c-fn { color: var(--k-fn); }
 .trace .c-str { color: var(--k-str); } .trace .c-num { color: var(--k-num); } .trace .c-com { color: var(--k-com); font-style: italic; } .trace .c-pre { color: var(--k-pre); }
-/* circuits: no code, the view takes the stage and the side panels (truth table, schematic) sit beside it */
+/* circuits: no code; one column — the step sentence, the blocks, the timing diagram, then tables and values */
 .trace.nocode { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr); }
 .trace.nocode .tcode { display: none; }
-.trace.nocode .tview { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto auto 1fr; grid-template-areas: "b b" "n n" "v p" "x p"; gap: 12px; align-content: start; }
-.trace.nocode .tbadges { grid-area: b; } .trace.nocode .tnote { grid-area: n; font-size: 15px; }
-.trace.nocode .tmain { grid-area: v; } .trace.nocode .tprimary svg { width: 100%; height: auto; max-height: 52vh; }
-.trace.nocode .tpanels .viewbox svg { width: 100%; height: auto; max-height: 40vh; }
-.trace.nocode .tpanels { grid-area: p; flex-direction: column; align-self: start; } .trace.nocode .tvars { grid-area: x; align-self: start; }
-.trace.nocode.wide .tview { grid-template-areas: "b b" "n n" "v v" "p x"; grid-template-rows: auto auto auto 1fr; }
-.trace.nocode.wide .tprimary svg { max-height: 34vh; }
+.trace.nocode .tview { display: flex; flex-direction: column; gap: 12px; }
+.trace.nocode .tpanels { display: contents; }
+.trace.nocode .tbadges { order: -2; } .trace.nocode .tnote { order: -1; font-size: 15px; } .trace.nocode .tvars { order: 9; }
+.trace.nocode .viewbox svg { width: min(100%, 980px); height: auto; max-height: 36vh; }
