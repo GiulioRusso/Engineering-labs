@@ -7,6 +7,8 @@
 // caused it — which is why a Mealy machine can react one cycle sooner.
 #include <string>
 #include "../tracer/tracer.hpp"
+#include "../sim/waves.hpp"
+#include "../sim/circuit.hpp"
 
 static Tracer T("moore_vs_mealy", "Moore vs Mealy", "FSM", __FILE__);
 
@@ -47,15 +49,23 @@ static std::string mealyGraph(const std::string& edgeState) {
 int main() {
     T.view("graph").complexity("O(1) per symbol", "2 states");
     T.panel("graph", "Mealy (output on the edge)", "mealy");
+    T.panel("waveform", "Input and both outputs over time");
 
     std::string bits = "1101001";
     int state = 0;
+    std::vector<int> win{0}, wmo{0}, wme{0};
+    for (char c : bits) { int b = c - '0'; win.push_back(b); wmo.push_back(b); wme.push_back(b); }
+    // Moore's output is the state, so it shows the bit one tick after the input; Mealy's appears with it
+    std::vector<int> wmoore(win.size(), 0); for (size_t i = 1; i < win.size(); i++) wmoore[i] = win[i - 1];
+    Waves W; W.add("in", "data", win); W.add("out_mealy", "out", wme); W.add("out_moore", "out", wmoore);
+    int k = 0;
     T.input("Input: " + bits);
     T.layout("{\"S0\":{\"x\":0,\"y\":0},\"S1\":{\"x\":140,\"y\":0}}");
     T.at(__LINE__, "main")
      .vars({{"state", state}})
      .graphState(mooreGraph(state, ""))
      .graphState("mealy", mealyGraph(""))
+     .waveState(W.json(k++))
      .note("Initial state S0, Moore output = 0.")
      .emit();
 
@@ -68,6 +78,7 @@ int main() {
          .vars({{"input", bit}, {"state", state}, {"out_moore", state}, {"out_mealy", bit}})
          .graphState(mooreGraph(state, edgeState))
          .graphState("mealy", mealyGraph(edgeState))
+         .waveState(W.json(k++))
          .note("Input " + std::to_string(bit) + ": new state S" + std::to_string(state) +
                ". Moore output = " + std::to_string(state) + " (from the state). Mealy output = " +
                std::to_string(bit) + " (from the transition, same cycle).")

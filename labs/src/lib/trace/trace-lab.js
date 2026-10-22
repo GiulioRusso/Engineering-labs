@@ -19,7 +19,23 @@ function cpp(line) {
   });
 }
 
+// A circuit-only trace gets a timing diagram derived from its own circuit snapshots: every pin and gate
+// output, step by step, with all inputs one after the other (a combinational truth table becomes a
+// waveform; the cursor sits on the current input's step).
+function deriveWaves(trace) {
+  const has = trace.view === 'waveform' || (trace.panels || []).some((p) => p.view === 'waveform');
+  if (has || !trace.inputs[0].steps[0]?.circuit) return;
+  const all = trace.inputs.flatMap((inp) => inp.steps), first = all[0].circuit;
+  const names = [...first.pins.filter((p) => p.side === 'left').map((p) => ['pin', p.name, 'data']), ...first.gates.map((g) => ['gate', g.id, 'data', g.type]), ...first.pins.filter((p) => p.side !== 'left').map((p) => ['pin', p.name, 'out'])].slice(0, 14);
+  const val = (c, [k, n]) => (k === 'pin' ? c.pins.find((p) => p.name === n)?.bit : c.gates.find((g) => g.id === n)?.out) ?? 0;
+  const signals = names.map((nm) => ({ name: nm[1], kind: nm[2], values: all.map((st) => val(st.circuit, nm)) }));
+  let t0 = 0; const markers = [];
+  trace.inputs.forEach((inp, ii) => { if (trace.inputs.length > 1) markers.push({ t: t0, label: `${ii + 1}` }); inp.steps.forEach((st, k) => { st.wave = { t: t0 + k, signals, markers }; }); t0 += inp.steps.length; });
+  trace.panels = [...(trace.panels || []), { view: 'waveform', title: trace.inputs.length > 1 ? 'Every signal, all inputs one after the other' : 'Every signal, step by step' }];
+}
+
 export function traceLab(trace, { id, title, group, code = true }) {
+  if (!code) deriveWaves(trace);
   const inputs = trace.inputs;
   return {
     id, title, group, size: 1, ortho: true, plain: true, cam: 'top', duration: inputs[0].steps.length * STEP, loop: false,
@@ -30,8 +46,9 @@ export function traceLab(trace, { id, title, group, code = true }) {
       const { state, time } = ctx, view = ctx.el.stage.parentElement;
       const root = document.createElement('div'); root.className = 'trace'; view.append(root);
       if (!code) root.classList.add('nocode');
+      if (trace.view === 'waveform') root.classList.add('wide'); // a timing diagram is long: give it the full width
       root.innerHTML = `<section class="tcode"><h3>C++ source <span class="fn"></span></h3><pre></pre></section>
-        <section class="tview"><div class="tbadges"></div><div class="tcard"><div class="viewbox tprimary"></div><div class="tlegend"></div></div>
+        <section class="tview"><div class="tbadges"></div><div class="tcard tmain"><div class="viewbox tprimary"></div><div class="tlegend"></div></div>
         <div class="tpanels"></div><div class="tcard tvars"></div><div class="tnote"></div></section>`;
       const $ = (s) => root.querySelector(s), pre = $('pre');
       pre.innerHTML = trace.displaySource.map((l, i) => `<div class="row"><span class="gut">${i + 1}</span><span></span></div>`).join('');

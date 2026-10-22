@@ -9,11 +9,24 @@
 #include <string>
 #include <vector>
 #include "../tracer/tracer.hpp"
+#include "../sim/circuit.hpp"
 #include "../sim/waves.hpp"
 
 static Tracer T("metastability", "Metastability", "Flip-Flops", __FILE__);
 static const int N = 20;
 static const int EDGE = 8;
+
+static Schematic dff() {
+    Schematic S;
+    S.gate("ff", "D FF", 2.4, 1.0);
+    S.pin("D", 0.0, 0.6, "left");
+    S.pin("CLK", 0.0, 1.4, "left");
+    S.wire("D", "ff.a");
+    S.wire("CLK", "ff.b");
+    S.pin("Q", 4.6, 1.0, "right");
+    S.wire("ff", "Q");
+    return S;
+}
 
 static void run(const std::string& label, int resolveAfter, int resolvedTo) {
     std::vector<int> D(N, 0), CLK(N, 0), Q(N, 0);
@@ -31,11 +44,13 @@ static void run(const std::string& label, int resolveAfter, int resolvedTo) {
     W.add("CLK", "clk", CLK);
     W.add("Q", "out", Q);
 
+    Schematic sch = dff();
     T.input(label);
     for (int t = 0; t < N; t++) {
         T.at(__LINE__, __func__)
          .vars({{"t", t}, {"D", D[t]}, {"CLK", CLK[t]}, {"Q", Q[t]}})
          .waveState(W.json(t))
+         .circuitState(sch.json({{"D", D[t]}, {"CLK", CLK[t]}, {"ff", Q[t]}, {"Q", Q[t]}}))
          .note(t < EDGE ? "Before the edge: Q = 0."
                : t == EDGE ? "D changes exactly at the edge: violation, Q enters metastability."
                : Q[t] == -1 ? "Still metastable: neither 0 nor 1, resolution time not guaranteed."
@@ -46,6 +61,7 @@ static void run(const std::string& label, int resolveAfter, int resolvedTo) {
 
 int main() {
     T.view("waveform").complexity("edge-triggered", "1 D-FF");
+    T.panel("schematic", "Circuit");
 
     run("Fast resolution (2 steps)", 2, 1);
     run("Slow resolution (6 steps), same input", 6, 1);

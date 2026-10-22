@@ -21,7 +21,9 @@ static Schematic layout() {
     S.pin("D", 0.0, 0.6, "left");
     S.pin("CLK", 0.0, 1.8, "left");
     S.wire("D", "master.a");
+    S.wire("CLK", "master.b");
     S.wire("master", "slave.a");
+    S.wire("CLK", "slave.b");
     S.pin("Q", 6.2, 1.0, "right");
     S.wire("slave", "Q");
     return S;

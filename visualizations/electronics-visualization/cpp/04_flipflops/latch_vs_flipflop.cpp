@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "../tracer/tracer.hpp"
+#include "../sim/circuit.hpp"
 #include "../sim/waves.hpp"
 
 static Tracer T("latch_vs_flipflop", "Latch vs Flip-Flop", "Flip-Flops", __FILE__);
@@ -15,6 +16,16 @@ static const int N = 20;
 
 int main() {
     T.view("waveform").complexity("—", "—");
+    T.panel("schematic", "Circuit");
+    Schematic sch;
+    sch.gate("latch", "D LATCH", 2.4, 0.6);
+    sch.gate("ff", "D FF", 2.4, 2.0);
+    sch.pin("D", 0.0, 0.9, "left");
+    sch.pin("CLK", 0.0, 1.7, "left");
+    sch.wire("D", "latch.a"); sch.wire("CLK", "latch.b");
+    sch.wire("D", "ff.a"); sch.wire("CLK", "ff.b");
+    sch.pin("Q_latch", 4.6, 0.6, "right"); sch.wire("latch", "Q_latch");
+    sch.pin("Q_ff", 4.6, 2.0, "right"); sch.wire("ff", "Q_ff");
 
     std::vector<int> D(N, 0), CLK(N), Qlatch(N), Qff(N);
     // Kept off the CLK edges on purpose, same reasoning as
@@ -42,6 +53,7 @@ int main() {
         T.at(__LINE__, __func__)
          .vars({{"t", t}, {"D", D[t]}, {"CLK", CLK[t]}, {"Q_latch", Qlatch[t]}, {"Q_ff", Qff[t]}})
          .waveState(W.json(t))
+         .circuitState(sch.json({{"D", D[t]}, {"CLK", CLK[t]}, {"latch", Qlatch[t]}, {"ff", Qff[t]}, {"Q_latch", Qlatch[t]}, {"Q_ff", Qff[t]}}))
          .note(CLK[t]
                ? "CLK=1: Q_latch follows D in real time (=" + std::to_string(Qlatch[t]) +
                  "); Q_ff stays fixed at " + std::to_string(Qff[t]) + " until the next edge."

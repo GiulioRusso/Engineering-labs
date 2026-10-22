@@ -7,6 +7,8 @@
 // Moore machine.
 #include <string>
 #include "../tracer/tracer.hpp"
+#include "../sim/waves.hpp"
+#include "../sim/circuit.hpp"
 
 static Tracer T("traffic_light", "Traffic Light", "FSM", __FILE__);
 
@@ -31,7 +33,12 @@ static std::string graphOf(int state) {
 
 int main() {
     T.view("graph").complexity("O(1) per tick", "3 states");
+    T.panel("waveform", "The three lamps over time");
     T.panel("table", "Duration per state (ticks)");
+    std::vector<int> clk, red, green, yellow;
+    for (int cycle = 0; cycle < 2; cycle++) for (int s = 0; s < 3; s++) for (int i = 0; i < durations[s]; i++) { clk.push_back(0); red.push_back(s == 0); green.push_back(s == 1); yellow.push_back(s == 2); }
+    std::vector<int> clk2(clk.size()); for (size_t i = 0; i < clk.size(); i++) clk2[i] = i % 2;
+    Waves W; W.add("tick", "clk", clk2); W.add("Red", "out", red); W.add("Green", "out", green); W.add("Yellow", "out", yellow);
 
     T.input("Two full cycles");
     T.layout("{\"Red\":{\"x\":0,\"y\":0},\"Green\":{\"x\":150,\"y\":80},\"Yellow\":{\"x\":0,\"y\":160}}");
@@ -44,6 +51,7 @@ int main() {
                 T.at(__LINE__, "main")
                  .vars({{"tick", tick}, {"state", state}, {"remaining", durations[s] - i}})
                  .graphState(graphOf(state))
+                 .waveState(W.json(tick))
                  .table("durations", {{"Red", durations[0]}, {"Green", durations[1]}, {"Yellow", durations[2]}})
                  .note(std::string(names[state]) + ": tick " + std::to_string(i + 1) + " of " +
                        std::to_string(durations[s]) + ".")

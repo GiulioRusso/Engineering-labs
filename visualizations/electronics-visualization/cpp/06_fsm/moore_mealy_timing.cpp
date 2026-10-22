@@ -8,12 +8,21 @@
 #include <string>
 #include <vector>
 #include "../tracer/tracer.hpp"
+#include "../sim/circuit.hpp"
 #include "../sim/waves.hpp"
 
 static Tracer T("moore_mealy_timing", "Same Input, Different Outputs", "FSM", __FILE__);
 
 int main() {
     T.view("waveform").complexity("O(1) per symbol", "2 states");
+    T.panel("schematic", "Circuit");
+    Schematic sch;
+    sch.pin("in", 0.0, 1.2, "left");
+    sch.gate("mealy", "MEALY", 2.4, 0.5);
+    sch.gate("reg", "STATE", 2.0, 1.9); sch.gate("moore", "MOORE", 3.8, 1.9);
+    sch.wire("in", "mealy.a"); sch.wire("in", "reg.a"); sch.wire("reg", "moore.a");
+    sch.pin("out_mealy", 5.6, 0.5, "right"); sch.pin("out_moore", 5.6, 1.9, "right");
+    sch.wire("mealy", "out_mealy"); sch.wire("moore", "out_moore");
 
     std::string bits = "0011010010";
     int N = static_cast<int>(bits.size());
@@ -36,6 +45,7 @@ int main() {
         T.at(__LINE__, __func__)
          .vars({{"t", i}, {"in", in[i]}, {"out_mealy", outMealy[i]}, {"out_moore", outMoore[i]}})
          .waveState(W.json(i))
+         .circuitState(sch.json({{"in", in[i]}, {"mealy", outMealy[i]}, {"reg", outMoore[i]}, {"moore", outMoore[i]}, {"out_mealy", outMealy[i]}, {"out_moore", outMoore[i]}}))
          .note("out_mealy follows the input right away; out_moore is still showing the response to the previous bit.")
          .emit();
     }

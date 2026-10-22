@@ -7,14 +7,29 @@
 #include <string>
 #include <vector>
 #include "../tracer/tracer.hpp"
+#include "../sim/circuit.hpp"
 #include "../sim/waves.hpp"
 
 static Tracer T("setup_hold", "Setup and Hold", "Flip-Flops", __FILE__);
 static const int N = 20;
 static const int EDGE = 10, T_SU = 2, T_H = 1;
 
+static Schematic dff() {
+    Schematic S;
+    S.gate("ff", "D FF", 2.4, 1.0);
+    S.pin("D", 0.0, 0.6, "left");
+    S.pin("CLK", 0.0, 1.4, "left");
+    S.wire("D", "ff.a");
+    S.wire("CLK", "ff.b");
+    S.pin("Q", 4.6, 1.0, "right");
+    S.wire("ff", "Q");
+    return S;
+}
+
 int main() {
     T.view("waveform").complexity("edge-triggered", "1 D-FF");
+    T.panel("schematic", "Circuit");
+    Schematic sch = dff();
 
     T.input("D changes outside the window: clean capture");
     {
@@ -30,6 +45,7 @@ int main() {
             T.at(__LINE__, __func__)
              .vars({{"t", t}, {"D", D[t]}, {"CLK", CLK[t]}})
              .waveState(W.json(t, "[]", winJson))
+             .circuitState(sch.json({{"D", D[t]}, {"CLK", CLK[t]}, {"ff", t >= EDGE ? 1 : 0}, {"Q", t >= EDGE ? 1 : 0}}))
              .note(t == EDGE ? "Rising edge: D was stable through the whole window, capture guaranteed."
                               : "D stable, outside the window.")
              .emit();
@@ -50,6 +66,7 @@ int main() {
             T.at(__LINE__, __func__)
              .vars({{"t", t}, {"D", D[t]}, {"CLK", CLK[t]}})
              .waveState(W.json(t, "[]", winJson))
+             .circuitState(sch.json({{"D", D[t]}, {"CLK", CLK[t]}, {"ff", t >= EDGE ? -1 : 0}, {"Q", t >= EDGE ? -1 : 0}}))
              .note(t == EDGE ? "Rising edge: D changed inside the setup window. "
                                 "The manufacturer does not guarantee the sampled value."
                               : "D inside or near the forbidden window.")

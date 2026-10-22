@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "../tracer/tracer.hpp"
+#include "../sim/circuit.hpp"
 #include "../sim/waves.hpp"
 
 static Tracer T("ring_johnson", "Ring and Johnson", "Counters", __FILE__);
@@ -19,11 +20,17 @@ void run(const std::string& label, bool johnson, int steps) {
 
     std::vector<std::vector<int>> history(NBITS, std::vector<int>(steps, 0));
     for (int i = 0; i < NBITS; i++) history[i][0] = reg[i];
+    Schematic sch;
+    sch.pin("CLK", 0.0, 2.2, "left");
+    for (int i = 0; i < NBITS; i++) { std::string f = "ff" + std::to_string(i); sch.gate(f, "D FF", 1.2 + 1.6 * i, 1.0); sch.wire("CLK", f + ".b"); if (i) sch.wire("ff" + std::to_string(i - 1), f + ".a"); }
+    if (johnson) { sch.gate("inv", "NOT", 3.6, -0.4); sch.wire("ff3", "inv.a"); sch.wire("inv", "ff0.a"); } else sch.wire("ff3", "ff0.a");
+    auto cs = [&](int clk) { std::map<std::string, int> v{{"CLK", clk}, {"inv", 1 - reg[NBITS - 1]}}; for (int i = 0; i < NBITS; i++) v["ff" + std::to_string(i)] = reg[i]; return sch.json(v); };
     T.clearWatches();
     T.watchVector("reg", reg);
     T.input(label);
     T.at(__LINE__, "run")
      .vars({{"step", 0}})
+     .circuitState(cs(0))
      .note("Initial state.")
      .emit();
 
@@ -38,6 +45,7 @@ void run(const std::string& label, bool johnson, int steps) {
         T.at(__LINE__, "run")
          .vars({{"step", s}, {"feedback", feedback}})
          .waveState(W.json(s))
+         .circuitState(cs(1))
          .note("Shift: the incoming bit becomes " + std::string(johnson ? "NOT(last bit) = " : "last bit = ") +
                std::to_string(feedback) + ".")
          .emit();
@@ -46,6 +54,7 @@ void run(const std::string& label, bool johnson, int steps) {
 
 int main() {
     T.view("array").complexity("O(1) per step", "4 flip-flops");
+    T.panel("schematic", "Four flip-flops in a loop");
     T.panel("waveform", "Every bit over time");
 
     run("Ring (4 states)", false, 9);
