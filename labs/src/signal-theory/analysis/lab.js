@@ -73,7 +73,7 @@ export default {
     stage.controls.enableRotate = false;
     const tl = createChart(ctx, { box: TL }), tr = createChart(ctx, { box: TR }), bl = createChart(ctx, { box: BL }), br = createChart(ctx, { box: BR }), bot = createChart(ctx, { box: BOT }), all = [tl, tr, bl, br, bot];
     return {
-      changed() { const c = state.case; for (const k of all) k.show(false); (c === 'window' ? [tl, tr, bot] : [tl, tr, bl, br]).forEach((k) => k.show(true)); ctx.setDuration(c === 'iq' ? 8 : 0); },
+      changed() { const c = state.case; for (const k of all) k.show(false); (c === 'window' ? [tl, tr, bot] : [tl, tr, bl, br]).forEach((k) => k.show(true)); ctx.setClock(c === 'iq' ? 8 : 0); },
       update() {
         const c = state.case;
         if (c === 'bins' || c === 'window') {

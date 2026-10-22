@@ -1,0 +1,67 @@
+<section data-case="ce">
+  <h3>The common-emitter amplifier</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a transistor with its base fed by a small signal on top of a DC bias, a collector resistor R_C to the supply, and optionally an emitter resistor R_E. Top right: the output in time — real (blue) and what a perfectly linear amplifier would give (dashed). Bottom right: the transfer curve, output against input; its slope is the gain.</div>
+  <p>A transistor converts an input voltage into a current (g_m). To get a <i>voltage</i> back, push that current through a resistor. When the input goes up, more current flows, R_C drops more voltage, and the collector goes <b>down</b>: the stage inverts.</p>
+  <div class="eq">$$A_v=\frac{v_\text{out}}{v_\text{in}}=-\frac{g_m (R_C\parallel r_o)}{1+g_m R_E}\;\approx\;-\frac{R_C}{R_E}\ \ (\text{when } g_m R_E\gg1)$$</div>
+  <ol class="steps">
+    <li>Bias: pick I_C (here 1 mA) so that V_C sits mid-way between the rails.</li>
+    <li>Gain: g_m = I_C/V_T = 38.7 mS; with R_C = 4.7 kΩ, A_v ≈ −182 (−166 with the transistor's own r_o).</li>
+    <li>Swing: the output can move up to V_CC and down to about 0.2 V. Too large an input hits a rail: clipping.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>5 mV in, gain −166: 0.83 V out, inverted. 20 mV in would ask for 3.3 V — but the exponential makes the downward half (more current) larger than the upward half: visibly lopsided.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Forgetting the minus sign. Expecting gain to keep growing with R_C: a larger R_C also pushes the Q point towards saturation.</div>
+  <div class="try"><h4>Try it</h4>Raise the input until the blue trace flattens at the top or bottom, then add R_E: the gain drops but the shape becomes clean.</div>
+</section>
+<section data-case="ce" data-example="clip"><h3>20 mV</h3><p>The transfer curve is not a straight line over ±20 mV: one half-cycle is stretched, the other squashed, and soon a rail cuts it off.</p></section>
+<section data-case="ce" data-example="degen"><h3>Emitter degeneration</h3><p>With R_E = 470 Ω the gain falls to about −9 ≈ −R_C/R_E, but now it is set by two resistors, not by the exponential: 300 mV in still comes out clean. Trading gain for linearity is the theme of feedback.</p></section>
+<section data-case="follower">
+  <h3>The emitter follower (common collector)</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a source with internal resistance R_s drives the base; the output is taken at the emitter, across R_E and the load R_L. Top right: the source (grey), the load voltage with the follower (blue) and if the source drove the load directly (red). Bottom right: how much of the source reaches the load, for any load.</div>
+  <p>The emitter sits one V_BE below the base and follows it: the voltage gain is just under 1. Its job is different: it is an <b>impedance transformer</b>. The source sees the load multiplied by β + 1; the load sees the source divided by β + 1.</p>
+  <div class="eq">$$A_v=\frac{g_m R}{1+g_m R}\approx1,\qquad R_\text{in}=r_\pi+(\beta+1)R,\qquad R_\text{out}\approx\frac1{g_m}+\frac{R_s}{\beta+1}$$</div>
+  <div class="worked"><h4>Worked example</h4>A 10 kΩ source into a 100 Ω speaker directly: 100/10100 = 1%. With a follower (β = 150): R_in ≈ 16 kΩ, so the source keeps 60%, and the follower drives 100 Ω from about 90 Ω: overall about 50% of the signal, 50× more.</div>
+  <div class="pitfall"><h4>Common mistake</h4>"Gain 1 means useless." Power gain is huge; most op-amp output stages are followers.</div>
+</section>
+<section data-case="follower" data-example="heavy"><h3>100 Ω load</h3><p>Direct, the source collapses; through the follower most of the signal survives.</p></section>
+<section data-case="follower" data-example="weak"><h3>100 kΩ source</h3><p>Even a feeble source can drive a small load: its resistance appears divided by 151 at the output.</p></section>
+<section data-case="diff">
+  <h3>The differential pair</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: two matched transistors whose emitters share a tail current I_tail. Top right: the two collector currents against the input difference — a tanh. Bottom right: in time, the difference between the outputs (blue) stays clean while each single output (grey) is polluted by common-mode noise.</div>
+  <p>The two currents must always add up to I_tail. So if both inputs move together (common mode), nothing can change: the current has nowhere else to go. Only the <b>difference</b> v₁ − v₂ moves current from one side to the other. That is why every op-amp starts with a differential pair: it ignores noise that hits both wires equally.</p>
+  <div class="eq">$$I_1-I_2=I_\text{tail}\tanh\!\left(\frac{v_1-v_2}{2V_T}\right),\qquad A_{dm}=g_mR_C,\quad A_{cm}\approx\frac{R_C}{2R_\text{tail}},\quad \text{CMRR}=\frac{A_{dm}}{A_{cm}}$$</div>
+  <div class="worked"><h4>Worked example</h4>I_tail = 1 mA: each side 0.5 mA, g_m = 19.3 mS, R_C = 5 kΩ → A_dm ≈ 97. A 50 kΩ tail: A_cm = 0.05 → CMRR ≈ 66 dB.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using a plain resistor as the tail. A real current source (a mirror!) has a huge R_tail, and CMRR rises with it.</div>
+</section>
+<section data-case="diff" data-example="large"><h3>100 mV</h3><p>tanh(100/51.7) ≈ 0.96: almost all the tail current is on one side. The output is a squared-off wave: the pair is a natural limiter.</p></section>
+<section data-case="diff" data-example="poortail"><h3>Weak tail</h3><p>2 kΩ tail: common-mode gain 1.25, CMRR only 38 dB. The noise leaks into each output.</p></section>
+<section data-case="miller">
+  <h3>The Miller effect</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a gain stage with the small capacitance C_μ between base and collector. Top right: frequency response with the Miller effect (blue) and if C_μ were counted only once (dashed). Bottom right: bandwidth against gain.</div>
+  <p>C_μ is a few picofarads. But one end moves by v and the other by −|A|·v: the voltage across it is (1 + |A|) v, so it draws (1 + |A|) times the charge. Seen from the input it looks like a capacitor (1 + |A|) times larger. Together with the source resistance it makes a low-pass filter far lower than you would expect.</p>
+  <div class="eq">$$C_\text{in}=C_\pi+C_\mu(1+|A|),\qquad f_{-3\text{dB}}=\frac1{2\pi R_s C_\text{in}}$$</div>
+  <div class="worked"><h4>Worked example</h4>|A| = 200, C_μ = 5 pF: 1005 pF from a 5 pF part. With R_s = 1 kΩ: f₋₃dB ≈ 155 kHz instead of 6.4 MHz.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Ignoring a "tiny" feedback capacitance. Cures: low source resistance, a follower in front, or a cascode stage that keeps the collector voltage still.</div>
+</section>
+<section data-case="miller" data-example="high"><h3>Gain 400</h3><p>Twice the gain, half the bandwidth: the product barely moves.</p></section>
+<section data-case="miller" data-example="lowrs"><h3>Low source resistance</h3><p>50 Ω charges the big C_in 20× faster: the pole moves up by 20×.</p></section>
+<section data-case="feedback">
+  <h3>Negative feedback</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: an amplifier A with a fraction β of its output subtracted from the input. Top right: open-loop gain (grey) and closed-loop gain (blue) against frequency. Bottom right: how far the closed-loop gain is from the ideal 1/β, as a function of the raw gain A₀.</div>
+  <p>Feed back part of the output against the input: the amplifier ends up amplifying only the small error between them. If A is huge, the error becomes tiny and the output settles at whatever makes βv_out = v_in. The gain becomes 1/β — fixed by two resistors, no longer by the transistor.</p>
+  <div class="eq">$$A_{cl}=\frac{A}{1+A\beta}\;\xrightarrow{\;A\beta\gg1\;}\;\frac1\beta,\qquad \frac{\Delta A_{cl}}{A_{cl}}=\frac{1}{1+A\beta}\,\frac{\Delta A}{A},\qquad f_{cl}=f_p(1+A\beta)$$</div>
+  <ol class="steps"><li>Loop gain Aβ: the number that decides everything.</li><li>Error: 1/(1 + Aβ) of the ideal.</li><li>Sensitivity: a change of A is divided by 1 + Aβ.</li><li>Bandwidth: multiplied by 1 + Aβ. Gain × bandwidth stays constant.</li></ol>
+  <div class="worked"><h4>Worked example</h4>A₀ = 100 dB = 10⁵, β = 0.1: A_cl = 9.999, error 0.01%. Halve A₀: A_cl changes by 0.02%. Pole 10 Hz → closed-loop bandwidth 100 kHz.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking feedback is free: you pay with gain. And with too much phase lag around the loop it turns positive and oscillates (op-amp stability).</div>
+</section>
+<section data-case="feedback" data-example="lowgain"><h3>A₀ = 40 dB</h3><p>Loop gain only 10: the closed loop is 9% short of 10 and follows every drift of A.</p></section>
+<section data-case="feedback" data-example="more"><h3>β = 1%</h3><p>Ten times more closed-loop gain, ten times less loop gain and bandwidth.</p></section>
+<section data-case="cascade">
+  <h3>Cascading stages</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the chain of blocks with each one's gain factor, including the "loading" factor at each junction. Top right: the running gain after each block; the dashed line is what you'd get multiplying the stage gains naively. Bottom right: total gain against the final load.</div>
+  <p>Gains multiply only if each stage does not load the previous one. At every junction the output resistance of one stage and the input resistance of the next form a voltage divider. A common-emitter stage has a large R_out (≈ R_C) and a small R_in (≈ r_π): two of them in a row waste most of the gain.</p>
+  <div class="eq">$$A_\text{tot}=A_1\cdot\frac{R_{in,2}}{R_{out,1}+R_{in,2}}\cdot A_2$$</div>
+  <div class="worked"><h4>Worked example</h4>1 mA, 4.7 kΩ: R_out1 ≈ 4.3 kΩ, R_in2 = r_π ≈ 3.9 kΩ → only 47% passes. Insert a follower: it sees a big R_in and presents a small R_out, and most of the gain returns.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Multiplying datasheet gains without checking impedances. Rule: each stage's R_out should be much smaller than the next stage's R_in.</div>
+</section>
+<section data-case="cascade" data-example="buffer"><h3>With a follower</h3><p>Two small losses instead of one big one: the total approaches A₁·A₂.</p></section>
+<section data-case="cascade" data-example="load"><h3>1 kΩ load</h3><p>The last stage's own R_C is now in parallel with 1 kΩ: its gain drops too.</p></section>

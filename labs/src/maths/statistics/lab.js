@@ -53,7 +53,7 @@ export default {
     const top = createChart(ctx, { box: TOP }), bot = createChart(ctx, { box: BOT }), sql = createChart(ctx, { box: SQL, grid: false, xTicks: false, yTicks: false }), right = createChart(ctx, { box: RIGHT }), all = [top, bot, sql, right];
     const PI = monteCarloPi(4000), CW = {};
     return {
-      changed() { const c = state.case; for (const k of all) k.show(false); ({ dist: [top, bot], bayes: [sql, right], clt: [top, bot], walk: [top, bot], pi: [sql, right] })[c].forEach((k) => k.show(true)); ctx.setDuration(c === 'pi' || c === 'walk' ? 10 : 0); },
+      changed() { const c = state.case; for (const k of all) k.show(false); ({ dist: [top, bot], bayes: [sql, right], clt: [top, bot], walk: [top, bot], pi: [sql, right] })[c].forEach((k) => k.show(true)); ctx.setClock(c === 'pi' || c === 'walk' ? 10 : 0); },
       update() {
         const c = state.case, u = (time.t % 10) / 10;
         if (c === 'dist') {

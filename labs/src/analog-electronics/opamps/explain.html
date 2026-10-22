@@ -1,0 +1,69 @@
+<section data-case="ideal">
+  <h3>The op-amp and the virtual short</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: an op-amp (the triangle) with resistors around it. Top right: input (grey) and output (blue) in time. Bottom right: output against input — the slope is the gain, the flat parts are the supply rails.</div>
+  <p>An op-amp amplifies the difference between its two inputs by an enormous factor A (100 000 or more). Connect its output back to the − input through resistors and something remarkable happens: since the output is a few volts and A is huge, the input difference must be microvolts. <b>The two inputs sit at the same voltage</b> — the "virtual short". Add the second rule, "no current flows into the inputs", and every op-amp circuit can be solved with Ohm's law.</p>
+  <div class="eq">$$\text{inverting: } A_v=-\frac{R_2}{R_1}\qquad \text{non-inverting: } A_v=1+\frac{R_2}{R_1}\qquad\text{follower: } A_v=1$$</div>
+  <ol class="steps">
+    <li>Inverting: + is grounded, so − is at 0 V too (virtual ground). Current in R1: v_in/R1.</li>
+    <li>That current cannot enter the op-amp: it all flows through R2, dropping v_in·R2/R1.</li>
+    <li>One end of R2 is at 0 V, so the output is −v_in R2/R1.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>R1 = 10 kΩ, R2 = 100 kΩ, 0.5 V in: 50 µA through both resistors, output −5 V. With 2 V in it would need −20 V: the op-amp stops at the rail (here ±12 V).</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Applying the virtual short without negative feedback (e.g. a comparator): it only holds when the output is fed back to the − input. Forgetting the rails.</div>
+  <div class="try"><h4>Try it</h4>Switch between the three configurations and watch the bottom slope.</div>
+</section>
+<section data-case="ideal" data-example="non"><h3>Non-inverting</h3><p>The input drives the + pin directly: input resistance practically infinite, gain 1 + R2/R1 = 11, no inversion.</p></section>
+<section data-case="ideal" data-example="fol"><h3>Follower</h3><p>Output tied to −: v_out = v_in. A buffer: it copies a voltage from a weak source to a heavy load.</p></section>
+<section data-case="ideal" data-example="clip"><h3>Into the rails</h3><p>2 V × 10 = 20 V is beyond ±12 V: the sine's tops are sliced off.</p></section>
+<section data-case="finite">
+  <h3>Leak one: the gain is not infinite</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the actual closed-loop gain against the op-amp's open-loop gain A, approaching the ideal (dashed). Bottom: the error, on a log scale.</div>
+  <p>The virtual short says v₊ − v₋ = 0. In reality it equals v_out/A. The resulting error depends only on the <b>loop gain</b> Aβ, where β = R1/(R1 + R2) is the fraction of the output fed back.</p>
+  <div class="eq">$$A_{cl}=\frac{A}{1+A\beta},\qquad \frac{A_{cl}-1/\beta}{1/\beta}=-\frac1{1+A\beta}$$</div>
+  <div class="worked"><h4>Worked example</h4>Ideal gain 11 (β = 1/11). A = 10³: error −1.09%. A = 10⁴: −0.11%. A = 10⁵: −0.011%. Each decade of A buys a decade of precision.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting that A falls with frequency (next case): an op-amp with 100 dB at DC may have only 20 dB at 100 kHz, and then the error is 10%.</div>
+</section>
+<section data-case="finite" data-example="weak"><h3>A = 40 dB</h3><p>A = 100, Aβ ≈ 9: the gain is 9% low.</p></section>
+<section data-case="finite" data-example="strong"><h3>A = 100 dB</h3><p>Loop gain 9000: the error is about 0.01%. The resistors' tolerance now matters more than the op-amp.</p></section>
+<section data-case="speed">
+  <h3>Leaks two and three: bandwidth and slew rate</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the ideal output G·v_in (grey) and the real one (blue). Bottom: the open-loop gain falling at 20 dB/decade and the closed-loop response, flat until it meets it.</div>
+  <p>An op-amp's gain falls with frequency so that <b>gain × bandwidth = GBW</b> is constant. Ask for gain 10 and you get GBW/10 of bandwidth. That is a small-signal, linear limit: the output is smaller and delayed, but still a sine.</p>
+  <p>The slew rate is a different, large-signal limit: the output simply cannot change faster than SR volts per microsecond. A sine of amplitude V at frequency f needs a slope of 2πfV. If that exceeds SR, the sine turns into a triangle.</p>
+  <div class="eq">$$f_{-3\text{dB}}=\frac{\text{GBW}}{G},\qquad \text{slew-free if } 2\pi f V_\text{out}\le SR,\qquad f_\text{FPBW}=\frac{SR}{2\pi V_\text{out}}$$</div>
+  <div class="worked"><h4>Worked example</h4>GBW 1 MHz, G = 10: bandwidth 100 kHz. A 10 V-peak output at 30 kHz needs 2π·30k·10 = 1.9 V/µs; with SR = 0.5 V/µs it is slew-limited even though 30 kHz is well inside the bandwidth.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Checking only one limit. Small fast signals hit the bandwidth; big fast signals hit the slew rate first.</div>
+</section>
+<section data-case="speed" data-example="bw"><h3>Above the bandwidth</h3><p>200 kHz at gain 10 with 1 MHz GBW: the output is reduced and lags, but keeps its sine shape.</p></section>
+<section data-case="speed" data-example="slew"><h3>Slew-limited</h3><p>The output ramps at the maximum rate and turns into a triangle wave, smaller than it should be.</p></section>
+<section data-case="dc">
+  <h3>Leak four: offset and bias currents</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a non-inverting amplifier with its input grounded. Top right: the output error split into its two causes. Bottom right: total error against gain.</div>
+  <p>Ground the input and an ideal op-amp outputs 0 V. A real one has a few millivolts of <b>input offset</b> V_os (its input transistors are not perfectly matched — the mirror mismatch again), amplified by the noise gain 1 + R2/R1. Its inputs also draw small <b>bias currents</b>, and I_B flowing through R2 makes another error.</p>
+  <div class="eq">$$V_\text{out,err}=V_{os}\left(1+\frac{R_2}{R_1}\right)+I_B R_2$$</div>
+  <div class="worked"><h4>Worked example</h4>V_os = 2 mV, gain 101: 202 mV. I_B = 100 nA through R2 = 100 kΩ: 10 mV. Total 212 mV out of nothing. Adding R1‖R2 in the + input makes both bias currents see the same resistance: only their difference (I_os ≈ 10 nA) remains, 1 mV.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Measuring a microvolt sensor with a high-gain stage and an ordinary op-amp: the offset swamps the signal. Use precision (low V_os) or chopper op-amps, or AC coupling.</div>
+</section>
+<section data-case="dc" data-example="comp"><h3>Compensated</h3><p>The bias-current bar shrinks tenfold; the offset bar is unchanged.</p></section>
+<section data-case="dc" data-example="g1000"><h3>Gain 1000</h3><p>2 mV × 1000 = 2 V of pure error.</p></section>
+<section data-case="stability">
+  <h3>Leak five: the loop can oscillate</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the loop gain |Aβ| (blue) and its phase (orange, shifted by +180° and halved to share the axis). The dots mark where the loop gain crosses 0 dB. Bottom: the response to a step.</div>
+  <p>Negative feedback means the signal returning around the loop opposes the input. Every pole adds up to 90° of phase lag. If the lag reaches 180° while the loop still has gain ≥ 1, opposition becomes reinforcement: the circuit rings or oscillates. The <b>phase margin</b> is how far from 180° the lag still is at the 0 dB crossing.</p>
+  <div class="eq">$$\text{PM}=180°+\angle A\beta\big|_{|A\beta|=1}\qquad \text{PM}\gtrsim 60° \Rightarrow \text{little overshoot}$$</div>
+  <div class="worked"><h4>Worked example</h4>First pole 10 Hz (GBW 1 MHz), second pole 2 MHz, follower (β = 1): the loop crosses 0 dB near 0.8 MHz with about 66° margin. Move the second pole to 0.3 MHz: margin about 30°, the step overshoots by ~40%.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the follower is the "easiest" configuration. With β = 1 it has the most loop gain and the least margin; many fast op-amps are unstable as followers.</div>
+</section>
+<section data-case="stability" data-example="ring"><h3>Ringing</h3><p>Second pole close to the crossover: the step overshoots and rings before settling.</p></section>
+<section data-case="stability" data-example="gain10"><h3>Gain 10</h3><p>β = 0.1 lowers the loop gain by 20 dB: the crossover moves below the second pole and the margin returns.</p></section>
+<section data-case="sallen">
+  <h3>The Sallen-Key filter</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: two R's and two C's around an op-amp with gain K. Top right: the frequency response. Bottom right: the two poles in the complex plane, on a circle of radius ω₀.</div>
+  <p>Two passive RC filters in a row interact and cannot give a sharp corner. In the Sallen-Key circuit, the op-amp output feeds back through one capacitor and lifts the response near the corner: one stage makes a clean <b>second-order</b> low-pass, falling at 40 dB/decade. K sets how much lift (the Q).</p>
+  <div class="eq">$$H(s)=\frac{K\omega_0^2}{s^2+\frac{\omega_0}{Q}s+\omega_0^2},\qquad \omega_0=\frac1{RC},\qquad Q=\frac{1}{3-K}$$</div>
+  <ol class="steps"><li>Choose f₀ = 1/(2πRC) — your corner.</li><li>Choose Q: 0.5 (no overshoot), 0.707 (Butterworth, flattest), larger for a peak.</li><li>Set K = 3 − 1/Q with two resistors around the op-amp.</li></ol>
+  <div class="worked"><h4>Worked example</h4>R = 10 kΩ, C = 10 nF: f₀ = 1.59 kHz. K = 1.586: Q = 0.707, exactly −3 dB at f₀. K = 2.5: Q = 2, a +6 dB peak. K = 3: poles on the jω axis — an oscillator.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Pushing Q high with this circuit: Q depends on K through 3 − K, so 1% gain error gives a big Q error near K = 3.</div>
+</section>
+<section data-case="sallen" data-example="bessel"><h3>K = 1</h3><p>A plain follower: Q = 0.5, two real poles, the gentlest response and no overshoot.</p></section>
+<section data-case="sallen" data-example="peak"><h3>K = 2.5</h3><p>The poles move close to the imaginary axis: a resonant peak, and a ringing step response.</p></section>

@@ -79,7 +79,7 @@ export default {
           const g = []; for (let k = 1; k <= 4; k++) for (let i = 0; i < 90; i++) { const a = 2 * Math.PI * i / 90, b = 2 * Math.PI * (i + 1) / 90, r = pvR * k / 4; g.push(pvC[0] + r * Math.cos(a), pvC[1] + r * Math.sin(a), -0.001, pvC[0] + r * Math.cos(b), pvC[1] + r * Math.sin(b), -0.001); }
           ringsHi.segments(g);
         }
-        ctx.setDuration(c === 'measure' ? 0 : 6);
+        ctx.setClock(c === 'measure' ? 0 : 6);
       },
       update() {
         const c = state.case, u = Math.min(1, time.t / 5.5);

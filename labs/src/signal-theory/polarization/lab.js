@@ -78,7 +78,7 @@ export default {
         if (c === 'wave3d') for (const o of [vecs, tip, axes]) o.object.visible = true;
         if (c === 'poincare') for (const o of [sphere, path, now, axes]) o.object.visible = true;
         ({ wave3d: [], ellipse: [sql, tr, br], orient: [sql, tr, br], jones: [sql, sqr], poincare: [], circular: [sql, tr, br] })[c].forEach((k) => k.show(true));
-        ctx.setDuration(['wave3d', 'ellipse', 'circular'].includes(c) ? 4 : 0);
+        ctx.setClock(['wave3d', 'ellipse', 'circular'].includes(c) ? 4 : 0);
       },
       update() {
         const c = state.case, d = state.dl * deg, { Ax, Ay } = state, wt = 2 * Math.PI * (time.t % 4) / 4, E = ellipse(Ax, Ay, d);

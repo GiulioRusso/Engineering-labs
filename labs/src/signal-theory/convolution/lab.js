@@ -72,7 +72,7 @@ export default {
       return area;
     };
     return {
-      changed() { const c = state.case; for (const k of all) k.show(false); if (c === 'steps' || c === 'pairs') { top.show(true); bot.show(true); } else for (const k of [tl, tr, bl, br]) k.show(true); ctx.setDuration(c === 'theorem' ? 0 : 10); },
+      changed() { const c = state.case; for (const k of all) k.show(false); if (c === 'steps' || c === 'pairs') { top.show(true); bot.show(true); } else for (const k of [tl, tr, bl, br]) k.show(true); ctx.setClock(c === 'theorem' ? 0 : 10); },
       update() {
         const c = state.case, tt = time.t;
         if (c === 'steps') {

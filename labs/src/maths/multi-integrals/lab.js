@@ -51,7 +51,7 @@ export default {
       changed() {
         const c = state.case, v3 = c === 'double'; stage.setOrtho(!v3); stage.controls.enableRotate = v3; stage.preset(v3 ? 'iso' : 'top');
         for (const k of charts) k.show(!v3); surf.mesh.visible = boxes.visible = edges.object.visible = v3; for (const o of all) o.object.visible = !v3; key = '';
-        ctx.setDuration(v3 ? 0 : 8);
+        ctx.setClock(v3 ? 0 : 8);
       },
       update() {
         const c = state.case, u = (time.t % 8) / 8;

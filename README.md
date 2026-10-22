@@ -17,15 +17,16 @@ you can also run `open index.html`). It opens the catalogue: one card per subjec
 
 | Subject | Open this file | Topics |
 |---|---|---|
-| Maths | [`labs/web/maths.html`](labs/web/maths.html) | functions · trigonometry · complex numbers · calculus · sequences and series · differential equations · vectors · matrices · functions of two variables · divergence and curl · probability |
+| Maths | [`labs/web/maths.html`](labs/web/maths.html) | functions and transformations · polynomials · limits · curve sketching · Newton's method · trigonometry, triangles, polar curves · conic sections · complex numbers, Euler's formula, complex functions · calculus and its applications · sequences and series · differential equations · vectors · matrices, linear systems, determinant, eigenvectors, least squares · functions of two variables · double and line integrals · Lagrange multipliers · divergence and curl · probability, distributions, Bayes, central limit theorem, random walks |
 | Physics | [`labs/web/physics.html`](labs/web/physics.html) | motion · momentum · forces · buoyancy · oscillations · waves · gravitational field · gas and heat · rays · interference · electric charges · magnetic field · induction · charges in E and B · EM waves · flight · orbits · orbital transfers · Lagrange points |
 | Control systems | [`labs/web/control-systems.html`](labs/web/control-systems.html) | time response · poles and stability · steady-state error · root locus · PID · Bode · Nyquist and margins · lead/lag compensation |
 | Signal theory | [`labs/web/signal-theory.html`](labs/web/signal-theory.html) | pulses and spectra · time–bandwidth · Fourier series and Gibbs · DFT as winding · FFT · leakage and windows · sampling and aliasing · convolution · LTI systems and poles · filtering and FIR design · spectral analysis and frequency estimation · AM/FM/PM · PSK/QAM, BER, eye diagram, Shannon · IQ demodulation · dipoles · phased arrays · polarization · transmission lines and waveguides · fibres · Vivaldi · links and propagation · Yagi and patch |
 | Electronic warfare | [`labs/web/electronic-warfare.html`](labs/web/electronic-warfare.html) | pulse echo and range resolution · pulse trains and RTI · waveforms (chirp, Barker) and pulse compression · Doppler and the range–Doppler map · receivers and IQ · phased arrays, FDTD, pointing, lobing, search · airborne radar and ground clutter · radar equation · detection · MTI · PPI · jamming and burn-through |
+| Analog electronics | [`labs/web/analog-electronics.html`](labs/web/analog-electronics.html) | diodes, rectifiers, Zener · BJT and MOSFET (with a 3D view) · transconductance · bias point · small-signal model · current mirror · common emitter · emitter follower · differential pair · Miller effect · negative feedback · cascading · op-amps: virtual short, finite gain, bandwidth and slew, offset, stability, Sallen-Key · CMOS inverter, noise margins, delay, power, latch |
 | Computer science | [`visualizations/algorithm-visualization/web/index.html`](visualizations/algorithm-visualization/web/index.html) | the Algorithm Visualizer |
 | Digital electronics | [`visualizations/electronics-visualization/web/index.html`](visualizations/electronics-visualization/web/index.html) | the Electronics Visualizer |
 
-The other subjects (analog electronics, circuits, machine learning) are planned; they will appear as `labs/web/<subject>.html` in the same way. No install, no server,
+The other subjects (circuits, machine learning) are planned; they will appear as `labs/web/<subject>.html` in the same way. No install, no server,
 no internet connection.
 
 ## 🧪 How a topic works

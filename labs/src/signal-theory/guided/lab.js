@@ -72,7 +72,7 @@ export default {
     const grid = createCurve(stage, { max: 6000, width: 1, color: '--line' }), lines = createCurve(stage, { max: 6000, width: 1.6, color: '--c-B' }), lines2 = createCurve(stage, { max: 6000, width: 1.6, color: '--c-I' }), extra = [grid, lines, lines2];
     const circle = (cx, cy, r, n = 90) => { const p = []; for (let i = 0; i < n; i++) { const a = 2 * Math.PI * i / n, b = 2 * Math.PI * (i + 1) / n; p.push(cx + r * Math.cos(a), cy + r * Math.sin(a), 0.002, cx + r * Math.cos(b), cy + r * Math.sin(b), 0.002); } return p; };
     return {
-      changed() { const c = state.case; for (const k of all) k.show(false); for (const o of extra) o.object.visible = c === 'tem' || c === 'smith' || c === 'mode'; ({ tem: [tr, bot], smith: [tr, br], cutoff: [tl, tr, bot], mode: [sqr], dispersion: [tl, tr, bot], fibre: [tl, tr, bot] })[c].forEach((k) => k.show(true)); if (c === 'smith') sql.show(true); ctx.setDuration(c === 'tem' || c === 'smith' || c === 'mode' ? 6 : 0); },
+      changed() { const c = state.case; for (const k of all) k.show(false); for (const o of extra) o.object.visible = c === 'tem' || c === 'smith' || c === 'mode'; ({ tem: [tr, bot], smith: [tr, br], cutoff: [tl, tr, bot], mode: [sqr], dispersion: [tl, tr, bot], fibre: [tl, tr, bot] })[c].forEach((k) => k.show(true)); if (c === 'smith') sql.show(true); ctx.setClock(c === 'tem' || c === 'smith' || c === 'mode' ? 6 : 0); },
       update() {
         const c = state.case, wt = 2 * Math.PI * (time.t % 6) / 6;
         if (c === 'tem') {

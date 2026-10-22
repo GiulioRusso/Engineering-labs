@@ -101,7 +101,7 @@ export default {
         else if (c === 'wind' || c === 'bins') { tl.show(true); bl.show(true); plane.show(true); }
         else if (c === 'bridge') { top.show(true); bot.show(true); }
         else { tr.show(true); br.show(true); }
-        ctx.setDuration(c === 'bridge' || c === 'fft' ? 0 : 12);
+        ctx.setClock(c === 'bridge' || c === 'fft' ? 0 : 12);
       },
       update() {
         const c = state.case, t = time.t;

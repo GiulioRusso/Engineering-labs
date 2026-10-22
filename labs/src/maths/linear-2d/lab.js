@@ -63,7 +63,7 @@ export default {
     pk.forEach((k, i) => handles.add({ object: k.group, axes: 'xy', hint: 'Drag the point', get: () => k.get(), set: ([x, y]) => { state[`px${i + 1}`] = cl(x, -5.5, 5.5); state[`py${i + 1}`] = cl(y, -4.2, 4.2); ctx.requestUpdate(); } }));
     const arrow = (x, y) => { const L = Math.hypot(x, y) || 1, ux = x / L, uy = y / L, h = 0.22; return [0, 0, 0.01, x, y, 0.01, x, y, 0.01, x - h * (ux - 0.5 * uy), y - h * (uy + 0.5 * ux), 0.01, x, y, 0.01, x - h * (ux + 0.5 * uy), y - h * (uy - 0.5 * ux), 0.01]; };
     return {
-      changed() { ctx.setDuration(state.case === 'eigen' ? 10 : 0); },
+      changed() { ctx.setClock(state.case === 'eigen' ? 10 : 0); },
       update() {
         const c = state.case; for (const o of all) o.object.visible = false; for (const k of knobs) k.group.visible = false; const pts = [];
         const show = (o, s) => { o.segments(s); o.object.visible = true; };

@@ -112,7 +112,7 @@ export default {
         if (c === 'pointing') { plan.show(true); r1.show(true); r2.show(true); lobe.object.visible = true; }
         if (c === 'lobing') { polL.show(true); r1.show(true); r2.show(true); hist = []; }
         if (c === 'nodding') { vcut.show(true); r1.show(true); wedges.object.visible = cur.object.visible = true; hist = []; }
-        ctx.setDuration(c === 'pointing' ? 10 : 0);
+        ctx.setClock(c === 'pointing' ? 10 : 0);
       },
       update() {
         const c = state.case, t = time.t;

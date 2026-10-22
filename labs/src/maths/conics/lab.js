@@ -52,7 +52,7 @@ export default {
     return {
       changed() {
         const c = state.case, v3 = c === 'cone'; stage.setOrtho(!v3); stage.controls.enableRotate = v3; stage.preset(v3 ? 'iso' : 'top');
-        cone.visible = plane.visible = axis.object.visible = v3; sq.show(!v3); cut.object.visible = true; rays.object.visible = c === 'reflect'; extra.object.visible = c === 'focus'; ctx.setDuration(v3 ? 0 : 8);
+        cone.visible = plane.visible = axis.object.visible = v3; sq.show(!v3); cut.object.visible = true; rays.object.visible = c === 'reflect'; extra.object.visible = c === 'focus'; ctx.setClock(v3 ? 0 : 8);
       },
       update() {
         const c = state.case, u = (time.t % 8) / 8;

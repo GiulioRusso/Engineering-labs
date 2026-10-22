@@ -1,0 +1,57 @@
+<section data-case="inverter">
+  <h3>The CMOS inverter</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a PMOS on top (to V_DD) and an NMOS below (to ground), gates tied together as the input, drains tied together as the output; a highlighted path shows which transistor conducts. Top right: output against input (the transfer curve). Bottom right: the current flowing straight from V_DD to ground.</div>
+  <p>Digital circuits use the same MOSFETs as analog ones, but only in the two places where they make good switches: fully off and fully on. Input low: the NMOS is off and the PMOS connects the output to V_DD. Input high: the reverse. In both states <b>one switch is open, so no current flows</b>, and the output sits exactly on a rail.</p>
+  <ol class="steps">
+    <li>v_in &lt; V_TN = 0.7 V: NMOS off → out = V_DD.</li>
+    <li>v_in &gt; V_DD − V_TP = 2.6 V: PMOS off → out = 0.</li>
+    <li>In between both conduct; the output is where their currents balance, I_n = I_p, and it falls steeply around the switching threshold V_M.</li>
+  </ol>
+  <div class="eq">$$I_n(v_\text{in},v_\text{out})=I_p(v_\text{in},v_\text{out}),\qquad V_M=\frac{V_{DD}}2 \text{ when } k_p=k_n$$</div>
+  <div class="worked"><h4>Worked example</h4>Electrons move about twice as easily as holes (k_n = 200 µA/V², k_p = 100 µA/V²). Making the PMOS twice as wide equalises them: V_M = 1.65 V, exactly half of 3.3 V. With equal widths V_M drops to about 1.5 V.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking CMOS draws no current at all: during every transition both devices conduct briefly (the "crowbar" current, bottom chart). Slow input edges make this worse.</div>
+  <div class="try"><h4>Try it</h4>Let the input sweep and watch the highlighted path move from top to bottom; the current only flows in the middle.</div>
+</section>
+<section data-case="inverter" data-example="mid"><h3>Input at V_DD/2</h3><p>Both transistors are on and fighting: the output is in the steep middle and the current is at its peak (about 90 µA here). A gate must never sit here.</p></section>
+<section data-case="inverter" data-example="skew"><h3>Equal widths</h3><p>The NMOS is now the stronger device: it starts winning earlier, so the curve and V_M shift left.</p></section>
+<section data-case="margins">
+  <h3>Noise margins: why a bit survives ten thousand gates</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a chain of four inverters. Top right: the transfer curve with the two points where its slope is −1 (V_IL and V_IH). Bottom right: a noisy input, the signal after two gates, and after four.</div>
+  <p>An analog stage passes its input errors on and adds its own. A logic gate does the opposite: outside its steep middle region the gain is <i>less than one</i>, so small disturbances are squashed; inside it the gain is large, so a degraded level is pushed hard to the nearest rail. Noise stops accumulating — this is <b>restoration</b>.</p>
+  <div class="eq">$$NM_L=V_{IL}-V_{OL},\qquad NM_H=V_{OH}-V_{IH}$$</div>
+  <ol class="steps"><li>V_IL: the highest input still read as "low" (slope −1).</li><li>V_IH: the lowest input read as "high".</li><li>V_OL, V_OH: what the gate outputs at those points.</li><li>Any disturbance smaller than the margin is removed by the next gate.</li></ol>
+  <div class="worked"><h4>Worked example</h4>Symmetric 3.3 V inverter: V_IL ≈ 1.42 V, V_IH ≈ 1.88 V, V_OH ≈ 3.06 V, V_OL ≈ 0.24 V → both margins ≈ 1.18 V, about 36% of V_DD.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Taking V_DD/2 as the margin. The guaranteed band is set by the unity-gain points, and skewed sizing shrinks one side.</div>
+</section>
+<section data-case="margins" data-example="loud"><h3>0.9 V of noise</h3><p>The input is badly corrupted, yet after a few gates the blue trace is clean rails again.</p></section>
+<section data-case="margins" data-example="skew"><h3>Skewed gate</h3><p>A weak PMOS moves V_M down: NM_L shrinks, NM_H grows. Low-level noise now gets through more easily.</p></section>
+<section data-case="delay">
+  <h3>Gate delay: an RC circuit in disguise</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: an inverter switching its output low, driving a load capacitance made of the gates it feeds plus the wire. Top right: the output discharging; the dot marks the 50% point. Bottom right: delay against fan-out.</div>
+  <p>Logic diagrams have no time in them, but every gate output must charge or discharge the input capacitance of everything it drives, through a transistor that, when on, behaves like a resistor. That is the RC circuit from the first circuits lesson.</p>
+  <div class="eq">$$R_\text{on}\approx\frac{1}{k\,W\,(V_{DD}-V_{th})},\qquad t_p\approx0.69\,R_\text{on}C_L,\qquad C_L=n\,C_g+C_\text{wire}$$</div>
+  <div class="worked"><h4>Worked example</h4>k = 200 µA/V², W = 1, V_DD = 3.3 V: R_on ≈ 1.9 kΩ. Fan-out 2 with 2 fF gates and 1 fF of wire: C_L = 5 fF → t_p ≈ 6.6 ps. Fan-out 8: 17 fF → 22 ps.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Simply making every driver huge: a wide transistor has a large gate capacitance and slows down whatever drives it. Real designs use chains of gradually larger buffers.</div>
+</section>
+<section data-case="delay" data-example="fanout"><h3>Fan-out 8</h3><p>More than three times the capacitance, more than three times the delay.</p></section>
+<section data-case="delay" data-example="wide"><h3>Wider driver</h3><p>Four times wider: R_on ÷ 4, delay ÷ 4 — for this gate.</p></section>
+<section data-case="power">
+  <h3>Power: the equation that stopped the megahertz race</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: total power against supply voltage, with your chip's operating point. Bottom: gate delay against supply voltage.</div>
+  <p>Each time a node rises, the supply delivers charge C·V_DD; half the energy is stored in C, half is burned in the PMOS. When it falls, the stored half is burned in the NMOS. So each full cycle costs C·V_DD², however good the transistors are. Multiply by how often nodes switch:</p>
+  <div class="eq">$$P=\alpha\,C\,V_{DD}^2\,f\;+\;I_\text{leak}V_{DD}$$</div>
+  <div class="worked"><h4>Worked example</h4>α = 0.1, C = 100 pF, f = 100 MHz, 3.3 V: 10.9 mW. At 1.2 V: 1.4 mW — 7.6 times less. But the delay rises steeply as V_DD approaches the threshold: you trade speed for energy.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Raising the clock without counting: power grows linearly with f, and since faster needs a higher V_DD, roughly with f³. Around 2005 chips hit the heat limit and clocks stopped rising.</div>
+</section>
+<section data-case="power" data-example="lowv"><h3>1.2 V</h3><p>(1.2/3.3)² = 0.13: same work, an eighth of the power, much slower gates.</p></section>
+<section data-case="power" data-example="leaky"><h3>Leakage</h3><p>When almost nothing switches (α = 0.001), the small but constant leakage current dominates: the "idle" power of modern chips.</p></section>
+<section data-case="latch">
+  <h3>Memory: two inverters holding each other</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: two inverters in a ring — each one's output is the other's input. Top right: the two node voltages over time, starting almost equal. Bottom right: the "butterfly": both inverters' transfer curves on the same axes; the crossings are the possible resting states.</div>
+  <p>A ring of two inverters agrees with itself in two ways: A high and B low, or the reverse. Those are the two stable states — one bit. There is a third crossing in the middle, an equilibrium where both sit at V_M, but it is <b>unstable</b>: the gain around the loop is larger than 1, so any tiny difference is amplified until the pair falls to one of the rails. This is the core of every SRAM cell and flip-flop.</p>
+  <div class="eq">$$\Delta V(t)\approx\Delta V_0\,e^{t/\tau}\;\Rightarrow\;t_\text{decide}\approx\tau\ln\frac{V_{DD}/2}{\Delta V_0}$$</div>
+  <div class="worked"><h4>Worked example</h4>A 1 mV push decides in about 0.24 ns; 1 µV takes about 0.42 ns. A thousand times smaller push, only a fixed amount more time: the logarithm.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming a flip-flop always decides in time. If its input changes right at the clock edge, the starting imbalance can be nearly zero and the decision arbitrarily late: metastability, the reason for synchronisers.</div>
+</section>
+<section data-case="latch" data-example="tiny"><h3>1 µV</h3><p>The traces linger near the middle much longer before diverging.</p></section>
+<section data-case="latch" data-example="neg"><h3>Opposite push</h3><p>Same circuit, opposite sign: it falls the other way and stores the other bit.</p></section>

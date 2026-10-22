@@ -40,7 +40,7 @@ export default {
     const big = createChart(ctx, { box: BIG }), sql = createChart(ctx, { box: SQL }), sqr = createChart(ctx, { box: SQR }), all = [big, sql, sqr];
     const arr = createCurve(stage, { max: 200, width: 2.4, color: '--c-I' }), gl = createCurve(stage, { max: 9000, width: 1.2, color: '--c-B' }), gl2 = createCurve(stage, { max: 9000, width: 1.2, color: '--c-I' }), gr = createCurve(stage, { max: 9000, width: 1.2, color: '--c-B' }), gr2 = createCurve(stage, { max: 9000, width: 1.2, color: '--c-I' }), extra = [arr, gl, gl2, gr, gr2];
     return {
-      changed() { const c = state.case; for (const k of all) k.show(false); for (const o of extra) o.object.visible = false; ({ euler: [big], domain: [big], mapping: [sql, sqr] })[c].forEach((k) => k.show(true)); ctx.setDuration(c === 'euler' ? 8 : 0); },
+      changed() { const c = state.case; for (const k of all) k.show(false); for (const o of extra) o.object.visible = false; ({ euler: [big], domain: [big], mapping: [sql, sqr] })[c].forEach((k) => k.show(true)); ctx.setClock(c === 'euler' ? 8 : 0); },
       update() {
         const c = state.case;
         if (c === 'euler') {

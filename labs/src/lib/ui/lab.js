@@ -73,7 +73,15 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     setPlaying, load,
     panelSync() { panel?.sync(); writeUrl(); },
     setDuration(D) { time.D = D; if (D && time.t > D) time.t = 0; bar(); },
+    // a case with an animation gets a clock of D seconds; D = 0 means nothing evolves in time:
+    // no play bar, render on demand only (the controls drive it)
+    setClock(D) { ctx.setDuration(D); setStill(!D); },
   };
+  let still = false;
+  function setStill(on) {
+    if (def.timeless || on === still) return; still = on;
+    el.playbar.hidden = on; time.t = 0; setPlaying(!on && !stage.reducedMotion);
+  }
 
   function setPlaying(on) { time.playing = on; stage.setAnimating(on); bar(); }
   function bar() { playbar?.set({ playing: time.playing, t: time.t, D: time.live ? 0 : time.D, scrubbable: time.scrubbable && !time.live, speed: time.speed }); }
@@ -150,7 +158,7 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     urlParams,
     theme() { stage.setTheme(); impl.theme?.(); for (const p of Object.values(plots)) p.redraw(); ctx.requestUpdate(); },
     key(e) {
-      if (e.key === ' ' && !def.timeless) { e.preventDefault(); setPlaying(!time.playing); }
+      if (e.key === ' ' && !def.timeless && !still) { e.preventDefault(); setPlaying(!time.playing); }
       else if (e.key === 'r' || e.key === 'R') load(state.case, state.example);
       else if (e.key === 'Escape') explain.close();
       else if (e.key.length === 1 && '1234'.includes(e.key)) stage.preset(['front', 'side', 'top', 'iso'][Number(e.key) - 1]);

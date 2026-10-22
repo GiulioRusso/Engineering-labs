@@ -6,10 +6,32 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 
 | Topic | What you do | Status |
 |---|---|---|
-| Transistors: the device curves | Drag the operating point over the 3D I_C(V_BE, V_CE) surface; small-signal gain appears as the slope. | planned |
-| Amplifier stages | Common emitter, emitter follower, differential pair: drag the bias and watch the signal swing, invert and clip. | planned |
-| The CMOS inverter | Sweep the input: both transistors, the transfer curve, noise margins and the crowbar current. | planned |
-| Op-amps and the virtual short | Drag the open-loop gain from 10 to 10⁶ and watch V+ − V− collapse to zero. | planned |
+| [The diode](web/analog-electronics.html?lab=diode-iv) | Exponential I–V curve, load line and operating point. | done |
+| [Rectifiers](web/analog-electronics.html?lab=rectifiers) | From AC to DC: half wave, bridge, smoothing capacitor and ripple. | done |
+| [The Zener regulator](web/analog-electronics.html?lab=zener) | Holding a voltage steady against supply and load. | done |
+| [The bipolar transistor](web/analog-electronics.html?lab=bjt) | Exponential control, output curves, saturation. | done |
+| [The MOSFET](web/analog-electronics.html?lab=mosfet) | Cutoff, triode and saturation, in 2D and as a 3D surface. | done |
+| [Transconductance](web/analog-electronics.html?lab=transconductance) | How much current each volt buys: BJT vs MOSFET. | done |
+| [The bias point](web/analog-electronics.html?lab=bias-point) | Load line, Q point, and why an emitter resistor keeps it stable. | done |
+| [Small-signal model](web/analog-electronics.html?lab=small-signal) | Zoom in until the curve is a straight line: g_m and its limits. | done |
+| [Current mirror](web/analog-electronics.html?lab=current-mirror) | Copying a current with two matched transistors. | done |
+| [Common-emitter amplifier](web/analog-electronics.html?lab=common-emitter) | Gain, inversion, clipping, and emitter degeneration. | done |
+| [Emitter follower](web/analog-electronics.html?lab=emitter-follower) | No voltage gain — an impedance transformer. | done |
+| [Differential pair](web/analog-electronics.html?lab=differential-pair) | The tanh, and rejecting what both inputs share. | done |
+| [Miller effect](web/analog-electronics.html?lab=miller-effect) | Why a few picofarads kill the bandwidth of a high-gain stage. | done |
+| [Negative feedback](web/analog-electronics.html?lab=negative-feedback) | Give away gain, buy accuracy and bandwidth. | done |
+| [Cascading stages](web/analog-electronics.html?lab=cascading) | Loading at each junction, and the follower that fixes it. | done |
+| [The ideal op-amp](web/analog-electronics.html?lab=virtual-short) | Inverting, non-inverting, follower: the virtual short. | done |
+| [Finite open-loop gain](web/analog-electronics.html?lab=finite-gain) | Where the gain error comes from: loop gain. | done |
+| [Bandwidth and slew rate](web/analog-electronics.html?lab=bandwidth-slew) | Gain × bandwidth, and the speed limit of big signals. | done |
+| [Offset and bias current](web/analog-electronics.html?lab=offset-bias) | Errors with nothing at the input. | done |
+| [Stability and phase margin](web/analog-electronics.html?lab=stability) | When feedback turns into ringing. | done |
+| [Sallen-Key filter](web/analog-electronics.html?lab=sallen-key) | A second-order low-pass from one op-amp. | done |
+| [The CMOS inverter](web/analog-electronics.html?lab=cmos-inverter) | Two switches that are never both fully on. | done |
+| [Noise margins](web/analog-electronics.html?lab=noise-margins) | Why logic restores a noisy signal. | done |
+| [Gate delay](web/analog-electronics.html?lab=gate-delay) | An RC charge: fan-out, width and supply. | done |
+| [Power](web/analog-electronics.html?lab=cmos-power) | α C V² f, and the speed it costs to lower V. | done |
+| [The latch: memory](web/analog-electronics.html?lab=latch) | Two inverters, two stable states, one unstable. | done |
 
 ## Circuits
 

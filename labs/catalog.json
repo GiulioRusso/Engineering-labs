@@ -4,24 +4,265 @@
   "name": "Analog electronics",
   "topics": [
    {
-    "id": "transistor-curves",
-    "title": "Transistors: the device curves",
-    "what": "Drag the operating point over the 3D I_C(V_BE, V_CE) surface; small-signal gain appears as the slope."
+    "id": "diode-iv",
+    "title": "The diode",
+    "what": "Exponential I–V curve, load line and operating point.",
+    "from": "diodes",
+    "cases": [
+     "iv"
+    ],
+    "group": "Diodes"
    },
    {
-    "id": "amplifier-stages",
-    "title": "Amplifier stages",
-    "what": "Common emitter, emitter follower, differential pair: drag the bias and watch the signal swing, invert and clip."
+    "id": "rectifiers",
+    "title": "Rectifiers",
+    "what": "From AC to DC: half wave, bridge, smoothing capacitor and ripple.",
+    "from": "diodes",
+    "cases": [
+     "rectifier"
+    ],
+    "group": "Diodes"
+   },
+   {
+    "id": "zener",
+    "title": "The Zener regulator",
+    "what": "Holding a voltage steady against supply and load.",
+    "from": "diodes",
+    "cases": [
+     "zener"
+    ],
+    "group": "Diodes"
+   },
+   {
+    "id": "bjt",
+    "title": "The bipolar transistor",
+    "what": "Exponential control, output curves, saturation.",
+    "from": "transistors",
+    "cases": [
+     "bjt"
+    ],
+    "group": "Transistors"
+   },
+   {
+    "id": "mosfet",
+    "title": "The MOSFET",
+    "what": "Cutoff, triode and saturation, in 2D and as a 3D surface.",
+    "from": "transistors",
+    "cases": [
+     "mosfet",
+     "surface"
+    ],
+    "group": "Transistors"
+   },
+   {
+    "id": "transconductance",
+    "title": "Transconductance",
+    "what": "How much current each volt buys: BJT vs MOSFET.",
+    "from": "transistors",
+    "cases": [
+     "gm"
+    ],
+    "group": "Transistors"
+   },
+   {
+    "id": "bias-point",
+    "title": "The bias point",
+    "what": "Load line, Q point, and why an emitter resistor keeps it stable.",
+    "from": "transistors",
+    "cases": [
+     "bias"
+    ],
+    "group": "Transistors"
+   },
+   {
+    "id": "small-signal",
+    "title": "Small-signal model",
+    "what": "Zoom in until the curve is a straight line: g_m and its limits.",
+    "from": "transistors",
+    "cases": [
+     "small"
+    ],
+    "group": "Transistors"
+   },
+   {
+    "id": "current-mirror",
+    "title": "Current mirror",
+    "what": "Copying a current with two matched transistors.",
+    "from": "transistors",
+    "cases": [
+     "mirror"
+    ],
+    "group": "Transistors"
+   },
+   {
+    "id": "common-emitter",
+    "title": "Common-emitter amplifier",
+    "what": "Gain, inversion, clipping, and emitter degeneration.",
+    "from": "amplifiers",
+    "cases": [
+     "ce"
+    ],
+    "group": "Amplifiers"
+   },
+   {
+    "id": "emitter-follower",
+    "title": "Emitter follower",
+    "what": "No voltage gain — an impedance transformer.",
+    "from": "amplifiers",
+    "cases": [
+     "follower"
+    ],
+    "group": "Amplifiers"
+   },
+   {
+    "id": "differential-pair",
+    "title": "Differential pair",
+    "what": "The tanh, and rejecting what both inputs share.",
+    "from": "amplifiers",
+    "cases": [
+     "diff"
+    ],
+    "group": "Amplifiers"
+   },
+   {
+    "id": "miller-effect",
+    "title": "Miller effect",
+    "what": "Why a few picofarads kill the bandwidth of a high-gain stage.",
+    "from": "amplifiers",
+    "cases": [
+     "miller"
+    ],
+    "group": "Amplifiers"
+   },
+   {
+    "id": "negative-feedback",
+    "title": "Negative feedback",
+    "what": "Give away gain, buy accuracy and bandwidth.",
+    "from": "amplifiers",
+    "cases": [
+     "feedback"
+    ],
+    "group": "Amplifiers"
+   },
+   {
+    "id": "cascading",
+    "title": "Cascading stages",
+    "what": "Loading at each junction, and the follower that fixes it.",
+    "from": "amplifiers",
+    "cases": [
+     "cascade"
+    ],
+    "group": "Amplifiers"
+   },
+   {
+    "id": "virtual-short",
+    "title": "The ideal op-amp",
+    "what": "Inverting, non-inverting, follower: the virtual short.",
+    "from": "opamps",
+    "cases": [
+     "ideal"
+    ],
+    "group": "Op-amps"
+   },
+   {
+    "id": "finite-gain",
+    "title": "Finite open-loop gain",
+    "what": "Where the gain error comes from: loop gain.",
+    "from": "opamps",
+    "cases": [
+     "finite"
+    ],
+    "group": "Op-amps"
+   },
+   {
+    "id": "bandwidth-slew",
+    "title": "Bandwidth and slew rate",
+    "what": "Gain × bandwidth, and the speed limit of big signals.",
+    "from": "opamps",
+    "cases": [
+     "speed"
+    ],
+    "group": "Op-amps"
+   },
+   {
+    "id": "offset-bias",
+    "title": "Offset and bias current",
+    "what": "Errors with nothing at the input.",
+    "from": "opamps",
+    "cases": [
+     "dc"
+    ],
+    "group": "Op-amps"
+   },
+   {
+    "id": "stability",
+    "title": "Stability and phase margin",
+    "what": "When feedback turns into ringing.",
+    "from": "opamps",
+    "cases": [
+     "stability"
+    ],
+    "group": "Op-amps"
+   },
+   {
+    "id": "sallen-key",
+    "title": "Sallen-Key filter",
+    "what": "A second-order low-pass from one op-amp.",
+    "from": "opamps",
+    "cases": [
+     "sallen"
+    ],
+    "group": "Op-amps"
    },
    {
     "id": "cmos-inverter",
     "title": "The CMOS inverter",
-    "what": "Sweep the input: both transistors, the transfer curve, noise margins and the crowbar current."
+    "what": "Two switches that are never both fully on.",
+    "from": "cmos",
+    "cases": [
+     "inverter"
+    ],
+    "group": "CMOS logic"
    },
    {
-    "id": "opamp-feedback",
-    "title": "Op-amps and the virtual short",
-    "what": "Drag the open-loop gain from 10 to 10⁶ and watch V+ − V− collapse to zero."
+    "id": "noise-margins",
+    "title": "Noise margins",
+    "what": "Why logic restores a noisy signal.",
+    "from": "cmos",
+    "cases": [
+     "margins"
+    ],
+    "group": "CMOS logic"
+   },
+   {
+    "id": "gate-delay",
+    "title": "Gate delay",
+    "what": "An RC charge: fan-out, width and supply.",
+    "from": "cmos",
+    "cases": [
+     "delay"
+    ],
+    "group": "CMOS logic"
+   },
+   {
+    "id": "cmos-power",
+    "title": "Power",
+    "what": "α C V² f, and the speed it costs to lower V.",
+    "from": "cmos",
+    "cases": [
+     "power"
+    ],
+    "group": "CMOS logic"
+   },
+   {
+    "id": "latch",
+    "title": "The latch: memory",
+    "what": "Two inverters, two stable states, one unstable.",
+    "from": "cmos",
+    "cases": [
+     "latch"
+    ],
+    "group": "CMOS logic"
    }
   ]
  },

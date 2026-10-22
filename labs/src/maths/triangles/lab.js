@@ -64,7 +64,7 @@ export default {
     drag(kB, (x, y) => { state.bx = x; state.by = y; }); drag(kC, (x, y) => { state.cx = x; state.cy = y; });
     const arc = (c, r, a0, a1) => { const s = []; for (let i = 0; i < 24; i++) { const u = a0 + (a1 - a0) * i / 24, v = a0 + (a1 - a0) * (i + 1) / 24; s.push(c[0] + r * Math.cos(u), c[1] + r * Math.sin(u), 0.01, c[0] + r * Math.cos(v), c[1] + r * Math.sin(v), 0.01); } return s; };
     return {
-      changed() { const c = state.case; ctx.setDuration(c === 'lissajous' || c === 'polar' ? 8 : 0); },
+      changed() { const c = state.case; ctx.setClock(c === 'lissajous' || c === 'polar' ? 8 : 0); },
       update() {
         const c = state.case, u = (time.t % 8) / 8; for (const o of all) o.object.visible = false; for (const k of knobs) k.group.visible = false; labels.forEach((l) => { l.visible = false; }); const pts = [];
         const show = (o, s) => { o.segments(s); o.object.visible = true; };

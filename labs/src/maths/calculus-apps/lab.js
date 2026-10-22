@@ -71,7 +71,7 @@ export default {
       changed() {
         const c = state.case, v3 = c === 'revolve'; stage.setOrtho(!v3); stage.controls.enableRotate = v3; stage.preset(v3 ? 'iso' : 'top');
         for (const k of all) k.show(false); fill.object.visible = false; solid.visible = disc.visible = axis.object.visible = prof.object.visible = v3;
-        (c === 'sketch' ? rows : c === 'revolve' ? [] : [top, bot]).forEach((k) => k.show(true)); ctx.setDuration(c === 'limit' || c === 'newton' || c === 'revolve' ? 8 : 0);
+        (c === 'sketch' ? rows : c === 'revolve' ? [] : [top, bot]).forEach((k) => k.show(true)); ctx.setClock(c === 'limit' || c === 'newton' || c === 'revolve' ? 8 : 0);
       },
       update() {
         const c = state.case, u = (time.t % 8) / 8;

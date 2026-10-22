@@ -86,7 +86,7 @@ export default {
     return {
       changed() {
         const c = state.case; for (const k of all) k.show(false); for (const o of epi) o.object.visible = c === 'series';
-        ctx.setDuration(c === 'series' || c === 'project' ? 8 : 0);
+        ctx.setClock(c === 'series' || c === 'project' ? 8 : 0);
         if (c === 'series') { trace.show(true); spec.show(true); }
         else if (c === 'gibbs' || c === 'transform') { top.show(true); bot.show(true); }
         else for (const k of [tl, tr, bl, br]) k.show(true);

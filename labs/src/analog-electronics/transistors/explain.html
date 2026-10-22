@@ -1,0 +1,86 @@
+<section data-case="bjt">
+  <h3>The bipolar transistor: a tap controlled by a voltage</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: an NPN transistor with a voltage V_BE between base and emitter and V_CE between collector and emitter. Top right: collector current against V_BE. Bottom right: the "output characteristics", I_C against V_CE, one curve for each V_BE.</div>
+  <p>A diode has two terminals and one rule. A transistor adds a third terminal, and with it something no resistor can do: a <b>small voltage in one place controls a large current somewhere else</b>. The base–emitter junction is a diode, so the current follows the same exponential law. The trick is that almost all of that current is collected by the collector, not the base.</p>
+  <div class="eq">$$I_C = I_S\,e^{V_{BE}/V_T}, \qquad I_B = \frac{I_C}{\beta}\;(\beta \approx 100\text{–}300)$$</div>
+  <ol class="steps">
+    <li>Fix V_BE: the top chart gives I_C. Each extra 59.5 mV multiplies it by 10.</li>
+    <li>Now change V_CE: on the bottom chart, the current barely moves. The collector takes whatever it is given, like a current source.</li>
+    <li>Below about 0.2 V the curve collapses: <b>saturation</b>. The transistor is now a closed switch, not an amplifier.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>I_S = 10⁻¹⁵ A, V_BE = 0.66 V: I_C = 10⁻¹⁵·e^{0.66/0.02585} = 0.12 mA. At 0.72 V: 1.2 mA. At 0.78 V: 12 mA.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking the base current "is amplified": the controlling quantity is V_BE; β just tells you how much base current that costs. Forgetting saturation: β only applies in the active region.</div>
+  <div class="try"><h4>Try it</h4>Drag V_CE from 12 V down to 0: the dot slides along a flat line, then falls off the knee.</div>
+</section>
+<section data-case="bjt" data-example="decade"><h3>+60 mV, ×10</h3><p>From 0.66 to 0.72 V the current goes from about 0.12 to 1.2 mA. This sensitivity is why you never bias a BJT by fixing V_BE directly — see "Bias point".</p></section>
+<section data-case="bjt" data-example="sat"><h3>Saturation</h3><p>With V_CE = 0.1 V both junctions are forward biased: the collector cannot collect. In digital circuits this is the "on" state.</p></section>
+<section data-case="mosfet">
+  <h3>The MOSFET: a channel opened by the gate</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: an n-channel MOSFET between V_GS and V_DS sources. Top right: I_D against V_GS (dashed line: threshold). Bottom right: I_D against V_DS for several gate voltages; the dashed orange parabola separates triode (left) from saturation (right).</div>
+  <p>The gate is insulated: it draws <b>no current at all</b>. A positive gate voltage attracts electrons under it and, above the threshold V_th, they form a conducting channel between drain and source. How much it conducts depends on the "overdrive" V_ov = V_GS − V_th.</p>
+  <div class="eq">$$I_D=\begin{cases}0 & V_{ov}\le 0 \;\;(\text{cutoff})\\ k\left(V_{ov}V_{DS}-\tfrac12 V_{DS}^2\right) & V_{DS}<V_{ov}\;\;(\text{triode})\\ \tfrac12 k\,V_{ov}^2 & V_{DS}\ge V_{ov}\;\;(\text{saturation})\end{cases}$$</div>
+  <ol class="steps">
+    <li>Is V_GS above V_th? If not: off.</li>
+    <li>Compare V_DS with V_ov. Smaller: triode, the channel is a voltage-controlled resistor (used as a switch).</li>
+    <li>Larger: the channel "pinches off" at the drain end and the current stops growing: saturation, a current source (used as an amplifier).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>k = 2 mA/V², V_th = 1 V, V_GS = 2.5 V: V_ov = 1.5 V. At V_DS = 3 V (≥ 1.5): I_D = ½·2·1.5² = 2.25 mA. At V_DS = 0.5 V: I_D = 2(1.5·0.5 − 0.125) = 1.25 mA.</div>
+  <div class="pitfall"><h4>Common mistake</h4>"Saturation" means opposite things for the two devices: for a MOSFET it is the flat, amplifying region; for a BJT it is the switched-on, collapsed region.</div>
+</section>
+<section data-case="mosfet" data-example="cutoff"><h3>Below threshold</h3><p>0.8 V on the gate, threshold 1 V: no channel, I_D = 0 whatever V_DS does.</p></section>
+<section data-case="mosfet" data-example="triode"><h3>Triode</h3><p>V_DS = 0.4 V is well below V_ov: the I–V is nearly a straight line through the origin, i.e. a resistor of about 1/(k V_ov).</p></section>
+<section data-case="mosfet" data-example="sat"><h3>Saturation</h3><p>V_DS = 4 V: the curve is flat; the slight slope is channel-length modulation (λ).</p></section>
+<section data-case="surface">
+  <h3>All the MOSFET curves at once</h3>
+  <div class="look"><h4>What you are looking at</h4>A 3D landscape: V_DS along one floor axis, V_GS along the other, I_D as height. Colour shows the region; the orange line is the triode/saturation boundary; the yellow pin is your operating point. Drag to rotate.</div>
+  <p>Every 2D chart of the previous case is a slice of this surface. Slice at fixed V_GS: an output curve (rising, then flat). Slice at fixed V_DS in saturation: the square-law transfer curve. The flat floor is cutoff.</p>
+  <div class="try"><h4>Try it</h4>Move V_DS and V_GS and watch the pin walk from the floor (off), up the slope (triode), onto the plateau (saturation). Raise the threshold: the whole landscape slides back.</div>
+</section>
+<section data-case="surface" data-example="edge"><h3>On the edge</h3><p>V_GS = 3 V, V_DS = 2 V = V_ov: the pin sits exactly on the orange boundary.</p></section>
+<section data-case="gm">
+  <h3>Transconductance: current out per volt in</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: g_m against bias current for both devices (log–log). Bottom: g_m divided by the current — how much control each milliamp buys.</div>
+  <p>Both devices turn an input <i>voltage</i> into an output <i>current</i>. The exchange rate is the slope g_m = ∂I/∂V, and it sets the gain of every amplifier you will build (A_v = −g_m R).</p>
+  <div class="eq">$$g_{m,\text{BJT}}=\frac{I_C}{V_T}, \qquad g_{m,\text{MOS}}=k\,V_{ov}=\sqrt{2kI_D}=\frac{2I_D}{V_{ov}}$$</div>
+  <div class="worked"><h4>Worked example</h4>1 mA: BJT 1/0.02585 = 38.7 mS. MOSFET with k = 2 mA/V²: √(2·0.002·0.001) = 2 mS — nearly 20× less for the same current.</div>
+  <p>At very small currents the square law gives way to "weak inversion", where the MOSFET becomes exponential too, with g_m ≈ I/(1.5 V_T): it approaches, but never beats, the BJT.</p>
+  <div class="pitfall"><h4>Common mistake</h4>Concluding MOSFETs are worse. They draw no gate current, scale down beautifully and can be made huge (larger k) to catch up; every modern chip is CMOS.</div>
+</section>
+<section data-case="gm" data-example="low"><h3>At 10 µA</h3><p>BJT 0.39 mS, MOSFET 0.20 mS: only a factor 2. At low currents a MOSFET's overdrive is small, and g_m = 2I/V_ov gets close to the BJT's I/V_T.</p></section>
+<section data-case="gm" data-example="high"><h3>At 20 mA</h3><p>BJT 774 mS, MOSFET 8.9 mS: almost 90×. The BJT keeps g_m/I = 38.7 V⁻¹; the MOSFET falls to √(2k/I) ≈ 0.45 V⁻¹.</p></section>
+<section data-case="bias">
+  <h3>The bias point and why R_E is there</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the classic biasing circuit — base voltage V_B, collector resistor R_C to V_CC, emitter resistor R_E to ground. Top right: the load line of R_C + R_E meets the transistor curve at the bias point. Bottom right: what warming does to the current, with R_E (blue) and without (red).</div>
+  <p>The circuit imposes a straight line: V_CE = V_CC − I_C(R_C + R_E). The transistor imposes its curve. Where they cross is the quiescent ("Q") point. For the most output swing, put V_CE roughly in the middle.</p>
+  <ol class="steps">
+    <li>The base is held at V_B. The emitter sits one V_BE (≈0.7 V) lower.</li>
+    <li>So the emitter current is I_E ≈ (V_B − 0.7)/R_E — set by a resistor, not by the exponential.</li>
+    <li>If the transistor warms and wants more current, V_E rises, V_BE shrinks, and the current is pulled back: <b>negative feedback</b>.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>V_B = 2 V, R_E = 1 kΩ: I_E ≈ 1.3 mA. V_CE = 12 − 1.3·(4.7 + 1) = 4.6 V. Warm by 50 K: V_BE drops 0.1 V, I_E rises only to 1.4 mA (+8%). Without R_E the same 0.1 V would multiply the current by e^{0.1/0.0259} ≈ 48.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Choosing R_C so large that V_CE falls below 0.2 V: the transistor saturates and the "amplifier" amplifies nothing.</div>
+</section>
+<section data-case="bias" data-example="hot"><h3>+50 K with R_E</h3><p>The current moves by a few percent: the blue curve stays near 1.</p></section>
+<section data-case="bias" data-example="nore"><h3>No emitter resistor</h3><p>Only V_BE holds the current, and V_BE drops 2 mV/K: the red curve shoots up. In a power stage this is thermal runaway.</p></section>
+<section data-case="bias" data-example="sat"><h3>R_C too large</h3><p>12 kΩ × 1.3 mA = 15.6 V &gt; 12 V: the load line is too steep and the Q point lands in saturation.</p></section>
+<section data-case="small">
+  <h3>The small-signal idea: zoom in until the curve looks straight</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the device curve near the bias point, with its tangent (orange) and the input swing (yellow bar). Bottom: the signal current in time — the real one (blue) and the tangent prediction g_m·v (dashed).</div>
+  <p>Transistors are not linear. But if the signal is small, the curve over that tiny stretch is almost a straight line: its slope at the bias point is g_m. Then i = g_m·v and all of linear circuit theory applies. This is what "small-signal model" means.</p>
+  <div class="eq">$$i \approx g_m\, v, \qquad \text{valid while } v \ll V_T\ (\text{BJT})\ \text{or}\ v \ll 2V_{ov}\ (\text{MOS})$$</div>
+  <div class="worked"><h4>Worked example</h4>BJT at 1 mA, 10 mV peak: up-swing e^{10/25.85}−1 = +47%, down-swing −32%. The output is lopsided by about 20%. At 1 mV it is under 2%.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Applying the small-signal model to large signals. It predicts symmetric outputs that the real circuit never gives.</div>
+</section>
+<section data-case="small" data-example="tiny"><h3>1 mV</h3><p>Blue and dashed lie on top of each other: linear.</p></section>
+<section data-case="small" data-example="big"><h3>40 mV</h3><p>The upward half grows exponentially, the downward half is squashed: strong second harmonic.</p></section>
+<section data-case="small" data-example="mos"><h3>MOSFET, 200 mV</h3><p>A square law bends far more gently than an exponential: hundreds of millivolts are still nearly linear.</p></section>
+<section data-case="mirror">
+  <h3>The current mirror</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: Q1 with its collector tied to its base (a "diode-connected" transistor) fed by R from V_CC, and Q2 sharing the same base voltage. Top right: the output current against the output voltage. Bottom right: the effect of a mismatch between the two transistors.</div>
+  <p>Two identical transistors with the same V_BE carry the same current. Q1 sets its own V_BE so that it carries I_ref = (V_CC − 0.7)/R. Q2 sees that V_BE and copies the current — whatever voltage its collector is at. A resistor and a transistor have become a <b>current source</b>, the most-used building block in analog chips.</p>
+  <div class="eq">$$I_\text{ref}=\frac{V_{CC}-V_{BE}}{R},\qquad I_\text{out}\approx I_\text{ref}\,\frac{1+V_\text{out}/V_A}{1+V_{BE}/V_A}\cdot\frac{1}{1+2/\beta}$$</div>
+  <div class="worked"><h4>Worked example</h4>5 V, 4.3 kΩ: I_ref ≈ 1 mA. With β = 150 the two base currents steal 1.3%. At V_out = 2.5 V the Early effect adds about 3.6%.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming any two transistors match. Discrete parts differ by several mV in V_BE: 18 mV doubles the current. Mirrors work on chips, where neighbours are near-identical.</div>
+</section>
+<section data-case="mirror" data-example="mismatch"><h3>5 mV mismatch</h3><p>e^{5/25.85} = 1.21: a 21% error from a tiny offset.</p></section>
+<section data-case="mirror" data-example="lowbeta"><h3>β = 20</h3><p>The two base currents (2I/β) come out of I_ref: the copy is 9% short.</p></section>

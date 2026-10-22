@@ -88,7 +88,7 @@ export default {
         const v3 = c === 'pattern3d'; stage.setOrtho(!v3); stage.controls.enableRotate = v3; stage.preset(v3 ? 'iso' : 'top');
         ({ current: [left, mid], fields: [sql, sqr], hertz: [sql, sqr], planes: [pbl, pbr], pattern3d: [], sweep: [sql], impedance: [tl, tr, bl, br], directivity: [tl, tr, bl, br], nearfar: [sql, sqr] })[c].forEach((k) => k.show(true));
         if (c === 'planes') { polE.show(true); polH.show(true); } if (c === 'sweep') polS.show(true);
-        ctx.setDuration(['current', 'fields', 'hertz'].includes(c) ? 4 : 0);
+        ctx.setClock(['current', 'fields', 'hertz'].includes(c) ? 4 : 0);
       },
       update() {
         const c = state.case, L = state.L, wt = 2 * Math.PI * (time.t % 4) / 4;

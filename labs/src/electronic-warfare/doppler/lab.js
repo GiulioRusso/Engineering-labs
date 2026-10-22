@@ -81,7 +81,7 @@ export default {
         if (c === 'dashboard') for (const k of P3) k.show(true);
         if (c === 'rdmap') { rd.show(true); top.show(true); }
         if (c === 'ambiguity') { for (const k of amb) k.show(true); radar.object.visible = false; }
-        ctx.setDuration(c === 'wavefronts' ? 12 : 0);
+        ctx.setClock(c === 'wavefronts' ? 12 : 0);
       },
       update() {
         const c = state.case, f0 = state.f0 * 1e9, lam = C0 / f0;

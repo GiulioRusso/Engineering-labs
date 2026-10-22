@@ -62,7 +62,7 @@ export default {
     const P = () => ({ L: state.L, Wa: state.Wa, Wt: state.Wt, R: state.R });
     const outline = (ch, p, ext = 0) => { const xs = Array.from({ length: 200 }, (_, i) => p.L * i / 199), hw = xs.map((x) => halfWidth(x, p)), H = Math.max(p.Wa / 2 + 0.4, 1); ch.line('up', xs, hw, { color: '--c-I', width: 2.4 }); ch.line('dn', xs, hw.map((v) => -v), { color: '--c-I', width: 2.4 }); ch.line('box', [0, p.L, p.L, 0, 0], [H, H, -H, -H, H], { color: '--ink-dim', width: 1 }); ch.line('feed', [ext, ext], [-0.1, 0.1], { color: '--c-north', width: 4 }); return { xs, hw, H }; };
     return {
-      changed() { const c = state.case; for (const k of all) k.show(false); for (const p of pols) p.show(false); ({ geometry: [top, bot], current: [top, bot], field: [top, bot], pattern: [], band: [tl, tr, bl, br], array: [] })[c].forEach((k) => k.show(true)); if (c === 'pattern' || c === 'array') { polE.show(true); polH.show(c === 'pattern'); } ctx.setDuration(c === 'current' || c === 'field' ? 4 : 0); },
+      changed() { const c = state.case; for (const k of all) k.show(false); for (const p of pols) p.show(false); ({ geometry: [top, bot], current: [top, bot], field: [top, bot], pattern: [], band: [tl, tr, bl, br], array: [] })[c].forEach((k) => k.show(true)); if (c === 'pattern' || c === 'array') { polE.show(true); polH.show(c === 'pattern'); } ctx.setClock(c === 'current' || c === 'field' ? 4 : 0); },
       update() {
         const c = state.case, p = P(), wt = 2 * Math.PI * (time.t % 4) / 4, fr = state.fr;
         if (c === 'geometry') {

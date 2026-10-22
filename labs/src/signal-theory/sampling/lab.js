@@ -77,7 +77,7 @@ export default {
         if (c === 'tone' || c === 'replicas') for (const k of [tl, tr, bl, br]) k.show(true);
         else if (c === 'rebuild' || c === 'alias') { top.show(true); bot.show(true); }
         else { tr.show(true); br.show(true); }
-        ctx.setDuration(c === 'rebuild' || c === 'wheel' ? 10 : 0);
+        ctx.setClock(c === 'rebuild' || c === 'wheel' ? 10 : 0);
       },
       update() {
         const c = state.case, t = time.t;
