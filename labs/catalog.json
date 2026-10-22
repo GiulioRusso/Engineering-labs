@@ -538,7 +538,7 @@
  {
   "subject": "computer-science",
   "name": "Computer science",
-  "visualizer": "algorithm"
+  "trace": "algorithm-visualization"
  },
  {
   "subject": "control-systems",
@@ -627,7 +627,7 @@
  {
   "subject": "digital-electronics",
   "name": "Digital electronics",
-  "visualizer": "electronics"
+  "trace": "electronics-visualization"
  },
  {
   "subject": "electronic-warfare",

@@ -119,7 +119,7 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
   playbar = createPlaybar(el.playbar, {
     onPlay: () => setPlaying(!time.playing),
     onRestart: () => { time.t = 0; impl.changed?.('restart'); ctx.requestUpdate(); },
-    onStep: () => { setPlaying(false); time.t = Math.min(time.D || Infinity, time.t + (time.D ? time.D / 200 : time.scale / 30)); impl.update(1 / 30); stage.requestRender(); bar(); },
+    onStep: () => { setPlaying(false); time.t = Math.min(time.D || Infinity, time.t + (time.stepDt || (time.D ? time.D / 200 : time.scale / 30))); impl.update(1 / 30); stage.requestRender(); bar(); },
     onScrub: (u) => { if (time.D) { time.t = u * time.D; impl.update(0); stage.requestRender(); bar(); } },
     onSpeed: (v) => { time.speed = v; bar(); writeUrl(); },
   });

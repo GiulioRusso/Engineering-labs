@@ -3,13 +3,6 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-const VIS = {
-  algorithm: { title: 'Algorithm Visualizer', href: 'visualizations/algorithm-visualization/web/index.html',
-    what: 'Step forwards and backwards through real C++ runs: arrays, sorting, lists, trees, heaps, graphs, scheduling, synchronization.' },
-  electronics: { title: 'Electronics Visualizer', href: 'visualizations/electronics-visualization/web/index.html',
-    what: 'Digital circuits gate by gate, with timing diagrams: gates, adders, latches, flip-flops, counters, state machines.' },
-};
-export const visTitle = (k) => VIS[k].title;
 
 const HUE = {
   'analog-electronics': 28, circuits: 45, 'computer-science': 200, 'control-systems': 160, 'digital-electronics': 260,
@@ -41,11 +34,6 @@ export function renderCatalogue({ catalog, labsRoot, web, repo }) {
   const cards = catalog.map((S) => {
     const done = (S.topics || []).filter((t) => isBuilt(S.subject, t));
     const style = `--hue:${HUE[S.subject] ?? 210}`;
-    if (S.visualizer) {
-      const v = VIS[S.visualizer];
-      index.push({ s: S.name, t: v.title, w: v.what, h: `${repo}${v.href}` });
-      return `<a class="card" style="${style}" href="${repo}${v.href}"><span class="name">${icon(S.subject)}${esc(S.name)}</span><span class="sub">${v.title}</span></a>`;
-    }
     if (!done.length) return `<div class="card soon" style="${style}"><span class="name">${icon(S.subject)}${esc(S.name)}</span><span class="sub">coming soon</span></div>`;
     nTopics += done.length;
     for (const t of done) index.push({ s: S.name, t: t.title, w: t.what, g: t.group || '', h: `${web}${S.subject}.html?lab=${t.id}` });
@@ -75,7 +63,9 @@ a { color: inherit; text-decoration: none; }
 .brand .logo { width: 76px; height: 76px; flex: none; border-radius: 20px; background: linear-gradient(135deg, var(--accent), hsl(265 80% 66%)); display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 44px; box-shadow: 0 10px 30px color-mix(in srgb, var(--accent) 35%, transparent); }
 .btn { border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 8px; padding: 7px 12px; font: inherit; font-size: 13px; cursor: pointer; }
 .btn:hover { border-color: var(--accent); }
-.about { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 22px; margin: 18px 0 20px; }
+.about { margin: 18px 0 20px; display: grid; gap: 6px; }
+.about .lead { color: var(--ink); font-size: 16px; }
+.about .by span { text-transform: uppercase; letter-spacing: .08em; font-size: 11.5px; font-weight: 700; color: var(--ink); margin-right: 6px; }
 .about h3 { margin: 0 0 3px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink); }
 .about p { margin: 0; color: var(--dim); font-size: 13.5px; line-height: 1.45; }
 .intro { color: var(--dim); font-size: 13px; margin: 0 0 14px; }
@@ -113,10 +103,9 @@ footer { color: var(--dim); font-size: 12.5px; padding: 0 16px 40px; }
 <div class="wrap topbar"><div class="brand"><span class="logo">∇</span><div><h1>Engineering Labs</h1><div class="tag">Interactive tutorials for engineering students</div></div></div><button class="btn" id="theme" title="Theme">☀</button></div>
 <div class="wrap">
   <div class="about">
-    <div><h3>What it is</h3><p>A collection of interactive tutorials on maths, physics and engineering: ${nTopics} topics, each a picture you can move.</p></div>
-    <div><h3>Author</h3><p>Giulio Russo, for his students. Free and open: <a href="https://github.com/GiulioRusso/Engineering-scripts">source on GitHub</a>.</p></div>
-    <div><h3>How to use it</h3><p>Pick a subject, then a topic. Try the examples one by one; press <b>?</b> for the explanation.</p></div>
-    <div><h3>Where it runs</h3><p>In any browser, offline: every subject is a single file, nothing to install.</p></div>
+    <p class="lead">A collection of interactive tutorials for engineering subjects.</p>
+    <p>Pick a subject, then a topic. Try the examples one by one; press <b>?</b> for the explanation.</p>
+    <p class="by"><span>Author</span> Giulio Russo · <a href="https://github.com/GiulioRusso">GitHub</a> · <a href="https://www.linkedin.com/in/giuliorusso">LinkedIn</a></p>
   </div>
   <div class="search"><input id="q" type="search" placeholder="Search topics: pendulum, Bode, eigenvector…" aria-label="Search topics" autocomplete="off"></div>
   <div class="results" id="results" hidden></div>
@@ -146,7 +135,7 @@ q.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const a = res.qu
 }
 
 // built(labsRoot)(subject, topic): does src/<subject>/<from or id>/lab.js exist (see build.mjs)
-export const built = (labsRoot) => (subject, t) => { const f = t.from || t.id; return existsSync(join(labsRoot, 'src', ...(f.includes('/') ? f.split('/') : [subject, f]), 'lab.js')); };
+export const built = (labsRoot) => (subject, t) => { if (t.trace) return true; const f = t.from || t.id; return existsSync(join(labsRoot, 'src', ...(f.includes('/') ? f.split('/') : [subject, f]), 'lab.js')); };
 
 export function counts(catalog, labsRoot) {
   const isBuilt = built(labsRoot);

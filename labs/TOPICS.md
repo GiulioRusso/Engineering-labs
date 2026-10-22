@@ -66,7 +66,54 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 
 ## Computer science
 
-In the Algorithm Visualizer.
+| Topic | What you do | Status |
+|---|---|---|
+| [Accessing](web/computer-science.html?lab=array_access) | time O(1) · space O(1) | done |
+| [Insert](web/computer-science.html?lab=array_insert) | time O(n) · space O(1) | done |
+| [Delete](web/computer-science.html?lab=array_delete) | time O(n) · space O(1) | done |
+| [Linear Search](web/computer-science.html?lab=linear_search) | time O(n) · space O(1) | done |
+| [Binary Search](web/computer-science.html?lab=binary_search) | time O(log n) · space O(1) | done |
+| [Insertion Sort](web/computer-science.html?lab=insertion_sort) | time O(n²) · space O(1) | done |
+| [Selection Sort](web/computer-science.html?lab=selection_sort) | time O(n²) · space O(1) | done |
+| [Bubble Sort](web/computer-science.html?lab=bubble_sort) | time O(n²) · space O(1) | done |
+| [Merge Sort](web/computer-science.html?lab=merge_sort) | time O(n log n) · space O(n) | done |
+| [Quick Sort](web/computer-science.html?lab=quick_sort) | time O(n log n) · space O(log n) | done |
+| [Kadane](web/computer-science.html?lab=kadane) | time O(n) · space O(1) | done |
+| [Stack](web/computer-science.html?lab=stack) | time O(1) · space O(n) | done |
+| [Circular Queue](web/computer-science.html?lab=queue) | time O(1) · space O(n) | done |
+| [Accessing](web/computer-science.html?lab=list_access) | time O(n) · space O(1) | done |
+| [Insert](web/computer-science.html?lab=list_insert) | time O(1)–O(n) · space O(1) | done |
+| [Delete](web/computer-science.html?lab=list_delete) | time O(1)–O(n) · space O(1) | done |
+| [Search](web/computer-science.html?lab=list_search) | time O(n) · space O(1) | done |
+| [Singly / Doubly / Circular](web/computer-science.html?lab=list_types) | time — · space O(n) | done |
+| [N-ary Tree](web/computer-science.html?lab=tree_basics) | time O(n) · space O(h) | done |
+| [Breadth-First](web/computer-science.html?lab=tree_bfs) | time O(n) · space O(w) | done |
+| [Pre-order](web/computer-science.html?lab=tree_preorder) | time O(n) · space O(h) | done |
+| [In-order](web/computer-science.html?lab=tree_inorder) | time O(n) · space O(h) | done |
+| [Post-order](web/computer-science.html?lab=tree_postorder) | time O(n) · space O(h) | done |
+| [Search](web/computer-science.html?lab=bst_search) | time O(h) · space O(1) | done |
+| [Insertion](web/computer-science.html?lab=bst_insert) | time O(h) · space O(h) | done |
+| [Delete (3 cases)](web/computer-science.html?lab=bst_delete) | time O(h) · space O(h) | done |
+| [Heapify](web/computer-science.html?lab=heap_heapify) | time O(log n) · space O(log n) | done |
+| [Insert](web/computer-science.html?lab=heap_insert) | time O(log n) · space O(1) | done |
+| [Delete](web/computer-science.html?lab=heap_delete) | time O(log n) · space O(log n) | done |
+| [Matrix and List](web/computer-science.html?lab=graph_repr) | time O(1) / O(degree) · space O(V²) / O(V+E) | done |
+| [Breadth-First Search](web/computer-science.html?lab=graph_bfs) | time O(V + E) · space O(V) | done |
+| [Depth-First Search](web/computer-science.html?lab=graph_dfs) | time O(V + E) · space O(V) | done |
+| [Dijkstra](web/computer-science.html?lab=dijkstra) | time O(V²) · space O(V) | done |
+| [Floyd-Warshall](web/computer-science.html?lab=floyd_warshall) | time O(V³) · space O(V²) | done |
+| [Bellman-Ford](web/computer-science.html?lab=bellman_ford) | time O(V·E) · space O(V) | done |
+| [A*](web/computer-science.html?lab=a_star) | time O(E) · space O(V) | done |
+| [Ford-Fulkerson](web/computer-science.html?lab=ford_fulkerson) | time O(E · f) · space O(V²) | done |
+| [Kruskal](web/computer-science.html?lab=kruskal) | time O(E log E) · space O(V) | done |
+| [First Come First Served](web/computer-science.html?lab=fcfs) | time O(n log n) · space O(n) | done |
+| [Shortest Job First](web/computer-science.html?lab=sjf) | time O(n²) · space O(n) | done |
+| [Priority Scheduling](web/computer-science.html?lab=priority_scheduling) | time O(n²) · space O(n) | done |
+| [Round Robin](web/computer-science.html?lab=round_robin) | time O(n) · space O(n) | done |
+| [Comparing All Four](web/computer-science.html?lab=scheduling_compare) | time — · space — | done |
+| [Lock Variable](web/computer-science.html?lab=lock_variable) | time — · space O(1) | done |
+| [Peterson's Solution](web/computer-science.html?lab=petersons_solution) | time — · space O(1) | done |
+| [Semaphores](web/computer-science.html?lab=semaphores) | time O(1) · space O(n) | done |
 
 ## Control systems
 
@@ -83,7 +130,40 @@ In the Algorithm Visualizer.
 
 ## Digital electronics
 
-In the Electronics Visualizer.
+| Topic | What you do | Status |
+|---|---|---|
+| [The Seven Gates](web/digital-electronics.html?lab=gates_truth) | time 1 t_p · space 1 gate | done |
+| [Gates Over Time](web/digital-electronics.html?lab=gates_timing) | time 1 t_p · space 1 gate | done |
+| [NAND Is Universal](web/digital-electronics.html?lab=nand_universal) | time 2 t_p · space 3 NAND | done |
+| [Tri-State Buffer](web/digital-electronics.html?lab=tri_state) | time 1 t_p · space 1 buffer | done |
+| [Half Adder](web/digital-electronics.html?lab=half_adder) | time 2 t_p · space 2 gate | done |
+| [Full Adder](web/digital-electronics.html?lab=full_adder) | time 3 t_p · space 5 gate | done |
+| [Ripple-Carry, 4 bit](web/digital-electronics.html?lab=ripple_carry) | time 4 t_p · space 4 FA | done |
+| [Ripple vs Carry-Look-Ahead](web/digital-electronics.html?lab=adder_delay_compare) | time O(n) · space O(1) | done |
+| [1-Bit Comparator](web/digital-electronics.html?lab=comparator_1bit) | time 2 t_p · space 5 gate | done |
+| [Parity Generator](web/digital-electronics.html?lab=parity_tree) | time 2 t_p · space 3 XOR | done |
+| [SR Latch (NOR)](web/digital-electronics.html?lab=sr_latch_nor) | time level-sensitive · space 2 NOR | done |
+| [SR Over Time](web/digital-electronics.html?lab=sr_latch_timing) | time level-sensitive · space 2 NOR | done |
+| [D Latch with Enable](web/digital-electronics.html?lab=d_latch) | time level-sensitive · space 4 NAND | done |
+| [Transparency](web/digital-electronics.html?lab=d_latch_transparency) | time level-sensitive · space 4 NAND | done |
+| [NOR vs NAND: Duality](web/digital-electronics.html?lab=sr_nor_vs_nand) | time level-sensitive · space 2+2 gates | done |
+| [The Glitch That Survives](web/digital-electronics.html?lab=latch_glitch) | time level-sensitive · space 4 NAND | done |
+| [SR Flip-Flop](web/digital-electronics.html?lab=sr_flipflop) | time edge-triggered · space 2 latches | done |
+| [D Master-Slave](web/digital-electronics.html?lab=d_flipflop_master_slave) | time edge-triggered · space 2 D-latches | done |
+| [Latch vs Flip-Flop](web/digital-electronics.html?lab=latch_vs_flipflop) | time — · space — | done |
+| [JK Flip-Flop](web/digital-electronics.html?lab=jk_flipflop) | time edge-triggered · space 2 latches | done |
+| [T as a Frequency Divider](web/digital-electronics.html?lab=t_flipflop_divider) | time edge-triggered · space 3 T-FF | done |
+| [Setup and Hold](web/digital-electronics.html?lab=setup_hold) | time edge-triggered · space 1 D-FF | done |
+| [Metastability](web/digital-electronics.html?lab=metastability) | time edge-triggered · space 1 D-FF | done |
+| [Asynchronous Ripple Counter](web/digital-electronics.html?lab=ripple_counter) | time O(n) delay · space 4 T-FF | done |
+| [Synchronous Counter](web/digital-electronics.html?lab=sync_counter) | time O(1) per stage · space 4 T-FF + AND | done |
+| [Mod-N Counter](web/digital-electronics.html?lab=mod_n_counter) | time O(1) per stage · space 4 T-FF + decoder | done |
+| [Ring and Johnson](web/digital-electronics.html?lab=ring_johnson) | time O(1) per step · space 4 flip-flops | done |
+| [Gray Code](web/digital-electronics.html?lab=gray_counter) | time O(1) per step · space XOR + shift | done |
+| [Moore vs Mealy](web/digital-electronics.html?lab=moore_vs_mealy) | time O(1) per symbol · space 2 states | done |
+| ['101' Sequence Detector (Moore)](web/digital-electronics.html?lab=seq_detector_101) | time O(n) · space 4 states | done |
+| [Same Input, Different Outputs](web/digital-electronics.html?lab=moore_mealy_timing) | time O(1) per symbol · space 2 states | done |
+| [Traffic Light](web/digital-electronics.html?lab=traffic_light) | time O(1) per tick · space 3 states | done |
 
 ## Electronic warfare
 

@@ -1,0 +1,39 @@
+/* Trace labs: code on the left, the trace's own view on the right, over the (unused) 3D stage. The semantic
+   palette is shared by every renderer: "being compared" looks the same in an array and in a graph. */
+.trace {
+  --c-compare: #fbbf24; --c-selected: #a78bfa; --c-swap: #f472b6; --c-sorted: #4ade80; --c-visited: #22d3ee;
+  --c-frontier: #60a5fa; --c-excluded: #4b5563; --c-error: #f87171; --c-neutral: #35404f;
+  --c-hi: #ef6a5a; --c-lo: #6b7684; --c-z: #e0b12f; --anim-ms: 300ms;
+  position: absolute; inset: 0; z-index: 1; background: var(--bg); padding: 12px 14px 72px;
+  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 12px; overflow: hidden; font-size: 14px;
+}
+:root[data-theme="light"] .trace {
+  --c-compare: #f59e0b; --c-selected: #7c3aed; --c-swap: #db2777; --c-sorted: #16a34a; --c-visited: #0e7490;
+  --c-frontier: #2563eb; --c-excluded: #9aa3af; --c-error: #dc2626; --c-neutral: #c7d2e0;
+  --c-hi: #c0392b; --c-lo: #94a0ac; --c-z: #b98900;
+}
+.trace h3 { margin: 0; font-size: 11px; font-weight: 700; color: var(--ink-dim); padding: 8px 12px; border-bottom: 1px solid var(--line); text-transform: uppercase; letter-spacing: .08em; }
+.trace .fn { font: 12px var(--mono); color: var(--accent); text-transform: none; letter-spacing: 0; }
+.trace .tcode { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; display: flex; flex-direction: column; min-height: 0; }
+.trace pre { margin: 0; padding: 8px 0; overflow: auto; flex: 1; font: 12.5px/1.55 var(--mono); }
+.trace pre .row { display: flex; padding: 0 10px; white-space: pre; }
+.trace pre .gut { flex: 0 0 40px; text-align: right; padding-right: 10px; color: var(--ink-dim); user-select: none; }
+.trace pre .row.cur { background: color-mix(in srgb, var(--accent) 20%, transparent); }
+.trace pre .row.cur .gut { color: var(--accent); font-weight: 700; }
+.trace .tview { overflow: auto; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+.trace .tbadges { display: flex; gap: 6px; flex-wrap: wrap; }
+.trace .tbadges span { font: 11.5px var(--mono); color: var(--ink-dim); border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; background: var(--panel); }
+.trace .tcard { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.trace .viewbox { padding: 10px 12px; overflow-x: auto; }
+.trace .viewbox svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.trace .tpanels { display: flex; flex-wrap: wrap; gap: 10px; } .trace .tpanels .tcard { flex: 1 1 260px; }
+.trace .tlegend { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 12px 10px; font-size: 12px; color: var(--ink-dim); }
+.trace .tlegend span { display: inline-flex; align-items: center; gap: 5px; } .trace .tlegend i { width: 11px; height: 11px; border-radius: 3px; border: 1px solid var(--line); }
+.trace .tvars { display: flex; flex-wrap: wrap; gap: 6px; padding: 9px 12px; }
+.trace .var { font: 12px var(--mono); background: var(--panel-2); border: 1px solid var(--line); border-radius: 5px; padding: 2px 7px; }
+.trace .var b { color: var(--accent); font-weight: 600; }
+.trace .var.changed { border-color: var(--c-compare); background: color-mix(in srgb, var(--c-compare) 22%, transparent); }
+.trace .counter { font: 12px var(--mono); color: var(--ink-dim); align-self: center; }
+.trace .tnote { padding: 10px 13px; line-height: 1.55; border-left: 3px solid var(--accent); background: var(--panel); border-radius: 0 10px 10px 0; min-height: 44px; }
+@media (max-width: 1000px) { .trace { grid-template-columns: 1fr; grid-template-rows: 34% 1fr; } }
+.trace .tprimary svg { width: min(100%, 760px); }
