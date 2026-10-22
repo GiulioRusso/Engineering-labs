@@ -105,6 +105,21 @@ elements show everywhere.
 <section data-case="dot cross">… shared by both cases …</section>
 ```
 
+A case section is written for a student meeting the idea for the first time, with these building blocks
+(styled in `lib/lab.css`):
+
+```html
+<div class="look"><h4>What you are looking at</h4>what each panel shows</div>
+<p>the idea in plain words, before any formula</p>
+<div class="eq">$$…$$</div>
+<ol class="steps"><li>how to reason, step by step</li></ol>
+<div class="worked"><h4>Worked example</h4>real numbers, checked</div>
+<div class="pitfall"><h4>Common mistakes</h4>what students usually get wrong</div>
+<div class="try"><h4>Try it</h4>one thing to do with the controls</div>
+```
+
+Example sections stay short: what this preset shows and why.
+
 Style: short labels, hints as tooltips, start from the basics, one idea per example. Topics carry a
 `group` in `catalog.json` (sections of the left bar and of the home page). Prefer flat 2D views; offer 3D
 as a View option only where it adds something (`view3d` + `camOf(state)` in the lab definition).

@@ -2,17 +2,29 @@
   <p>The complex plane \(s = \sigma + j\omega\), with the poles of \(G(s)\) as ×. The poles decide how the system moves; the right half plane (tinted) is unstable. Drag the pole. The <i>3D view</i> (in View) shows \(\log|G(s)|\) as a surface: every pole is a peak.</p>
 </section>
 <section data-case="first">
-  <h3>First order</h3>
-  <p>One pole at \(-1/\tau\). The step response climbs towards \(K\) without overshoot, reaching 63 % after one time constant and 98 % after four. The further left the pole, the faster.</p>
-  <div class="eq">$$G(s) = \frac{K}{\tau s + 1}, \qquad y(t) = K\left(1 - e^{-t/\tau}\right)$$</div>
+  <h3>First-order response</h3>
+  <div class="look"><h4>What you are looking at</h4>The step response of G(s) = K/(τs + 1): the output rising toward K, with the time constant τ and the 63 % point marked; the s-plane shows the single pole at −1/τ.</div>
+  <p>Many real systems — a heater, a tank filling, an RC circuit — respond to a sudden change by moving toward the new value quickly at first, then more and more slowly: they close a fixed fraction of the remaining gap every second. That is an exponential, and its speed is set by one number, τ.</p>
+  <div class="eq">$$G(s) = \frac{K}{\tau s + 1}, \qquad y(t) = K\left(1 - e^{-t/\tau}\right), \qquad y(\tau) = 0.632K, \quad t_{2\%} \approx 4\tau$$</div>
+  <ol class="steps">
+    <li>K sets where it ends; τ sets how fast it gets there.</li>
+    <li>Initial slope K/τ: if it kept that rate it would arrive in exactly τ.</li>
+    <li>The pole at −1/τ: further left in the s-plane means faster.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>An oven with τ = 10 min set from 20 to 200 °C (K = 180): after 10 min 134 °C, after 40 min 197 °C.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting it to "arrive": an exponential never reaches the final value; engineers use the 2 % settling time.</div>
 </section>
 <section data-case="first" data-example="fast"><h3>Small τ</h3><p>The pole moves left to \(-3.3\): the response is three times faster. A thermometer with a thin bulb, a small RC circuit.</p></section>
 <section data-case="first" data-example="slow"><h3>Large τ</h3><p>A pole near the origin is slow: \(\tau = 3\) s means 12 s to settle.</p></section>
 <section data-case="first" data-example="gain"><h3>Gain</h3><p>\(K\) scales the final value but not the speed: the pole does not move.</p></section>
 <section data-case="second">
-  <h3>Second order</h3>
-  <p>Two poles at \(-\zeta\omega_n \pm j\omega_n\sqrt{1-\zeta^2}\). Their distance from the origin is \(\omega_n\) (speed), their angle sets \(\zeta\) (damping). The imaginary part makes it oscillate, the real part makes it decay.</p>
-  <div class="eq">$$G(s) = \frac{K\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}, \qquad M_p = e^{-\pi\zeta/\sqrt{1-\zeta^2}}, \qquad t_s \approx \frac{4}{\zeta\omega_n}$$</div>
+  <h3>Second-order response</h3>
+  <div class="look"><h4>What you are looking at</h4>The step response of a second-order system for the chosen damping ζ and natural frequency ωn, with overshoot, peak time and settling time marked; the poles in the s-plane.</div>
+  <p>Systems with two energy stores (mass and spring, inductor and capacitor) can overshoot and ring. ζ decides the shape: below 1 they oscillate, at 1 they arrive as fast as possible without overshoot, above 1 they creep. ωn only sets the time scale: double it and the same curve happens twice as fast.</p>
+  <div class="eq">$$G(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}, \qquad M_p = e^{-\pi\zeta/\sqrt{1-\zeta^2}}, \qquad t_p = \frac{\pi}{\omega_n\sqrt{1 - \zeta^2}}, \qquad t_s \approx \frac{4}{\zeta\omega_n}$$</div>
+  <div class="worked"><h4>Worked example</h4>ζ = 0.3, ωn = 2: overshoot 37 %, peak at 1.65 s, settled after about 6.7 s. ζ = 0.7: overshoot 4.6 % — a common design target.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking more damping is always better: ζ = 2 has no overshoot but is much slower than ζ = 0.7.</div>
+  <div class="try"><h4>Try it</h4>Sweep ζ from 0 to 2 and follow the poles: they travel round a circle of radius ωn, meet at ζ = 1 and split along the real axis.</div>
 </section>
 <section data-case="second" data-example="z0"><h3>No damping</h3><p>The poles sit on the \(j\omega\) axis: the response oscillates between 0 and \(2K\) forever.</p></section>
 <section data-case="second" data-example="z07"><h3>ζ = 0.7</h3><p>A common design target: about 5 % overshoot and a quick rise. The poles are at 45° from the negative real axis.</p></section>
@@ -20,9 +32,12 @@
 <section data-case="second" data-example="z2"><h3>Overdamped</h3><p>Two separate real poles; the one near the origin is slow and dominates. Sluggish, no overshoot.</p></section>
 <section data-case="second" data-example="wn"><h3>Faster, same shape</h3><p>Doubling \(\omega_n\) at fixed \(\zeta\) moves the poles out along the same rays: same overshoot, half the time.</p></section>
 <section data-case="poles">
-  <h3>Poles and stability</h3>
-  <p>Each pole \(p\) contributes a mode \(e^{pt}\) to the response. With \(p = \sigma \pm j\omega\) that is \(e^{\sigma t}\cos\omega t\): it decays if \(\sigma < 0\), grows if \(\sigma > 0\). A system is stable when every pole is in the left half plane. The plot is the impulse response, the sum of the modes.</p>
-  <div class="eq">$$y(t) = \sum_i c_i\, e^{p_i t}, \qquad \text{stable} \iff \operatorname{Re} p_i < 0\ \ \forall i$$</div>
+  <h3>Poles decide the response</h3>
+  <div class="look"><h4>What you are looking at</h4>Draggable poles in the s-plane and the resulting step response.</div>
+  <p>Each pole contributes a term e^{pt}. Its real part is a decay rate (negative: dies out; positive: grows — unstable); its imaginary part is an oscillation frequency. A pole far to the left dies so fast that it hardly matters; the poles nearest the imaginary axis dominate.</p>
+  <div class="eq">$$p = \sigma \pm j\omega \;\Rightarrow\; e^{\sigma t}\cos\omega t, \qquad \text{stable} \iff \text{all } \operatorname{Re} p < 0$$</div>
+  <div class="worked"><h4>Worked example</h4>Poles at −0.5 ± 2j plus one at −4: the −4 term is gone after 1 s; the response is essentially the second-order one. Move it to −0.2 and it becomes the slowest part.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Judging stability by whether it oscillates: a pole on the right half-plane is unstable even with no oscillation.</div>
 </section>
 <section data-case="poles" data-example="axis"><h3>On the jω axis</h3><p>\(\sigma = 0\): the oscillation neither grows nor decays. Marginally stable: any extra push would accumulate.</p></section>
 <section data-case="poles" data-example="rhp"><h3>Right half plane</h3><p>\(\sigma > 0\): the oscillation grows as \(e^{0.3t}\) without limit. An unstable system.</p></section>

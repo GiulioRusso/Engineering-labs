@@ -2,27 +2,36 @@
   <p>Feed the loop a sine of frequency \(\omega\): it comes out scaled by \(|L(j\omega)|\) and shifted by \(\angle L(j\omega)\). The yellow curve traces \(L(j\omega)\) in the complex plane as \(\omega\) grows: the Nyquist plot (to scale up to \(|L| = 2\), compressed beyond). Magnitude and phase against \(\log\omega\) are the Bode diagram below. Tick <i>3D view</i> in View to lift the curve by \(\log\omega\): its shadows are both diagrams.</p>
 </section>
 <section data-case="bode">
-  <h3>The Bode diagram</h3>
-  <p>In decibels the factors of \(L\) add. A pole at \(\omega_p\) is flat below it and falls 20 dB per decade above it, with −3 dB and −45° at the corner; its phase goes from 0° to −90°.</p>
-  <div class="eq">$$|L|_\text{dB} = 20\log_{10}|L|, \qquad \frac{1}{1 + j\omega/\omega_p}: \ -3\ \text{dB},\ -45° \text{ at } \omega = \omega_p$$</div>
+  <h3>The Bode plot</h3>
+  <div class="look"><h4>What you are looking at</h4>Magnitude (dB) and phase of the open-loop transfer function against log frequency, with the asymptotes and the current frequency marked.</div>
+  <p>On log–log axes every pole and zero becomes a corner between straight lines: a pole bends the magnitude down by 20 dB/decade and the phase by 90°, a zero bends them up. An integrator is a −20 dB/decade line everywhere. You can sketch any Bode plot by adding these pieces.</p>
+  <div class="eq">$$|G| = \prod|\text{factors}| \Rightarrow 20\log|G| = \sum 20\log|\text{factor}|, \qquad \angle G = \sum\angle\text{factors}$$</div>
+  <div class="worked"><h4>Worked example</h4>K/(s/1 + 1): flat at 20 log K, −3 dB and −45° at 1 rad/s, then −20 dB/dec. Add a pole at 10: −40 dB/dec beyond 10, phase toward −180°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting that gain moves the magnitude curve up or down but never changes the phase.</div>
 </section>
 <section data-case="bode" data-example="pole2"><h3>Two poles</h3><p>Above both corners the slopes add: −40 dB per decade, and the phase heads to −180°.</p></section>
 <section data-case="bode" data-example="int"><h3>An integrator</h3><p>\(1/j\omega\) falls 20 dB per decade at every frequency and adds a constant −90°. Infinite gain at \(\omega = 0\): zero steady-state error to a step.</p></section>
 <section data-case="bode" data-example="zero"><h3>A zero</h3><p>A zero rises +20 dB per decade above its corner and adds up to +90°: here it cancels the slope of the second pole above 5 rad/s.</p></section>
 <section data-case="bode" data-example="gain"><h3>Gain</h3><p>\(K = 10\) lifts the whole magnitude by 20 dB. The phase does not change.</p></section>
 <section data-case="nyquist">
-  <h3>The Nyquist criterion</h3>
-  <p>The closed loop \(1 + L\) has a pole where \(L = -1\). For a loop with no unstable poles, the closed loop is stable when the Nyquist curve (with its mirror for negative frequencies) does not encircle −1. How far the curve stays from −1 is measured by two margins (red).</p>
-  <div class="eq">$$\text{GM} = -20\log_{10}|L(j\omega_{pc})|, \ \angle L(j\omega_{pc}) = -180°; \qquad \text{PM} = 180° + \angle L(j\omega_{gc}), \ |L(j\omega_{gc})| = 1$$</div>
+  <h3>The Nyquist plot and stability margins</h3>
+  <div class="look"><h4>What you are looking at</h4>G(jω) drawn in the complex plane as ω sweeps (and its mirror for negative ω); the critical point −1; the gain and phase margins.</div>
+  <p>A feedback loop goes unstable when the signal returns around the loop with the same size and inverted sign — that is, when G(jω) passes through −1. The Nyquist plot shows how close it comes. Encircling −1 means instability.</p>
+  <div class="eq">$$\text{GM} = \frac{1}{|G(j\omega_{180})|}, \qquad \text{PM} = 180^\circ + \angle G(j\omega_c)\;\text{ at } |G(j\omega_c)| = 1$$</div>
+  <div class="worked"><h4>Worked example</h4>K/(s(s + 1)(s/2 + 1)): crossing at −1 when K = 3 (gain margin of the K = 1 loop: 3 = 9.5 dB). K = 5 encircles −1: unstable.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Checking only the gain margin: a loop with a small phase margin rings badly even if GM is large.</div>
 </section>
 <section data-case="nyquist" data-example="small"><h3>Small gain</h3><p>The curve crosses the negative real axis far to the right of −1: large gain and phase margins, a calm, slow loop.</p></section>
 <section data-case="nyquist" data-example="more"><h3>More gain</h3><p>The whole curve grows: it crosses closer to −1, both margins shrink, the step response overshoots more.</p></section>
 <section data-case="nyquist" data-example="edge"><h3>Through −1</h3><p>At \(K = 3\) the curve passes through −1 at \(\omega = \sqrt2\): GM = 0 dB, PM = 0°. The closed loop oscillates forever.</p></section>
 <section data-case="nyquist" data-example="over"><h3>Encircling −1</h3><p>Now −1 is inside the loop of the curve: two closed-loop poles in the right half plane. Unstable.</p></section>
 <section data-case="lead">
-  <h3>Lead and lag compensation</h3>
-  <p>Add \(C(s) = \frac{1 + s/z}{1 + s/p}\) in series. A <b>lead</b> (\(z < p\)) adds phase between \(z\) and \(p\), up to \(\varphi_{\max}\) at \(\sqrt{zp}\): placed near the crossover it raises the phase margin. A <b>lag</b> (\(z > p\)) adds gain at low frequency only, cutting the steady-state error without touching the margins. Dashed: without \(C\).</p>
-  <div class="eq">$$\sin\varphi_{\max} = \frac{p - z}{p + z}, \qquad \omega_{\max} = \sqrt{zp}$$</div>
+  <h3>Compensation: lead and lag</h3>
+  <div class="look"><h4>What you are looking at</h4>Bode plots with and without a compensator, the margins, and the closed-loop step response.</div>
+  <p>A lead compensator (zero before pole) adds phase near the crossover frequency: more phase margin, less ringing, faster response. A lag compensator (pole before zero) adds gain at low frequency only: smaller steady-state error without touching the margins.</p>
+  <div class="eq">$$C_\text{lead}(s) = \frac{s/\omega_z + 1}{s/\omega_p + 1},\; \omega_z < \omega_p, \qquad \varphi_{\max} = \arcsin\frac{\omega_p - \omega_z}{\omega_p + \omega_z}$$</div>
+  <div class="worked"><h4>Worked example</h4>Zero at 0.8, pole at 8: up to 55° of extra phase at √(0.8·8) = 2.5 rad/s. The phase margin goes from 5° to about 45°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Placing the lead's maximum far from the crossover frequency: it adds phase where it is not needed.</div>
 </section>
 <section data-case="lead" data-example="none"><h3>Without a compensator</h3><p>\(K = 2.5\) gives a fast loop but only 5° of phase margin: the step response rings for a long time.</p></section>
 <section data-case="lead" data-example="lag"><h3>Lag</h3><p>Ten times the gain (so ten times less ramp error) with a lag at 0.005–0.05 rad/s: at the crossover the lag is invisible, the margins stay near 30°. The price: a slow tail in the step response.</p></section>

@@ -1,8 +1,17 @@
 <section data-case="pid">
-  <h3>PID control</h3>
-  <p>A motor at the pivot pushes the rod back towards upright. The controller looks at the error (the tilt) three ways: how big it is now (P), how much it has added up (I), and how fast it is changing (D).</p>
-  <div class="eq">$$\tau = -K_p\,\theta - K_i\!\int\!\theta\,dt - K_d\,\dot\theta, \qquad mL^2\ddot\theta = mgL\sin\theta + \tau + \tau_\text{dist}$$</div>
-  <p><b>P</b> is a spring: it must beat gravity, \(K_p > mgL\). <b>D</b> is a damper: it calms the swinging but amplifies sensor noise. <b>I</b> removes any steady error, but can overshoot and wind up when the motor saturates.</p>
+  <h3>PID control of an inverted pendulum</h3>
+  <div class="look"><h4>What you are looking at</h4>A pendulum balanced upright by a motor at its pivot; plots show the angle and the motor torque split into P, I and D parts.</div>
+  <p>An upright pendulum falls faster the more it tilts: it is unstable on its own. The controller measures the tilt and pushes back. P pushes in proportion to the tilt (a spring); D pushes against the tilt's speed (a damper — stops the rocking); I builds up while an error persists (removes a steady lean caused by a load).</p>
+  <div class="eq">$$u(t) = K_p\,e(t) + K_i\int_0^t e\,d\tau + K_d\,\frac{de}{dt}, \qquad \text{upright needs } K_p > mgL$$</div>
+  <ol class="steps">
+    <li>Kp below mgL: the spring is weaker than gravity, it falls.</li>
+    <li>P alone: it rocks back and forth; D adds damping.</li>
+    <li>A constant load leaves a tilt with PD; I removes it.</li>
+    <li>If the motor saturates, the integral keeps growing (windup) and overshoots; anti-windup stops integrating while saturated.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>m = 1 kg, L = 0.5 m: mgL = 4.9 N·m/rad, so Kp must exceed 4.9. With Kp = 20 and Kd = 2 it recovers from 10° in about a second.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Cranking up D on a noisy sensor: the derivative amplifies noise and makes the motor chatter.</div>
+  <div class="try"><h4>Try it</h4>Add a load with PD only, then turn on I and watch the tilt disappear.</div>
 </section>
 <section data-case="pid" data-example="weak"><h3>Kp too small</h3><p>With \(K_p = 3 < mgL = 4.9\) N·m/rad, gravity pulls harder than the controller pushes back: the rod falls, slowly at first.</p></section>
 <section data-case="pid" data-example="p"><h3>P only</h3><p>A pure spring: the rod rocks back and forth around upright, damped only by the small friction in the pivot. The linearised equation is \(mL^2\ddot\theta = -(K_p - mgL)\theta\).</p></section>

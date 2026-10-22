@@ -1,11 +1,15 @@
 <section data-case="error">
-  <h3>Feedback and steady-state error</h3>
-  <p>The controller measures the error \(e = r - y\) and drives the plant with \(K e\). Once things settle, what error is left depends on the input and on the <i>type</i> of the loop: the number of integrators (poles at \(s = 0\)) in \(KG(s)\). The plane shows the closed-loop poles; the 3D view adds the surface \(|T(s)|\).</p>
-  <div class="eq">$$T = \frac{KG}{1 + KG}, \qquad e_\infty = \lim_{s\to0} \frac{s\,R(s)}{1 + KG(s)}$$</div>
-  <table><tr><th></th><th>step</th><th>ramp</th><th>parabola</th></tr>
-  <tr><td>type 0</td><td>\(1/(1+K_p)\)</td><td>∞</td><td>∞</td></tr>
-  <tr><td>type 1</td><td>0</td><td>\(1/K_v\)</td><td>∞</td></tr>
-  <tr><td>type 2</td><td>0</td><td>0</td><td>\(1/K_a\)</td></tr></table>
+  <h3>Steady-state error</h3>
+  <div class="look"><h4>What you are looking at</h4>A unity-feedback loop following a step, ramp or parabola input: reference (dashed) and output, with the remaining error.</div>
+  <p>Feedback works by acting on the error. A plain proportional controller needs some error to keep pushing, so it never quite gets there. Every integrator in the loop (the "type") removes one level of error: type 1 follows a step perfectly, type 2 a ramp.</p>
+  <div class="eq">$$e_\text{ss} = \lim_{s\to 0}\frac{s\,R(s)}{1 + G(s)}, \qquad \text{step: } \frac{1}{1 + K_p}, \quad \text{ramp: } \frac{1}{K_v}, \quad \text{parabola: } \frac{1}{K_a}$$</div>
+  <ol class="steps">
+    <li>Type 0 on a step: finite error 1/(1 + K) — more gain, less error.</li>
+    <li>Type 1 on a step: zero; on a ramp: a constant lag.</li>
+    <li>Asking a type-0 loop to follow a ramp: the error grows without limit.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Type 0 with K = 5: 1/6 = 17 % error. K = 20: 4.8 %. Add an integrator: 0 %.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Raising the gain to kill the error: it also pushes the loop toward instability (see the root locus).</div>
 </section>
 <section data-case="error" data-example="gain"><h3>More gain</h3><p>A type 0 loop always leaves an error: some error is needed to keep pushing. With \(K = 20\) it shrinks to \(1/21\), about 5 %.</p></section>
 <section data-case="error" data-example="t1"><h3>An integrator</h3><p>A type 1 loop integrates the error: as long as any error is left, the push keeps growing. It only stops when \(e = 0\).</p></section>
@@ -14,8 +18,11 @@
 <section data-case="error" data-example="para2"><h3>Type 2, parabola</h3><p>Two integrators follow a steadily accelerating target with a constant error \(1/K_a\), here \(2/K\).</p></section>
 <section data-case="locus">
   <h3>The root locus</h3>
-  <p>As the gain \(K\) grows from 0 to ∞, the closed-loop poles (dots) start at the open-loop poles (×) and travel to the zeros (○) or off to infinity along the yellow curves. Pick \(K\) by where you want the poles.</p>
-  <div class="eq">$$1 + K G(s) = 0 \iff \angle G(s) = 180°, \quad K = \frac{1}{|G(s)|}$$</div>
+  <div class="look"><h4>What you are looking at</h4>The path the closed-loop poles follow as the gain K grows from 0; the current poles are marked and the step response shown.</div>
+  <p>Closing the loop moves the poles. At K = 0 they sit on the open-loop poles; as K grows they move along fixed branches toward the zeros or off to infinity. When a branch crosses the imaginary axis the loop becomes unstable. The locus shows at a glance which gains give a good response.</p>
+  <div class="eq">$$1 + K\,G(s) = 0, \qquad \angle G(s) = 180^\circ\,(2k + 1)$$</div>
+  <div class="worked"><h4>Worked example</h4>G = 1/(s(s + 1)(s + 3)): the closed-loop polynomial is s³ + 4s² + 3s + K. The poles from 0 and −1 meet at s = −0.45 when K = 0.63, then leave the real axis (oscillation). Routh: the loop is stable while 4·3 > K, so they cross the jω axis at K = 12, at ω = √3 = 1.73 rad/s. Above 12: unstable.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming more gain is always more stable: for three or more poles it eventually destabilises the loop.</div>
 </section>
 <section data-case="locus" data-example="meet"><h3>The poles meet</h3><p>At \(K \approx 0.63\) the two slow real poles meet at \(s \approx -0.45\) (breakaway) and split into a complex pair: from here on the response overshoots.</p></section>
 <section data-case="locus" data-example="under"><h3>Oscillatory</h3><p>The pair moves up and towards the axis: less damping, more overshoot, but a faster rise.</p></section>
