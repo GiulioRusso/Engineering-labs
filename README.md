@@ -7,7 +7,7 @@
 **Interactive tutorials for engineering subjects.** Every topic is a visual experiment: drag magnets, step through C++ code, or tune filters—with deep explanations one click away.
 
 <p align="center">
-  <img src="web/media/induction.gif" width="85%" alt="Interactive Induction Lab">
+  <img src="web/media/induction.png" width="85%" alt="Interactive Induction Lab">
 </p>
 
 **Author:** Giulio Russo · [GitHub](https://github.com/GiulioRusso) · [LinkedIn](https://www.linkedin.com/in/giuliorusso)
