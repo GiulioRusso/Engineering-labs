@@ -1,0 +1,39 @@
+<section data-case="double">
+  <h3>The double integral: volume under a surface</h3>
+  <div class="look"><h4>What you are looking at</h4>A surface z = f(x, y) (transparent) over a square, and the boxes that approximate the volume under it: each box sits on a small square of the floor with the height of the surface at its centre. Drag to rotate.</div>
+  <p>A single integral adds up thin strips to get an area. In two variables, cut the floor into small squares, put on each a column as tall as the function there, and add their volumes. With smaller squares the stack of boxes matches the solid better and better.</p>
+  <div class="eq">$$\iint_R f(x, y)\,dA = \lim_{n\to\infty}\sum_{i,j} f(x_i, y_j)\,\Delta x\,\Delta y = \int_a^b\!\!\int_c^d f(x, y)\,dy\,dx$$</div>
+  <ol class="steps">
+    <li>Integrate in y with x held fixed: the area of one slice.</li>
+    <li>Integrate those slice areas in x: the volume (Fubini).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>∬(x² + y²) over [−1.5, 1.5]²: each term gives (2·1.5³/3)·3 = 6.75, total 13.5. With 6 × 6 boxes the sum is 13.1; with 30 × 30, 13.48.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting dA = dx dy: the box volume is height × area of its base.</div>
+</section>
+<section data-case="double" data-example="fine"><h3>Fine boxes</h3><p>900 boxes: the stack hugs the surface; the error is a fraction of a per cent.</p></section>
+<section data-case="double" data-example="bump"><h3>A bump</h3><p>2e^{−(x² + y²)}: the volume over the whole plane would be 2π; on this square it is a little less.</p></section>
+<section data-case="lagrange">
+  <h3>Lagrange multipliers: optimising with a constraint</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: level curves of f and the constraint circle (green). A point walks round the circle with the gradient of f (blue) and of the constraint g = x² + y² (orange). Right: f along the circle.</div>
+  <p>You may only move along the circle. Moving changes f whenever ∇f has a component along the circle. At the best point it has none: ∇f points straight across the circle — the same direction as ∇g. There the level curve of f just touches the circle.</p>
+  <div class="eq">$$\nabla f = \lambda\,\nabla g, \qquad g(x, y) = r^2$$</div>
+  <ol class="steps">
+    <li>Write ∇f = λ∇g component by component.</li>
+    <li>Add the constraint equation; solve the three equations for x, y, λ.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Maximise x + y on x² + y² = 1: (1, 1) = λ(2x, 2y) gives x = y, then x = y = 1/√2: maximum √2 at 45°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Setting ∇f = 0: on a constraint the optimum is usually not a flat point of f.</div>
+</section>
+<section data-case="lagrange" data-example="prod"><h3>Maximise xy</h3><p>On a circle of radius r, xy is largest at 45° (and 225°): r²/2. The best rectangle in a circle is a square.</p></section>
+<section data-case="lagrange" data-example="tilt"><h3>2x + y</h3><p>The maximum sits where the radius points along (2, 1): at the angle atan(1/2) = 26.6°.</p></section>
+<section data-case="line">
+  <h3>Line integrals: work along a path</h3>
+  <div class="look"><h4>What you are looking at</h4>A force field (grey arrows), a path (green) and a particle moving along it with the force acting on it; right, the work accumulated.</div>
+  <p>Work is force times displacement — but only the part of the force along the motion counts. Along a curved path, add up F · dr over every small step. For some fields (gradients of a potential) the answer depends only on the start and end: going round a loop gives zero. Others — swirling fields — do net work around a loop.</p>
+  <div class="eq">$$W = \int_C \mathbf F\cdot d\mathbf r, \qquad \mathbf F = \nabla\varphi \;\Rightarrow\; W = \varphi(B) - \varphi(A), \qquad \oint \mathbf F\cdot d\mathbf r = 0$$</div>
+  <div class="worked"><h4>Worked example</h4>F = (y, x) = ∇(xy) from A(−2, −1) to B(2, 2): W = 4 − 2 = 2 on any path. F = (−y, x) round a circle of radius 1.6: W = 2π·1.6² = 16.1.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming every field is conservative: a non-zero curl (here the vortex) makes the work depend on the path.</div>
+</section>
+<section data-case="line" data-example="curved"><h3>Another path</h3><p>The curved path takes a different route but ends with the same work, 2.</p></section>
+<section data-case="line" data-example="vortex"><h3>Around a vortex</h3><p>The force always pushes along the circle: the work keeps growing, 16.1 per lap.</p></section>
+<section data-case="line" data-example="closed"><h3>A loop in a conservative field</h3><p>Positive and negative work cancel exactly: back where you started, total zero.</p></section>

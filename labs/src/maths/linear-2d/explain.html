@@ -1,0 +1,52 @@
+<section data-case="system">
+  <h3>Two equations, two unknowns</h3>
+  <div class="look"><h4>What you are looking at</h4>Each equation ax + by = e is a line (blue and orange). The solution is the point where they cross.</div>
+  <p>One linear equation in x and y has infinitely many solutions: all the points of a line. A second equation is a second line. Both are satisfied only where the lines meet. Two lines can meet once, never (parallel), or everywhere (the same line).</p>
+  <div class="eq">$$\begin{cases} ax + by = e\\ cx + dy = f \end{cases} \qquad x = \frac{ed - bf}{ad - bc}, \quad y = \frac{af - ec}{ad - bc}$$</div>
+  <ol class="steps">
+    <li><b>Substitution:</b> solve one equation for y, put it in the other.</li>
+    <li><b>Elimination:</b> multiply and subtract to cancel one unknown.</li>
+    <li><b>Cramer:</b> the formulas above — they need det = ad − bc ≠ 0.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>x + y = 3, x − y = 1: adding gives 2x = 4, x = 2, then y = 1. det = −1 − 1 = −2 ≠ 0.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Dividing by det without checking it. Thinking a tiny det is "fine": nearly parallel lines make the answer extremely sensitive to small errors in the data.</div>
+</section>
+<section data-case="system" data-example="parallel"><h3>Parallel lines</h3><p>2x + 2y = 2 is the same slope as x + y = 3 with a different offset: no common point, det = 0.</p></section>
+<section data-case="system" data-example="same"><h3>The same line</h3><p>2x + 2y = 6 is x + y = 3 doubled: every point of the line is a solution.</p></section>
+<section data-case="system" data-example="steep"><h3>Nearly parallel</h3><p>The crossing is far away and moves a lot when you touch a coefficient: an ill-conditioned system.</p></section>
+<section data-case="det">
+  <h3>The determinant is an area</h3>
+  <div class="look"><h4>What you are looking at</h4>The unit square (dashed) and its image under the matrix A: a parallelogram (green) whose sides are the columns of A (drag their tips).</div>
+  <p>A 2×2 matrix sends (1, 0) to its first column and (0, 1) to its second. The unit square becomes the parallelogram they span. Its area is |det A|: the factor by which A scales every area. Its sign says whether the orientation is kept or flipped.</p>
+  <div class="eq">$$\det A = a_{11}a_{22} - a_{12}a_{21}, \qquad \det(AB) = \det A\,\det B$$</div>
+  <div class="worked"><h4>Worked example</h4>[[2, 1], [1, 2]]: det = 3 — every shape becomes 3 times bigger. A shear [[1, 1.5], [0, 1]] slants the square but keeps det = 1.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking det = 0 means the matrix is zero: it means the columns are parallel, so the plane collapses onto a line and A cannot be undone.</div>
+</section>
+<section data-case="det" data-example="shear"><h3>A shear</h3><p>The parallelogram leans over but keeps base and height: area 1.</p></section>
+<section data-case="det" data-example="flip"><h3>Swapped columns</h3><p>det = 1 − 4 = −3: area 3, orientation reversed.</p></section>
+<section data-case="det" data-example="zero"><h3>Columns in line</h3><p>(1, 1) and (2, 2) point the same way: the parallelogram is flat, det = 0.</p></section>
+<section data-case="eigen">
+  <h3>Eigenvectors: the directions that only stretch</h3>
+  <div class="look"><h4>What you are looking at</h4>A test vector v (orange) sweeping round the circle, and Av (green). The circle maps to the blue ellipse. The red dashed lines are the eigen-directions: there Av points along v.</div>
+  <p>A matrix usually turns vectors as well as stretching them. A few special directions are only stretched (or flipped): the eigenvectors. The stretch factor is the eigenvalue. In those directions the matrix acts like a simple number.</p>
+  <div class="eq">$$A\mathbf v = \lambda\mathbf v, \qquad \lambda^2 - (\text{tr}A)\lambda + \det A = 0$$</div>
+  <ol class="steps">
+    <li>Solve the characteristic equation for λ.</li>
+    <li>For each λ, solve (A − λI)v = 0 for the direction v.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>[[2, 1], [1, 2]]: λ² − 4λ + 3 = 0 → λ = 3 along (1, 1), λ = 1 along (1, −1). The circle becomes an ellipse with semi-axes 3 and 1 along those lines.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting every matrix to have real eigenvectors: a rotation turns every direction, so its eigenvalues are complex.</div>
+</section>
+<section data-case="eigen" data-example="diag"><h3>Diagonal</h3><p>The axes are the eigenvectors, the diagonal entries the eigenvalues.</p></section>
+<section data-case="eigen" data-example="rot"><h3>Rotation</h3><p>Av is always 90° from v: no real eigen-direction (λ = ±j).</p></section>
+<section data-case="eigen" data-example="shear"><h3>Shear</h3><p>λ = 1 twice but only one direction (the x axis): the matrix cannot be diagonalised.</p></section>
+<section data-case="fit">
+  <h3>Least squares</h3>
+  <div class="look"><h4>What you are looking at</h4>Five data points (drag them), the best straight line, and the residuals (red): the vertical misses.</div>
+  <p>Real data never lie exactly on a line, so the system "line through all points" has no solution. Least squares asks for the line that misses the least, measured by the sum of the squared vertical misses. Squaring makes all misses positive and punishes big ones most.</p>
+  <div class="eq">$$\min_{m,q}\sum_i (y_i - mx_i - q)^2 \;\Rightarrow\; m = \frac{n\sum xy - \sum x\sum y}{n\sum x^2 - (\sum x)^2}, \quad q = \bar y - m\bar x$$</div>
+  <div class="worked"><h4>Worked example</h4>Points (0, 1), (1, 3), (2, 5), (3, 7) lie on y = 2x + 1: zero residuals, R² = 1.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Trusting the line with outliers: one bad point can tilt it a lot, because its residual is squared.</div>
+</section>
+<section data-case="fit" data-example="outlier"><h3>An outlier</h3><p>Dragging one point far down tilts the whole line toward it.</p></section>
+<section data-case="fit" data-example="perfect"><h3>A perfect line</h3><p>All points on y = 0.75x: every residual is zero.</p></section>

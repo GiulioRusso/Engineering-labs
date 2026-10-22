@@ -587,6 +587,46 @@
     "group": "Linear algebra"
    },
    {
+    "id": "linear-systems",
+    "title": "Linear systems",
+    "what": "Two equations as two lines: one, none or infinitely many solutions.",
+    "from": "linear-2d",
+    "cases": [
+     "system"
+    ],
+    "group": "Linear algebra"
+   },
+   {
+    "id": "determinant",
+    "title": "The determinant",
+    "what": "The area a matrix gives to the unit square, with a sign.",
+    "from": "linear-2d",
+    "cases": [
+     "det"
+    ],
+    "group": "Linear algebra"
+   },
+   {
+    "id": "eigenvectors",
+    "title": "Eigenvalues and eigenvectors",
+    "what": "The directions a matrix only stretches.",
+    "from": "linear-2d",
+    "cases": [
+     "eigen"
+    ],
+    "group": "Linear algebra"
+   },
+   {
+    "id": "least-squares",
+    "title": "Least squares",
+    "what": "Fitting the best line through data.",
+    "from": "linear-2d",
+    "cases": [
+     "fit"
+    ],
+    "group": "Linear algebra"
+   },
+   {
     "id": "matrices",
     "title": "Matrices and linear maps",
     "what": "A 3×3 matrix deforms the unit cube: determinant, eigenvectors.",
@@ -612,9 +652,80 @@
     "group": "Multivariable calculus"
    },
    {
+    "id": "double-integrals",
+    "title": "Double integrals",
+    "what": "Volume under a surface as a stack of boxes.",
+    "from": "multi-integrals",
+    "cases": [
+     "double"
+    ],
+    "group": "Multivariable calculus"
+   },
+   {
+    "id": "lagrange",
+    "title": "Constrained optimisation",
+    "what": "Lagrange multipliers: where ∇f is parallel to ∇g.",
+    "from": "multi-integrals",
+    "cases": [
+     "lagrange"
+    ],
+    "group": "Multivariable calculus"
+   },
+   {
+    "id": "line-integrals",
+    "title": "Line integrals and work",
+    "what": "Work along a path; conservative and rotational fields.",
+    "from": "multi-integrals",
+    "cases": [
+     "line"
+    ],
+    "group": "Multivariable calculus"
+   },
+   {
     "id": "probability",
     "title": "Probability",
     "what": "A Galton board: random falls build the binomial and then the normal curve.",
+    "group": "Probability"
+   },
+   {
+    "id": "distributions",
+    "title": "Probability distributions",
+    "what": "Normal, exponential, Poisson, binomial: probability as area.",
+    "from": "statistics",
+    "cases": [
+     "dist"
+    ],
+    "group": "Probability"
+   },
+   {
+    "id": "bayes",
+    "title": "Bayes’ theorem",
+    "what": "Why most positive tests for a rare disease are false.",
+    "from": "statistics",
+    "cases": [
+     "bayes"
+    ],
+    "group": "Probability"
+   },
+   {
+    "id": "central-limit",
+    "title": "Sample means and the CLT",
+    "what": "Averages become normal and narrower as 1/√n.",
+    "from": "statistics",
+    "cases": [
+     "clt"
+    ],
+    "group": "Probability"
+   },
+   {
+    "id": "random-walk",
+    "title": "Random walks and Monte Carlo",
+    "what": "Diffusion as √n; estimating π with random darts.",
+    "from": "statistics",
+    "cases": [
+     "walk",
+     "pi"
+    ],
     "group": "Probability"
    }
   ]

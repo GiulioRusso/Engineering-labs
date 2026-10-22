@@ -1,0 +1,61 @@
+<section data-case="dist">
+  <h3>Probability distributions</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the distribution — a curve (continuous) or bars (discrete). The green part is the interval you chose; its area (or the sum of its bars) is the probability. Bottom: the cumulative distribution F(x) = P(X ≤ x).</div>
+  <p>A random quantity does not have one value, it has a spread of possible values. The distribution says how likely each region is. For a continuous quantity (a height, a time) the probability of an interval is the area under the curve; for a count (people in a queue) each value has its own bar.</p>
+  <div class="eq">$$P(a \le X \le b) = \int_a^b f(x)\,dx = F(b) - F(a), \qquad \int_{-\infty}^{\infty} f = 1$$</div>
+  <ol class="steps">
+    <li><b>Normal:</b> sums of many small effects (measurement errors, heights). 68 / 95 / 99.7 % within 1 / 2 / 3 σ.</li>
+    <li><b>Exponential:</b> waiting times between random events; P(wait > t) = e^{−λt}.</li>
+    <li><b>Poisson:</b> how many random events in a fixed time, mean λ.</li>
+    <li><b>Binomial:</b> successes in n independent tries with probability p.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Heights normal with μ = 175 cm, σ = 7 cm: P(168 ≤ h ≤ 182) = 68 %; taller than 189 cm (2σ): 2.3 %. Calls arriving at λ = 4 per minute: P(exactly 4) = 19.5 %, P(0) = 1.8 %.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading the height of a continuous curve as a probability: it is a density (it can be bigger than 1); only areas are probabilities.</div>
+</section>
+<section data-case="dist" data-example="two"><h3>Two standard deviations</h3><p>95.4 % of a normal population lies within μ ± 2σ.</p></section>
+<section data-case="dist" data-example="exp"><h3>Waiting times</h3><p>Rate 0.5 per minute: mean wait 2 minutes; P(wait ≤ 2) = 1 − e^{−1} = 63 %.</p></section>
+<section data-case="dist" data-example="poisson"><h3>Poisson λ = 4</h3><p>Most likely 3 or 4 events; between 2 and 6 about 79 % of the time.</p></section>
+<section data-case="dist" data-example="binom"><h3>Binomial</h3><p>20 tries at 30 %: mean 6, standard deviation 2.05.</p></section>
+<section data-case="bayes">
+  <h3>Bayes' theorem: the screening paradox</h3>
+  <div class="look"><h4>What you are looking at</h4>1000 people, each a dot: ill and positive (red), ill but missed (orange), healthy but positive — false alarms (yellow), healthy and negative (grey). Right: the chance that a positive person is really ill, against how common the disease is.</div>
+  <p>A test that is "99 % accurate" sounds decisive. But if the disease is rare, the healthy people vastly outnumber the ill, and even a small false-positive rate on that huge group produces more false alarms than true cases. The question "am I ill given a positive test?" depends on how common the disease is.</p>
+  <div class="eq">$$P(\text{ill}\mid +) = \frac{P(+\mid\text{ill})\,P(\text{ill})}{P(+\mid\text{ill})P(\text{ill}) + P(+\mid\text{healthy})P(\text{healthy})}$$</div>
+  <ol class="steps">
+    <li>Count the ill: prevalence × 1000; of those, sensitivity × ill test positive.</li>
+    <li>Count the healthy; of those, (1 − specificity) × healthy test positive anyway.</li>
+    <li>Divide the true positives by all positives.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Prevalence 1 %, sensitivity 99 %, specificity 95 %: 10 ill → 10 positive; 990 healthy → 50 false positives. P(ill | +) = 10/60 = 17 %.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Confusing P(+ | ill) (the test's sensitivity) with P(ill | +) (what the patient wants to know).</div>
+</section>
+<section data-case="bayes" data-example="common"><h3>A common disease</h3><p>At 20 % prevalence the same test is right about 83 % of the time it says positive.</p></section>
+<section data-case="bayes" data-example="better"><h3>Better specificity</h3><p>Cutting false alarms to 0.1 % lifts P(ill | +) to about 91 % even for a 1 % disease.</p></section>
+<section data-case="clt">
+  <h3>The central limit theorem</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: a very skewed population (exponential). Bottom: 4000 averages, each of n values drawn from it, with the normal curve predicted by the theorem.</div>
+  <p>Take n values and average them. The average varies less than the single values, and — whatever the shape of the population — its distribution becomes a bell. That is why the normal distribution is everywhere and why polls work.</p>
+  <div class="eq">$$\bar X = \frac{1}{n}\sum X_i \;\approx\; \mathcal N\!\left(\mu,\ \frac{\sigma}{\sqrt n}\right)$$</div>
+  <div class="worked"><h4>Worked example</h4>A poll of 1000 people with an opinion split 50/50: σ of one answer is 0.5, of the average 0.5/√1000 = 1.6 %: the result is within ±3.2 % 95 % of the time.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting the error to fall like 1/n: it falls like 1/√n — four times the sample for half the error.</div>
+</section>
+<section data-case="clt" data-example="one"><h3>n = 1</h3><p>One value at a time: the histogram is just the skewed parent.</p></section>
+<section data-case="clt" data-example="big"><h3>n = 50</h3><p>Averages of 50: a narrow bell around 1, spread 0.14.</p></section>
+<section data-case="walk">
+  <h3>Random walks</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: walkers stepping randomly left or right; dashed: the expected drift ± 2 typical deviations. Bottom: where 3000 walkers end up.</div>
+  <p>Each step is a coin toss. Positive and negative steps mostly cancel, so a walker does not get far — but it does drift away slowly: the typical distance grows like the square root of the number of steps. Diffusion of heat, of perfume in a room, of share prices, all follow this law.</p>
+  <div class="eq">$$E[S_n] = n(2p - 1), \qquad \text{sd}(S_n) = 2\sqrt{n\,p(1 - p)} \;(= \sqrt n \text{ for } p = \tfrac12)$$</div>
+  <div class="worked"><h4>Worked example</h4>100 fair steps: typically about 10 away from the start. 400 steps: about 20, not 40.</div>
+  <div class="pitfall"><h4>Common mistake</h4>"After many heads, tails is due": the coin has no memory, and the walk does not return to the start on its own.</div>
+</section>
+<section data-case="walk" data-example="long"><h3>Four times longer</h3><p>The cloud of walkers is only twice as wide.</p></section>
+<section data-case="walk" data-example="drift"><h3>A biased coin</h3><p>p = 0.6: the crowd drifts 0.2 per step, while still spreading as √n around the drift.</p></section>
+<section data-case="pi">
+  <h3>Monte Carlo: π by throwing darts</h3>
+  <div class="look"><h4>What you are looking at</h4>Random points in a unit square (green if inside the quarter circle), and the running estimate of π with its expected error band.</div>
+  <p>The quarter circle covers π/4 of the square. Throw points at random: the fraction landing inside estimates π/4. Random sampling can estimate any area or integral, in any number of dimensions — the method is called Monte Carlo.</p>
+  <div class="eq">$$\pi \approx 4\,\frac{N_\text{inside}}{N}, \qquad \text{error} \sim \frac{1.64}{\sqrt N}$$</div>
+  <div class="worked"><h4>Worked example</h4>4000 darts: error typically ±0.026, so π ≈ 3.14 ± 0.03. One more correct digit needs 100 times the darts.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting the estimate to improve at every dart: it wanders, and only its typical error shrinks.</div>
+</section>

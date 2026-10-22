@@ -101,10 +101,21 @@ In the Electronics Visualizer.
 | [Sequences and series](web/maths.html?lab=sequences) | Partial sums that converge or not: geometric, harmonic, alternating, and the limit. | done |
 | [Differential equations](web/maths.html?lab=differential-equations) | Slope fields and solution curves; Euler steps against the exact solution. | done |
 | [Vectors](web/maths.html?lab=vectors) | Dot and cross product of two arrows you drag in 3D. | done |
+| [Linear systems](web/maths.html?lab=linear-systems) | Two equations as two lines: one, none or infinitely many solutions. | done |
+| [The determinant](web/maths.html?lab=determinant) | The area a matrix gives to the unit square, with a sign. | done |
+| [Eigenvalues and eigenvectors](web/maths.html?lab=eigenvectors) | The directions a matrix only stretches. | done |
+| [Least squares](web/maths.html?lab=least-squares) | Fitting the best line through data. | done |
 | [Matrices and linear maps](web/maths.html?lab=matrices) | A 3×3 matrix deforms the unit cube: determinant, eigenvectors. | done |
 | [Functions of two variables](web/maths.html?lab=surfaces) | Walk on a surface: gradient, tangent plane, level curves. | done |
 | [Divergence and curl](web/maths.html?lab=vector-calculus) | Tracers in a flow: spreading is divergence, turning is curl. | done |
+| [Double integrals](web/maths.html?lab=double-integrals) | Volume under a surface as a stack of boxes. | done |
+| [Constrained optimisation](web/maths.html?lab=lagrange) | Lagrange multipliers: where ∇f is parallel to ∇g. | done |
+| [Line integrals and work](web/maths.html?lab=line-integrals) | Work along a path; conservative and rotational fields. | done |
 | [Probability](web/maths.html?lab=probability) | A Galton board: random falls build the binomial and then the normal curve. | done |
+| [Probability distributions](web/maths.html?lab=distributions) | Normal, exponential, Poisson, binomial: probability as area. | done |
+| [Bayes’ theorem](web/maths.html?lab=bayes) | Why most positive tests for a rare disease are false. | done |
+| [Sample means and the CLT](web/maths.html?lab=central-limit) | Averages become normal and narrower as 1/√n. | done |
+| [Random walks and Monte Carlo](web/maths.html?lab=random-walk) | Diffusion as √n; estimating π with random darts. | done |
 
 ## Physics
 
