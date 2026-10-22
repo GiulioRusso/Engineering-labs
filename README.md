@@ -10,6 +10,8 @@
   <img src="web/media/induction.png" width="85%" alt="Interactive Induction Lab">
 </p>
 
+**▶ Try it online: [giuliorusso.github.io/Engineering-labs](https://giuliorusso.github.io/Engineering-labs/)**
+
 **Author:** Giulio Russo · [GitHub](https://github.com/GiulioRusso) · [LinkedIn](https://www.linkedin.com/in/giuliorusso)
 
 ## 🚀 Quick Start
