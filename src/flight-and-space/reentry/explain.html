@@ -1,0 +1,24 @@
+<section data-case="entry">
+  <h3>Atmospheric entry</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a capsule’s path from 120 km down to the ground (altitude against distance travelled). Top right: its deceleration in g. Bottom right: the heating rate at its nose. Below: speed and altitude against time.</div>
+  <p>A spacecraft coming home has an enormous kinetic energy: 30 MJ for every kilogram at orbital speed, the energy of seven kilograms of TNT. The atmosphere has to take it all away, as heat. At first the air is too thin to do much; as the capsule sinks, density grows exponentially and drag rises sharply, peaks, and then falls again because the capsule has already slowed down. The angle of entry decides how hard that peak is: steep means a short, violent squeeze; shallow means a long, gentle one, but too shallow and the capsule bounces off the top of the atmosphere like a stone on water.</p>
+  <div class="eq">$$\frac{dv}{dt} = -\frac{\rho v^2}{2\beta} - g\sin\gamma, \qquad \rho = \rho_0 e^{-h/H}, \qquad a_\text{max} \approx \frac{v_e^2\,|\sin\gamma_e|}{2eH}, \qquad \dot q = k\sqrt{\rho/r_n}\,v^3$$</div>
+  <ol class="steps">
+    <li>β = m/(C_D A): a heavy, slender body (large β) slows down lower, in thicker air, and heats more.</li>
+    <li>Peak deceleration hardly depends on β, mainly on speed and angle (Allen–Eggers).</li>
+    <li>Heating grows with v³: lunar-return speed (11 km/s) heats about three times more than orbital (7.8).</li>
+    <li>Lift, pointing up, holds the capsule in thinner air for longer: lower g, but longer heating.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>From orbit at 7.8 km/s, 1.5° below horizontal, β = 300 kg/m² (a capsule): peak 8.5 g, nose heating up to 1.14 MW/m², 150 MJ/m² in total, 2570 km and 9.4 minutes from 120 km to the ground. With L/D = 0.3: 2.6 g.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the heat comes from friction with the air. It comes mainly from compressing the air in the shock wave in front of the capsule, which reaches several thousand kelvin; the heat shield is protected by that layer of hot gas and by its own surface burning away.</div>
+  <div class="try"><h4>Try it</h4>Move the angle from −0.5° to −30°: peak g grows roughly with sin γ, and below about −2° the gentle curve becomes a spike.</div>
+</section>
+<section data-case="entry" data-example="lifting"><h3>With lift</h3><p>Tilting the capsule (an offset centre of mass) gives lift of 0.3 times the drag. Pointed up, it keeps the capsule high where the air is thin: the peak drops from 8.5 to 2.6 g, as on Soyuz and the Shuttle, at the cost of a longer, 15-minute heating.</p></section>
+<section data-case="entry" data-example="steep"><h3>Steep: −20°</h3><p>56 g in a few seconds: fatal for a crew, fine for a probe or a warhead. Total heat is lower (48 MJ/m²) because the whole thing lasts only 3.4 minutes, but the peak rate is three times higher.</p></section>
+<section data-case="entry" data-example="lunar"><h3>Back from the Moon</h3><p>11 km/s, twice the energy per kilogram: at −6.5° without lift, 17.7 g and 4.2 MW/m², four times the heating of an orbital return.</p></section>
+<section data-case="entry" data-example="skip"><h3>Skipping out</h3><p>At 11 km/s and only −5°, the capsule dips into the air, is bent upwards by the curvature and its own speed, and leaves again: it would come back hours later, or not at all. The corridor at lunar return speed is only a couple of degrees wide.</p></section>
+<section data-case="entry" data-example="apollo"><h3>Moon return with lift</h3><p>Apollo flew back at about −6.5° and used lift (L/D ≈ 0.3) to control the descent. Here, −7.5° with constant full lift up: 13.5 g instead of over 25 for the same entry without lift, and a much longer glide (3560 km). Real capsules roll to steer the lift and keep below 7 g.</p></section>
+<section data-case="entry" data-example="dense"><h3>A dense capsule</h3><p>β = 3000 kg/m²: ten times heavier for the same shape. The peak deceleration is almost the same (18 g at −6°), but it happens lower, in denser air: heating 6.4 MW/m² against 2.0.</p></section>
+<details><summary>About the model</summary>
+  <p>Point mass, round non-rotating Earth, exponential atmosphere (ρ₀ = 1.225 kg/m³, H = 7.2 km), constant β and L/D (lift always up), RK4 with 0.05 s steps from 120 km. Heating: Sutton–Graves stagnation point, nose radius 1 m. Tests: without gravity and curvature, speed against altitude matches the Allen–Eggers solution (10⁻⁴) and so does the peak deceleration (10⁻³); a steeper entry decelerates harder; lift lowers the peak; a shallow lifting entry at 11 km/s skips.</p>
+</details>

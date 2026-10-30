@@ -29,15 +29,23 @@ Open **`index.html`** in any browser. Catalogue self-contained, runs offline.
 |---|---|---|
 | **Maths** | [`web/maths.html`](web/maths.html) | Calculus, Linear Algebra, Differential Equations, Complex Analysis |
 | **Probability & Stats** | [`web/probability.html`](web/probability.html) | Distributions, Bayes, Monte Carlo, Hypothesis Testing |
-| **Physics** | [`web/physics.html`](web/physics.html) | Mechanics, EM, Optics, Thermodynamics, Orbital Motion |
+| **Physics** | [`web/physics.html`](web/physics.html) | Mechanics, Oscillations and Waves, Heat, Electromagnetism (all four Maxwell equations), Optics |
+| **Modern Physics** | [`web/modern-physics.html`](web/modern-physics.html) | Special Relativity, Photoelectric Effect, Particle in a Box, Hydrogen Spectrum, Decay |
+| **Flight and Space** | [`web/flight-and-space.html`](web/flight-and-space.html) | Lift and Drag, Standard Atmosphere, Gliding, Breguet Range, Kepler's Laws, Newton's Cannon, Gravity Assist, Rocket Equation, Staging, Gravity Turn, Re-entry |
+| **Robotics** | [`web/robotics.html`](web/robotics.html) | Rotations and Quaternions, DH and the Kinova Jaco2, Jacobian, CLIK, Redundancy, Trajectories, Dynamics, Computed Torque, Impedance Control |
 | **Circuits** | [`web/circuits.html`](web/circuits.html) | RLC, Phasors, Impedance, AC Power, Filter Design |
 | **Analog Electronics** | [`web/analog-electronics.html`](web/analog-electronics.html) | BJTs, MOSFETs, Op-Amps, Feedback, CMOS |
 | **Digital Electronics** | [`web/digital-electronics.html`](web/digital-electronics.html) | Logic Gates, FSMs, Counters, Timing Analysis |
 | **Computer Science** | [`web/computer-science.html`](web/computer-science.html) | Algorithms, Data Structures, CPU Scheduling (Real C++) |
+| **Design Patterns** | [`web/design-patterns.html`](web/design-patterns.html) | Creational, Structural and Behavioural Patterns as Running C++ with Object Diagrams |
 | **Signal Theory** | [`web/signal-theory.html`](web/signal-theory.html) | Fourier, Sampling, LTI Systems, Modulation, IQ |
 | **Control Systems** | [`web/control-systems.html`](web/control-systems.html) | PID, Root Locus, Bode/Nyquist, Stability |
 | **Electronic Warfare** | [`web/electronic-warfare.html`](web/electronic-warfare.html) | Pulse Compression, Radar Eq, Jamming, Doppler |
-| **Machine Learning** | [`web/machine-learning.html`](web/machine-learning.html) | Neural Nets, Optimizers, Loss Surfaces, Generalization |
+| **Machine Learning** | [`web/machine-learning.html`](web/machine-learning.html) | k-NN, Trees, Clustering, Linear and Logistic Regression, SVMs, Ensembles, ROC |
+| **Deep Learning** | [`web/deep-learning.html`](web/deep-learning.html) | Neurons, Network Playground, Layers, Backprop, Initialisation, MNIST MLP and CNN |
+| **Numerical Methods** | [`web/numerical-methods.html`](web/numerical-methods.html) | Root Finding, ODE Solvers, Stability, Interpolation, Quadrature |
+| **Information Theory** | [`web/information-theory.html`](web/information-theory.html) | Entropy, Huffman Coding, Channel Capacity, Hamming Codes |
+| **Structural Mechanics** | [`web/structural-mechanics.html`](web/structural-mechanics.html) | Beams, Cross Sections, Tensile Test, Mohr's Circle, Buckling |
 
 Full list: [`docs/TOPICS.md`](docs/TOPICS.md).
 
@@ -59,7 +67,7 @@ npm run build     # Source → web/
 npm run smoke     # Headless validation of all cases
 ```
 
-For C++ traces (CS/Digital), edit `tracer/`, run local `./build.sh`, then `npm run build`.
+For C++ traces (CS/Digital/Design patterns), edit `tracer/`, run local `./build.sh`, then `npm run build`.
 
 Guide: [`docs/GUIDE.md`](docs/GUIDE.md).
 

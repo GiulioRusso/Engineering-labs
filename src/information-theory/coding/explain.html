@@ -1,0 +1,26 @@
+<section>
+  <p>A <b>channel code</b> adds redundant bits so that the receiver can detect and correct errors made by the channel. A code's rate is the share of data bits among all bits sent; it trades against how many errors the code can fix.</p>
+</section>
+<section data-case="repetition">
+  <h3>The repetition code</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: 24 message bits, columns from left to right. The top row is what was sent (blue = 1, grey = 0), the middle rows are the n received copies with flips in red, and the bottom row is the majority vote, with wrong decisions shown as big red dots. Top right: bit error rate after the vote against n. Bottom right: error rate against rate 1/n, with the capacity C dashed. Below: the measured error rate of a long run.</div>
+  <p>Send each bit n times (n odd) and take the majority. The decision is wrong only if more than half of the copies flipped, which becomes very unlikely as n grows.</p>
+  <div class="eq">$$P_b=\sum_{j>n/2}\binom nj e^j(1-e)^{n-j},\qquad n=3:\ P_b=3e^2-2e^3$$</div>
+  <div class="worked"><h4>Worked example</h4>e = 0.1, n = 3: P_b = 0.03 − 0.002 = 0.028, about 3.5 times fewer errors, at the cost of sending three times as many bits.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Concluding that reliability costs rate. Repetition drives the rate to zero, but Shannon proved that codes at any fixed rate below C can make errors as rare as you like. LDPC and turbo codes come close to that limit.</div>
+  <div class="try"><h4>Try it</h4>Set e = 0.3 and raise n: the errors still go away, but the point in the bottom chart slides towards rate 0.</div>
+</section>
+<section data-case="repetition" data-example="none"><h3>No code</h3><p>n = 1: every flip is an error and the error rate is e.</p></section>
+<section data-case="repetition" data-example="seven"><h3>Seven copies</h3><p>Four of seven must flip: about 0.3 % errors at e = 0.1, but only one data bit per seven channel uses.</p></section>
+<section data-case="hamming">
+  <h3>The Hamming (7,4) code</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the seven bits of a codeword placed in the regions of three circles. Each circle holds four bits and must contain an even number of 1s; a circle that does not is red. Top right: sent and received bits by position. Bottom right: the distance from the received word to each of the 16 codewords; the sent one is green, and the decoder picks the nearest. Below: block error rate with and without the code.</div>
+  <p>Four data bits get three parity bits, a rate of 4/7. Each parity bit makes its circle even. If one bit flips, exactly the circles containing it become odd, and every position is in a different set of circles, so the odd circles point to the culprit.</p>
+  <div class="eq">$$s=(s_4s_2s_1)_2=\text{position of the flipped bit},\qquad s_j=\bigoplus_{i\,:\,i\,\&\,j}r_i$$</div>
+  <ol class="steps"><li>Position i belongs to the circle j if bit j is set in the binary form of i (5 = 101: circles 1 and 4).</li><li>Parity bits sit at positions 1, 2 and 4, each in only its own circle.</li><li>The receiver recomputes the three checks; read as a binary number they give the syndrome.</li><li>Syndrome 0: accept. Otherwise flip the bit at that position.</li></ol>
+  <div class="worked"><h4>Worked example</h4>Data 1011 gives codeword 0110011. Flip position 5: checks 1 and 4 fail, check 2 passes, syndrome 101 = 5, corrected.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Trusting the decoder with two errors. Every pair of codewords differs in at least 3 places, so one error can be corrected, but two errors land nearer to a different codeword and get "corrected" into a third error.</div>
+</section>
+<section data-case="hamming" data-example="one"><h3>Flip d₂</h3><p>Position 5 = 101: circles 1 and 4 turn red, circle 2 stays green. Only position 5 sits in exactly those two.</p></section>
+<section data-case="hamming" data-example="parity"><h3>Flip p₄</h3><p>A parity bit can be hit too: only circle 4 complains, and the data are untouched.</p></section>
+<section data-case="hamming" data-example="two"><h3>Two flips</h3><p>Positions 3 and 6 flip: the syndrome is 3 ⊕ 6 = 5, so the decoder flips position 5 as well and outputs wrong data. A distance-3 code corrects one error, not two.</p></section>

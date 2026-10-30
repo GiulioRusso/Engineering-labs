@@ -1,0 +1,22 @@
+<section data-case="roc">
+  <h3>Thresholds and ROC curves</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the scores a classifier gives to negatives (blue) and positives (gold), drawn in proportion to how common each class is. Everything right of the threshold (dashed) is called positive: green are the positives caught, red the negatives wrongly flagged. Top right: the ROC curve, every threshold at once, with the current one marked (grey: from a finite sample). Bottom right: the four counts per 1000 cases. Below: precision and recall for every threshold.</div>
+  <p>Most classifiers output a score, not a yes or no. Where you put the threshold is a separate decision: lower it and you catch more positives but also flag more negatives; raise it and the reverse. The ROC curve shows that trade-off for every threshold, plotting the share of positives caught against the share of negatives flagged. A useless score gives the diagonal; a perfect one hugs the top-left corner. The area under it, AUC, has a neat meaning: the chance that a random positive gets a higher score than a random negative.</p>
+  <div class="eq">$$\text{TPR} = \frac{TP}{TP + FN}, \quad \text{FPR} = \frac{FP}{FP + TN}, \quad \text{precision} = \frac{TP}{TP + FP}, \qquad \text{AUC} = P(s_+ > s_-) = \Phi\!\left(\frac{d}{\sqrt2}\right)$$</div>
+  <ol class="steps">
+    <li>Pick a threshold: count TP, FN, FP, TN.</li>
+    <li>TPR and FPR give one point of the ROC curve.</li>
+    <li>Sweep the threshold: the whole curve; its area is the AUC.</li>
+    <li>Precision also depends on how rare positives are; TPR and FPR do not.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Separation d = 2, threshold 1, 30 % positives: recall 84 %, false-positive rate 16 %; per 1000 cases TP 252, FN 48, FP 111, TN 589; precision 69 %. AUC = Φ(2/√2) = 0.92.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Comparing classifiers at one threshold only, or by accuracy. The ROC curve separates how good the scores are (AUC) from where you choose to cut them.</div>
+  <div class="try"><h4>Try it</h4>Slide the threshold and watch the marker run along the ROC curve, and the red and green areas trade places.</div>
+</section>
+<section data-case="roc" data-example="strict"><h3>A strict threshold</h3><p>t = 2.5: almost no false alarms (0.6 % of negatives) and 95 % precision, but only 31 % of the positives are found. Right for a costly follow-up, wrong for screening.</p></section>
+<section data-case="roc" data-example="perfect"><h3>Well separated</h3><p>d = 4: the two humps barely overlap, AUC = 0.998, and a threshold in between catches 98 % of positives while flagging 2 % of negatives.</p></section>
+<section data-case="roc" data-example="useless"><h3>No signal</h3><p>d = 0: the scores of both classes are identical, every threshold flags the same share of each, and the ROC curve is the diagonal: AUC = 0.5, a coin toss.</p></section>
+<section data-case="roc" data-example="rare"><h3>Rare positives</h3><p>Same scores and threshold, but only 1 % positives: recall is still 84 % and the false-positive rate still 16 %, yet per 1000 cases that means 8 true positives against 157 false ones: precision 5 %. The ROC curve does not move; the precision curve below collapses. With rare events, look at precision.</p></section>
+<details><summary>About the model</summary>
+  <p>Scores are normal: negatives N(0, 1), positives N(d, 1) (the binormal model). Exact rates from Φ, computed with the Abramowitz–Stegun erf approximation (error below 1.5·10⁻⁷); the grey curve is the empirical ROC of 200 + 200 sampled scores. Tests: Φ at known values; the numerical area under the ROC curve equals Φ(d/√2) (10⁻⁵); the empirical ROC's trapezoid area equals the Mann–Whitney pair count exactly and is close to the exact AUC; rare positives keep recall and lower precision below 20 %.</p>
+</details>

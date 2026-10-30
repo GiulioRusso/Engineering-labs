@@ -1,0 +1,56 @@
+<section data-case="least-squares">
+  <h3>Least squares</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: 24 data points and a line you set with the slope and intercept sliders. Grey: each point's residual, its vertical distance to the line; red: the square built on it. Top right: the total squared error for every slope. Bottom right: the residuals themselves.</div>
+  <p>To fit a line to noisy data we need a score for how bad a line is. Least squares takes each point's vertical miss, squares it, and adds them up: literally the total area of the red squares. The best line is the one with the smallest total. Squaring makes every miss count positively, makes big misses count much more than small ones, and gives a smooth bowl-shaped score with a single bottom that a formula can find directly.</p>
+  <div class="eq">$$\text{SSE}(m, c) = \sum_i \big(y_i - (m x_i + c)\big)^2, \qquad m = \frac{\sum (x_i - \bar x)(y_i - \bar y)}{\sum (x_i - \bar x)^2}, \quad c = \bar y - m\bar x, \qquad R^2 = 1 - \frac{\text{SSE}}{\sum (y_i - \bar y)^2}$$</div>
+  <ol class="steps">
+    <li>Residual of each point: y − (mx + c).</li>
+    <li>Square and add: SSE.</li>
+    <li>Set the two partial derivatives to zero: the formulas above.</li>
+    <li>R² compares with the dumbest line, flat at the mean: 1 is perfect, 0 no better.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>These 24 points: least squares gives m = 0.643, c = 0.846, SSE = 14.8, R² = 0.83 (the data were made from y = 1.2 + 0.6x + noise). The starting line m = 0.3, c = 3 has SSE 39.2, R² = 0.54.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Measuring distance perpendicular to the line: least squares uses vertical distances, the errors in y. Reading a high R² as "the line explains why": it only measures fit.</div>
+  <div class="try"><h4>Try it</h4>Tune m and c by hand to make the red squares as small as you can, then tick "Use the least-squares line".</div>
+</section>
+<section data-case="least-squares" data-example="best"><h3>The least-squares line</h3><p>m = 0.643, c = 0.846: the top-right marker sits at the bottom of the bowl, and the residuals below scatter evenly around zero.</p></section>
+<section data-case="least-squares" data-example="flat"><h3>A flat line at the mean</h3><p>y = ȳ = 4.11 ignores x entirely: SSE = 86.0 and R² = 0. This is the baseline R² compares with.</p></section>
+<section data-case="least-squares" data-example="outlier"><h3>One outlier</h3><p>One point at (9, −3) would have a huge square, so the line tilts to shrink it: the slope drops from 0.64 to 0.45 and R² from 0.83 to 0.28. Squaring makes least squares sensitive to outliers.</p></section>
+
+<section data-case="gradient">
+  <h3>Gradient descent on the same problem</h3>
+  <div class="look"><h4>What you are looking at</h4>Gradient descent starting from a bad line. Top right: the loss landscape over (slope, intercept) on a log scale, with the path taken; the dot is the least-squares answer. Bottom right: the loss per step.</div>
+  <p>Least squares has a formula, but most models do not: they are trained by walking downhill on the loss, a step against the gradient at a time. Here the landscape is a long narrow valley, because x runs from 0 to 10: changing the slope changes the error a lot more than changing the intercept. A step small enough not to overshoot across the valley is far too small to travel along it, so descent crawls. Standardising x (subtract its mean, divide by its spread) turns the valley into a round bowl.</p>
+  <div class="eq">$$(m, c) \leftarrow (m, c) - \eta\,\nabla \text{MSE}, \qquad \nabla \text{MSE} = \frac{2}{n}\sum_i e_i\,(x_i, 1), \qquad \eta < \frac{2}{\lambda_\text{max}} \approx \frac{1}{\overline{x^2}} = 0.030$$</div>
+  <ol class="steps">
+    <li>Compute the residuals e of the current line.</li>
+    <li>The gradient points uphill; step the other way by η.</li>
+    <li>Too large η: each step overshoots more than the last, and it explodes.</li>
+    <li>Scaled features: one η suits every direction.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>η = 0.01 on raw x: after 200 steps the slope has only reached 0.23, still far from 0.643. η = 0.032 diverges. With x standardised and η = 0.3 it lands on the least-squares line in 6 steps.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Blaming the learning rate alone for slow training. Badly scaled inputs make any single step size wrong; normalising them is usually the first fix.</div>
+  <div class="try"><h4>Try it</h4>Raise η towards 0.03 and watch the path start to zigzag across the valley, then cross the limit.</div>
+</section>
+<section data-case="gradient" data-example="unstable"><h3>Step too large</h3><p>η = 0.032 is just over the stability limit for the steep direction: each step overshoots further, and within 60 steps the slope is in the millions.</p></section>
+<section data-case="gradient" data-example="scaled"><h3>Feature scaling</h3><p>With u = (x − x̄)/s the landscape is a round bowl: the gradient points straight at the minimum, and η = 0.3 gets there in six steps.</p></section>
+
+<section data-case="logistic">
+  <h3>Logistic regression</h3>
+  <div class="look"><h4>What you are looking at</h4>Points with label 0 (blue, bottom) or 1 (gold, top) along x. The green curve is the model's probability of label 1; the dashed line is where it is ½. Top right: the average log loss as the curve gets steeper. Bottom right: each point's own loss.</div>
+  <p>For yes/no labels a straight line makes no sense: it would predict values below 0 and above 1. Logistic regression passes the line through the sigmoid, turning any score into a probability. It is fitted by maximum likelihood: make the observed labels as probable as possible, which means minimising the log loss. That loss is mild for correct confident answers and severe for confident mistakes.</p>
+  <div class="eq">$$p(y = 1 \mid x) = \sigma(wx + b) = \frac{1}{1 + e^{-(wx + b)}}, \qquad L = -\frac1n\sum\big[y\ln p + (1 - y)\ln(1 - p)\big]$$</div>
+  <ol class="steps">
+    <li>The score wx + b is the log-odds, ln(p/(1 − p)).</li>
+    <li>Boundary p = ½ at x = −b/w; w sets how sharply p changes.</li>
+    <li>No closed form: minimise L numerically (Newton's method here, gradient descent in general).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>These 40 points: Newton gives w = 1.27, b = −6.68, boundary at x = 5.28 (the labels were drawn around 5), average loss 0.28. The starting curve, w = 0.8, b = −4, has loss 0.31.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Treating the probability as a hard answer. 0.6 means "class 1, not sure"; thresholds other than ½ are often better (see ROC curves).</div>
+  <div class="try"><h4>Try it</h4>Make w large: the curve becomes a step, and the points on the wrong side of the boundary get very tall loss bars.</div>
+</section>
+<section data-case="logistic" data-example="lfit"><h3>Maximum likelihood</h3><p>w = 1.27, b = −6.68: the marker sits at the bottom of the loss curve. The points near x = 5, where labels are mixed, carry most of the loss.</p></section>
+<section data-case="logistic" data-example="separable"><h3>Separable data</h3><p>Every point left of 5 is 0, every one right is 1. Then a steeper curve always fits better (loss 0.046 at w = 3, 0.006 at w = 10): the best fit is an infinitely sharp step. In practice a penalty on large w (regularisation) keeps it finite.</p></section>
+<details><summary>About the model</summary>
+  <p>Least squares by the closed form; gradient descent on the mean squared error, optionally on the standardised feature; one-variable logistic regression by Newton's method. Tests: zero gradient and a true minimum at the least-squares line, R² of the mean line is 0; gradient descent reaches the least-squares slope (raw in 3000 steps, scaled in 30), and η = 0.035 diverges; Newton's solution has zero gradient with its boundary near 5; on separable data the loss keeps falling as w grows.</p>
+</details>

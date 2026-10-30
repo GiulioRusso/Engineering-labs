@@ -1,16 +1,17 @@
 <section data-case="spring">
-  <h3>The mass on a spring</h3>
-  <div class="look"><h4>What you are looking at</h4>A mass on a spring with its position, velocity and acceleration arrows; plots show x(t) and the energy sloshing between kinetic and elastic.</div>
-  <p>The spring pulls back in proportion to how far it is stretched. Pulled out, the mass is pushed back, overshoots, is pushed the other way: a sine wave. Energy moves from spring to motion and back. Damping drains it; a periodic push can pump it in — dramatically, at resonance.</p>
-  <div class="eq">$$m\ddot x = -kx - 2m\gamma\dot x + F_0\cos\omega_d t, \qquad \omega_0 = \sqrt{\frac{k}{m}}, \qquad T = 2\pi\sqrt{\frac{m}{k}}$$</div>
+  <h3>Simple harmonic motion</h3>
+  <div class="look"><h4>What you are looking at</h4>A mass on a spring with its force and velocity arrows. The plots show x(t) and the energy sloshing between kinetic and elastic.</div>
+  <p>The spring pulls back in proportion to how far it is stretched. Let go, and the mass is pushed back toward the middle, overshoots, and is pushed the other way. The result is a sine wave that repeats forever, because nothing takes energy away: it just moves from the spring into the motion and back.</p>
+  <div class="eq">$$m\ddot x = -kx, \qquad x(t) = x_0\cos\omega_0 t, \qquad \omega_0 = \sqrt{\frac{k}{m}}, \qquad T = 2\pi\sqrt{\frac{m}{k}}$$</div>
   <ol class="steps">
-    <li>The period does not depend on the amplitude: big or small swings take the same time.</li>
-    <li>Heavier → slower (√m); stiffer → faster (√k).</li>
-    <li>Driven at ω_d ≈ ω₀ the amplitude grows until damping balances the input.</li>
+    <li>Force: −kx, always pointing back to the middle, largest at the ends.</li>
+    <li>Speed: largest in the middle, zero at the ends where the mass turns round.</li>
+    <li>Energy: ½kx₀² at the start, all elastic; in the middle it is all kinetic, ½mv²; the total stays the same.</li>
+    <li>The period depends on m and k only, not on how far you pull it.</li>
   </ol>
-  <div class="worked"><h4>Worked example</h4>m = 1 kg, k = 10 N/m: ω₀ = 3.16 rad/s, T = 1.99 s. 4 kg: T = 3.97 s. Critical damping at γ = ω₀ = 3.16 /s returns fastest without overshoot (car suspensions aim near it).</div>
-  <div class="pitfall"><h4>Common mistake</h4>Thinking the force is largest at the centre: there it is zero; the speed is largest there.</div>
-  <div class="try"><h4>Try it</h4>Drive it at resonance, then lower the damping: the peak grows and takes longer to build.</div>
+  <div class="worked"><h4>Worked example</h4>m = 1 kg, k = 10 N/m, pulled out 30 cm: ω₀ = √10 = 3.16 rad/s, T = 1.99 s. Energy ½·10·0.3² = 0.45 J, so the top speed is √(2·0.45/1) = 0.95 m/s, which is also ω₀x₀. With 4 kg: T = 3.97 s.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking the force is largest in the middle: there it is zero, and the speed is largest. Thinking a bigger swing takes longer: it goes further but also faster.</div>
+  <div class="try"><h4>Try it</h4>Change the pull-out distance and read the measured period: it does not move.</div>
 </section>
 <section data-case="spring" data-example="heavy"><h3>Four times the mass</h3><p>More inertia, same pull: \(T \propto \sqrt m\), so the period doubles.</p></section>
 <section data-case="spring" data-example="stiff"><h3>Four times stiffer</h3><p>\(T \propto 1/\sqrt k\): half the period.</p></section>
@@ -32,24 +33,43 @@
 <section data-case="pendulum" data-example="damped"><h3>Air friction</h3><p>The swing keeps its rhythm but shrinks as \(e^{-\gamma t}\) (dashed envelope): energy goes into the air.</p></section>
 <section data-case="pendulum" data-example="pushed"><h3>Pushed in rhythm</h3><p>Small pushes at the pendulum's own frequency \(\sqrt{g/L}\) add up swing after swing, as on a playground swing. The amplitude grows until friction removes energy as fast as the pushes add it.</p></section>
 
-<section data-case="spring pendulum">
-  <h3>Damping</h3>
-  <p>Friction proportional to the speed drains energy: the oscillation keeps its rhythm but its amplitude shrinks as \(e^{-\gamma t}\) (dashed envelope).</p>
+<section data-case="damped">
+  <h3>Damped oscillations</h3>
+  <div class="look"><h4>What you are looking at</h4>The same mass and spring with friction proportional to the speed. The dashed curves on x(t) are the envelope ±x₀e^(−γt); the energy plot runs downhill.</div>
+  <p>A real spring does not swing forever: air and internal friction take a little energy each cycle. When the friction force is proportional to the speed, the swing keeps almost the same rhythm but its size shrinks by the same fraction every second: an exponential decay. With strong enough friction it no longer swings at all.</p>
   <div class="eq">$$\ddot x + 2\gamma\dot x + \omega_0^2 x = 0, \qquad x \approx x_0 e^{-\gamma t}\cos\omega_1 t, \quad \omega_1 = \sqrt{\omega_0^2 - \gamma^2}$$</div>
+  <ol class="steps">
+    <li>Compare γ with ω₀. γ &lt; ω₀: underdamped, it oscillates and shrinks.</li>
+    <li>γ = ω₀: critically damped, the fastest return with no overshoot.</li>
+    <li>γ &gt; ω₀: overdamped, it creeps back without crossing zero.</li>
+    <li>The energy falls twice as fast as the amplitude, as e^(−2γt), because it goes as x².</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>ω₀ = 3.16 rad/s, γ = 0.08 /s: ω₁ = 3.161 rad/s, the period hardly changes. After 10 s the amplitude is e^(−0.8) = 0.45 of the start; it drops below 1 % after ln(100)/γ ≈ 58 s. Critical damping (γ = 3.16 /s) gets within 1 % in 2.1 s; heavy overdamping (γ = 8 /s) needs 7.1 s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking more damping always settles faster. Past critical damping it gets slower again: the friction holds the mass back too.</div>
+  <div class="try"><h4>Try it</h4>Slide γ up from 0 to 8 and watch the overshoot disappear at γ = ω₀.</div>
 </section>
-<section data-case="spring" data-example="light"><h3>Light damping</h3><p>\(\gamma \ll \omega_0\): many swings, each slightly smaller. A guitar string or a swing.</p></section>
-<section data-case="spring" data-example="critical"><h3>Critical damping</h3><p>\(\gamma = \omega_0\): the fastest return to rest without overshooting. Car suspensions and door closers are tuned close to this.</p></section>
-<section data-case="spring" data-example="over"><h3>Overdamped</h3><p>\(\gamma > \omega_0\): no oscillation at all, it creeps back slowly, as if moving through honey.</p></section>
+<section data-case="damped" data-example="critical"><h3>Critical damping</h3><p>\(\gamma = \omega_0\): the fastest return to rest without overshooting. Car suspensions and door closers are tuned close to this.</p></section>
+<section data-case="damped" data-example="over"><h3>Overdamped</h3><p>\(\gamma > \omega_0\): no oscillation at all, it creeps back slowly, as if moving through honey.</p></section>
 
-<section data-case="spring pendulum">
+<section data-case="driven">
   <h3>Driven oscillations and resonance</h3>
-  <p>Push periodically at \(\omega_d\). After the start-up dies away, the mass follows the drive, with an amplitude that peaks when the drive matches the natural frequency (right plot).</p>
-  <div class="eq">$$\ddot x + 2\gamma\dot x + \omega_0^2 x = \frac{F_0}{m}\cos\omega_d t, \qquad A = \frac{F_0/m}{\sqrt{(\omega_0^2 - \omega_d^2)^2 + (2\gamma\omega_d)^2}}$$</div>
+  <div class="look"><h4>What you are looking at</h4>The mass starts at rest and is pushed by a force F₀cos(ω_d t). Left plot: x(t), a start-up transient then a steady swing. Right plot: the steady amplitude for every drive frequency, with the cursor at the current one.</div>
+  <p>Push a damped oscillator periodically. At first its own motion and the forced motion mix; the own motion dies away (that is the damping) and what remains swings at the drive frequency, not its own. How big that swing is depends on how close the drive is to the natural frequency: pushes in step with the natural swing add up, and only the damping stops them growing.</p>
+  <div class="eq">$$\ddot x + 2\gamma\dot x + \omega_0^2 x = \frac{F_0}{m}\cos\omega_d t, \qquad A = \frac{F_0/m}{\sqrt{(\omega_0^2 - \omega_d^2)^2 + (2\gamma\omega_d)^2}}, \qquad \tan\varphi = \frac{2\gamma\omega_d}{\omega_0^2 - \omega_d^2}$$</div>
+  <ol class="steps">
+    <li>Wait for the transient to die out (a few times 1/γ).</li>
+    <li>Below ω₀ the spring dominates: x ≈ F/k, in step with the push (φ ≈ 0).</li>
+    <li>At ω₀ the spring and the inertia cancel: only damping limits A = F₀/(2mγω₀), and x lags by 90°, so the push is always along the velocity and always adds energy.</li>
+    <li>Above ω₀ inertia dominates: small A, opposite to the push (φ → 180°).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>m = 1 kg, k = 10 N/m, γ = 0.2 /s, F₀ = 1 N. At ω_d = 1 rad/s: A = 0.111 m, lag 2.5° (the static stretch F₀/k is 0.1 m). At ω_d = ω₀ = 3.16 rad/s: A = 0.79 m, lag 90°. At ω_d = 7 rad/s: A = 0.026 m, lag 176°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking it oscillates at its own frequency once driven. In the steady state it follows the drive; ω₀ only sets how big the response is.</div>
+  <div class="try"><h4>Try it</h4>Sweep ω_d across ω₀ and read the lag in the readout: 0°, then 90° at the peak, then towards 180°.</div>
 </section>
-<section data-case="spring" data-example="resonance"><h3>At resonance</h3><p>Each push arrives just when it helps most: the amplitude grows until the damping removes energy as fast as the drive adds it, \(A = F_0/(2m\gamma\omega_0)\).</p></section>
-<section data-case="spring" data-example="above"><h3>Far above resonance</h3><p>The mass cannot keep up: tiny amplitude, moving opposite to the push (180° out of phase).</p></section>
-<section data-case="spring" data-example="sharp"><h3>Less damping</h3><p>The peak grows taller and narrower: its width is about \(2\gamma\). This is how a radio tunes to one station, and how soldiers marching in step can shake a bridge.</p></section>
+<section data-case="driven" data-example="below"><h3>Driven slowly</h3><p>At ω_d = 1 rad/s, about three times below ω₀: the mass simply follows the force, stretched by about F₀/k, almost in phase.</p></section>
+<section data-case="driven" data-example="above"><h3>Far above resonance</h3><p>The mass cannot keep up: tiny amplitude, moving opposite to the push (180° out of phase).</p></section>
+<section data-case="driven" data-example="sharp"><h3>Less damping</h3><p>The peak grows taller and narrower: its width is about \(2\gamma\). This is how a radio tunes to one station, and how soldiers marching in step can shake a bridge.</p></section>
 
 <details><summary>About the model</summary>
-  <p>RK4 at \(\Delta t = 2\) ms over 20 s. Tests: spring period vs \(2\pi\sqrt{m/k}\) (10⁻⁵) and energy (10⁻⁹); pendulum at 115° vs the AGM period (10⁻⁵); damped envelope vs \(e^{-\gamma t}\) (2 %); steady driven amplitude vs the resonance formula at three frequencies (0.2 %).</p>
+  <p>RK4 at \(\Delta t = 2\) ms over 20 s. Tests: spring period vs \(2\pi\sqrt{m/k}\) (10⁻⁵) and energy (10⁻⁹); pendulum at 115° vs the AGM period (10⁻⁵); damped envelope vs \(e^{-\gamma t}\) (2 %); steady driven amplitude vs the resonance formula at three frequencies (0.2 %), and the measured phase lag vs the formula (within 0.6°).</p>
 </details>

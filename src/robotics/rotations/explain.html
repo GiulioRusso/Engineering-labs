@@ -1,0 +1,91 @@
+<section data-case="elementary">
+  <h3>Rotation matrices</h3>
+  <div class="look"><h4>What you are looking at</h4>The world frame (thin) and a body frame x′ y′ z′ (thick, red–green–blue) attached to a small aircraft-like body, turning from the world frame to its final orientation as the clock runs. A vector p fixed in the body turns with it. The panel shows the rotation matrix R.</div>
+  <p>A robot has to know which way each link and the gripper are pointing. That orientation is a rotation from a reference frame, and it is stored as a 3×3 matrix with a very concrete meaning: its three columns are the unit vectors of the rotated frame, x′, y′ and z′, written in the reference frame’s coordinates. Multiplying R by a vector expressed in the body frame gives the same vector expressed in the world frame. The three simplest rotations are about a single axis; that axis stays put and the other two turn in its plane.</p>
+  <div class="eq">$$R_z(\vartheta) = \begin{bmatrix} \cos\vartheta & -\sin\vartheta & 0\\ \sin\vartheta & \cos\vartheta & 0\\ 0 & 0 & 1\end{bmatrix}, \qquad R^\mathsf{T}R = I, \quad \det R = 1, \qquad p^0 = R\,p^1$$</div>
+  <ol class="steps">
+    <li>Read the columns: where the body’s x, y and z axes point now.</li>
+    <li>Orthonormal columns: the inverse is just the transpose, R⁻¹ = Rᵀ.</li>
+    <li>The same R also rotates a vector: R p gives p turned with the body.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>R_z(90°) = [[0, −1, 0], [1, 0, 0], [0, 0, 1]]: first column (0, 1, 0), so x′ now points along the world y; second column (−1, 0, 0), y′ along −x; z′ unchanged.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading the rows instead of the columns. The rows are the world axes seen from the body frame (the columns of Rᵀ).</div>
+  <div class="try"><h4>Try it</h4>Set 90° about each axis in turn and check which column of the matrix stays (0, 0, 1), (0, 1, 0) or (1, 0, 0).</div>
+</section>
+<section data-case="elementary" data-example="x45"><h3>45° about x</h3><p>x′ stays on the world x axis; y′ and z′ tip by 45° in the y–z plane, so the second and third columns contain ±0.71.</p></section>
+<section data-case="elementary" data-example="y180"><h3>180° about y</h3><p>y′ stays; x′ and z′ flip: R = diag(−1, 1, −1). A half turn is its own inverse.</p></section>
+<section data-case="elementary" data-example="neg"><h3>Back again</h3><p>R_z(−90°) is the transpose of R_z(90°): turning back is the inverse rotation.</p></section>
+
+<section data-case="compose">
+  <h3>Composing rotations</h3>
+  <div class="look"><h4>What you are looking at</h4>Two rotations played one after the other: the faint frame is the orientation after the first, the thick one after both. The panel says which matrix product that is, and whether the other convention would end somewhere else.</div>
+  <p>Orientations are built from several simple rotations, and the order matters. If each rotation is about an axis of the <em>current</em>, already-moved frame (as when a joint turns about its own axis), the matrices multiply left to right: R = R₁R₂. If each is about a <em>fixed</em> world axis, the new rotation goes on the left: R = R₂R₁. Rotations about different axes do not commute, so the two answers differ. This is exactly how a robot arm stacks its joints: each joint rotates about an axis of the link before it.</p>
+  <div class="eq">$$\text{current frame: } R = R_1 R_2, \qquad \text{fixed frame: } R = R_2 R_1, \qquad R_1R_2 \ne R_2R_1 \text{ in general}$$</div>
+  <ol class="steps">
+    <li>Current axes: post-multiply, in the order the rotations are made.</li>
+    <li>Fixed axes: pre-multiply, so the list reads backwards.</li>
+    <li>Rotations about the same axis commute; their angles add.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>90° about z, then 90° about the new x: R = R_z R_x = [[0, 0, 1], [1, 0, 0], [0, 1, 0]]. The same two about fixed axes: R_x R_z = [[0, −1, 0], [0, 0, −1], [1, 0, 0]]: x′ ends along world y in the first case, along world z in the second.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Multiplying the matrices in the order the rotations are listed without asking about which frame each one is made.</div>
+  <div class="try"><h4>Try it</h4>Keep the angles and flip “current” to “fixed”: the final frame jumps, the intermediate one does not.</div>
+</section>
+<section data-case="compose" data-example="fixed"><h3>About fixed axes</h3><p>The second 90° is about the world x axis, not the turned one: R = R_x R_z. A different orientation from the same two moves.</p></section>
+<section data-case="compose" data-example="swap"><h3>Swapped order</h3><p>x first, then z: yet another result. Three-dimensional rotations do not commute.</p></section>
+<section data-case="compose" data-example="same"><h3>Same axis</h3><p>30° then 60° about z: 90° about z, in either order and either convention.</p></section>
+
+<section data-case="euler">
+  <h3>Euler angles and roll–pitch–yaw</h3>
+  <div class="look"><h4>What you are looking at</h4>The three elementary rotations of the convention played in turn, each about the current frame; the two faint frames are the orientations after the first and second. The panel shows R and the three angles recovered from it.</div>
+  <p>Nine numbers with six constraints leave three degrees of freedom, so three angles are enough to describe any orientation. ZYZ Euler angles turn about z, then the new y, then the new z, and suit spherical wrists. Roll–pitch–yaw turns about z (yaw), then y (pitch), then x (roll), and suit vehicles and the end-effector of a robot. Every three-angle description has a weak spot: when the middle rotation lines up the first and third axes, the first and third angles do the same thing. One degree of freedom is lost, the angles cannot be recovered uniquely, and near it small orientation changes need huge angle changes. That is gimbal lock, and the reason quaternions exist.</p>
+  <div class="eq">$$R_{ZYZ} = R_z(\varphi)R_y(\vartheta)R_z(\psi), \qquad R_{RPY} = R_z(\varphi)R_y(\vartheta)R_x(\psi), \qquad \vartheta = \operatorname{atan2}\!\left(\sqrt{r_{13}^2 + r_{23}^2},\, r_{33}\right)$$</div>
+  <ol class="steps">
+    <li>Build R by multiplying the three elementary matrices left to right.</li>
+    <li>Back from R: θ from the third column (ZYZ) or the third row (RPY), then φ and ψ with atan2.</li>
+    <li>ZYZ is singular at θ = 0 or 180°; RPY at pitch ±90°.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>ZYZ with φ = 30°, θ = 45°, ψ = 60°: third column of R = (0.612, 0.354, 0.707), so θ = atan2(√(0.612² + 0.354²), 0.707) = 45°, and φ = atan2(0.354, 0.612) = 30°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Averaging or interpolating Euler angles. Halfway between two orientations is not the orientation at half the angles, especially near a singularity.</div>
+  <div class="try"><h4>Try it</h4>In ZYZ set θ = 0 and move φ, then ψ: they turn the body about the same axis.</div>
+</section>
+<section data-case="euler" data-example="lock"><h3>Gimbal lock (ZYZ)</h3><p>θ = 0: the second rotation does nothing, so the first and third are both about z. Only φ + ψ = 90° can be recovered; the panel reports ψ = 0 by convention.</p></section>
+<section data-case="euler" data-example="rpy"><h3>Roll–pitch–yaw</h3><p>Yaw 30° about z, pitch 20° about the new y, roll 40° about the newest x: the way an aircraft’s attitude, or the Jaco2 end-effector’s orientation in the project (Rot2rpy), is written.</p></section>
+<section data-case="euler" data-example="rpylock"><h3>Pitch 90°</h3><p>The nose points straight up: yaw and roll now turn about the same axis. Only φ − ψ is defined.</p></section>
+
+<section data-case="quaternion">
+  <h3>Axis–angle and unit quaternions</h3>
+  <div class="look"><h4>What you are looking at</h4>The rotation axis r (orange) and the body turning about it from the start to the angle θ, the tip of x′ leaving a trail. The panel shows R, the unit quaternion and the orientation error from the start.</div>
+  <p>Euler’s rotation theorem: any orientation is reached by a single rotation by an angle θ about some axis r. A unit quaternion packs exactly that into four numbers: a scalar η = cos(θ/2) and a vector ε = sin(θ/2) r. Unlike three angles it has no singularity, interpolates smoothly (slerp), and gives a clean measure of how far one orientation is from another. The Jaco2 project controls the gripper’s orientation with the quaternion error e_O = η ε_d − η_d ε − ε_d × ε, which is zero when the two agree and behaves like sin of half the angle between them.</p>
+  <div class="eq">$$\mathcal Q = \{\eta, \boldsymbol\varepsilon\} = \left\{\cos\frac\vartheta2,\ \sin\frac\vartheta2\,\mathbf r\right\}, \qquad \eta^2 + \|\boldsymbol\varepsilon\|^2 = 1, \qquad e_O = \eta\,\boldsymbol\varepsilon_d - \eta_d\,\boldsymbol\varepsilon - \boldsymbol\varepsilon_d\times\boldsymbol\varepsilon$$</div>
+  <ol class="steps">
+    <li>Axis and angle → quaternion: half the angle.</li>
+    <li>Q and −Q are the same orientation; QuatError flips the sign to take the shorter way.</li>
+    <li>Quaternion → R and back without any singular case (Rot2Quat).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>θ = 120° about r = (0.81, 0.30, 0.50): η = cos 60° = 0.5, ε = sin 60° × r = (0.70, 0.26, 0.43). Error from the start: |e_O| = sin 60° = 0.866.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting the half angle: a quaternion with η = 0 is a 180° rotation, not 90°.</div>
+  <div class="try"><h4>Try it</h4>Play the clock and watch |e_O| grow as sin(θ/2): almost linear for small errors, which is why a proportional controller on e_O works well.</div>
+</section>
+<section data-case="quaternion" data-example="small"><h3>A small error</h3><p>10°: |ε| = sin 5° = 0.087 ≈ θ/2 in radians. Close to the target, the quaternion error is just half the rotation vector.</p></section>
+<section data-case="quaternion" data-example="half"><h3>Half a turn</h3><p>180°: η = 0 and ε = r. The furthest any orientation can be from another.</p></section>
+<section data-case="quaternion" data-example="task3"><h3>Jaco2 task 3</h3><p>The project rotates the gripper by 45° about its own z while tracing the square: Q = {cos 22.5°, (0, 0, sin 22.5°)} = {0.924, (0, 0, 0.383)}. The CLIK loop drives e_O to below 5·10⁻⁵.</p></section>
+
+<section data-case="homogeneous">
+  <h3>Homogeneous transforms</h3>
+  <div class="look"><h4>What you are looking at</h4>A frame 1 placed at origin o₁ (grey arrow) with orientation R (yaw only here), and a point given by its coordinates p¹ in frame 1: the orange arrow R p¹ from o₁ and the result p⁰ in world coordinates (blue).</div>
+  <p>Position and orientation together form a pose. A point known in frame 1 (say, the tip of a gripper in the gripper’s own frame) is found in the world frame by first rotating its coordinates and then adding where frame 1 is. A 4×4 homogeneous matrix packs both steps into one product, and chains of them simply multiply: frame 0 to 1 to 2 to the gripper. This is how a robot’s forward kinematics is computed, one link at a time.</p>
+  <div class="eq">$$\mathbf p^0 = \mathbf o_1^0 + R_1^0\,\mathbf p^1 \quad\Leftrightarrow\quad \begin{bmatrix}\mathbf p^0\\1\end{bmatrix} = \underbrace{\begin{bmatrix}R_1^0 & \mathbf o_1^0\\ \mathbf 0^\mathsf{T} & 1\end{bmatrix}}_{T_1^0}\begin{bmatrix}\mathbf p^1\\1\end{bmatrix}, \qquad T_2^0 = T_1^0\,T_2^1$$</div>
+  <ol class="steps">
+    <li>Rotate the coordinates: R p¹.</li>
+    <li>Translate: add o₁.</li>
+    <li>Inverse: T⁻¹ = [Rᵀ, −Rᵀo₁; 0, 1], not the plain matrix inverse of each block.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Frame 1 at o₁ = (0.5, 0.4, 0.2), yawed 40°; p¹ = (0.6, 0.3, 0.4). R p¹ = (0.267, 0.616, 0.4), so p⁰ = (0.767, 1.015, 0.6).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding the translation before rotating. The offset o₁ is already in world coordinates; only p¹ needs rotating.</div>
+  <div class="try"><h4>Try it</h4>Change only the yaw: the orange arrow swings about o₁, and the blue one follows.</div>
+</section>
+<section data-case="homogeneous" data-example="shift"><h3>Translation only</h3><p>R = I: p⁰ = o₁ + p¹, plain vector addition.</p></section>
+<section data-case="homogeneous" data-example="turn"><h3>Rotation only</h3><p>o₁ = 0 and a 90° yaw: p⁰ = R p¹ = (−0.3, 0.6, 0.4).</p></section>
+<details><summary>About the model</summary>
+  <p>Shared robotics library (robotics/kin), after Siciliano, Sciavicco, Villani and Oriolo, <em>Robotics: Modelling, Planning and Control</em> (2009), ch. 2–3, and the course library of the Jaco2 project (Rot2Quat, QuatError). Tests: RRᵀ = I; ZYZ, RPY, axis–angle and quaternion round trips (10⁻¹²); the ZYZ singular case returns φ + ψ; QuatError is zero when aligned and |e_O| = sin(θ/2); slerp moves at a constant angular rate.</p>
+</details>

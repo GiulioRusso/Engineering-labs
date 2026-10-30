@@ -1,4 +1,4 @@
-import { simulate, energy, period, steadyAmplitude, measuredPeriod, omega0 } from './model.js';
+import { simulate, energy, period, steadyAmplitude, phaseLag, measuredPeriod, omega0 } from './model.js';
 import { near, ok } from '../../lib/testing.js';
 
 const spring = { kind: 'spring', m: 1, k: 10, x0: 0.3, gamma: 0, F0: 0, wd: 0 };
@@ -28,5 +28,15 @@ export const tests = {
       let a = 0; for (let i = 0; i < r.t.length; i++) if (r.t[i] > 45) a = Math.max(a, Math.abs(r.q[i]));
       near(a, steadyAmplitude(Math.sqrt(10), 0.3, 1, wd), 2e-3, `ω_d = ${wd.toFixed(2)}`);
     }
+  },
+  'driven: the response lags the drive by the phase formula (90° at resonance)'() {
+    for (const wd of [1, Math.sqrt(10), 7]) {
+      const s = { ...spring, x0: 0, gamma: 0.3, F0: 1, wd }, r = simulate(s, 60), P = 2 * Math.PI / wd;
+      const t0 = Math.ceil(45 / P) * P; let im = 0, best = -Infinity; // a drive maximum after the transient
+      for (let i = 0; i < r.t.length; i++) if (r.t[i] >= t0 && r.t[i] < t0 + P && r.q[i] > best) { best = r.q[i]; im = i; }
+      const lag = wd * (r.t[im] - t0), want = phaseLag(Math.sqrt(10), 0.3, wd);
+      ok(Math.abs(lag - want) < 0.01, `ω_d = ${wd.toFixed(2)}: lag ${lag} rad, want ${want}`); // within 0.6°
+    }
+    near(phaseLag(2, 0.1, 2), Math.PI / 2, 1e-12, 'exactly 90° at ω_d = ω₀');
   },
 };

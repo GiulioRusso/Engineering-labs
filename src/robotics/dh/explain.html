@@ -1,0 +1,41 @@
+<section data-case="anthro jaco2">
+  <div class="look"><h4>What you are looking at</h4>The robot drawn from its DH table: links (grey), joints as discs about their axes (the highlighted one in orange), a small frame at every joint numbered 0 to n, and the highlighted frame drawn large. The panel shows that frame’s DH row, the tip position and the tip orientation. Tick “Sweep” to swing the highlighted joint and trace the path of the tip.</div>
+</section>
+<section data-case="anthro">
+  <h3>Forward kinematics and the DH convention</h3>
+  <p>Forward kinematics answers: given the joint angles, where is the hand? Each link is a rigid body, so the pose of each frame relative to the one before is a homogeneous transform; chain them and you have the hand. The Denavit–Hartenberg convention makes every link transform the same shape, fixed by only four numbers: put each frame’s z axis along a joint axis, then go from one frame to the next by a rotation θ about z, a slide d along z, a slide a along the new x, and a twist α about it. For a revolute joint θ is the joint variable; a, α and d are fixed by the link’s geometry and make up the DH table.</p>
+  <div class="eq">$$A_i^{i-1}(q_i) = R_z(\vartheta_i)\,T_z(d_i)\,T_x(a_i)\,R_x(\alpha_i), \qquad T_n^0(\mathbf q) = A_1^0(q_1)\,A_2^1(q_2)\cdots A_n^{n-1}(q_n)$$</div>
+  <ol class="steps">
+    <li>z_{i−1} along the axis of joint i.</li>
+    <li>x_i along the common normal between z_{i−1} and z_i; a_i is its length, α_i the twist between the two axes.</li>
+    <li>d_i: offset along z_{i−1}; θ_i: angle about z_{i−1}, the joint variable.</li>
+    <li>Multiply the n transforms: position = last column, orientation = the 3×3 block.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Anthropomorphic arm, table (a, α, d) = (0, 90°, 0.40), (0.45, 0, 0), (0.40, 0, 0). Stretched out (q₂ = q₃ = 0) the tip is at (0.45 + 0.40, 0, 0.40) = (0.85, 0, 0.40). With q₂ = 30°, q₃ = −60°: x = 0.45 cos 30° + 0.40 cos(−30°) = 0.736, z = 0.40 + 0.45 sin 30° − 0.40 sin 30° = 0.425.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Mixing up which frame a DH row belongs to: row i uses θᵢ and dᵢ along z_{i−1} (the previous frame) but aᵢ and αᵢ along xᵢ (the new one).</div>
+  <div class="try"><h4>Try it</h4>Highlight frame 1 and change q₁: frame 1 turns about z₀, and everything beyond it turns along.</div>
+</section>
+<section data-case="anthro" data-example="base"><h3>Turning the base</h3><p>Joint 1 turns about the vertical axis: the whole arm swings round, the tip keeps its height (0.425 m) and distance from the axis.</p></section>
+<section data-case="anthro" data-example="down"><h3>Elbow down</h3><p>q₂ = −20°, q₃ = 60°: a different posture; the tip moves to (0.729, 0, 0.503). For most positions there are two answers, elbow up and elbow down: inverse kinematics has to choose.</p></section>
+<section data-case="anthro" data-example="reach"><h3>Stretched out</h3><p>All in line: the tip at 0.85 m, as far as it can go. Here the arm cannot move the tip further out: a singular configuration, the edge of the workspace.</p></section>
+<section data-case="anthro" data-example="frame1"><h3>Frame 1</h3><p>Row 1: a = 0, α = 90°, d = 0.40 m. Frame 1 sits 0.40 m up the base axis (the shoulder) and is twisted 90° about x, so its z axis lies horizontal: the shoulder joint’s axis.</p></section>
+
+<section data-case="jaco2">
+  <h3>A 7-joint arm: the Kinova Jaco2</h3>
+  <p>The Jaco2 of the course project has seven revolute joints with a very regular DH table: every a is zero and every twist is 90°, so consecutive axes are perpendicular, with offsets d along them (0.2755 m at the base, −0.41 m upper arm, −0.31 m forearm, 0.26 m to the gripper). Seven joints for a six-dimensional task (position and orientation) leave one spare degree of freedom: the elbow can swing round the line from shoulder to wrist while the hand stays still. The project uses this arm for CLIK tracking of a square and for impedance control against a surface.</p>
+  <div class="eq">$$\mathbf a = \mathbf 0, \quad \boldsymbol\alpha = (90°, 90°, 90°, 90°, 90°, 90°, 0), \quad \mathbf d = (0.2755,\ 0,\ -0.41,\ -0.0098,\ -0.3111,\ 0,\ 0.2638)\ \text{m}$$</div>
+  <ol class="steps">
+    <li>Same recipe: seven A matrices, multiplied in order.</li>
+    <li>The geometric Jacobian has 6 rows and 7 columns: at best rank 6, one direction of joint motion moves nothing at the hand (the null space).</li>
+    <li>At some postures links line up and the rank drops: a singularity.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>The project’s home posture q₀ = (77, −17, 0, 43, −94, 77, 71)°: the gripper at (0.212, −0.264, 0.498) m, Jacobian rank 6.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using the robot maker’s joint angles directly in a DH model. The Kinova convention differs from DH by offsets and signs; the project converts with mask_q_DH2Jaco and mask_q_Jaco2DH.</div>
+  <div class="try"><h4>Try it</h4>Highlight joint 3, tick “Sweep”: the elbow rolls, and the tip traces only a short arc.</div>
+</section>
+<section data-case="jaco2" data-example="zero"><h3>All zeros</h3><p>With this DH table, all joints at zero fold the arm onto itself: the tip ends 11 cm above the base and the Jacobian’s rank drops to 3. Half the directions of motion are lost: a strongly singular posture to keep away from.</p></section>
+<section data-case="jaco2" data-example="wrist"><h3>The wrist</h3><p>Joint 7 turns the gripper about its own axis: position unchanged, orientation (roll) changes. The last three joints form the wrist that sets orientation.</p></section>
+<section data-case="jaco2" data-example="elbow"><h3>The redundant elbow</h3><p>Joint 3 at 60° instead of 0: the elbow moves and the hand moves too. Moving the hand back to where it was, using the other joints, is exactly the null-space motion of a redundant arm (see Redundancy).</p></section>
+<details><summary>About the model</summary>
+  <p>Standard DH convention (Siciliano et al., ch. 2.8); the Jaco2 table is the one in the course model (G. Antonelli, Introduction to Robotics, University of Cassino, 2022/23), as used by the Jaco2 project’s DirectKinematics.m. Tests: the geometric Jacobian of both arms matches finite differences of the forward kinematics, position (10⁻⁸) and angular velocity (10⁻⁶).</p>
+</details>

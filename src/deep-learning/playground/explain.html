@@ -1,0 +1,56 @@
+<section data-case="xor">
+  <h3>Training a small network</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: 240 training points (large) and 240 unseen test points (small) of the XOR pattern, over the network's current answer: gold where it says class 1, blue where it says class 0, dark at the boundary. Top right: the network, 2 inputs → 4 hidden units → 1 output; each square shows what that unit responds to over the whole plane, and the lines are the weights. Bottom: loss and accuracy, epoch by epoch, as it trains (press play).</div>
+  <p>Training adjusts every weight a little, again and again, to lower the loss: a measure of how wrong the predictions are on the training points. Watch the hidden units: each one learns to split the plane with a soft line. The output unit then combines those half-planes, adding some and subtracting others, into a shape no single line could make: here, the four quadrants of XOR. The test points were never used for training: their accuracy tells you whether the network learned the pattern or just the points.</p>
+  <div class="eq">$$\mathbf h = \tanh(W_1\mathbf x + \mathbf b_1), \qquad \hat y = \sigma(\mathbf w_2\cdot\mathbf h + b_2), \qquad L = -\frac1N\sum\big[y\ln\hat y + (1 - y)\ln(1 - \hat y)\big]$$</div>
+  <ol class="steps">
+    <li>Each epoch: shuffle the training points, split into mini-batches of 16.</li>
+    <li>For each batch: forward pass, loss, backpropagation for the gradient, an Adam step.</li>
+    <li>Look at the unit maps: one line each.</li>
+    <li>Compare training and test curves: close together means it generalises.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>2 → 4 → 1 with tanh: 4 × 3 + 5 = 17 parameters. After 160 epochs: 98.8 % right on the training points, 97.5 % on the unseen test points.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Judging a network by its training accuracy alone. A network can memorise the training points; only unseen data shows what it really learned.</div>
+  <div class="try"><h4>Try it</h4>Change the seed (the starting weights): the units may learn different lines, yet the final map looks much the same.</div>
+</section>
+<section data-case="xor" data-example="no-hidden"><h3>No hidden layer</h3><p>A single output neuron draws one straight line, and no line splits XOR: it stays at a coin toss, 49 % on the test points.</p></section>
+<section data-case="xor" data-example="two"><h3>Two hidden units</h3><p>XOR can be built from two lines, but finding them by gradient descent from this start is hard: here it stalls at 73 %, with one quadrant wrong. Extra units make training far easier, even when fewer would be enough in principle.</p></section>
+
+<section data-case="circles">
+  <h3>Circles: combining half-planes</h3>
+  <div class="look"><h4>What you are looking at</h4>One class inside a disc, the other in a ring around it. Same network, 4 hidden tanh units.</div>
+  <p>A closed boundary needs several lines working together: each hidden unit cuts off one side, and the output fires only where all of them agree. With tanh the cuts are soft, so the corners round off into something close to a circle.</p>
+  <div class="eq">$$\text{boundary} = \{\mathbf x : \mathbf w_2\cdot\tanh(W_1\mathbf x + \mathbf b_1) + b_2 = 0\}$$</div>
+  <ol class="steps">
+    <li>Count the hidden units' lines in their squares.</li>
+    <li>The output weights decide which side of each line counts.</li>
+    <li>Three lines already make a triangle around the centre; four, a rounded square.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>4 tanh units: 99.6 % training, 97.5 % test after 160 epochs.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the network "knows" it is a circle. It only knows a shape that fits the points; far outside the data its answer can be anything.</div>
+  <div class="try"><h4>Try it</h4>Step the units from 1 to 4 and count how many sides the boundary gets.</div>
+</section>
+<section data-case="circles" data-example="one"><h3>One hidden unit</h3><p>One unit, one line: the network can only cut the disc in two, 68 % on the test points.</p></section>
+<section data-case="circles" data-example="relu"><h3>ReLU</h3><p>ReLU units fold the plane along straight creases, so the boundary is a polygon with sharp corners: 99.2 % on the test points, the best of the three.</p></section>
+
+<section data-case="spiral">
+  <h3>Depth, width and the learning rate</h3>
+  <div class="look"><h4>What you are looking at</h4>Two interleaved spirals, a much harder pattern, learned by two hidden layers of 8 ReLU units each.</div>
+  <p>The first layer can only make straight folds of the plane. A second layer folds those folded pieces again, so the number of regions grows very quickly with depth: that is the main reason deep networks are so expressive. The learning rate sets the step size; too small and training crawls, too large and each step overshoots, so the loss jumps around or the units die.</p>
+  <div class="eq">$$\theta \leftarrow \theta - \eta\,\frac{\hat m}{\sqrt{\hat v} + \epsilon} \;\text{(Adam)}, \qquad L_\text{total} = L + \frac{\lambda}{2}\sum w^2 \;\text{(weight decay)}$$</div>
+  <ol class="steps">
+    <li>More layers: regions multiply (each layer folds the previous result).</li>
+    <li>More units per layer: more folds per layer.</li>
+    <li>Learning rate: about 0.01 here; a factor 30 more breaks it.</li>
+    <li>Weight decay pulls weights towards 0: smoother boundaries, less overfitting.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>2 → 8 → 8 → 1, 105 parameters: 100 % training, 97.1 % test. One layer of 8 (33 parameters): 85 % and 76 %.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding parameters is not the same as adding depth. One wider layer can need many more units to match two narrow ones.</div>
+  <div class="try"><h4>Try it</h4>Go to 3 hidden layers: training gets there faster.</div>
+</section>
+<section data-case="spiral" data-example="shallow"><h3>One layer of 8</h3><p>The map stays a coarse patchwork of straight edges: 85 % training, 76 % test. The spirals turn too often for 8 folds.</p></section>
+<section data-case="spiral" data-example="lr-high"><h3>Learning rate 0.3</h3><p>The first steps are so large that all 8 units of the second layer are pushed to where they never fire, for any input. Dead ReLUs pass no gradient, so nothing can recover: the output is a constant 0.5, and accuracy stays at 50 %.</p></section>
+<section data-case="spiral" data-example="l2"><h3>Weight decay</h3><p>\(\lambda = 0.003\) keeps the weights small: the boundary is smoother and less wiggly between the arms, at a small cost here (98.3 % training, 96.3 % test). On noisier data it is what prevents memorising.</p></section>
+<details><summary>About the model</summary>
+  <p>Dense network written from scratch (forward pass, backpropagation, Adam, mini-batches of 16), the same engine as the MNIST labs. 240 training and 240 test points, seeded. Tests: datasets balanced; a single neuron fails on circles and XOR while one hidden layer of 4 reaches above 95 % on test data; on the spirals [8, 8] beats [3] by more than 15 points. Backpropagation itself is checked against finite differences.</p>
+</details>

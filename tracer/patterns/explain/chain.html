@@ -1,0 +1,16 @@
+<section>
+  <h3>Chain of Responsibility</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> Support tickets go to whoever can deal with them: a bot answers easy questions, an agent fixes accounts, engineers fix bugs. If the app decided who gets what, it would need to know every team and their rules.</p>
+  <p><b>Solution.</b> Link the handlers in a chain, each with a pointer to the next. The app gives every ticket to the first handler. Each handler either resolves it or passes it along. Adding, removing or reordering handlers changes only how the chain is linked.</p>
+  <ol class="steps">
+    <li>A Handler base with a <code>next</code> pointer and <code>handle()</code>.</li>
+    <li>Each subclass says what it can handle and how.</li>
+    <li><code>handle()</code>: deal with it, or forward it to <code>next</code>.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>Event bubbling in the browser DOM (a click goes to the button, then its parents), middleware pipelines, exception handlers searched outward through the call stack, logging levels.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Requests that fall off the end unhandled, with nobody noticing; put a catch-all at the end. And long chains that make it hard to see who handled what.</div>
+  <div class="try"><h4>Try it</h4>Count how far each ticket travels before someone takes it: one hop, two, three.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> a question (bot), a double charge (agent) and a crash (engineer).</p></section>
+<section data-case="in1"><p><b>This scenario:</b> a request nobody can handle falls off the end of the chain.</p></section>

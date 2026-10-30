@@ -1,0 +1,74 @@
+<section data-case="fk">
+  <h3>A planar arm: forward kinematics and workspace</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a two-link arm in a vertical plane (shoulder at the origin), with the region its tip can reach shaded. Top right: the same posture as a point in joint space, the plane of the two joint angles. Bottom right: the distance from base to tip against the elbow angle.</div>
+  <p>Before the full 3D chains, the essentials show up in a two-link arm. Its tip position follows from adding two vectors: the first link at angle q₁, the second at q₁ + q₂ (angles add because each joint is measured from the link before). The elbow alone sets how far the tip is from the shoulder; the shoulder only turns the whole arm round. So the reachable workspace is a ring: from l₁ + l₂ when stretched out, down to |l₁ − l₂| when fully folded.</p>
+  <div class="eq">$$x = l_1\cos q_1 + l_2\cos(q_1+q_2), \quad y = l_1\sin q_1 + l_2\sin(q_1+q_2), \qquad r^2 = l_1^2 + l_2^2 + 2l_1l_2\cos q_2$$</div>
+  <ol class="steps">
+    <li>Each point of joint space gives one tip position (forward kinematics is a function).</li>
+    <li>The reach depends only on q₂.</li>
+    <li>Workspace boundary: q₂ = 0 (outer circle) and q₂ = ±180° (inner circle).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>l₁ = 1 m, l₂ = 0.7 m, q₁ = 30°, q₂ = 60°: x = 0.866 + 0.7 cos 90° = 0.866 m, y = 0.5 + 0.7 sin 90° = 1.2 m. Reach √(1 + 0.49 + 1.4 × 0.5) = 1.48 m.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using q₂ as the angle of the second link from the horizontal. It is measured from the first link; the absolute angle is q₁ + q₂.</div>
+  <div class="try"><h4>Try it</h4>Move only q₁: the dot in joint space slides sideways and the tip travels on a circle; move only q₂ and the reach changes.</div>
+</section>
+<section data-case="fk" data-example="stretch"><h3>Stretched out</h3><p>q₂ = 0: the tip on the outer edge, 1.7 m out. It can move round the circle but not further out, nor in, without first bending: a boundary singularity.</p></section>
+<section data-case="fk" data-example="fold"><h3>Folded</h3><p>q₂ = 180°: the second link doubles back, the tip 0.3 m from the shoulder, on the inner edge. Nothing closer than that can be reached.</p></section>
+<section data-case="fk" data-example="equal"><h3>Equal links</h3><p>With l₁ = l₂ the hole in the ring closes: the tip can reach the shoulder itself, and the whole disc is workspace.</p></section>
+
+<section data-case="ik">
+  <h3>Inverse kinematics</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a target point (red) and the arm reaching it with the chosen elbow; the other solution is drawn faint. Top right: both solutions in joint space. Bottom right: cos q₂ computed from the target, which must lie between −1 and 1.</div>
+  <p>The useful question is usually the reverse: the tip has to be <em>there</em>; what joint angles put it there? The law of cosines in the triangle shoulder–elbow–tip gives the elbow angle: only its cosine is fixed, so there are two mirror solutions, elbow up and elbow down. Then the shoulder angle is the direction to the target minus the angle the bent arm makes. If the target is outside the ring there is no solution; on the edge the two merge into one.</p>
+  <div class="eq">$$\cos q_2 = \frac{x^2 + y^2 - l_1^2 - l_2^2}{2l_1l_2}, \qquad q_2 = \pm\arccos(\cdot), \qquad q_1 = \operatorname{atan2}(y, x) - \operatorname{atan2}(l_2\sin q_2,\ l_1 + l_2\cos q_2)$$</div>
+  <ol class="steps">
+    <li>Check |cos q₂| ≤ 1: reachable or not.</li>
+    <li>Choose the sign of q₂: elbow up (q₂ &lt; 0 here) or down.</li>
+    <li>Compute q₁ with atan2 (not atan, which loses the quadrant).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Target (1.1, 0.6), l₁ = 1, l₂ = 0.7: cos q₂ = (1.21 + 0.36 − 1 − 0.49)/1.4 = 0.057, q₂ = ∓86.7°. Elbow up: q₁ = 62.5°, q₂ = −86.7°; elbow down: q₁ = −5.3°, q₂ = 86.7°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting one answer. Inverse kinematics can have none, one, two or (for redundant arms) infinitely many solutions; picking one is part of the problem.</div>
+  <div class="try"><h4>Try it</h4>Move the target outwards along the x axis: the two solutions close together like scissors and meet at 1.7 m.</div>
+</section>
+<section data-case="ik" data-example="down"><h3>Elbow down</h3><p>Same tip, elbow below the line to the target: q₁ = −5.3°, q₂ = +86.7°. Which one a robot uses depends on obstacles and joint limits.</p></section>
+<section data-case="ik" data-example="edge"><h3>On the edge</h3><p>(1.7, 0): cos q₂ = 1, q₂ = 0. The arm is stretched; both solutions are the same one.</p></section>
+<section data-case="ik" data-example="out"><h3>Out of reach</h3><p>(1.6, 0.9) is 1.84 m away, more than 1.7: cos q₂ = 1.21, no angle has that cosine.</p></section>
+
+<section data-case="jac">
+  <h3>The Jacobian and singularities</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the arm, the tip velocity produced by the chosen joint speeds (orange) and the velocity ellipse (blue, half scale): every tip velocity that joint speeds of size 1 can make. Top right: the joint speeds, inside the unit circle. Bottom right: |det J| against the elbow angle.</div>
+  <p>The Jacobian maps joint speeds to tip velocity: v = J q̇. Its columns say how the tip moves when each joint turns alone. A circle of joint speeds becomes an ellipse of tip velocities: long where the arm moves easily, short where it struggles. When the arm is stretched or folded the ellipse flattens into a line: the tip cannot move along the arm at all, J loses rank and det J = 0. That is a singularity. Near one, moving the tip even slowly in the bad direction needs enormous joint speeds.</p>
+  <div class="eq">$$\mathbf v = J(\mathbf q)\,\dot{\mathbf q}, \qquad J = \begin{bmatrix} -l_1 s_1 - l_2 s_{12} & -l_2 s_{12}\\ l_1 c_1 + l_2 c_{12} & l_2 c_{12}\end{bmatrix}, \qquad \det J = l_1 l_2 \sin q_2$$</div>
+  <ol class="steps">
+    <li>Column i: tip velocity for q̇ᵢ = 1, the others still.</li>
+    <li>Ellipse axes: square roots of the eigenvalues of J Jᵀ.</li>
+    <li>det J = 0 at q₂ = 0 or 180°: singular; there q̇ = J⁻¹v does not exist.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>q₂ = 60°: |det J| = 0.7 × sin 60° = 0.61, ellipse 1.59 by 0.38 m/s. To move the tip up at 0.5 m/s: q̇ = (0.58, −0.99) rad/s. At q₂ = 5° the same move needs (3.3, −7.4) rad/s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking singularities are only at the workspace edge. Here they are at the edges, but in 6-joint arms they also occur inside the workspace (wrist singularity, two axes lined up).</div>
+  <div class="try"><h4>Try it</h4>Bring q₂ towards 0 and watch the ellipse collapse into a line across the arm.</div>
+</section>
+<section data-case="jac" data-example="best"><h3>q₂ = 90°</h3><p>For these link lengths |det J| is largest, 0.70, and the ellipse is as round as it gets: the most isotropic posture.</p></section>
+<section data-case="jac" data-example="near"><h3>Nearly stretched</h3><p>q₂ = 5°: |det J| = 0.061, the ellipse is 1.84 by only 0.033 m/s. Turning the elbow alone barely moves the tip along the arm.</p></section>
+<section data-case="jac" data-example="sing"><h3>Singular</h3><p>q₂ = 0: the ellipse is a line, det J = 0. No joint speeds can move the tip outward or inward.</p></section>
+
+<section data-case="statics">
+  <h3>Statics: τ = Jᵀ F</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the arm pushing with a force F at its tip (red), its force ellipse (red dashed: forces a unit of joint torque can produce) and the velocity ellipse (blue). Top right: the joint torques needed. Bottom right: |det J|.</div>
+  <p>The same Jacobian, transposed, answers the static question: to push with force F at the tip, what torques must the motors give? By virtual work, power in at the joints equals power out at the tip for any motion, τ·q̇ = F·v, so τ = Jᵀ F. The force ellipse is the velocity ellipse inside out: in the direction where the tip moves fastest it pushes weakest, and where it can hardly move it can push very hard. At a singularity a force along the arm needs no torque at all; the links carry it, like a straight leg holding your weight.</p>
+  <div class="eq">$$\boldsymbol\tau = J^\mathsf{T}(\mathbf q)\,\mathbf F, \qquad \boldsymbol\tau\cdot\dot{\mathbf q} = \mathbf F\cdot\mathbf v$$</div>
+  <ol class="steps">
+    <li>τ₁ is the moment of F about the shoulder, τ₂ about the elbow.</li>
+    <li>A force whose line passes through a joint needs no torque at that joint.</li>
+    <li>Force ellipse axes are the inverses of the velocity ellipse axes.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>q = (30°, 60°), pressing down with 10 N: the tip is straight above the elbow, so τ₂ = 0, and τ₁ = −10 × 0.866 = −8.66 N·m (moment arm = horizontal distance from the shoulder).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using J⁻¹ instead of Jᵀ for statics. Jᵀ always exists, even at singularities, where it gives the useful result “no torque needed”.</div>
+  <div class="try"><h4>Try it</h4>Turn the force round the tip: when its line crosses the elbow, the elbow torque goes through zero.</div>
+</section>
+<section data-case="statics" data-example="hold"><h3>Holding 1 kg</h3><p>Arm stretched horizontally, the tip pushes up 9.81 N: τ₁ = 9.81 × 1.7 = 16.7 N·m at the shoulder, τ₂ = 9.81 × 0.7 = 6.9 N·m at the elbow. Why holding things at arm’s length is tiring.</p></section>
+<section data-case="statics" data-example="push"><h3>Pushing along the arm</h3><p>Stretched, pushing 20 N straight out: both torques are zero. The force goes along the links into the base; the singular posture is the strongest.</p></section>
+<section data-case="statics" data-example="bent"><h3>The same push, bent</h3><p>q = (−30°, 60°): pushing 20 N along x now needs 3.0 N·m at the shoulder and −7.0 N·m at the elbow.</p></section>
+<details><summary>About the model</summary>
+  <p>Two rigid links, revolute joints, no limits. Closed-form inverse kinematics (Siciliano et al., ch. 2.12), Jacobian and manipulability ellipsoids (ch. 3.9). Tests: both inverse solutions reach the target (10⁻¹²) and none exists outside the ring; |det J| = l₁l₂|sin q₂|, the velocity ellipse area equals |det J| and the force ellipse is its inverse; τ·q̇ = F·v; no inverse at q₂ = 0.</p>
+</details>

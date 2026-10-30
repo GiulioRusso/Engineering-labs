@@ -1,0 +1,36 @@
+<section>
+  <p>A <b>beam</b> carries loads sideways to its supports by bending. Statics tells us the reactions; cutting the beam anywhere tells us the internal shear force and bending moment; the moment curves the beam and sets the stress in it.</p>
+</section>
+<section data-case="simply">
+  <h3>The simply supported beam</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the beam on a pin and a roller, the load (red) and the reactions (green). The blue line is the deflected shape, exaggerated by the factor written below it. Top right: the shear force V(x). Bottom right: the bending moment M(x). Below: the real deflection in millimetres.</div>
+  <p>The two supports push up just enough to balance the load and its turning effect. Cut the beam at x: the shear V is the net vertical force on the left piece, and the moment M is its net turning effect. M is largest where V crosses zero.</p>
+  <div class="eq">$$R_1=\frac{P\,b}{L},\quad R_2=\frac{P\,a}{L},\qquad \frac{dM}{dx}=V,\quad \frac{dV}{dx}=-w,\qquad EI\,\frac{d^2y}{dx^2}=M$$</div>
+  <ol class="steps"><li>Reactions from ΣF = 0 and ΣM = 0 about one support.</li><li>V(x): start from R₁, drop by P at the load (or by w per metre).</li><li>M(x): the area under V, zero at both pins.</li><li>Deflection: integrate M/EI twice, with y = 0 at both supports.</li></ol>
+  <div class="worked"><h4>Worked example</h4>P = 10 kN at midspan, L = 4 m, EI = 200 GPa × 6.67·10⁻⁵ m⁴ = 13.3 MN·m². M_max = PL/4 = 10 kN·m; δ = PL³/(48EI) = 10⁴·64/(48·1.33·10⁷) = 1.0 mm. Stress M c/I = 10⁴·0.1/6.67·10⁻⁵ = 15 MPa.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Forgetting that the moment is zero at a pin, and mixing up signs: here a sagging moment (tension at the bottom) is positive.</div>
+  <div class="try"><h4>Try it</h4>Slide the load towards a support: the reaction there grows, the peak moment shrinks, and the peak moves with the load.</div>
+</section>
+<section data-case="simply" data-example="off"><h3>Off-centre load</h3><p>a = 1 m: R₁ = 7.5 kN, R₂ = 2.5 kN. The moment peaks under the load at R₁·a = 7.5 kN·m.</p></section>
+<section data-case="simply" data-example="udl"><h3>Uniform load</h3><p>V falls linearly, M is a parabola with M_max = wL²/8 at midspan, and δ = 5wL⁴/(384EI).</p></section>
+<section data-case="simply" data-example="long"><h3>Twice the span</h3><p>Deflection grows as L³ for a point load: double the span, eight times the sag (and twice the moment).</p></section>
+<section data-case="cantilever">
+  <h3>The cantilever</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a beam built into a wall at x = 0 and free at the other end, its load, and the wall's reaction. The blue line is the deflected shape, exaggerated. Right: shear and bending moment. Below: the deflection in millimetres.</div>
+  <p>A cantilever has only one support, so the wall must provide a force and a moment. The moment is largest at the wall and hogging (tension on top); the beam leaves the wall horizontally and droops towards the tip.</p>
+  <div class="eq">$$M(0)=-P\,a,\qquad \delta_{\text{tip}}=\frac{PL^3}{3EI}\ (\text{tip load}),\qquad \delta_{\text{tip}}=\frac{wL^4}{8EI}\ (\text{uniform})$$</div>
+  <div class="worked"><h4>Worked example</h4>P = 10 kN at the tip of a 4 m cantilever, EI = 13.3 MN·m²: δ = 10⁴·64/(3·1.33·10⁷) = 16 mm, sixteen times the simply supported beam with the same load.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Putting the largest moment at the load. In a cantilever it is always at the wall, where the whole load has the longest lever arm.</div>
+</section>
+<section data-case="cantilever" data-example="mid"><h3>Load halfway</h3><p>The beam beyond the load carries no moment and stays straight, but it is tilted, so the tip still moves: 5PL³/(48EI).</p></section>
+<section data-case="cantilever" data-example="udl"><h3>Uniform load</h3><p>The moment at the wall is wL²/2, and the tip drops by wL⁴/(8EI).</p></section>
+<section data-case="section">
+  <h3>Cross sections and bending stress</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the cross section with its neutral axis (dashed) and arrows for the stress across the depth: compression (blue) above, tension (orange) below. Top right: the stress against height, a straight line, with the yield stress dashed. Bottom right: b(y)·y², how much each layer contributes to the second moment I. Below: outer-fibre stress against the moment.</div>
+  <p>Under a moment, plane sections stay plane: the strain, and so the stress, grows linearly from zero at the neutral axis. A layer far from the axis carries more stress and has a longer lever arm, which is why the second moment weighs area by y².</p>
+  <div class="eq">$$\sigma(y)=-\frac{M\,y}{I},\qquad I=\int y^2\,dA,\qquad I_{\text{rect}}=\frac{bh^3}{12}$$</div>
+  <div class="worked"><h4>Worked example</h4>An I-beam 100 × 200 mm with 12 mm flanges and an 8 mm web: A = 38.1 cm², I = 2490 cm⁴. A solid rectangle with the same area and depth has I = 1270 cm⁴, so the I-beam is almost twice as stiff for the same steel.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Making the flanges thicker instead of the beam deeper. I grows as h³: depth is the cheapest stiffness there is, until the web gets thin enough to buckle.</div>
+</section>
+<section data-case="section" data-example="rect"><h3>Solid rectangle</h3><p>Same area, same depth, but much of the steel sits near the axis where it does little: smaller I, higher stress.</p></section>
+<section data-case="section" data-example="deep"><h3>Twice as deep</h3><p>h from 200 to 400 mm adds only web: 1.4 times the steel, about 5 times the second moment.</p></section>

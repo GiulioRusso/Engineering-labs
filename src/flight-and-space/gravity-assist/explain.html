@@ -1,0 +1,24 @@
+<section data-case="assist">
+  <h3>Gravity assist</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a spacecraft flying past a planet, seen from the planet (a hyperbola) or from the Sun (the planet moving right, with the craft). Top right: the velocity triangle: the planet’s velocity (grey), the craft’s velocity relative to the planet before and after (dashed, both on the circle of radius v∞), and the craft’s velocity seen from the Sun before (blue) and after (orange). Bottom right: the speeds. Below: speed against time through the flyby.</div>
+  <p>Seen from the planet, a flyby is just a fall past it: the craft speeds up on the way in, slows down by exactly as much on the way out, and leaves with the same speed v∞, only in a new direction. Nothing is gained. But the planet itself is moving round the Sun. Seen from the Sun, the craft’s velocity is the planet’s velocity plus v∞. Turning v∞ to point more along the planet’s motion makes that sum longer: the craft leaves faster, taking a tiny bit of the planet’s orbital energy. Turn it the other way and the craft slows down, which is how probes fall in towards Mercury or the Sun.</p>
+  <div class="eq">$$\mathbf v_\odot = \mathbf V_\text{planet} + \mathbf v_\infty, \qquad |\mathbf v_{\infty,\text{out}}| = |\mathbf v_{\infty,\text{in}}|, \qquad \delta = 2\arcsin\frac{1}{1 + r_p v_\infty^2/\mu}$$</div>
+  <ol class="steps">
+    <li>Subtract the planet’s velocity: in its frame the craft arrives at v∞.</li>
+    <li>The flyby turns v∞ by δ: more for a closer pass, a slower approach or a heavier planet.</li>
+    <li>Add the planet’s velocity back: the length of the sum is the new speed round the Sun.</li>
+    <li>Passing behind the planet turns v∞ towards its motion: a gain. In front: a loss.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Jupiter (13.07 km/s round the Sun), v∞ = 6 km/s arriving at 100°, closest approach 5 Jupiter radii: δ = 130°. Heliocentric speed 13.40 km/s before, 18.50 after: +5.1 km/s, free. Peak speed at closest approach 27.3 km/s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>“The closer the pass, the bigger the boost.” A closer pass turns v∞ more, but the gain is largest when v∞ leaves along the planet’s motion; turning past that direction gives back speed. Here 30 radii (δ = 77°) gains 5.3 km/s, 1.1 radii (δ = 156°) only 3.8.</div>
+  <div class="try"><h4>Try it</h4>Switch between the planet’s view and the Sun’s, then move the closest approach and watch the orange arrow in the triangle swing round the circle.</div>
+</section>
+<section data-case="assist" data-example="sun"><h3>Seen from the Sun</h3><p>The same flyby with the planet moving: the craft’s path bends round the moving planet and leaves at 18.5 km/s instead of 13.4. In the plot below, the orange speed ends higher than it started; the grey one (planet frame) returns to where it was.</p></section>
+<section data-case="assist" data-example="front"><h3>In front of the planet</h3><p>Passing ahead turns v∞ against the planet’s motion: 13.40 → 10.34 km/s. The craft gives energy to the planet and drops towards the Sun.</p></section>
+<section data-case="assist" data-example="close"><h3>Skimming the cloud tops</h3><p>At 1.1 radii the turn is 156°, but that swings v∞ past the planet’s direction of motion: +3.8 km/s, less than the wider pass. Juno-like close passes are about science, not a bigger boost.</p></section>
+<section data-case="assist" data-example="far"><h3>A far pass</h3><p>30 radii: only a 77° turn, which here happens to aim v∞ almost exactly along Jupiter’s motion: +5.3 km/s, the best of these passes.</p></section>
+<section data-case="assist" data-example="earth"><h3>Earth</h3><p>Earth is light: at 9 km/s even a pass 640 km above the surface turns the path by only 49°. Still +6.5 km/s seen from the Sun, because Earth moves at 29.8 km/s. Galileo, Cassini, Rosetta and Juno all borrowed speed from Earth or Venus this way.</p></section>
+<section data-case="assist" data-example="venus"><h3>Braking at Venus</h3><p>A pass in front of Venus: 34.5 → 30.0 km/s. Losing speed lowers the orbit’s perihelion; MESSENGER and Parker Solar Probe use repeated Venus flybys to fall closer to the Sun.</p></section>
+<details><summary>About the model</summary>
+  <p>Patched conics: inside the planet’s sphere of influence only the planet pulls (a hyperbola), outside only the Sun; the planet moves in a straight line during the flyby. The craft’s position comes from Kepler’s equation for hyperbolas. Planet data: μ, mean radius and mean orbital speed. Tests: the asymptotes point in the given directions (10⁻⁶), periapsis distance and energy are exact; an RK4 flyby turns by the formula’s δ (2·10⁻³); v∞ is unchanged and passing behind always gains more than passing in front.</p>
+</details>

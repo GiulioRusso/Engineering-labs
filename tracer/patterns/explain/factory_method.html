@@ -1,0 +1,16 @@
+<section>
+  <h3>Factory Method</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> A dialog box draws itself the same way on every platform, except for the buttons: Windows buttons and web buttons are different classes. If <code>render()</code> wrote <code>new WinButton</code> it would be tied to Windows forever.</p>
+  <p><b>Solution.</b> The base class writes <code>render()</code> once and, where it needs a button, calls a virtual method <code>createButton()</code>, the factory method. Each subclass overrides only that method to create its kind of button. The shared code works with the <code>Button</code> interface and never names a concrete class.</p>
+  <ol class="steps">
+    <li>Products share an interface (<code>Button</code>).</li>
+    <li>The creator’s general algorithm calls <code>createButton()</code>.</li>
+    <li>Each concrete creator overrides it to return its product.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>GUI toolkits creating platform widgets, document editors creating the right document type, test code overriding a factory to return fakes, C++ <code>std::make_unique</code> wrapped in a virtual function for plug-ins.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Writing a big <code>switch (platform)</code> in the base class instead: every new platform means editing shared code. And creating a subclass just to change one product when a simple parameter would do.</div>
+  <div class="try"><h4>Try it</h4>Compare the two scenarios step by step: <code>render()</code> runs identical lines; only the overridden <code>createButton()</code> differs.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> a WindowsDialog creates a WinButton.</p></section>
+<section data-case="in1"><p><b>This scenario:</b> a WebDialog runs the same <code>render()</code> and gets a WebButton.</p></section>

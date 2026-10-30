@@ -1,0 +1,39 @@
+<section>
+  <p>How much load a part can take depends on its material and its shape. A tensile test characterises the material; Mohr's circle shows the stress on any plane through a point; a column can fail by buckling long before its material yields.</p>
+</section>
+<section data-case="tensile">
+  <h3>The tensile test</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the stress–strain curve traced as the specimen is pulled; the grey curves are the other materials. Top right: the specimen itself, stretching, thinning, necking and breaking. Bottom right: the start of the test magnified, with the 0.2 % offset line used to define yield. Below: the energy absorbed per unit volume so far.</div>
+  <p>Stress σ = F/A₀ and strain ε = ΔL/L₀ make the result independent of the specimen's size. At first the bar behaves like a stiff spring with slope E (Young's modulus) and springs back fully. Past the <b>yield</b> stress, atoms slip and part of the stretch becomes permanent. The stress still rises (work hardening) up to the <b>ultimate</b> strength; then a neck forms and the bar breaks.</p>
+  <div class="eq">$$\sigma=E\,\varepsilon\ \ (\sigma&lt;\sigma_y),\qquad \varepsilon_{\text{permanent}}=\varepsilon-\frac{\sigma}{E},\qquad U=\int_0^{\varepsilon_f}\sigma\,d\varepsilon$$</div>
+  <ol class="steps"><li>Elastic: straight line, slope E.</li><li>Yield: the curve bends over (0.2 % offset definition).</li><li>Hardening: stress rises to σ_u at uniform elongation.</li><li>Necking: deformation concentrates, the engineering stress falls, fracture.</li></ol>
+  <div class="worked"><h4>Worked example</h4>Mild steel: E = 200 GPa, σ_y = 250 MPa, so yield starts at ε = 250/200 000 = 0.125 %. It stretches to 30 % before breaking and absorbs about 110 MJ/m³.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Confusing stiffness with strength. Steel is three times stiffer than aluminium, but this aluminium alloy yields at a higher stress.</div>
+</section>
+<section data-case="tensile" data-example="alu"><h3>Aluminium 6061-T6</h3><p>A third of steel's stiffness, a higher yield stress, little hardening, and only 12 % elongation.</p></section>
+<section data-case="tensile" data-example="brittle"><h3>Cast iron</h3><p>It breaks at 0.2 % strain with no yield and no neck: almost no energy absorbed, no warning before failure.</p></section>
+<section data-case="tensile" data-example="unload"><h3>Unload at 5 %</h3><p>The bar unloads along a line of slope E and keeps almost all of the 5 %. On reloading it stays elastic up to the stress it had reached: work hardening.</p></section>
+<section data-case="mohr">
+  <h3>Plane stress and Mohr's circle</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: Mohr's circle. The grey points are the faces x and y of the original element; the orange points are the faces of the element turned by θ; green marks the principal stresses. Top right: the turned element with its normal stresses (orange tension, blue compression) and shear (purple). Bottom right: σx′ and τx′y′ against θ.</div>
+  <p>The same state of stress looks different on differently oriented faces. Every orientation lands on one circle in the (σ, τ) plane, centred at the average stress. Turning the element by θ moves its point round the circle by 2θ.</p>
+  <div class="eq">$$\sigma_{x'}=\frac{\sigma_x+\sigma_y}2+\frac{\sigma_x-\sigma_y}2\cos2\theta+\tau_{xy}\sin2\theta,\qquad \tau_{x'y'}=-\frac{\sigma_x-\sigma_y}2\sin2\theta+\tau_{xy}\cos2\theta$$</div>
+  <div class="eq">$$\sigma_{1,2}=c\pm R,\quad c=\frac{\sigma_x+\sigma_y}2,\quad R=\sqrt{\Big(\frac{\sigma_x-\sigma_y}2\Big)^2+\tau_{xy}^2},\quad \tan2\theta_p=\frac{2\tau_{xy}}{\sigma_x-\sigma_y}$$</div>
+  <div class="worked"><h4>Worked example</h4>σx = 80, σy = −20, τxy = 30 MPa: c = 30, R = √(50² + 30²) = 58.3. σ₁ = 88.3 MPa, σ₂ = −28.3 MPa at θp = ½ atan(60/100) = 15.5°; maximum shear 58.3 MPa at 60.5°.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting the factor 2: 90° on the element is 180° on the circle, so the faces x and y are always at opposite ends of a diameter.</div>
+</section>
+<section data-case="mohr" data-example="principal"><h3>Principal angle</h3><p>At θp the orange points sit on the σ axis: no shear, and the normal stresses are the largest and smallest possible.</p></section>
+<section data-case="mohr" data-example="maxshear"><h3>Maximum shear</h3><p>45° from the principal directions the points are at the top and bottom of the circle: τ = R. Ductile metals yield in shear, on these planes.</p></section>
+<section data-case="mohr" data-example="pure"><h3>Pure shear</h3><p>A circle centred at zero: at 45° the shear disappears and the element sees tension +50 and compression −50. That is why a twisted chalk stick breaks along a 45° helix.</p></section>
+<section data-case="buckling">
+  <h3>Buckling of columns</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a steel column with a small initial bow under a load that rises towards the critical load; the bow is exaggerated. Top right: the critical stress against slenderness, Euler's curve (dashed) and the Johnson parabola for short columns (green), with the yield stress. Bottom right: how much the bow grows as the load approaches P_cr. Below: the critical load against length for the three end conditions.</div>
+  <p>A straight column under compression can suddenly bend sideways. At the <b>Euler load</b> the bent shape is in equilibrium as well as the straight one; any small imperfection grows without limit. The load depends on stiffness EI and on the effective length KL set by the ends, not on the material's strength.</p>
+  <div class="eq">$$P_{cr}=\frac{\pi^2EI}{(KL)^2},\qquad \lambda=\frac{KL}r,\ r=\sqrt{I/A},\qquad \delta=\frac{e_0}{1-P/P_{cr}}$$</div>
+  <ol class="steps"><li>Effective length factor K: pinned–pinned 1, fixed–free 2, fixed–fixed 0.5.</li><li>Slender columns (λ above λc = √(2π²E/σy) ≈ 126 for this steel) follow Euler.</li><li>Stocky columns yield before they buckle: Johnson's parabola.</li></ol>
+  <div class="worked"><h4>Worked example</h4>A 50 mm bar, 3 m long, pinned: I = π·0.05⁴/64 = 3.07·10⁻⁷ m⁴, P_cr = π²·200·10⁹·3.07·10⁻⁷/9 = 67 kN. Its stress is then only 34 MPa, far below yield.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Checking only σ = P/A &lt; σy. A slender column fails at a small fraction of the yield stress.</div>
+</section>
+<section data-case="buckling" data-example="flagpole"><h3>Fixed–free</h3><p>A flagpole behaves like half of a pinned column twice as long: K = 2, a quarter of the critical load.</p></section>
+<section data-case="buckling" data-example="clamped"><h3>Fixed–fixed</h3><p>Clamping both ends halves the effective length: four times the critical load.</p></section>
+<section data-case="buckling" data-example="stocky"><h3>Short and stocky</h3><p>L = 0.9 m: λ = 72, below λc. The column reaches yield before Euler's load, and Johnson's curve governs.</p></section>

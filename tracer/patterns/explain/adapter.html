@@ -1,0 +1,16 @@
+<section>
+  <h3>Adapter</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> The climate app works with any <code>TemperatureSensor</code> that returns °C as a <code>double</code>. An old probe you cannot modify returns tenths of a degree Fahrenheit as an <code>int</code>. Changing the app for every odd device would spread conversions everywhere.</p>
+  <p><b>Solution.</b> Write a small class that implements <code>TemperatureSensor</code> and holds the probe. Its <code>celsius()</code> calls the probe’s own method and converts the answer. The app talks to the adapter exactly as to a real sensor; the probe is untouched.</p>
+  <ol class="steps">
+    <li>Implement the interface the client expects.</li>
+    <li>Keep a reference to the existing object (the adaptee).</li>
+    <li>Translate each call: rename, reorder arguments, convert units.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>Wrapping a C library in a C++ class, connecting a third-party logger to your logging interface, <code>std::stack</code> adapting a <code>std::deque</code>, power plug adapters (the name comes from there).</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Putting business logic in the adapter; it should only translate. And adapting when you own both sides: then just change the interface.</div>
+  <div class="try"><h4>Try it</h4>Compare the two scenarios: the app’s <code>show()</code> runs the same lines; in the second, one extra object does the conversion.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> a sensor that already speaks °C.</p></section>
+<section data-case="in1"><p><b>This scenario:</b> the legacy probe returns 698 (69.8 °F); the adapter turns it into 21.0 °C.</p></section>

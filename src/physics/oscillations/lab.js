@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { createCurve } from '../../lib/viz/curve.js';
 import { createVector } from '../../lib/viz/vector.js';
 import { si } from '../../lib/ui/format.js';
-import { simulate, energy, period, omega0, steadyAmplitude, measuredPeriod, G } from './model.js';
+import { simulate, energy, period, omega0, steadyAmplitude, phaseLag, measuredPeriod, G } from './model.js';
 
 const D = 20, K = 3, PIVOT = 1.5; // simulated seconds; world units per metre (spring); pendulum pivot height
 
@@ -17,12 +17,15 @@ export default {
       { id: 'heavy', label: '4× the mass: 2× the period', set: { m: 4 } },
       { id: 'stiff', label: '4× stiffer: half the period', set: { k: 40 } },
       { id: 'wide', label: 'Bigger swing: same period', set: { x0: 0.6 } },
-      { id: 'light', label: 'Light damping', set: { gamma: 0.08 } },
+    ] },
+    { id: 'damped', label: 'Damped', controls: ['gamma'], set: { gamma: 0.08 }, examples: [
       { id: 'critical', label: 'Critical damping', set: { gamma: Math.sqrt(10) } },
       { id: 'over', label: 'Overdamped: creeps back', set: { gamma: 8 } },
-      { id: 'resonance', label: 'Driven at resonance', controls: ['gamma', 'F0', 'wd'], set: { x0: 0, gamma: 0.2, F0: 1, wd: Math.sqrt(10) } },
-      { id: 'above', label: 'Driven far above: out of phase', controls: ['wd'], set: { x0: 0, gamma: 0.2, F0: 1, wd: 7 } },
-      { id: 'sharp', label: 'Less damping: sharper peak', controls: ['gamma', 'wd'], set: { x0: 0, gamma: 0.05, F0: 1, wd: Math.sqrt(10) } },
+    ] },
+    { id: 'driven', label: 'Driven', controls: ['gamma', 'F0', 'wd'], set: { x0: 0, gamma: 0.2, F0: 1, wd: Math.sqrt(10) }, examples: [
+      { id: 'below', label: 'Driven slowly: in phase', controls: ['wd'], set: { wd: 1 } },
+      { id: 'above', label: 'Driven far above: out of phase', controls: ['wd'], set: { wd: 7 } },
+      { id: 'sharp', label: 'Less damping: sharper peak', controls: ['gamma', 'wd'], set: { gamma: 0.05 } },
     ] },
     { id: 'pendulum', label: 'Pendulum', set: { kind: 'pendulum' }, examples: [
       { id: 'long', label: '4× longer: 2× the period', set: { L: 4 } },
@@ -108,7 +111,7 @@ export default {
         hud.set('E', `${si(E.K + E.U, 'J')}  (K ${si(E.K, 'J')}, U ${si(E.U, 'J')})`);
         const E0 = energy(state, R.q[0], R.v[0]), lossless = !state.gamma && !state.F0;
         const fm = state.F0 / (p ? state.m * state.L : state.m), A = steadyAmplitude(omega0(state), state.gamma, fm, state.wd);
-        hud.set('chk', lossless ? `energy kept: ${((E.K + E.U) / (E0.K + E0.U)).toFixed(7)} ✓` : state.F0 ? `steady amplitude ${p ? `${(A * f).toFixed(1)}° (linear)` : si(A, 'm')}` : `envelope e^(−γt) = ${Math.exp(-state.gamma * time.t).toFixed(3)}`, lossless ? 'good' : '');
+        hud.set('chk', lossless ? `energy kept: ${((E.K + E.U) / (E0.K + E0.U)).toFixed(7)} ✓` : state.F0 ? `steady amplitude ${p ? `${(A * f).toFixed(1)}° (linear)` : si(A, 'm')}, lags the drive by ${(phaseLag(omega0(state), state.gamma, state.wd) * 180 / Math.PI).toFixed(0)}°` : `envelope e^(−γt) = ${Math.exp(-state.gamma * time.t).toFixed(3)}`, lossless ? 'good' : '');
 
         const T = [], Q = [], Ev = [], Up = [], Lo = [], Ks = [], Us = [];
         for (let j = 0; j < R.t.length; j += 20) {

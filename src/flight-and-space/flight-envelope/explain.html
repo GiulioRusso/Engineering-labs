@@ -1,25 +1,53 @@
 <section data-case="flight">
-  <h3>Lift, drag and the flight envelope</h3>
-  <div class="look"><h4>What you are looking at</h4>An aircraft with airflow around the wing, the four forces (lift, weight, thrust, drag), the angle of attack, and plots of the lift curve and the speed range where flight is possible.</div>
-  <p>A wing turns air downward; the air pushes the wing up. More speed or a steeper angle of attack α gives more lift — until about 15°, where the flow separates from the upper surface and lift collapses: the stall. In level flight lift must equal weight, so slow flight needs a big α. In a banked turn lift tilts, so it must grow by the load factor n = 1/cos(bank).</p>
-  <div class="eq">$$L = \tfrac12\rho V^2 S\,C_L(\alpha), \qquad D = \tfrac12\rho V^2 S\,C_D, \qquad C_D = C_{D0} + kC_L^2, \qquad n = \frac{1}{\cos\phi}, \qquad V_\text{stall} = \sqrt{\frac{2nW}{\rho S C_{L,\max}}}$$</div>
+  <h3>Lift and drag</h3>
+  <div class="look"><h4>What you are looking at</h4>A light aircraft (1000 kg, 16.2 m² of wing) in level flight with its four forces, the airflow and the angle of attack α. The plots show the lift curve and the drag polar, with the current point.</div>
+  <p>A wing turns the air downward; the air pushes the wing up. The lift grows with the air density, the wing area, the square of the speed, and the angle of attack. In level flight the lift must equal the weight, so at each speed there is exactly one angle that holds the aircraft up: slow means nose up, fast means nose down. Producing lift costs drag, and drag is what the engine pays for.</p>
+  <div class="eq">$$L = \tfrac12\rho V^2 S\,C_L(\alpha) = W, \qquad D = \tfrac12\rho V^2 S\,C_D, \qquad C_D = C_{D0} + kC_L^2$$</div>
   <ol class="steps">
-    <li>Half the speed needs four times the lift coefficient.</li>
-    <li>Thin air (altitude) means a higher true speed for the same lift.</li>
-    <li>Turning raises the stall speed by √n: at 60° bank, ×1.41.</li>
+    <li>From L = W find the needed C_L = 2W/(ρV²S).</li>
+    <li>The lift curve gives the angle for that C_L.</li>
+    <li>The drag polar gives C_D: a fixed friction part C_D0 plus the induced part kC_L², the price of lift.</li>
+    <li>Friction drag grows with V², induced drag falls as 1/V²: the best lift-to-drag ratio is where they are equal.</li>
   </ol>
-  <div class="worked"><h4>Worked example</h4>A light aircraft stalls at 25 m/s level; in a 60° turn (n = 2) it stalls at 35 m/s. At 4000 m (ρ = 0.82 vs 1.11 at 1000 m) every speed is about 16 % higher.</div>
-  <div class="pitfall"><h4>Common mistake</h4>Thinking a stall means the engine stopped: it is the wing, and it happens at an angle, at any speed.</div>
+  <div class="worked"><h4>Worked example</h4>At 1000 m (ρ = 1.11 kg/m³) and 55 m/s: C_L = 0.36, α = 2.2°, drag 923 N, L/D = 10.6. At 30 m/s: C_L = 1.21, α = 12.0°, L/D = 11.6. The best L/D is 13.2 at C_L = 0.71.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking flying faster always costs more drag. Below the best-L/D speed, slowing down raises the drag, because the induced part grows.</div>
+  <div class="try"><h4>Try it</h4>Sweep the airspeed and watch the angle of attack and the drag readout: the drag is smallest in the middle.</div>
 </section>
-<section data-case="flight"><h3>Level flight</h3><p>Lift equals weight, thrust equals drag. At each speed there is exactly one angle of attack that holds the aircraft up.</p><div class="eq">$$\tfrac12\rho V^2 S\,C_L = W, \qquad C_D = C_{D0} + k\,C_L^2$$</div></section>
 <section data-case="flight" data-example="slow"><h3>Slow flight</h3><p>Half the speed needs four times \(C_L\): the nose comes up, close to the stall. Induced drag (\(\propto C_L^2\)) dominates.</p></section>
 <section data-case="flight" data-example="fast"><h3>Fast flight</h3><p>A small \(C_L\) is enough; now friction drag \(C_{D0}\) dominates. The best glide (largest \(L/D\)) is in between, where the two drags are equal.</p></section>
-<section data-case="flight" data-example="high"><h3>Thinner air</h3><p>At 4000 m the air is about 33 % less dense: the same lift needs more speed or more angle of attack, and the stall speed rises.</p></section>
-<section data-case="flight"><h3>Turns load the wing</h3><p>Banked at \(\varphi\), the lift must also pull the aircraft round: it grows by the load factor \(n\). The stall speed grows with \(\sqrt n\).</p><div class="eq">$$n = \frac{1}{\cos\varphi}, \qquad V_s = \sqrt{\frac{2 n W}{\rho S\, C_{L\max}}}$$</div></section>
-<section data-case="flight" data-example="b30"><h3>Gentle turn</h3><p>\(1/\cos 30° = 1.15\): only 15 % more lift.</p></section>
-<section data-case="flight" data-example="slowturn"><h3>Too slow</h3><p>At 60° bank \(n = 2\), so the stall speed is \(\sqrt2 \approx 1.41\) times the level value: this speed is below it. Turning steeply at low speed is how many stalls happen.</p></section>
-<section data-case="flight"><h3>The stall</h3><p>Past the critical angle (about 15°) the flow breaks away from the upper surface: \(C_L\) collapses and the drag jumps.</p></section>
-<section data-case="flight" data-example="before"><h3>Just below</h3><p>Near the top of the lift curve: the most lift the wing can give at this speed.</p></section>
-<section data-case="flight" data-example="neg"><h3>Negative angle</h3><p>Below the zero-lift angle \(\alpha_0\) the wing pushes down.</p></section>
-<section data-case="flight" data-example="b60"><h3>A 60° bank</h3><p>\(n = 1/\cos 60° = 2\): the wing must carry twice the weight, so the stall speed rises by \(\sqrt 2\).</p></section>
-<section data-case="flight" data-example="stall"><h3>The stall</h3><p>Past the critical angle (about 15°) the flow breaks away from the upper surface: \(C_L\) collapses and the drag jumps. Lift is now far below the weight.</p></section>
+<section data-case="flight" data-example="high"><h3>Thinner air</h3><p>At 4000 m the air is about 33 % less dense: the same lift needs more speed or more angle of attack, and the stall speed rises from 26.9 to 31.4 m/s.</p></section>
+
+<section data-case="turn">
+  <h3>Turning flight and the load factor</h3>
+  <div class="look"><h4>What you are looking at</h4>The aircraft banked by φ in a level turn. The lift tilts with the wings; the V–n plot shows the speeds and load factors where flight is possible.</div>
+  <p>To turn, the aircraft banks so that part of the lift pulls it sideways, round the turn. The other part must still carry the weight, so the total lift has to grow: by the load factor n = 1/cos φ. Everything on board feels n times heavier. More lift from the same wing needs a bigger angle of attack, so the stall comes sooner: the stall speed grows by √n.</p>
+  <div class="eq">$$L\cos\varphi = W, \quad L\sin\varphi = \frac{mV^2}{r} \;\Rightarrow\; n = \frac{L}{W} = \frac{1}{\cos\varphi}, \qquad r = \frac{V^2}{g\tan\varphi}, \qquad V_s = \sqrt{\frac{2nW}{\rho S C_{L\max}}}$$</div>
+  <ol class="steps">
+    <li>Bank angle → load factor n = 1/cos φ.</li>
+    <li>Needed C_L is n times the level value: check it is below C_Lmax.</li>
+    <li>Turn radius from the sideways part of the lift: r = V²/(g tan φ).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>30° bank at 55 m/s: n = 1.15, α = 2.8°, radius 534 m. 60° bank at 50 m/s: n = 2, α = 8.1°, radius 147 m. The level stall speed of 26.9 m/s becomes 38.1 m/s at 60° bank.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the stall speed is a fixed number. It depends on the load factor (and the altitude and weight): the same aircraft stalls at 38 m/s in a steep turn.</div>
+  <div class="try"><h4>Try it</h4>At 60° bank, lower the speed until the readout says it stalls.</div>
+</section>
+<section data-case="turn" data-example="b60"><h3>A 60° bank</h3><p>\(n = 1/\cos 60° = 2\): the wing must carry twice the weight, so the stall speed rises by \(\sqrt 2\).</p></section>
+<section data-case="turn" data-example="slowturn"><h3>Too slow</h3><p>At 60° bank \(n = 2\), so the stall speed is \(\sqrt2 \approx 1.41\) times the level value, 38.1 m/s: 34 m/s is below it. Turning steeply at low speed is how many stalls happen.</p></section>
+
+<section data-case="stall">
+  <h3>The stall</h3>
+  <div class="look"><h4>What you are looking at</h4>The angle of attack set by hand at 30 m/s, here 22°. The airflow leaves the upper surface; on the lift curve the point has fallen past the peak.</div>
+  <p>Up to a critical angle, tilting the wing further gives more lift. Beyond it (about 15° here) the air can no longer follow the curved upper surface: it breaks away in eddies. The lift drops instead of rising, and the drag jumps. That is the stall. It is set by the angle, not the speed: at any speed, past the critical angle, the wing stalls.</p>
+  <div class="eq">$$C_L \approx a(\alpha - \alpha_0) \text{ for } \alpha < \alpha_s, \qquad a = \frac{2\pi A}{A+2}, \qquad C_{L\max} = a(\alpha_s - \alpha_0)$$</div>
+  <ol class="steps">
+    <li>Below α_s: C_L grows linearly (slope a ≈ 4.9 per radian here).</li>
+    <li>At α_s ≈ 15.3°: C_Lmax = 1.5.</li>
+    <li>Above: C_L falls, the drag coefficient jumps; the aircraft sinks.</li>
+    <li>Recovery: lower the nose to reduce α, then pull out gently.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>At 30 m/s: α = 15° gives C_L = 1.47, lift 1.22 × weight. At 22° (stalled) C_L = 1.00, lift only 0.83 × weight, and L/D drops from 10.4 to 6.2.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a stall means the engine stopped: it is the wing, and it happens at an angle, at any speed.</div>
+  <div class="try"><h4>Try it</h4>Slide α up through 15° and watch the lift readout turn round.</div>
+</section>
+<section data-case="stall" data-example="before"><h3>Just below</h3><p>Near the top of the lift curve: the most lift the wing can give at this speed: at 15°, C_L = 1.47.</p></section>
+<section data-case="stall" data-example="neg"><h3>Negative angle</h3><p>Below the zero-lift angle \(\alpha_0\) the wing pushes down.</p></section>

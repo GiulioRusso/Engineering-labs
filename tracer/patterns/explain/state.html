@@ -1,0 +1,16 @@
+<section>
+  <h3>State</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> A turnstile reacts to a coin and a push differently when locked and unlocked. A <code>switch (state)</code> inside every method spreads the rules of each state over many functions, and adding a state means editing all of them.</p>
+  <p><b>Solution.</b> One class per state, all with the same methods (one per event). The turnstile keeps a pointer to its current state and forwards every event to it. A state object handles the event and, when needed, tells the turnstile to switch to another state object.</p>
+  <ol class="steps">
+    <li>A State interface with one method per event.</li>
+    <li>One class per state holds only that state’s rules.</li>
+    <li>The context forwards events and lets states replace its current state.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>Network connections (closed, listening, established), game characters (idle, running, jumping), order workflows (placed, paid, shipped), UI tools in a drawing program, any finite-state machine.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>States that need lots of data from the context, or transitions scattered so widely that the overall state diagram is no longer visible anywhere. Draw the diagram first.</div>
+  <div class="try"><h4>Try it</h4>Watch the “state” arrow from the turnstile jump between Locked and Unlocked; the turnstile’s own methods never test anything.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> coin (unlock), push (lock again).</p></section>
+<section data-case="in1"><p><b>This scenario:</b> a push while locked is blocked; a second coin while unlocked is just kept.</p></section>

@@ -1,0 +1,51 @@
+<section data-case="rod">
+  <h3>Heat conduction and the steady state</h3>
+  <div class="look"><h4>What you are looking at</h4>A 20 cm copper rod, all at 0 °C, whose left end is suddenly held at 100 °C and right end at 0 °C. Top: the rod coloured by temperature. Middle: the temperature profile, with the final straight line dashed. Right: heat flux in and out over time, and the temperature at three points. Ten seconds of playback cover ten minutes.</div>
+  <p>Heat flows from hot to cold, and the steeper the temperature drops along the rod, the faster it flows (Fourier's law). At first the profile is steep near the hot end: a lot of heat rushes in, and it warms the rod nearby. The warm region creeps along. Eventually every slice gets as much heat from its hot side as it passes to its cold side: nothing changes any more, the profile is a straight line, and the heat in at the left equals the heat out at the right.</p>
+  <div class="eq">$$q = -k\frac{\partial T}{\partial x}, \qquad \rho c\,\frac{\partial T}{\partial t} = \frac{\partial}{\partial x}\left(k\frac{\partial T}{\partial x}\right), \qquad \text{steady: } q = k\frac{T_L - T_R}{L}$$</div>
+  <ol class="steps">
+    <li>The flux depends on the conductivity k and the slope of T.</li>
+    <li>How fast a temperature change spreads depends on the diffusivity α = k/ρc.</li>
+    <li>Time to reach the far end: about L²/α (not L/something: doubling the length takes four times as long).</li>
+    <li>Steady state: straight line, one flux everywhere.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Copper, k = 401 W/(m K), α = 116 mm²/s, L = 20 cm: L²/α = 344 s. After 60 s the middle is at 38 °C, after 5 min at 49 °C, almost the final 50 °C. Steady flux 401 · 100/0.2 = 200 kW/m².</div>
+  <div class="pitfall"><h4>Common mistake</h4>Confusing conductivity and diffusivity. k says how much heat flows for a given slope; α = k/ρc says how fast the temperature changes, because a material with a large heat capacity needs more heat to warm up.</div>
+  <div class="try"><h4>Try it</h4>Watch the two fluxes on the right: big in, zero out at first, then they meet.</div>
+</section>
+<section data-case="rod" data-example="steel"><h3>Steel</h3><p>\(\alpha = 13\) mm²/s, 8.8 times less than copper: the same profile, 8.8 times slower (\(L^2/\alpha = 51\) min), and the final flux is 8 times smaller (\(k = 50\)).</p></section>
+
+<section data-case="pulse">
+  <h3>A hot spot spreads out</h3>
+  <div class="look"><h4>What you are looking at</h4>A steel rod with insulated ends and a hot spot (100 °C peak, width 1 cm) in the middle. Below: the heat stored in the rod, which stays flat.</div>
+  <p>With nowhere to escape, the heat can only redistribute: the peak falls and the spot widens, always keeping the bell shape. That is diffusion, the same mathematics as ink spreading in still water. The width does not grow steadily: it grows like the square root of time, fast at first and then more and more slowly.</p>
+  <div class="eq">$$T(x,t) \propto \frac{1}{\sigma(t)}\, e^{-(x - x_0)^2 / 2\sigma^2}, \qquad \sigma^2 = \sigma_0^2 + 2\alpha t$$</div>
+  <ol class="steps">
+    <li>Insulated ends: no flux, the stored heat ∫ρcT dx is fixed.</li>
+    <li>The square of the width grows by 2α per second.</li>
+    <li>The peak falls as 1/σ, so the area under the bell stays the same.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Steel, σ₀ = 1 cm, after 40 s: σ = √(1 + 2 · 13.2 · 40/100) cm = 3.4 cm, so the peak drops to about 100 · 1/3.4 = 29 °C (the simulation gives 29.5 °C).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the heat is lost as the peak drops. The readout shows the total stays the same: it is spread out, not gone.</div>
+  <div class="try"><h4>Try it</h4>Run longer: when the bell reaches the ends it stops being a bell and the rod settles at one uniform temperature.</div>
+</section>
+<section data-case="pulse" data-example="copper"><h3>In copper</h3><p>8.8 times the diffusivity: the same spreading takes only 5 s instead of 40 s.</p></section>
+
+<section data-case="composite">
+  <h3>Two materials in series</h3>
+  <div class="look"><h4>What you are looking at</h4>10 cm of copper joined to 10 cm of wood, 100 °C at the copper end, 0 °C at the wood end. The dashed vertical line is the joint. The simulated time is 55 hours: wood is very slow.</div>
+  <p>In the steady state the same heat flux has to cross both halves, one after the other. A good conductor needs only a gentle slope to carry it; a poor one needs a steep slope. So the temperature drop splits between the two in proportion to their thermal resistances L/k, like voltage across resistors in series. Next to wood, copper might as well be a perfect conductor: almost all of the 100 °C is lost across the wood.</p>
+  <div class="eq">$$q = \frac{T_L - T_R}{L_1/k_1 + L_2/k_2}, \qquad T_\text{joint} = T_L - q\,\frac{L_1}{k_1}$$</div>
+  <ol class="steps">
+    <li>Each layer's resistance: R = L/k (per square metre).</li>
+    <li>Total resistance = sum; flux = ΔT / total.</li>
+    <li>Drop across each layer = q × its R.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Copper: R = 0.1/401 = 0.00025; wood: 0.1/0.12 = 0.83 m² K/W. q = 100/0.83 = 120 W/m², and the joint sits at 99.97 °C. This is why a saucepan handle is wooden.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Averaging the conductivities. In series, resistances add: the poor conductor dominates.</div>
+  <div class="try"><h4>Try it</h4>Swap the halves: the steady line flips, the flux is the same.</div>
+</section>
+<section data-case="composite" data-example="cu-steel"><h3>Copper and steel</h3><p>Resistances 0.00025 and 0.002 m² K/W: \(q = 44.5\) kW/m², the joint at 88.9 °C. Steel still takes 89 % of the drop.</p></section>
+<details><summary>About the model</summary>
+  <p>Finite volumes (100 cells), backward Euler in time solved with the Thomas algorithm, so any step is stable even with copper next to wood (diffusivities 870 times apart). Thermal conductances between cells add in series. Tests: steady state linear and flux \(k\Delta T/L\) (10⁻⁹); copper–wood joint temperature and flux vs the series-resistance formula (10⁻³); insulated rod keeps its heat (10⁻¹²); a Gaussian spreads with \(\sigma^2 = \sigma_0^2 + 2\alpha t\) (1 %).</p>
+</details>

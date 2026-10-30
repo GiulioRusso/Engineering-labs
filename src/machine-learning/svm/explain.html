@@ -1,0 +1,39 @@
+<section data-case="margin">
+  <h3>The maximum-margin classifier</h3>
+  <div class="look"><h4>What you are looking at</h4>Two classes of points, the SVM's decision line (orange), and the edges of its "street" (dashed), where y·f(x) = 1. Red rings mark the support vectors. Top right: street width against C. Bottom right: each point's dual weight α. Below: y·f(x) for every point, sorted.</div>
+  <p>Many lines separate the two clouds. The SVM picks the one with the widest empty street between them, the line that stays as far as possible from both classes, because a decision that is not close to any training point is less likely to flip on new data. Remarkably, the answer depends only on the few points that touch the edges of the street: the support vectors. All the other points could be moved or deleted without changing anything.</p>
+  <div class="eq">$$\min_{\mathbf w, b}\ \tfrac12\|\mathbf w\|^2 + C\sum_i \max\big(0,\, 1 - y_i(\mathbf w\cdot\mathbf x_i + b)\big), \qquad \text{width} = \frac{2}{\|\mathbf w\|}, \qquad \mathbf w = \sum_i \alpha_i y_i\mathbf x_i$$</div>
+  <ol class="steps">
+    <li>Labels y = ±1; score f(x) = w·x + b; predicted class = sign of f.</li>
+    <li>Demand y·f ≥ 1 for every point: outside the street on its own side.</li>
+    <li>Make ‖w‖ small: the street wide.</li>
+    <li>C prices violations: large C, a hard margin; small C, a wider street that lets some points in.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>These 40 points, C = 100: street width 1.15, set by just 3 support vectors; every point has y·f ≥ 1. Trying every direction by brute force gives the same widest gap (the model test).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking all training points shape the boundary. Only the support vectors (α &gt; 0) appear in w.</div>
+  <div class="try"><h4>Try it</h4>Lower C step by step: the street widens and more points become support vectors.</div>
+</section>
+<section data-case="margin" data-example="soft"><h3>Small C</h3><p>C = 0.05: violations are cheap, so the street widens to 2.55 and 20 points end up inside it, all of them support vectors. Still 100 % right: being inside the street is not the same as being on the wrong side.</p></section>
+<section data-case="margin" data-example="outlier"><h3>An outlier</h3><p>One blue point sits deep among the gold ones. A hard margin must still keep it outside the street: the width collapses from 1.15 to 0.20 and the line tilts.</p></section>
+<section data-case="margin" data-example="outlier-soft"><h3>Soft margin and the outlier</h3><p>C = 0.5: the SVM accepts the one mistake and keeps a sensible street, width 1.42, 97.6 % of training points right. This is what C is for.</p></section>
+
+<section data-case="kernel">
+  <h3>The kernel trick</h3>
+  <div class="look"><h4>What you are looking at</h4>One class in a disc, the other in a ring around it: no straight line can split them. The colours show the SVM's score f(x) with an RBF kernel; red rings are the support vectors. Top right: how similarity falls with distance for the current γ. Bottom right: accuracy on training and unseen points for every γ.</div>
+  <p>The SVM only ever uses the data through dot products between pairs of points. Replace each dot product by a kernel K(x, z), a similarity score, and the SVM behaves as if the points had been mapped into a much richer space where a flat boundary is enough, without ever computing that space. With the RBF kernel, similarity is 1 for identical points and falls off with distance; the decision function becomes a weighted sum of bumps centred on the support vectors.</p>
+  <div class="eq">$$K(\mathbf x, \mathbf z) = e^{-\gamma\|\mathbf x - \mathbf z\|^2}, \qquad f(\mathbf x) = \sum_i \alpha_i y_i K(\mathbf x_i, \mathbf x) + b$$</div>
+  <ol class="steps">
+    <li>γ sets the reach of each point: small γ, wide bumps (smooth boundary); large γ, narrow bumps.</li>
+    <li>The dual problem is the same as before with K in place of x·z.</li>
+    <li>Few support vectors and good test accuracy: a well-chosen γ.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>120 points, C = 10: γ = 0.01 gets only 73 % (too smooth, nearly linear); γ = 0.3, 100 % on unseen points with 14 support vectors; γ = 100, 100 % on training but 87 % on unseen points, with 116 of 120 points as support vectors.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Picking γ by training accuracy: large γ always reaches 100 % there. Choose it on held-out data, as the bottom-right chart does.</div>
+  <div class="try"><h4>Try it</h4>Sweep γ from 0.01 to 100 and watch the boundary go from a blurry ellipse to a ring to islands.</div>
+</section>
+<section data-case="kernel" data-example="smooth"><h3>γ = 0.01</h3><p>Every point is similar to every other: the bumps are so wide that the boundary can barely bend. 73 % right, and almost every point is a support vector.</p></section>
+<section data-case="kernel" data-example="best"><h3>γ = 0.3</h3><p>A clean ring boundary from just 14 support vectors, 100 % on unseen points. A small number of support vectors is a good sign of a simple model.</p></section>
+<section data-case="kernel" data-example="islands"><h3>γ = 100</h3><p>Each point's bump is tiny: the model draws a little island round each gold point. Perfect on the training data, 87 % on new points: overfitting.</p></section>
+<details><summary>About the model</summary>
+  <p>Dual coordinate descent (one α at a time, clipped to [0, C]); the linear SVM carries its bias as a constant feature (10), the kernel SVM adds 1 to the kernel. Tests: with large C every point has y·f ≥ 1 and support vectors sit at y·f = 1 (10⁻³); the margin 2/‖w‖ matches the widest gap found by trying 7200 directions (1 %); smaller C gives a wider margin and more support vectors; on rings an RBF SVM exceeds 95 % on new points while a linear SVM stays below 70 %.</p>
+</details>

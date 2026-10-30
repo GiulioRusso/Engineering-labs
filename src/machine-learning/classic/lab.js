@@ -2,7 +2,7 @@
 // k-means moving its centres iteration by iteration, PCA sweeping a direction until the variance peaks.
 import { createChart } from '../../lib/viz/chart.js';
 import { createCurve } from '../../lib/viz/curve.js';
-import { blobs, moons } from '../neuron/model.js';
+import { blobs, moons } from '../../deep-learning/neuron/model.js';
 import { clusters, neighbours, knn, accuracy, growTree, predict, leaves, splits, kmeans, cloud, pca, along } from './model.js';
 
 const fmt = (v, d = 3) => (Number.isFinite(v) ? (Math.abs(v) < 1e-12 ? '0' : String(Number(v.toPrecision(d)))) : '—');

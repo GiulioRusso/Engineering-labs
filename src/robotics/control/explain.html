@@ -1,0 +1,56 @@
+<section data-case="free">
+  <h3>Robot dynamics: the free arm</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a two-link arm in a vertical plane (1 m and 0.8 m, 5 kg and 3 kg), released from rest with no motor torque; the orange line is the path of its tip. Top right: kinetic, potential and total energy. Bottom right: the entries of its inertia matrix B(q). Below: the elbow angle.</div>
+  <p>Kinematics says where the links are; dynamics says what torques it takes to move them. For a robot the equations of motion come from Lagrange’s method and have a fixed structure: an inertia matrix B(q) that multiplies the joint accelerations, Coriolis and centrifugal terms C(q, q̇)q̇, and gravity g(q). Even two links show what makes robots hard to control: B depends on the posture (a folded arm is easier to swing about the shoulder than a stretched one), the joints push on each other, and released from horizontal the arm swings chaotically. With no friction, energy just moves back and forth between kinetic and potential.</p>
+  <div class="eq">$$B(\mathbf q)\,\ddot{\mathbf q} + C(\mathbf q, \dot{\mathbf q})\,\dot{\mathbf q} + \mathbf g(\mathbf q) = \boldsymbol\tau, \qquad B_{11} = I_1 + m_1 l_{c1}^2 + I_2 + m_2\big(l_1^2 + l_{c2}^2 + 2l_1l_{c2}\cos q_2\big)$$</div>
+  <ol class="steps">
+    <li>Kinetic energy ½ q̇ᵀB(q)q̇, potential energy of the two centres of mass.</li>
+    <li>Lagrange’s equations give B, C and g.</li>
+    <li>B₁₁ changes with the elbow angle: 7.71 kg·m² stretched, 4.42 folded.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Released horizontal: potential 0 (the reference). Hanging straight down is 65.7 J lower, so the kinetic energy can reach 65.6 J as the arm swings through the bottom.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Treating each joint as a separate motor with a fixed load. The load on the shoulder depends on the elbow’s angle and speed: the joints are coupled.</div>
+  <div class="try"><h4>Try it</h4>Watch B₁₂ and B₁₁ change as the elbow folds and unfolds, while the green total energy stays flat.</div>
+</section>
+<section data-case="free" data-example="hang"><h3>Hanging</h3><p>Straight down, gravity has no lever arm: g(q) = 0, and the arm stays still. The stable equilibrium.</p></section>
+<section data-case="free" data-example="small"><h3>A small swing</h3><p>Released 15° from hanging: a gentle, nearly periodic swing, a double pendulum at small amplitude.</p></section>
+<section data-case="free" data-example="friction"><h3>Friction</h3><p>Viscous friction in the joints (2 N·m·s): the total energy falls and the arm settles hanging down, near −65.7 J.</p></section>
+
+<section data-case="pd">
+  <h3>PD control with gravity compensation</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the arm moving from hanging to the target posture (faint arm, red tip). Top right: the error of each joint. Bottom right: the motor torques. Below: the size of the error.</div>
+  <p>The simplest controller acts at each joint like a spring and a damper pulling towards the target: torque proportional to the angle error, minus some proportional to speed. On its own it cannot hold the arm up, because gravity keeps pulling: the arm settles where the spring’s pull balances the weight, below the target. Adding the gravity torque the model predicts, ĝ(q), removes that offset. With exact gravity compensation this law brings the arm to any set point, whatever its other dynamics: a classic result proven with a Lyapunov function. The course exercise main07 tunes exactly this law for the Jaco2.</p>
+  <div class="eq">$$\boldsymbol\tau = K_P(\mathbf q_d - \mathbf q) - K_D\,\dot{\mathbf q} + \hat{\mathbf g}(\mathbf q), \qquad \text{without } \hat{\mathbf g}: \quad K_P(\mathbf q_d - \mathbf q_\infty) = \mathbf g(\mathbf q_\infty)$$</div>
+  <ol class="steps">
+    <li>K_P sets the stiffness: a larger error gives a larger torque.</li>
+    <li>K_D damps the motion: too little and it swings, too much and it creeps.</li>
+    <li>ĝ(q) holds the weight, so the error can go to zero.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Target (30°, 60°): holding it needs g = (46.7, 0) N·m (the second link is vertical, so the elbow needs nothing). With K_P = 100 and no ĝ the arm settles at (−5.1°, 55.7°): the shoulder sags 35°, because 46.7/100 rad is 27° and the sag also lowers the load.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Raising K_P to shrink the gravity sag. It shrinks only as 1/K_P and needs ever larger torques; compensating gravity removes it.</div>
+  <div class="try"><h4>Try it</h4>Untick gravity compensation and raise K_P: the sag shrinks, never vanishes.</div>
+</section>
+<section data-case="pd" data-example="nog"><h3>No compensation</h3><p>The arm stops short, hanging 35° low at the shoulder: the spring K_P(q_d − q) is holding the weight.</p></section>
+<section data-case="pd" data-example="lowd"><h3>Little damping</h3><p>K_D = 3: the arm overshoots and swings back and forth around the target, still 36° off after 4 s.</p></section>
+<section data-case="pd" data-example="stiff"><h3>Stiffer</h3><p>K_P = 400, K_D = 40: there in 1.5 s, but the first kick asks for over 900 N·m. Gains are limited by the motors.</p></section>
+
+<section data-case="ct">
+  <h3>Computed torque (inverse dynamics)</h3>
+  <div class="look"><h4>What you are looking at</h4>The arm following a fast move (a quintic from hanging to the target in 1.5 s) with the chosen law; the faint arm is the reference. Right: joint errors and torques. Below: the size of the error.</div>
+  <p>PD control waits for an error before it acts. If we have a model of the arm, we can do better: compute, from the desired acceleration, the torque the dynamics need, B(q)q̈_d + Cq̇ + g, and apply it in advance. Adding a PD correction inside, the arm’s nonlinear, coupled dynamics cancel out exactly and each joint’s error obeys a simple linear equation, ë + K_D ė + K_P e = 0, which goes to zero as fast as we choose. The catch: it is only as good as the model. With wrong masses the cancellation is imperfect and an error remains.</p>
+  <div class="eq">$$\boldsymbol\tau = \hat B(\mathbf q)\big(\ddot{\mathbf q}_d + K_D\dot{\mathbf e} + K_P\mathbf e\big) + \hat C(\mathbf q, \dot{\mathbf q})\dot{\mathbf q} + \hat{\mathbf g}(\mathbf q) \quad\Rightarrow\quad \ddot{\mathbf e} + K_D\dot{\mathbf e} + K_P\mathbf e = \mathbf 0 \ \text{ if } \hat{\ } = \text{exact}$$</div>
+  <ol class="steps">
+    <li>Feedforward: the torque the reference motion needs.</li>
+    <li>Feedback: a PD on the error, scaled by the inertia.</li>
+    <li>The robot behaves like two independent double integrators.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Exact model: the error stays below 10⁻⁶ rad all the way. PD + ĝ with the same gains on the same path: up to 30°. With the model’s masses 30 % too small, computed torque misses by 5.9°, mostly because it under-compensates gravity.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Trusting the model. Real payloads, friction and motor dynamics differ from it; practical controllers add robustness, integral action or adaptation.</div>
+  <div class="try"><h4>Try it</h4>Raise the model error from 0 to 60 % and watch the final error grow.</div>
+</section>
+<section data-case="ct" data-example="pdt"><h3>PD on the same path</h3><p>Same gains, no model except gravity: the arm lags the fast reference by up to 30° and catches up only after the move ends.</p></section>
+<section data-case="ct" data-example="err"><h3>A wrong model</h3><p>Masses 30 % too light in the controller: the arm follows the shape of the move but ends 5.9° off, the gravity torque under-estimated. The PD part fights it, as in uncompensated PD.</p></section>
+<section data-case="ct" data-example="pdstiff"><h3>PD with stiffer gains</h3><p>K_P = 400, K_D = 40: the lag drops to 8°, at the cost of larger torques and more sensitivity to noise. Model-based control gets more accuracy for less gain.</p></section>
+<details><summary>About the model</summary>
+  <p>Two uniform rods (1 m, 5 kg and 0.8 m, 3 kg), joint angles measured from the horizontal (shoulder) and from the first link (elbow), g = 9.81 m/s². Lagrangian model (Siciliano et al., ch. 7.3.2), RK4 at 1 ms. Controllers from ch. 8.5 (PD + gravity compensation) and 8.5.2 (inverse dynamics); the course exercise main07 applies the first to the Jaco2. Tests: energy conserved when free (10⁻⁶ J); PD + ĝ reaches the set point; without ĝ the arm settles at K_P⁻¹g; computed torque with the exact model tracks within 10⁻⁶ rad, over 1000 times better than PD + ĝ; a 30 % mass error leaves a visible but bounded error.</p>
+</details>

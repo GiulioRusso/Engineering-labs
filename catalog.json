@@ -541,6 +541,11 @@
   "trace": "algorithms"
  },
  {
+  "subject": "design-patterns",
+  "name": "Design patterns",
+  "trace": "patterns"
+ },
+ {
   "subject": "control-systems",
   "name": "Control systems",
   "topics": [
@@ -892,8 +897,77 @@
   ]
  },
  {
+  "subject": "information-theory",
+  "name": "Information theory",
+  "topics": [
+   {
+    "id": "entropy",
+    "title": "Entropy",
+    "what": "Surprisal in bits, and why a predictable source carries little information.",
+    "from": "entropy",
+    "cases": [
+     "entropy"
+    ],
+    "group": "Information"
+   },
+   {
+    "id": "huffman",
+    "title": "Huffman coding",
+    "what": "Build the optimal prefix code merge by merge; compare its length with the entropy.",
+    "from": "entropy",
+    "cases": [
+     "huffman"
+    ],
+    "group": "Information"
+   },
+   {
+    "id": "channel-capacity",
+    "title": "Channel capacity",
+    "what": "The binary symmetric channel: mutual information and Shannon's limit.",
+    "from": "entropy",
+    "cases": [
+     "channel"
+    ],
+    "group": "Channels"
+   },
+   {
+    "id": "repetition-code",
+    "title": "The repetition code",
+    "what": "Send every bit n times and vote: reliability bought with rate.",
+    "from": "coding",
+    "cases": [
+     "repetition"
+    ],
+    "group": "Channels"
+   },
+   {
+    "id": "hamming-code",
+    "title": "The Hamming (7,4) code",
+    "what": "Three parity circles locate and fix any single flipped bit.",
+    "from": "coding",
+    "cases": [
+     "hamming"
+    ],
+    "group": "Channels"
+   }
+  ]
+ },
+ {
   "subject": "machine-learning",
   "name": "Machine learning",
+  "moved": {
+   "neuron": "deep-learning",
+   "hidden-layer": "deep-learning",
+   "activations": "deep-learning",
+   "dense-layer": "deep-learning",
+   "conv-layer": "deep-learning",
+   "pooling": "deep-learning",
+   "softmax": "deep-learning",
+   "cnn-stack": "deep-learning",
+   "loss-functions": "deep-learning",
+   "backpropagation": "deep-learning",
+   "optimizers": "deep-learning"
+  },
   "topics": [
    {
     "id": "neighbours-trees",
@@ -918,6 +992,128 @@
     "group": "1 · Classic methods"
    },
    {
+    "id": "linear-regression",
+    "title": "Linear regression",
+    "what": "Fit a line by least squares: residual squares, R², and gradient descent with and without feature scaling.",
+    "from": "linear",
+    "cases": [
+     "least-squares",
+     "gradient"
+    ],
+    "group": "2 · Linear models"
+   },
+   {
+    "id": "logistic-regression",
+    "title": "Logistic regression",
+    "what": "Probabilities for yes/no labels: the sigmoid, log loss, and why separable data breaks it.",
+    "from": "linear",
+    "cases": [
+     "logistic"
+    ],
+    "group": "2 · Linear models"
+   },
+   {
+    "id": "svm",
+    "title": "Support vector machines",
+    "what": "The widest street between two classes: support vectors, hard and soft margins, the cost C.",
+    "from": "svm",
+    "cases": [
+     "margin"
+    ],
+    "group": "3 · Margins and kernels"
+   },
+   {
+    "id": "kernel-trick",
+    "title": "The kernel trick",
+    "what": "An RBF kernel separates rings; γ from too smooth to islands round every point.",
+    "from": "svm",
+    "cases": [
+     "kernel"
+    ],
+    "group": "3 · Margins and kernels"
+   },
+   {
+    "id": "random-forest",
+    "title": "Bagging and random forests",
+    "what": "Many bootstrapped trees vote: smoother boundaries, lower variance, and where they disagree.",
+    "from": "ensembles",
+    "cases": [
+     "forest"
+    ],
+    "group": "4 · Ensembles"
+   },
+   {
+    "id": "boosting",
+    "title": "Boosting",
+    "what": "AdaBoost adds one stump per round and re-weights the mistakes; when it starts memorising.",
+    "from": "ensembles",
+    "cases": [
+     "boosting"
+    ],
+    "group": "4 · Ensembles"
+   },
+   {
+    "id": "overfitting",
+    "title": "Overfitting and how to fight it",
+    "what": "Capacity, bias and variance, ridge, early stopping, cross-validation.",
+    "from": "generalization",
+    "cases": [
+     "capacity",
+     "biasvar",
+     "ridge",
+     "early",
+     "cv"
+    ],
+    "group": "5 · Generalization"
+   },
+   {
+    "id": "metrics",
+    "title": "Classification metrics",
+    "what": "Accuracy, precision, recall on rare classes.",
+    "from": "generalization",
+    "cases": [
+     "imbalance"
+    ],
+    "group": "5 · Generalization"
+   },
+   {
+    "id": "roc-curves",
+    "title": "ROC curves and thresholds",
+    "what": "Two score distributions and a threshold: ROC, AUC, precision and recall, and rare positives.",
+    "from": "roc",
+    "cases": [
+     "roc"
+    ],
+    "group": "5 · Generalization"
+   }
+  ]
+ },
+ {
+  "subject": "deep-learning",
+  "name": "Deep learning",
+  "topics": [
+   {
+    "id": "neuron-anatomy",
+    "title": "Inside a neuron",
+    "what": "Inputs, weights, bias, sum, activation: every number of one neuron, with its controls.",
+    "from": "neuron-anatomy",
+    "cases": [
+     "anatomy"
+    ],
+    "group": "1 · The neuron"
+   },
+   {
+    "id": "logic-gates",
+    "title": "Logic gates and the perceptron",
+    "what": "AND, OR, NAND as one neuron; the perceptron rule learns them and fails on XOR.",
+    "from": "neuron-anatomy",
+    "cases": [
+     "gates",
+     "learn"
+    ],
+    "group": "1 · The neuron"
+   },
+   {
     "id": "neuron",
     "title": "The neuron",
     "what": "Weights tilt it, the bias slides it, gradient descent learns them.",
@@ -926,27 +1122,7 @@
      "neuron",
      "descent"
     ],
-    "group": "2 · The neuron"
-   },
-   {
-    "id": "activations",
-    "title": "Activation functions",
-    "what": "Sigmoid, tanh, ReLU, GELU: the bend in every layer and the gradient it lets through.",
-    "from": "layers",
-    "cases": [
-     "activation"
-    ],
-    "group": "3 · Layers, one at a time"
-   },
-   {
-    "id": "dense-layer",
-    "title": "Dense layer",
-    "what": "One dot product per output.",
-    "from": "layers",
-    "cases": [
-     "dense"
-    ],
-    "group": "3 · Layers, one at a time"
+    "group": "1 · The neuron"
    },
    {
     "id": "hidden-layer",
@@ -956,7 +1132,59 @@
     "cases": [
      "hidden"
     ],
-    "group": "3 · Layers, one at a time"
+    "group": "2 · Networks"
+   },
+   {
+    "id": "network-playground",
+    "title": "Training a small network",
+    "what": "Train an MLP live on XOR and circles: decision map, what each hidden unit learns, loss curves.",
+    "from": "playground",
+    "cases": [
+     "xor",
+     "circles"
+    ],
+    "group": "2 · Networks"
+   },
+   {
+    "id": "depth-width",
+    "title": "Depth, width and learning rate",
+    "what": "Two spirals need depth; too high a learning rate, and weight decay, change everything.",
+    "from": "playground",
+    "cases": [
+     "spiral"
+    ],
+    "group": "2 · Networks"
+   },
+   {
+    "id": "universal-approximation",
+    "title": "Universal approximation",
+    "what": "One hidden layer fits any curve: watch each ReLU or tanh unit add its piece.",
+    "from": "approximation",
+    "cases": [
+     "relu",
+     "tanh"
+    ],
+    "group": "2 · Networks"
+   },
+   {
+    "id": "activations",
+    "title": "Activation functions",
+    "what": "Sigmoid, tanh, ReLU, GELU: the bend in every layer and the gradient it lets through.",
+    "from": "layers",
+    "cases": [
+     "activation"
+    ],
+    "group": "3 · Layers"
+   },
+   {
+    "id": "dense-layer",
+    "title": "Dense layer",
+    "what": "One dot product per output.",
+    "from": "layers",
+    "cases": [
+     "dense"
+    ],
+    "group": "3 · Layers"
    },
    {
     "id": "conv-layer",
@@ -967,7 +1195,7 @@
      "conv",
      "channels"
     ],
-    "group": "3 · Layers, one at a time"
+    "group": "3 · Layers"
    },
    {
     "id": "pooling",
@@ -977,7 +1205,7 @@
     "cases": [
      "pool"
     ],
-    "group": "3 · Layers, one at a time"
+    "group": "3 · Layers"
    },
    {
     "id": "softmax",
@@ -987,7 +1215,7 @@
     "cases": [
      "softmax"
     ],
-    "group": "3 · Layers, one at a time"
+    "group": "3 · Layers"
    },
    {
     "id": "cnn-stack",
@@ -997,7 +1225,7 @@
     "cases": [
      "stack"
     ],
-    "group": "3 · Layers, one at a time"
+    "group": "3 · Layers"
    },
    {
     "id": "loss-functions",
@@ -1030,28 +1258,66 @@
     "group": "4 · Training"
    },
    {
-    "id": "overfitting",
-    "title": "Overfitting and how to fight it",
-    "what": "Capacity, bias and variance, ridge, early stopping, cross-validation.",
-    "from": "generalization",
+    "id": "vanishing-gradients",
+    "title": "Vanishing gradients",
+    "what": "Why deep sigmoid stacks barely train: the gradient layer by layer.",
+    "from": "dynamics",
     "cases": [
-     "capacity",
-     "biasvar",
-     "ridge",
-     "early",
-     "cv"
+     "vanish"
     ],
-    "group": "5 · Generalization"
+    "group": "4 · Training"
    },
    {
-    "id": "metrics",
-    "title": "Classification metrics",
-    "what": "Accuracy, precision, recall on rare classes.",
-    "from": "generalization",
+    "id": "weight-initialization",
+    "title": "Weight initialisation",
+    "what": "Xavier and He: the weight scale that keeps signals alive through many layers.",
+    "from": "dynamics",
     "cases": [
-     "imbalance"
+     "init"
     ],
-    "group": "5 · Generalization"
+    "group": "4 · Training"
+   },
+   {
+    "id": "mnist-digits",
+    "title": "Handwritten digits (MNIST)",
+    "what": "Train an MLP live on real handwritten digits; inspect one digit, its probabilities and the pixels that matter.",
+    "from": "mnist",
+    "cases": [
+     "train",
+     "inspect"
+    ],
+    "group": "5 · Real data: MNIST"
+   },
+   {
+    "id": "mnist-weights",
+    "title": "What the digit network learned",
+    "what": "Weights as images: templates, stroke features, and a gallery of mistakes.",
+    "from": "mnist",
+    "cases": [
+     "weights",
+     "errors"
+    ],
+    "group": "5 · Real data: MNIST"
+   },
+   {
+    "id": "convolution-filters",
+    "title": "Convolution filters on digits",
+    "what": "A 3×3 kernel sliding over a handwritten digit: edges, blur, sharpen, with every weight shown.",
+    "from": "cnn",
+    "cases": [
+     "kernels"
+    ],
+    "group": "5 · Real data: MNIST"
+   },
+   {
+    "id": "mnist-cnn",
+    "title": "A CNN on handwritten digits",
+    "what": "A small CNN learns its own filters live and beats an MLP with four times the parameters.",
+    "from": "cnn",
+    "cases": [
+     "learned"
+    ],
+    "group": "5 · Real data: MNIST"
    }
   ]
  },
@@ -1335,6 +1601,102 @@
   ]
  },
  {
+  "subject": "numerical-methods",
+  "name": "Numerical methods",
+  "topics": [
+   {
+    "id": "bisection",
+    "title": "Bisection",
+    "what": "Halve a bracket around a sign change: slow, sure, one bit per step.",
+    "from": "roots",
+    "cases": [
+     "bisect"
+    ],
+    "group": "Roots of equations"
+   },
+   {
+    "id": "secant-method",
+    "title": "The secant method",
+    "what": "Follow chords to the root: order 1.618 without a derivative.",
+    "from": "roots",
+    "cases": [
+     "secant"
+    ],
+    "group": "Roots of equations"
+   },
+   {
+    "id": "fixed-point",
+    "title": "Fixed-point iteration",
+    "what": "x ← g(x) as a cobweb: why |g′| < 1 decides everything.",
+    "from": "roots",
+    "cases": [
+     "fixed"
+    ],
+    "group": "Roots of equations"
+   },
+   {
+    "id": "ode-methods",
+    "title": "Euler, Heun and RK4",
+    "what": "Step an oscillator forward: spirals, energy drift and symplectic methods.",
+    "from": "odes",
+    "cases": [
+     "euler"
+    ],
+    "group": "Differential equations"
+   },
+   {
+    "id": "ode-stability",
+    "title": "Stability and stiffness",
+    "what": "Explicit Euler blows up past h = 2/|λ|; implicit Euler never does.",
+    "from": "odes",
+    "cases": [
+     "stability"
+    ],
+    "group": "Differential equations"
+   },
+   {
+    "id": "ode-order",
+    "title": "Order of accuracy",
+    "what": "Error against step size on log axes: slopes 1, 2 and 4.",
+    "from": "odes",
+    "cases": [
+     "order"
+    ],
+    "group": "Differential equations"
+   },
+   {
+    "id": "interpolation",
+    "title": "Interpolation and Runge",
+    "what": "Polynomials through samples: equispaced wiggles vs Chebyshev nodes.",
+    "from": "approx",
+    "cases": [
+     "runge"
+    ],
+    "group": "Approximation"
+   },
+   {
+    "id": "quadrature",
+    "title": "Numerical integration",
+    "what": "Trapezoid vs Simpson: chords, parabolas, errors ∝ h² and h⁴.",
+    "from": "approx",
+    "cases": [
+     "quad"
+    ],
+    "group": "Approximation"
+   },
+   {
+    "id": "finite-differences",
+    "title": "Finite differences",
+    "what": "Derivatives from differences: truncation meets round-off.",
+    "from": "approx",
+    "cases": [
+     "fdiff"
+    ],
+    "group": "Approximation"
+   }
+  ]
+ },
+ {
   "subject": "probability",
   "name": "Probability and statistics",
   "topics": [
@@ -1501,15 +1863,62 @@
  {
   "subject": "physics",
   "name": "Physics",
+  "moved": {
+   "flight": "flight-and-space",
+   "turns": "flight-and-space",
+   "stall": "flight-and-space",
+   "gravity-field": "flight-and-space",
+   "orbits": "flight-and-space",
+   "ground-tracks": "flight-and-space",
+   "orbit-perturbations": "flight-and-space",
+   "orbital-transfers": "flight-and-space",
+   "lagrange-points": "flight-and-space",
+   "time-dilation": "modern-physics",
+   "spacetime": "modern-physics",
+   "photoelectric": "modern-physics",
+   "particle-in-a-box": "modern-physics",
+   "atomic-spectra": "modern-physics",
+   "radioactive-decay": "modern-physics"
+  },
   "topics": [
    {
     "id": "kinematics",
-    "title": "Motion",
-    "what": "Projectiles and circular motion: position, velocity, acceleration.",
+    "title": "Projectile motion",
+    "what": "A thrown ball: launch angle, range, height, and what air drag changes.",
     "from": "motion-energy",
     "cases": [
-     "projectile",
+     "projectile"
+    ],
+    "group": "Mechanics"
+   },
+   {
+    "id": "circular-motion",
+    "title": "Circular motion",
+    "what": "Uniform motion on a circle: speed, angular speed and centripetal acceleration.",
+    "from": "motion-energy",
+    "cases": [
      "circular"
+    ],
+    "group": "Mechanics"
+   },
+   {
+    "id": "work-energy",
+    "title": "Work and energy",
+    "what": "A bead on a track trades potential for kinetic energy; loop the loop without falling.",
+    "from": "energy-track",
+    "cases": [
+     "ramp",
+     "loop"
+    ],
+    "group": "Mechanics"
+   },
+   {
+    "id": "friction-energy",
+    "title": "Friction turns energy into heat",
+    "what": "Each swing climbs less high: kinetic + potential + heat stays constant.",
+    "from": "energy-track",
+    "cases": [
+     "friction"
     ],
     "group": "Mechanics"
    },
@@ -1524,13 +1933,54 @@
     "group": "Mechanics"
    },
    {
+    "id": "rolling",
+    "title": "Rolling and moment of inertia",
+    "what": "Sphere, disc, shell and hoop race down a slope; a falling mass spins a spool.",
+    "from": "rotation",
+    "cases": [
+     "rolling",
+     "spool"
+    ],
+    "group": "Mechanics"
+   },
+   {
+    "id": "angular-momentum",
+    "title": "Angular momentum",
+    "what": "A skater pulls in their arms and spins faster: L = Iω stays, the energy does not.",
+    "from": "rotation",
+    "cases": [
+     "spin"
+    ],
+    "group": "Mechanics"
+   },
+   {
     "id": "forces",
-    "title": "Forces and torque",
-    "what": "Add forces tip to tail; turn a lever.",
+    "title": "Adding forces",
+    "what": "Add forces tip to tail: the resultant, and equilibrium when they cancel.",
     "from": "forces-torque",
     "cases": [
-     "sum",
+     "sum"
+    ],
+    "group": "Mechanics"
+   },
+   {
+    "id": "torque",
+    "title": "Torque",
+    "what": "Turn a lever: force, lever arm and angle.",
+    "from": "forces-torque",
+    "cases": [
      "torque"
+    ],
+    "group": "Mechanics"
+   },
+   {
+    "id": "newtons-laws",
+    "title": "Newton’s laws and friction",
+    "what": "A block on a slope: free-body diagram, static and kinetic friction, a pulley.",
+    "from": "incline",
+    "cases": [
+     "incline",
+     "pulley"
     ],
     "group": "Mechanics"
    },
@@ -1546,28 +1996,187 @@
    },
    {
     "id": "oscillations",
-    "title": "Oscillations",
-    "what": "Spring and pendulum: period, energy, damping and resonance.",
+    "title": "Simple harmonic motion",
+    "what": "A mass on a spring: period, amplitude and energy going back and forth.",
+    "from": "oscillations",
+    "cases": [
+     "spring"
+    ],
+    "group": "Waves and oscillations"
+   },
+   {
+    "id": "damping",
+    "title": "Damped oscillations",
+    "what": "Friction drains the swing: underdamped, critical and overdamped.",
+    "from": "oscillations",
+    "cases": [
+     "damped"
+    ],
+    "group": "Waves and oscillations"
+   },
+   {
+    "id": "resonance",
+    "title": "Driven oscillations and resonance",
+    "what": "A periodic push: amplitude and phase lag against drive frequency.",
+    "from": "oscillations",
+    "cases": [
+     "driven"
+    ],
+    "group": "Waves and oscillations"
+   },
+   {
+    "id": "pendulum",
+    "title": "The pendulum",
+    "what": "Small and large swings, the exact period, friction and pushing in rhythm.",
+    "from": "oscillations",
+    "cases": [
+     "pendulum"
+    ],
+    "group": "Waves and oscillations"
+   },
+   {
+    "id": "coupled-oscillators",
+    "title": "Coupled oscillators",
+    "what": "Two masses joined by a spring swap their energy back and forth: normal modes and beats.",
+    "from": "coupled",
+    "cases": [
+     "two"
+    ],
+    "group": "Waves and oscillations"
+   },
+   {
+    "id": "normal-modes",
+    "title": "Normal modes of a chain",
+    "what": "N beads on springs: N modes, their shapes and frequencies.",
+    "from": "coupled",
+    "cases": [
+     "chain"
+    ],
     "group": "Waves and oscillations"
    },
    {
     "id": "waves",
-    "title": "Waves",
-    "what": "A string: travelling pulses, superposition, standing waves, and the Doppler effect.",
+    "title": "Travelling waves",
+    "what": "A wave on a string: wavelength, frequency, speed, and a single pulse.",
+    "from": "waves",
+    "cases": [
+     "travel"
+    ],
+    "group": "Waves and oscillations"
+   },
+   {
+    "id": "wave-superposition",
+    "title": "Superposition and beats",
+    "what": "Two waves on one string add up: cancellation, standing waves and beats.",
+    "from": "waves",
+    "cases": [
+     "super"
+    ],
+    "group": "Waves and oscillations"
+   },
+   {
+    "id": "standing-waves",
+    "title": "Standing waves",
+    "what": "Modes of a string fixed at both ends: nodes, antinodes and harmonics.",
+    "from": "waves",
+    "cases": [
+     "standing"
+    ],
+    "group": "Waves and oscillations"
+   },
+   {
+    "id": "doppler",
+    "title": "Doppler effect and shock waves",
+    "what": "A moving source squeezes its waves ahead; faster than the waves, a Mach cone.",
+    "from": "waves",
+    "cases": [
+     "doppler"
+    ],
     "group": "Waves and oscillations"
    },
    {
     "id": "thermodynamics",
-    "title": "Gas and heat",
-    "what": "Atoms in a piston: pressure from impacts, heating, isothermal and adiabatic squeezes.",
+    "title": "Kinetic theory of gases",
+    "what": "Atoms in a box: pressure from wall impacts, temperature as speed, Maxwell–Boltzmann.",
     "from": "gas-piston",
+    "cases": [
+     "gas"
+    ],
+    "group": "Heat"
+   },
+   {
+    "id": "gas-processes",
+    "title": "Isothermal and adiabatic processes",
+    "what": "Squeeze a gas slowly with the walls held at T, or insulated: p–V paths and heating.",
+    "from": "gas-piston",
+    "cases": [
+     "isothermal",
+     "adiabatic"
+    ],
+    "group": "Heat"
+   },
+   {
+    "id": "heat-engines",
+    "title": "Heat engines and efficiency",
+    "what": "Carnot and Otto cycles on the p–V diagram: heat in, heat out, net work.",
+    "from": "heat-engine",
+    "cases": [
+     "carnot",
+     "otto"
+    ],
+    "group": "Heat"
+   },
+   {
+    "id": "entropy-ts",
+    "title": "Entropy and the T–S diagram",
+    "what": "Heat as area under T(S): why the Carnot rectangle is the best engine.",
+    "from": "heat-engine",
+    "cases": [
+     "ts"
+    ],
+    "group": "Heat"
+   },
+   {
+    "id": "heat-conduction",
+    "title": "Heat conduction",
+    "what": "Fourier’s law in a rod: the steady straight line, a spreading hot spot, copper joined to wood.",
+    "from": "heat-conduction",
+    "cases": [
+     "rod",
+     "pulse",
+     "composite"
+    ],
     "group": "Heat"
    },
    {
     "id": "electrostatics",
-    "title": "Electric charges",
-    "what": "Field lines, equipotentials and Gauss’s law for point charges.",
+    "title": "Field of a point charge",
+    "what": "Field lines, |E| and the potential around a single charge.",
     "from": "point-charges",
+    "cases": [
+     "charges"
+    ],
+    "group": "Electromagnetism"
+   },
+   {
+    "id": "dipole",
+    "title": "Dipoles and charge pairs",
+    "what": "Superposition: opposite and like charges, dipoles and a quadrupole.",
+    "from": "point-charges",
+    "cases": [
+     "pair",
+     "many"
+    ],
+    "group": "Electromagnetism"
+   },
+   {
+    "id": "gauss-law",
+    "title": "Gauss’s law",
+    "what": "The flux through a closed surface counts only the charge inside.",
+    "from": "point-charges",
+    "cases": [
+     "gauss"
+    ],
     "group": "Electromagnetism"
    },
    {
@@ -1582,8 +2191,8 @@
    },
    {
     "id": "induction",
-    "title": "Electromagnetic induction",
-    "what": "Move a magnet through a coil: flux, EMF, Lenz, magnetic braking.",
+    "title": "Moving magnet and Lenz’s law",
+    "what": "Move a magnet through a coil: flux, EMF, Lenz’s law and magnetic braking.",
     "from": "coil-induction",
     "cases": [
      "magnet",
@@ -1592,9 +2201,65 @@
     "group": "Electromagnetism"
    },
    {
+    "id": "ac-induction",
+    "title": "AC induction",
+    "what": "An alternating current in one coil drives an EMF in another: the transformer idea.",
+    "from": "coil-induction",
+    "cases": [
+     "ac"
+    ],
+    "group": "Electromagnetism"
+   },
+   {
+    "id": "gauss-magnetism",
+    "title": "No magnetic charge: Gauss’s law for B",
+    "what": "Flux of B through any closed surface round a magnet is zero; compare a charge",
+    "from": "maxwell",
+    "cases": [
+     "gauss-b"
+    ],
+    "group": "Electromagnetism"
+   },
+   {
+    "id": "ampere-law",
+    "title": "Ampère’s law",
+    "what": "∮B·dl round any loop equals μ₀ times the current through it",
+    "from": "maxwell",
+    "cases": [
+     "ampere"
+    ],
+    "group": "Electromagnetism"
+   },
+   {
+    "id": "displacement-current",
+    "title": "Displacement current",
+    "what": "A charging capacitor: a changing E field makes B like a current",
+    "from": "maxwell",
+    "cases": [
+     "displacement"
+    ],
+    "group": "Electromagnetism"
+   },
+   {
     "id": "charged-particle",
-    "title": "Charges in E and B",
-    "what": "Circles, helices and drifts of a charged particle.",
+    "title": "Cyclotron motion",
+    "what": "A charge in a magnetic field: circles at the cyclotron frequency, helices along B.",
+    "from": "charged-particle",
+    "cases": [
+     "particle",
+     "helix"
+    ],
+    "group": "Electromagnetism"
+   },
+   {
+    "id": "exb-drift",
+    "title": "E×B drift",
+    "what": "Add an electric field: drift across both fields, or acceleration along B.",
+    "from": "charged-particle",
+    "cases": [
+     "drift",
+     "parallel"
+    ],
     "group": "Electromagnetism"
    },
    {
@@ -1605,12 +2270,30 @@
    },
    {
     "id": "geometric-optics",
-    "title": "Rays: refraction, lenses, mirrors",
-    "what": "Snell’s law, total reflection and image formation.",
+    "title": "Refraction and total reflection",
+    "what": "Snell’s law, the critical angle and total internal reflection.",
     "from": "optics-bench",
     "cases": [
-     "snell",
-     "lens",
+     "snell"
+    ],
+    "group": "Optics"
+   },
+   {
+    "id": "lenses",
+    "title": "Thin lenses",
+    "what": "Converging and diverging lenses: ray diagrams, image position and magnification.",
+    "from": "optics-bench",
+    "cases": [
+     "lens"
+    ],
+    "group": "Optics"
+   },
+   {
+    "id": "mirrors",
+    "title": "Curved mirrors",
+    "what": "A concave mirror: real and virtual images, the mirror equation.",
+    "from": "optics-bench",
+    "cases": [
      "mirror"
     ],
     "group": "Optics"
@@ -1626,11 +2309,159 @@
     "group": "Optics"
    },
    {
+    "id": "diffraction",
+    "title": "Single-slit diffraction",
+    "what": "Light spreads through a slit: sinc² pattern, first zero at λ/a, the phasor chain.",
+    "from": "diffraction",
+    "cases": [
+     "single",
+     "phasor"
+    ],
+    "group": "Optics"
+   },
+   {
+    "id": "grating",
+    "title": "Diffraction gratings",
+    "what": "N slits: sharp lines at d sin θ = mλ, and resolving two close colours.",
+    "from": "diffraction",
+    "cases": [
+     "grating"
+    ],
+    "group": "Optics"
+   }
+  ]
+ },
+ {
+  "subject": "modern-physics",
+  "name": "Modern physics",
+  "topics": [
+   {
+    "id": "time-dilation",
+    "title": "Time dilation and the twins",
+    "what": "A light clock on a moving ship ticks slow; the travelling twin comes back younger.",
+    "from": "relativity",
+    "cases": [
+     "clock",
+     "twins"
+    ],
+    "group": "Relativity"
+   },
+   {
+    "id": "spacetime",
+    "title": "Spacetime diagrams",
+    "what": "Boosted axes, the light cone, and why simultaneity depends on the observer.",
+    "from": "relativity",
+    "cases": [
+     "minkowski"
+    ],
+    "group": "Relativity"
+   },
+   {
+    "id": "photoelectric",
+    "title": "The photoelectric effect",
+    "what": "Light as photons: K_max = hf − φ, the threshold, four metals.",
+    "from": "quantum",
+    "cases": [
+     "photo"
+    ],
+    "group": "Quantum"
+   },
+   {
+    "id": "particle-in-a-box",
+    "title": "Particle in a box",
+    "what": "Allowed energies n²h²/8mL², stationary states, and a superposition that sloshes.",
+    "from": "quantum",
+    "cases": [
+     "box"
+    ],
+    "group": "Quantum"
+   },
+   {
+    "id": "atomic-spectra",
+    "title": "Hydrogen spectrum",
+    "what": "Bohr levels and the Lyman, Balmer and Paschen series of lines.",
+    "from": "quantum",
+    "cases": [
+     "bohr"
+    ],
+    "group": "Quantum"
+   },
+   {
+    "id": "radioactive-decay",
+    "title": "Radioactive decay",
+    "what": "Random decays, half-life, the exponential law, and parent–daughter chains.",
+    "from": "decay",
+    "cases": [
+     "decay",
+     "chain"
+    ],
+    "group": "Nuclear"
+   }
+  ]
+ },
+ {
+  "subject": "flight-and-space",
+  "name": "Flight and space",
+  "topics": [
+   {
     "id": "flight",
-    "title": "Flight",
-    "what": "Lift, drag, the stall and the flight envelope of a light aircraft.",
+    "title": "Lift and drag",
+    "what": "Level flight of a light aircraft: angle of attack, lift curve and drag polar.",
     "from": "flight-envelope",
-    "group": "Flight and space"
+    "cases": [
+     "flight"
+    ],
+    "group": "Flight"
+   },
+   {
+    "id": "turns",
+    "title": "Turning flight and load factor",
+    "what": "Banked turns: load factor, turn radius and a higher stall speed.",
+    "from": "flight-envelope",
+    "cases": [
+     "turn"
+    ],
+    "group": "Flight"
+   },
+   {
+    "id": "stall",
+    "title": "The stall",
+    "what": "Past the critical angle of attack the flow separates and lift collapses.",
+    "from": "flight-envelope",
+    "cases": [
+     "stall"
+    ],
+    "group": "Flight"
+   },
+   {
+    "id": "standard-atmosphere",
+    "title": "The standard atmosphere",
+    "what": "Temperature, pressure, density and the speed of sound with altitude",
+    "from": "cruise",
+    "cases": [
+     "atmosphere"
+    ],
+    "group": "Flight"
+   },
+   {
+    "id": "gliding",
+    "title": "Gliding and the sink polar",
+    "what": "Best glide, minimum sink, and the speed to fly into a headwind",
+    "from": "cruise",
+    "cases": [
+     "glide"
+    ],
+    "group": "Flight"
+   },
+   {
+    "id": "range-endurance",
+    "title": "Range: the Breguet equation",
+    "what": "How far a jet flies: speed, L/D, engine and fuel",
+    "from": "cruise",
+    "cases": [
+     "range"
+    ],
+    "group": "Flight"
    },
    {
     "id": "gravity-field",
@@ -1640,25 +2471,316 @@
     "cases": [
      "gravity"
     ],
-    "group": "Flight and space"
+    "group": "Orbits"
    },
    {
     "id": "orbits",
-    "title": "Orbits",
-    "what": "Kepler orbits around a turning Earth, ground tracks, J2.",
-    "group": "Flight and space"
+    "title": "Kepler orbits",
+    "what": "Circular and elliptical orbits: speed, period, geostationary and Molniya.",
+    "from": "orbits",
+    "cases": [
+     "orbit"
+    ],
+    "group": "Orbits"
+   },
+   {
+    "id": "kepler-laws",
+    "title": "Kepler’s first and second laws",
+    "what": "Ellipses with the Sun at a focus; equal areas in equal times",
+    "from": "kepler",
+    "cases": [
+     "areas"
+    ],
+    "group": "Orbits"
+   },
+   {
+    "id": "kepler-third",
+    "title": "Kepler’s third law",
+    "what": "T² ∝ a³ for the eight planets, and weighing a star",
+    "from": "kepler",
+    "cases": [
+     "third"
+    ],
+    "group": "Orbits"
+   },
+   {
+    "id": "newtons-cannon",
+    "title": "Newton’s cannon and escape speed",
+    "what": "Fire faster: fall back, circle, ellipse, escape",
+    "from": "kepler",
+    "cases": [
+     "cannon"
+    ],
+    "group": "Orbits"
+   },
+   {
+    "id": "ground-tracks",
+    "title": "Inclination and ground tracks",
+    "what": "A tilted orbit over a turning Earth: polar, retrograde, the ISS track.",
+    "from": "orbits",
+    "cases": [
+     "inclined"
+    ],
+    "group": "Orbits"
+   },
+   {
+    "id": "orbit-perturbations",
+    "title": "Earth’s bulge (J2)",
+    "what": "The equatorial bulge turns the orbit plane: sun-synchronous orbits.",
+    "from": "orbits",
+    "cases": [
+     "j2"
+    ],
+    "group": "Orbits"
    },
    {
     "id": "orbital-transfers",
     "title": "Orbital transfers",
     "what": "Hohmann and bi-elliptic transfers, Δv and the rocket equation.",
-    "group": "Flight and space"
+    "group": "Orbits"
+   },
+   {
+    "id": "gravity-assist",
+    "title": "Gravity assist",
+    "what": "A flyby turns the velocity; seen from the Sun the craft speeds up or slows down",
+    "from": "gravity-assist",
+    "group": "Orbits"
    },
    {
     "id": "lagrange-points",
     "title": "Lagrange points",
     "what": "The rotating two-body potential and its five equilibria.",
-    "group": "Flight and space"
+    "group": "Orbits"
+   },
+   {
+    "id": "rocket-equation",
+    "title": "The rocket equation",
+    "what": "Δv = Isp g₀ ln(m₀/m_f) during a burn",
+    "from": "rocket",
+    "cases": [
+     "equation"
+    ],
+    "group": "Rockets"
+   },
+   {
+    "id": "staging",
+    "title": "Staging",
+    "what": "Why rockets drop empty stages, and how much payload each choice carries",
+    "from": "rocket",
+    "cases": [
+     "staging"
+    ],
+    "group": "Rockets"
+   },
+   {
+    "id": "gravity-turn",
+    "title": "Launch: gravity turn and losses",
+    "what": "Pitch kick, gravity loss, drag loss and max-Q on the way up",
+    "from": "rocket",
+    "cases": [
+     "ascent"
+    ],
+    "group": "Rockets"
+   },
+   {
+    "id": "reentry",
+    "title": "Atmospheric entry",
+    "what": "Deceleration, heating and the entry corridor, with or without lift",
+    "from": "reentry",
+    "group": "Rockets"
+   }
+  ]
+ },
+ {
+  "subject": "robotics",
+  "name": "Robotics",
+  "topics": [
+   {
+    "id": "rotation-matrices",
+    "title": "Rotation matrices",
+    "what": "Elementary rotations; the columns are the new axes",
+    "from": "rotations",
+    "cases": [
+     "elementary"
+    ],
+    "group": "1 · Rotations and frames"
+   },
+   {
+    "id": "composing-rotations",
+    "title": "Composing rotations",
+    "what": "Current frame or fixed frame: the order of the product",
+    "from": "rotations",
+    "cases": [
+     "compose"
+    ],
+    "group": "1 · Rotations and frames"
+   },
+   {
+    "id": "euler-angles",
+    "title": "Euler angles and roll–pitch–yaw",
+    "what": "ZYZ and RPY, and the gimbal-lock singularity",
+    "from": "rotations",
+    "cases": [
+     "euler"
+    ],
+    "group": "1 · Rotations and frames"
+   },
+   {
+    "id": "quaternions",
+    "title": "Axis–angle and quaternions",
+    "what": "Unit quaternions and the orientation error used by CLIK",
+    "from": "rotations",
+    "cases": [
+     "quaternion"
+    ],
+    "group": "1 · Rotations and frames"
+   },
+   {
+    "id": "homogeneous-transforms",
+    "title": "Homogeneous transforms",
+    "what": "Rotation and translation in one 4×4 matrix",
+    "from": "rotations",
+    "cases": [
+     "homogeneous"
+    ],
+    "group": "1 · Rotations and frames"
+   },
+   {
+    "id": "planar-arm",
+    "title": "A planar arm",
+    "what": "Forward kinematics and the reachable workspace",
+    "from": "planar",
+    "cases": [
+     "fk"
+    ],
+    "group": "2 · Kinematics"
+   },
+   {
+    "id": "dh-convention",
+    "title": "Denavit–Hartenberg convention",
+    "what": "Four numbers per link, chained into the forward kinematics",
+    "from": "dh",
+    "cases": [
+     "anthro"
+    ],
+    "group": "2 · Kinematics"
+   },
+   {
+    "id": "jaco2-arm",
+    "title": "A 7-joint arm: Kinova Jaco2",
+    "what": "The course project’s robot: DH table, home posture, redundancy",
+    "from": "dh",
+    "cases": [
+     "jaco2"
+    ],
+    "group": "2 · Kinematics"
+   },
+   {
+    "id": "inverse-kinematics",
+    "title": "Inverse kinematics",
+    "what": "Elbow up and elbow down, and targets out of reach",
+    "from": "planar",
+    "cases": [
+     "ik"
+    ],
+    "group": "2 · Kinematics"
+   },
+   {
+    "id": "robot-jacobian",
+    "title": "The Jacobian and singularities",
+    "what": "Tip velocity from joint speeds; the manipulability ellipse",
+    "from": "planar",
+    "cases": [
+     "jac"
+    ],
+    "group": "3 · Differential kinematics"
+   },
+   {
+    "id": "statics-duality",
+    "title": "Statics: τ = Jᵀ F",
+    "what": "Joint torques for a tip force, and the force ellipse",
+    "from": "planar",
+    "cases": [
+     "statics"
+    ],
+    "group": "3 · Differential kinematics"
+   },
+   {
+    "id": "clik",
+    "title": "Closed-loop inverse kinematics",
+    "what": "Tracking the project’s square with J⁺, Jᵀ or damped least squares",
+    "from": "clik",
+    "cases": [
+     "clik"
+    ],
+    "group": "3 · Differential kinematics"
+   },
+   {
+    "id": "redundancy",
+    "title": "Redundancy and the null space",
+    "what": "A spare joint pursues a second goal without moving the tip",
+    "from": "clik",
+    "cases": [
+     "redundancy"
+    ],
+    "group": "3 · Differential kinematics"
+   },
+   {
+    "id": "trapezoidal-profile",
+    "title": "Trapezoidal velocity profile",
+    "what": "Accelerate, cruise, brake: the admissible cruise speeds",
+    "from": "trajectory",
+    "cases": [
+     "trap"
+    ],
+    "group": "4 · Trajectories"
+   },
+   {
+    "id": "polynomial-trajectories",
+    "title": "Cubic and quintic trajectories",
+    "what": "Smoothness up to the acceleration, compared with the trapezoid",
+    "from": "trajectory",
+    "cases": [
+     "poly"
+    ],
+    "group": "4 · Trajectories"
+   },
+   {
+    "id": "robot-dynamics",
+    "title": "Robot dynamics",
+    "what": "B(q)q̈ + C q̇ + g = τ on a free two-link arm",
+    "from": "control",
+    "cases": [
+     "free"
+    ],
+    "group": "5 · Dynamics and control"
+   },
+   {
+    "id": "pd-gravity",
+    "title": "PD control with gravity compensation",
+    "what": "Set-point regulation, and the sag without ĝ",
+    "from": "control",
+    "cases": [
+     "pd"
+    ],
+    "group": "5 · Dynamics and control"
+   },
+   {
+    "id": "computed-torque",
+    "title": "Computed torque",
+    "what": "Inverse dynamics cancels the arm’s dynamics, if the model is right",
+    "from": "control",
+    "cases": [
+     "ct"
+    ],
+    "group": "5 · Dynamics and control"
+   },
+   {
+    "id": "impedance-control",
+    "title": "Impedance control",
+    "what": "Pushing into a wall with a bounded, chosen force",
+    "from": "impedance",
+    "group": "5 · Dynamics and control"
    }
   ]
  },
@@ -2242,6 +3364,72 @@
      "fibre"
     ],
     "group": "Antennas and propagation"
+   }
+  ]
+ },
+ {
+  "subject": "structural-mechanics",
+  "name": "Structural mechanics",
+  "topics": [
+   {
+    "id": "simply-supported",
+    "title": "Simply supported beam",
+    "what": "Reactions, shear and moment diagrams, and the deflected shape.",
+    "from": "beams",
+    "cases": [
+     "simply"
+    ],
+    "group": "Beams"
+   },
+   {
+    "id": "cantilever",
+    "title": "Cantilever",
+    "what": "One support, a moment at the wall, the tip droops.",
+    "from": "beams",
+    "cases": [
+     "cantilever"
+    ],
+    "group": "Beams"
+   },
+   {
+    "id": "cross-section",
+    "title": "Cross sections",
+    "what": "Second moment, the neutral axis, and why beams are shaped like an I.",
+    "from": "beams",
+    "cases": [
+     "section"
+    ],
+    "group": "Beams"
+   },
+   {
+    "id": "tensile-test",
+    "title": "The tensile test",
+    "what": "Elastic, yield, hardening, necking, fracture — and unloading.",
+    "from": "materials",
+    "cases": [
+     "tensile"
+    ],
+    "group": "Materials"
+   },
+   {
+    "id": "mohr-circle",
+    "title": "Mohr’s circle",
+    "what": "Plane stress on a rotating element; principal stresses and maximum shear.",
+    "from": "materials",
+    "cases": [
+     "mohr"
+    ],
+    "group": "Materials"
+   },
+   {
+    "id": "buckling",
+    "title": "Buckling of columns",
+    "what": "Euler's load, end conditions, slenderness and imperfections.",
+    "from": "materials",
+    "cases": [
+     "buckling"
+    ],
+    "group": "Stability"
    }
   ]
  }

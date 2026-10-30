@@ -1,0 +1,22 @@
+<section data-case="impedance">
+  <h3>Impedance control</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a two-link arm seen from above, its tip resting against a compliant wall; the red dot is the desired point, pushed into the wall over a couple of seconds. Top right: how far past the wall the tip and the desired point are (mm). Bottom right: the contact force, with its predicted final value dashed. Below: the joint torques.</div>
+  <p>Position control in contact is dangerous: if the robot is told to be 5 cm inside a wall, a stiff position loop pushes harder and harder. Impedance control instead makes the tip behave like a mass on a spring and damper attached to the desired point. In free space nothing stretches the spring and the tip follows the desired point exactly. Against the wall, the spring stretches until its pull balances the wall’s push-back: the force is bounded and chosen through K_P. Two springs in series decide where the tip stops: whichever is softer gives way. This is the Jaco2 project’s task 4, pushing the gripper 20 cm into a compliant plane.</p>
+  <div class="eq">$$M_d\,\ddot{\tilde{\mathbf x}} + K_D\,\dot{\tilde{\mathbf x}} + K_P\,\tilde{\mathbf x} = \mathbf h_e, \quad \tilde{\mathbf x} = \mathbf x - \mathbf x_d; \qquad \text{at rest: } f = \frac{k\,K_P}{K_P + k}\,\Delta, \qquad \boldsymbol\tau = B(\mathbf q)\,\mathbf y + \mathbf n(\mathbf q, \dot{\mathbf q}) + J^\mathsf{T}\mathbf h_e$$</div>
+  <ol class="steps">
+    <li>Measure the contact force h_e (a force sensor at the wrist).</li>
+    <li>Compute the tip acceleration the target impedance prescribes, and the joint acceleration y that produces it (J⁻¹, minus the J̇q̇ term).</li>
+    <li>Inverse dynamics gives the torques; the measured force is cancelled so only the virtual one acts.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>K_P = 400 N/m, wall k = 2000 N/m, desired point 50 mm in: f = 2000 × 400 / 2400 × 0.05 = 16.7 N; the tip sinks 16.7/2000 = 8.3 mm into the wall and stays 41.7 mm short of the desired point.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Choosing the damping without the wall. In contact the spring is K_P + k, much stiffer than in free space: ζ = K_D/2√((K_P + k)M_d) falls, and the contact can ring. The project’s committed gains (M_d = 100, K_D = 100, K_P = 1) err the other way: ζ = 5 in free space and a time constant K_D/K_P = 100 s, too slow to settle in a 30 s run.</div>
+  <div class="try"><h4>Try it</h4>Sweep K_P from 10 to 10 000 N/m: the force rises from almost nothing to almost kΔ = 100 N.</div>
+</section>
+<section data-case="impedance" data-example="compliant"><h3>Compliant</h3><p>K_P = 100 N/m: the robot is the soft spring. 4.8 N and only 2.4 mm into the wall: a gentle touch, whatever the wall is made of.</p></section>
+<section data-case="impedance" data-example="stiff"><h3>Stiff</h3><p>K_P = 5000 N/m, more than the wall: 71 N, 36 mm into the wall. The robot now behaves almost like position control, and the force depends on the environment.</p></section>
+<section data-case="impedance" data-example="hard"><h3>A hard wall</h3><p>k = 20 000 N/m: the tip barely sinks in (1 mm) and the force, 19.6 N, approaches K_P Δ = 20 N: with a compliant robot the force hardly depends on the wall.</p></section>
+<section data-case="impedance" data-example="fast"><h3>A fast push</h3><p>The desired point jumps in over 0.2 s: the tip arrives with speed and the force overshoots to 23 N before settling at 16.7.</p></section>
+<section data-case="impedance" data-example="free"><h3>No wall</h3><p>In free space the impedance is never excited: the tip follows the desired point to within micrometres. Impedance control is position control until something pushes back.</p></section>
+<details><summary>About the model</summary>
+  <p>Two links (1 m, 5 kg and 0.8 m, 3 kg) in a horizontal plane (no gravity), exact inverse-dynamics impedance control with the measured force (Siciliano et al., §9.3; the project’s main_progetto_4 implements the position part on the Jaco2). Wall: a linear spring acting along x only when penetrated, no friction. RK4 at 0.5 ms. Tests: final force equals kK_PΔ/(K_P + k) for compliant, medium and stiff gains (0.2 %); in free space the tip tracks the desired point within 10⁻⁶ m; the tip never crosses back and the force barely overshoots for a slow push.</p>
+</details>

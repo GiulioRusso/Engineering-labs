@@ -1,0 +1,16 @@
+<section>
+  <h3>Proxy</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> A photo gallery holds hundreds of high-resolution images. Loading all of them at start-up wastes seconds and memory on pictures the user may never scroll to.</p>
+  <p><b>Solution.</b> Give the gallery a stand-in, a proxy, with the same <code>Image</code> interface. It is cheap to create and remembers only the file name. On the first <code>display()</code> it creates the real image, then forwards that call and every later one to it.</p>
+  <ol class="steps">
+    <li>The proxy implements the same interface as the real object.</li>
+    <li>It decides when (and whether) to create or reach the real object.</li>
+    <li>Then it forwards the call.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>Lazy loading in ORMs, smart pointers (<code>std::shared_ptr</code> controls access and lifetime), remote proxies that send calls over a network (RPC stubs), access-control and caching proxies.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Hiding a slow operation behind an innocent-looking call: the first <code>display()</code> takes much longer than the rest, which surprises the caller.</div>
+  <div class="try"><h4>Try it</h4>Count the “loading from disk” lines in the output: one, however many times the photo is shown.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> displayed twice, loaded once.</p></section>
+<section data-case="in1"><p><b>This scenario:</b> never displayed, never loaded: the 24 MB are never spent.</p></section>

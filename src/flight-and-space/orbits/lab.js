@@ -15,14 +15,16 @@ export default {
     { id: 'orbit', label: 'Orbit', set: { alt: 420 * km, e: 0, i: 0, j2: false }, examples: [
       { id: 'high', label: 'Higher: slower', set: { alt: 5000 * km } },
       { id: 'geo', label: 'Geostationary: one day', set: { alt: 35786 * km } },
-      { id: 'iss', label: 'Tilted: the ISS', set: { i: 51.6 * deg } },
-      { id: 'polar', label: 'Polar: every latitude', set: { alt: 700 * km, i: 90 * deg } },
-      { id: 'retro', label: 'Retrograde: i > 90°', set: { i: 140 * deg } },
       { id: 'ellipse', label: 'Elliptical', cam: 'iso', set: { alt: 12000 * km, e: 0.4, i: 30 * deg } },
       { id: 'molniya', label: 'Molniya: apogee over the north', cam: 'iso', set: { alt: 20230 * km, e: 0.74, i: 63.4 * deg, argp: 270 * deg } },
-      { id: 'sso', label: 'Bulge on: sun-synchronous', set: { alt: 800 * km, i: 98.6 * deg, e: 0.001, j2: true } },
-      { id: 'sso-off', label: 'Same, bulge off', set: { alt: 800 * km, i: 98.6 * deg, e: 0.001, j2: false } },
-      { id: 'iss-j2', label: 'Bulge on: the ISS plane turns west', set: { i: 51.6 * deg, j2: true } },
+    ] },
+    { id: 'inclined', label: 'Inclination', controls: ['i', 'alt'], set: { alt: 420 * km, e: 0, i: 51.6 * deg, j2: false }, examples: [
+      { id: 'polar', label: 'Polar: every latitude', set: { alt: 700 * km, i: 90 * deg } },
+      { id: 'retro', label: 'Retrograde: i > 90°', set: { i: 140 * deg } },
+    ] },
+    { id: 'j2', label: 'Bulge (J2)', controls: ['i', 'alt', 'j2'], set: { alt: 800 * km, i: 98.6 * deg, e: 0.001, j2: true }, examples: [
+      { id: 'sso-off', label: 'Same, bulge off', set: { j2: false } },
+      { id: 'iss-j2', label: 'The ISS plane turns west', set: { alt: 420 * km, i: 51.6 * deg, e: 0.0005 } },
     ] },
   ],
   controls: [

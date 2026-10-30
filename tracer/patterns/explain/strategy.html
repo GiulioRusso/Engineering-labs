@@ -1,0 +1,16 @@
+<section>
+  <h3>Strategy</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> A navigator estimates travel time differently for cars, walkers and cyclists. An <code>if (mode == CAR) … else if …</code> inside the navigator grows with every mode and mixes unrelated rules in one function.</p>
+  <p><b>Solution.</b> Put each algorithm in its own class behind one interface, <code>RouteStrategy</code>. The navigator holds a pointer to a strategy and delegates the varying part to it. Switching mode means pointing at another object; the navigator’s code does not change.</p>
+  <ol class="steps">
+    <li>One interface for the family of algorithms.</li>
+    <li>The context holds a strategy and calls it.</li>
+    <li>Strategies can be swapped at run time.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>The comparator passed to <code>std::sort</code>, payment methods at a checkout, compression algorithms, the loss function of a neural network, routing modes in map apps.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Creating strategy classes for a choice that never changes (a plain function would do), or leaking strategy-specific details into the context.</div>
+  <div class="try"><h4>Try it</h4>Watch the grey “strategy” arrow move from one box to another; <code>plan()</code> runs the same lines each time.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> 6 km by car (14 min) then on foot (72 min).</p></section>
+<section data-case="in1"><p><b>This scenario:</b> 1.5 km: walking 18 min, cycling 8 min.</p></section>

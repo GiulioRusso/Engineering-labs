@@ -1,0 +1,38 @@
+<section data-case="vanish">
+  <h3>Vanishing gradients</h3>
+  <div class="look"><h4>What you are looking at</h4>A stack of 10 dense layers, 64 sigmoid units each, before any training. 200 random inputs go up through it; a random error signal comes back down. Left: for each layer (row), where its activation values lie (bright = many). Top right: their spread per layer. Bottom right: how big the gradient of each layer's weights is, on a log scale. Below: how many units are saturated.</div>
+  <p>Backpropagation multiplies the error signal by each layer's weights and by the slope of its activation, layer after layer, on the way down. The sigmoid's slope is at most 0.25 and usually smaller. Ten such factors make the signal reaching the first layers tens of thousands of times weaker than at the top: the last layers learn, the first ones hardly move. This vanishing gradient is why deep networks were so hard to train before ReLU and careful initialisation.</p>
+  <div class="eq">$$\frac{\partial L}{\partial \mathbf a_{l-1}} = W_l^\top\left(\frac{\partial L}{\partial \mathbf a_l} \odot f'(\mathbf z_l)\right), \qquad \sigma'(z) \le \tfrac14 \;\Rightarrow\; \text{each layer can shrink the gradient by } 4\times$$</div>
+  <ol class="steps">
+    <li>Read the bottom-right line from right (top layer) to left (first layer).</li>
+    <li>A falling line means the gradient vanishes on its way down.</li>
+    <li>Compare activations: tanh and ReLU have slope 1 near zero, so their gradients survive.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>10 sigmoid layers with Xavier weights: the gradient reaching layer 1 is 3·10⁻⁵ of what layer 10 gets (the HUD ratio). The activations sit around 0.5 with a spread of only 0.1–0.2.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Blaming the learning rate. Raising it to rescue the first layers makes the last layers overshoot; the cure is a better activation, initialisation or architecture (residual connections, normalisation).</div>
+  <div class="try"><h4>Try it</h4>Increase the depth one layer at a time and watch the ratio fall by a factor of about four each time.</div>
+</section>
+<section data-case="vanish" data-example="tanh"><h3>tanh</h3><p>Slope 1 at zero and zero-centred outputs: the gradient is about the same size at every layer. The activations do narrow slowly (spread 0.6 → 0.23).</p></section>
+<section data-case="vanish" data-example="relu"><h3>ReLU with He weights</h3><p>Slope exactly 1 wherever the unit is active: the gradient stays flat across the layers and the spread holds at about 0.5–0.8. About half the units are at exactly 0 for any one input, by design.</p></section>
+<section data-case="vanish" data-example="deep"><h3>Twenty sigmoid layers</h3><p>The ratio falls to about \(2\cdot10^{-12}\): the first layers would need a trillion times more steps to learn as much as the last.</p></section>
+
+<section data-case="init">
+  <h3>Weight initialisation</h3>
+  <div class="look"><h4>What you are looking at</h4>The same 10-layer stack, now tanh, with the starting weights drawn at different scales.</div>
+  <p>A layer adds up n inputs, each times a random weight. If the weights have variance 1/n, the sum has about the same spread as one input: the signal keeps its size from layer to layer. Smaller weights shrink it at every layer until it is lost in rounding; larger ones grow it until every tanh is stuck at ±1, where its slope, and so the gradient, is nearly zero. ReLU sets half its inputs to zero, so it needs twice the variance, 2/n.</p>
+  <div class="eq">$$\operatorname{Var}(z) = n\,\operatorname{Var}(w)\,\operatorname{Var}(a) \;\Rightarrow\; \operatorname{Var}(w) = \frac1n\ \text{(Xavier, tanh)}, \qquad \operatorname{Var}(w) = \frac2n\ \text{(He, ReLU)}$$</div>
+  <ol class="steps">
+    <li>Count the inputs n of each unit (64 here).</li>
+    <li>Pick the weight standard deviation 1/√n, or √2/√n for ReLU.</li>
+    <li>Check: the spread line (top right) should stay roughly flat.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>n = 64: Xavier std 1/8 = 0.125, He 0.177. With 0.1/√n the spread falls ten times per layer: 0.1, 0.01, … 10⁻¹⁰ at layer 10.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Initialising all weights to 0 (or one constant). Then every unit in a layer computes the same thing and receives the same gradient: they never become different.</div>
+  <div class="try"><h4>Try it</h4>Switch between the four scales and watch the left picture: a vanishing dot, a healthy spread, or two bright stripes at ±1.</div>
+</section>
+<section data-case="init" data-example="small"><h3>Too small</h3><p>Each layer multiplies the spread by about 0.1: after ten layers, \(10^{-10}\). The output no longer depends on the input, and the gradients are \(10^{-8}\).</p></section>
+<section data-case="init" data-example="large"><h3>Too large</h3><p>With 3/√n the sums are large and the tanh units pile up at ±1 (bright stripes at both edges): more than half are saturated, with slopes near zero.</p></section>
+<section data-case="init" data-example="relu-xavier"><h3>ReLU with Xavier</h3><p>ReLU throws away the negative half, so Xavier weights lose half the variance at every layer: spread 0.59 at layer 1, 0.016 at layer 10. He initialisation (√2/√n) fixes exactly this.</p></section>
+<details><summary>About the model</summary>
+  <p>64 units per layer, weights \(\mathcal N(0, (k/\sqrt n)^2)\), no biases, 200 standard normal inputs, one random error vector per input at the top. Weight-gradient size \(\|\delta_l\|\,\|a_{l-1}\|\) averaged over the batch. Tests: linear layers with Xavier weights keep the spread within 25 %; ReLU keeps its scale with He and loses more than 90 % over 12 layers with Xavier; ten sigmoid layers shrink the gradient by more than 1000; tanh with 0.1/√n falls below 10⁻⁶; tanh with 3/√n has over half its units beyond ±0.9.</p>
+</details>

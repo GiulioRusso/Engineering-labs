@@ -1,27 +1,52 @@
 <section data-case="orbit">
-  <h3>Orbits and ground tracks</h3>
-  <div class="look"><h4>What you are looking at</h4>The Earth, a satellite's orbit (with its nodes) in 3D, and the ground track — the path of the point directly below the satellite — on a map.</div>
-  <p>An orbit is a fall that keeps missing the ground: the satellite moves sideways fast enough that the Earth curves away as quickly as it falls. Higher orbits are slower. The ground track moves west each turn because the Earth rotates underneath; the tilt (inclination) sets how far north and south it reaches.</p>
-  <div class="eq">$$v = \sqrt{\frac{\mu}{r}}, \qquad T = 2\pi\sqrt{\frac{a^3}{\mu}}, \qquad \mu_\oplus = 3.986\cdot10^{14}\ \text{m}^3/\text{s}^2$$</div>
+  <h3>Kepler orbits</h3>
+  <div class="look"><h4>What you are looking at</h4>The Earth, a satellite's orbit in 3D, and the ground track (the point directly below the satellite) on the map.</div>
+  <p>An orbit is a fall that keeps missing the ground: the satellite moves sideways so fast that the Earth curves away as quickly as it falls. On a circle gravity supplies exactly the centripetal force. Further out gravity is weaker, so the satellite moves slower on a longer path: higher orbits take much longer.</p>
+  <div class="eq">$$\frac{GMm}{r^2} = \frac{mv^2}{r} \;\Rightarrow\; v = \sqrt{\frac{\mu}{r}}, \qquad T = 2\pi\sqrt{\frac{a^3}{\mu}}, \qquad \mu_\oplus = 3.986\cdot10^{14}\ \text{m}^3/\text{s}^2$$</div>
   <ol class="steps">
-    <li>Inclination i: the track reaches latitudes ±i (or ±(180° − i) if retrograde).</li>
-    <li>Eccentricity e: elliptical orbits are fast at perigee, slow at apogee (Kepler's second law).</li>
-    <li>Earth's equatorial bulge (J2) slowly turns the orbital plane: used for sun-synchronous orbits.</li>
+    <li>Radius from the centre: r = R_E + altitude (R_E = 6378 km).</li>
+    <li>Speed v = √(μ/r); period T = 2πr/v, which is Kepler's third law T² ∝ a³.</li>
+    <li>For an ellipse use the semi-major axis a in T, and vis-viva v² = μ(2/r − 1/a) for the speed at any point.</li>
   </ol>
-  <div class="worked"><h4>Worked example</h4>ISS at 420 km: r = 6791 km, v = 7.66 km/s, T = 92.6 min; each orbit the track shifts 23° west. Geostationary at 35 786 km: T = 23 h 56 min — it stays over one point.</div>
-  <div class="pitfall"><h4>Common mistake</h4>"There is no gravity in orbit": at 400 km gravity is still 89 % of surface gravity — astronauts float because they are falling with the station.</div>
+  <div class="worked"><h4>Worked example</h4>ISS altitude 420 km: r = 6798 km, v = 7.66 km/s, T = 93.0 min. Geostationary at 35 786 km: T = 23 h 56 min, one turn of the Earth, so it stays over one point.</div>
+  <div class="pitfall"><h4>Common mistake</h4>"There is no gravity in orbit": at 400 km gravity is still 89 % of surface gravity. Astronauts float because they are falling with the station.</div>
+  <div class="try"><h4>Try it</h4>Raise the altitude and read the period: 8 times further out (in a) is 22.6 times longer.</div>
 </section>
-<section data-case="orbit"><h3>Circular orbits</h3><p>Gravity provides exactly the centripetal force: \(v = \sqrt{\mu/r}\). Lower is faster: the ISS does a lap in 93 minutes at 7.7 km/s.</p></section>
 <section data-case="orbit" data-example="high"><h3>Higher</h3><p>Further out, gravity is weaker: slower speed, longer path, a period of several hours (\(T \propto a^{3/2}\)).</p></section>
 <section data-case="orbit" data-example="geo"><h3>Geostationary</h3><p>At 35 786 km the period equals one sidereal day: above the equator the satellite stays over one point, and its ground track is a dot.</p></section>
-<section data-case="orbit"><h3>Inclination</h3><p>The orbit plane is tilted by \(i\) to the equator; the ground track swings between latitudes \(\pm i\). During each orbit the Earth turns east, so each pass crosses the equator further west.</p><div class="eq">$$\Delta\lambda = -\omega_E T \approx -22.9° \text{ for the ISS}$$</div></section>
-<section data-case="orbit" data-example="polar"><h3>Polar orbit</h3><p>\(i = 90°\): over both poles. As the Earth turns beneath, the satellite sees the whole planet: mapping and weather.</p></section>
-<section data-case="orbit" data-example="retro"><h3>Retrograde</h3><p>\(i > 90°\): the satellite moves westward, against the Earth's spin. Launching there costs more fuel.</p></section>
-<section data-case="orbit"><h3>Elliptical orbits</h3><p>Fast at perigee, slow at apogee (Kepler's second law: equal areas in equal times). The argument of perigee \(\omega\) turns the ellipse in its plane.</p></section>
-<section data-case="orbit" data-example="molniya"><h3>Molniya</h3><p>\(e = 0.74\), \(i = 63.4°\), apogee over the north: the satellite hangs over Russia for most of its 12-hour orbit. At 63.4° the bulge does not rotate the ellipse.</p></section>
-<section data-case="orbit"><h3>The Earth's bulge (J2)</h3><p>The equatorial bulge pulls on the orbit and makes its plane precess. At 98.6° and 800 km it turns about 1° a day, once a year: the orbit keeps the same angle to the Sun (sun-synchronous).</p><div class="eq">$$\dot\Omega = -\frac32 n J_2 \left(\frac{R_E}{p}\right)^2 \cos i$$</div></section>
-<section data-case="orbit" data-example="sso-off"><h3>Without the bulge</h3><p>For a perfect sphere the orbit plane stays fixed in space.</p></section>
-<section data-case="orbit" data-example="iss-j2"><h3>The ISS</h3><p>\(\cos i > 0\): the plane turns west, about 5° a day.</p></section>
-<section data-case="orbit" data-example="iss"><h3>Inclination</h3><p>The ISS orbit is tilted 51.6° to the equator: the ground track swings between 51.6° N and S, and each pass crosses the equator about 23° further west, because the Earth turned underneath.</p></section>
 <section data-case="orbit" data-example="ellipse"><h3>An ellipse</h3><p>Fast at perigee, slow at apogee: equal areas in equal times (Kepler's second law). The vis-viva equation gives the speed at any distance.</p></section>
-<section data-case="orbit" data-example="sso"><h3>Sun-synchronous</h3><p>At 98.6° and 800 km the bulge turns the orbit plane about 1° a day, once a year: the satellite always crosses the equator at the same local time.</p></section>
+<section data-case="orbit" data-example="molniya"><h3>Molniya</h3><p>\(e = 0.74\), \(i = 63.4°\), apogee over the north: the satellite hangs over Russia for most of its 12-hour orbit. Perigee 540 km, apogee 39 920 km, period 12.0 h. At 63.4° the bulge does not rotate the ellipse.</p></section>
+
+<section data-case="inclined">
+  <h3>Inclination and ground tracks</h3>
+  <div class="look"><h4>What you are looking at</h4>The ISS orbit, tilted 51.6° to the equator, and its ground track on the map: a wave that shifts west at every pass.</div>
+  <p>The orbit plane passes through the Earth's centre, tilted by the inclination i. The satellite goes north for half an orbit and south for the other half, reaching latitudes ±i. Meanwhile the Earth turns eastward under the plane, so each new pass crosses the equator further west.</p>
+  <div class="eq">$$|\text{latitude}| \le i \;(\text{or } 180° - i), \qquad \Delta\lambda = -\omega_E T, \quad \omega_E = 360°/23.93\,\text{h}$$</div>
+  <ol class="steps">
+    <li>Highest latitude = i (prograde, i &lt; 90°) or 180° − i (retrograde).</li>
+    <li>Westward shift per orbit = Earth's rotation during one period.</li>
+    <li>Ascending node Ω: where it crosses the equator going north; it sets which longitudes the tracks start from.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>ISS: T = 93.0 min, so the Earth turns 360° · 93.0/1436 = 23.3° per orbit; about 15.5 orbits a day. Its tracks cover everything between 51.6° N and 51.6° S.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the orbit itself moves west. The orbit plane is fixed in space; the ground underneath turns.</div>
+  <div class="try"><h4>Try it</h4>Set i = 0°: the track collapses onto the equator. Set 90°: it covers the poles.</div>
+</section>
+<section data-case="inclined" data-example="polar"><h3>Polar orbit</h3><p>\(i = 90°\): over both poles. At 700 km the period is 98.8 min and each pass lands 24.8° further west. As the Earth turns beneath, the satellite sees the whole planet: mapping and weather.</p></section>
+<section data-case="inclined" data-example="retro"><h3>Retrograde</h3><p>\(i > 90°\): the satellite moves westward, against the Earth's spin. Launching there costs more fuel.</p></section>
+
+<section data-case="j2">
+  <h3>The Earth's bulge (J2)</h3>
+  <div class="look"><h4>What you are looking at</h4>An 800 km orbit tilted 98.6°, with the effect of the Earth's equatorial bulge switched on. Watch the nodes: the orbit plane slowly turns.</div>
+  <p>The Earth is not a perfect sphere: it is 21 km wider at the equator than pole to pole. The extra mass at the equator tugs on a tilted orbit, like a twist on a spinning top, and the orbit plane slowly precesses around the Earth's axis. Pick the inclination well and the plane turns exactly once a year, keeping step with the Sun.</p>
+  <div class="eq">$$\dot\Omega = -\frac32\, n\, J_2 \left(\frac{R_E}{p}\right)^2 \cos i, \qquad n = \sqrt{\mu/a^3},\; p = a(1-e^2),\; J_2 = 1.083\cdot10^{-3}$$</div>
+  <ol class="steps">
+    <li>cos i &gt; 0 (prograde): the plane turns west. cos i &lt; 0 (retrograde): east.</li>
+    <li>Lower orbits feel it more: (R_E/p)² and n both grow.</li>
+    <li>Sun-synchronous: choose i so that Ω̇ = 360°/365.24 days = +0.986° per day.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>800 km, i = 98.6°: Ω̇ = +0.985° per day, just what a sun-synchronous orbit needs. The ISS (420 km, 51.6°): −4.95° per day, a full turn in about 73 days.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking J2 changes the period or the shape a lot. It mainly turns the orbit; the size and eccentricity stay put.</div>
+  <div class="try"><h4>Try it</h4>Move i towards 90°: the precession stops (cos i = 0).</div>
+</section>
+<section data-case="j2" data-example="sso-off"><h3>Without the bulge</h3><p>For a perfect sphere the orbit plane stays fixed in space.</p></section>
+<section data-case="j2" data-example="iss-j2"><h3>The ISS</h3><p>\(\cos i > 0\): the plane turns west, 4.95° a day.</p></section>

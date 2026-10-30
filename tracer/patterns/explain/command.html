@@ -1,0 +1,16 @@
+<section>
+  <h3>Command</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> An editor must support undo. If editing operations are just function calls, once done they are gone: nothing remembers what happened or how to reverse it.</p>
+  <p><b>Solution.</b> Turn every request into an object with <code>execute()</code> and <code>undo()</code> that keeps everything it needs to do and reverse its work. The editor runs commands and pushes them on a history stack; undo pops the last one and asks it to reverse itself.</p>
+  <ol class="steps">
+    <li>A Command interface: <code>execute()</code>, <code>undo()</code>.</li>
+    <li>Each concrete command holds its receiver and its data.</li>
+    <li>The invoker runs commands and keeps the history.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>Undo/redo in every editor, menu items and keyboard shortcuts bound to the same action, job queues and task schedulers, transactions and database migrations with an up and a down step.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Commands that do not store enough to undo themselves (a delete must remember what it deleted), and undo that is not the exact inverse of execute.</div>
+  <div class="try"><h4>Try it</h4>Watch the history arrows from the editor appear on run and disappear on undo, like a stack.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> type “Hello”, “, world”, “!”, then undo the last.</p></section>
+<section data-case="in1"><p><b>This scenario:</b> undo everything and once more: the editor reports nothing to undo.</p></section>

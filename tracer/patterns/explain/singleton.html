@@ -1,0 +1,15 @@
+<section>
+  <h3>Singleton</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> Some things should exist once in a program: one log file, one configuration, one connection pool. If every part of the code created its own, they would fight over the file and disagree about the settings. Passing one object around everywhere is tedious.</p>
+  <p><b>Solution.</b> Make the constructor private, so nobody can write <code>new Logger</code>, and give the class a static function <code>instance()</code> that returns the one object, creating it on the first call. In modern C++ a function-local <code>static</code> does exactly that, and is thread-safe.</p>
+  <ol class="steps">
+    <li>Private constructor; copying deleted.</li>
+    <li><code>static Logger&amp; instance()</code> holds a <code>static Logger only;</code> inside.</li>
+    <li>Everyone calls <code>Logger::instance()</code> and gets a reference to the same object.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>Loggers, application settings, hardware drivers (one serial port), caches. Many frameworks offer the same idea as “a service registered once” in a dependency-injection container.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Using singletons as hidden global variables: any code can reach them, so tests cannot replace them and dependencies become invisible. Prefer passing the object in, and keep Singleton for things that truly must be unique.</div>
+  <div class="try"><h4>Try it</h4>Watch the counter in the Logger box: it keeps counting across the database and the network, because they write to the same object.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> the database asks first and causes the Logger to be built; the network asks next and gets the same one; the third write shows line [3].</p></section>

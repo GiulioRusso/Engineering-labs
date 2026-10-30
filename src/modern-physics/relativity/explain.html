@@ -1,0 +1,52 @@
+<section data-case="clock">
+  <h3>Time dilation and the light clock</h3>
+  <div class="look"><h4>What you are looking at</h4>Two identical light clocks: a flash of light bouncing between two mirrors, one tick per round trip. The left clock is at rest in the lab; the right one rides on a ship moving at β = v/c (the posts underneath are the lab sliding past). Top right: the slowing factor γ. Bottom right: the ticks each clock has counted.</div>
+  <p>Light travels at the same speed c for every observer: that is the starting point of relativity. Seen from the lab, the light in the moving clock does not go straight up and down: the mirrors move while it travels, so it runs along a longer diagonal path. Same speed, longer path: each tick takes longer. The moving clock runs slow, and not just this one: every process on the ship, from wristwatches to heartbeats, slows by the same factor.</p>
+  <div class="eq">$$\left(\frac{c\,\Delta t}{2}\right)^2 = L^2 + \left(\frac{v\,\Delta t}{2}\right)^2 \;\Rightarrow\; \Delta t = \frac{2L/c}{\sqrt{1 - v^2/c^2}} = \gamma\,\Delta\tau, \qquad \gamma = \frac{1}{\sqrt{1 - \beta^2}}$$</div>
+  <ol class="steps">
+    <li>At rest: the light goes up and down, 2L, one tick Δτ = 2L/c.</li>
+    <li>Moving: the light runs the hypotenuse; Pythagoras with the same c gives Δt.</li>
+    <li>Ratio Δt/Δτ = γ, always ≥ 1, growing without limit as β → 1.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>β = 0.6: γ = 1/√(1 − 0.36) = 1.25. While the lab clock ticks 5 times, the moving one ticks 4. At β = 0.99, γ = 7.09.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the ship's crew sees their own clock slow down. On board everything is normal; it is the lab observer who measures the slowing (and the crew says the same of the lab's clocks).</div>
+  <div class="try"><h4>Try it</h4>Push β towards 0.99 and watch the moving photon crawl along its long zigzag.</div>
+</section>
+<section data-case="clock" data-example="fast"><h3>At 0.99 c</h3><p>\(\gamma = 7.09\): one tick of the moving clock lasts seven lab ticks. Muons made high in the atmosphere live long enough to reach the ground only because of this.</p></section>
+<section data-case="clock" data-example="slow"><h3>At 0.1 c</h3><p>\(\gamma = 1.005\): half a percent, and that is already 30 000 km/s. At everyday speeds the effect is billions of times smaller, which is why we never notice it (GPS satellites do have to correct for it).</p></section>
+
+<section data-case="twins">
+  <h3>The twin paradox</h3>
+  <div class="look"><h4>What you are looking at</h4>A spacetime diagram: distance across, Earth time up. The Earth twin stays at x = 0 (blue); the traveller (orange) flies at 0.8 c to a star 8 light-years away and comes back. Dots mark each twin's birthdays on their own clock; the gold dashed line is a light ray.</div>
+  <p>On each leg the traveller's clock runs slow by γ, as seen from Earth. So on return the traveller is younger. The "paradox": the traveller could say Earth was moving, so Earth's twin should be younger. But the two are not equal: only the traveller turns round, jumping from the outgoing to the returning frame. In spacetime the stay-at-home path is the straight line, and between two events the straight path is the one that collects the most time.</p>
+  <div class="eq">$$T_\text{Earth} = \frac{2D}{v}, \qquad T_\text{traveller} = \frac{T_\text{Earth}}{\gamma}$$</div>
+  <ol class="steps">
+    <li>Earth time for the round trip: distance there and back over speed.</li>
+    <li>The traveller's own (proper) time: divide by γ.</li>
+    <li>Count the dots on each worldline: those are the birthdays each twin celebrates.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>D = 8 ly, β = 0.8, γ = 5/3: Earth waits 2 · 8/0.8 = 20 years; the traveller ages 20/(5/3) = 12 years. They part as twins and meet 8 years apart in age.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Putting the asymmetry in the acceleration's size. The turn can be as quick as you like; what matters is that the traveller's worldline is bent and Earth's is straight.</div>
+  <div class="try"><h4>Try it</h4>Raise β towards 0.99: the trip takes Earth just over 16 years, the traveller little more than 2.</div>
+</section>
+<section data-case="twins" data-example="half"><h3>At 0.5 c</h3><p>32 years on Earth, 27.7 for the traveller (\(\gamma = 1.155\)): a gap of 4 years.</p></section>
+
+<section data-case="minkowski">
+  <h3>Spacetime diagrams and simultaneity</h3>
+  <div class="look"><h4>What you are looking at</h4>Lab axes (grey), light rays at 45° (gold), and the axes and grid of a frame moving at β (orange). Events A and B happen at the same lab time, ct = 1, two light-years apart. The red and green dashed lines are the moving frame's lines of "same time" through A and through B.</div>
+  <p>In the lab, A and B are simultaneous. But "at the same time" means "on a line of constant time", and a moving observer's lines of constant time are tilted: their time axis leans towards the light ray, and their space axis leans up by the same angle, keeping the light ray halfway between them. Through A and B those tilted lines are different, so for the moving observer the two events are not simultaneous. Which one comes first depends on the direction of motion.</p>
+  <div class="eq">$$t' = \gamma\left(t - \frac{vx}{c^2}\right), \qquad x' = \gamma(x - vt), \qquad c^2t'^2 - x'^2 = c^2t^2 - x^2$$</div>
+  <ol class="steps">
+    <li>The ct' axis (x' = 0) is the line x = βct; the x' axis (t' = 0) is ct = βx.</li>
+    <li>Apply the Lorentz transformation to A and B.</li>
+    <li>The time difference is −γβΔx/c: zero only if the events are at the same place or β = 0.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>β = 0.6, γ = 1.25: A at (ct, x) = (1, −1) becomes ct' = 1.25 (1 + 0.6) = 2; B at (1, 1) becomes ct' = 1.25 (1 − 0.6) = 0.5. B happens 1.5 years before A for the moving observer.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking this can reverse cause and effect. It cannot for events that light could connect (inside each other's light cone): their order is the same in every frame. Only events too far apart for any signal can swap.</div>
+  <div class="try"><h4>Try it</h4>Slide β through 0: the order of A and B swaps exactly there.</div>
+</section>
+<section data-case="minkowski" data-example="flip"><h3>The other way</h3><p>At \(\beta = -0.6\) the roles swap: now A is at ct' = 0.5 and B at 2.</p></section>
+<section data-case="minkowski" data-example="near-c"><h3>At 0.9 c</h3><p>Both orange axes fold towards the light line: \(t'_A = 4.36\), \(t'_B = 0.23\). Every frame sees light at 45°: that is the constancy of c, drawn.</p></section>
+<details><summary>About the model</summary>
+  <p>Units with c = 1 (years and light-years). Tests: the interval \(t^2 - x^2\) is unchanged by 200 random boosts (10⁻¹²); two boosts equal one at the relativistic sum of the speeds, always below c; the light-clock tick from the geometry of the diagonal (bisection) equals \(\gamma\) times the rest tick (10⁻¹²); twins at 0.8 c and 8 ly: 20 and 12 years; A and B transform as in the worked example.</p>
+</details>

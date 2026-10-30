@@ -1,0 +1,57 @@
+<section data-case="anatomy">
+  <h3>Inside a neuron</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: one artificial neuron. Three inputs (circles) feed the sum Σ through weights (blue positive, red negative, thicker = larger); a bias adds a constant; the activation box bends the sum into the output y. Top right: what each input contributes to z. Bottom right: the activation curve and its slope, with the current point. Below: the output as x₁ changes.</div>
+  <p>An artificial neuron does two small things. First it scores its inputs: each input is multiplied by a weight that says how much it matters and in which direction, the products are added, and a bias shifts the total. That score is z. Then it squashes the score with an activation function, which decides how strongly the neuron responds. Learning only ever changes the weights and the bias; everything a network knows is stored in those numbers.</p>
+  <div class="eq">$$z = w_1x_1 + w_2x_2 + w_3x_3 + b = \mathbf w\cdot\mathbf x + b, \qquad y = f(z)$$</div>
+  <ol class="steps">
+    <li>Multiply each input by its weight (the arrows' labels show the products).</li>
+    <li>Add them and the bias: z.</li>
+    <li>Apply f: sigmoid squeezes into (0, 1), tanh into (−1, 1), ReLU keeps only the positive part, step is a hard yes/no.</li>
+    <li>The slope f′(z) says how much a small change of z moves y: training relies on it.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>x = (0.8, −0.4, 0.5), w = (1.2, 0.75, −0.5), b = 0.1: z = 0.96 − 0.30 − 0.25 + 0.10 = 0.51; sigmoid gives y = 1/(1 + e^(−0.51)) = 0.625, with slope 0.625 · 0.375 = 0.234.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Forgetting the bias: without it the neuron's boundary must pass through the origin. Thinking a negative weight "switches the input off": it makes that input push the other way.</div>
+  <div class="try"><h4>Try it</h4>Change one weight's sign and watch its bar flip below zero, then the output follow.</div>
+</section>
+<section data-case="anatomy" data-example="cancel"><h3>Inputs that cancel</h3><p>x₁ = x₂ = 1 with weights +1.5 and −1.5: the two contributions cancel, z = 0, and the sigmoid sits exactly in the middle, y = 0.5. The neuron is sensitive to the <em>difference</em> between the two inputs.</p></section>
+<section data-case="anatomy" data-example="saturate"><h3>Saturation</h3><p>Big weights push z to 6.6: y = 0.9986, and the slope is only 0.0014. The neuron is sure, and a small change of its weights hardly changes its output: gradients vanish here, and learning stalls.</p></section>
+<section data-case="anatomy" data-example="dead"><h3>A silent ReLU</h3><p>With b = −2, z = −1.59 &lt; 0: ReLU outputs exactly 0 and its slope is 0 too. If this happens for every input, the neuron is "dead": no gradient reaches its weights.</p></section>
+<section data-case="anatomy" data-example="linear"><h3>No activation</h3><p>y = z = 0.51. Stacking linear neurons only ever gives another linear function: without the bend, depth adds nothing.</p></section>
+
+<section data-case="gates">
+  <h3>Logic gates as neurons</h3>
+  <div class="look"><h4>What you are looking at</h4>The four inputs of a two-input gate at the corners of the square: gold where the gate should output 1, blue where 0. The shaded half-plane is where the neuron (step activation) fires; its edge is the line w₁x₁ + w₂x₂ + b = 0. Red rings mark mistakes. Top right: the truth table.</div>
+  <p>With a step activation a neuron answers yes or no, and the yes-region is always a half-plane: a straight line through the input space. The weights set which way the line faces, the bias slides it. AND needs both inputs: put the line so that only the corner (1, 1) is on the firing side. OR needs either: slide the line closer to the origin.</p>
+  <div class="eq">$$y = \begin{cases}1 & w_1x_1 + w_2x_2 + b \ge 0\\ 0 & \text{otherwise}\end{cases} \qquad \text{AND: } w = (1, 1),\ b = -1.5 \qquad \text{OR: } b = -0.5$$</div>
+  <ol class="steps">
+    <li>Mark the inputs that must give 1.</li>
+    <li>Find a line with them on one side and the rest on the other.</li>
+    <li>Its normal is the weight vector; the offset gives b.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>AND with w = (1, 1), b = −1.5: z = −1.5, −0.5, −0.5, +0.5 at (0,0), (0,1), (1,0), (1,1): only the last fires. ✓</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a cleverer choice of weights can do XOR. No single straight line puts (0,1) and (1,0) on one side and (0,0), (1,1) on the other.</div>
+  <div class="try"><h4>Try it</h4>Starting from AND, slide only the bias until it becomes OR.</div>
+</section>
+<section data-case="gates" data-example="or"><h3>OR</h3><p>b = −0.5: now one active input is enough, z = 0.5 at (0,1) and (1,0).</p></section>
+<section data-case="gates" data-example="nand"><h3>NAND</h3><p>Negate everything: w = (−1, −1), b = 1.5. NAND alone can build any logic circuit, so in principle networks of these neurons can compute anything a computer can.</p></section>
+<section data-case="gates" data-example="xor"><h3>XOR</h3><p>Whatever you try, at least one corner is wrong (here (1,1) fires). This is the famous limit Minsky and Papert pointed out in 1969; a hidden layer removes it: XOR = AND(OR, NAND).</p></section>
+
+<section data-case="learn">
+  <h3>The perceptron learning rule</h3>
+  <div class="look"><h4>What you are looking at</h4>The neuron starts with w = 0, b = 0 and is shown the four examples in turn, one every ¼ s (accent dot). After each mistake it moves its line. Bottom right: the weights and bias over time. Below: how many examples are still wrong.</div>
+  <p>The first learning machine (Rosenblatt, 1958) used a simple rule: look at an example; if the answer is right, change nothing; if it should have fired and did not, add the input to the weights (and 1 to the bias), pulling the line towards that point; if it fired wrongly, subtract. Repeat. If any line can separate the classes, the rule is guaranteed to find one in a finite number of mistakes.</p>
+  <div class="eq">$$\mathbf w \leftarrow \mathbf w + \eta\,(t - y)\,\mathbf x, \qquad b \leftarrow b + \eta\,(t - y)$$</div>
+  <ol class="steps">
+    <li>Compute y with the current weights.</li>
+    <li>Error t − y is 0, +1 or −1.</li>
+    <li>Move the weights by η times the error times the input.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>AND with η = 0.5: after a few rounds of mistakes it settles at w = (1, 0.5), b = −1.5, with all four right from the 19th example on.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting it to find the "best" line. It stops at the first line that works, which may sit very close to a point.</div>
+  <div class="try"><h4>Try it</h4>Change η: with all inputs 0 or 1 the line it ends on may differ, but it still gets there.</div>
+</section>
+<section data-case="learn" data-example="or-learn"><h3>Learning OR</h3><p>Fewer corrections are needed: all four are right after 10 examples, at w = (0.5, 0.5), b = −0.5.</p></section>
+<section data-case="learn" data-example="xor-learn"><h3>XOR never settles</h3><p>The error count never reaches zero: every fix for one corner breaks another. The weights wander in a loop for ever. A single neuron simply cannot represent XOR.</p></section>
+<details><summary>About the model</summary>
+  <p>One neuron, \(z = \mathbf w\cdot\mathbf x + b\), five activation functions. Tests: z and each activation's slope vs finite differences; hand-set weights give AND, OR and NAND; the perceptron rule reaches zero errors on AND, OR, NAND and NOR and never on XOR (400 steps).</p>
+</details>

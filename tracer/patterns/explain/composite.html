@@ -1,0 +1,16 @@
+<section>
+  <h3>Composite</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> A folder contains files and other folders, which contain more of both. Code that wants the total size would need to check at every level “is this a file or a folder?”.</p>
+  <p><b>Solution.</b> Files and folders share one interface, <code>Node</code>, with <code>size()</code>. A file returns its own size; a folder asks each of its children and adds up. The recursion is in the folder, and the caller treats a whole tree exactly like a single file.</p>
+  <ol class="steps">
+    <li>One interface for leaves and containers.</li>
+    <li>Leaves do the work themselves.</li>
+    <li>Containers delegate to their children and combine the answers.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>File systems, GUI layouts (a panel of panels of buttons), scene graphs in games, the HTML DOM, expression trees in compilers (a sum of products of numbers).</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Adding container-only methods (<code>add</code>) to the shared interface, so leaves must implement them uselessly; and forgetting that a cycle in the tree makes the recursion endless.</div>
+  <div class="try"><h4>Try it</h4>Watch the folder boxes fill in their totals from the bottom up as the returns arrive.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> docs = cv.pdf (120 KB) + photos (800 + 650 KB) = 1570 KB.</p></section>
+<section data-case="in1"><p><b>This scenario:</b> the same <code>report()</code> on a single file: one call, no recursion.</p></section>

@@ -6,13 +6,19 @@ import { join } from 'node:path';
 
 const HUE = {
   'analog-electronics': 28, circuits: 45, 'computer-science': 200, 'control-systems': 160, 'digital-electronics': 260,
-  'electronic-warfare': 0, 'machine-learning': 300, maths: 220, probability: 330, physics: 190, 'signal-theory': 130,
+  'electronic-warfare': 0, 'machine-learning': 300, maths: 220, 'numerical-methods': 250, 'information-theory': 100, 'structural-mechanics': 15, probability: 330, physics: 190, 'signal-theory': 130,
+  'modern-physics': 280, 'flight-and-space': 205, 'deep-learning': 340, robotics: 25, 'design-patterns': 115,
 };
 // one simple line icon per subject (24×24, stroke = currentColor)
 const ICON = {
   maths: '<path d="M18 5H7l6 7-6 7h11"/>',
   probability: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.3"/><circle cx="16" cy="8" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="8" cy="16" r="1.3"/><circle cx="16" cy="16" r="1.3"/>',
   physics: '<circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>',
+  'modern-physics': '<path d="M2 12c2 0 2-6 4-6s2 12 4 12 2-12 4-12 2 12 4 12 2-6 4-6"/><circle cx="12" cy="12" r="1.4"/>',
+  'flight-and-space': '<ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-25 12 12)"/><circle cx="12" cy="12" r="3"/><circle cx="20" cy="8.5" r="1.3"/>',
+  robotics: '<path d="M4 20h8"/><path d="M8 20v-4"/><circle cx="8" cy="14" r="2"/><path d="M9.4 12.6l5-5"/><circle cx="15.5" cy="6.5" r="1.6"/><path d="M16.8 7.5l2.7 3M19.5 10.5l-1.6 1.8M19.5 10.5l1 2.2"/>',
+  'design-patterns': '<rect x="3" y="3" width="7" height="5" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="8.5" y="16" width="7" height="5" rx="1"/><path d="M6.5 8v4h11V8M12 12v4"/>',
+  'deep-learning': '<circle cx="4" cy="7" r="1.6"/><circle cx="4" cy="17" r="1.6"/><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/><circle cx="20" cy="12" r="1.6"/><path d="M5.5 7.5l5-2M5.5 7.5l5 4M5.5 16.5l5-4M5.5 16.5l5 2M13.5 5.5l5 6M13.5 12h5M13.5 18.5l5-6"/>',
   'control-systems': '<rect x="9" y="3.5" width="6" height="5" rx="1"/><path d="M3 6h6M15 6h6v12H3V6"/><path d="M3 18l3-3m-3 3l3 3"/>',
   'computer-science': '<path d="M8 6l-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/>',
   'digital-electronics': '<rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 2v4M12 2v4M15 2v4M9 18v4M12 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>',
@@ -21,6 +27,9 @@ const ICON = {
   'electronic-warfare': '<path d="M12 20a8 8 0 0 1-8-8M12 16a4 4 0 0 1-4-4"/><circle cx="12" cy="12" r="1.5"/><path d="M12 12l7-7M15 4a8 8 0 0 1 5 5"/>',
   'machine-learning': '<circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 7l3 4M7 17l3-4M14 11l3-4M14 13l3 4"/>',
   'signal-theory': '<path d="M2 12c2.5-8 5-8 7.5 0s5 8 7.5 0 3.5-5 5-3"/>',
+  'numerical-methods': '<path d="M3 20h18M4 20V4"/><path d="M4 18l4-6 4 3 4-8 4 2"/><circle cx="8" cy="12" r="1.2"/><circle cx="12" cy="15" r="1.2"/><circle cx="16" cy="7" r="1.2"/>',
+  'information-theory': '<path d="M3 12h3l2-5 3 10 2-5h3"/><path d="M18 8l3 4-3 4"/>',
+  'structural-mechanics': '<path d="M2 9h20M2 15h20M4 9l4 6 4-6 4 6 4-6"/><path d="M4 15v5M20 15v5"/>',
 };
 const icon = (k) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k] || '<circle cx="12" cy="12" r="8"/>'}</svg>`;
 const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');

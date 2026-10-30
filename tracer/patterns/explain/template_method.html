@@ -1,0 +1,16 @@
+<section>
+  <h3>Template Method</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> Exporting data as CSV or JSON follows the same steps: header, one line per row, footer. Copying that sequence into each exporter duplicates the skeleton, and the copies drift apart.</p>
+  <p><b>Solution.</b> The base class writes the skeleton once in a non-virtual method, <code>exportAll()</code>, which calls virtual step methods. Subclasses override only the steps. Some steps have a default in the base class (a hook) that subclasses may override or not.</p>
+  <ol class="steps">
+    <li>The algorithm’s order lives in one base-class method.</li>
+    <li>Steps are virtual: abstract where every subclass must decide, with a default (a hook) where it is optional.</li>
+    <li>Subclasses never change the order, only the steps.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>Framework base classes (a test case’s <code>setUp</code>, test, <code>tearDown</code>), game loops (<code>update</code>, <code>draw</code>), parsers with overridable callbacks, <code>std::streambuf</code> overflow hooks.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Letting subclasses override the template method itself, which breaks the guaranteed order, and long chains of inheritance where nobody can tell which step runs where. Strategy is the alternative based on composition.</div>
+  <div class="try"><h4>Try it</h4>In CSV, <code>footer()</code> runs the base class’s empty hook; in JSON, the override closes the bracket.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> three rows exported as CSV.</p></section>
+<section data-case="in1"><p><b>This scenario:</b> the same three rows as JSON.</p></section>

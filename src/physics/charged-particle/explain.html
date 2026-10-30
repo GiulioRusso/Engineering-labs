@@ -1,32 +1,70 @@
 <section data-case="particle">
-  <h3>A charge in electric and magnetic fields</h3>
-  <div class="look"><h4>What you are looking at</h4>A charged particle moving through a uniform magnetic field B (and optionally an electric field E), its trail, and the force and velocity arrows.</div>
-  <p>The electric force pushes along E and changes the particle's speed. The magnetic force is always at right angles to the velocity: it can only turn the particle, never speed it up. A force that always points sideways makes a circle — or, if the particle also moves along B, a helix.</p>
-  <div class="eq">$$\mathbf F = q(\mathbf E + \mathbf v\times\mathbf B), \qquad r = \frac{m v_\perp}{|q|B}, \qquad T = \frac{2\pi m}{|q|B}, \qquad \mathbf v_d = \frac{\mathbf E\times\mathbf B}{B^2}$$</div>
+  <h3>Cyclotron motion</h3>
+  <div class="look"><h4>What you are looking at</h4>A charged particle in a uniform magnetic field B pointing up (z), seen from above, with its trail and the force and velocity arrows.</div>
+  <p>A magnetic field pushes on a moving charge at right angles to its velocity. A force that is always sideways never speeds the particle up or slows it down; it only turns it. Turning at a steady rate with a steady speed is exactly circular motion.</p>
+  <div class="eq">$$\mathbf F = q\,\mathbf v\times\mathbf B, \qquad r_L = \frac{m v_\perp}{|q|B}, \qquad \omega_c = \frac{|q|B}{m}, \qquad T = \frac{2\pi m}{|q|B}$$</div>
   <ol class="steps">
-    <li>Radius grows with speed, but the period does not depend on speed: fast particles take bigger circles in the same time (this is how a cyclotron works).</li>
-    <li>The velocity component along B is untouched: the circle is stretched into a helix.</li>
-    <li>E across B makes the circle drift sideways at E/B — in the same direction for both signs of charge.</li>
+    <li>Magnetic force = centripetal force: qvB = mv²/r gives the radius.</li>
+    <li>Period = circumference / speed = 2πr/v: the v cancels, so the period does not depend on speed.</li>
+    <li>Sign of q sets the sense of rotation: right-hand rule for +, the other way for −.</li>
   </ol>
-  <div class="worked"><h4>Worked example</h4>A proton at 10 km/s in 1 mT: r = 1.67·10⁻²⁷·10⁴ / (1.6·10⁻¹⁹·10⁻³) = 0.104 m; T = 65.6 µs. With E = 1 V/m the drift is 1000 m/s.</div>
-  <div class="pitfall"><h4>Common mistakes</h4>Thinking B does work on the charge: F ⊥ v, so no work, constant speed. Getting the turning direction wrong for negative charges: the force reverses.</div>
-  <div class="try"><h4>Try it</h4>Double the speed: the circle doubles, the period stays. Tilt the velocity: watch the helix pitch.</div>
+  <div class="worked"><h4>Worked example</h4>A proton at 10 km/s in 1 mT: r = 1.67·10⁻²⁷ · 10⁴ / (1.60·10⁻¹⁹ · 10⁻³) = 0.104 m, T = 65.6 µs. An electron at 3000 km/s in the same field: r = 1.7 cm, T = 35.7 ns.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking B does work on the charge: F ⊥ v, so no work, constant speed (the ΔKE readout stays at 0). Getting the turning direction wrong for negative charges: the force reverses.</div>
+  <div class="try"><h4>Try it</h4>Double the speed: the circle doubles, the period stays the same.</div>
 </section>
-<section data-case="particle"><h3>Circles</h3><p>Velocity at right angles to a uniform \(\mathbf B\): the force always points to the same centre, so the particle circles at the cyclotron frequency, whatever its speed.</p><div class="eq">$$\omega_c = \frac{|q| B}{m}, \qquad r_L = \frac{m\,v_\perp}{|q| B}$$</div></section>
 <section data-case="particle" data-example="strong-b"><h3>Stronger field</h3><p>Three times \(B\): a circle three times smaller, turned three times faster.</p></section>
 <section data-case="particle" data-example="speed"><h3>Faster particle</h3><p>The radius grows with \(v\), but the period does not change: this is what makes a cyclotron work.</p></section>
 <section data-case="particle" data-example="anti"><h3>Opposite charge</h3><p>\(q \to -q\) flips the force: the antiparticle circles the other way, same size.</p></section>
 <section data-case="particle" data-example="electron"><h3>An electron</h3><p>1836 times lighter than a proton: it circles 1836 times faster, on a much smaller circle at the same speed.</p></section>
-<section data-case="particle"><h3>Helices</h3><p>The part of the velocity along \(\mathbf B\) feels no force, so the circle is stretched along \(\mathbf B\) into a helix. This is how charged particles spiral along the Earth's field lines into the aurora.</p><div class="eq">$$p = v_\parallel \cdot \frac{2\pi}{\omega_c}$$</div></section>
-<section data-case="particle" data-example="shallow"><h3>Almost along B</h3><p>A small angle: tiny circles, long pitch. The particle is guided by the field line.</p></section>
-<section data-case="particle"><h3>The E × B drift</h3><p>With \(\mathbf E\) across \(\mathbf B\), the particle speeds up on one half of its circle and slows on the other, so the loops do not close: it drifts at right angles to both fields.</p><div class="eq">$$\mathbf v_d = \frac{\cE{\mathbf E}\times\cB{\mathbf B}}{B^2}$$</div></section>
-<section data-case="particle" data-example="pair"><h3>Same drift for both</h3><p>The antiparticle circles the opposite way but drifts in the same direction at the same speed: \(\mathbf v_d\) contains neither \(q\) nor \(m\).</p></section>
-<section data-case="particle" data-example="strong-e"><h3>Stronger E</h3><p>The drift speed is \(E/B\): three times the field, three times faster.</p></section>
-<section data-case="particle"><h3>E along B</h3><p>Now the electric force pushes along the axis: the helix stretches as the particle speeds up. The kinetic energy rises, all from \(q\mathbf E\cdot\mathbf v\).</p></section>
-<section data-case="particle" data-example="brake"><h3>E against the motion</h3><p>The particle slows along \(\mathbf B\), stops, and is pushed back: the helix closes up and reverses.</p></section>
-<section data-case="particle" data-example="helix"><h3>A helix</h3><p>The velocity along \(\mathbf B\) feels no force; only the part across \(\mathbf B\) circles. Together: a helix with pitch \(v_\parallel \cdot 2\pi/\omega_c\).</p></section>
-<section data-case="particle" data-example="drift"><h3>E × B drift</h3><p>Faster on one half of the circle, slower on the other: the loops do not close, and the particle drifts at \(E/B\), at right angles to both fields.</p><div class="eq">$$\mathbf v_d = \frac{\cE{\mathbf E}\times\cB{\mathbf B}}{B^2}$$</div></section>
-<section data-case="particle" data-example="along"><h3>E along B</h3><p>The electric force pushes along the axis: the helix stretches as the particle speeds up, gaining energy \(q\mathbf E\cdot\mathbf v\).</p></section>
+
+<section data-case="helix">
+  <h3>Helical motion</h3>
+  <div class="look"><h4>What you are looking at</h4>The same particle launched at an angle to B (shown in 3D). The trail is a helix around a field line.</div>
+  <p>Split the velocity into a part across B and a part along B. The magnetic force v × B only involves the part across B, so that part goes round in a circle as before. The part along B feels nothing and stays constant. A circle carried steadily along an axis is a helix, like a stretched spring.</p>
+  <div class="eq">$$v_\perp = v\sin\alpha,\quad v_\parallel = v\cos\alpha, \qquad r_L = \frac{m v_\perp}{|q|B}, \qquad \text{pitch} = v_\parallel\,T = v_\parallel\frac{2\pi m}{|q|B}$$</div>
+  <ol class="steps">
+    <li>Find the angle α between v and B and split the velocity.</li>
+    <li>v⊥ gives the radius, as for a circle.</li>
+    <li>The period is still 2πm/|q|B; in one period the particle moves v∥T along B: the pitch.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Proton at 10 km/s, 60° to a 1 mT field: v⊥ = 8.66 km/s gives r = 9.0 cm; v∥ = 5 km/s and T = 65.6 µs give a pitch of 32.8 cm.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using the full speed in the radius formula: only the component across B counts.</div>
+  <div class="try"><h4>Try it</h4>Lower the angle towards 0°: the circles shrink and the pitch grows. The particle follows the field line, as electrons from the Sun do on their way to the aurora.</div>
+</section>
+<section data-case="helix" data-example="shallow"><h3>Almost along B</h3><p>At 17°: circles of 3.1 cm, pitch 63 cm. The particle is guided by the field line.</p></section>
+
+<section data-case="drift">
+  <h3>The E × B drift</h3>
+  <div class="look"><h4>What you are looking at</h4>A proton in B (up, z) and an electric field E along x. Instead of closing, the loops march sideways, along y. The readouts compare the measured drift with E/B.</div>
+  <p>Add an electric field across B. On the half of the circle where the particle moves with E it speeds up, so that part of the loop is wider; on the other half it slows down and the loop is tighter. The loops no longer close, and the centre of the circle moves steadily, at right angles to both E and B.</p>
+  <div class="eq">$$\mathbf v_d = \frac{\cE{\mathbf E}\times\cB{\mathbf B}}{B^2}, \qquad |v_d| = \frac{E}{B}$$</div>
+  <ol class="steps">
+    <li>Find the direction with the right-hand rule for E × B: here x × z = −y.</li>
+    <li>The speed is E/B, with no q and no m in it.</li>
+    <li>So every particle, positive or negative, light or heavy, drifts the same way at the same speed.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>E = 1 V/m, B = 1 mT: v_d = 1/10⁻³ = 1000 m/s. In the frame moving at 1000 m/s the electric field vanishes and the proton just circles.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting the particle to accelerate along E. Across a magnetic field it cannot: E only makes it drift sideways at constant average speed.</div>
+  <div class="try"><h4>Try it</h4>Turn on the antiparticle: it circles the other way but drifts alongside.</div>
+</section>
+<section data-case="drift" data-example="pair"><h3>Same drift for both</h3><p>The antiparticle circles the opposite way but drifts in the same direction at the same speed: \(\mathbf v_d\) contains neither \(q\) nor \(m\).</p></section>
+<section data-case="drift" data-example="strong-e"><h3>Stronger E</h3><p>The drift speed is \(E/B\): three times the field, three times faster.</p></section>
+
+<section data-case="parallel">
+  <h3>E along B: acceleration</h3>
+  <div class="look"><h4>What you are looking at</h4>Now E points along B (up). The particle circles as before, but the helix stretches upward as it goes; the ΔKE readout grows.</div>
+  <p>An electric field along B pushes on the motion along B, which the magnetic field ignores. So the particle accelerates along the field line, exactly as if B were not there, while still circling around it. Unlike B, E does work: the kinetic energy rises.</p>
+  <div class="eq">$$m\dot v_\parallel = qE_\parallel, \qquad \frac{dK}{dt} = q\,\mathbf E\cdot\mathbf v$$</div>
+  <ol class="steps">
+    <li>Across B: circle, unchanged.</li>
+    <li>Along B: constant acceleration a = qE/m.</li>
+    <li>The pitch grows turn by turn.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Proton, E = 2 V/m: a = 1.6·10⁻¹⁹ · 2 / 1.67·10⁻²⁷ = 1.9·10⁸ m/s². In five turns (328 µs) it gains 63 km/s along B, six times its start speed.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the radius grows too: only v∥ changes; v⊥, and so the radius, stay the same.</div>
+  <div class="try"><h4>Try it</h4>Make E_z negative: the helix squeezes, stops and comes back.</div>
+</section>
+<section data-case="parallel" data-example="brake"><h3>E against the motion</h3><p>The particle slows along \(\mathbf B\), stops after about a third of a turn, and is pushed back: the helix closes up and reverses.</p></section>
 <details><summary>About the model</summary>
   <p>Boris pusher with 200 steps per gyration: half electric kick, exact magnetic rotation, half kick. In a pure magnetic field it conserves the speed to round-off (test: \(10^{-12}\)), and the drift matches \(E/B\) within 0.2 %.</p>
 </details>

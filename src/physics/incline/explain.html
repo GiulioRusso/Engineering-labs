@@ -1,0 +1,38 @@
+<section data-case="incline">
+  <h3>Newton's laws and friction on a slope</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a 2 kg block on a slope with its free-body diagram: weight mg, normal force N from the surface, friction f. Top right: the acceleration for every slope angle (dashed: without friction). Bottom right: the friction law. Below: the block's position over time.</div>
+  <p>Draw every force on the block, then split them along the slope and across it. Across the slope nothing moves, so the surface pushes back exactly as hard as the weight presses into it: N = mg cos θ. Along the slope, gravity pulls down with mg sin θ and friction resists. Static friction is a reaction: it takes whatever value is needed to keep the block still, but only up to μsN. Ask for more and the block slips; then kinetic friction μkN, a bit smaller, acts against the motion.</p>
+  <div class="eq">$$\sum F = ma, \qquad N = mg\cos\theta, \qquad |f_s| \le \mu_s N, \qquad f_k = \mu_k N, \qquad a = g(\sin\theta - \mu_k\cos\theta)$$</div>
+  <ol class="steps">
+    <li>Free-body diagram: weight, normal, friction (and any rope).</li>
+    <li>Across the slope: N = mg cos θ.</li>
+    <li>Along the slope: does mg sin θ exceed μsN? If not, it stays; static friction = mg sin θ.</li>
+    <li>If it does, it slides: ma = mg sin θ − μkN. The mass cancels.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>m = 2 kg, θ = 35°, μs = 0.5, μk = 0.4: N = 19.62 · cos 35° = 16.07 N; mg sin θ = 11.25 N &gt; μsN = 8.04 N, so it slides with a = 9.81 (0.574 − 0.4 · 0.819) = 2.41 m/s² down the slope (frictionless: 5.63 m/s²).</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Using f = μsN when the block is at rest: that is the maximum, not the value. Writing N = mg on a slope: only the part of the weight across the slope presses into it.</div>
+  <div class="try"><h4>Try it</h4>Raise θ slowly from 0: the block starts at tan θ = μs, 26.6° here, and the acceleration jumps from 0 (top right).</div>
+</section>
+<section data-case="incline" data-example="below"><h3>Friction holds it</h3><p>At 20° the slope pulls with \(mg\sin\theta = 6.71\) N; static friction could give up to \(\mu_s N = 9.22\) N, so it gives exactly 6.71 N and the block stays.</p></section>
+<section data-case="incline" data-example="ice"><h3>On ice</h3><p>Same 20°, but now static friction can give only 1.84 N: the block slides, at 2.89 m/s².</p></section>
+<section data-case="incline" data-example="steep"><h3>Steep slope</h3><p>At 60° the block presses less into the surface (\(N = mg\cos 60° = 9.81\) N), so friction is weaker too: \(a = 6.53\) m/s², not far from the frictionless 8.50 m/s².</p></section>
+
+<section data-case="pulley">
+  <h3>Connected bodies: a hanging mass over a pulley</h3>
+  <div class="look"><h4>What you are looking at</h4>A rope over a pulley at the top of the slope ties the block to a hanging mass M. The tension T (orange) pulls the block up the slope and holds M up.</div>
+  <p>Two bodies tied by a taut rope move together with the same acceleration. Write Newton's law for each one: the hanging mass feels its weight down and the tension up; the block feels the tension up the slope, the slope component of its weight, and friction. The tension is the same at both ends of a light rope, and it is not Mg: if M accelerates downward, the rope must hold it with less than its weight.</p>
+  <div class="eq">$$Ma = Mg - T, \qquad ma = T - mg\sin\theta + f \;\Rightarrow\; a = \frac{Mg - mg\sin\theta + f}{m + M}$$</div>
+  <ol class="steps">
+    <li>Driving force: Mg − mg sin θ. If its size is below μsN, nothing moves.</li>
+    <li>Otherwise kinetic friction μkN opposes the motion.</li>
+    <li>Add the two equations: T cancels and gives a; then T = M(g − a).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>m = M = 2 kg, θ = 30°, μk = 0.2: driving force 19.62 − 9.81 = 9.81 N, friction 0.2 · 16.99 = 3.40 N, so a = 6.41/4 = 1.60 m/s² up the slope, and T = 2 (9.81 − 1.60) = 16.4 N, less than Mg = 19.6 N.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Setting T = Mg. That is true only if nothing accelerates.</div>
+  <div class="try"><h4>Try it</h4>Lower M until the block stops: friction then takes up the difference.</div>
+</section>
+<section data-case="pulley" data-example="balanced"><h3>Friction holds the pair</h3><p>With M = 1.5 kg the driving force is 4.91 N, below \(\mu_s N = 5.10\) N: nothing moves, static friction gives 4.91 N down the slope and \(T = Mg = 14.7\) N.</p></section>
+<section data-case="pulley" data-example="atwood"><h3>The Atwood machine</h3><p>A vertical slope and no friction: two masses over a pulley. \(a = (M - m)g/(M + m) = 0.5 \cdot 9.81/2.5 = 1.96\) m/s², \(T = 2mMg/(m + M) = 11.8\) N. Close masses give a slow, easy-to-measure fall: how \(g\) was once measured.</p></section>
+<details><summary>About the model</summary>
+  <p>Static friction takes any value up to \(\mu_s N\) to keep the system still; past that, kinetic friction \(\mu_k N\) opposes the motion and the masses move with constant acceleration. Tests: the block starts at \(\tan\theta = \mu_s\) (bisection, 10⁻⁹); sliding acceleration vs \(g(\sin\theta - \mu_k\cos\theta)\) for three masses; Atwood acceleration and tension; for 500 random set-ups, static friction never exceeds \(\mu_s N\) and Newton's law holds for each body (10⁻⁹).</p>
+</details>

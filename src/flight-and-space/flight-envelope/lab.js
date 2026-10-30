@@ -16,12 +16,14 @@ export default {
       { id: 'slow', label: 'Slow: big angle of attack', set: { V: 30 } },
       { id: 'fast', label: 'Fast: small angle', set: { V: 80 } },
       { id: 'high', label: 'Thin air at 4000 m', set: { h: 4000 } },
-      { id: 'b30', label: 'Turn, 30° bank', set: { bank: 30 * deg } },
+    ] },
+    { id: 'turn', label: 'Turn', controls: ['V', 'bank'], set: { V: 55, h: 1000, bank: 30 * deg }, examples: [
       { id: 'b60', label: 'Turn, 60° bank: n = 2', set: { V: 50, bank: 60 * deg } },
-      { id: 'slowturn', label: 'Too slow for that bank', controls: ['V', 'bank'], set: { V: 34, bank: 60 * deg } },
-      { id: 'stall', label: 'Stall: α past 15°', controls: ['alpha'], set: { mode: 'free', V: 30, alpha: 18 * deg } },
-      { id: 'before', label: 'Just below the stall', controls: ['alpha'], set: { mode: 'free', V: 30, alpha: 13 * deg } },
-      { id: 'neg', label: 'Negative angle: pushes down', controls: ['alpha'], set: { mode: 'free', V: 30, alpha: -3 * deg } },
+      { id: 'slowturn', label: 'Too slow for that bank', set: { V: 34, bank: 60 * deg } },
+    ] },
+    { id: 'stall', label: 'Stall', controls: ['alpha'], set: { mode: 'free', V: 30, h: 1000, alpha: 22 * deg }, examples: [
+      { id: 'before', label: 'Just below the stall', set: { alpha: 15 * deg } },
+      { id: 'neg', label: 'Negative angle: pushes down', set: { alpha: -3 * deg } },
     ] },
   ],
   controls: [

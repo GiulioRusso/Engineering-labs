@@ -1,0 +1,16 @@
+<section>
+  <h3>Builder</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> An HTTP request has a method, a URL, any number of headers and maybe a body. A constructor with all of them as parameters is unreadable and forces you to pass blanks; setting fields one by one leaves half-made objects around that might be used too early.</p>
+  <p><b>Solution.</b> A separate builder collects the parts through small, named methods, each returning the builder so calls chain. Only <code>build()</code> creates the product, after checking that everything required is there. The product itself can then be immutable.</p>
+  <ol class="steps">
+    <li>Builder methods set one part each and <code>return *this</code>.</li>
+    <li><code>build()</code> validates, then creates the finished object.</li>
+    <li>The product has no setters: once built, it cannot change.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>Request builders in HTTP libraries, <code>StringBuilder</code>, query builders for SQL, configuration objects in test code, Protocol Buffers message builders.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Using a builder for a class with two fields (a constructor is clearer), or letting <code>build()</code> skip validation, which brings the half-made objects back.</div>
+  <div class="try"><h4>Try it</h4>Watch the builder box fill up line by line while no Request exists; it appears only at <code>.build()</code>.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> a GET with two headers, assembled in one chained expression.</p></section>
+<section data-case="in1"><p><b>This scenario:</b> a POST with a body, then a builder missing its URL: <code>build()</code> refuses to create anything.</p></section>

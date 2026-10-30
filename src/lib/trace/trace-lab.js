@@ -55,7 +55,7 @@ export function traceLab(trace, { id, title, group, code = true }) {
       const $ = (s) => root.querySelector(s), pre = $('pre');
       pre.innerHTML = trace.displaySource.map((l, i) => `<div class="row"><span class="gut">${i + 1}</span><span></span></div>`).join('');
       [...pre.children].forEach((r, i) => { r.lastChild.innerHTML = cpp(trace.displaySource[i]); });
-      $('.tbadges').innerHTML = [trace.chapter.replace(/^\d+\s*·\s*/, ''), `time ${trace.complexity.time}`, `space ${trace.complexity.space}`].map((b) => `<span>${b}</span>`).join('');
+      $('.tbadges').innerHTML = [trace.chapter.replace(/^\d+\s*·\s*/, ''), ...(trace.complexity.time === '?' ? [] : [`time ${trace.complexity.time}`, `space ${trace.complexity.space}`])].map((b) => `<span>${b}</span>`).join('');
       let primary = null, panels = [], shown = -1;
       const steps = () => inputs[state.input].steps;
       const make = (viewId, box, opts) => { const f = window.RENDERERS?.[viewId]; if (!f) { box.textContent = `no renderer for “${viewId}”`; return null; } const r = f(); r.mount(box, trace, opts); return r; };

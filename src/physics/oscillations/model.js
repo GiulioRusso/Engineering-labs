@@ -44,6 +44,9 @@ export function period(s) {
 // Steady-state amplitude of the driven, damped linear oscillator.
 export const steadyAmplitude = (w0, gamma, fm, wd) => fm / Math.sqrt((w0 * w0 - wd * wd) ** 2 + (2 * gamma * wd) ** 2);
 
+// How far the steady response lags the drive (rad): 0 well below ω₀, π/2 at resonance, → π above.
+export const phaseLag = (w0, gamma, wd) => Math.atan2(2 * gamma * wd, w0 * w0 - wd * wd);
+
 // Period measured from successive upward zero crossings (linear interpolation).
 export function measuredPeriod({ t, q }, skip = 0) {
   const c = [];

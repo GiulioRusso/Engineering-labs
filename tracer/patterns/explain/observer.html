@@ -1,0 +1,17 @@
+<section>
+  <h3>Observer</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call being made now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> Several parts of a program must react when something changes: a phone app, a thermostat and a logger all care about the temperature. If the weather station called each of them by name, it would have to change every time a new display was added, and it would depend on all of their classes.</p>
+  <p><b>Solution.</b> The station (the <em>subject</em>) keeps a list of objects that implement one small interface, <code>Observer</code>, with a single method <code>update()</code>. Anyone interested subscribes; when the temperature changes the station loops over the list and calls <code>update()</code> on each. It never learns what they are.</p>
+  <ol class="steps">
+    <li>Define the interface the subject will call (<code>update</code>).</li>
+    <li>The subject keeps a list of pointers to that interface, with <code>subscribe</code> and <code>unsubscribe</code>.</li>
+    <li>On every change, <code>notify()</code> calls <code>update</code> on everyone in the list.</li>
+    <li>Each observer decides on its own what to do with the news.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>GUI event listeners (a button notifies its click handlers), spreadsheet cells recomputing when a cell they use changes, model–view separation in MVC, publish/subscribe message buses, reactive libraries (signals, RxJS).</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Forgetting to unsubscribe an object that is about to be destroyed: the subject keeps a dangling pointer (in C++ a crash, in garbage-collected languages a memory leak). And relying on the order observers are called in: the pattern promises none.</div>
+  <div class="try"><h4>Try it</h4>Step through <code>notify()</code>: the same line calls three different <code>update</code> methods, one per class. That is polymorphism doing the work.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> three observers subscribe, then the temperature changes twice. At 17 °C the thermostat turns the heating on; the station’s code never mentions heating.</p></section>
+<section data-case="in1"><p><b>This scenario:</b> the phone unsubscribes halfway. The second change reaches only the thermostat: the phone still exists, it simply is no longer on the list.</p></section>

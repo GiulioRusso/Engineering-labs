@@ -1,0 +1,35 @@
+<section>
+  <p>Numerical methods replace a function by something simpler that a computer can handle: a polynomial through some samples, a sum of areas, a difference of two values. Each replacement has an error, and knowing how that error behaves is the whole craft.</p>
+</section>
+<section data-case="runge">
+  <h3>Polynomial interpolation</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the function 1/(1 + 25x²) (blue), the nodes where it is sampled, and the polynomial through them (orange). Top right: the error along x. Bottom right: the largest error against the number of nodes, for equispaced (red) and Chebyshev (green) nodes. Below: the node polynomial that controls the error.</div>
+  <p>Through n points goes exactly one polynomial of degree n − 1. More points should mean a better fit — but with equally spaced points the polynomial starts to oscillate wildly near the ends. This is <b>Runge's phenomenon</b>.</p>
+  <div class="eq">$$f(x)-p(x)=\frac{f^{(n)}(\xi)}{n!}\prod_{i=1}^{n}(x-x_i),\qquad x_i^{\text{Cheb}}=-\cos\frac{(2i-1)\pi}{2n}$$</div>
+  <ol class="steps"><li>The error has two factors: a derivative of f, and the node product.</li><li>With equispaced nodes the product is huge near the ends.</li><li>Chebyshev nodes cluster at the ends and make the product as small as possible: the error then falls as n grows.</li></ol>
+  <div class="pitfall"><h4>Common mistake</h4>Fitting a high-degree polynomial through equally spaced measurements. Use Chebyshev nodes if you can choose them, otherwise splines (low-degree pieces).</div>
+  <div class="try"><h4>Try it</h4>Equispaced, raise n from 5 to 25 and watch the error at x ≈ ±0.9; then switch to Chebyshev.</div>
+</section>
+<section data-case="runge" data-example="wild"><h3>Equispaced, n = 15</h3><p>The polynomial passes through every node yet overshoots to about 7 between the last ones.</p></section>
+<section data-case="runge" data-example="cheb"><h3>Chebyshev, n = 15</h3><p>Same degree, nodes moved towards the ends: the error is under 0.1 everywhere.</p></section>
+<section data-case="quad">
+  <h3>Numerical integration</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the integrand (blue), the panel boundaries, and the curve the rule actually integrates (orange): chords or parabolas. Top right: the error against the number of panels, log–log. Bottom right: the error made in each panel.</div>
+  <p>Split [a, b] into n panels of width h. The <b>trapezoid rule</b> replaces f by a straight line on each; <b>Simpson's rule</b> by a parabola through each pair of panels. Simpson is exact for cubics and its error falls much faster.</p>
+  <div class="eq">$$T_n=h\Big[\tfrac{f_0}2+f_1+\dots+\tfrac{f_n}2\Big],\qquad S_n=\tfrac h3\big[f_0+4f_1+2f_2+\dots+4f_{n-1}+f_n\big]$$</div>
+  <div class="eq">$$E_T\approx-\frac{(b-a)h^2}{12}f'',\qquad E_S\approx-\frac{(b-a)h^4}{180}f^{(4)}$$</div>
+  <div class="worked"><h4>Worked example</h4>∫₀¹ eˣ dx = 1.718282. Trapezoid with 4 panels: 1.727222 (error 9·10⁻³). Simpson with 4 panels: 1.718319 (error 4·10⁻⁵).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using Simpson with an odd number of panels — it needs pairs.</div>
+</section>
+<section data-case="quad" data-example="simpson"><h3>Simpson</h3><p>The parabolas are almost on top of the curve: the error line has slope −4.</p></section>
+<section data-case="quad" data-example="bump"><h3>A narrow bump</h3><p>With 8 panels the rule barely sees the peak; the panel errors concentrate around it. Doubling n helps, but adaptive rules would refine only the middle.</p></section>
+<section data-case="fdiff">
+  <h3>Finite differences</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the error of the derivative of sin at x = 1 against the step h, log–log, with the two error sources dashed: truncation (blue) and round-off (yellow). Top right: a zoom on sin with the chord being used. Bottom right: the number of correct digits. Below: the difference quotient itself.</div>
+  <p>The derivative is the limit of a difference quotient as h → 0. On a computer h cannot go to zero: f(x + h) and f(x) become nearly equal and their difference keeps only a few significant digits. Two errors pull in opposite directions.</p>
+  <div class="eq">$$\frac{f(x+h)-f(x)}{h}=f'+\frac h2f''+\dots,\qquad\text{round-off}\approx\frac{\varepsilon\,|f|}{h},\quad\varepsilon\approx2.2\cdot10^{-16}$$</div>
+  <ol class="steps"><li>Large h: truncation dominates, the error falls as h (forward) or h² (central).</li><li>Small h: round-off dominates, the error grows as 1/h.</li><li>The minimum: h ≈ √ε ≈ 10⁻⁸ (forward), h ≈ ∛ε ≈ 10⁻⁵ (central).</li></ol>
+  <div class="pitfall"><h4>Common mistake</h4>Choosing h = 10⁻¹⁵ "to be accurate": the answer has no correct digits at all.</div>
+</section>
+<section data-case="fdiff" data-example="tiny"><h3>h = 10⁻¹³</h3><p>Only three digits of the difference survive the subtraction: the derivative is wrong in the fourth digit.</p></section>
+<section data-case="fdiff" data-example="central"><h3>Central difference</h3><p>Symmetric around x, the h term cancels: error ∝ h², best near 10⁻⁵ with about 11 correct digits.</p></section>

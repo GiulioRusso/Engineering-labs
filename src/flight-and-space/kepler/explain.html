@@ -1,0 +1,59 @@
+<section data-case="areas">
+  <h3>Kepler’s first and second laws</h3>
+  <div class="look"><h4>What you are looking at</h4>A planet on an ellipse round the Sun (at one focus; the dot on the other side is the empty focus). The ellipse is cut into slices the planet crosses in equal times, coloured alternately. Top right: its speed through one orbit. Bottom right: the area of each slice. Below: its distance from the Sun.</div>
+  <p>Kepler found two rules in Tycho Brahe’s observations of Mars. First: planets move on ellipses with the Sun at one focus, not on circles round the centre. Second: the line from the Sun to the planet sweeps equal areas in equal times. Near the Sun the slices are short and wide, so the planet must move fast; far away they are long and thin, and it crawls. Newton later showed both follow from a force pointing at the Sun: such a force cannot change the angular momentum r × v, and the area swept per second is half of it.</p>
+  <div class="eq">$$r(\nu) = \frac{a(1 - e^2)}{1 + e\cos\nu}, \qquad \frac{dA}{dt} = \tfrac12 r^2\dot\nu = \frac{h}{2} = \text{constant}, \qquad v^2 = \mu\left(\frac2r - \frac1a\right)$$</div>
+  <ol class="steps">
+    <li>e = 0 is a circle; the closer e gets to 1, the longer and thinner the ellipse.</li>
+    <li>Closest point: perihelion r = a(1 − e); furthest: aphelion a(1 + e).</li>
+    <li>Equal areas: r × v is the same at both ends, so v_peri / v_aph = (1 + e)/(1 − e).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>a = 1 AU, e = 0.5: perihelion 0.5 AU at 51.6 km/s, aphelion 1.5 AU at 17.2 km/s, a ratio of 3 = 1.5/0.5. Eight slices of 1.5 months each, every one sweeping π × 1 × 0.866/8 = 0.340 AU².</div>
+  <div class="pitfall"><h4>Common mistake</h4>Putting the Sun at the centre of the ellipse. It sits at a focus, off-centre by a·e; the centre and the other focus are empty.</div>
+  <div class="try"><h4>Try it</h4>Raise e slowly: the slices near the Sun get wider, and the speed curve grows a sharp peak at perihelion.</div>
+</section>
+<section data-case="areas" data-example="circle"><h3>A circle</h3><p>e = 0: every slice is the same wedge and the speed is constant, 29.8 km/s at 1 AU: Earth’s orbital speed.</p></section>
+<section data-case="areas" data-example="earth"><h3>Earth</h3><p>e = 0.017: the ellipse is indistinguishable from a circle by eye, yet Earth is 5 million km closer to the Sun in January than in July, and moves 1 km/s faster (30.3 against 29.3 km/s). That is why northern winter is a few days shorter than summer.</p></section>
+<section data-case="areas" data-example="mercury"><h3>Mercury’s shape</h3><p>e = 0.21, the most eccentric planet: at 1 AU it would move at 36.7 km/s at perihelion and 24.2 at aphelion, 1.5 times slower.</p></section>
+<section data-case="areas" data-example="comet"><h3>A comet</h3><p>e = 0.9: 0.1 AU from the Sun at perihelion, 1.9 AU at aphelion. It whips past the Sun at 130 km/s and spends most of its year far out at under 7 km/s. A slice near the Sun is a short fat wedge; the far ones are long needles.</p></section>
+
+<section data-case="third">
+  <h3>Kepler’s third law: T² ∝ a³</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the eight planets on a log–log plot of period against distance, and your planet (orange). Top right: a top view with the planets inside your orbit, moving at their real speeds. Bottom right: T²/a³ for each planet, and for yours.</div>
+  <p>Kepler’s third law, found ten years after the first two, links the planets to each other: the square of the period is proportional to the cube of the orbit’s size. Further out, the path is longer and the planet is also slower, so the year grows faster than the distance. On a log–log plot the eight planets fall exactly on a straight line of slope 3/2. Newton showed the constant depends only on the mass of the star, which is how we weigh stars, and planets, from their satellites.</p>
+  <div class="eq">$$T^2 = \frac{4\pi^2}{G M}\,a^3 \qquad\Rightarrow\qquad T[\text{years}] = \sqrt{\frac{a[\text{AU}]^3}{M[\text{Suns}]}}$$</div>
+  <ol class="steps">
+    <li>In years and AU round the Sun, T² = a³: no constants.</li>
+    <li>Twice as far: 2^1.5 = 2.83 times as long.</li>
+    <li>A heavier star pulls harder: the same orbit takes T/√M.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>a = 1.5 AU: T = 1.5^1.5 = 1.84 years, at 24.3 km/s. Jupiter, 5.20 AU: T = 11.86 years (measured: 11.86). Neptune: 30.07^1.5 = 165 years, measured 164.8.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting T ∝ a. A planet twice as far has twice as far to go and moves √2 times slower: 2√2 times the period.</div>
+  <div class="try"><h4>Try it</h4>Sweep a from 0.3 to 35 AU: the orange dot slides along the same line as the planets.</div>
+</section>
+<section data-case="third" data-example="jupiter"><h3>Jupiter’s distance</h3><p>a = 5.2 AU: T = 11.86 years, and an orbital speed of 13 km/s, less than half of Earth’s.</p></section>
+<section data-case="third" data-example="four"><h3>Four times as far</h3><p>a = 4 AU: 4^1.5 = 8 years. Four times the distance, half the speed, eight times the period.</p></section>
+<section data-case="third" data-example="heavy"><h3>A heavier star</h3><p>The same 1 AU round a star of 4 solar masses: T = 1/√4 = half a year, and twice the speed (59.6 km/s). The dashed blue line is the law for this star, shifted down.</p></section>
+
+<section data-case="cannon">
+  <h3>Newton’s cannon: from falling to orbiting</h3>
+  <div class="look"><h4>What you are looking at</h4>A cannon on top of a very tall mountain fires horizontally. The ball’s path so far (solid) and the whole conic it follows (dashed). Top right: its energy per kilogram against the launch speed, with the circular and escape speeds marked (green). Bottom right: the eccentricity of the path. Below: altitude against time.</div>
+  <p>Newton’s thought experiment. A slow ball falls back to the ground. Faster, it lands further away, because the ground curves away beneath it. At one speed the ground curves away exactly as fast as the ball falls: it never lands. That is a circular orbit, and every orbit is the same thing, falling while missing. Faster still, the path becomes an ellipse reaching higher on the far side; at the escape speed the ellipse opens into a parabola and the ball never comes back. What decides it is the energy: negative, bound; zero or positive, gone.</p>
+  <div class="eq">$$v_c = \sqrt{\frac{\mu}{r}}, \qquad v_\text{esc} = \sqrt{\frac{2\mu}{r}} = \sqrt2\,v_c, \qquad \varepsilon = \frac{v^2}{2} - \frac{\mu}{r} \;\begin{cases} < 0 & \text{ellipse (bound)}\\ = 0 & \text{parabola}\\ > 0 & \text{hyperbola}\end{cases}$$</div>
+  <ol class="steps">
+    <li>Below v_c the launch point is the highest point (apogee); the rest of the ellipse dips into the Earth.</li>
+    <li>At v_c: a circle, e = 0.</li>
+    <li>Between v_c and v_esc: the launch point is perigee; apogee rises without limit as v → v_esc.</li>
+    <li>At and above v_esc: e ≥ 1, the path is open.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>From 400 km (the ISS’s height): v_c = √(3.986·10¹⁴ / 6.778·10⁶) = 7.67 km/s, a 92.6 min orbit, ε = −29.4 MJ/kg. At 9 km/s: an ellipse with apogee 8617 km, period 3.1 h. v_esc = 10.85 km/s, where ε reaches 0.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking astronauts float because there is no gravity up there. At 400 km gravity is still 89 % of its value on the ground; they float because they and the station fall together.</div>
+  <div class="try"><h4>Try it</h4>Raise the speed from 6 to 13 km/s in steps of 1: fall, circle, ellipse, escape.</div>
+</section>
+<section data-case="cannon" data-example="slow"><h3>Falls back</h3><p>6 km/s: the ball is on an ellipse whose highest point is the cannon (e = 0.39); most of it lies inside the Earth, so it hits the ground a quarter of the way round.</p></section>
+<section data-case="cannon" data-example="ellipse"><h3>An ellipse</h3><p>9 km/s: perigee at the cannon, apogee at 8617 km on the other side, e = 0.38, 3.1 hours per orbit. It returns to the cannon at the same speed, every time.</p></section>
+<section data-case="cannon" data-example="escape"><h3>Escape</h3><p>10.85 km/s = √2 × 7.67: total energy zero. The path is a parabola; the ball slows down for ever but never stops or turns back.</p></section>
+<section data-case="cannon" data-example="hyper"><h3>A hyperbola</h3><p>12 km/s: energy +13.2 MJ/kg, e = 1.45. Far away it keeps a leftover speed √(2ε) = 5.1 km/s: the hyperbolic excess speed that interplanetary probes use.</p></section>
+<details><summary>About the model</summary>
+  <p>Two-body Kepler motion: Kepler’s equation solved by Newton’s method; slice areas by integrating ½r²dν; planet data from NASA fact sheets (a, e, sidereal period). The cannon is integrated with RK4 (no air); the dashed conic comes from the energy and angular momentum. Tests: equal slices equal πab/n (10⁻⁶) for e = 0, 0.3, 0.8; mean anomaly inverts the position; r·v equal at both apsides; T²/a³ = 1 for the eight planets (0.5 %); circular and escape speeds give e = 0 and an open path; the RK4 apoapsis matches the conic (10⁻⁶).</p>
+</details>

@@ -1,5 +1,5 @@
 import { clusters, knn, accuracy, growTree, predict, leaves, kmeans, cloud, pca, along } from './model.js';
-import { moons } from '../neuron/model.js';
+import { moons } from '../../deep-learning/neuron/model.js';
 import { near, ok } from '../../lib/testing.js';
 
 export const tests = {

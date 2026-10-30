@@ -1,0 +1,36 @@
+<section data-case="decay">
+  <h3>Radioactive decay and half-life</h3>
+  <div class="look"><h4>What you are looking at</h4>400 unstable nuclei (gold) with a half-life of 2 s; each turns grey when it decays. Top right: how many are left, against the exponential law, with the half-life points marked. Bottom right: decays per second. Below: the logarithm of the count, a straight line.</div>
+  <p>A radioactive nucleus has no clock inside: it does not get "older" and more likely to decay. In every second it has the same small chance of decaying, whatever happened before. So the number that decay each second is proportional to how many are still there, and the count falls by the same fraction in every equal stretch of time: half in one half-life, half of the rest in the next, and so on. Which nucleus goes when is pure chance; the overall law is exact.</p>
+  <div class="eq">$$\frac{dN}{dt} = -\lambda N \;\Rightarrow\; N(t) = N_0 e^{-\lambda t} = N_0\left(\tfrac12\right)^{t/T_{1/2}}, \qquad T_{1/2} = \frac{\ln 2}{\lambda}, \qquad A = \lambda N$$</div>
+  <ol class="steps">
+    <li>Decay constant λ = ln 2 / T½: the chance per second.</li>
+    <li>After n half-lives: N₀/2ⁿ left.</li>
+    <li>Activity (decays per second) falls in the same way: A = λN.</li>
+    <li>Random scatter: about √(N p(1 − p)) around the law, large when N is small.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>T½ = 2 s: λ = 0.347 /s, mean life 2.89 s. From 400: expect 200 after 2 s, 100 after 4 s, 12.5 after 10 s; this sample had 222, 105 and 16. The starting activity is 0.347 · 400 = 139 decays per second.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking that after two half-lives everything has decayed. Each half-life halves what is left: after two, a quarter remains.</div>
+  <div class="try"><h4>Try it</h4>Change the random sample: the dots decay in a different order, the curve stays close to the same law.</div>
+</section>
+<section data-case="decay" data-example="small"><h3>Only 25 nuclei</h3><p>Now chance dominates: after one half-life you might have 10 or 15 instead of 12.5 (here 10). The exponential law is a statement about averages; it gets precise only with many nuclei, and a gram of matter holds 10²² of them.</p></section>
+<section data-case="decay" data-example="long"><h3>A longer half-life</h3><p>\(T_{1/2} = 4\) s: the same curve, stretched twice as long in time; the starting activity is half as large.</p></section>
+
+<section data-case="chain">
+  <h3>Decay chains and equilibrium</h3>
+  <div class="look"><h4>What you are looking at</h4>Parent A (gold, T½ = 10 s) decays into daughter B (orange, T½ = 1 s), which decays into a stable nucleus (grey). Top right: counts of A and B against the exact (Bateman) curves.</div>
+  <p>The daughter is made by the parent's decays and removed by its own. At first B builds up; soon it decays as fast as it is made. If the parent lives much longer than the daughter, B settles to a small, steady fraction of A and then simply follows A down: the two activities become equal. This is secular equilibrium, and it is why short-lived radon is always present wherever there is long-lived uranium.</p>
+  <div class="eq">$$\frac{dN_B}{dt} = \lambda_A N_A - \lambda_B N_B, \qquad N_B = N_0\frac{\lambda_A}{\lambda_B - \lambda_A}\left(e^{-\lambda_A t} - e^{-\lambda_B t}\right), \qquad \frac{\lambda_B N_B}{\lambda_A N_A} \to \frac{\lambda_B}{\lambda_B - \lambda_A}$$</div>
+  <ol class="steps">
+    <li>B grows from zero while e^(−λ_B t) dies away (a few daughter half-lives).</li>
+    <li>Then N_B/N_A is fixed: λ_A/(λ_B − λ_A).</li>
+    <li>If λ_A ≪ λ_B: activities equal, λ_B N_B ≈ λ_A N_A.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>T½(A) = 10 s, T½(B) = 1 s: N_B/N_A → 0.0693/(0.693 − 0.0693) = 0.111. With 238 nuclei of A at 8 s, expect 26 of B; the sample has 24. The activity ratio B/A is 1.11.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting the daughter to pile up indefinitely. It cannot exceed the rate at which it is made divided by its own decay rate.</div>
+  <div class="try"><h4>Try it</h4>Make B's half-life longer: B takes longer to settle and ends up a larger fraction of A.</div>
+</section>
+<section data-case="chain" data-example="transient"><h3>Transient equilibrium</h3><p>T½(A) = 4 s, T½(B) = 1.5 s: still B settles to a fixed ratio of A, but the activity ratio is now \(\lambda_B/(\lambda_B - \lambda_A) = 1.6\): B is more active than its parent.</p></section>
+<details><summary>About the model</summary>
+  <p>Each nucleus draws an exponential lifetime from a seeded random generator; daughters draw theirs when they are born. Exact curves from the Bateman solution. Tests: Bateman vs RK4 integration of the rate equations (10⁻⁸); after one half-life, 10 000 nuclei leave 5000 ± 3σ for three seeds; secular and transient equilibrium ratios \(\lambda_B/(\lambda_B - \lambda_A)\).</p>
+</details>

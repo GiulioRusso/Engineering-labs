@@ -36,8 +36,11 @@ function rendererCss() {
   let rest = body; for (const k of keys) rest = rest.replace(k, '');
   return `${keys.join('\n')}\n.trace {\n${rest}\n}\n`;
 }
-// the explanation drawer: the comment block heading the C++ source, complexity, and one line per input
-function traceExplain(T, code) {
+// the explanation drawer: a hand-written tracer/<dir>/explain/<id>.html if there is one; otherwise the comment
+// block heading the C++ source, complexity, and one line per input
+function traceExplain(T, code, dir) {
+  const own = join(VIS, dir, 'explain', `${T.id}.html`);
+  if (existsSync(own)) return readFileSync(own, 'utf8');
   const lines = []; for (const l of T.displaySource) { if (/^\s*\/\//.test(l)) lines.push(l.replace(/^\s*\/\/\s?/, '')); else if (lines.length) break; }
   const paras = lines.join('\n').split(/\n\s*\n/).map((p) => p.replace(/\n/g, ' ').trim()).filter(Boolean), [head, ...more] = paras;
   return `<section><h3>${escHtml(T.name)}</h3>${more.length ? '' : ''}${(more.length ? more : [head]).map((p) => `<p>${escHtml(p)}</p>`).join('')}
@@ -52,7 +55,7 @@ async function buildTraceSubject(S) {
   const entry = [
     "import '../lab.css';", "import './trace.css';", `import ${JSON.stringify(join(root, '.out-trace.css'))};`,
     "import { startTopic } from '../ui/topic.js';", "import { traceLab } from './trace-lab.js';",
-    `startTopic({ name: ${JSON.stringify(S.name)}, labs: [${topics.map((t) => `traceLab(window.TRACES[${JSON.stringify(t.id)}], ${JSON.stringify({ id: t.id, title: t.title, group: t.group, code: S.code !== false })})`).join(', ')}] });`,
+    `startTopic({ name: ${JSON.stringify(S.name)}, moved: ${JSON.stringify(S.moved || {})}, labs: [${topics.map((t) => `traceLab(window.TRACES[${JSON.stringify(t.id)}], ${JSON.stringify({ id: t.id, title: t.title, group: t.group, code: S.code !== false })})`).join(', ')}] });`,
   ].join('\n');
   const res = await build({
     stdin: { contents: entry, resolveDir: join(root, 'src', 'lib', 'trace'), sourcefile: `${S.subject}-entry.js`, loader: 'js' },
@@ -62,7 +65,7 @@ async function buildTraceSubject(S) {
   const css = res.outputFiles.find((f) => f.path.endsWith('.css'))?.text || '';
   const rdir = join(VIS, dir, 'views', 'renderers'), { readdirSync } = await import('node:fs');
   const classic = [...readdirSync(rdir).filter((f) => f.endsWith('.js')).sort().map((f) => readFileSync(join(rdir, f), 'utf8')), ...topics.map((t) => readFileSync(join(VIS, dir, 'traces', `${t.id}.js`), 'utf8'))].join('\n;\n').replace(/<\/script/gi, '<\\/script');
-  const templates = topics.map((t, i) => `<template id="explain-${t.id}">${traceExplain(traces[i], S.code !== false)}</template>`).join('\n') + `\n<script>${classic}</script>`;
+  const templates = topics.map((t, i) => `<template id="explain-${t.id}">${traceExplain(traces[i], S.code !== false, dir)}</template>`).join('\n') + `\n<script>${classic}</script>`;
   const html = readFileSync(join(root, 'src', 'lib', 'topic.html'), 'utf8')
     .replace(/<!-- source-only -->[\s\S]*?<!-- \/source-only -->\n?/, '')
     .replace('{{TITLE}}', `${S.name} · Engineering Labs`).replace('{{DESCRIPTION}}', `Interactive ${S.name.toLowerCase()}: ${topics.map((t) => t.title).join(', ')}.`)
@@ -97,7 +100,7 @@ async function buildSubject(S) {
     ...dirs.map((d, i) => `import L${i} from ${JSON.stringify(join(d, 'lab.js'))};`),
     'const sub = (L, t) => { const cases = t.cases ? L.cases.filter((c) => t.cases.includes(c.id)) : L.cases;',
     "  return { ...L, ...t, cases, gif: L.gif && cases.some((c) => c.id === L.gif.scenario.split('/')[0]) ? L.gif : undefined }; };",
-    `startTopic({ name: ${JSON.stringify(S.name)}, labs: [${topics.map((t) => `sub(L${dirs.indexOf(srcOf(S.subject, t))}, ${JSON.stringify({ id: t.id, title: t.title, group: t.group, cases: t.cases })})`).join(', ')}] });`,
+    `startTopic({ name: ${JSON.stringify(S.name)}, moved: ${JSON.stringify(S.moved || {})}, labs: [${topics.map((t) => `sub(L${dirs.indexOf(srcOf(S.subject, t))}, ${JSON.stringify({ id: t.id, title: t.title, group: t.group, cases: t.cases })})`).join(', ')}] });`,
   ].join('\n');
   const res = await build({
     stdin: { contents: entry, resolveDir: join(root, 'src', S.subject), sourcefile: `${S.subject}-entry.js`, loader: 'js' },

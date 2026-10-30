@@ -1,0 +1,37 @@
+<section>
+  <p><b>Information theory</b> measures information in bits: how surprising a message is, how short it can be made, and how much of it a noisy channel can carry. Claude Shannon set it up in 1948, and every compressor, modem and phone still works within his limits.</p>
+</section>
+<section data-case="entropy">
+  <h3>Surprisal and entropy</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the probability of each of five symbols (blue) and its surprisal log₂(1/p), scaled down by 8 (orange). Top right: the entropy of a coin as a function of its bias. Bottom right: a long random message from the source; the average surprisal of the symbols so far settles on the entropy (blue dashed). Below: each symbol's share of the entropy.</div>
+  <p>Learning that an event of probability p happened gives log₂(1/p) bits of information: a fair coin toss 1 bit, a 1-in-8 event 3 bits, a certain event 0 bits. The <b>entropy</b> is the average over the source: the information per symbol.</p>
+  <div class="eq">$$I(x)=\log_2\frac1{p(x)},\qquad H=\sum_x p(x)\log_2\frac1{p(x)}\ \text{bits},\qquad 0\le H\le\log_2 N$$</div>
+  <ol class="steps"><li>Equal probabilities give the most entropy, log₂ N.</li><li>A source that almost always sends the same symbol has entropy near 0.</li><li>H is the smallest average number of bits per symbol any lossless code can reach (the source coding theorem).</li></ol>
+  <div class="worked"><h4>Worked example</h4>Weights 4, 2, 2, 1, 1 give p = 0.4, 0.2, 0.2, 0.1, 0.1. H = 0.4·1.32 + 2·0.2·2.32 + 2·0.1·3.32 = 0.53 + 0.93 + 0.66 = 2.12 bits, compared with 2.32 for five equal symbols.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking of information as meaning. Entropy measures only unpredictability: a page of random letters has more of it than a page of English.</div>
+  <div class="try"><h4>Try it</h4>Drag one weight up to 10: the entropy falls towards 0, and rare symbols get larger surprisals.</div>
+</section>
+<section data-case="entropy" data-example="uniform"><h3>All equal</h3><p>No symbol is more predictable than another: H = log₂ 5 ≈ 2.32 bits, the most five symbols can carry.</p></section>
+<section data-case="entropy" data-example="certain"><h3>Almost certain</h3><p>A is sent 96 % of the time: H ≈ 0.3 bits. Each rare symbol is very surprising, but rare.</p></section>
+<section data-case="entropy" data-example="coin"><h3>A biased coin</h3><p>P(heads) = 0.1: H₂ = 0.47 bits. A thousand such tosses could be compressed into about 470 bits.</p></section>
+<section data-case="huffman">
+  <h3>The Huffman code</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the code tree built merge by merge. Each merge joins the two least likely nodes; the left branch is 0 (blue), the right is 1 (orange). Reading from the top down to a leaf gives its codeword. Top right: codeword lengths against the ideal log₂(1/p). Bottom right: entropy, Huffman average length, and a fixed 3-bit code. Below: bits used to send a random message.</div>
+  <p>Give short codewords to frequent symbols and long ones to rare symbols. Huffman's algorithm does this optimally: no prefix-free code has a smaller average length.</p>
+  <ol class="steps"><li>List the symbols with their probabilities.</li><li>Join the two least likely into a node whose probability is their sum.</li><li>Repeat until one node is left: the root.</li><li>Label the branches 0 and 1; each symbol's codeword is the path from the root.</li></ol>
+  <div class="eq">$$H\le L=\sum_x p(x)\,\ell(x)<H+1,\qquad \sum_x 2^{-\ell(x)}=1$$</div>
+  <div class="worked"><h4>Worked example</h4>p = 0.4, 0.2, 0.2, 0.1, 0.1: lengths 2, 2, 2, 3, 3 (1, 3, 3, 3, 3 is just as good). L = 2·0.8 + 3·0.2 = 2.2 bits against H = 2.12; a fixed-length code needs 3 bits.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting L = H. Codeword lengths are whole numbers, so L meets H only when every probability is a power of ½. Coding blocks of symbols (or arithmetic coding) closes the gap.</div>
+</section>
+<section data-case="huffman" data-example="dyadic"><h3>Powers of ½</h3><p>p = ½, ¼, ⅛, 1/16, 1/16: lengths 1, 2, 3, 4, 4 equal log₂(1/p) exactly, so L = H = 1.875 bits.</p></section>
+<section data-case="huffman" data-example="flat"><h3>Nearly uniform</h3><p>With nothing to exploit the code uses lengths 2 and 3, about 2.3 bits: not much better than 3-bit words.</p></section>
+<section data-case="channel">
+  <h3>The binary symmetric channel</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the channel. Each bit arrives intact with probability 1 − e (green) or flipped with probability e (red); line thickness follows probability, and the input and output probabilities are written beside each node. Top right: the information that gets through per use, against the input probability. Bottom right: the capacity against e.</div>
+  <p>The output Y tells us something about the input X, but not everything. The <b>mutual information</b> is the uncertainty about Y minus the part due only to noise. Its maximum over all inputs is the channel <b>capacity</b>.</p>
+  <div class="eq">$$I(X;Y)=H(Y)-H(Y\mid X)=H_2\big(q(1-e)+(1-q)e\big)-H_2(e),\qquad C=1-H_2(e)$$</div>
+  <div class="worked"><h4>Worked example</h4>e = 0.11: H₂(0.11) ≈ 0.5, so C ≈ 0.5. Half of every bit sent is lost to noise; at best one data bit gets through every two channel uses.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking capacity is "1 − e". With e = 0.11 the channel delivers 89 % of bits correctly, but you do not know which ones; that uncertainty costs H₂(e) bits per use.</div>
+</section>
+<section data-case="channel" data-example="half"><h3>e = ½</h3><p>The output is a fair coin regardless of the input: H(Y) = H(Y|X) = 1, and nothing gets through.</p></section>
+<section data-case="channel" data-example="skew"><h3>Unequal inputs</h3><p>Sending mostly zeros lowers H(Y) while the noise H(Y|X) stays the same: less information per use. For this channel, equal inputs are best.</p></section>

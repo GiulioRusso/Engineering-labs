@@ -115,6 +115,24 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Peterson's Solution](web/computer-science.html?lab=petersons_solution) | time — · space O(1) | done |
 | [Semaphores](web/computer-science.html?lab=semaphores) | time O(1) · space O(n) | done |
 
+## Design patterns
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Singleton](web/design-patterns.html?lab=singleton) | time undefined · space undefined | done |
+| [Factory Method](web/design-patterns.html?lab=factory_method) | time undefined · space undefined | done |
+| [Builder](web/design-patterns.html?lab=builder) | time undefined · space undefined | done |
+| [Adapter](web/design-patterns.html?lab=adapter) | time undefined · space undefined | done |
+| [Decorator](web/design-patterns.html?lab=decorator) | time undefined · space undefined | done |
+| [Composite](web/design-patterns.html?lab=composite) | time undefined · space undefined | done |
+| [Proxy](web/design-patterns.html?lab=proxy) | time undefined · space undefined | done |
+| [Strategy](web/design-patterns.html?lab=strategy) | time undefined · space undefined | done |
+| [Observer](web/design-patterns.html?lab=observer) | time undefined · space undefined | done |
+| [Command](web/design-patterns.html?lab=command) | time undefined · space undefined | done |
+| [State](web/design-patterns.html?lab=state) | time undefined · space undefined | done |
+| [Template Method](web/design-patterns.html?lab=template_method) | time undefined · space undefined | done |
+| [Chain of Responsibility](web/design-patterns.html?lab=chain) | time undefined · space undefined | done |
+
 ## Control systems
 
 | Topic | What you do | Status |
@@ -195,25 +213,58 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [The PPI scope](web/electronic-warfare.html?lab=ppi) | A rotating beam paints aircraft, ground clutter and rain on a plan display. | done |
 | [Jamming and burn-through](web/electronic-warfare.html?lab=jamming) | Self-screening and stand-off jammers: S/J against range and the burn-through point. | done |
 
+## Information theory
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Entropy](web/information-theory.html?lab=entropy) | Surprisal in bits, and why a predictable source carries little information. | done |
+| [Huffman coding](web/information-theory.html?lab=huffman) | Build the optimal prefix code merge by merge; compare its length with the entropy. | done |
+| [Channel capacity](web/information-theory.html?lab=channel-capacity) | The binary symmetric channel: mutual information and Shannon's limit. | done |
+| [The repetition code](web/information-theory.html?lab=repetition-code) | Send every bit n times and vote: reliability bought with rate. | done |
+| [The Hamming (7,4) code](web/information-theory.html?lab=hamming-code) | Three parity circles locate and fix any single flipped bit. | done |
+
 ## Machine learning
 
 | Topic | What you do | Status |
 |---|---|---|
 | [Nearest neighbours and decision trees](web/machine-learning.html?lab=neighbours-trees) | Classify by a vote of neighbours, or by a few yes/no questions. | done |
 | [Clustering and PCA](web/machine-learning.html?lab=clustering-pca) | No labels: k-means finds groups, PCA finds the main directions. | done |
-| [The neuron](web/machine-learning.html?lab=neuron) | Weights tilt it, the bias slides it, gradient descent learns them. | done |
-| [Activation functions](web/machine-learning.html?lab=activations) | Sigmoid, tanh, ReLU, GELU: the bend in every layer and the gradient it lets through. | done |
-| [Dense layer](web/machine-learning.html?lab=dense-layer) | One dot product per output. | done |
-| [Hidden layers](web/machine-learning.html?lab=hidden-layer) | A hidden layer bends the plane: two moons. | done |
-| [Convolutional layer](web/machine-learning.html?lab=conv-layer) | A kernel sliding over an image; stride, padding, dilation; channels in 3D. | done |
-| [Pooling layer](web/machine-learning.html?lab=pooling) | Max and average, no parameters. | done |
-| [Softmax output layer](web/machine-learning.html?lab=softmax) | From scores to probabilities, with temperature. | done |
-| [Putting the layers together](web/machine-learning.html?lab=cnn-stack) | A whole CNN: shapes and where the parameters live. | done |
-| [Loss functions](web/machine-learning.html?lab=loss-functions) | Squared, absolute, Huber; the sigmoid trap; every loss vs the margin. | done |
-| [Backpropagation and mini-batches](web/machine-learning.html?lab=backpropagation) | The chain rule run backwards through a network; noisy cheap steps with SGD. | done |
-| [Optimizers](web/machine-learning.html?lab=optimizers) | GD, momentum, RMSProp and Adam on 3D loss surfaces. | done |
+| [Linear regression](web/machine-learning.html?lab=linear-regression) | Fit a line by least squares: residual squares, R², and gradient descent with and without feature scaling. | done |
+| [Logistic regression](web/machine-learning.html?lab=logistic-regression) | Probabilities for yes/no labels: the sigmoid, log loss, and why separable data breaks it. | done |
+| [Support vector machines](web/machine-learning.html?lab=svm) | The widest street between two classes: support vectors, hard and soft margins, the cost C. | done |
+| [The kernel trick](web/machine-learning.html?lab=kernel-trick) | An RBF kernel separates rings; γ from too smooth to islands round every point. | done |
+| [Bagging and random forests](web/machine-learning.html?lab=random-forest) | Many bootstrapped trees vote: smoother boundaries, lower variance, and where they disagree. | done |
+| [Boosting](web/machine-learning.html?lab=boosting) | AdaBoost adds one stump per round and re-weights the mistakes; when it starts memorising. | done |
 | [Overfitting and how to fight it](web/machine-learning.html?lab=overfitting) | Capacity, bias and variance, ridge, early stopping, cross-validation. | done |
 | [Classification metrics](web/machine-learning.html?lab=metrics) | Accuracy, precision, recall on rare classes. | done |
+| [ROC curves and thresholds](web/machine-learning.html?lab=roc-curves) | Two score distributions and a threshold: ROC, AUC, precision and recall, and rare positives. | done |
+
+## Deep learning
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Inside a neuron](web/deep-learning.html?lab=neuron-anatomy) | Inputs, weights, bias, sum, activation: every number of one neuron, with its controls. | done |
+| [Logic gates and the perceptron](web/deep-learning.html?lab=logic-gates) | AND, OR, NAND as one neuron; the perceptron rule learns them and fails on XOR. | done |
+| [The neuron](web/deep-learning.html?lab=neuron) | Weights tilt it, the bias slides it, gradient descent learns them. | done |
+| [Hidden layers](web/deep-learning.html?lab=hidden-layer) | A hidden layer bends the plane: two moons. | done |
+| [Training a small network](web/deep-learning.html?lab=network-playground) | Train an MLP live on XOR and circles: decision map, what each hidden unit learns, loss curves. | done |
+| [Depth, width and learning rate](web/deep-learning.html?lab=depth-width) | Two spirals need depth; too high a learning rate, and weight decay, change everything. | done |
+| [Universal approximation](web/deep-learning.html?lab=universal-approximation) | One hidden layer fits any curve: watch each ReLU or tanh unit add its piece. | done |
+| [Activation functions](web/deep-learning.html?lab=activations) | Sigmoid, tanh, ReLU, GELU: the bend in every layer and the gradient it lets through. | done |
+| [Dense layer](web/deep-learning.html?lab=dense-layer) | One dot product per output. | done |
+| [Convolutional layer](web/deep-learning.html?lab=conv-layer) | A kernel sliding over an image; stride, padding, dilation; channels in 3D. | done |
+| [Pooling layer](web/deep-learning.html?lab=pooling) | Max and average, no parameters. | done |
+| [Softmax output layer](web/deep-learning.html?lab=softmax) | From scores to probabilities, with temperature. | done |
+| [Putting the layers together](web/deep-learning.html?lab=cnn-stack) | A whole CNN: shapes and where the parameters live. | done |
+| [Loss functions](web/deep-learning.html?lab=loss-functions) | Squared, absolute, Huber; the sigmoid trap; every loss vs the margin. | done |
+| [Backpropagation and mini-batches](web/deep-learning.html?lab=backpropagation) | The chain rule run backwards through a network; noisy cheap steps with SGD. | done |
+| [Optimizers](web/deep-learning.html?lab=optimizers) | GD, momentum, RMSProp and Adam on 3D loss surfaces. | done |
+| [Vanishing gradients](web/deep-learning.html?lab=vanishing-gradients) | Why deep sigmoid stacks barely train: the gradient layer by layer. | done |
+| [Weight initialisation](web/deep-learning.html?lab=weight-initialization) | Xavier and He: the weight scale that keeps signals alive through many layers. | done |
+| [Handwritten digits (MNIST)](web/deep-learning.html?lab=mnist-digits) | Train an MLP live on real handwritten digits; inspect one digit, its probabilities and the pixels that matter. | done |
+| [What the digit network learned](web/deep-learning.html?lab=mnist-weights) | Weights as images: templates, stroke features, and a gallery of mistakes. | done |
+| [Convolution filters on digits](web/deep-learning.html?lab=convolution-filters) | A 3×3 kernel sliding over a handwritten digit: edges, blur, sharpen, with every weight shown. | done |
+| [A CNN on handwritten digits](web/deep-learning.html?lab=mnist-cnn) | A small CNN learns its own filters live and beats an MLP with four times the parameters. | done |
 
 ## Maths
 
@@ -249,6 +300,20 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Constrained optimisation](web/maths.html?lab=lagrange) | Lagrange multipliers: where ∇f is parallel to ∇g. | done |
 | [Line integrals and work](web/maths.html?lab=line-integrals) | Work along a path; conservative and rotational fields. | done |
 
+## Numerical methods
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Bisection](web/numerical-methods.html?lab=bisection) | Halve a bracket around a sign change: slow, sure, one bit per step. | done |
+| [The secant method](web/numerical-methods.html?lab=secant-method) | Follow chords to the root: order 1.618 without a derivative. | done |
+| [Fixed-point iteration](web/numerical-methods.html?lab=fixed-point) | x ← g(x) as a cobweb: why |g′| < 1 decides everything. | done |
+| [Euler, Heun and RK4](web/numerical-methods.html?lab=ode-methods) | Step an oscillator forward: spirals, energy drift and symplectic methods. | done |
+| [Stability and stiffness](web/numerical-methods.html?lab=ode-stability) | Explicit Euler blows up past h = 2/|λ|; implicit Euler never does. | done |
+| [Order of accuracy](web/numerical-methods.html?lab=ode-order) | Error against step size on log axes: slopes 1, 2 and 4. | done |
+| [Interpolation and Runge](web/numerical-methods.html?lab=interpolation) | Polynomials through samples: equispaced wiggles vs Chebyshev nodes. | done |
+| [Numerical integration](web/numerical-methods.html?lab=quadrature) | Trapezoid vs Simpson: chords, parabolas, errors ∝ h² and h⁴. | done |
+| [Finite differences](web/numerical-methods.html?lab=finite-differences) | Derivatives from differences: truncation meets round-off. | done |
+
 ## Probability and statistics
 
 | Topic | What you do | Status |
@@ -274,25 +339,110 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 
 | Topic | What you do | Status |
 |---|---|---|
-| [Motion](web/physics.html?lab=kinematics) | Projectiles and circular motion: position, velocity, acceleration. | done |
+| [Projectile motion](web/physics.html?lab=kinematics) | A thrown ball: launch angle, range, height, and what air drag changes. | done |
+| [Circular motion](web/physics.html?lab=circular-motion) | Uniform motion on a circle: speed, angular speed and centripetal acceleration. | done |
+| [Work and energy](web/physics.html?lab=work-energy) | A bead on a track trades potential for kinetic energy; loop the loop without falling. | done |
+| [Friction turns energy into heat](web/physics.html?lab=friction-energy) | Each swing climbs less high: kinetic + potential + heat stays constant. | done |
 | [Momentum and collisions](web/physics.html?lab=momentum) | Two carts collide: momentum always survives, kinetic energy not always. | done |
-| [Forces and torque](web/physics.html?lab=forces) | Add forces tip to tail; turn a lever. | done |
+| [Rolling and moment of inertia](web/physics.html?lab=rolling) | Sphere, disc, shell and hoop race down a slope; a falling mass spins a spool. | done |
+| [Angular momentum](web/physics.html?lab=angular-momentum) | A skater pulls in their arms and spins faster: L = Iω stays, the energy does not. | done |
+| [Adding forces](web/physics.html?lab=forces) | Add forces tip to tail: the resultant, and equilibrium when they cancel. | done |
+| [Torque](web/physics.html?lab=torque) | Turn a lever: force, lever arm and angle. | done |
+| [Newton’s laws and friction](web/physics.html?lab=newtons-laws) | A block on a slope: free-body diagram, static and kinetic friction, a pulley. | done |
 | [Buoyancy](web/physics.html?lab=fluids) | A block in a liquid bobs and settles where buoyancy equals weight. | done |
-| [Oscillations](web/physics.html?lab=oscillations) | Spring and pendulum: period, energy, damping and resonance. | done |
-| [Waves](web/physics.html?lab=waves) | A string: travelling pulses, superposition, standing waves, and the Doppler effect. | done |
-| [Gas and heat](web/physics.html?lab=thermodynamics) | Atoms in a piston: pressure from impacts, heating, isothermal and adiabatic squeezes. | done |
-| [Electric charges](web/physics.html?lab=electrostatics) | Field lines, equipotentials and Gauss’s law for point charges. | done |
+| [Simple harmonic motion](web/physics.html?lab=oscillations) | A mass on a spring: period, amplitude and energy going back and forth. | done |
+| [Damped oscillations](web/physics.html?lab=damping) | Friction drains the swing: underdamped, critical and overdamped. | done |
+| [Driven oscillations and resonance](web/physics.html?lab=resonance) | A periodic push: amplitude and phase lag against drive frequency. | done |
+| [The pendulum](web/physics.html?lab=pendulum) | Small and large swings, the exact period, friction and pushing in rhythm. | done |
+| [Coupled oscillators](web/physics.html?lab=coupled-oscillators) | Two masses joined by a spring swap their energy back and forth: normal modes and beats. | done |
+| [Normal modes of a chain](web/physics.html?lab=normal-modes) | N beads on springs: N modes, their shapes and frequencies. | done |
+| [Travelling waves](web/physics.html?lab=waves) | A wave on a string: wavelength, frequency, speed, and a single pulse. | done |
+| [Superposition and beats](web/physics.html?lab=wave-superposition) | Two waves on one string add up: cancellation, standing waves and beats. | done |
+| [Standing waves](web/physics.html?lab=standing-waves) | Modes of a string fixed at both ends: nodes, antinodes and harmonics. | done |
+| [Doppler effect and shock waves](web/physics.html?lab=doppler) | A moving source squeezes its waves ahead; faster than the waves, a Mach cone. | done |
+| [Kinetic theory of gases](web/physics.html?lab=thermodynamics) | Atoms in a box: pressure from wall impacts, temperature as speed, Maxwell–Boltzmann. | done |
+| [Isothermal and adiabatic processes](web/physics.html?lab=gas-processes) | Squeeze a gas slowly with the walls held at T, or insulated: p–V paths and heating. | done |
+| [Heat engines and efficiency](web/physics.html?lab=heat-engines) | Carnot and Otto cycles on the p–V diagram: heat in, heat out, net work. | done |
+| [Entropy and the T–S diagram](web/physics.html?lab=entropy-ts) | Heat as area under T(S): why the Carnot rectangle is the best engine. | done |
+| [Heat conduction](web/physics.html?lab=heat-conduction) | Fourier’s law in a rod: the steady straight line, a spreading hot spot, copper joined to wood. | done |
+| [Field of a point charge](web/physics.html?lab=electrostatics) | Field lines, |E| and the potential around a single charge. | done |
+| [Dipoles and charge pairs](web/physics.html?lab=dipole) | Superposition: opposite and like charges, dipoles and a quadrupole. | done |
+| [Gauss’s law](web/physics.html?lab=gauss-law) | The flux through a closed surface counts only the charge inside. | done |
 | [Magnetic field of currents](web/physics.html?lab=magnetic-field) | A loop and a solenoid: field lines, B on the axis. | done |
-| [Electromagnetic induction](web/physics.html?lab=induction) | Move a magnet through a coil: flux, EMF, Lenz, magnetic braking. | done |
-| [Charges in E and B](web/physics.html?lab=charged-particle) | Circles, helices and drifts of a charged particle. | done |
+| [Moving magnet and Lenz’s law](web/physics.html?lab=induction) | Move a magnet through a coil: flux, EMF, Lenz’s law and magnetic braking. | done |
+| [AC induction](web/physics.html?lab=ac-induction) | An alternating current in one coil drives an EMF in another: the transformer idea. | done |
+| [No magnetic charge: Gauss’s law for B](web/physics.html?lab=gauss-magnetism) | Flux of B through any closed surface round a magnet is zero; compare a charge | done |
+| [Ampère’s law](web/physics.html?lab=ampere-law) | ∮B·dl round any loop equals μ₀ times the current through it | done |
+| [Displacement current](web/physics.html?lab=displacement-current) | A charging capacitor: a changing E field makes B like a current | done |
+| [Cyclotron motion](web/physics.html?lab=charged-particle) | A charge in a magnetic field: circles at the cyclotron frequency, helices along B. | done |
+| [E×B drift](web/physics.html?lab=exb-drift) | Add an electric field: drift across both fields, or acceleration along B. | done |
 | [Electromagnetic waves](web/physics.html?lab=em-wave) | E and B travelling together; reflection and standing waves. | done |
-| [Rays: refraction, lenses, mirrors](web/physics.html?lab=geometric-optics) | Snell’s law, total reflection and image formation. | done |
+| [Refraction and total reflection](web/physics.html?lab=geometric-optics) | Snell’s law, the critical angle and total internal reflection. | done |
+| [Thin lenses](web/physics.html?lab=lenses) | Converging and diverging lenses: ray diagrams, image position and magnification. | done |
+| [Curved mirrors](web/physics.html?lab=mirrors) | A concave mirror: real and virtual images, the mirror equation. | done |
 | [Interference](web/physics.html?lab=interference) | Two slits, two waves: bright and dark fringes. | done |
-| [Flight](web/physics.html?lab=flight) | Lift, drag, the stall and the flight envelope of a light aircraft. | done |
-| [Gravitational field](web/physics.html?lab=gravity-field) | The field of two masses, arrow by arrow. | done |
-| [Orbits](web/physics.html?lab=orbits) | Kepler orbits around a turning Earth, ground tracks, J2. | done |
-| [Orbital transfers](web/physics.html?lab=orbital-transfers) | Hohmann and bi-elliptic transfers, Δv and the rocket equation. | done |
-| [Lagrange points](web/physics.html?lab=lagrange-points) | The rotating two-body potential and its five equilibria. | done |
+| [Single-slit diffraction](web/physics.html?lab=diffraction) | Light spreads through a slit: sinc² pattern, first zero at λ/a, the phasor chain. | done |
+| [Diffraction gratings](web/physics.html?lab=grating) | N slits: sharp lines at d sin θ = mλ, and resolving two close colours. | done |
+
+## Modern physics
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Time dilation and the twins](web/modern-physics.html?lab=time-dilation) | A light clock on a moving ship ticks slow; the travelling twin comes back younger. | done |
+| [Spacetime diagrams](web/modern-physics.html?lab=spacetime) | Boosted axes, the light cone, and why simultaneity depends on the observer. | done |
+| [The photoelectric effect](web/modern-physics.html?lab=photoelectric) | Light as photons: K_max = hf − φ, the threshold, four metals. | done |
+| [Particle in a box](web/modern-physics.html?lab=particle-in-a-box) | Allowed energies n²h²/8mL², stationary states, and a superposition that sloshes. | done |
+| [Hydrogen spectrum](web/modern-physics.html?lab=atomic-spectra) | Bohr levels and the Lyman, Balmer and Paschen series of lines. | done |
+| [Radioactive decay](web/modern-physics.html?lab=radioactive-decay) | Random decays, half-life, the exponential law, and parent–daughter chains. | done |
+
+## Flight and space
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Lift and drag](web/flight-and-space.html?lab=flight) | Level flight of a light aircraft: angle of attack, lift curve and drag polar. | done |
+| [Turning flight and load factor](web/flight-and-space.html?lab=turns) | Banked turns: load factor, turn radius and a higher stall speed. | done |
+| [The stall](web/flight-and-space.html?lab=stall) | Past the critical angle of attack the flow separates and lift collapses. | done |
+| [The standard atmosphere](web/flight-and-space.html?lab=standard-atmosphere) | Temperature, pressure, density and the speed of sound with altitude | done |
+| [Gliding and the sink polar](web/flight-and-space.html?lab=gliding) | Best glide, minimum sink, and the speed to fly into a headwind | done |
+| [Range: the Breguet equation](web/flight-and-space.html?lab=range-endurance) | How far a jet flies: speed, L/D, engine and fuel | done |
+| [Gravitational field](web/flight-and-space.html?lab=gravity-field) | The field of two masses, arrow by arrow. | done |
+| [Kepler orbits](web/flight-and-space.html?lab=orbits) | Circular and elliptical orbits: speed, period, geostationary and Molniya. | done |
+| [Kepler’s first and second laws](web/flight-and-space.html?lab=kepler-laws) | Ellipses with the Sun at a focus; equal areas in equal times | done |
+| [Kepler’s third law](web/flight-and-space.html?lab=kepler-third) | T² ∝ a³ for the eight planets, and weighing a star | done |
+| [Newton’s cannon and escape speed](web/flight-and-space.html?lab=newtons-cannon) | Fire faster: fall back, circle, ellipse, escape | done |
+| [Inclination and ground tracks](web/flight-and-space.html?lab=ground-tracks) | A tilted orbit over a turning Earth: polar, retrograde, the ISS track. | done |
+| [Earth’s bulge (J2)](web/flight-and-space.html?lab=orbit-perturbations) | The equatorial bulge turns the orbit plane: sun-synchronous orbits. | done |
+| [Orbital transfers](web/flight-and-space.html?lab=orbital-transfers) | Hohmann and bi-elliptic transfers, Δv and the rocket equation. | done |
+| [Gravity assist](web/flight-and-space.html?lab=gravity-assist) | A flyby turns the velocity; seen from the Sun the craft speeds up or slows down | done |
+| [Lagrange points](web/flight-and-space.html?lab=lagrange-points) | The rotating two-body potential and its five equilibria. | done |
+| [The rocket equation](web/flight-and-space.html?lab=rocket-equation) | Δv = Isp g₀ ln(m₀/m_f) during a burn | done |
+| [Staging](web/flight-and-space.html?lab=staging) | Why rockets drop empty stages, and how much payload each choice carries | done |
+| [Launch: gravity turn and losses](web/flight-and-space.html?lab=gravity-turn) | Pitch kick, gravity loss, drag loss and max-Q on the way up | done |
+| [Atmospheric entry](web/flight-and-space.html?lab=reentry) | Deceleration, heating and the entry corridor, with or without lift | done |
+
+## Robotics
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Rotation matrices](web/robotics.html?lab=rotation-matrices) | Elementary rotations; the columns are the new axes | done |
+| [Composing rotations](web/robotics.html?lab=composing-rotations) | Current frame or fixed frame: the order of the product | done |
+| [Euler angles and roll–pitch–yaw](web/robotics.html?lab=euler-angles) | ZYZ and RPY, and the gimbal-lock singularity | done |
+| [Axis–angle and quaternions](web/robotics.html?lab=quaternions) | Unit quaternions and the orientation error used by CLIK | done |
+| [Homogeneous transforms](web/robotics.html?lab=homogeneous-transforms) | Rotation and translation in one 4×4 matrix | done |
+| [A planar arm](web/robotics.html?lab=planar-arm) | Forward kinematics and the reachable workspace | done |
+| [Denavit–Hartenberg convention](web/robotics.html?lab=dh-convention) | Four numbers per link, chained into the forward kinematics | done |
+| [A 7-joint arm: Kinova Jaco2](web/robotics.html?lab=jaco2-arm) | The course project’s robot: DH table, home posture, redundancy | done |
+| [Inverse kinematics](web/robotics.html?lab=inverse-kinematics) | Elbow up and elbow down, and targets out of reach | done |
+| [The Jacobian and singularities](web/robotics.html?lab=robot-jacobian) | Tip velocity from joint speeds; the manipulability ellipse | done |
+| [Statics: τ = Jᵀ F](web/robotics.html?lab=statics-duality) | Joint torques for a tip force, and the force ellipse | done |
+| [Closed-loop inverse kinematics](web/robotics.html?lab=clik) | Tracking the project’s square with J⁺, Jᵀ or damped least squares | done |
+| [Redundancy and the null space](web/robotics.html?lab=redundancy) | A spare joint pursues a second goal without moving the tip | done |
+| [Trapezoidal velocity profile](web/robotics.html?lab=trapezoidal-profile) | Accelerate, cruise, brake: the admissible cruise speeds | done |
+| [Cubic and quintic trajectories](web/robotics.html?lab=polynomial-trajectories) | Smoothness up to the acceleration, compared with the trapezoid | done |
+| [Robot dynamics](web/robotics.html?lab=robot-dynamics) | B(q)q̈ + C q̇ + g = τ on a free two-link arm | done |
+| [PD control with gravity compensation](web/robotics.html?lab=pd-gravity) | Set-point regulation, and the sag without ĝ | done |
+| [Computed torque](web/robotics.html?lab=computed-torque) | Inverse dynamics cancels the arm’s dynamics, if the model is right | done |
+| [Impedance control](web/robotics.html?lab=impedance-control) | Pushing into a wall with a bounded, chosen force | done |
 
 ## Signal theory
 
@@ -351,3 +501,14 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Transmission lines](web/signal-theory.html?lab=transmission-lines) | The TEM coax, mismatch, standing waves and the Smith chart. | done |
 | [Waveguides](web/signal-theory.html?lab=waveguides) | Cutoff, mode fields and slots, dispersion and pulse spreading. | done |
 | [Dielectric guides](web/signal-theory.html?lab=optical-guide) | Total internal reflection, modes and evanescent tails. | done |
+
+## Structural mechanics
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Simply supported beam](web/structural-mechanics.html?lab=simply-supported) | Reactions, shear and moment diagrams, and the deflected shape. | done |
+| [Cantilever](web/structural-mechanics.html?lab=cantilever) | One support, a moment at the wall, the tip droops. | done |
+| [Cross sections](web/structural-mechanics.html?lab=cross-section) | Second moment, the neutral axis, and why beams are shaped like an I. | done |
+| [The tensile test](web/structural-mechanics.html?lab=tensile-test) | Elastic, yield, hardening, necking, fracture — and unloading. | done |
+| [Mohr’s circle](web/structural-mechanics.html?lab=mohr-circle) | Plane stress on a rotating element; principal stresses and maximum shear. | done |
+| [Buckling of columns](web/structural-mechanics.html?lab=buckling) | Euler's load, end conditions, slenderness and imperfections. | done |

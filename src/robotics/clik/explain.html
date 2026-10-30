@@ -1,0 +1,42 @@
+<section data-case="clik">
+  <h3>Closed-loop inverse kinematics (CLIK)</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a three-link arm whose tip follows a path (dashed: the reference; orange: where the tip actually went; faint arms: earlier postures). Top right: the tracking error in millimetres. Bottom right: the three joint angles. Below: how fast the joints turn. The path is the Jaco2 project’s: a 40 cm square, 3 s per side with a trapezoidal speed profile, short stops at the corners.</div>
+  <p>Inverse kinematics in closed form exists only for simple arms. The general method works with velocities instead: if the tip should move at ẋ_d, the joints should move at q̇ = J⁻¹ẋ_d. Integrating that alone would slowly drift, because each step is a little wrong; so the error between where the tip should be and where it is gets fed back with a gain K. The result is a loop in which the error decays exponentially, e(t) ∝ e^(−Kt), and the joint angles are found step by step, every Ts = 10 ms. When the arm has more joints than the task has coordinates, J is not square and the pseudo-inverse J⁺ takes the minimum-speed solution.</p>
+  <div class="eq">$$\dot{\mathbf q} = J^\dagger(\mathbf q)\,\big(\dot{\mathbf x}_d + K\,\mathbf e\big), \qquad \mathbf e = \mathbf x_d - \mathbf x_e, \qquad J^\dagger = J^\mathsf{T}(JJ^\mathsf{T})^{-1}, \qquad \mathbf q_{k+1} = \mathbf q_k + T_s\,\dot{\mathbf q}_k$$</div>
+  <ol class="steps">
+    <li>Forward kinematics: where is the tip now? Error e.</li>
+    <li>Command: path speed (feedforward) plus K e (feedback).</li>
+    <li>Map to joints with J⁺ (or Jᵀ, or the damped inverse).</li>
+    <li>Integrate one step; repeat. In the project the resulting q is streamed to CoppeliaSim.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Pseudo-inverse, K = 50 /s: largest error 0.021 mm, the same order as the project’s task 1 (0.008 mm with its Jaco2). With K = 5 the loop is ten times slower: 0.20 mm.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Making K as large as possible. With Euler steps of Ts, K·Ts must stay well below 1 (here 2 at most), or the discrete loop overshoots and goes unstable; and a real robot has motor limits.</div>
+  <div class="try"><h4>Try it</h4>Switch between J⁺ and Jᵀ and compare the scale of the error plot.</div>
+</section>
+<section data-case="clik" data-example="transpose"><h3>The transpose</h3><p>q̇ = Jᵀ K e: no matrix to invert, never singular, but no feedforward of the path speed: the tip only moves because it is behind. 17 mm of lag on the square at K = 20 (higher gains go unstable with these steps).</p></section>
+<section data-case="clik" data-example="lowgain"><h3>Low gain</h3><p>K = 5: the feedforward still does most of the work, so the error stays small (0.20 mm), but it is corrected ten times more slowly.</p></section>
+<section data-case="clik" data-example="pose"><h3>Position and angle</h3><p>Now the gripper’s angle is held too (like the project’s task 2): three coordinates for three joints, J is square, no redundancy left. The orientation error stays below 10⁻³ rad and the joints move more (up to 0.7 rad/s) to keep the gripper level.</p></section>
+<section data-case="clik" data-example="circle"><h3>A circle</h3><p>The circle starts at full speed: the first step has a 2 mm error, which the feedback removes within a fraction of a second; after that it stays at hundredths of a millimetre.</p></section>
+<section data-case="clik" data-example="singular"><h3>Out of reach</h3><p>Starting nearly stretched, the square goes outward beyond the arm’s reach. As the arm straightens, JJᵀ becomes singular and J⁺ asks for joint speeds of thousands of rad/s: the simulation goes wild. A real robot would hit its limits or fault.</p></section>
+<section data-case="clik" data-example="dls"><h3>Damped least squares</h3><p>J* = Jᵀ(JJᵀ + λ²I)⁻¹ with λ = 0.3: near the singularity it trades accuracy for sanity. The tip cannot reach the target anyway, but the joints stay below 1 rad/s and the arm points as close as it can. The project’s pinv_damped does the same.</p></section>
+
+<section data-case="redundancy">
+  <h3>Redundancy and the null space</h3>
+  <div class="look"><h4>What you are looking at</h4>The same tracking task, position only, with three joints for two coordinates. Left: the arm and its earlier postures. Top right: the tip error. Bottom right: the joint angles. Below: how far the joints are from the middle of their ranges, and the manipulability.</div>
+  <p>With one joint more than the task needs, infinitely many postures put the tip in the same place: the elbow can move while the tip stays still. Those motions form the null space of J: joint speeds that produce zero tip velocity. The CLIK law can add any motion projected into that space without touching the tip, and use it for a second goal: keep the joints away from their limits, stay far from singularities, avoid an obstacle. The Jaco2, with seven joints for a six-dimensional task, has exactly one such spare motion: the elbow swinging round.</p>
+  <div class="eq">$$\dot{\mathbf q} = J^\dagger(\dot{\mathbf x}_d + K\mathbf e) + \big(I - J^\dagger J\big)\,k_0\,\nabla_{\mathbf q} w(\mathbf q), \qquad J\big(I - J^\dagger J\big) = 0$$</div>
+  <ol class="steps">
+    <li>I − J⁺J projects any joint motion onto the null space.</li>
+    <li>Choose w(q) to maximise: −½|q − q_mid|² (centre the joints) or √det(JJᵀ) (manipulability).</li>
+    <li>Its gradient, times k₀, is the joint motion you would like; the projection keeps only the harmless part.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Centring the joints (ranges centred on 0°, 90°, 90°): the distance from the centres falls from 0.87 to 0.59 rad during the square, the arm ending at (−29°, 74°, 93°) instead of (−40°, 90°, 61°), while the tip error stays at 0.1 mm.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding the second goal’s gradient directly to q̇. Without the projection it moves the tip; with it, the tip does not notice.</div>
+  <div class="try"><h4>Try it</h4>Choose “Stay still”: the tip stays put while the arm folds itself into a new posture.</div>
+</section>
+<section data-case="redundancy" data-example="none"><h3>No second goal</h3><p>J⁺ alone gives the smallest joint speeds at every instant; the posture wanders with the path and ends almost where it started (0.86 rad from the centres).</p></section>
+<section data-case="redundancy" data-example="manip"><h3>Manipulability</h3><p>The spare motion now raises √det(JJᵀ) from 1.03 to 1.07, bending the elbow more (105°) to keep the tip far from singular postures. The joints end further from their centres: the two goals differ.</p></section>
+<section data-case="redundancy" data-example="self"><h3>Self-motion</h3><p>The tip is told to stay still; only the null-space term acts. The arm reconfigures to (−29°, 74°, 93°) and the tip moves by less than 0.03 mm. This is how a redundant robot reaches round an obstacle without moving its hand.</p></section>
+<details><summary>About the model</summary>
+  <p>Kinematic simulation, as in the project’s tasks 1–3: joint velocities integrated exactly with Euler steps (Ts = 10 ms), no dynamics. Links 1, 0.7, 0.4 m. Square: 40 cm, 3 s per side with cruise speed 1.5 L/T, 0.5 s at the corners and 2 s at the end (15.5 s). Manipulability gradient by central differences. Tests: path duration and corners; J⁺ keeps the error below 1 mm and Jᵀ lags more; the angle is held in the pose task; the null-space term moves the joints towards their centres (or raises manipulability) while the tip error stays below 1 mm; near the singularity J⁺ needs over 20 times the joint speed of damped least squares.</p>
+</details>

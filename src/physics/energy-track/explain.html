@@ -1,0 +1,55 @@
+<section data-case="ramp">
+  <h3>Kinetic and potential energy</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a bead sliding from rest down a ramp onto a flat track; the dashed gold line is its energy level, the height it could climb back to. Top right: energy bars. Bottom right: the energies over time. Below: the normal force from the track, in units of the weight.</div>
+  <p>Lifting something stores energy: the higher it is, the more it can give back. Let it slide down a frictionless track and that stored (potential) energy turns into motion (kinetic energy). Neither appears from nothing nor disappears: as one bar shrinks the other grows, and their total stays the same. The shape of the track only decides how quickly the trade happens.</p>
+  <div class="eq">$$U = mgh, \qquad K = \tfrac12 m v^2, \qquad K + U = \text{const} \;\Rightarrow\; v = \sqrt{2gh}$$</div>
+  <ol class="steps">
+    <li>At the start: all potential, U = mgh, K = 0.</li>
+    <li>At height y: U = mgy, so K = mg(h − y).</li>
+    <li>At the bottom: all kinetic, ½mv² = mgh, so v = √(2gh). The mass cancels.</li>
+    <li>The normal force does no work (it is always at right angles to the motion), so only gravity changes K.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>m = 1 kg from h = 3 m: U = 1 · 9.81 · 3 = 29.4 J. At the bottom K = 29.4 J, so v = √(2 · 9.81 · 3) = 7.67 m/s. Halfway down (1.5 m): K = U = 14.7 J, v = 5.42 m/s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a steeper or longer path changes the final speed. Without friction only the drop in height matters; the steeper ramp just gets there sooner.</div>
+  <div class="try"><h4>Try it</h4>Change the mass: every energy scales with m, the speed does not move.</div>
+</section>
+<section data-case="ramp" data-example="higher"><h3>Start higher</h3><p>From 5 m: 49 J per kg, and \(v = \sqrt{2 \cdot 9.81 \cdot 5} = 9.90\) m/s. Speed grows as the square root of the height: 5/3 the height, 1.29 times the speed.</p></section>
+<section data-case="ramp" data-example="steeper"><h3>Steeper, same height</h3><p>At 60° the bead reaches the flat in 0.95 s instead of 1.59 s, but with the same 7.67 m/s: the same drop gives the same kinetic energy.</p></section>
+
+<section data-case="loop">
+  <h3>Loop the loop</h3>
+  <div class="look"><h4>What you are looking at</h4>The bead runs down a ramp and round a vertical loop of radius R on its inside. The plot below shows the normal force (the push of the track) in units of the weight: if it would have to become negative, the bead falls off.</div>
+  <p>On the inside of a loop the track can only push, never pull. At the top, gravity and the push of the track together must provide the centripetal force mv²/R that keeps the bead on its circle. If the bead is too slow, gravity alone is already more than enough: the track would have to pull, it cannot, and the bead leaves the track and falls through the loop.</p>
+  <div class="eq">$$\text{top: } N + mg = \frac{mv^2}{R}, \quad N \ge 0 \Rightarrow v^2 \ge gR; \qquad \text{energy: } v^2 = 2g(h - 2R) \;\Rightarrow\; h \ge \tfrac52 R$$</div>
+  <ol class="steps">
+    <li>Energy gives the speed at the top: ½mv² = mg(h − 2R).</li>
+    <li>Newton at the top gives the push: N = mv²/R − mg.</li>
+    <li>N ≥ 0 needs h ≥ 2.5R: not 2R, because the bead must still be moving at the top.</li>
+    <li>Below that, it leaves the track where N reaches 0, at cos φ = (2 − 2h/R)/3 (φ measured from the bottom).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>R = 1 m, h = 3 m: at the top v² = 2 · 9.81 · 1 = 19.6 m²/s², v = 4.43 m/s, and N = m(19.6/1 − 9.81) = 1 · mg. At the bottom of the loop N = mg + mv²/R = 7 mg.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Taking h = 2R as enough "to reach the top". It would get there with zero speed, and long before that it would already have fallen.</div>
+  <div class="try"><h4>Try it</h4>Lower h towards 2.5 m and watch the normal force at the top go to zero.</div>
+</section>
+<section data-case="loop" data-example="just"><h3>Just makes it</h3><p>From 2.55 R the push at the top is only 0.1 of the weight: the track barely touches the bead there.</p></section>
+<section data-case="loop" data-example="short"><h3>Falls off</h3><p>From 2.2 R, \(\cos\varphi = (2 - 4.4)/3 = -0.8\): the bead leaves the track at a height of 1.8 R, before the top, and falls inside the loop along a parabola (red dashes).</p></section>
+
+<section data-case="friction">
+  <h3>Friction turns energy into heat</h3>
+  <div class="look"><h4>What you are looking at</h4>The bead sliding to and fro in a valley with friction μ = 0.1. The red bar is the heat made so far; the dashed total stays flat.</div>
+  <p>Friction acts against the motion all the time, so it always takes energy away from the motion. That energy is not lost: it warms the bead and the track. Each swing climbs a bit less high, the dashed energy level sinks, and finally the bead rests at the bottom with all its starting energy turned into heat. Kinetic + potential + heat stays exactly constant.</p>
+  <div class="eq">$$f = \mu N, \qquad Q = \int \mu N\, ds, \qquad K + U + Q = \text{const}$$</div>
+  <ol class="steps">
+    <li>Friction force μN, with N the push of the track (mg cos θ on a slope, more on a curve).</li>
+    <li>Work against friction = force × distance: that is the heat Q.</li>
+    <li>Energy balance: mgh at the start = K + U + Q at any time.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>From h = 2 m with μ = 0.1 on 30° slopes: the turning points fall to 1.09 m, 0.57 m, 0.28 m, 0.11 m… and after 9.5 s the 19.6 J per kg are all heat. On the 30° ramp with μ = 0.3, the bead stops 3.4 m along the flat after turning all 29.4 J into heat.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Saying friction "destroys" energy. It converts it to heat; the total is conserved, and the plot shows it.</div>
+  <div class="try"><h4>Try it</h4>Raise μ: fewer swings. Above tan 30° = 0.58 the bead does not even start.</div>
+</section>
+<section data-case="friction" data-example="none"><h3>No friction</h3><p>With \(\mu = 0\) the bead swings back to the same height forever: the energy bars trade places, the heat bar stays at zero.</p></section>
+<section data-case="friction" data-example="brake"><h3>A ramp with friction</h3><p>Down the ramp friction already takes 52 % of the energy (\(\mu\cot 30° = 0.52\)); the curve at the bottom presses harder and takes more; the flat track does the rest. The bead stops after 3.4 m of flat.</p></section>
+<details><summary>About the model</summary>
+  <p>The track is built from straight pieces and circular arcs, so the slope θ and the curvature κ are exact. The bead obeys \(\dot v = -g\sin\theta - \mu |N|/m\), with \(N/m = v^2\kappa + g\cos\theta\), integrated with RK4 at 1 ms together with the heat \(\dot Q = \mu|N||v|\). It leaves the track when N would turn negative and then flies as a projectile. Tests: K + U constant without friction (10⁻⁶); K + U + Q constant with friction (10⁻⁴); distance on the ramp vs ½g(sin θ − μ cos θ)t² (10⁻⁶); loop from 2.55 R stays on, from 2.4 R leaves at the predicted height (0.2 %).</p>
+</details>

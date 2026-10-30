@@ -1,0 +1,57 @@
+<section data-case="single">
+  <h3>Single-slit diffraction</h3>
+  <div class="look"><h4>What you are looking at</h4>Green light (550 nm) through a slit 5 µm wide. Left: the intensity at each angle, with a probe angle. Top right: the phasor picture at the probe angle. Bottom: what a screen would show. Below: the same intensity on a log scale, so the faint fringes show.</div>
+  <p>Light squeezing through a narrow gap does not make a sharp shadow of the gap: it spreads out. Think of every point of the opening as a small source of waves (Huygens). Straight ahead all of them arrive in step and add up. At an angle, waves from different parts of the slit travel different distances. At the angle where the far edge is one full wavelength behind the near edge, every wavelet has a partner exactly half a wavelength out of step: they all cancel, and the screen is dark.</p>
+  <div class="eq">$$\frac{I}{I_0} = \left(\frac{\sin\beta}{\beta}\right)^2, \qquad \beta = \frac{\pi a\sin\theta}{\lambda}, \qquad \text{zeros at } a\sin\theta = m\lambda,\; m = \pm1, \pm2, \dots$$</div>
+  <ol class="steps">
+    <li>First dark fringe: sin θ = λ/a.</li>
+    <li>The central bright band spans between the two first zeros: about 2λ/a radians.</li>
+    <li>The side fringes are faint: the first is 4.7 % of the centre, the next 1.6 %.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>λ = 550 nm, a = 5 µm: sin θ = 0.11, first zero at 6.3°, central band 12.6° wide. On a screen 1 m away that is a bright stripe about 22 cm wide.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting a narrower slit to give a narrower bright stripe. It is the reverse: the narrower the slit, the more the light spreads.</div>
+  <div class="try"><h4>Try it</h4>Halve the slit width and watch the central peak double in width.</div>
+</section>
+<section data-case="single" data-example="wide"><h3>Wider slit</h3><p>\(a = 10\) µm: the first zero moves in to 3.2°. A slit much wider than \(\lambda\) hardly diffracts at all: that is why we normally see sharp shadows.</p></section>
+<section data-case="single" data-example="narrow"><h3>Narrow slit</h3><p>\(a = 2.5\) µm, only 4.5 wavelengths: the first zero is out at 12.7°.</p></section>
+<section data-case="single" data-example="red"><h3>Red light</h3><p>At 650 nm the zero moves from 6.3° to 7.5°: longer waves spread more. White light through a slit gives coloured fringes, red on the outside.</p></section>
+
+<section data-case="phasor">
+  <h3>The phasor picture</h3>
+  <div class="look"><h4>What you are looking at</h4>Main view: the slit split into 60 wavelets, each drawn as an arrow (its amplitude and phase), placed tip to tail. The dashed arrow from start to end is the total wave; its length squared is the intensity. Top right: the intensity with the probe angle.</div>
+  <p>Adding waves means adding arrows. Straight ahead every wavelet has the same phase: the arrows line up and the total is as long as possible. Tilt the angle and each wavelet is a little more delayed than the one before, so each arrow turns a little more: the chain curls into an arc. When the far edge is a whole wavelength behind, the total turn is 360°: the chain closes into a circle and the resultant is zero. Curl further and it opens again, only smaller: the side fringe.</p>
+  <div class="eq">$$\text{total phase across the slit} = \frac{2\pi a\sin\theta}{\lambda} = 2\beta, \qquad |E| = \text{chord of an arc of length } 1 = \frac{\sin\beta}{\beta}$$</div>
+  <ol class="steps">
+    <li>Phase step between neighbouring wavelets: (2π/λ)(a/60) sin θ.</li>
+    <li>Chain of fixed length, bent through a total angle 2β.</li>
+    <li>Resultant = chord: maximal when straight, zero when the chain closes (2β = 2π).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>At θ = 3° with a = 5 µm, λ = 550 nm: a sin θ = 0.48 λ, the chain bends through 171°; the chord gives I/I₀ = 0.445 (the 60 arrows give the same to 0.02 %).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding intensities instead of amplitudes. Waves add as arrows first; only then square.</div>
+  <div class="try"><h4>Try it</h4>Slide the probe angle and watch the chain wind up, close, and reopen.</div>
+</section>
+<section data-case="phasor" data-example="first-zero"><h3>The chain closes</h3><p>At \(\sin\theta = \lambda/a\) the chain is a full circle: the resultant vanishes. Every wavelet cancels with the one half a slit away.</p></section>
+<section data-case="phasor" data-example="side"><h3>First side maximum</h3><p>About one and a half turns: the chain winds once and reaches across the circle again, but the circle is now smaller. \(I/I_0 = 0.047\).</p></section>
+
+<section data-case="grating">
+  <h3>Diffraction gratings</h3>
+  <div class="look"><h4>What you are looking at</h4>N slits 1 µm wide, 5 µm apart. Left: the intensity (solid) under the envelope of one slit (dashed). Top right: 2 and 20 slits compared. Bottom: the screen.</div>
+  <p>With many equal slits, light from all of them arrives in step only in a few directions, where the path difference to the next slit is a whole number of wavelengths. There the waves add up to a bright line; anywhere else the N contributions nearly cancel. The more slits, the more precise the cancellation, and the sharper the lines. That makes gratings the heart of spectrometers: each wavelength puts its lines at its own angle.</p>
+  <div class="eq">$$d\sin\theta = m\lambda, \qquad \frac{I}{I_0} = \left(\frac{\sin\beta}{\beta}\right)^2\left(\frac{\sin N\varphi}{N\sin\varphi}\right)^2, \quad \varphi = \frac{\pi d\sin\theta}{\lambda}, \qquad \frac{\lambda}{\Delta\lambda} \le mN$$</div>
+  <ol class="steps">
+    <li>Bright lines (principal maxima) at d sin θ = mλ.</li>
+    <li>Between each pair: N − 1 zeros and N − 2 weak maxima.</li>
+    <li>Line width ∝ 1/N; the single-slit envelope sets how bright each order is.</li>
+    <li>Two wavelengths are resolved in order m when λ/Δλ ≤ mN (Rayleigh).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>d = 5 µm, λ = 550 nm: first order at 6.3°, second at 12.7°. With 1 µm slits the envelope still lets 88 % through at first order. With N = 5 there are 3 weak maxima between orders.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking more slits move the lines. The positions depend only on d and λ; N only sharpens them.</div>
+  <div class="try"><h4>Try it</h4>Increase N and count the small bumps between the bright lines: always N − 2.</div>
+</section>
+<section data-case="grating" data-example="n2"><h3>Two slits</h3><p>Young's experiment: broad \(\cos^2\) fringes under the envelope, no weak maxima in between.</p></section>
+<section data-case="grating" data-example="n20"><h3>Twenty slits</h3><p>The lines are ten times narrower than with two slits, with 18 tiny bumps between them. A real grating has thousands of lines per millimetre.</p></section>
+<section data-case="grating" data-example="blur"><h3>Two colours, ten slits</h3><p>550 and 570 nm need \(\lambda/\Delta\lambda = 27.5\); first order with 10 slits gives only 10. The first-order lines (at 6.3° and 6.5°) merge into one blur: see the zoom below.</p></section>
+<section data-case="grating" data-example="sharp"><h3>Two colours, forty slits</h3><p>With 40 slits, \(mN = 40 &gt; 27.5\): two separate lines in first order, and even more clearly in second order, where \(mN = 80\).</p></section>
+<details><summary>About the model</summary>
+  <p>Fraunhofer (far-field) diffraction from slits, scalar waves, small and large angles. Tests: the closed forms vs a direct sum of 2000 Huygens wavelets per slit (10⁻⁶); first zero at \(\sin\theta = \lambda/a\), where the phasor chain closes; principal maxima at \(d\sin\theta = m\lambda\); exactly \(N - 2\) secondary maxima between orders for N = 3, 5, 8.</p>
+</details>

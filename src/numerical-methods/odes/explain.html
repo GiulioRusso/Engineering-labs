@@ -1,0 +1,35 @@
+<section>
+  <p>A computer solves a differential equation by marching: from the state now, estimate the state a small step h later, and repeat. The method decides how accurate each step is, whether errors pile up, and whether the solution stays bounded at all.</p>
+</section>
+<section data-case="euler">
+  <h3>Methods compared on an oscillator</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the phase portrait, velocity against position. The exact motion goes round the unit circle (dashed). Top right: x(t) against cos t. Bottom right: the energy, constant for the exact solution. Below: the error in x over time.</div>
+  <p>The spring x″ = −x is written as two first-order equations, x′ = v and v′ = −x. <b>Euler</b> moves along the current slope for one step. On a circle the slope is the tangent, which always points slightly outside: the numerical orbit spirals out.</p>
+  <div class="eq">$$\text{Euler: } y_{n+1}=y_n+h\,f(y_n)\qquad\text{RK4: } y_{n+1}=y_n+\tfrac h6(k_1+2k_2+2k_3+k_4)$$</div>
+  <ol class="steps"><li>Euler: one slope per step, error per period ∝ h.</li><li>Semi-implicit Euler: update v, then x with the new v. Same cost, energy no longer drifts (a <i>symplectic</i> method).</li><li>Heun: Euler guess, then average the two slopes. Error ∝ h².</li><li>RK4: four slopes per step. Error ∝ h⁴.</li></ol>
+  <div class="worked"><h4>Worked example</h4>Euler with h = 0.1: energy × (1 + 0.01) per step. After t = 20 (200 steps) the energy is 1.01²⁰⁰ ≈ 7.3 times too large.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Judging a method by one step. A small error per step that always pushes the same way (outward) accumulates; long simulations of orbits or molecules use symplectic methods for that reason.</div>
+  <div class="try"><h4>Try it</h4>Pick RK4 and push h up to 1: the orbit stays close to the circle for a long time, even with only six steps per period.</div>
+</section>
+<section data-case="euler" data-example="semi"><h3>Semi-implicit Euler</h3><p>The energy wobbles by about h/2 but never drifts: the orbit is a slightly squashed closed curve.</p></section>
+<section data-case="euler" data-example="rk4big"><h3>RK4 with a big step</h3><p>Twelve steps per period, and the energy is still within a fraction of a percent after three periods.</p></section>
+<section data-case="stability">
+  <h3>Stability</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: y′ = λy with λ &lt; 0, exact decay (dashed), explicit Euler (red) and implicit Euler (green), one dot per step. Top right: how much each method multiplies y per step, against hλ. Bottom right: the complex hλ plane with each method's stability region; the dot is your step.</div>
+  <p>On the decay y′ = λy each Euler step multiplies y by a fixed factor. If that factor is larger than 1 in size, the numerical solution grows even though the exact one decays: the method is <b>unstable</b> at that step.</p>
+  <div class="eq">$$\text{explicit: } y_{n+1}=(1+h\lambda)\,y_n\qquad\text{implicit: } y_{n+1}=\frac{y_n}{1-h\lambda}$$</div>
+  <ol class="steps"><li>Explicit Euler is stable when |1 + hλ| &lt; 1, i.e. h &lt; 2/|λ|.</li><li>Between h = 1/|λ| and 2/|λ| it is stable but flips sign every step.</li><li>Implicit Euler solves for y_{n+1} and is stable for every h &gt; 0 (A-stable).</li></ol>
+  <div class="worked"><h4>Worked example</h4>|λ| = 10: explicit Euler needs h &lt; 0.2 s. With h = 0.3 s the factor is 1 − 3 = −2: after 10 steps y ≈ 1000, sign alternating.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Confusing accuracy with stability. A stable result can still be inaccurate (implicit Euler with a huge step decays too slowly), and you cannot fix an instability by waiting.</div>
+</section>
+<section data-case="stability" data-example="edge"><h3>On the edge</h3><p>hλ = −2: the factor is exactly −1, the solution flips sign forever without decaying.</p></section>
+<section data-case="stability" data-example="blow"><h3>Past the edge</h3><p>hλ = −3: explicit Euler doubles every step; implicit Euler divides by 4 and decays.</p></section>
+<section data-case="order">
+  <h3>Order of accuracy</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the error after one period of the oscillator against the step h, both logarithmic. Each method is a straight line whose slope is its order. Top right: the same errors against the work, counted in slope evaluations. Bottom right: Euler and RK4 at the marked step. Below: the local slope of each line.</div>
+  <p>A method of order p has a global error ∝ h^p. On log–log axes that is a line of slope p: Euler and semi-implicit Euler 1, Heun 2, RK4 4.</p>
+  <div class="eq">$$E(h)\approx C\,h^p\quad\Rightarrow\quad\log E=\log C+p\log h$$</div>
+  <div class="worked"><h4>Worked example</h4>From h = 0.1 to h = 0.05: Euler's error halves, RK4's falls 16 times. To reach 10⁻⁸ Euler would need about 10⁹ steps; RK4 needs about a thousand.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Making h as small as possible. Below about 10⁻³ RK4's error stops falling: round-off in millions of additions sets a floor.</div>
+</section>
+<section data-case="order" data-example="cost"><h3>Equal work</h3><p>RK4 costs four slope evaluations per step, but even per evaluation its line sits far below the others.</p></section>

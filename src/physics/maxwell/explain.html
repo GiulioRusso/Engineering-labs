@@ -1,0 +1,71 @@
+<section data-case="gauss-b ampere displacement">
+  <div class="look"><h4>The four equations, and where to see each one</h4>
+    <table>
+      <tr><td>\(\oint \mathbf E\cdot d\mathbf A = Q_\text{in}/\varepsilon_0\)</td><td>Gauss: electric charges are where E lines start and end</td><td>Physics › Gauss’s law</td></tr>
+      <tr><td>\(\oint \mathbf B\cdot d\mathbf A = 0\)</td><td>Gauss for magnetism: no magnetic charges, B lines never end</td><td>No magnetic charge (here)</td></tr>
+      <tr><td>\(\oint \mathbf E\cdot d\mathbf l = -\dfrac{d\Phi_B}{dt}\)</td><td>Faraday: a changing magnetic flux drives a current round a loop</td><td>Physics › Moving magnet, AC induction</td></tr>
+      <tr><td>\(\oint \mathbf B\cdot d\mathbf l = \mu_0\!\left(I + \varepsilon_0\dfrac{d\Phi_E}{dt}\right)\)</td><td>Ampère–Maxwell: currents, and changing electric fields, make B circulate</td><td>Ampère’s law and Displacement current (here)</td></tr>
+    </table>
+    Together the last two make a changing E produce B and a changing B produce E: that is the electromagnetic wave (Physics › Electromagnetic waves), travelling at \(c = 1/\sqrt{\mu_0\varepsilon_0}\).</div>
+</section>
+
+<section data-case="gauss-b">
+  <h3>No magnetic charge: Gauss’s law for B</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the field lines of a bar magnet (a short coil, outlined, with its N and S ends) in the plane through its axis, and a sphere seen edge-on as a circle: red where B leaves the sphere, blue where it enters. Top right: B·n round that circle. Bottom right: the flux leaving and entering the whole sphere, and the net.</div>
+  <p>The electric field starts on positive charges and ends on negative ones, so a closed surface round a charge has a net flux: it counts the charge inside. Magnetic field lines are different: they never start or end. They come out of the north end, loop round outside, and go back through the inside of the magnet to the north end again. Wherever you put a closed surface, every line that leaves it must come back in. Cut a magnet in two and you get two smaller magnets, each with both poles: there is no isolated N or S, no magnetic charge.</p>
+  <div class="eq">$$\oint_S \mathbf B\cdot d\mathbf A = 0 \quad\text{for every closed surface } S, \qquad \text{compare}\quad \oint_S \mathbf E\cdot d\mathbf A = \frac{Q_\text{in}}{\varepsilon_0}$$</div>
+  <ol class="steps">
+    <li>Split the surface into small patches; the flux through each is B·n times its area.</li>
+    <li>Add up the outward (positive) and inward (negative) parts.</li>
+    <li>For B the two always cancel. For E they cancel only if no charge is inside.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Sphere of radius 1.1 round the whole magnet: 0.115 out, 0.115 in (units μ₀I), net 0. A sphere round just the N end (centre 0.6, radius 0.5): 0.210 leaves through the outside, 0.209 enters through the cut inside the magnet; the 0.4 % difference is the numerical integration, not physics.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the N pole is a “source” of B, like a positive charge. Outside the magnet lines seem to start at N, but inside they run from S to N: follow one and it closes on itself.</div>
+  <div class="try"><h4>Try it</h4>Move the sphere so it cuts the magnet anywhere: the red and blue areas always balance. Then switch to the charge.</div>
+</section>
+<section data-case="gauss-b" data-example="cut"><h3>Round one pole</h3><p>The sphere encloses only the N end. Lots of flux leaves through its outside (0.210), but the same amount enters through the part inside the magnet (0.209), where B runs from S to N. Net zero: a pole is not a charge.</p></section>
+<section data-case="gauss-b" data-example="beside"><h3>Beside the magnet</h3><p>A sphere next to the magnet: lines pass through it, entering on one side and leaving on the other, 0.019 each way. Net zero, as for any empty region.</p></section>
+<section data-case="gauss-b" data-example="charge"><h3>A charge</h3><p>E lines start on the charge and run off to infinity: nothing comes back. The flux through the sphere is q/ε₀ (here 1.000) whatever its size: this is Gauss’s law for E, and what a magnetic charge would look like if one existed.</p></section>
+<section data-case="gauss-b" data-example="charge-out"><h3>Charge outside</h3><p>With the charge outside, its lines cross the sphere in and out again: 0.064 each way, net 0. A closed surface only counts what is inside.</p></section>
+
+<section data-case="ampere">
+  <h3>Ampère’s law: B circulates round currents</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: wires perpendicular to the screen (⊙ current towards you, ⊗ away), the strength of B as brightness and its direction as small arrows, and a closed loop coloured by whether B runs along it (red) or against it (blue). Top right: the component of B along the loop, point by point. Bottom right: the total ∮B·dl (divided by μ₀) next to the current passing through the loop.</div>
+  <p>A current in a straight wire makes B circle round it, getting weaker as 1/r. Walk round any closed loop and add up B along your path, step by step: the total does not depend on the loop’s size, shape or position, only on how much current passes through it. Closer to the wire B is stronger but the path is shorter; further away, weaker but longer: the two always balance. A wire outside the loop pushes you forward on one side and backward on the other, adding nothing.</p>
+  <div class="eq">$$\oint_C \mathbf B\cdot d\mathbf l = \mu_0 I_\text{through}, \qquad \text{straight wire: } B\cdot 2\pi r = \mu_0 I \;\Rightarrow\; B = \frac{\mu_0 I}{2\pi r}$$</div>
+  <ol class="steps">
+    <li>Pick a direction round the loop (here counter-clockwise).</li>
+    <li>Right-hand rule: a current towards you (⊙) counts positive.</li>
+    <li>Sum B·dl round the loop; compare with μ₀ times the currents inside.</li>
+    <li>With enough symmetry (a circle round one wire) B is the same all round, and the law gives B directly.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A 2 A wire and a circle of radius 0.8 centred on it: B·t = 0.398 everywhere (units μ₀), times the length 2π × 0.8 = 5.03 gives 2.00. Move the circle off-centre: B·t now ranges from 0.24 to 0.70, but the sum is still 2.00.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Concluding that B = 0 on a loop where ∮B·dl = 0. With two opposite currents inside, the total is zero, yet B along the loop is far from zero (from −0.51 to +0.41).</div>
+  <div class="try"><h4>Try it</h4>Drag the loop’s size slider: B·t changes everywhere, the bar on the left of the bottom chart does not move until the loop crosses a wire.</div>
+</section>
+<section data-case="ampere" data-example="off"><h3>Off-centre</h3><p>B is stronger on the side near the wire, weaker on the far side, and the curve on the right is no longer flat; but the area under it is still μ₀ × 2 A.</p></section>
+<section data-case="ampere" data-example="square"><h3>A square loop</h3><p>B is no longer along the path everywhere (on the straight sides it crosses at an angle), so only its component along the path counts. The total is still 2.00.</p></section>
+<section data-case="ampere" data-example="two"><h3>Opposite currents</h3><p>+2 A and −2 A inside: the sum is 0. B is not zero on the loop; it runs one way near one wire and the other way near the other.</p></section>
+<section data-case="ampere" data-example="outside"><h3>A wire outside</h3><p>A 3 A wire just outside the loop makes B along the loop very uneven, but adds nothing to ∮B·dl: still 2.00, the 2 A inside.</p></section>
+
+<section data-case="displacement">
+  <h3>Displacement current</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a capacitor charging, seen from the side. Current flows along the wire onto the left plate, the E field between the plates (orange) grows. A circular loop round the axis is seen edge-on (thin ellipse, B circles round it). The dashed line is the surface the loop bounds: a flat disc, or a bag that bulges into the gap. Top right: B on the loop against its radius, round the wire and in the gap. Bottom right: what passes through the chosen surface.</div>
+  <p>Ampère’s law says ∮B·dl equals μ₀ times the current through <em>a surface</em> bounded by the loop, and any surface should do. Take a loop round the wire: a flat disc is crossed by the wire, current I. But a bag bulging into the gap between the plates is crossed by no wire at all: current 0, for the same loop. Maxwell’s fix: between the plates the electric field is growing, and a changing electric flux counts as a current, the displacement current ε₀ dΦ_E/dt. It equals I exactly, so both surfaces agree. In the gap, B circles round the axis even though no charge moves there.</p>
+  <div class="eq">$$\oint \mathbf B\cdot d\mathbf l = \mu_0\left(I_\text{through} + \varepsilon_0\frac{d\Phi_E}{dt}\right), \qquad \Phi_E = E\,\pi a^2 = \frac{Q}{\varepsilon_0} \;\Rightarrow\; \varepsilon_0\frac{d\Phi_E}{dt} = \frac{dQ}{dt} = I$$</div>
+  <ol class="steps">
+    <li>Round the wire, flat disc: conduction current I, no E flux.</li>
+    <li>Same loop, bag through the gap: no conduction, ε₀ dΦ/dt = I. Same B.</li>
+    <li>Loop in the gap, radius r &lt; a: it encloses the share r²/a² of the E flux, so B = μ₀I r/(2πa²), growing with r.</li>
+    <li>Loop wider than the plates: all the flux, the same B as round the wire.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>I = 1 A, plates of radius 5 cm: dE/dt = I/(ε₀πa²) = 1.44·10¹³ V/(m·s). A loop of 3 cm round the wire: B = μ₀ × 1/(2π × 0.03) = 6.67 μT. The same radius in the gap encloses 9/25 of the flux: displacement current 0.36 A, B = 2.40 μT.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking displacement current is charge moving through the gap. Nothing crosses the gap; it is the rate of change of the electric field, which makes B just as a current does.</div>
+  <div class="try"><h4>Try it</h4>Switch the surface from flat to bag: the conduction and displacement bars swap, the total and B stay the same.</div>
+</section>
+<section data-case="displacement" data-example="bag"><h3>The bag</h3><p>The same loop round the wire, but the surface bulges into the gap and is crossed by no wire. Without Maxwell’s term Ampère’s law would give B = 0 here and 6.67 μT with the flat disc: impossible for one loop. With it, 1 A of displacement current: the same 6.67 μT.</p></section>
+<section data-case="displacement" data-example="gap"><h3>In the gap</h3><p>A 3 cm loop between the plates: no current flows, but 36 % of the changing E flux passes through it, so B = 2.40 μT. This magnetic field between the plates has been measured.</p></section>
+<section data-case="displacement" data-example="wide"><h3>Wider than the plates</h3><p>An 8 cm loop takes in all of the flux: displacement current 1 A, B = 2.50 μT, exactly as round the wire at the same radius.</p></section>
+<details><summary>About the model</summary>
+  <p>The magnet is 40 coaxial current rings (length 1.2, radius 0.3, units with μ₀I = 1), each with the exact field from complete elliptic integrals (AGM). Flux through the sphere: midpoint rule on 90 × 180 patches. Field lines: RK4 along the unit field direction. Wires: infinite and straight; ∮B·dl by the midpoint rule on 720 steps. The capacitor ignores fringe fields (E uniform between the plates, zero outside). Tests: elliptic integrals at m = ½; the ring field against a 4000-segment Biot–Savart sum (10⁻⁶); zero magnetic flux through four spheres (below 1 % of the outflow), q through a sphere round a charge (10⁻³) and 0 outside; a magnetic field line closes on itself; ∮B·dl = I enclosed for circles and squares (10⁻⁵); the same total current through a flat disc and a bag.</p>
+</details>

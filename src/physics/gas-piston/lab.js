@@ -16,10 +16,12 @@ export default {
     { id: 'gas', label: 'Gas', set: { mode: 'heating' }, examples: [
       { id: 'more', label: 'Heat twice the gas', set: { moles: 0.02 } },
       { id: 'cold', label: 'Heat from 150 K', set: { T0: 150 } },
-      { id: 'iso-half', label: 'Squeeze slowly to half', set: { mode: 'isothermal', squeeze: 0.5 } },
-      { id: 'iso-quarter', label: 'Squeeze slowly to a quarter', set: { mode: 'isothermal', squeeze: 0.25 } },
-      { id: 'adi-half', label: 'Insulated, to half: T × 1.59', set: { mode: 'adiabatic', squeeze: 0.5 } },
-      { id: 'adi-quarter', label: 'Insulated, to a quarter: T × 2.52', set: { mode: 'adiabatic', squeeze: 0.25 } },
+    ] },
+    { id: 'isothermal', label: 'Isothermal', controls: ['squeeze', 'T0'], set: { mode: 'isothermal', squeeze: 0.5 }, examples: [
+      { id: 'iso-quarter', label: 'Squeeze slowly to a quarter', set: { squeeze: 0.25 } },
+    ] },
+    { id: 'adiabatic', label: 'Insulated', controls: ['squeeze', 'T0'], set: { mode: 'adiabatic', squeeze: 0.5 }, examples: [
+      { id: 'adi-quarter', label: 'Insulated, to a quarter: T × 2.52', set: { squeeze: 0.25 } },
       { id: 'hand', label: 'Push the piston yourself', set: { mode: 'manual' } },
     ] },
   ],

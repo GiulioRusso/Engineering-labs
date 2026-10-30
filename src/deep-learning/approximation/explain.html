@@ -1,0 +1,38 @@
+<section data-case="relu">
+  <h3>Universal approximation with ReLU units</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a target function (dashed) and a 1 → 8 → 1 network learning it (gold). Each thin blue line is one hidden unit's contribution; the gold curve is their sum plus a constant. Orange dots mark where each unit bends. Top right: the error falling as it trains. Bottom right: how sharply each unit bends at its knee.</div>
+  <p>A ReLU unit computes max(0, wx + b): flat on one side of its knee, a straight ramp on the other. Multiply it by an output weight and add it to the others, and every unit puts one corner into the output. So a one-hidden-layer ReLU network draws a broken line, and training slides the corners and tilts the segments until the line hugs the target. With more units there are more corners, and any continuous curve can be followed as closely as you like.</p>
+  <div class="eq">$$\hat y(x) = c + \sum_{j=1}^{H} v_j\,\max(0,\, w_jx + b_j), \qquad \text{knee at } x_j = -\frac{b_j}{w_j}, \qquad \text{slope changes there by } v_j|w_j|$$</div>
+  <ol class="steps">
+    <li>Each unit: one knee, at −b/w; which side it ramps on depends on the sign of w.</li>
+    <li>The output weight v scales the ramp (negative v bends downwards).</li>
+    <li>Sum: a piecewise-linear function with up to H corners.</li>
+    <li>Training moves knees to where the target bends most.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>sin 2πx on [−1, 1] after 3000 Adam steps: 2 units, mean squared error 0.25 (no better than a flat line); 8 units, 0.003; 32 units, 0.0005.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading "universal" as "easy". The theorem says the weights exist; it says nothing about how many units, or whether gradient descent will find them.</div>
+  <div class="try"><h4>Try it</h4>Watch the orange knees during training: they gather where the sine curves most.</div>
+</section>
+<section data-case="relu" data-example="two"><h3>Two units</h3><p>Two corners cannot follow two full waves: the best it finds is nearly flat, error 0.25.</p></section>
+<section data-case="relu" data-example="many"><h3>Thirty-two units</h3><p>32 corners trace the sine closely, error 0.0005. The pieces themselves (blue) look nothing like a sine: only their sum does.</p></section>
+<section data-case="relu" data-example="abs"><h3>|x| from three units</h3><p>\(|x|\) is itself piecewise linear, one corner at 0: the network can represent it exactly, and training finds it, error \(10^{-25}\). (Two units would be enough in principle, but from this start Adam pushes both knees off the data and gets stuck: a local minimum.)</p></section>
+<section data-case="relu" data-example="bump"><h3>A bump</h3><p>Six units build a tent-shaped bump: up, up steeply, down steeply, down; error 0.0003.</p></section>
+
+<section data-case="tanh">
+  <h3>Universal approximation with tanh units</h3>
+  <div class="look"><h4>What you are looking at</h4>The same idea with tanh hidden units: each blue piece is a smooth S-shaped step, centred at −b/w (orange dots).</div>
+  <p>A tanh unit is a soft step: about −1 well to one side of its centre, +1 well to the other. A large weight makes the step sharp; a small one stretches it into a gentle slope. Adding scaled steps at different places builds smooth curves; four of them already make a convincing sine wave. This is the form of the theorem proved by Cybenko in 1989.</p>
+  <div class="eq">$$\hat y(x) = c + \sum_j v_j \tanh(w_jx + b_j), \qquad \text{centre } -\frac{b_j}{w_j}, \qquad \text{width} \sim \frac{1}{|w_j|}$$</div>
+  <ol class="steps">
+    <li>Each unit: a step of height 2v, centred at −b/w, of width about 1/|w|.</li>
+    <li>Sum the steps: up, down, up builds a wave.</li>
+    <li>Sharp features need large weights: steep steps.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>sin 2πx with only 4 tanh units: error 0.0014 after 3000 steps, better than 8 ReLU units, because the target is smooth.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking tanh is always better. For corners and kinks ReLUs fit exactly what tanh can only approach; deep networks mostly use ReLU because it trains more easily.</div>
+  <div class="try"><h4>Try it</h4>Lower H to 2: one step up and one down make a single hump, not a wave.</div>
+</section>
+<section data-case="tanh" data-example="step"><h3>A jump</h3><p>The target jumps at 0, which no smooth function can do. Training keeps growing the weight of the unit at 0 to make its step steeper: error 0.004 after 3000 steps, still falling slowly.</p></section>
+<details><summary>About the model</summary>
+  <p>A 1 → H → 1 network, linear output, squared error on 64 points, full-batch Adam. The hidden units start with knees evenly spread over [−1, 1] and alternating directions. Tests: the output equals the sum of the pieces plus the output bias (10⁻¹²); for sin 2πx the error drops by more than ten times from 2 to 8 units and again from 8 to 32; |x| with three ReLUs is fitted to 10⁻⁸.</p>
+</details>

@@ -1,0 +1,16 @@
+<section>
+  <h3>Decorator</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the real C++ program, the line being executed highlighted. Right: the objects alive at this step (name : class, then their fields), grey arrows for the references they hold, the orange arrow for the call or return happening now. Underneath, what the program has printed. Press play, or step with the play bar.</div>
+  <p><b>Problem.</b> A coffee can have milk, sugar, extra milk, syrup… in any combination. A subclass for every combination (<code>EspressoWithMilkAndSugar</code>) explodes in number and cannot be chosen at run time.</p>
+  <p><b>Solution.</b> Each extra is a wrapper that both <em>is</em> a <code>Coffee</code> and <em>has</em> a <code>Coffee</code> inside. Its <code>cost()</code> asks the inner coffee and adds its own price. Wrappers can be stacked in any order and number, and the client only ever holds the outermost one.</p>
+  <ol class="steps">
+    <li>Decorators implement the same interface as the object they wrap.</li>
+    <li>Each forwards the call inwards…</li>
+    <li>…and adds its part on the way back out.</li>
+  </ol>
+  <div class="worked"><h4>Where you meet it</h4>Stream classes (a buffered, compressed, encrypted stream is three wrappers around a file), middleware in web servers, Python’s <code>@decorator</code> functions, adding logging or caching around a service.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Depending on the concrete type of the object you hold (it is now a wrapper), and building chains so deep they are hard to debug.</div>
+  <div class="try"><h4>Try it</h4>Follow the orange arrows: the call travels down to the espresso, the returns climb back adding 0.40 and 0.10.</div>
+</section>
+<section data-case="in0"><p><b>This scenario:</b> espresso + milk + sugar = 2.00.</p></section>
+<section data-case="in1"><p><b>This scenario:</b> one more milk layer added at run time: 2.40, with no new class.</p></section>

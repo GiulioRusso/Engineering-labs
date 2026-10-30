@@ -1,0 +1,37 @@
+<section>
+  <p>Most equations f(x) = 0 have no formula for their solution. <b>Root finding</b> methods start from a guess and improve it step by step; what separates them is how many correct digits each step adds, and whether they can fail.</p>
+</section>
+<section data-case="bisect">
+  <h3>Bisection</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: f(x) with the current bracket [a, b] (orange) and its midpoint (green). Top right: the error of the midpoint on a log scale, one dot per step. Bottom right: each error against the previous one — a line of slope 1 means a constant factor per step. Below: the midpoint against the step.</div>
+  <p>If a continuous f is negative at a and positive at b, it must cross zero in between. Look at the midpoint: one of the two halves still has a sign change. Keep that half and repeat.</p>
+  <div class="eq">$$m=\frac{a+b}{2},\qquad |e_k|\le\frac{b-a}{2^{k+1}}$$</div>
+  <ol class="steps"><li>Check that f(a) and f(b) have opposite signs.</li><li>Compute m and f(m).</li><li>Replace a or b by m so that the sign change is kept.</li><li>Stop when the bracket is narrower than the tolerance.</li></ol>
+  <div class="worked"><h4>Worked example</h4>Bracket [1, 3], width 2. For an error below 10⁻⁶ we need 2/2^(k+1) &lt; 10⁻⁶, so k ≥ 20 steps — known before starting.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Starting from a bracket without a sign change, or one containing two roots (no sign change either). Bisection also cannot find a double root like x² = 0, where f touches zero without crossing.</div>
+  <div class="try"><h4>Try it</h4>Change the function: the error line has exactly the same slope. Bisection ignores the shape of f.</div>
+</section>
+<section data-case="bisect" data-example="cos"><h3>cos x = x</h3><p>A transcendental equation, no formula for x — still one bit per step.</p></section>
+<section data-case="bisect" data-example="nosign"><h3>No sign change</h3><p>f(2.5) and f(3) are both positive: the method has nothing to guarantee a root and refuses to start.</p></section>
+<section data-case="secant">
+  <h3>The secant method</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: f(x), the chord through the last two estimates (orange), and where it crosses zero: the next estimate. Right: the error per step and the error-vs-previous-error chart, whose slope is the order of convergence.</div>
+  <p>Replace f by the straight line through the two latest points and solve the line instead. Close to the root f looks almost straight, so the line's zero is an excellent guess. It is Newton's method without needing the derivative.</p>
+  <div class="eq">$$x_{k+1}=x_k-f(x_k)\,\frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})},\qquad |e_{k+1}|\approx C\,|e_k|^{1.618}$$</div>
+  <div class="worked"><h4>Worked example</h4>From x₀ = 1, x₁ = 3 on x³ − 2x − 5 the errors fall roughly 10⁻¹, 10⁻², 10⁻³, 10⁻⁶, 10⁻⁹, 10⁻¹⁴: the number of digits grows by a factor ≈ 1.6 each step.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming fast means safe: far from the root the chord can be nearly flat and throw the next guess far away. Robust solvers (Brent's method) combine secant steps with a bisection bracket.</div>
+</section>
+<section data-case="secant" data-example="close"><h3>Start close</h3><p>Already near the root: the curve is nearly straight between the points and the digits pile up immediately.</p></section>
+<section data-case="secant" data-example="far"><h3>Bad start</h3><p>Between 0 and 0.6 the curve slopes the wrong way: the first chord shoots far left. It recovers, but nothing guaranteed it would.</p></section>
+<section data-case="fixed">
+  <h3>Fixed-point iteration</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the cobweb. From xₖ go up to the blue curve g, across to the line y = x, and that is xₖ₊₁. The root √2 is where g meets the line (green). Right: error charts as for the other methods.</div>
+  <p>Rewrite f(x) = 0 as x = g(x) and iterate x ← g(x). Here f = x² − 2 and g(x) = x − λ(x² − 2), with a free relaxation λ. Near the fixed point each error is multiplied by g′ there, so the iteration converges when |g′| &lt; 1.</p>
+  <div class="eq">$$e_{k+1}\approx g'(x^*)\,e_k,\qquad g'(\sqrt2)=1-2\sqrt2\,\lambda$$</div>
+  <ol class="steps"><li>0 &lt; g′ &lt; 1: monotone staircase.</li><li>−1 &lt; g′ &lt; 0: spiral, alternating sides.</li><li>|g′| &gt; 1: the spiral or staircase goes outward.</li><li>g′ = 0: quadratic convergence (this is Newton's choice λ = 1/f′).</li></ol>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking any rearrangement x = g(x) works. x = 2/x has the same fixed point √2 but g′ = −1: it bounces between two values forever.</div>
+</section>
+<section data-case="fixed" data-example="best"><h3>Optimal λ</h3><p>λ = 1/(2√2) makes g′(√2) = 0: the errors square every step, as in Newton's method.</p></section>
+<section data-case="fixed" data-example="slow"><h3>Slow staircase</h3><p>g′ ≈ 0.86: each step removes only 14 % of the error.</p></section>
+<section data-case="fixed" data-example="spiral"><h3>Spiral in</h3><p>g′ ≈ −0.70: the estimate overshoots and comes back from the other side, still shrinking.</p></section>
+<section data-case="fixed" data-example="diverge"><h3>Spiral out</h3><p>g′ ≈ −1.26: every overshoot is larger than the last.</p></section>

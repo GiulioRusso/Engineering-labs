@@ -1,33 +1,67 @@
 <section data-case="charges">
-  <h3>Electric fields of point charges</h3>
-  <div class="look"><h4>What you are looking at</h4>Point charges (draggable), electric field lines, a colour slice of the potential with equipotential contours, and optionally a Gauss surface with the flux through it.</div>
-  <p>Each charge pushes a positive test charge away (if positive) or pulls it in (if negative), with a force that weakens as 1/r². Field lines start on positive charges and end on negative ones; where they crowd, the field is strong. Equipotentials cross the field lines at right angles — moving along them costs no work.</p>
-  <div class="eq">$$\mathbf E = \sum_i \frac{q_i}{4\pi\varepsilon_0 r_i^2}\hat{\mathbf r}_i, \qquad V = \sum_i \frac{q_i}{4\pi\varepsilon_0 r_i}, \qquad \oint\mathbf E\cdot d\mathbf A = \frac{Q_\text{inside}}{\varepsilon_0}$$</div>
+  <h3>The field of a point charge</h3>
+  <div class="look"><h4>What you are looking at</h4>A point charge (draggable), its electric field lines, and a colour slice of |E| with equipotential contours.</div>
+  <p>A charge changes the space around it: put a small positive test charge anywhere and it feels a push away from a positive charge, or a pull towards a negative one. That push per unit charge is the electric field. It spreads out in all directions, so it weakens with the area of a sphere, as 1/r². The potential V is the energy per unit charge; it falls off only as 1/r.</p>
+  <div class="eq">$$\mathbf E = \frac{1}{4\pi\varepsilon_0}\frac{q}{r^2}\hat{\mathbf r}, \qquad V = \frac{1}{4\pi\varepsilon_0}\frac{q}{r}, \qquad \frac{1}{4\pi\varepsilon_0} = 8.99\cdot10^9\ \text{N m}^2/\text{C}^2$$</div>
   <ol class="steps">
-    <li>Fields of several charges add as vectors (superposition); potentials add as numbers — easier.</li>
-    <li>Number of lines ∝ charge.</li>
-    <li>Gauss's law: the total flux out of a closed surface depends only on the charge inside.</li>
+    <li>Field lines point the way a positive test charge would be pushed: out of +, into −.</li>
+    <li>Where lines crowd, the field is strong; their number is proportional to the charge.</li>
+    <li>Equipotentials are spheres around the charge, crossing the lines at right angles: moving along them costs no work.</li>
   </ol>
-  <div class="worked"><h4>Worked example</h4>2 nC at 10 cm: E = 9·10⁹·2·10⁻⁹/0.01 = 1800 V/m, V = 180 V. Two equal like charges: the field is zero exactly midway.</div>
-  <div class="pitfall"><h4>Common mistakes</h4>Thinking a field line is the path a charge follows (only if it starts at rest and moves slowly). Adding field magnitudes instead of vectors.</div>
-  <div class="try"><h4>Try it</h4>Enable the Gauss surface and drag a charge in and out: the flux jumps only when the charge crosses the surface.</div>
+  <div class="worked"><h4>Worked example</h4>2 nC at 10 cm: E = 8.99·10⁹ · 2·10⁻⁹ / 0.1² = 1798 V/m, V = 180 V. At 20 cm the field is four times weaker (449 V/m), the potential only twice (90 V).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a field line is the path a charge follows. It gives the direction of the force, not of the velocity.</div>
+  <div class="try"><h4>Try it</h4>Make the charge negative: same picture, arrows reversed.</div>
 </section>
-<section data-case="charges"><h3>One charge</h3><p>Radial lines, spherical equipotentials. The field at distance \(r\) is \(kq/r^2\), the potential \(kq/r\).</p></section>
 <section data-case="charges" data-example="neg"><h3>Negative</h3><p>Same pattern, arrows reversed: the lines come in from far away and end on the charge.</p></section>
 <section data-case="charges" data-example="big"><h3>More charge</h3><p>2.5 times the charge, 2.5 times as many lines and a field 2.5 times stronger everywhere.</p></section>
-<section data-case="charges"><h3>A pair of opposite charges</h3><p>Every line from the + charge lands on the − charge. Between them the field is strong and points from + to −.</p></section>
-<section data-case="charges" data-example="like"><h3>Like charges</h3><p>The lines push away from each other. Midway the two fields cancel: a point of zero field, a saddle of the potential.</p></section>
-<section data-case="charges" data-example="unequal"><h3>Unequal charges</h3><p>The −1 nC charge can absorb only a third of the lines from the +3 nC one; the rest escape to infinity. From far away the pair looks like a single +2 nC charge.</p></section>
-<section data-case="charges" data-example="close"><h3>A dipole</h3><p>Seen from a distance much larger than the separation, the fields nearly cancel: a dipole field, fading as \(1/r^3\).</p></section>
-<section data-case="charges"><h3>A quadrupole</h3><p>Alternating charges on a square: total charge 0 and no net dipole either. Far away the field fades even faster, as \(1/r^4\).</p></section>
-<section data-case="charges" data-example="same"><h3>All positive</h3><p>+8 nC in total: from far away, the field of a single charge at the centre, where the four fields cancel.</p></section>
-<section data-case="charges">
-  <h3>Gauss's law</h3>
-  <p>Count the field flowing out of a closed surface: it depends only on the charge inside. A charge outside sends in as much as it lets out.</p>
-  <div class="eq">$$\oint \cE{\mathbf E}\cdot d\mathbf A = \frac{Q_\text{inside}}{\varepsilon_0}$$</div>
+
+<section data-case="pair">
+  <h3>Two charges: superposition</h3>
+  <div class="look"><h4>What you are looking at</h4>A +2 nC and a −2 nC charge 30 cm apart, their combined field lines and the |E| slice with equipotentials.</div>
+  <p>Each charge makes its own field as if the other were not there; the total field is their vector sum at every point. That is superposition. For opposite charges the lines leave the + charge and land on the −; between them both fields point the same way and add up.</p>
+  <div class="eq">$$\mathbf E = \sum_i \frac{q_i}{4\pi\varepsilon_0 r_i^2}\hat{\mathbf r}_i, \qquad V = \sum_i \frac{q_i}{4\pi\varepsilon_0 r_i}$$</div>
+  <ol class="steps">
+    <li>Draw the field of each charge at the point.</li>
+    <li>Add them as arrows (components), not as sizes.</li>
+    <li>Potentials are plain numbers: just add them, signs included.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Midway between +2 nC and −2 nC, 15 cm from each: each gives 8.99·10⁹ · 2·10⁻⁹/0.15² = 799 V/m towards the − charge, so E = 1598 V/m. The potential there is 0: +120 V − 120 V.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Concluding the field is zero where V = 0, or the other way round. Midway between opposite charges V = 0 but E is large; between like charges E = 0 but V is not.</div>
+  <div class="try"><h4>Try it</h4>Drag one charge closer: the lines bunch up between them and the field grows.</div>
 </section>
-<section data-case="charges" data-example="inside"><h3>Both inside</h3><p>The flux counts \(+2 - 1 = +1\) nC, however the charges are arranged inside the sphere.</p></section>
-<section data-case="charges" data-example="alone"><h3>One charge</h3><p>Remove the outside charge: the field lines change, the flux does not.</p></section>
-<section data-case="charges" data-example="pair"><h3>Opposite charges</h3><p>Every line from the + charge lands on the − charge. Between them the field is strong and points from + to −.</p></section>
-<section data-case="charges" data-example="four"><h3>A quadrupole</h3><p>Alternating charges on a square: no net charge and no net dipole. Far away the field fades as \(1/r^4\).</p></section>
-<section data-case="charges" data-example="gauss"><h3>Gauss's law</h3><p>The flux out of the sphere counts only the charge inside (+2 nC). The −1 nC charge outside bends the lines but sends in as much flux as it takes out. Drag it in and watch the flux jump.</p><div class="eq">$$\oint \cE{\mathbf E}\cdot d\mathbf A = \frac{Q_\text{inside}}{\varepsilon_0}$$</div></section>
+<section data-case="pair" data-example="like"><h3>Like charges</h3><p>The lines push away from each other. Midway the two fields cancel: a point of zero field, a saddle of the potential.</p></section>
+<section data-case="pair" data-example="unequal"><h3>Unequal charges</h3><p>The −1 nC charge can absorb only a third of the lines from the +3 nC one; the rest escape to infinity. From far away the pair looks like a single +2 nC charge.</p></section>
+<section data-case="pair" data-example="close"><h3>A dipole</h3><p>Seen from a distance much larger than the separation, the fields nearly cancel: a dipole field, fading as \(1/r^3\): from 20 to 40 cm it drops from 169 to 22 V/m, almost 8 times.</p></section>
+
+<section data-case="many">
+  <h3>Four charges: a quadrupole</h3>
+  <div class="look"><h4>What you are looking at</h4>Four charges on the corners of a square, alternating + and −.</div>
+  <p>Superposition works for any number of charges. Here the total charge is zero, so from far away there is no 1/r² field; and the + and − pairs are arranged so that there is no net dipole either. What is left falls off even faster, as 1/r⁴: from a distance the four charges almost hide each other.</p>
+  <div class="eq">$$Q = \sum q_i = 0, \qquad \mathbf p = \sum q_i\mathbf r_i = 0 \;\Rightarrow\; E \propto \frac{1}{r^4} \text{ far away}$$</div>
+  <ol class="steps">
+    <li>Total charge sets the far field (1/r²).</li>
+    <li>If it is zero, the dipole moment sets it (1/r³).</li>
+    <li>If that is zero too, the quadrupole (1/r⁴).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>At the centre the four fields cancel by symmetry: E = 0, and V = 0 too (equal distances, charges summing to 0).</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking zero total charge means zero field everywhere: close to the charges the field is strong.</div>
+  <div class="try"><h4>Try it</h4>Change one charge: the far field becomes a dipole or a point-charge field again.</div>
+</section>
+<section data-case="many" data-example="same"><h3>All positive</h3><p>+8 nC in total: from far away, the field of a single charge at the centre, where the four fields cancel.</p></section>
+
+<section data-case="gauss">
+  <h3>Gauss's law</h3>
+  <div class="look"><h4>What you are looking at</h4>A +2 nC charge inside a sphere (the Gauss surface) and a −1 nC charge outside. The readouts give the flux through the sphere, times ε₀, and the charge inside.</div>
+  <p>Count how much field flows out through a closed surface: that is the flux. For one charge at the centre of a sphere the field is the same all over the surface, and the flux is E × area = q/ε₀, whatever the radius. Move the charge, deform the surface, add charges outside: the flux still counts only the charge inside. A charge outside sends as much field in on one side as out on the other.</p>
+  <div class="eq">$$\Phi = \oint \cE{\mathbf E}\cdot d\mathbf A = \frac{Q_\text{inside}}{\varepsilon_0}$$</div>
+  <ol class="steps">
+    <li>Pick a closed surface.</li>
+    <li>Add up the charges inside it, ignoring those outside.</li>
+    <li>Flux = Q_inside/ε₀; with symmetry (sphere, cylinder, plane) this gives E directly.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Inside: +2 nC, so Φ = 2·10⁻⁹ / 8.85·10⁻¹² = 226 V·m (flux·ε₀ = 2 nC). With both charges inside: 1 nC, 113 V·m.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Concluding E = 0 on the surface when the flux is 0: the field can go in and out at different places.</div>
+  <div class="try"><h4>Try it</h4>Drag the −1 nC charge into the sphere: the flux drops from 2 to 1 nC the moment it crosses.</div>
+</section>
+<section data-case="gauss" data-example="inside"><h3>Both inside</h3><p>The flux counts \(+2 - 1 = +1\) nC, however the charges are arranged inside the sphere.</p></section>
+<section data-case="gauss" data-example="alone"><h3>One charge</h3><p>Remove the outside charge: the field lines change, the flux does not.</p></section>

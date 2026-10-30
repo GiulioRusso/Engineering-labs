@@ -1,0 +1,40 @@
+<section data-case="forest">
+  <h3>Bagging: a forest of trees</h3>
+  <div class="look"><h4>What you are looking at</h4>200 noisy points of two moons, and the vote of 20 decision trees (gold = class 1, blue = class 0, dark = undecided). Top right: accuracy on unseen points as trees are added (orange) and each tree on its own (grey dots). Bottom right: where the trees disagree.</div>
+  <p>A deep decision tree fits its training data in great detail, including the noise, so a slightly different sample gives a quite different tree: high variance. Bagging turns that weakness into strength. Draw many bootstrap samples (200 points picked at random with replacement), grow a tree on each, and let them vote. Their individual quirks point in different directions and cancel; what they agree on is the real pattern. The disagreement map shows where the answer is genuinely uncertain: along the boundary and in the noisy overlap.</p>
+  <div class="eq">$$\hat p(\mathbf x) = \frac1T\sum_{t=1}^T \hat p_t(\mathbf x), \qquad \operatorname{Var}(\text{average}) = \rho\,\sigma^2 + \frac{1 - \rho}{T}\sigma^2$$</div>
+  <ol class="steps">
+    <li>Bootstrap: sample n points with replacement (about 63 % distinct each time).</li>
+    <li>Grow a deep tree on it.</li>
+    <li>Repeat T times; average the trees' probabilities.</li>
+    <li>The more different the trees (small ρ), the more averaging helps.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Depth-10 trees on these moons: one tree on its bootstrap sample, 81 % on unseen points; trees alone average 86 %; the vote of 5 trees, 91 %; of 60, 91.5 %. A single tree on all the data: 88.5 %.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting more trees to overfit. Adding trees only reduces variance; past a few dozen the vote simply stops changing.</div>
+  <div class="try"><h4>Try it</h4>Step T from 1 to 10 and watch the jagged blocks melt into a smooth boundary.</div>
+</section>
+<section data-case="forest" data-example="one"><h3>One tree</h3><p>A single bootstrapped tree: rectangular patches carved around individual noisy points, 81 % on unseen points.</p></section>
+<section data-case="forest" data-example="sixty"><h3>Sixty trees</h3><p>The vote is smooth and stable, 91.5 %. A real random forest also picks a random subset of features at every split, to make the trees even more different; with two features there is little to choose.</p></section>
+<section data-case="forest" data-example="stumpy"><h3>Shallow trees</h3><p>Depth-2 trees are too simple to follow the moons (high bias). Averaging 60 of them helps (90 %) but cannot remove a bias they all share: bagging fixes variance, not bias.</p></section>
+
+<section data-case="boosting">
+  <h3>Boosting: adding weak learners one by one</h3>
+  <div class="look"><h4>What you are looking at</h4>AdaBoost after M rounds. Each round adds one decision stump, a single straight cut (the newest in red). Point size shows its weight for the next round. Top right: accuracy on training and unseen points by round. Bottom right: each stump's say α. Below: each stump's weighted error.</div>
+  <p>Boosting builds a strong model from very weak ones, one at a time, each focusing on what the others get wrong. Start with all points equally weighted; fit the best stump; give it a say α that grows with its accuracy; then increase the weights of the points it misclassified and lower the rest. The next stump, fitted to the new weights, concentrates on the hard points. The final model is the weighted vote of all the stumps.</p>
+  <div class="eq">$$\varepsilon_m = \sum_i w_i [h_m(\mathbf x_i) \ne y_i], \qquad \alpha_m = \tfrac12\ln\frac{1 - \varepsilon_m}{\varepsilon_m}, \qquad w_i \leftarrow w_i\, e^{-\alpha_m y_i h_m(\mathbf x_i)}, \qquad F(\mathbf x) = \operatorname{sign}\sum_m \alpha_m h_m(\mathbf x)$$</div>
+  <ol class="steps">
+    <li>Fit the stump with the lowest weighted error ε (always below ½).</li>
+    <li>Say: α large when ε is small.</li>
+    <li>Re-weight: mistakes × e^α, correct points × e^(−α), then normalise.</li>
+    <li>Repeat; the training error falls below Π 2√(ε(1 − ε)).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Round 1: the best single cut has ε = 0.155 and α = 0.85; 84.5 % right on training, 79.5 % on unseen points. After 20 rounds: 93 % and 87.5 %. After 80: 97.5 % and 88 %.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming boosting cannot overfit because it is made of weak parts. On noisy data it keeps chasing the hardest (mislabelled) points: training accuracy climbs while unseen accuracy stalls.</div>
+  <div class="try"><h4>Try it</h4>Step M one at a time: the big dots are always where the next cut goes.</div>
+</section>
+<section data-case="boosting" data-example="first"><h3>One stump</h3><p>A single straight cut, the best available: 84.5 % of training points right. Notice which points grew big: the ones it misclassified.</p></section>
+<section data-case="boosting" data-example="five"><h3>Five rounds</h3><p>Five cuts with different says already make a staircase that follows the moons: 85 % on unseen points.</p></section>
+<section data-case="boosting" data-example="eighty"><h3>Eighty rounds</h3><p>97.5 % on training, 88 % on unseen points: later stumps mostly carve out noise. In practice one stops boosting when the held-out accuracy stops improving.</p></section>
+<details><summary>About the model</summary>
+  <p>CART trees (Gini) grown on bootstrap samples, averaged; AdaBoost with exhaustive axis-aligned stumps. 200 training and 200 unseen points from two noisy moons. Tests: 50 bagged depth-10 trees beat one tree by more than 2 points on unseen data; every stump has ε &lt; ½ and the weights stay normalised; training accuracy rises from round 1 to above 95 % by round 100; the training error stays below the bound Π 2√(ε(1 − ε)) at every round.</p>
+</details>

@@ -5,7 +5,10 @@ import { initTheme } from './theme.js';
 import { readUrl } from './urlstate.js';
 import { onDrag, store } from './drag.js';
 
-export function startTopic({ name, labs: all }) {
+export function startTopic({ name, labs: all, moved = {} }) {
+  // a topic that moved to another subject: keep old links working
+  const asked = new URLSearchParams(location.search).get('lab');
+  if (asked && moved[asked] && !all.some((l) => l.id === asked)) { location.replace(`${moved[asked]}.html${location.search}`); return; }
   document.body.innerHTML = `<div class="topic">
     <header class="tbar">
       <a class="home" href="../index.html" title="All subjects"><span class="logo">∇</span></a>

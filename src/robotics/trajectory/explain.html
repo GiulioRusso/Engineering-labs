@@ -1,0 +1,37 @@
+<section data-case="trap">
+  <h3>The trapezoidal velocity profile</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the joint angle against time, with a one-link arm (top left) swinging along it. Top right: joint speed, with the slowest and fastest admissible cruise speeds dashed. Bottom right: acceleration. Below: jerk, the rate of change of acceleration.</div>
+  <p>A robot joint cannot jump from rest to full speed. The simplest motion that respects that is the trapezoid: accelerate at a constant rate, cruise at constant speed, brake at the same rate, and arrive exactly at t_f. Given the distance and the time, the cruise speed fixes everything else. It cannot be anything: too slow and the joint cannot cover the distance in time even cruising all the way; faster than twice the average and the acceleration and braking phases would overlap. At the top limit the trapezoid becomes a triangle. The Jaco2 project moves the gripper along each side of its square with this profile (trapezoidal.m), cruise speed 1.5 times the average.</p>
+  <div class="eq">$$\frac{|q_f - q_i|}{t_f} &lt; |\dot q_c| \le \frac{2|q_f - q_i|}{t_f}, \qquad t_c = t_f - \frac{q_f - q_i}{\dot q_c}, \qquad \ddot q_c = \frac{\dot q_c}{t_c}$$</div>
+  <ol class="steps">
+    <li>Pick t_f and a cruise speed in the admissible range.</li>
+    <li>Acceleration time t_c and acceleration q̈_c follow.</li>
+    <li>q(t) is a parabola for t &lt; t_c, a straight line while cruising, a mirrored parabola at the end.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>0 → 90° in 2 s: the average speed is 45 °/s, so q̇_c must be in (45, 90] °/s. With 60 °/s: t_c = 2 − 90/60 = 0.5 s, q̈_c = 120 °/s²: accelerate 0.5 s, cruise 1 s, brake 0.5 s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Choosing the cruise speed from the motor’s limit without checking the range. Below |Δq|/t_f the formulas still give numbers, but nonsense ones (a negative acceleration time); trapezoidal.m stops with an error.</div>
+  <div class="try"><h4>Try it</h4>Sweep the cruise speed from 46 to 90 °/s: the flat top of the speed curve shrinks to a point.</div>
+</section>
+<section data-case="trap" data-example="triangle"><h3>A triangle</h3><p>q̇_c = 90 °/s = 2|Δq|/t_f: no cruise at all, accelerate for 1 s and brake for 1 s at 90 °/s². The lowest peak acceleration for this move.</p></section>
+<section data-case="trap" data-example="slowcruise"><h3>Barely fast enough</h3><p>q̇_c = 46 °/s, just above the 45 °/s average: the joint must reach cruise speed almost instantly, t_c = 0.04 s, needing 2070 °/s². A jolt that shakes the arm.</p></section>
+<section data-case="trap" data-example="bad"><h3>Too slow</h3><p>q̇_c = 40 °/s: even cruising the whole 2 s covers only 80°. No trapezoid exists; the profile is not drawn.</p></section>
+
+<section data-case="poly">
+  <h3>Polynomial trajectories</h3>
+  <div class="look"><h4>What you are looking at</h4>The same move with a polynomial law (solid) and a trapezoid for comparison (dashed, left). Right: speed and acceleration. Below: jerk.</div>
+  <p>A polynomial in time can match as many boundary conditions as it has coefficients. A cubic has four: start and end position, start and end speed zero. It is smooth in position and speed, but its acceleration starts and ends at a non-zero value: at the instants it starts and stops, the acceleration jumps, and so does the motor torque, exciting vibrations. A quintic has six coefficients and can also make the acceleration zero at both ends: no jumps anywhere. The price is a higher peak speed.</p>
+  <div class="eq">$$\text{cubic: } q = q_i + \Delta q\,(3s^2 - 2s^3), \qquad \text{quintic: } q = q_i + \Delta q\,(10s^3 - 15s^4 + 6s^5), \qquad s = t/t_f$$</div>
+  <ol class="steps">
+    <li>Count the conditions you need (positions, speeds, accelerations at each end).</li>
+    <li>Use a polynomial with that many coefficients.</li>
+    <li>Compare peaks: cubic 1.5×, quintic 1.875× the average speed; the trapezoid can be anywhere between 1× and 2×.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>0 → 90° in 2 s: the cubic peaks at 67.5 °/s mid-way and starts with an acceleration of 6Δq/t_f² = 135 °/s² straight away; the quintic peaks at 84.4 °/s, its acceleration rising smoothly from zero to at most 130 °/s².</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a trajectory is smooth because its position curve looks smooth. Look at the acceleration: a jump there is a torque step.</div>
+  <div class="try"><h4>Try it</h4>Switch between cubic and quintic and watch the ends of the acceleration curve.</div>
+</section>
+<section data-case="poly" data-example="quintic"><h3>Quintic</h3><p>Acceleration zero at start and end: the jerk is finite everywhere. The usual choice for smooth point-to-point moves.</p></section>
+<section data-case="poly" data-example="trapcmp"><h3>Trapezoid, same time</h3><p>Cruise 67.5 °/s, the same peak as the cubic: constant acceleration of 101 °/s² for 0.67 s, but four jumps in acceleration.</p></section>
+<details><summary>About the model</summary>
+  <p>Trapezoidal profile as in the course’s trapezoidal.m (Siciliano et al., ch. 4.2.1); cubic and quintic rest-to-rest polynomials. Tests: the trapezoid is continuous, reaches q_f exactly at t_f and cruises at q̇_c; cruise speeds outside (|Δq|/t_f, 2|Δq|/t_f] are rejected; both polynomials start and end at rest and pass the midpoint at t_f/2.</p>
+</details>

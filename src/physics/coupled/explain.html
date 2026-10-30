@@ -1,0 +1,38 @@
+<section data-case="two">
+  <h3>Coupled oscillators and beats</h3>
+  <div class="look"><h4>What you are looking at</h4>Two 1 kg masses between two walls: each is held by a wall spring k = 10 N/m, and a weaker spring κ = 2 N/m joins them. The first mass is pulled 30 cm and let go. Top right: the two normal-mode frequencies and how the energy is shared between them. Bottom right: both positions. Below: the energy of each mass.</div>
+  <p>Pull one mass and let go: it swings, but through the middle spring it slowly pushes the other one in rhythm, until all the motion has moved across; then it comes back. The trick to understand it is to look for motions that do not change their pattern: the normal modes. Here there are two: both masses swinging together (the middle spring is never stretched), and the two swinging opposite (it is stretched twice as much). Any motion is a mix of these two, and since they have slightly different frequencies, they drift in and out of step: beats.</p>
+  <div class="eq">$$\omega_1 = \sqrt{\frac{k}{m}}, \qquad \omega_2 = \sqrt{\frac{k + 2\kappa}{m}}, \qquad x_{1,2} = \frac{A}{2}\left(\cos\omega_1 t \pm \cos\omega_2 t\right)$$</div>
+  <ol class="steps">
+    <li>Mode 1 (together): the coupling spring does nothing, so ω₁ is the single-mass frequency.</li>
+    <li>Mode 2 (opposite): each mass also feels 2κ from the stretched middle spring.</li>
+    <li>Pulling one mass = half of mode 1 + half of mode 2.</li>
+    <li>The modes slip out of phase by π in a time π/(ω₂ − ω₁): then all the energy is in the other mass.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>k = 10 N/m, κ = 2 N/m, m = 1 kg: ω₁ = √10 = 3.16 rad/s, ω₂ = √14 = 3.74 rad/s. The energy moves to the second mass in π/0.58 = 5.4 s, and back in another 5.4 s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking each mass has its own frequency. Once coupled, only the modes have frequencies; a single mass's motion is a mix of both.</div>
+  <div class="try"><h4>Try it</h4>Make κ smaller: the two frequencies get closer and the swap takes longer.</div>
+</section>
+<section data-case="two" data-example="mode1"><h3>Mode 1: together</h3><p>Both masses pulled the same way: the middle spring never stretches, the pattern never changes, and only one stem in the spectrum: all the energy is in mode 1.</p></section>
+<section data-case="two" data-example="mode2"><h3>Mode 2: opposite</h3><p>Pulled in opposite directions: they swing mirror-image at \(\omega_2 = 3.74\) rad/s, faster because the middle spring helps pull each one back.</p></section>
+<section data-case="two" data-example="weak"><h3>Weak coupling</h3><p>\(\kappa = 0.5\) N/m: \(\omega_2 = 3.32\) rad/s, just above \(\omega_1\). The swap now takes \(\pi/0.154 = 20\) s. Two pendulum clocks on the same wall exchange energy this slowly.</p></section>
+
+<section data-case="chain">
+  <h3>Normal modes of a chain</h3>
+  <div class="look"><h4>What you are looking at</h4>Eight equal beads joined by equal springs between two walls, displacements drawn across the string (the maths is the same as along it). Started in the shape of mode 1. Top right: the 8 mode frequencies.</div>
+  <p>N coupled masses have exactly N normal modes. In mode n all beads move at the same frequency ωₙ, keeping the same shape, a sine with n humps between the walls. The more humps, the more each spring is stretched, and the higher the frequency. Any motion at all is a mix of these modes, each going round at its own pace: that is how a guitar string or a crystal vibrates.</p>
+  <div class="eq">$$x_j^{(n)} \propto \sin\frac{n j \pi}{N + 1}, \qquad \omega_n = 2\sqrt{\frac{\kappa}{m}}\,\sin\frac{n\pi}{2(N + 1)}, \quad n = 1, \dots, N$$</div>
+  <ol class="steps">
+    <li>Write F = −Kx for all beads at once: K is the stiffness matrix.</li>
+    <li>Its eigenvectors are the mode shapes; its eigenvalues are mω².</li>
+    <li>Project the starting shape on each mode: that fixes how much of each is present, for ever.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>N = 8, κ = k = 10 N/m, m = 1 kg: ω₁ = 2√10 sin(π/18) = 1.10 rad/s; mode 3 is 3.16 rad/s; the highest, mode 8, is 6.23 rad/s, just below the limit 2√(κ/m) = 6.32 rad/s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting the frequencies to go up in equal steps, as for a continuous string. With beads they bunch up near the top: a discrete chain cannot vibrate faster than 2√(κ/m).</div>
+  <div class="try"><h4>Try it</h4>Change the mode number: count the nodes (beads that never move) in between.</div>
+</section>
+<section data-case="chain" data-example="n3"><h3>Third mode</h3><p>Three humps, two nodes; \(\omega_3 = 3.16\) rad/s, nearly three times mode 1 (a continuous string would give exactly three times).</p></section>
+<section data-case="chain" data-example="pluck"><h3>Pull one bead</h3><p>A single bead pulled at the end is a mix of all eight modes; most of the energy goes to the fast ones (25 % in each of modes 5 and 6, 0.2 % in mode 1). The shape changes all the time, yet the share of each mode (top right) never does.</p></section>
+<details><summary>About the model</summary>
+  <p>Exact solution by normal modes: the stiffness matrix is diagonalised with the Jacobi method and the motion is the sum of the modes, each \(\cos\omega_n t\). Tests: two-mass frequencies and mode shapes; chain frequencies vs the closed form (10⁻¹⁰); one mass pulled vs the beat formula (10⁻¹²); total energy constant and equal to the sum of mode energies (10⁻¹²).</p>
+</details>

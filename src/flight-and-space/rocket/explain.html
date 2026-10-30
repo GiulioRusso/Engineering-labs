@@ -1,0 +1,59 @@
+<section data-case="equation">
+  <h3>The rocket equation</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the speed of a rocket burning at constant thrust in empty space, as time runs (dashed: the whole burn), with orbital and escape speed for scale. Top right: the total speed change Δv against the mass ratio, for three engines. Bottom right: the rocket’s mass, propellant draining from the tanks. Below: its acceleration.</div>
+  <p>A rocket moves forward by throwing mass backwards: every kilogram of exhaust leaves at the exhaust speed vₑ and pushes the rest of the rocket the other way. The catch is that the propellant must also push all the propellant not yet burnt. Early on the rocket is heavy and gains little speed per kilogram burnt; at the end it is light and gains a lot. Adding it up gives Tsiolkovsky’s equation: the speed gained depends only on the exhaust speed and on the ratio of full to empty mass, and only through a logarithm.</p>
+  <div class="eq">$$\Delta v = v_e \ln\frac{m_0}{m_f} = I_{sp}\,g_0\,\ln R, \qquad m\,\frac{dv}{dt} = \dot m\, v_e$$</div>
+  <ol class="steps">
+    <li>Exhaust speed vₑ = Isp × g₀: Isp 300 s (kerosene) is 2.94 km/s, 450 s (hydrogen) 4.41 km/s.</li>
+    <li>Mass ratio R = full/empty: 90 % propellant gives R = 10.</li>
+    <li>Δv = vₑ ln R: R = 10 gives 2.3 vₑ, R = 20 only 3.0 vₑ.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Isp 300 s, 90 % propellant: vₑ = 2942 m/s, Δv = 2942 × ln 10 = 6.77 km/s, less than the 7.8 km/s of a low orbit (and about 9.4 km/s are needed counting the losses on the way up). Thrust is constant, so acceleration climbs from 2.25 g to 22.5 g as the mass falls tenfold.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking twice the propellant gives twice the speed. Going from 90 % to 95 % propellant doubles the mass ratio but adds only vₑ ln 2 = 2.0 km/s.</div>
+  <div class="try"><h4>Try it</h4>Push the propellant share towards 96 %: the curve on the top right flattens, each extra km/s costs more and more.</div>
+</section>
+<section data-case="equation" data-example="hydrogen"><h3>Hydrogen</h3><p>Isp 450 s, the best chemical engines: the same tanks now give 10.2 km/s. Exhaust speed is worth far more than extra propellant, which is why upper stages burn hydrogen despite its huge, light tanks.</p></section>
+<section data-case="equation" data-example="heavy"><h3>Heavier tanks</h3><p>Only 80 % propellant (R = 5): 4.73 km/s. Tank and engine mass is the enemy.</p></section>
+<section data-case="equation" data-example="r20"><h3>95 % propellant</h3><p>R = 20, a thin-walled balloon of a rocket: 8.81 km/s at Isp 300. Still short of orbit with losses: this is why rockets have stages.</p></section>
+
+<section data-case="staging">
+  <h3>Staging</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: rockets with 1 to 4 stages, all carrying 1 t of payload (green) to the same Δv, drawn to scale: propellant (orange tones) and structure (grey) of each stage, lowest stage at the bottom. The selected one is wider. Top right: payload share against Δv for each number of stages. Bottom right: payload share against how heavy the structure is.</div>
+  <p>A single stage has to carry its empty tanks and engines all the way. With structure at 10 % of the stage’s mass, even with no payload at all its mass ratio cannot pass 10, so its Δv is capped at vₑ ln 10. Staging breaks the cap: when the first stage is empty, drop it. The next stage starts light and fresh, and its Δv adds to the first. Each stage only needs a modest mass ratio, and the product of the ratios can be as large as you like.</p>
+  <div class="eq">$$\Delta v = \sum_{i=1}^{n} v_e \ln R_i, \qquad R_i = \frac{1}{\varepsilon + (1 - \varepsilon)\pi}, \qquad \text{payload share} = \pi^{\,n}, \qquad \Delta v_\text{1 stage} &lt; v_e \ln\frac1\varepsilon$$</div>
+  <ol class="steps">
+    <li>Split the Δv equally: each stage gives Δv/n.</li>
+    <li>Each stage’s mass ratio follows from Tsiolkovsky: R = exp(Δv/(n vₑ)).</li>
+    <li>From R and ε, the share π of each stage’s mass that is “the rest of the rocket” above it.</li>
+    <li>Multiply up from the payload: the lift-off mass.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Δv 9.4 km/s, Isp 330 s, ε = 10 %: one stage tops out at 7.45 km/s, impossible. Two stages: R = 4.27 each, 45 t at lift-off per tonne of payload (2.2 %). Three: 33 t (3.0 %). Four: 30 t, a small gain for a lot of complexity.</div>
+  <div class="pitfall"><h4>Common mistake</h4>“More stages is always better.” The gain shrinks quickly, while every stage adds engines, separations and ways to fail. Most launchers have two or three.</div>
+  <div class="try"><h4>Try it</h4>Lower ε from 20 % to 4 % with two stages: the payload grows several-fold. Light structure is worth as much as a better engine.</div>
+</section>
+<section data-case="staging" data-example="one"><h3>One stage</h3><p>Even an empty stage only reaches 7.45 km/s with ε = 10 %: orbit is out of reach, whatever its size. Single-stage-to-orbit needs both very light tanks and high Isp.</p></section>
+<section data-case="staging" data-example="three"><h3>Three stages</h3><p>33 t per tonne of payload: the top stage is small (2.2 t), the first stage carries most of the propellant (23 t).</p></section>
+<section data-case="staging" data-example="light"><h3>Lighter structure</h3><p>ε = 5 %: two stages carry 3.75 % instead of 2.2 %, and a single stage could now in principle reach 9.7 km/s if it carried nothing.</p></section>
+<section data-case="staging" data-example="moon"><h3>To the Moon</h3><p>About 12 km/s from the ground to a lunar transfer: three stages need 105 t per tonne sent (0.95 %). Saturn V weighed 2900 t for about 45 t sent to the Moon.</p></section>
+
+<section data-case="ascent">
+  <h3>Launch: the gravity turn and the losses</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the path of a one-stage rocket (altitude against distance downrange), solid while it has flown, dashed for the rest of the burn and grey for the coast afterwards. Top right: its speed, against what it would have without gravity and air (dashed). Bottom right: at burnout, the ideal Δv, what gravity and drag took, and the speed left. Below: the dynamic pressure on the rocket.</div>
+  <p>A rocket lifts off vertically, but it needs to end up going sideways: orbit is about speed, not height. A few seconds after lift-off it tips over by a small angle, the pitch kick, and from then on it simply points along its velocity and lets gravity bend the path over: the gravity turn. While the path is steep, part of the thrust only holds the rocket up against gravity; that is gravity loss. While low and fast, air pushes back; that is drag loss. Too little kick and the rocket climbs too long (big gravity loss); too much and it flattens out in thick air or falls back.</p>
+  <div class="eq">$$\frac{dv}{dt} = \frac{T}{m} - \frac{D}{m} - g\sin\gamma \quad\Rightarrow\quad v_\text{bo} = \underbrace{v_e\ln R}_\text{ideal} - \underbrace{\int g\sin\gamma\,dt}_\text{gravity loss} - \underbrace{\int \frac{D}{m}\,dt}_\text{drag loss}$$</div>
+  <ol class="steps">
+    <li>γ is the climb angle above horizontal; sin γ = 1 straight up.</li>
+    <li>A higher thrust-to-weight ratio shortens the burn and the gravity loss, but the rocket is fast in thicker air: more drag and a higher max-Q.</li>
+    <li>The kick sets the shape of the whole turn; nothing else steers the rocket.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>T/W 1.5, kick 2°: 215 s burn, ideal 8.67 km/s, gravity loss 1.22 km/s, drag 0.11 km/s; burnout at 134 km and 7.34 km/s, still climbing at 13°. Real launchers lose about 1–1.5 km/s to gravity and 0.1–0.3 km/s to drag.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking rockets go up to get into space and then turn. They start turning almost at once: at burnout they are nearly horizontal, because what an orbit needs is 7.8 km/s sideways.</div>
+  <div class="try"><h4>Try it</h4>Step the kick from 0 to 3° in tenths: watch gravity loss fall and drag loss rise, then explode.</div>
+</section>
+<section data-case="ascent" data-example="vertical"><h3>Straight up</h3><p>No kick: the rocket goes straight up and falls straight back. Gravity takes 2.05 km/s during the burn. It reaches 4145 km, far higher than any orbit, but with no sideways speed it cannot stay there.</p></section>
+<section data-case="ascent" data-example="good"><h3>A good turn</h3><p>Kick 2.2°: burnout at 109 km, 7.41 km/s, only 9° above horizontal. Gravity loss 1.13 km/s, drag 0.13 km/s. A second stage would finish the job.</p></section>
+<section data-case="ascent" data-example="flat"><h3>Too flat</h3><p>Kick 3°: the path bends over too early and the rocket races through dense air. Drag takes 4.0 km/s, dynamic pressure peaks above 700 kPa (a real rocket would break up near 40), and at burnout it is at 22 km, heading down.</p></section>
+<section data-case="ascent" data-example="punchy"><h3>T/W = 3</h3><p>A 107 s burn: gravity loss falls to 0.61 km/s, but drag rises to 0.30 km/s and max-Q to 137 kPa. A bigger kick (18°) is needed because a faster rocket turns more slowly under gravity.</p></section>
+<details><summary>About the model</summary>
+  <p>Tsiolkovsky in empty space; staging with identical stages, equal Δv split and the same Isp and ε for all. The ascent: point mass, round non-rotating Earth, exponential atmosphere (scale height 8.5 km), 100 t at lift-off, 10 m², C_D = 0.3, Isp 350 s, 92 % propellant; vertical to 60 m/s, an instantaneous kick, then thrust along the velocity; RK4. Tests: the burn’s speed and its integrated acceleration equal vₑ ln R; each stage’s Δv adds up to the target; one stage cannot reach 9.4 km/s with ε = 0.1; burnout speed = ideal − gravity − drag (2·10⁻⁴); a slower climb loses more to gravity.</p>
+</details>

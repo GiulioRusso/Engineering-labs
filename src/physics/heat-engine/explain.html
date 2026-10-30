@@ -1,0 +1,53 @@
+<section data-case="carnot">
+  <h3>Heat engines and the Carnot cycle</h3>
+  <div class="look"><h4>What you are looking at</h4>One mole of a monatomic gas taken round a closed cycle. Left: the p–V diagram, legs coloured red when heat flows in, blue when it flows out, grey when insulated; the thick leg is the current one. Top right: the piston, with the heat arrow. Bottom right: the same cycle on the T–S diagram.</div>
+  <p>An engine takes heat from something hot, turns part of it into work, and must dump the rest into something cold. The gas expands while hot (high pressure, a lot of work out) and is squeezed back while cold (low pressure, less work in): the difference is the net work, the area inside the loop. The Carnot cycle does this in the gentlest way possible: heat flows only at the two fixed temperatures, through isotherms, and the two adiabats change the temperature without any heat at all.</p>
+  <div class="eq">$$W_\text{net} = \oint p\,dV = Q_\text{in} - Q_\text{out}, \qquad \eta = \frac{W_\text{net}}{Q_\text{in}}, \qquad \eta_\text{Carnot} = 1 - \frac{T_c}{T_h}$$</div>
+  <ol class="steps">
+    <li>Hot isotherm (1): Q_h = nRT_h ln(V_B/V_A) flows in, all of it becomes work.</li>
+    <li>Adiabatic expansion (2): no heat; the gas cools from T_h to T_c, still doing work.</li>
+    <li>Cold isotherm (3): squeezed at T_c, heat Q_c = nRT_c ln(V_C/V_D) flows out.</li>
+    <li>Adiabatic compression (4): back to T_h. Over the cycle ΔU = 0, so W = Q_h − Q_c, and Q_h/T_h = Q_c/T_c.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>T_h = 600 K, T_c = 300 K, expanding from 10 to 20 L at 600 K: Q_in = 8.314 · 600 · ln 2 = 3458 J, Q_out = 1729 J, W = 1729 J: η = 50 % = 1 − 300/600. The pressure falls from 499 kPa at the start to 44 kPa at the largest volume.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Hoping to reach 100 %: you always need a cold sink, and η = 100 % would need T_c = 0 K. Using Celsius in 1 − T_c/T_h: kelvin only.</div>
+  <div class="try"><h4>Try it</h4>Lower T_c instead of raising T_h: the efficiency rises just as well.</div>
+</section>
+<section data-case="carnot" data-example="hotter"><h3>A hotter source</h3><p>\(T_h = 900\) K: \(\eta = 1 - 300/900 = 67\) %. The loop on the p–V diagram is taller; the same heat leaves at 300 K (1729 J) but 5187 J come in.</p></section>
+<section data-case="carnot" data-example="close"><h3>Temperatures close together</h3><p>Between 330 K and 300 K the best possible engine converts only 9 % of the heat: the loop is a thin sliver. Low-grade heat is hard to use.</p></section>
+
+<section data-case="otto">
+  <h3>The Otto cycle: a petrol engine</h3>
+  <div class="look"><h4>What you are looking at</h4>The ideal Otto cycle: adiabatic compression, a sudden heating at constant volume (the spark), adiabatic expansion (the power stroke), cooling at constant volume (the exhaust). The gas here is monatomic.</div>
+  <p>A petrol engine does not take heat at one temperature. It squeezes the air–fuel mix (getting it hot), burns it almost instantly at the smallest volume, lets it push the piston out, and throws the hot remains away. The heat goes in and out along constant-volume legs. What sets the efficiency is how much the gas is squeezed: the compression ratio r.</p>
+  <div class="eq">$$\eta_\text{Otto} = 1 - \frac{1}{r^{\gamma - 1}}, \qquad r = \frac{V_\text{max}}{V_\text{min}}, \qquad TV^{\gamma - 1} = \text{const on the adiabats}$$</div>
+  <ol class="steps">
+    <li>Compression: T₂ = T₁ r^(γ−1). No heat.</li>
+    <li>Burning: heat in at constant volume, Q_in = nC_v(T₃ − T₂).</li>
+    <li>Power stroke: T₄ = T₃/r^(γ−1).</li>
+    <li>Exhaust: heat out, Q_out = nC_v(T₄ − T₁). The ratio Q_out/Q_in = 1/r^(γ−1).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>r = 8, γ = 5/3, from 300 K and 10 L: compression to 1.25 L and 1200 K; burning to 2400 K (16 MPa); expansion back to 600 K. Q_in = 1.5 · 8.314 · 1200 = 14 966 J, Q_out = 3742 J, η = 1 − 8^(−2/3) = 75 %. With air (γ = 1.4) the same r gives 56 %.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a hotter flame alone raises the Otto efficiency. In this ideal cycle η depends only on r; but the Carnot limit between its extreme temperatures (here 87.5 %) is always higher.</div>
+  <div class="try"><h4>Try it</h4>Change the peak temperature: the work changes, the efficiency does not.</div>
+</section>
+<section data-case="otto" data-example="low"><h3>Compression ratio 4</h3><p>\(\eta = 1 - 4^{-2/3} = 60\) %. Higher r is better, until the mixture ignites by itself while being squeezed (knocking): petrol engines stay near r = 10, diesels go to 20.</p></section>
+
+<section data-case="ts">
+  <h3>Entropy and the T–S diagram</h3>
+  <div class="look"><h4>What you are looking at</h4>The same cycles drawn with temperature against entropy (main view), and the p–V diagram below.</div>
+  <p>Entropy S measures how spread out the energy is. When heat Q flows into a gas at temperature T, its entropy rises by Q/T. That makes the T–S diagram a heat diagram: the area under a leg is the heat exchanged on it, and the area inside the loop is the net work. Adiabats (Q = 0) are vertical lines; isotherms are horizontal. The Carnot cycle is a rectangle, which is why it wastes nothing.</p>
+  <div class="eq">$$dS = \frac{\delta Q}{T}, \qquad Q = \int T\,dS, \qquad \oint dS = 0, \qquad S = nC_v\ln T + nR\ln V + \text{const}$$</div>
+  <ol class="steps">
+    <li>Heat in along the top (T_h): entropy +Q_h/T_h.</li>
+    <li>Heat out along the bottom (T_c): entropy −Q_c/T_c.</li>
+    <li>Back to the start: these must cancel, so Q_c = Q_h T_c/T_h, and η = 1 − T_c/T_h.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Carnot 600/300 K: the hot isotherm adds ΔS = 3458/600 = 5.76 J/K; the cold one removes 1729/300 = 5.76 J/K. Rectangle: (600 − 300) × 5.76 = 1729 J of work.</div>
+  <div class="pitfall"><h4>Common mistake</h4>"The entropy of the gas grows every cycle." The gas returns to its state, so its entropy does too; the entropy given to the cold sink is what grows (in a real engine, more than it has to).</div>
+  <div class="try"><h4>Try it</h4>Switch to Otto: the loop is no longer a rectangle; its constant-volume legs are curves, heat flows over a range of temperatures, and less of it becomes work.</div>
+</section>
+<section data-case="ts" data-example="otto-ts"><h3>Otto on the T–S diagram</h3><p>The heat comes in at temperatures between 1200 and 2400 K, not all at the top: compared with a Carnot rectangle between the same extremes, part of the area is missing.</p></section>
+<details><summary>About the model</summary>
+  <p>One mole of a monatomic ideal gas, \(C_v = \tfrac32 R\), \(\gamma = 5/3\), quasi-static legs. Each leg's heat and work come from the closed-form expressions; the path is sampled for the diagrams. Tests: Carnot and Otto efficiencies vs the formulas (10⁻⁹); ΔU = ΔS = 0 round each cycle; the enclosed p–V area (shoelace on the samples) equals the net work (10⁻⁴); Q_h/T_h = Q_c/T_c.</p>
+</details>

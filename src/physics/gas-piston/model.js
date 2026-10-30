@@ -42,4 +42,5 @@ export function rescaleTo(G, T) { const f = Math.sqrt(T / temperature(G)); for (
 // Pressure since the last reading: impulse / (time · total wall area); resets the counter.
 export function readPressure(G) { const A = 2 * G.a * G.a + 4 * G.a * G.h, P = G.impulse / (G.tImp * A); G.impulse = 0; G.tImp = 0; return P; }
 export const idealPressure = (G) => G.N * G.weight * KB * temperature(G) / (G.a * G.a * G.h);
+export const meanSpeed = (T) => Math.sqrt(8 * KB * T / (Math.PI * M_AR));
 export const maxwell = (v, T) => { const m = M_AR, c = m / (2 * KB * T); return 4 * Math.PI * (c / Math.PI) ** 1.5 * v * v * Math.exp(-c * v * v); };

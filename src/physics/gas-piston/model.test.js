@@ -1,4 +1,4 @@
-import { createGas, step, temperature, readPressure, idealPressure, rescaleTo } from './model.js';
+import { createGas, step, temperature, readPressure, idealPressure, rescaleTo, meanSpeed, maxwell } from './model.js';
 import { near, ok } from '../../lib/testing.js';
 
 export const tests = {
@@ -20,5 +20,13 @@ export const tests = {
     const G = createGas({ N: 500 });
     for (let n = 0; n < 5000; n++) { step(G, 1e-6, 0.1 - 0.05 * n / 5000, -10); rescaleTo(G, 300); }
     ok(Math.abs(temperature(G) - 300) < 1e-9, 'T held');
+  },
+  'speeds settle to Maxwell–Boltzmann: mean speed √(8kT/πm)'() {
+    const G = createGas({ N: 4000 });
+    for (let i = 0; i < 200; i++) step(G, 1e-6, 0.1, 0);
+    let s = 0; for (let i = 0; i < G.N; i++) s += Math.hypot(G.v[3 * i], G.v[3 * i + 1], G.v[3 * i + 2]);
+    near(s / G.N, meanSpeed(temperature(G)), 0.03, 'mean speed');
+    let I = 0; for (let v = 0; v < 3000; v += 0.5) I += maxwell(v + 0.25, 300) * 0.5;
+    near(I, 1, 1e-6, 'f(v) normalised');
   },
 };

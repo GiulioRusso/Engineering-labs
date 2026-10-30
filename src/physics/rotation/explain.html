@@ -1,0 +1,54 @@
+<section data-case="rolling">
+  <h3>Rolling and the moment of inertia</h3>
+  <div class="look"><h4>What you are looking at</h4>Four objects released together on identical 4 m slopes: a solid sphere, a solid disc, a hollow sphere and a hoop. Top right: the share of their energy that goes into spinning. Bottom right: distance against time; below, their speeds.</div>
+  <p>A rolling object has to do two things at once: move forward and spin. The energy it gains from falling is split between the two. How much the spin takes depends on where the mass sits: far from the axis (a hoop) it is hard to spin, so it takes a big share and little is left for moving forward. The measure of this is the moment of inertia I, the rotational version of mass.</p>
+  <div class="eq">$$I = cMR^2, \qquad Mgh = \tfrac12 Mv^2 + \tfrac12 I\omega^2, \;\; \omega = \frac{v}{R} \;\Rightarrow\; a = \frac{g\sin\theta}{1 + c}$$</div>
+  <ol class="steps">
+    <li>Look up c: solid sphere 2/5, disc 1/2, hollow sphere 2/3, hoop 1.</li>
+    <li>Rolling without slipping ties the spin to the speed: ω = v/R.</li>
+    <li>Energy (or forces and torques) give a = g sin θ / (1 + c): M and R cancel.</li>
+    <li>Share of energy in spinning: c/(1 + c), from 29 % (sphere) to 50 % (hoop).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>θ = 20°, 4 m: sphere a = 9.81 · 0.342/1.4 = 2.40 m/s², arrives in 1.83 s at 4.38 m/s (a frictionless sliding block would reach 5.18 m/s). Disc 1.89 s, hollow sphere 1.99 s, hoop 2.18 s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the heavier or bigger object wins. Only the shape factor c matters; a large heavy ball and a marble tie.</div>
+  <div class="try"><h4>Try it</h4>Change the mass and the slope: the order never changes.</div>
+</section>
+<section data-case="rolling" data-example="mass"><h3>Five times heavier</h3><p>Every force and every inertia scale with \(M\): the race is identical.</p></section>
+<section data-case="rolling" data-example="steep"><h3>Steeper slope</h3><p>At 40° all are faster (sphere 1.33 s, hoop 1.59 s), but the ratios of their accelerations are the same: \(5/7 : 2/3 : 3/5 : 1/2\).</p></section>
+
+<section data-case="spool">
+  <h3>Torque and angular acceleration: the spool</h3>
+  <div class="look"><h4>What you are looking at</h4>A mass hangs from a string wound round a spool (a disc on a fixed axle). As it falls it unwinds the string and spins the spool. Top right: where the energy goes. Bottom right: the drop against free fall.</div>
+  <p>The string pulls the spool at its rim: that is a torque, and a torque makes it spin faster and faster, as a force makes a mass speed up. The spool resists in proportion to its moment of inertia. Meanwhile the string holds the falling mass back, so it falls slower than in free fall. A heavy spool holds it back a lot, a light one hardly at all.</p>
+  <div class="eq">$$\tau = TR = I\alpha, \qquad mg - T = ma, \qquad a = \alpha R \;\Rightarrow\; a = \frac{mg}{m + I/R^2}, \quad I_\text{disc} = \tfrac12 M_s R^2$$</div>
+  <ol class="steps">
+    <li>Mass: mg − T = ma.</li>
+    <li>Spool: TR = Iα, with α = a/R because the string does not slip.</li>
+    <li>Eliminate T: the spool acts like an extra mass I/R² = Ms/2 that has to be accelerated too.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>m = 0.5 kg, a 2 kg spool: a = 0.5 · 9.81 / (0.5 + 1) = 3.27 m/s², tension T = 0.5 (9.81 − 3.27) = 3.27 N. After a 1.6 m drop two thirds of the energy is in the spinning spool.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Taking T = mg. The mass accelerates, so the string pulls less than its weight.</div>
+  <div class="try"><h4>Try it</h4>Increase the spool mass: the fall slows and more energy goes into the spin.</div>
+</section>
+<section data-case="spool" data-example="heavy"><h3>Heavy spool</h3><p>An 8 kg spool behaves like 4 kg of extra inertia: \(a = 1.09\) m/s², a slow, steady fall.</p></section>
+<section data-case="spool" data-example="light"><h3>Light spool</h3><p>A 0.1 kg spool adds only 0.05 kg of inertia: \(a = 8.92\) m/s², close to free fall.</p></section>
+
+<section data-case="spin">
+  <h3>Conservation of angular momentum</h3>
+  <div class="look"><h4>What you are looking at</h4>A skater seen from above, holding a 2 kg weight in each hand, spinning. Between t = 1 s and 2.5 s the arms pull in from 0.8 m to 0.25 m. Top right: the spin rate ω and the moment of inertia I. Bottom right: angular momentum (flat) and kinetic energy.</div>
+  <p>Without an outside twist (torque), the angular momentum L = Iω of a spinning body cannot change. Pull mass in towards the axis and I drops; the only way to keep L fixed is to spin faster. The kinetic energy is not conserved: it rises, and the extra energy comes from the work the skater's arms do pulling the weights inward against their tendency to fly out.</p>
+  <div class="eq">$$L = I\omega = \text{const}, \qquad I = I_\text{body} + 2m r^2, \qquad K = \tfrac12 I\omega^2 = \frac{L^2}{2I}$$</div>
+  <ol class="steps">
+    <li>Compute I at the start and at the end.</li>
+    <li>ω₂ = ω₁ · I₁/I₂ (L is the same).</li>
+    <li>K₂/K₁ = I₁/I₂ as well: the energy grows by the same factor.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>I_body = 1 kg m², two 2 kg weights: at 0.8 m, I = 1 + 2·2·0.64 = 3.56 kg m²; at 0.25 m, 1.25 kg m². Starting at 2 rad/s, the spin goes to 2 · 3.56/1.25 = 5.70 rad/s, and the energy from 7.1 J to 20.3 J.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming kinetic energy is conserved too. Angular momentum is; the energy changes by the work of the arms.</div>
+  <div class="try"><h4>Try it</h4>Make the hand weights heavier: the speed-up is bigger, because more of I sits in the arms.</div>
+</section>
+<section data-case="spin" data-example="out"><h3>Arms out</h3><p>The reverse: spinning at 5.7 rad/s with the arms in, letting them out to 0.8 m slows the spin to 2.0 rad/s. Skaters stop a spin this way.</p></section>
+<section data-case="spin" data-example="empty"><h3>No weights</h3><p>With 0.2 kg in each hand, most of the inertia is in the body: I only drops from 1.26 to 1.03 kg m², and the spin rises by 22 %.</p></section>
+<details><summary>About the model</summary>
+  <p>Closed-form results for ideal rigid bodies rolling without slipping, an ideal string and a skater modelled as a fixed body plus two point masses. Tests: the four rolling accelerations vs \(g\sin\theta/(1 + c)\); energy balance at the bottom (10⁻¹²); the race order; spool acceleration and energy; skater ω and KE ratios = I₁/I₂.</p>
+</details>

@@ -1,0 +1,56 @@
+<section data-case="photo">
+  <h3>The photoelectric effect</h3>
+  <div class="look"><h4>What you are looking at</h4>Light of one wavelength shining on a metal. Left: the largest kinetic energy of the electrons knocked out, against the frequency of the light, one line per metal. Top right: the energy budget of one photon. Bottom: the spectrum, with each metal's threshold and your light marked.</div>
+  <p>Light knocks electrons out of a metal, but in a way waves cannot explain: below a certain frequency nothing comes out at all, however bright the light; above it, electrons appear at once, even in dim light, and their energy depends only on the colour. Einstein's answer: light comes in packets, photons, each with energy hf. One photon gives all its energy to one electron. Part of it (the work function φ) pays to get out of the metal; the rest is kinetic energy.</p>
+  <div class="eq">$$E_\text{photon} = hf = \frac{hc}{\lambda}, \qquad K_\text{max} = hf - \varphi, \qquad eV_\text{stop} = K_\text{max}, \qquad \lambda_0 = \frac{hc}{\varphi}$$</div>
+  <ol class="steps">
+    <li>Photon energy: hc/λ, with hc = 1240 eV·nm.</li>
+    <li>Subtract the work function of the metal.</li>
+    <li>Negative? No electrons. Positive? That is K_max, and a reverse voltage of K_max/e stops them.</li>
+    <li>All metals give parallel lines of slope h: Millikan measured h this way in 1916.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Violet light, 400 nm: 1240/400 = 3.10 eV. On sodium (φ = 2.36 eV): K_max = 0.74 eV, stopped by 0.74 V. On zinc (φ = 4.33 eV): nothing; zinc needs λ &lt; 286 nm, ultraviolet.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting brighter light to give faster electrons. Brighter light means more photons, so more electrons, each with the same K_max.</div>
+  <div class="try"><h4>Try it</h4>Lengthen the wavelength until K_max hits zero: that is the threshold λ₀.</div>
+</section>
+<section data-case="photo" data-example="red"><h3>Red light on sodium</h3><p>650 nm photons carry 1.91 eV, less than the 2.36 eV needed: no electrons, at any brightness. Sodium needs λ &lt; 525 nm.</p></section>
+<section data-case="photo" data-example="uv"><h3>Ultraviolet on zinc</h3><p>250 nm: 4.96 eV per photon, 0.63 eV left after paying zinc's 4.33 eV. This is the experiment Hallwachs did with a zinc plate in 1888.</p></section>
+
+<section data-case="box">
+  <h3>A particle in a box</h3>
+  <div class="look"><h4>What you are looking at</h4>An electron trapped between two hard walls 1 nm apart. Left: the probability of finding it at each place, |Ψ|². Top right: the allowed energies. Bottom: the two wave functions ψ₁ and ψ₂ that are mixed.</div>
+  <p>In quantum mechanics a trapped particle is described by a wave that must vanish at the walls. Like a guitar string, it can only fit a whole number of half-waves: so only certain shapes, and only certain energies, are allowed. A particle in one of these states has a probability pattern that never changes: a stationary state. Mix two of them and the pattern sloshes from side to side, at a rate set by their energy difference.</p>
+  <div class="eq">$$\psi_n(x) = \sqrt{\tfrac{2}{L}}\sin\frac{n\pi x}{L}, \qquad E_n = \frac{n^2h^2}{8mL^2}, \qquad |\Psi|^2 = \tfrac12(\psi_a^2 + \psi_b^2) + \psi_a\psi_b\cos\frac{(E_b - E_a)t}{\hbar}$$</div>
+  <ol class="steps">
+    <li>Fit n half-wavelengths in L: λₙ = 2L/n.</li>
+    <li>De Broglie: p = h/λ, so E = p²/2m = n²h²/8mL².</li>
+    <li>The lowest energy is not zero: the particle can never sit still.</li>
+    <li>Mixed states beat with period h/(E_b − E_a).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Electron, L = 1 nm: E₁ = 0.376 eV, E₂ = 1.50 eV, E₃ = 3.38 eV. The 1 + 2 mix sloshes with period h/1.13 eV = 3.67 fs. A jump from 2 to 1 emits a 1.13 eV photon, λ = 1099 nm.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Picturing the electron bouncing between the walls in a stationary state. In a single state nothing moves at all; motion needs a mix of energies.</div>
+  <div class="try"><h4>Try it</h4>Pick b = a: the sloshing stops. Pick a and b far apart: it speeds up.</div>
+</section>
+<section data-case="box" data-example="ground"><h3>The ground state</h3><p>One hump, highest in the middle, constant in time. Its energy, 0.376 eV, is the zero-point energy: the uncertainty principle forbids a confined particle to have none.</p></section>
+<section data-case="box" data-example="one-three"><h3>States 1 and 3</h3><p>\(E_3 - E_1 = 8E_1 = 3.0\) eV: the pattern beats with period 1.37 fs, and since both states are symmetric it pulses in the middle instead of sloshing left and right.</p></section>
+<section data-case="box" data-example="wide"><h3>Twice as wide</h3><p>\(E \propto 1/L^2\): every level drops four times, \(E_1 = 0.094\) eV. Larger boxes, closer levels: this is why quantum dots change colour with their size.</p></section>
+
+<section data-case="bohr">
+  <h3>The hydrogen spectrum</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the energy levels of hydrogen, with the jumps of one series. Top right: the wavelengths of that series. Bottom: the visible spectrum, dark except for the Balmer lines.</div>
+  <p>Heat hydrogen and it glows, but not with all colours: only with a few sharp lines. Bohr explained them: the electron can only have certain energies, and when it drops from one level to a lower one it emits one photon carrying exactly the difference. The levels crowd together towards zero, so each series of lines crowds together towards a limit.</p>
+  <div class="eq">$$E_n = -\frac{13.6\ \text{eV}}{n^2}, \qquad \frac{1}{\lambda} = R_H\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right), \qquad R_H = 1.0968\cdot10^7\ \text{m}^{-1}$$</div>
+  <ol class="steps">
+    <li>Pick the lower level n₁: 1 Lyman (ultraviolet), 2 Balmer (visible), 3 Paschen (infrared).</li>
+    <li>Photon energy = E(n₂) − E(n₁); wavelength = 1240 eV·nm / energy.</li>
+    <li>As n₂ → ∞, λ → the series limit, n₁²/R_H.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>3 → 2: E = −1.511 − (−3.400) = 1.889 eV, λ = 656.5 nm (Hα, the red line; 656.3 nm in air). 4 → 2: 486.3 nm, cyan. Balmer limit 364.7 nm.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting that energies are negative: the electron is bound, and n = ∞ (energy 0) means free. Larger n is higher energy.</div>
+  <div class="try"><h4>Try it</h4>Step the upper level up from 3: the Balmer lines march towards violet and bunch together.</div>
+</section>
+<section data-case="bohr" data-example="lyman"><h3>Lyman series</h3><p>Every jump ends on the ground state: big energies, 10.2 eV and up, all in the ultraviolet (Lyman α at 121.6 nm).</p></section>
+<section data-case="bohr" data-example="paschen"><h3>Paschen series</h3><p>Jumps down to \(n = 3\): small energies, infrared lines from 1876 nm (4 → 3) down to the limit at 820 nm.</p></section>
+<details><summary>About the model</summary>
+  <p>CODATA 2018 constants; work functions from the CRC Handbook; Bohr levels with the reduced-mass Rydberg constant \(R_H = R_\infty/(1 + m_e/m_p)\), vacuum wavelengths. Tests: box states normalised and orthogonal, \(E_n \propto n^2\), \(E_1 = 0.376\) eV for 1 nm; the superposition keeps probability 1 and moves from the left half to the right in half a period; Hα 656.47 nm and Lyman α vs measured values (2·10⁻⁵, Bohr has no fine structure); no photoelectrons beyond the threshold, \(K_\text{max}\) slope the same for every metal.</p>
+</details>

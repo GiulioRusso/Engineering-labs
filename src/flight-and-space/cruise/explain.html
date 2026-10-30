@@ -1,0 +1,58 @@
+<section data-case="atmosphere">
+  <h3>The standard atmosphere</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: temperature, pressure and density against altitude, each as a share of its sea-level value, with your altitude (dashed) and the tropopause at 11 km. Top right: the speed of sound. Bottom right: the three values at your altitude. Below: temperature in °C.</div>
+  <p>Aircraft performance depends on the air, and the air changes a lot with height. Pressure is the weight of the air above you, so it falls as you climb; density falls with it. Temperature falls steadily too, by 6.5 °C per kilometre, up to the tropopause at 11 km, then stays at −56.5 °C. Engineers use one agreed model, the International Standard Atmosphere, so that a performance figure means the same thing everywhere.</p>
+  <div class="eq">$$T = T_0 - 0.0065\,h, \qquad \frac{p}{p_0} = \left(\frac{T}{T_0}\right)^{5.256}, \qquad \rho = \frac{p}{RT}, \qquad a = \sqrt{\gamma R T}$$</div>
+  <ol class="steps">
+    <li>Sea level: 15 °C, 1013 hPa, 1.225 kg/m³, sound at 340 m/s.</li>
+    <li>Lift and drag scale with density: same speed, thinner air, less lift.</li>
+    <li>The speed of sound depends only on temperature, so it stops changing above 11 km.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>3000 m: T = 15 − 19.5 = −4.5 °C, p = 701 hPa, ρ = 0.909 kg/m³, 74 % of sea level: a wing needs √(1/0.74) = 1.16 times the speed for the same lift.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming density and pressure fall in step with temperature. Temperature falls by a quarter up to 11 km; pressure by more than three quarters.</div>
+  <div class="try"><h4>Try it</h4>Drag the altitude through 11 km: the temperature line turns vertical, and the speed of sound stops falling.</div>
+</section>
+<section data-case="atmosphere" data-example="everest"><h3>Everest</h3><p>8849 m: −42.5 °C, 314 hPa, 39 % of sea-level density. Every breath holds a third of the oxygen molecules it would at the coast.</p></section>
+<section data-case="atmosphere" data-example="airliner"><h3>Airliner cruise</h3><p>11 km: −56.5 °C, 226 hPa, density 30 % of sea level. Less air means less drag at the same true speed: at 900 km/h the airliner feels the dynamic pressure of about 500 km/h at sea level.</p></section>
+<section data-case="atmosphere" data-example="concorde"><h3>Concorde</h3><p>18 km: 75 hPa, a tenth of sea-level density. Concorde cruised at Mach 2 there, 2150 km/h, with the speed of sound still 295 m/s.</p></section>
+
+<section data-case="glide">
+  <h3>Gliding</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the glide path from your starting height with the engine off (orange) and the best possible one (dashed). Top right: the polar, how fast the aircraft sinks at each airspeed; the dashed tangent touches it at the best glide. Bottom right: distance gained per metre of height, against airspeed. Below: lift/drag.</div>
+  <p>Without thrust, an aircraft trades height for distance: gravity pulls it along a gentle downward slope, and the slope is set by the ratio of lift to drag. Each airspeed gives a different sink rate. Fly too slowly and the wing needs a high lift coefficient that brings a lot of induced drag; too fast and plain friction drag grows with the square of speed. In between is the best glide speed, where L/D is largest and the aircraft goes furthest per metre lost. It is not the speed where it sinks slowest: that one is a bit slower and keeps you in the air longest.</p>
+  <div class="eq">$$\frac{\text{distance}}{\text{height}} = \frac{L}{D}, \qquad w_\text{sink} = V\,\frac{C_D}{C_L}, \qquad \left(\frac{L}{D}\right)_\text{max} = \frac{1}{2\sqrt{k\,C_{D0}}}, \qquad V_\text{min sink} = 3^{-1/4}\,V_\text{best glide}$$</div>
+  <ol class="steps">
+    <li>On the polar, the best glide is where a line from the origin just touches the curve.</li>
+    <li>Headwind: draw the line from the wind speed instead; it touches at a higher airspeed.</li>
+    <li>Height × L/D = how far you can reach: the pilot’s engine-failure rule.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Light aircraft, engine off at 1500 m, flying 37 m/s (its best glide): sink 2.80 m/s, L/D 13.2, 19.8 km in 8.9 minutes. Slowing to 28.3 m/s, the minimum sink (2.47 m/s), keeps it up 10.1 minutes but only for 17.2 km.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Pulling the nose up to stretch a glide. Below the best glide speed you go less far, not further; and below the stall speed the wing quits.</div>
+  <div class="try"><h4>Try it</h4>Sweep the airspeed and watch the dot run round the polar; the glide path is longest when it touches the dashed tangent.</div>
+</section>
+<section data-case="glide" data-example="sailplane"><h3>A sailplane</h3><p>Long, slender wings (aspect ratio 22) and a clean shape: L/D 37.6 at 28 m/s, sinking only 0.74 m/s. From 1500 m it reaches 56 km and stays up over half an hour, more with a thermal.</p></section>
+<section data-case="glide" data-example="slow"><h3>Minimum sink</h3><p>28.3 m/s: the slowest descent, 2.47 m/s, the speed to circle in a thermal or wait for help, but 2.6 km shorter than best glide.</p></section>
+<section data-case="glide" data-example="fast"><h3>Too fast</h3><p>60 m/s: friction drag dominates, L/D falls to 8.9. 13.3 km instead of 19.8, in 3.7 minutes.</p></section>
+<section data-case="glide" data-example="wind"><h3>A headwind</h3><p>10 m/s against you at the still-air best speed: still 2.80 m/s sink but only 27 m/s over the ground, 14.5 km.</p></section>
+<section data-case="glide" data-example="stf"><h3>Speed to fly</h3><p>Into the same headwind, 40.4 m/s gets further: 14.7 km. Spending less time in the wind is worth the slightly higher sink. Into a headwind fly faster, with a tailwind slower.</p></section>
+
+<section data-case="range">
+  <h3>Range: the Breguet equation</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: how far a jet flies against the share of its take-off weight that is fuel (dashed: what it would be if the aircraft did not get lighter). Top right: its weight along the flight. Bottom right: range against lift/drag. Below: hours in the air.</div>
+  <p>In cruise, thrust equals drag, and drag is weight divided by L/D. The engines burn fuel in proportion to thrust (the TSFC c). So a heavy aircraft burns fuel fast; as the fuel goes, the aircraft gets lighter, needs less thrust and burns more slowly. Adding up gives Breguet’s equation, the rocket equation of aircraft: range grows with the logarithm of the weight ratio, times three factors owned by three different design teams.</p>
+  <div class="eq">$$R = \underbrace{V}_\text{speed}\;\underbrace{\frac{1}{c}}_\text{engine}\;\underbrace{\frac{L}{D}}_\text{aerodynamics}\;\ln\frac{W_0}{W_1}, \qquad \frac{dW}{dt} = -c\,\frac{W}{L/D}$$</div>
+  <ol class="steps">
+    <li>Thrust = drag = W/(L/D).</li>
+    <li>Fuel burnt per second = c × thrust.</li>
+    <li>Distance per second = V; integrate as W falls from W₀ to W₁.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A long-haul airliner: 864 km/h, TSFC 0.55 /h, L/D 18, fuel 35 % of take-off weight: R = 864/0.55 × 18 × ln(1/0.65) = 12 200 km, in 14.1 hours.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Doubling fuel to double range. The extra fuel must itself be carried: going from 35 % to 50 % fuel (43 % more fuel) adds 61 % range here, but the gain shrinks further on.</div>
+  <div class="try"><h4>Try it</h4>Change L/D from 18 to 20: 11 % more range, the same as 11 % less fuel consumption. That is why winglets and laminar wings are worth so much.</div>
+</section>
+<section data-case="range" data-example="fuel"><h3>Half the weight in fuel</h3><p>ln 2 instead of ln(1/0.65): 19 600 km, close to the longest non-stop airline routes.</p></section>
+<section data-case="range" data-example="fighter"><h3>A fighter</h3><p>L/D 8 and a thirsty engine (TSFC 0.8 /h): 3200 km on 30 % fuel. Fighters trade cruise efficiency for thrust and agility; long missions need tankers.</p></section>
+<section data-case="range" data-example="clean"><h3>A cleaner wing</h3><p>L/D 25, as a long-span, laminar-flow airliner might reach: 16 900 km on the same fuel.</p></section>
+<details><summary>About the model</summary>
+  <p>ISA up to 20 km (troposphere and lower stratosphere). Glides: steady, small angle, parabolic drag polar (C_D = C_D0 + C_L²/(π e AR)), still air or a steady headwind. Breguet: constant speed, L/D and TSFC. Tests: ISA at 11 km (T, p) and sea-level ρ and a; best-glide speed and maximum L/D from a scan equal the formulas (10⁻³), minimum-sink speed is 3^(−¼) of best glide; a headwind raises the speed to fly; Breguet range and endurance match a step-by-step cruise (10⁻⁴).</p>
+</details>

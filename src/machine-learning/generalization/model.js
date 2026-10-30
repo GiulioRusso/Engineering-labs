@@ -1,7 +1,7 @@
 // Generalization with polynomial fits on noisy samples of a smooth curve: capacity vs train/test error,
 // bias–variance from many redrawn datasets, ridge, early stopping by gradient descent, k-fold cross-
 // validation; and accuracy vs precision/recall on imbalanced classes. Legendre basis for conditioning.
-import { rng } from '../neuron/model.js';
+import { rng } from '../../deep-learning/neuron/model.js';
 
 export const truth = (x) => Math.sin(2.6 * x) + 0.3 * x;
 const gauss = (r) => Math.sqrt(-2 * Math.log(r() + 1e-12)) * Math.cos(2 * Math.PI * r());
