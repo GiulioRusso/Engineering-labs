@@ -29,9 +29,10 @@ Open **`index.html`** in any browser. Catalogue self-contained, runs offline.
 |---|---|---|
 | **Maths** | [`web/maths.html`](web/maths.html) | Calculus, Linear Algebra, Differential Equations, Complex Analysis |
 | **Probability & Stats** | [`web/probability.html`](web/probability.html) | Distributions, Bayes, Monte Carlo, Hypothesis Testing |
+| **Statistics** | [`web/statistics.html`](web/statistics.html) | Descriptive Statistics, Correlation, Sampling Distributions, MLE, Bootstrap, t Tests, p-values and Power, Chi-Square, ANOVA, Rank Tests, Regression Inference, Bayesian Updating |
 | **Physics** | [`web/physics.html`](web/physics.html) | Mechanics, Oscillations and Waves, Heat, Electromagnetism (all four Maxwell equations), Optics |
 | **Modern Physics** | [`web/modern-physics.html`](web/modern-physics.html) | Special Relativity, Photoelectric Effect, Particle in a Box, Hydrogen Spectrum, Decay |
-| **Flight and Space** | [`web/flight-and-space.html`](web/flight-and-space.html) | Lift and Drag, Standard Atmosphere, Gliding, Breguet Range, Kepler's Laws, Newton's Cannon, Gravity Assist, Rocket Equation, Staging, Gravity Turn, Re-entry |
+| **Flight and Space** | [`web/flight-and-space.html`](web/flight-and-space.html) | Lift and Drag, Standard Atmosphere, Gliding, Breguet Range, Airfoils (Joukowski), Drag Polar, Take-off and Landing, Static Stability, Kepler's Laws, Newton's Cannon, Hohmann vs Bi-elliptic, Plane Changes, Rendezvous (Clohessy–Wiltshire), Patched Conics, Gravity Assist, Rocket Equation, Staging, Gravity Turn, Re-entry |
 | **Robotics** | [`web/robotics.html`](web/robotics.html) | Rotations and Quaternions, DH and the Kinova Jaco2, Jacobian, CLIK, Redundancy, Trajectories, Dynamics, Computed Torque, Impedance Control |
 | **Circuits** | [`web/circuits.html`](web/circuits.html) | RLC, Phasors, Impedance, AC Power, Filter Design |
 | **Analog Electronics** | [`web/analog-electronics.html`](web/analog-electronics.html) | BJTs, MOSFETs, Op-Amps, Feedback, CMOS |

@@ -6,13 +6,14 @@ import { join } from 'node:path';
 
 const HUE = {
   'analog-electronics': 28, circuits: 45, 'computer-science': 200, 'control-systems': 160, 'digital-electronics': 260,
-  'electronic-warfare': 0, 'machine-learning': 300, maths: 220, 'numerical-methods': 250, 'information-theory': 100, 'structural-mechanics': 15, probability: 330, physics: 190, 'signal-theory': 130,
+  'electronic-warfare': 0, 'machine-learning': 300, maths: 220, 'numerical-methods': 250, 'information-theory': 100, 'structural-mechanics': 15, probability: 330, statistics: 55, physics: 190, 'signal-theory': 130,
   'modern-physics': 280, 'flight-and-space': 205, 'deep-learning': 340, robotics: 25, 'design-patterns': 115,
 };
 // one simple line icon per subject (24×24, stroke = currentColor)
 const ICON = {
   maths: '<path d="M18 5H7l6 7-6 7h11"/>',
   probability: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.3"/><circle cx="16" cy="8" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="8" cy="16" r="1.3"/><circle cx="16" cy="16" r="1.3"/>',
+  statistics: '<path d="M3 21h18"/><rect x="4" y="13" width="3.2" height="8"/><rect x="8.6" y="7" width="3.2" height="14"/><rect x="13.2" y="10" width="3.2" height="11"/><rect x="17.8" y="16" width="2.6" height="5"/>',
   physics: '<circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>',
   'modern-physics': '<path d="M2 12c2 0 2-6 4-6s2 12 4 12 2-12 4-12 2 12 4 12 2-6 4-6"/><circle cx="12" cy="12" r="1.4"/>',
   'flight-and-space': '<ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-25 12 12)"/><circle cx="12" cy="12" r="3"/><circle cx="20" cy="8.5" r="1.3"/>',

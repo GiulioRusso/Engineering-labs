@@ -1,0 +1,40 @@
+<section data-case="regression">
+  <h3>Inference for a regression line</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the data, the least-squares line (orange), the 95 % band for the mean line (green), and the 95 % band for a single new observation (blue dashed). Top right: residuals against fitted values. Bottom right: the slope estimated from the first k points, with its 95 % interval, against the true slope 0.8 and against 0. Below: a normal Q-Q plot of the residuals.</div>
+  <p>A fitted line is an estimate: other data from the same process would give a slightly different line. The slope's standard error turns into a confidence interval and into a t test of “no relation” (slope 0). There are two bands. One is for the <b>mean</b> of y at each x: it narrows as data grow, and is narrowest at the centre of the x values. The other is for a <b>single new point</b>: it also contains that point's own noise, so it never shrinks below about ±2σ. All of this rests on assumptions, which the residual plots check: a straight-line trend, constant spread, and roughly normal noise.</p>
+  <div class="eq">$$\operatorname{SE}(b) = \frac{s}{\sqrt{S_{xx}}}, \qquad t = \frac{b}{\operatorname{SE}(b)} \ (n-2 \text{ df}), \qquad \hat y_0 \pm t\,s\sqrt{\tfrac1n + \tfrac{(x_0-\bar x)^2}{S_{xx}}}, \qquad \hat y_0 \pm t\,s\sqrt{1 + \tfrac1n + \tfrac{(x_0-\bar x)^2}{S_{xx}}}$$</div>
+  <ol class="steps">
+    <li>Fit by least squares; s = √(Σ residual² / (n − 2)).</li>
+    <li>Slope interval b ± t·SE(b); the test of slope 0 uses t = b / SE(b).</li>
+    <li>Check the residuals: no pattern, even spread, a straight Q-Q line.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>25 points from y = 2 + 0.8x with σ = 1.5: fit y = 1.76 + 0.839x, slope interval [0.57, 1.11] (it contains 0.8), t = 6.36, p = 0.000002, R² = 0.64. At x = 5 the mean band is ±0.76 and the prediction band ±3.67.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Using the confidence band to predict individual cases. It describes where the <i>average</i> lies; single new points scatter across the much wider prediction band.</div>
+  <div class="try"><h4>Try it</h4>Raise the number of points to 300: the green band shrinks onto the line, while the blue band stops narrowing at about ±3.</div>
+</section>
+<section data-case="regression" data-example="more"><h3>200 points</h3><p>Slope [0.76, 0.91]: the interval is about a quarter as wide. At x = 5 the mean band shrinks to ±0.21, but the prediction band is still ±2.9, about 2σ.</p></section>
+<section data-case="regression" data-example="curved"><h3>A curve fitted with a line</h3><p>The truth is y = 1 + 0.09x². The line still gets R² = 0.69 and a “significant” slope of 0.99, but the residuals form a U: low in the middle, high at both ends. A good R² does not make the model right.</p></section>
+<section data-case="regression" data-example="funnel"><h3>Noise growing with x</h3><p>The residuals fan out to the right. The fitted line is still unbiased, but the bands assume one σ for all x: they are too wide on the left and too narrow on the right. Weighted least squares, or modelling log y, fixes it.</p></section>
+<section data-case="regression" data-example="few"><h3>Five points</h3><p>Slope 1.74 with interval [−1.7, 5.2]: 3 df, t critical 3.18. The data cannot even decide the sign of the slope; p = 0.20.</p></section>
+
+<section data-case="bayes">
+  <h3>Bayesian updating</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: densities for the coin's chance of heads p. The prior is what you believed before (blue dashed), the likelihood is what the flips so far say (green), and the posterior combines the two (orange), with its 95 % credible interval shaded. The black dashed line is the true p. Top right: the posterior mean and credible interval as flips accumulate, against the frequentist Wald interval (blue dashed). Bottom right: the prior mean, the data share h/n, and the posterior mean. Below: the width of the credible interval.</div>
+  <p>Bayesian statistics treats an unknown quantity as uncertain and describes that uncertainty with a probability distribution. Before the data, a <b>prior</b>; after it, a <b>posterior</b>. Bayes' rule says posterior ∝ prior × likelihood. For a coin with a Beta(a, b) prior the update is a simple count: add the heads to a and the tails to b. So the prior acts like a + b imaginary flips seen in advance, and the posterior mean is a weighted average of the prior mean and the observed share. As data accumulate the data's weight approaches 1, and any reasonable prior is overwhelmed.</p>
+  <div class="eq">$$p(\theta\mid x) \propto p(x\mid\theta)\,p(\theta), \qquad \text{Beta}(a,b) \xrightarrow{\ h \text{ heads},\ n-h \text{ tails}\ } \text{Beta}(a+h,\ b+n-h), \qquad E[p\mid x] = \frac{a+h}{a+b+n}$$</div>
+  <ol class="steps">
+    <li>Choose a prior Beta(a, b): Beta(1, 1) is flat, larger a + b is more confident.</li>
+    <li>Add the observed heads and tails.</li>
+    <li>Read the posterior mean and the 2.5 and 97.5 percentiles (the 95 % credible interval).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Flat prior, 68 heads in 100 flips: posterior Beta(69, 33), mean 0.676, 95 % credible interval [0.583, 0.763]. The Wald interval is [0.589, 0.771], nearly the same. With a flat prior and plenty of data the two schools agree on the numbers, though not on what they mean.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking a 95 % confidence interval means “p is in here with probability 95 %”. That statement belongs to the credible interval, and only given the prior; the confidence interval's 95 % describes the procedure (see Confidence intervals).</div>
+  <div class="try"><h4>Try it</h4>Play with the wrong prior, then raise the flips to 1000: the orange curve starts on the wrong side and slides over to the truth.</div>
+</section>
+<section data-case="bayes" data-example="fair"><h3>Probably fair</h3><p>Beta(20, 20) is worth 40 imaginary flips at 50 %. After 68 heads in 100 the posterior mean is 0.629, pulled from 0.68 towards 0.5, with the data weighted 0.71. A sceptical prior demands more evidence.</p></section>
+<section data-case="bayes" data-example="wrong"><h3>Confident and wrong</h3><p>Beta(3, 12) says p ≈ 0.2. After 100 flips the posterior mean is 0.617 and its interval [0.53, 0.70] does not reach the true 0.7: the prior's 15 flips still drag.</p></section>
+<section data-case="bayes" data-example="few"><h3>Only 10 flips</h3><p>9 heads in 10: the posterior with a flat prior is Beta(10, 2), mean 0.83, interval [0.59, 0.98]. The Wald interval [0.71, 1.09] goes past 1, a sign that the normal approximation fails for small n.</p></section>
+<section data-case="bayes" data-example="many"><h3>1000 flips</h3><p>709 heads: even the wrong prior gives mean 0.701 and interval [0.673, 0.729]. The data's weight is 0.99, and the prior no longer matters.</p></section>
+<details><summary>About the model</summary>
+  <p>Seeded data. Regression: ordinary least squares with t-based intervals on n − 2 df; the Q-Q plot compares sorted standardised residuals with normal quantiles (i − ½)/n. Bayes: conjugate beta–binomial updating; credible intervals are equal-tailed beta quantiles, and the Wald interval is p̂ ± 1.96√(p̂(1 − p̂)/n). Tests: the slope interval covers the true slope at about 95 %; the bands are narrowest at x̄; the posterior mean equals the weighted average of the prior and the data.</p>
+</details>

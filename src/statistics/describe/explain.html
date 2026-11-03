@@ -1,0 +1,60 @@
+<section data-case="summary">
+  <h3>Centre and spread</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: sixteen commute times as dots (the red one is the sixteenth, which you control), the mean (orange line), the median (green dashed), a bar one standard deviation either side of the mean, and a box plot along the bottom. Right: how the mean and median (top), and the standard deviation and interquartile range (bottom), change as the sixteenth commute moves. Below: the share of people with a commute up to x.</div>
+  <p>Two numbers summarise most data sets: where they sit, and how widely they spread. The <b>mean</b> adds everything up and divides; the <b>median</b> is the middle value once they are sorted. For spread, the <b>standard deviation</b> is a typical distance from the mean, and the <b>interquartile range</b> (IQR) is the width of the middle half. The mean and standard deviation use every value's size, so one extreme value drags them. The median and IQR only use the order, so they barely move. Statisticians call them <i>robust</i>.</p>
+  <div class="eq">$$\bar x = \frac1n\sum x_i, \qquad s = \sqrt{\frac{1}{n-1}\sum (x_i-\bar x)^2}, \qquad \text{IQR} = Q_3 - Q_1$$</div>
+  <ol class="steps">
+    <li>Sort the values. The median is the middle one (or the average of the two middle ones).</li>
+    <li>Q₁ and Q₃ are the medians of the lower and upper halves; the box spans them.</li>
+    <li>The standard deviation divides by n − 1, not n: the mean was estimated from the same data, which uses up one degree of freedom.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Fifteen commutes with mean 29.5 min and median 28 min, plus a sixteenth of 30 min: mean 29.6, median 28, standard deviation 6.2, IQR 8.5. Make the sixteenth 150 min: the mean jumps to 37.1 and the standard deviation to 30.7, while the median and IQR stay at 28 and 9.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reporting only the mean for skewed data such as incomes, house prices or waiting times. A few large values make the mean look typical when most people are below it. Give the median, or both.</div>
+  <div class="try"><h4>Try it</h4>Drag the sixteenth commute from 0 to 150: in the top-right chart the orange mean climbs in a straight line, while the green median moves one step and stops.</div>
+</section>
+<section data-case="summary" data-example="outlier"><h3>One very long commute</h3><p>150 min, five times the others: the mean is pulled 7.5 min up and sits right of almost everyone, while the standard deviation grows fivefold. The box plot flags the value as an outlier (more than 1.5 IQR beyond the box).</p></section>
+<section data-case="summary" data-example="skew"><h3>Skewed data</h3><p>Commutes with a long right tail (a few people come from far away): mean 18.6 min, median 15. Whenever the mean sits right of the median, there is a tail to the right.</p></section>
+<section data-case="summary" data-example="two"><h3>Two groups</h3><p>Walkers (about 18 min) and drivers (about 48 min): the mean, 33 min, describes nobody. The standard deviation is large because nobody is near the centre. Look at the data before you summarise it.</p></section>
+
+<section data-case="histogram">
+  <h3>Histograms and box plots</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a histogram of the sample, scaled so its total area is 1, with the true population density in orange. Top right: a box plot of the same values. Bottom right: the raw values themselves, jittered up and down so they don't overlap. Below: the empirical cumulative distribution, which needs no bins.</div>
+  <p>A histogram splits the range into bins and counts how many values fall in each. Its shape depends on a choice you make, the bin width. With too few bins the shape is lost; with too many, every random wiggle looks like a feature. Rules of thumb help. The Freedman–Diaconis rule makes the width 2·IQR/∛n, so it narrows slowly as data grow. A box plot is smaller: five numbers (the two whisker ends, the quartiles and the median) plus any outliers. It is good for comparing many groups side by side, but it cannot show two humps.</p>
+  <div class="eq">$$\text{height} = \frac{\text{count}}{n\cdot w}, \qquad w_{FD} = \frac{2\,\text{IQR}}{\sqrt[3]{n}}, \qquad \text{whiskers to the last point within } 1.5\,\text{IQR}$$</div>
+  <ol class="steps">
+    <li>Choose a bin width (or a number of bins) and count.</li>
+    <li>Divide by n·w so the bars estimate a density and can be compared with a curve.</li>
+    <li>For the box: quartiles, median, whiskers, and dots for anything beyond the whiskers.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>200 values from a normal population (mean 50, sd 10): sample median 48.9, IQR 12.7, mean 48.8, sd 9.6. Freedman–Diaconis gives a width of 2 × 12.7 / ∛200 = 4.3, about 12 bins over the range, which here are bins of width 10 over 0 to 120.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading a bump in a histogram of 20 values as a real feature. With few values, change the bin count by one or two: if the bump comes and goes, it was noise.</div>
+  <div class="try"><h4>Try it</h4>Choose “Two groups” and look at the box plot: a perfectly ordinary box, with no hint that the middle is empty.</div>
+</section>
+<section data-case="histogram" data-example="few"><h3>Three bins</h3><p>Everything falls into one tall middle bar: the bell shape has gone.</p></section>
+<section data-case="histogram" data-example="many"><h3>Sixty bins</h3><p>Two values per bin on average: a jagged comb, mostly noise. The cumulative curve below shows the same data smoothly, with no choice to make.</p></section>
+<section data-case="histogram" data-example="skewed"><h3>A long right tail</h3><p>Waiting times: mean 35.2, median 29.2. In the box plot the median sits left of centre and the right whisker is long; the outlier dots are the tail.</p></section>
+<section data-case="histogram" data-example="twohumps"><h3>Two humps</h3><p>Half the values near 35 and half near 65. The histogram shows both groups; the box plot (Q₁ 35, median 46, Q₃ 64) looks like one wide group with its centre where almost nobody is.</p></section>
+<section data-case="histogram" data-example="small"><h3>Only 20 values</h3><p>Even when drawn from a perfect bell, 20 values make a lumpy histogram. Small samples need wide bins, or a plot of the raw values.</p></section>
+
+<section data-case="correlation">
+  <h3>Correlation</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: pairs (x, y) as dots, with the least-squares line. Top right: Pearson's r (orange), Spearman's ρ (green) and r² (blue). Bottom right: the residuals, what the line misses at each point. Below: r and ρ computed from the first k points.</div>
+  <p>Correlation measures how strongly two quantities move together, on a scale from −1 to +1. <b>Pearson's r</b> measures a straight-line relation. <b>Spearman's ρ</b> is Pearson's r applied to the ranks, so it measures any relation that only rises (or only falls), and an outlier cannot pull it far. r² is the share of the variance of y that the line explains. One number cannot describe a cloud of points. Anscombe built four data sets with the same means, variances, r = 0.816 and line y = 3 + 0.5x that look completely different when plotted.</p>
+  <div class="eq">$$r = \frac{\sum (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum (x_i-\bar x)^2\,\sum (y_i-\bar y)^2}}, \qquad \rho = r(\text{rank}\,x, \text{rank}\,y), \qquad b = r\,\frac{s_y}{s_x}$$</div>
+  <ol class="steps">
+    <li>Centre both variables; multiply their deviations pair by pair.</li>
+    <li>Points up-right or down-left of the centre count positive, the other two quadrants negative.</li>
+    <li>Divide by the spreads so r has no units and lies between −1 and 1.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>40 points drawn with a true correlation of 0.7: the sample gives r = 0.555 and ρ = 0.483. With only 40 points, r can easily be 0.15 away from the true value. The line y = 3.64 + 0.388x explains r² = 31 % of the variance.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading correlation as causation. Ice-cream sales and drownings are correlated because both rise in summer. A third variable can drive both, and only an experiment (or careful causal reasoning) can tell them apart.</div>
+  <div class="try"><h4>Try it</h4>Click through Anscombe I to IV: the r bar and the fitted line never change, but the residuals tell four different stories.</div>
+</section>
+<section data-case="correlation" data-example="a2"><h3>Anscombe II</h3><p>A perfect curve. The line fits poorly, and the residuals form an arch. Spearman's ρ = 0.69 is lower than r because the curve turns down at the end.</p></section>
+<section data-case="correlation" data-example="a3"><h3>Anscombe III</h3><p>A perfect line except for one point. Without it, r would be 1; the outlier tilts the fitted line. Spearman's ρ = 0.99 barely notices it.</p></section>
+<section data-case="correlation" data-example="a4"><h3>Anscombe IV</h3><p>Ten points share one x value; a single point far to the right makes the whole correlation. Remove it and there is no relation at all.</p></section>
+<section data-case="correlation" data-example="parabola"><h3>A parabola</h3><p>y is almost exactly a function of x, yet r = 0.09: the rise and the fall cancel. r ≈ 0 rules out a straight-line relation, not every relation.</p></section>
+<section data-case="correlation" data-example="weak"><h3>Weak correlation</h3><p>True ρ = 0.3: in this sample of 40, r = 0.12. Weak relations need many points to be seen at all; raise the number of points and watch r settle.</p></section>
+<details><summary>About the model</summary>
+  <p>Seeded random data, so each visit shows the same numbers. Quantiles use linear interpolation (type 7, the default in R and NumPy). Anscombe's quartet from F. J. Anscombe, “Graphs in Statistical Analysis”, The American Statistician 27 (1973). Tests: quantiles and ranks with ties, r and ρ on known data, the least-squares line on exact points.</p>
+</details>

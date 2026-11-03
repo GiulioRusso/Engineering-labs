@@ -1,0 +1,80 @@
+<section data-case="airfoil">
+  <h3>How an airfoil lifts</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: streamlines round an airfoil in a flow from the left, with air parcels (orange dots) released along a vertical line at the same instants. Top right: the pressure along the upper (blue) and lower (orange) surfaces, plotted as −Cp so that suction points up. Bottom right: the lift coefficient against angle of attack for this shape, with the thin flat plate's 2πα (dashed). Below: the air speed just outside the surface.</div>
+  <p>An airfoil turns the flow: air leaves the trailing edge heading slightly downward, and by Newton's third law the wing is pushed up. In pressure terms, the flow over the curved upper surface speeds up and its pressure drops (Bernoulli), while the lower surface sees a little more than ambient. The difference, added along the chord, is the lift. Which flow does nature pick? The one that leaves the sharp trailing edge smoothly (the <b>Kutta condition</b>). That fixes the amount of circulation round the airfoil and hence the lift. Joukowski's conformal map turns the exactly known flow round a cylinder into the flow round an airfoil, so the picture here is exact potential flow.</p>
+  <div class="eq">$$z = \zeta + \frac{1}{\zeta}, \qquad \Gamma = 4\pi U R\sin(\alpha+\beta), \qquad L' = \rho U \Gamma, \qquad C_L = \frac{2\Gamma}{Uc} \approx 2\pi(\alpha - \alpha_0), \qquad C_p = 1 - \frac{V^2}{U^2}$$</div>
+  <ol class="steps">
+    <li>A circle through ζ = 1 maps to an airfoil with a sharp trailing edge. Shifting its centre adds thickness (left) and camber (up).</li>
+    <li>The circulation Γ is set so the flow leaves the trailing edge smoothly.</li>
+    <li>Lift per metre of span = ρUΓ (Kutta–Joukowski); the slope is about 2π per radian; camber moves the zero-lift angle α₀ below 0.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>10 % thick, 6 % camber, α = 5°: C_L = 0.97. A flat plate gives 2π × 0.087 = 0.55; the extra comes from the camber, which puts the zero-lift angle at −3.1°, so the airfoil is effectively at 8.1°. The lowest pressure, Cp = −1.93, is near the leading edge on top.</div>
+  <div class="pitfall"><h4>Common mistake</h4>“Air over the top has further to go, so it must go faster to meet the air from below at the trailing edge.” Nothing forces them to meet. Watch the parcels: those over the top arrive well <i>before</i> those underneath.</div>
+  <div class="try"><h4>Try it</h4>Raise α from 0 to 12° and watch the blue suction peak at the leading edge grow far faster than anything on the lower surface.</div>
+</section>
+<section data-case="airfoil" data-example="sym"><h3>Symmetric, 0°</h3><p>No camber, no angle: the flow above and below is a mirror image, Γ = 0, C_L = 0. The speed-up over both surfaces (Cp = −0.48) is just thickness.</p></section>
+<section data-case="airfoil" data-example="camber"><h3>Camber alone</h3><p>10 % camber at α = 0: C_L = 0.62. The curved mean line turns the flow down even with the chord along it; the zero-lift angle is −5.2°.</p></section>
+<section data-case="airfoil" data-example="high"><h3>12°</h3><p>C_L = 1.79, and the suction peak reaches Cp = −7.8 just behind the nose. In a real flow the boundary layer could not climb back up that steep pressure rise: it separates and the wing stalls. Potential flow keeps on lifting.</p></section>
+<section data-case="airfoil" data-example="neg"><h3>Below the zero-lift angle</h3><p>α = −6°, below α₀ = −3.1°: C_L = −0.35. The suction moves to the lower surface and the airfoil pushes down, as a wing in inverted flight does.</p></section>
+
+<section data-case="polar">
+  <h3>The drag polar and the power curves</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the drag of a 1000 kg trainer in level flight against airspeed: friction drag (blue), induced drag (green) and their sum (orange); the dot is the chosen speed. Top right: the drag polar C_D against C_L, with the tangent from the origin. Bottom right: the power needed (drag × speed) against the power the engine and propeller can give. Below: lift/drag against speed.</div>
+  <p>In level flight lift equals weight. To carry it slowly, the wing needs a large C_L, and the cost of lift is <b>induced drag</b>, from the trailing vortices; it falls as 1/V². <b>Friction drag</b> (skin friction and form drag) grows as V². Their sum has a minimum at the speed where the two are equal, the speed of best lift/drag and best glide. Power is drag × speed, so its minimum is at a lower speed, V_md/3^¼: the speed for the longest endurance. Below the minimum-drag speed lies the “back side” of the curve, where flying slower needs more thrust.</p>
+  <div class="eq">$$C_D = C_{D0} + kC_L^2, \quad k = \frac{1}{\pi e A}, \qquad D = \tfrac12\rho V^2 S C_{D0} + \frac{kW^2}{\tfrac12\rho V^2 S}, \qquad (L/D)_{max} = \frac{1}{2\sqrt{kC_{D0}}}$$</div>
+  <ol class="steps">
+    <li>C_L = W/(½ρV²S) at each speed.</li>
+    <li>Friction and induced parts; least drag where they are equal, C_L = √(C_D0/k).</li>
+    <li>Power needed D·V against power available: top speed where they meet.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Sea level, 45 m/s: C_L = 0.49, drag 796 N (543 friction, 254 induced). The least drag, 742 N, is at 37.2 m/s, where L/D = 13.2; the least power is at 28.3 m/s. Power needed meets the 107 kW available near 72 m/s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting weight or altitude to change the best L/D. They change the <i>speed</i> at which it happens (∝ √(W/ρ)); the ratio itself depends only on the shape, through C_D0, aspect ratio and e.</div>
+  <div class="try"><h4>Try it</h4>Raise the aspect ratio: the green induced curve sinks, and the minimum moves to a slower speed and lower drag.</div>
+</section>
+<section data-case="polar" data-example="glider"><h3>Aspect ratio 20</h3><p>A long, thin wing: k drops from 0.053 to 0.020, L/D max rises to 21.6 at 29 m/s. That is why gliders have long wings.</p></section>
+<section data-case="polar" data-example="heavy"><h3>40 % heavier</h3><p>The whole curve slides right: least drag 1040 N at 44 m/s, the same L/D of 13.2 (drag rises in proportion to weight).</p></section>
+<section data-case="polar" data-example="high"><h3>At 4000 m</h3><p>Thinner air (ρ 0.82 kg/m³): least drag is still 742 N, but at 45.5 m/s true airspeed instead of 37.2. The engine also loses power with altitude.</p></section>
+<section data-case="polar" data-example="slow"><h3>The back side</h3><p>At 28 m/s the drag is 866 N, more than at 45 m/s. Slow down further and you need still more thrust; landing approaches are flown on this side, which is why pilots control speed with the nose and height with the throttle.</p></section>
+
+<section data-case="takeoff">
+  <h3>Take-off and landing</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the airspeed against distance down the runway as the run is played, with the stall speed (red dashed) and the lift-off speed (grey dashed); the dot on the strip is the aircraft. Top right: the forces during the run: thrust, wheel friction and drag. Bottom right: the ground roll against mass. Below: the ground speed against time.</div>
+  <p>On the ground the aircraft accelerates under thrust minus drag minus wheel friction. The friction is μ times the weight the wheels still carry, W − L, so it fades as the wing takes the load. Lift-off needs a margin over the stall speed, here 1.1 V_s. Because the required speed grows with √(W/ρ) and the acceleration falls with W, the run grows roughly as W²/ρ. Heavy aircraft and high, hot airfields need long runways. A headwind helps twice over: you already have airspeed while standing still, and you cover less ground per second of acceleration. Landing runs the same equations with idle thrust and the brakes on.</p>
+  <div class="eq">$$m\frac{dV}{dt} = T - D - \mu(W-L), \qquad \frac{dx}{dt} = V - V_{wind}, \qquad V_{LOF} = 1.1\sqrt{\frac{2W}{\rho S C_{L,max}}}, \qquad s \propto \frac{W^2}{\rho\,S\,C_{L,max}\,\bar T}$$</div>
+  <ol class="steps">
+    <li>Stall speed from the weight, density and C_L,max; lift-off at 1.1 V_s.</li>
+    <li>Integrate the acceleration from rest (or from the wind speed, in airspeed).</li>
+    <li>Distance over the ground uses ground speed V − wind.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>1000 kg at sea level on dry asphalt: stall 25.7 m/s, lift-off at 28.2 m/s after 192 m and 12.9 s. At 1200 kg: 291 m, 52 % more for 20 % more mass, close to the 1.2² = 1.44 the rule suggests.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting that a tailwind works in reverse: 5 m/s of tailwind lengthens this run from 192 m to 256 m, a third more. Always take off and land into the wind.</div>
+  <div class="try"><h4>Try it</h4>Raise the airfield altitude to 3000 m: the lift-off speed rises (in true airspeed) and so does the run.</div>
+</section>
+<section data-case="takeoff" data-example="hot"><h3>A high airfield</h3><p>At 2000 m the air is 18 % thinner (1.01 kg/m³): lift-off at 31.2 m/s true airspeed, after 239 m. Hot days make it worse still; in this model the engine keeps its power, which real piston engines don't.</p></section>
+<section data-case="takeoff" data-example="heavy"><h3>20 % heavier</h3><p>Stall speed 28.1 m/s, ground roll 291 m in 17.7 s.</p></section>
+<section data-case="takeoff" data-example="wind"><h3>10 m/s headwind</h3><p>The aircraft starts with 10 m/s of airspeed and only needs 18 more: 83 m instead of 192, in 8.7 s.</p></section>
+<section data-case="takeoff" data-example="grass"><h3>From grass</h3><p>Rolling friction 0.05 instead of 0.02: 217 m. Soft or long grass can double it; rough fields are one reason pilots raise the nose early to unload the wheels.</p></section>
+<section data-case="takeoff" data-example="land"><h3>Landing, wet runway</h3><p>Touchdown at 1.15 V_s = 29.6 m/s with idle thrust: braking friction 0.2 instead of 0.4 nearly doubles the stop, 240 m against 129 m on dry asphalt.</p></section>
+
+<section data-case="stability">
+  <h3>Longitudinal static stability</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the aircraft from the side, at its trimmed attitude plus the disturbance after a gust: centre of gravity (orange), neutral point (green), wing and tail lift and the weight. Top right: the pitching moment about the CG against angle of attack (blue if stable, red if not), with the trim point. Bottom right: how the angle of attack recovers after a 3° gust. Below: the elevator needed to trim at C_L = 0.4 against CG position.</div>
+  <p>An aeroplane is statically stable in pitch if a gust that raises the nose makes a moment that lowers it again. The wing's lift acts near its quarter chord; the tail, far behind, adds lift that grows with α too. Together they act at the <b>neutral point</b>, the aircraft's “aerodynamic centre”. If the CG is ahead of the neutral point, extra lift from a gust acts behind the CG and pitches the nose back down: Cm falls with α. The distance between them, as a fraction of the mean chord, is the <b>static margin</b>. Behind the neutral point the slope changes sign, and the smallest disturbance grows.</p>
+  <div class="eq">$$C_{m,cg} = C_{m0} + C_{m\alpha}\,\alpha, \qquad C_{m\alpha} = a\,(h - h_n), \qquad h_n = h_{ac} + V_H\frac{a_t}{a}\Big(1 - \frac{d\varepsilon}{d\alpha}\Big), \qquad \alpha_{trim} = -\frac{C_{m0}}{C_{m\alpha}}$$</div>
+  <ol class="steps">
+    <li>The tail volume V_H = S_t l_t / (S c̄) moves the neutral point aft.</li>
+    <li>Stable if Cmα &lt; 0, that is, CG ahead of the neutral point.</li>
+    <li>Trim where Cm = 0; the elevator shifts Cm0 and so the trimmed speed.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Tail volume 0.5: neutral point at 46 % MAC. With the CG at 25 % the static margin is 21 %, Cmα = 4.96 × (0.25 − 0.46) = −1.05 per radian; it trims at α = 3.9° (C_L = 0.34), and a 3° gust has died out within about 0.6 s.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking stability depends on the CG being below the wing, like a pendulum. Pitch stability is about the fore-and-aft position of the CG relative to the neutral point; it is why loading an aircraft outside its CG limits is dangerous.</div>
+  <div class="try"><h4>Try it</h4>Slide the CG aft and watch the blue Cm line flatten, then tip over and turn red as the CG passes the neutral point.</div>
+</section>
+<section data-case="stability" data-example="fwd"><h3>Nose-heavy</h3><p>CG at 10 %: margin 36 %, Cmα = −1.79, very stiff in pitch. But it trims at only C_L = 0.20 (fast) unless the elevator holds the nose up; below, the trim curve shows the up elevator needed growing as the CG moves forward. Too far forward and the elevator runs out before landing speed.</p></section>
+<section data-case="stability" data-example="aft"><h3>Near the neutral point</h3><p>CG at 40 %, margin 6 %: Cmα = −0.31, with 3° of down elevator to trim at C_L = 0.50. The gust takes about three times as long to die out, and small elevator movements change the trimmed speed a lot: light and twitchy.</p></section>
+<section data-case="stability" data-example="unstable"><h3>Behind the neutral point</h3><p>CG at 55 %, margin −9 %: Cmα = +0.44. There is no stable trim; a 3° gust doubles in under a second. Only active control (a pilot or a fly-by-wire computer, as in some fighters) can fly it.</p></section>
+<section data-case="stability" data-example="tail"><h3>A smaller tail</h3><p>Tail volume 0.25: the neutral point moves forward to 36 %. With the CG at 30 % the margin is only 6 %.</p></section>
+<section data-case="stability" data-example="elev"><h3>Up elevator</h3><p>4° up raises Cm0 from 0.072 to 0.127: trim moves to α = 6.9° (C_L = 0.60), a slower speed. The stability (slope) is unchanged; the elevator picks the speed.</p></section>
+<details><summary>About the model</summary>
+  <p>Airfoil: Joukowski transformation of a circle with centre (−t, f) through ζ = 1, freestream at α, Kutta circulation; streamlines traced in the circle plane and mapped (I. H. Abbott and A. E. von Doenhoff, Theory of Wing Sections). Polar and ground roll use the trainer of “Lift and drag” (1000 kg, 16.2 m², AR 7.5, e 0.8, C_D0 0.027, C_L,max 1.5); propeller thrust 2600 N falling with speed, ground C_L 0.45, lift-off at 1.1 V_s, touchdown at 1.15 V_s. Stability: c̄ = 1.5 m, tail arm 4.5 m, a_t = 3.5, dε/dα = 0.4, tail incidence −4°, elevator effectiveness 0.45; gust response from a simple second-order pitch model. Tests: Joukowski C_L against the closed form and the Kutta condition; least drag where the friction and induced parts are equal; ground roll growing about as W²; neutral point where Cmα = 0.</p>
+</details>

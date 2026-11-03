@@ -1,0 +1,77 @@
+<section data-case="ttest">
+  <h3>z and t tests</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the data (σ = 2) as dots, with each group's mean as a bar (for one sample, the red dashed line is μ₀ = 10; for paired data, lines join each subject's two values). Top right: the t distribution for these degrees of freedom (blue) against the normal (green dashed), the observed t (orange), and the two-sided p-value as red tails. Bottom right: the critical t for 95 % against degrees of freedom. Below: the expected t against n.</div>
+  <p>A test asks whether a difference is larger than chance alone would produce. Divide the difference by its standard error to get a score. If σ were known, the score would follow the normal distribution: a <b>z test</b>. In practice σ is estimated by s from the same data, which adds uncertainty. Gosset (writing as “Student”, 1908) showed that the score then follows the <b>t distribution</b>, which has fatter tails when n is small. There are three designs: one group against a reference value; two independent groups; and paired measurements (before and after on the same people), which test the differences.</p>
+  <div class="eq">$$t = \frac{\bar x - \mu_0}{s/\sqrt n}, \qquad t = \frac{\bar x_B - \bar x_A}{s_p\sqrt{1/n_A + 1/n_B}}, \qquad t = \frac{\bar d}{s_d/\sqrt n}, \qquad \text{df} = n-1,\ n_A+n_B-2,\ n-1$$</div>
+  <ol class="steps">
+    <li>Difference of interest, divided by its standard error.</li>
+    <li>Compare with the t distribution with the right degrees of freedom.</li>
+    <li>p = the chance of a |t| at least this large if there were no effect.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Two groups of 10, true effect 1: the observed difference is 1.08 with standard error 0.655, so t = 1.65 on 18 df and p = 0.12, not significant. With 18 df a t of ±2.10 is needed, not the ±1.96 of z.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Analysing paired data as two independent groups. It throws away the pairing: the person-to-person variation stays in the error and hides the effect.</div>
+  <div class="try"><h4>Try it</h4>Set n = 3, then n = 60, and watch the blue t curve close in on the green normal.</div>
+</section>
+<section data-case="ttest" data-example="one"><h3>One sample</h3><p>Ten values against μ₀ = 10: mean difference 1.35, SE 0.553, t = 2.44 on 9 df, p = 0.037. Significant at 5 %.</p></section>
+<section data-case="ttest" data-example="paired"><h3>Paired</h3><p>The same ten people before and after: each person's differences vary by only about 0.7, so SE = 0.228, t = 3.44 and p = 0.0074. Treated as two independent groups, the same numbers give p = 0.37.</p></section>
+<section data-case="ttest" data-example="tiny"><h3>n = 3</h3><p>t = 2.53 on 2 df gives p = 0.13: the critical value is 4.30. A z test would have said p = 0.01, far too confident for three points.</p></section>
+<section data-case="ttest" data-example="large"><h3>n = 60</h3><p>118 df: the critical t is 1.98, almost 1.96. t = 3.45, p = 0.0008. With large samples t and z agree.</p></section>
+
+<section data-case="pvalues">
+  <h3>p-values, power and p-hacking</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: as time runs, 300 experiments (two groups of n each) build a histogram of their p-values; the green dashed line is the flat density 1, and the red line is α. Top right: the power, the chance of p &lt; α, against the true effect, with the simulated rate (dot). Bottom right: how many experiments were significant. Below: the chance that at least one of j tests on pure noise comes out significant.</div>
+  <p>Repeat an experiment many times and the p-value varies like any statistic. If there is no effect, p is <b>uniform</b> between 0 and 1: a fraction α of experiments fall below α by pure chance. Those are false alarms (Type I errors). If there is an effect, p piles up near 0. The fraction below α is the <b>power</b>, and its complement is the miss rate β (Type II errors). Power grows with the effect size and with n. Testing many outcomes and reporting whichever “worked” multiplies the false alarms.</p>
+  <div class="eq">$$P(p<\alpha \mid H_0) = \alpha, \qquad \text{power} = 1 - \Phi\!\Big(z_{1-\alpha/2} - \frac{d}{\sigma\sqrt{2/n}}\Big) + \dots, \qquad P(\text{some } p<\alpha \text{ in } m) = 1-(1-\alpha)^m$$</div>
+  <ol class="steps">
+    <li>Fix α before looking at the data.</li>
+    <li>Choose n large enough for the power you want (often 0.8).</li>
+    <li>If you test m outcomes, correct for it (Bonferroni: α/m each).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>No effect, 15 per group: 5.0 % of 300 experiments give p &lt; 0.05, as promised. True effect 1.5 (0.75 σ): the theory gives power 0.54, and 58 % of the simulated experiments find the effect.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Treating p = 0.04 as strong evidence and p = 0.06 as none. The line at 0.05 is a convention for decisions; the p-value itself varies a lot from one replication to the next.</div>
+  <div class="try"><h4>Try it</h4>With no effect, raise the number of outcomes from 1 to 20 and watch the red line's left bar grow.</div>
+</section>
+<section data-case="pvalues" data-example="effect"><h3>A real effect</h3><p>True effect 1.5, n = 15: the histogram crowds against 0. 58 % of experiments are significant; the other 42 % miss a real effect.</p></section>
+<section data-case="pvalues" data-example="low"><h3>Low power</h3><p>Effect 1, n = 8: power 0.17. Most experiments miss, and the few that “succeed” overestimate the effect, because only lucky large differences pass the threshold.</p></section>
+<section data-case="pvalues" data-example="hack"><h3>Twenty outcomes</h3><p>No effect anywhere, but each experiment measures 20 things and reports the best p: 68 % of experiments “find” something (theory: 1 − 0.95²⁰ = 64 %). Testing α/20 = 0.0025 each would bring it back to 5 %.</p></section>
+<section data-case="pvalues" data-example="strict"><h3>α = 0.005</h3><p>Fewer false alarms (0.5 %), but the power for effect 1.5 drops from 0.54 to 0.23. Stricter thresholds need more data.</p></section>
+
+<section data-case="anova">
+  <h3>One-way ANOVA</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: k groups of n values, with group means (bars) and the grand mean (green dashed). Top right: the F distribution if all true means are equal, the observed F (orange), and the p-value (red). Bottom right: the mean square between groups and within groups. Below: the expected F against n.</div>
+  <p>To compare several groups at once, analysis of variance splits the total variation into two parts. The part between groups is how far the group means sit from the grand mean. The part within groups is how far values sit from their own group's mean. Each divided by its degrees of freedom gives a mean square. If all true means are equal, both estimate the same noise variance σ² and their ratio F is near 1. Real differences inflate the between part.</p>
+  <div class="eq">$$F = \frac{\sum_j n_j(\bar x_j - \bar x)^2/(k-1)}{\sum_j\sum_i (x_{ij}-\bar x_j)^2/(N-k)} \sim F_{k-1,\,N-k}\ \text{under } H_0$$</div>
+  <ol class="steps">
+    <li>Grand mean and group means.</li>
+    <li>Sums of squares between (df k − 1) and within (df N − k).</li>
+    <li>F = MS_between / MS_within; large F means the means differ.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Three groups of 10, noise σ = 2: MS between = 14.9, MS within = 4.80 (close to σ² = 4), F = 3.11 on (2, 27) df. The 5 % critical value is 3.35, so p = 0.061: suggestive, not significant.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Running all the pairwise t tests instead. Three groups make three tests, five groups ten, and the chance of a false alarm grows with each. ANOVA asks one question first; follow-up comparisons need a correction (Tukey, Bonferroni).</div>
+  <div class="try"><h4>Try it</h4>Keep the spread of the means fixed and raise the noise: the orange bar stays put while the blue one grows.</div>
+</section>
+<section data-case="anova" data-example="none"><h3>No differences</h3><p>All true means equal: F = 0.07, p = 0.93. The group means differ only by chance.</p></section>
+<section data-case="anova" data-example="clear"><h3>Clear differences</h3><p>Spread 2.5: MS between 78.8 against 4.8 within, F = 16.4, p = 0.00002.</p></section>
+<section data-case="anova" data-example="noisy"><h3>More noise</h3><p>The same true means with σ = 4: MS within 19.2, F = 1.01. Differences that are invisible against this much noise.</p></section>
+<section data-case="anova" data-example="five"><h3>Five groups</h3><p>(4, 45) df: F = 4.36, p = 0.005 (critical value 2.58). The F test says “some mean differs”, not which.</p></section>
+
+<section data-case="nonparam">
+  <h3>Rank tests: Mann–Whitney</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: two groups of 12, with each value's rank among all 24. Top right: the p-value of the t test (blue) and of Mann–Whitney (green) as one value of B is pushed further out. Bottom right: the rank sums. Below: the standard deviation of group B.</div>
+  <p>The t test uses the values themselves, so a single wild value inflates the standard deviation and can hide a real difference. A rank test replaces the values by their positions in the combined, sorted list. The Mann–Whitney (Wilcoxon rank-sum) test asks whether B's ranks are systematically higher than A's. The largest value has rank 24 whether it is 20 or 2000. Rank tests make no assumption of normality. They lose a little power when the data really are normal, and gain a lot when the data have outliers or heavy tails.</p>
+  <div class="eq">$$U = R_B - \frac{n_B(n_B+1)}{2}, \qquad E[U] = \frac{n_An_B}{2}, \qquad \operatorname{sd}(U) = \sqrt{\frac{n_An_B(n_A+n_B+1)}{12}}$$</div>
+  <ol class="steps">
+    <li>Rank all values together (ties share the average rank).</li>
+    <li>Add up B's ranks; U counts the pairs in which B beats A.</li>
+    <li>Compare U with its distribution if the groups are the same (normal approximation here).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Shift 1.5, no outlier: t test p = 0.011, Mann–Whitney U = 115 of 144 pairs, p = 0.014. Both agree.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Deleting outliers until the t test works. If the outliers are real data, use a method that tolerates them; if they are errors, fix them for a reason you would state in advance.</div>
+  <div class="try"><h4>Try it</h4>Move the slider from 0 to 80: the blue curve rises past 0.05, and the green one does not move once that value is the largest.</div>
+</section>
+<section data-case="nonparam" data-example="one"><h3>One wild value</h3><p>Add 25 to one value of B: its standard deviation jumps from 1.7 to 6.8, the t test drifts to p = 0.054, and Mann–Whitney (p = 0.004) still sees the shift. It even counts the outlier as one more win for B.</p></section>
+<section data-case="nonparam" data-example="huge"><h3>A huge one</h3><p>Add 60: B's mean difference grows to 7.0, yet t = 1.45 and p = 0.16. The bigger the outlier, the less significant the t test becomes. The ranks don't change.</p></section>
+<section data-case="nonparam" data-example="none"><h3>No shift</h3><p>Both groups from the same population: t test p = 0.47, Mann–Whitney p = 0.67, U = 80, near its expected 72.</p></section>
+<details><summary>About the model</summary>
+  <p>Seeded normal data with σ = 2 (paired: a person-level baseline plus noise 0.5). Two-sample t with pooled variance; Welch's version, which does not assume equal variances, is usually preferred in practice. Power from the normal approximation. Mann–Whitney with the normal approximation and continuity correction, without a tie correction. t, F and χ² distributions from the regularised incomplete beta and gamma functions. Tests: table values of t, χ² and F; densities integrate to their CDFs; under H₀ 5 % of p-values fall below 0.05; F ≈ 1 with no differences.</p>
+</details>

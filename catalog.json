@@ -1861,6 +1861,152 @@
   ]
  },
  {
+  "subject": "statistics",
+  "name": "Statistics",
+  "topics": [
+   {
+    "id": "descriptive-stats",
+    "title": "Mean, median and spread",
+    "what": "What one outlier does to the mean, median, standard deviation and IQR.",
+    "from": "describe",
+    "cases": [
+     "summary"
+    ],
+    "group": "1 · Describing data"
+   },
+   {
+    "id": "histograms-boxplots",
+    "title": "Histograms and box plots",
+    "what": "Bin width shapes the picture; the box plot shows five numbers, and can hide two humps.",
+    "from": "describe",
+    "cases": [
+     "histogram"
+    ],
+    "group": "1 · Describing data"
+   },
+   {
+    "id": "correlation",
+    "title": "Correlation",
+    "what": "Pearson against Spearman, Anscombe's quartet, and r ≈ 0 with a perfect relation.",
+    "from": "describe",
+    "cases": [
+     "correlation"
+    ],
+    "group": "1 · Describing data"
+   },
+   {
+    "id": "sampling-distribution",
+    "title": "Sampling distributions",
+    "what": "Repeat the sample and the statistic varies: standard error σ/√n, for the mean, median and sd.",
+    "from": "estimation",
+    "cases": [
+     "sampling"
+    ],
+    "group": "2 · Estimation"
+   },
+   {
+    "id": "mle",
+    "title": "Maximum likelihood",
+    "what": "Slide the parameter to the peak of the likelihood: coin, measurements, waiting times.",
+    "from": "estimation",
+    "cases": [
+     "mle"
+    ],
+    "group": "2 · Estimation"
+   },
+   {
+    "id": "bootstrap",
+    "title": "The bootstrap",
+    "what": "Resample your one sample to get a confidence interval without a formula.",
+    "from": "estimation",
+    "cases": [
+     "bootstrap"
+    ],
+    "group": "2 · Estimation"
+   },
+   {
+    "id": "z-and-t-tests",
+    "title": "z and t tests",
+    "what": "One-sample, two-sample and paired t tests; why small samples need t's fat tails.",
+    "from": "tests",
+    "cases": [
+     "ttest"
+    ],
+    "group": "3 · Tests"
+   },
+   {
+    "id": "p-values-power",
+    "title": "p-values, power and p-hacking",
+    "what": "Hundreds of experiments: p is uniform under H₀, piles up near 0 with an effect; test 20 outcomes and something always 'works'.",
+    "from": "tests",
+    "cases": [
+     "pvalues"
+    ],
+    "group": "3 · Tests"
+   },
+   {
+    "id": "chi-square-gof",
+    "title": "Chi-square goodness of fit",
+    "what": "Is this die fair? Observed against expected counts, and Mendel's peas.",
+    "from": "chisquare",
+    "cases": [
+     "gof"
+    ],
+    "group": "3 · Tests"
+   },
+   {
+    "id": "chi-square-independence",
+    "title": "Chi-square test of independence",
+    "what": "Does the outcome depend on the treatment? A 2 × 3 table, expected counts and Cramér's V.",
+    "from": "chisquare",
+    "cases": [
+     "independence"
+    ],
+    "group": "3 · Tests"
+   },
+   {
+    "id": "anova",
+    "title": "ANOVA",
+    "what": "Several group means at once: variation between groups against within, the F ratio.",
+    "from": "tests",
+    "cases": [
+     "anova"
+    ],
+    "group": "3 · Tests"
+   },
+   {
+    "id": "rank-tests",
+    "title": "Rank tests (Mann–Whitney)",
+    "what": "One wild value wrecks the t test; ranks do not care.",
+    "from": "tests",
+    "cases": [
+     "nonparam"
+    ],
+    "group": "3 · Tests"
+   },
+   {
+    "id": "regression-inference",
+    "title": "Regression inference",
+    "what": "Confidence and prediction bands, the slope test, residual plots and R².",
+    "from": "models",
+    "cases": [
+     "regression"
+    ],
+    "group": "4 · Models"
+   },
+   {
+    "id": "bayesian-update",
+    "title": "Bayesian updating",
+    "what": "Prior × likelihood → posterior, flip by flip; credible against confidence intervals.",
+    "from": "models",
+    "cases": [
+     "bayes"
+    ],
+    "group": "4 · Models"
+   }
+  ]
+ },
+ {
   "subject": "physics",
   "name": "Physics",
   "moved": {
@@ -2434,6 +2580,26 @@
     "group": "Flight"
    },
    {
+    "id": "airfoil-lift",
+    "title": "How an airfoil lifts",
+    "what": "Flow and pressure round a Joukowski airfoil: suction on top, camber, the Kutta condition, and no equal transit time.",
+    "from": "aero",
+    "cases": [
+     "airfoil"
+    ],
+    "group": "Flight"
+   },
+   {
+    "id": "drag-polar",
+    "title": "Drag polar and power curves",
+    "what": "Friction against induced drag, the best L/D speed, power needed against power available.",
+    "from": "aero",
+    "cases": [
+     "polar"
+    ],
+    "group": "Flight"
+   },
+   {
     "id": "standard-atmosphere",
     "title": "The standard atmosphere",
     "what": "Temperature, pressure, density and the speed of sound with altitude",
@@ -2460,6 +2626,26 @@
     "from": "cruise",
     "cases": [
      "range"
+    ],
+    "group": "Flight"
+   },
+   {
+    "id": "takeoff-landing",
+    "title": "Take-off and landing",
+    "what": "The ground roll: thrust, drag and wheel friction; weight, altitude, headwind and runway surface.",
+    "from": "aero",
+    "cases": [
+     "takeoff"
+    ],
+    "group": "Flight"
+   },
+   {
+    "id": "static-stability",
+    "title": "Static stability",
+    "what": "Centre of gravity against neutral point: the pitching-moment slope, trim, and what a gust does.",
+    "from": "aero",
+    "cases": [
+     "stability"
     ],
     "group": "Flight"
    },
@@ -2540,10 +2726,50 @@
     "group": "Orbits"
    },
    {
+    "id": "hohmann-vs-bielliptic",
+    "title": "Hohmann against bi-elliptic",
+    "what": "When three burns beat two: the 11.94 and 15.58 radius ratios, and the time it costs.",
+    "from": "maneuvers",
+    "cases": [
+     "bielliptic"
+    ],
+    "group": "Orbits"
+   },
+   {
+    "id": "plane-change",
+    "title": "Plane changes",
+    "what": "Turning an orbit costs 2v sin(Δi/2): do it slow, at apoapsis, and combine it with a burn.",
+    "from": "maneuvers",
+    "cases": [
+     "plane"
+    ],
+    "group": "Orbits"
+   },
+   {
+    "id": "rendezvous",
+    "title": "Rendezvous",
+    "what": "Relative motion near the ISS (Clohessy–Wiltshire): speed up to fall behind, and a two-burn rendezvous.",
+    "from": "maneuvers",
+    "cases": [
+     "rendezvous"
+    ],
+    "group": "Orbits"
+   },
+   {
     "id": "gravity-assist",
     "title": "Gravity assist",
     "what": "A flyby turns the velocity; seen from the Sun the craft speeds up or slows down",
     "from": "gravity-assist",
+    "group": "Orbits"
+   },
+   {
+    "id": "escape-and-c3",
+    "title": "Escape to the planets",
+    "what": "Patched conics: v∞ from a Hohmann round the Sun, C3, the escape burn and the Oberth effect.",
+    "from": "maneuvers",
+    "cases": [
+     "escape"
+    ],
     "group": "Orbits"
    },
    {

@@ -1,0 +1,38 @@
+<section data-case="gof">
+  <h3>Chi-square goodness of fit</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: observed counts per category (blue bars) against the counts expected if H₀ is true (orange dashed). For the die, rolls accumulate as time runs. Top right: the χ² distribution with k − 1 degrees of freedom, the observed statistic (orange), and the p-value (red tail). Bottom right: each category's contribution to χ². Below: χ² as the rolls come in, against the 5 % critical value.</div>
+  <p>Is this die fair? Are these peas in Mendel's 9 : 3 : 3 : 1 ratio? A goodness-of-fit test compares counts with what a model predicts. For each category, square the gap between observed and expected and divide by expected, then add them up. The division makes a miss of 10 on an expected 20 count much more than a miss of 10 on an expected 1000. If the model is right, the total follows (approximately) a <b>χ² distribution</b> with k − 1 degrees of freedom. One degree is lost because the counts must add up to n.</p>
+  <div class="eq">$$\chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}, \qquad E_i = n\,p_i, \qquad \text{df} = k - 1, \qquad E[\chi^2] = \text{df}$$</div>
+  <ol class="steps">
+    <li>Expected counts from the model: n times each probability.</li>
+    <li>Add up (O − E)²/E.</li>
+    <li>Compare with χ²(k − 1); the approximation needs every E of at least about 5.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>120 rolls of a fair die, expected 20 per face: observed 16, 21, 22, 18, 26, 17 give χ² = 0.8 + 0.05 + 0.2 + 0.2 + 1.8 + 0.45 = 3.5 on 5 df. Its expected value is 5 and the 5 % critical value is 11.07, so p = 0.62: nothing unusual.</div>
+  <div class="pitfall"><h4>Common mistake</h4>“Not significant, so the die is fair.” A small sample cannot detect a modest bias; the test only says the data don't contradict fairness.</div>
+  <div class="try"><h4>Try it</h4>Load the die (six at 0.25) and watch the χ² line below: it wanders at first, then climbs steadily past the critical value as the rolls pile up.</div>
+</section>
+<section data-case="gof" data-example="loaded"><h3>Loaded, 60 rolls</h3><p>The six has probability 1 in 4, yet in 60 rolls it came up only 10 times, exactly as expected for a fair die. χ² = 5.0, p = 0.42: the bias is real but invisible at this sample size.</p></section>
+<section data-case="gof" data-example="caught"><h3>Loaded, 600 rolls</h3><p>150 sixes against an expected 100: that cell alone adds 25 to χ² = 31.4, and p = 0.000008. With enough data, small biases show up.</p></section>
+<section data-case="gof" data-example="mendel"><h3>Mendel's peas</h3><p>556 peas from a dihybrid cross: 315 round-yellow, 108 round-green, 101 wrinkled-yellow, 32 wrinkled-green, against expected 313, 104, 104, 35 for 9 : 3 : 3 : 1. χ² = 0.47 on 3 df, p = 0.93: an excellent fit. Fisher (1936) noticed that Mendel's results are, taken together, almost too good to be true.</p></section>
+
+<section data-case="independence">
+  <h3>Chi-square test of independence</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a 2 × 3 table of patients (treatment or placebo, by outcome), each cell showing the observed count and, in brackets, the count expected if outcome and treatment were unrelated. Below the table, the share of each row in each outcome. Top right: χ² with 2 degrees of freedom. Bottom right: the Pearson residual of each cell. Below: the typical p-value for this effect size against the number of patients.</div>
+  <p>Does the outcome depend on the treatment? If the two were independent, each row would split across the outcomes in the same proportions as the whole table. So the expected count in a cell is its row total times its column total, divided by n. The same χ² sum then measures how far the table is from independence. It has (rows − 1)(columns − 1) degrees of freedom, because once the margins are fixed only that many cells are free. The test says whether there is an association, and <b>Cramér's V</b> says how strong it is.</p>
+  <div class="eq">$$E_{ij} = \frac{R_i\,C_j}{n}, \qquad \chi^2 = \sum_{i,j}\frac{(O_{ij}-E_{ij})^2}{E_{ij}}, \qquad \text{df} = (r-1)(c-1), \qquad V = \sqrt{\frac{\chi^2}{n\,\min(r-1,\,c-1)}}$$</div>
+  <ol class="steps">
+    <li>Row and column totals; expected counts from them.</li>
+    <li>Residuals (O − E)/√E show where the table departs: beyond about ±2 is notable.</li>
+    <li>χ² is the sum of the squared residuals.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>200 patients: treatment 54 improved, 34 same, 18 worse; placebo 23, 30, 41. Expected for treatment–improved: 106 × 77 / 200 = 40.8. χ² = 21.1 on 2 df, p = 0.00003, V = 0.32: a modest-to-strong association, mostly from the improved and worse columns.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading a tiny p as a big effect. With thousands of subjects even a negligible difference is “significant”; always report an effect size such as V, or the difference in proportions.</div>
+  <div class="try"><h4>Try it</h4>Fix the strength at 0.15 and raise the number of patients: the expected p-value curve drops below 0.05 near 450 patients, even though nothing about the treatment changed.</div>
+</section>
+<section data-case="independence" data-example="none"><h3>No association</h3><p>Both rows drawn from the same proportions: χ² = 1.36, p = 0.51, V = 0.08. The bars differ only by chance.</p></section>
+<section data-case="independence" data-example="strong"><h3>Strong association</h3><p>70 of 111 treated patients improved against 10 of 89 on placebo: χ² = 76.6, V = 0.62.</p></section>
+<section data-case="independence" data-example="tiny"><h3>Tiny effect, 2000 patients</h3><p>χ² = 6.28, p = 0.043: significant. But V = 0.056, and the share improving differs by only 3.4 percentage points. Statistically detectable is not the same as clinically important.</p></section>
+<details><summary>About the model</summary>
+  <p>Seeded rolls and multinomial tables. The χ² approximation is used throughout; with expected counts below about 5, an exact test (Fisher's, or a simulation) is better. Mendel's counts from his 1866 paper; R. A. Fisher, “Has Mendel's work been rediscovered?”, Annals of Science 1 (1936). Tests: χ² table values; a fair die rejects at about the nominal 5 % rate; expected counts reproduce the margins.</p>
+</details>

@@ -1,0 +1,77 @@
+<section data-case="bielliptic">
+  <h3>Hohmann against bi-elliptic</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the total Δv to go from a circular orbit of radius r₁ to one of radius r₂, in units of the starting circular speed, against the ratio r₂/r₁. The curves are the Hohmann transfer (blue), the bi-elliptic transfer with your apoapsis r_b (orange), and the bi-elliptic limit as r_b → ∞ (green dashed). Top right: the orbits, radius on a square-root scale. Bottom right: the Δv of each burn. Below: the transfer times.</div>
+  <p>The Hohmann transfer uses two burns: raise the far end of the orbit to r₂, then circularise there. The bi-elliptic transfer uses three. It goes out <i>beyond</i> the target to r_b, raises the near end to r₂ while it is crawling slowly far out, then comes back in and brakes at r₂. Burns far from the planet are cheap, and for large enough ratios the detour costs less Δv overall. Two classic numbers bound it. Below r₂/r₁ = 11.94 the Hohmann always wins. Above 15.58 the bi-elliptic wins for any r_b beyond r₂. In between it depends on r_b. The price is time: the detour can take tens of times longer.</p>
+  <div class="eq">$$\Delta v_{H} = \Big(\sqrt{\tfrac{2R}{1+R}} - 1\Big) + \sqrt{\tfrac1R}\Big(1 - \sqrt{\tfrac{2}{1+R}}\Big), \qquad \Delta v_{bi}\xrightarrow{r_b\to\infty} (\sqrt2 - 1)\Big(1 + \tfrac{1}{\sqrt R}\Big) \qquad (v_1 = 1,\ R = r_2/r_1)$$</div>
+  <ol class="steps">
+    <li>Every burn is a change of speed from one conic to the next, from the vis-viva equation v² = μ(2/r − 1/a).</li>
+    <li>Add the magnitudes of the burns.</li>
+    <li>Compare the totals, then the times.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>R = 15, r_b = 3 r₂: Hohmann 0.369 + 0.167 = 0.536 v₁; bi-elliptic 0.399 + 0.074 + 0.058 = 0.531 v₁. That saves 1 %, about 40 m/s from low Earth orbit, but takes 12 times longer. For this r_b the curves cross at R = 13.3.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Assuming the Hohmann transfer is always optimal. It is the cheapest <i>two-burn</i> transfer between coplanar circles; with three burns and large ratios, the bi-elliptic can do better.</div>
+  <div class="try"><h4>Try it</h4>Raise r_b/r₂ to 100: the orange curve approaches the green limit and the crossover slides down towards 11.94.</div>
+</section>
+<section data-case="bielliptic" data-example="near"><h3>R = 5</h3><p>Hohmann 0.480 against bi-elliptic 0.561: for nearby targets, going out and back is pure waste.</p></section>
+<section data-case="bielliptic" data-example="far"><h3>R = 40, r_b = 10 r₂</h3><p>Bi-elliptic 0.485 against Hohmann 0.520: 7 % less Δv, and the middle burn far out is only 0.018 v₁. It takes 66 times as long.</p></section>
+<section data-case="bielliptic" data-example="cross"><h3>The crossover</h3><p>With r_b = 100 r₂ the two cost the same, 0.534 v₁, at R ≈ 12. Only as r_b → ∞ does the crossover reach 11.94, with a transfer that never ends.</p></section>
+
+<section data-case="plane">
+  <h3>Plane changes</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the total Δv from a 300 km orbit to the target orbit with an inclination change, against the share of it done at the first burn (green dot: the best; orange: your choice); the dashed curves are the two burns. Top right: the second burn as vectors, with arrival speed v_a, circular speed v_c turned by the rest of the plane change, and Δv between them. Bottom right: the cost of turning an orbit alone against the angle, at LEO speed and at the slow apogee speed. Below: the best total against the angle.</div>
+  <p>Turning an orbit's plane means turning its velocity vector, and that costs Δv in proportion to the speed: 2v sin(Δi/2). At low orbit speed, 7.7 km/s, a 28.5° change alone costs 3.8 km/s, as much as the whole trip to GEO. Two tricks reduce it. Turn where the orbit is slow: at the apogee of the transfer the speed is only 1.6 km/s. And combine the turn with a burn you need anyway: by the law of cosines, a speed change and a turn done together cost less than done separately. The optimum puts most of the turn at the second burn, and a little at the first.</p>
+  <div class="eq">$$\Delta v_{plane} = 2v\sin\frac{\Delta i}{2}, \qquad \Delta v_{comb} = \sqrt{v_1^2 + v_2^2 - 2v_1v_2\cos\Delta i}$$</div>
+  <ol class="steps">
+    <li>First burn: from circular LEO speed to transfer perigee speed, turned by s·Δi.</li>
+    <li>Second burn: from apogee speed to circular speed, turned by (1 − s)·Δi.</li>
+    <li>Search s for the smallest sum.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Cape Canaveral (28.5°) to GEO with the whole turn at apogee: 2430 + 1830 = 4260 m/s, against 3890 m/s with no turn. The best split (8 % at perigee) gives 4230 m/s: the 28.5° turn costs only 340 m/s extra, against 3800 m/s if done alone at LEO.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Treating Δv for a turn and for a speed change as separate additions. Done in one burn, the two partly cancel, and the combined burn is often barely more than the speed change alone.</div>
+  <div class="try"><h4>Try it</h4>Slide the share from 0 to 100 %: the total climbs by 2.2 km/s, because the turn moves to where the spacecraft is fast.</div>
+</section>
+<section data-case="plane" data-example="leo"><h3>All at the first burn</h3><p>The full 28.5° at LEO speed: 4990 + 1470 = 6460 m/s, 2.2 km/s more than the best. No real mission does this.</p></section>
+<section data-case="plane" data-example="best"><h3>The best split</h3><p>About 2.2° of the turn at perigee, the rest at apogee: 4230 m/s. A small turn at the fast burn is cheap because it is combined with a large speed change.</p></section>
+<section data-case="plane" data-example="kourou"><h3>From Kourou</h3><p>A launch site at 5° latitude: 3910 m/s, only 20 m/s more than an equatorial launch. Launch sites near the equator save geostationary satellites hundreds of m/s.</p></section>
+<section data-case="plane" data-example="baikonur"><h3>From Baikonur</h3><p>51.6°: the best is 4810 m/s, 920 m/s more than equatorial. Russian GEO launches often use supersynchronous transfers, raising apogee above GEO so the turn happens even slower.</p></section>
+
+<section data-case="rendezvous">
+  <h3>Rendezvous</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the chaser's path relative to a target on the ISS's orbit (green, at the origin). The horizontal axis is distance ahead along the track; the vertical is height above the target, stretched to be visible. The faint line is the whole path, the orange part the path so far. Top right: height against time. Bottom right: distance ahead against time. Below: the distance to the target.</div>
+  <p>Close to a target in a circular orbit, the chaser's motion relative to it follows the Clohessy–Wiltshire equations: linear, and solvable exactly. They hold some surprises. Burn forward (prograde) and you raise your orbit; a higher orbit is slower, so after one orbit you are <i>behind</i>, by 6π Δv/n. Burn backward and you drop and pull ahead. A radial burn makes a closed loop that returns to the start after one orbit. A lower orbit simply drifts ahead, 3π times the height difference per orbit. Real rendezvous combines these: phasing in a lower orbit, then a final two-burn approach.</p>
+  <div class="eq">$$\ddot x - 3n^2x - 2n\dot y = 0, \qquad \ddot y + 2n\dot x = 0, \qquad \Delta y_{orbit} = -\frac{6\pi}{n}\Delta v_y, \qquad \Delta y_{orbit} = 6\pi x_0 \ \text{(circular, lower)}$$</div>
+  <ol class="steps">
+    <li>x is up, y along the track, n the target's mean motion (93 min orbit here).</li>
+    <li>The closed-form solution gives position and velocity at any time from the start values.</li>
+    <li>For a rendezvous in time T, solve for the starting velocity that reaches the origin; brake on arrival.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>10 km behind, a 1 m/s prograde burn: the chaser climbs 3.6 km and after one orbit is 26.7 km behind (16.7 km more), the speed-up having slowed it down. A 1 m/s retrograde burn instead brings it 16.7 km forward per orbit: past the target in the first orbit.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thrusting towards the target. Orbital mechanics is not driving: pointing at the target and burning sends you on a curve that misses it. Approaches are planned with exactly these equations.</div>
+  <div class="try"><h4>Try it</h4>In “One burn”, switch the along-track burn between +1 and −1 m/s and watch the loops reverse direction.</div>
+</section>
+<section data-case="rendezvous" data-example="retro"><h3>Brake 1 m/s</h3><p>The chaser dips 3.6 km below and moves 16.7 km forward each orbit, overtaking the target from below.</p></section>
+<section data-case="rendezvous" data-example="radial"><h3>A radial burn</h3><p>1 m/s straight up: the chaser traces a 1.8 km by 3.6 km loop (rising, falling behind, dropping, catching up) and is back at the start after each orbit, with no drift. A useful safety property: a radial mistake comes back.</p></section>
+<section data-case="rendezvous" data-example="lower"><h3>5 km lower</h3><p>On its own circular orbit 5 km below and 40 km behind, the chaser drifts forward by 47 km per orbit (6π × 5 km) and ends one orbit 7 km ahead. Phasing like this is how capsules catch up with the ISS.</p></section>
+<section data-case="rendezvous" data-example="transfer"><h3>Half-orbit rendezvous</h3><p>From 10 km behind: a 2.8 m/s burn straight down starts a half-loop that arrives at the target, and a 2.8 m/s burn stops it there. 5.6 m/s in 46 minutes.</p></section>
+<section data-case="rendezvous" data-example="fast"><h3>A quick one</h3><p>0.2 orbit (19 minutes): 9.7 m/s at each end, 19.5 m/s in all, 3.5 times the half-orbit cost. Time costs fuel.</p></section>
+
+<section data-case="escape">
+  <h3>Escape to the planets</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the Sun, the Earth's orbit (blue), the target's orbit (grey) and the Hohmann transfer (orange), with the spacecraft (orange dot), the Earth and the planet moving through the transfer. Top right: the Δv needed to leave a circular parking orbit with the required v∞, against the parking radius, compared with v∞ itself. Bottom right: speeds at the parking orbit: circular, escape, needed at departure, and the burn. Below: Hohmann transfer time against the target's distance from the Sun.</div>
+  <p>Interplanetary trajectories are designed with <b>patched conics</b>. Near the Earth, only the Earth's gravity counts: a hyperbola that leaves with a speed v∞ relative to the Earth. Far away, only the Sun's counts: an ellipse round the Sun. The two are matched at the edge of the Earth's sphere of influence, about 925 000 km out. A Hohmann ellipse to Mars must leave 2.94 km/s faster than the Earth's 29.8 km/s round the Sun; to Venus, 2.50 km/s slower. Launchers quote this as C3 = v∞². The escape burn is far cheaper from low orbit than from high orbit. Deep in the gravity well the spacecraft is already fast, and the same Δv adds more kinetic energy there: the <b>Oberth effect</b>.</p>
+  <div class="eq">$$v_\infty = \big|v_{peri/apo} - v_\oplus\big|, \qquad C_3 = v_\infty^2, \qquad \Delta v = \sqrt{v_\infty^2 + \frac{2\mu}{r_p}} - \sqrt{\frac{\mu}{r_p}}, \qquad t = \pi\sqrt{\frac{a_t^3}{\mu_\odot}}$$</div>
+  <ol class="steps">
+    <li>Heliocentric Hohmann: speed needed at 1 AU minus the Earth's speed = v∞.</li>
+    <li>Departure hyperbola: at periapsis the speed must be √(v∞² + v_esc²).</li>
+    <li>Launch when the planet leads (or trails) by the phase angle, so it is there on arrival.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Mars from a 200 km orbit: v∞ = 2.95 km/s (C3 = 8.7 km²/s²). At 200 km the circular speed is 7.78 km/s and escape 11.0 km/s, so the spacecraft needs 11.4 km/s: a burn of 3.61 km/s. The trip takes 259 days, launching when Mars is 44° ahead of the Earth.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding the escape speed and v∞: 11.0 + 2.95 = 14 km/s. Speeds don't add like that; energies do, ½v² = ½v_esc² + ½v∞², giving 11.4 km/s.</div>
+  <div class="try"><h4>Try it</h4>Raise the parking orbit to GEO: v∞ stays the same, but the burn from there (2.18 km/s) is a far bigger share of the speed you already have. Starting from LEO, the Δv to reach that orbit and leave would be much more.</div>
+</section>
+<section data-case="escape" data-example="venus"><h3>Venus</h3><p>Inward: leave 2.50 km/s <i>slower</i> than the Earth (burn retrograde relative to the Earth's orbit), to fall onto an ellipse whose perihelion touches Venus. 146 days, launching when Venus is 54° behind the Earth.</p></section>
+<section data-case="escape" data-example="jupiter"><h3>Jupiter</h3><p>v∞ = 8.79 km/s, C3 = 77 km²/s², a 6.30 km/s burn and 2.7 years of flight. Real missions add gravity assists (Venus, Earth) to cut the burn.</p></section>
+<section data-case="escape" data-example="geo"><h3>From a high orbit</h3><p>From GEO the burn to reach Mars's v∞ is 2.18 km/s, less than from LEO, but getting to GEO first costs 3.9 km/s. Burning once, deep in the well, is best: LEO's 3.61 km/s against 3.9 + 2.18 = 6.1 km/s.</p></section>
+<details><summary>About the model</summary>
+  <p>Two-body orbits, impulsive burns, coplanar circles (H. D. Curtis, Orbital Mechanics for Engineering Students). Plane change: LEO 300 km to the chosen circular radius, the turn split between the two Hohmann burns, best split by search. Rendezvous: Clohessy–Wiltshire closed form for a target at 420 km, chaser starting on its own circular orbit. Planets on circular coplanar orbits; the sphere of influence a(m/M)^(2/5). Tests: the crossovers 11.94 and 15.58; the best split beats both extremes; the CW drift 6πΔv/n and the closed radial loop; the two-burn solution reaches the target; Earth–Mars v∞, Δv and time of flight.</p>
+</details>

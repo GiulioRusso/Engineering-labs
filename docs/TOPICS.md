@@ -335,6 +335,25 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Confidence intervals](web/probability.html?lab=confidence-intervals) | How often the interval catches the truth. | done |
 | [Hypothesis tests](web/probability.html?lab=hypothesis-tests) | α, p-value and power. | done |
 
+## Statistics
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Mean, median and spread](web/statistics.html?lab=descriptive-stats) | What one outlier does to the mean, median, standard deviation and IQR. | done |
+| [Histograms and box plots](web/statistics.html?lab=histograms-boxplots) | Bin width shapes the picture; the box plot shows five numbers, and can hide two humps. | done |
+| [Correlation](web/statistics.html?lab=correlation) | Pearson against Spearman, Anscombe's quartet, and r ≈ 0 with a perfect relation. | done |
+| [Sampling distributions](web/statistics.html?lab=sampling-distribution) | Repeat the sample and the statistic varies: standard error σ/√n, for the mean, median and sd. | done |
+| [Maximum likelihood](web/statistics.html?lab=mle) | Slide the parameter to the peak of the likelihood: coin, measurements, waiting times. | done |
+| [The bootstrap](web/statistics.html?lab=bootstrap) | Resample your one sample to get a confidence interval without a formula. | done |
+| [z and t tests](web/statistics.html?lab=z-and-t-tests) | One-sample, two-sample and paired t tests; why small samples need t's fat tails. | done |
+| [p-values, power and p-hacking](web/statistics.html?lab=p-values-power) | Hundreds of experiments: p is uniform under H₀, piles up near 0 with an effect; test 20 outcomes and something always 'works'. | done |
+| [Chi-square goodness of fit](web/statistics.html?lab=chi-square-gof) | Is this die fair? Observed against expected counts, and Mendel's peas. | done |
+| [Chi-square test of independence](web/statistics.html?lab=chi-square-independence) | Does the outcome depend on the treatment? A 2 × 3 table, expected counts and Cramér's V. | done |
+| [ANOVA](web/statistics.html?lab=anova) | Several group means at once: variation between groups against within, the F ratio. | done |
+| [Rank tests (Mann–Whitney)](web/statistics.html?lab=rank-tests) | One wild value wrecks the t test; ranks do not care. | done |
+| [Regression inference](web/statistics.html?lab=regression-inference) | Confidence and prediction bands, the slope test, residual plots and R². | done |
+| [Bayesian updating](web/statistics.html?lab=bayesian-update) | Prior × likelihood → posterior, flip by flip; credible against confidence intervals. | done |
+
 ## Physics
 
 | Topic | What you do | Status |
@@ -402,9 +421,13 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Lift and drag](web/flight-and-space.html?lab=flight) | Level flight of a light aircraft: angle of attack, lift curve and drag polar. | done |
 | [Turning flight and load factor](web/flight-and-space.html?lab=turns) | Banked turns: load factor, turn radius and a higher stall speed. | done |
 | [The stall](web/flight-and-space.html?lab=stall) | Past the critical angle of attack the flow separates and lift collapses. | done |
+| [How an airfoil lifts](web/flight-and-space.html?lab=airfoil-lift) | Flow and pressure round a Joukowski airfoil: suction on top, camber, the Kutta condition, and no equal transit time. | done |
+| [Drag polar and power curves](web/flight-and-space.html?lab=drag-polar) | Friction against induced drag, the best L/D speed, power needed against power available. | done |
 | [The standard atmosphere](web/flight-and-space.html?lab=standard-atmosphere) | Temperature, pressure, density and the speed of sound with altitude | done |
 | [Gliding and the sink polar](web/flight-and-space.html?lab=gliding) | Best glide, minimum sink, and the speed to fly into a headwind | done |
 | [Range: the Breguet equation](web/flight-and-space.html?lab=range-endurance) | How far a jet flies: speed, L/D, engine and fuel | done |
+| [Take-off and landing](web/flight-and-space.html?lab=takeoff-landing) | The ground roll: thrust, drag and wheel friction; weight, altitude, headwind and runway surface. | done |
+| [Static stability](web/flight-and-space.html?lab=static-stability) | Centre of gravity against neutral point: the pitching-moment slope, trim, and what a gust does. | done |
 | [Gravitational field](web/flight-and-space.html?lab=gravity-field) | The field of two masses, arrow by arrow. | done |
 | [Kepler orbits](web/flight-and-space.html?lab=orbits) | Circular and elliptical orbits: speed, period, geostationary and Molniya. | done |
 | [Kepler’s first and second laws](web/flight-and-space.html?lab=kepler-laws) | Ellipses with the Sun at a focus; equal areas in equal times | done |
@@ -413,7 +436,11 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Inclination and ground tracks](web/flight-and-space.html?lab=ground-tracks) | A tilted orbit over a turning Earth: polar, retrograde, the ISS track. | done |
 | [Earth’s bulge (J2)](web/flight-and-space.html?lab=orbit-perturbations) | The equatorial bulge turns the orbit plane: sun-synchronous orbits. | done |
 | [Orbital transfers](web/flight-and-space.html?lab=orbital-transfers) | Hohmann and bi-elliptic transfers, Δv and the rocket equation. | done |
+| [Hohmann against bi-elliptic](web/flight-and-space.html?lab=hohmann-vs-bielliptic) | When three burns beat two: the 11.94 and 15.58 radius ratios, and the time it costs. | done |
+| [Plane changes](web/flight-and-space.html?lab=plane-change) | Turning an orbit costs 2v sin(Δi/2): do it slow, at apoapsis, and combine it with a burn. | done |
+| [Rendezvous](web/flight-and-space.html?lab=rendezvous) | Relative motion near the ISS (Clohessy–Wiltshire): speed up to fall behind, and a two-burn rendezvous. | done |
 | [Gravity assist](web/flight-and-space.html?lab=gravity-assist) | A flyby turns the velocity; seen from the Sun the craft speeds up or slows down | done |
+| [Escape to the planets](web/flight-and-space.html?lab=escape-and-c3) | Patched conics: v∞ from a Hohmann round the Sun, C3, the escape burn and the Oberth effect. | done |
 | [Lagrange points](web/flight-and-space.html?lab=lagrange-points) | The rotating two-body potential and its five equilibria. | done |
 | [The rocket equation](web/flight-and-space.html?lab=rocket-equation) | Δv = Isp g₀ ln(m₀/m_f) during a burn | done |
 | [Staging](web/flight-and-space.html?lab=staging) | Why rockets drop empty stages, and how much payload each choice carries | done |

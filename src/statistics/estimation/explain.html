@@ -1,0 +1,58 @@
+<section data-case="sampling">
+  <h3>Sampling distributions</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: as time runs, 600 samples of size n are drawn and the chosen statistic of each is added to the histogram. The orange curve is a normal fitted to them, the green dashed curve (for the mean) is the theory, and the black dashed line is the true value. Top right: the population and the latest sample. Bottom right: the spread of the statistic (its standard error) against n, with the σ/√n line. Below: the standard error estimated from the first k samples.</div>
+  <p>Any number computed from random data is itself random: take another sample and you get another value. The distribution of those values is the <b>sampling distribution</b>, and its standard deviation is the <b>standard error</b>. It answers “how far off could my estimate be?”. For the mean it is σ/√n, whatever the population's shape. Quadrupling the data halves the error. Other statistics have sampling distributions too, with their own spread, and some of them are biased: on average they miss the true value.</p>
+  <div class="eq">$$\operatorname{SE}(\bar x) = \frac{\sigma}{\sqrt n}, \qquad \operatorname{SE}(\text{median}) \approx 1.25\,\frac{\sigma}{\sqrt n}\ \text{(normal parent)}, \qquad E[s] < \sigma$$</div>
+  <ol class="steps">
+    <li>Draw a sample of n, compute the statistic, and repeat many times.</li>
+    <li>The histogram of results is the sampling distribution; its width is the standard error.</li>
+    <li>In practice we have one sample, so σ is replaced by s: SE ≈ s/√n.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Exponential waiting times (mean 1, σ = 1), n = 10: the 600 sample means average 1.01 with a spread of 0.311, against the theory σ/√10 = 0.316. With n = 40 the spread is 0.155, half as much.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Confusing the standard deviation (the spread of the data, which does not shrink with n) with the standard error (the spread of the estimate, which does).</div>
+  <div class="try"><h4>Try it</h4>Switch between mean, median and sd at the same n and compare the widths of the left histogram.</div>
+</section>
+<section data-case="sampling" data-example="big"><h3>n = 40</h3><p>Four times the data: standard error 0.155 instead of 0.311, and the histogram is a clean bell even though the population is very skewed (the central limit theorem).</p></section>
+<section data-case="sampling" data-example="median"><h3>The median</h3><p>From a normal population with n = 30, the median's standard error is 0.110, against 0.091 for the mean (0.5/√30). For normal data the median wastes information: it needs about 1.57 times as many values for the same precision. For heavy-tailed data it can win.</p></section>
+<section data-case="sampling" data-example="sd"><h3>The sd is biased</h3><p>With n = 4 from the exponential population, the sample standard deviation averages 0.85 against σ = 1: it underestimates, even with the n − 1 divisor (which makes the <i>variance</i> unbiased, not its square root).</p></section>
+<section data-case="sampling" data-example="uniform"><h3>Three uniform values</h3><p>The mean of only three values from a flat distribution is already close to a bell: averaging smooths shapes quickly unless the population has a long tail.</p></section>
+
+<section data-case="mle">
+  <h3>Maximum likelihood</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the data, and what the model would predict with the trial value you set (for the coin: observed against expected counts). Top right: the log-likelihood, the total log-probability of the data, against the parameter; the dot is your trial value and the dashed line the maximum. Bottom right: the likelihood divided by its peak, for these data (blue) and for four times as many (green). Below: its slope, the score.</p>
+  <p>A model with an unknown parameter θ gives every possible data set a probability. Turn it around: for the data we actually got, which θ makes them most probable? That θ is the <b>maximum-likelihood estimate</b>. For a coin it is the share of heads; for normal measurements, the sample mean; for exponential waits, one over the mean wait. The curvature of the log-likelihood at the peak gives the standard error. A sharp peak means the data pin θ down, and the peak sharpens as data grow.</p>
+  <div class="eq">$$\ell(\theta) = \sum_i \log f(x_i\mid\theta), \qquad \hat\theta:\ \frac{d\ell}{d\theta} = 0, \qquad \operatorname{SE}(\hat\theta) \approx \Big(-\frac{d^2\ell}{d\theta^2}\Big)^{-1/2}$$</div>
+  <ol class="steps">
+    <li>Write the probability of each observation under the model.</li>
+    <li>Take logs and add (products of small numbers underflow; sums do not).</li>
+    <li>Find the peak, by calculus or numerically.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>14 heads in 20 flips: ℓ(p) = 14 ln p + 6 ln(1 − p), and dℓ/dp = 14/p − 6/(1 − p) = 0 gives p̂ = 0.7, with SE = √(0.7 × 0.3 / 20) = 0.10. A fair coin (p = 0.5) is 1.65 lower in log-likelihood: the data are e^1.65 ≈ 5 times less probable under it.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Reading the likelihood as the probability that θ is the true value. It is the probability of the data given θ; turning it into a probability for θ needs a prior (see Bayesian updating).</div>
+  <div class="try"><h4>Try it</h4>Slide the trial value: the slope chart crosses zero exactly where the log-likelihood peaks.</div>
+</section>
+<section data-case="mle" data-example="peak"><h3>At the peak</h3><p>p = 0.7: the expected counts (14 and 6) match the observed ones, and the score is zero.</p></section>
+<section data-case="mle" data-example="more"><h3>Four times the flips</h3><p>56 heads in 80: the same estimate, half the standard error (0.051), and the fair coin is now 6.6 below the peak, e^6.6 ≈ 700 times less likely.</p></section>
+<section data-case="mle" data-example="gauss"><h3>Measurements</h3><p>Twenty values with σ = 2 known: the log-likelihood is an exact parabola, peaking at the sample mean 5.96 with SE 2/√20 = 0.45. Least squares is maximum likelihood for normal errors.</p></section>
+<section data-case="mle" data-example="expo"><h3>Waiting times</h3><p>Twenty waits with a mean of 2.34 min: λ̂ = 1/2.34 = 0.427 per minute (true 0.4), SE λ̂/√n = 0.095. The curve is not symmetric; the likelihood falls off faster towards small λ.</p></section>
+
+<section data-case="bootstrap">
+  <h3>The bootstrap</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the histogram of the statistic over resamples as they accumulate, with the 95 % percentile interval (orange), the estimate from the original sample (black), and the true value (green dashed). Top right: the original sample (bottom row) and one resample, in which repeated values stack up. Bottom right: the bootstrap interval against the textbook t interval. Below: the interval's ends as resamples accumulate.</div>
+  <p>To get a standard error we would like to repeat the experiment many times, but we only have one sample. The bootstrap (Efron, 1979) treats that sample as a stand-in for the population. Draw n values from it <i>with replacement</i>, so some appear twice and some not at all, and recompute the statistic. Repeat a thousand times. The spread of the results estimates the standard error, and their 2.5 and 97.5 percentiles give a 95 % interval. It works for statistics with no simple formula, such as the median, a ratio or a correlation.</p>
+  <div class="eq">$$x^*_1,\dots,x^*_n \sim \text{uniform from } \{x_1,\dots,x_n\}, \qquad \operatorname{SE}^* = \operatorname{sd}(\hat\theta^*_1,\dots,\hat\theta^*_B), \qquad \text{CI} = [\hat\theta^*_{(2.5\%)},\ \hat\theta^*_{(97.5\%)}]$$</div>
+  <ol class="steps">
+    <li>Resample n values with replacement; compute the statistic.</li>
+    <li>Repeat B times (1000 is plenty for an interval).</li>
+    <li>Read the spread and the percentiles.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Twenty waiting times (true mean 10 min) with sample mean 9.37: bootstrap SE 1.35, 95 % interval [6.75, 12.1]. The t formula gives [6.40, 12.3], close but symmetric; the bootstrap follows the skew of the data.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting the bootstrap to create information. It can only reshuffle the sample: with very few values, or for extremes such as the maximum, its intervals are too narrow.</div>
+  <div class="try"><h4>Try it</h4>Switch to the median: the histogram turns lumpy, because a median of resampled values can only take a few distinct values.</div>
+</section>
+<section data-case="bootstrap" data-example="median"><h3>The median</h3><p>Sample median 6.79 (true 6.93): interval [3.9, 13.1], SE 2.84, wider than for the mean, and lopsided. There is no simple textbook formula for it; the bootstrap doesn't need one.</p></section>
+<section data-case="bootstrap" data-example="bigger"><h3>80 values</h3><p>Mean 10.1, interval [8.31, 11.9]: about half as wide as with 20, as 1/√n predicts.</p></section>
+<section data-case="bootstrap" data-example="tiny"><h3>Six values</h3><p>Interval [5.7, 18.1] around a mean of 12.0. With six values the resamples can only recombine those six. The interval contains the truth here, but its 95 % label is optimistic.</p></section>
+<details><summary>About the model</summary>
+  <p>Seeded draws, so each visit shows the same experiment. The SE-against-n chart uses 300 samples per n. The standard error from the likelihood's curvature uses the observed Fisher information. Bootstrap: 1000 resamples, percentile intervals (B. Efron, “Bootstrap methods: another look at the jackknife”, Annals of Statistics 7, 1979). Tests: the mean's standard error matches σ/√n; the MLE sits where the score is zero; bootstrap intervals cover the truth at about the stated rate.</p>
+</details>
