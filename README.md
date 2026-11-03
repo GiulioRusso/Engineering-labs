@@ -37,6 +37,7 @@ Open **`index.html`** in any browser. Catalogue self-contained, runs offline.
 | **Circuits** | [`web/circuits.html`](web/circuits.html) | RLC, Phasors, Impedance, AC Power, Filter Design |
 | **Analog Electronics** | [`web/analog-electronics.html`](web/analog-electronics.html) | BJTs, MOSFETs, Op-Amps, Feedback, CMOS |
 | **Digital Electronics** | [`web/digital-electronics.html`](web/digital-electronics.html) | Logic Gates, FSMs, Counters, Timing Analysis |
+| **Coding** | [`web/coding.html`](web/coding.html) | Sequence, Types, Selection, Loops, Break/Continue, Arrays, Strings, Maps, Functions, Scope, Recursion, Classes — the same program in Python, C++, JavaScript and Java |
 | **Computer Science** | [`web/computer-science.html`](web/computer-science.html) | Algorithms, Data Structures, CPU Scheduling (Real C++) |
 | **Design Patterns** | [`web/design-patterns.html`](web/design-patterns.html) | Creational, Structural and Behavioural Patterns as Running C++ with Object Diagrams |
 | **Signal Theory** | [`web/signal-theory.html`](web/signal-theory.html) | Fourier, Sampling, LTI Systems, Modulation, IQ |

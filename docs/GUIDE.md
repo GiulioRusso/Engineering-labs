@@ -134,6 +134,9 @@ Trace subjects (`"trace": "<dir>"` in `catalog.json`) are listed by `tracer/<dir
 explanation generated from the C++ header comment. Design patterns (`tracer/patterns/`) record object diagrams:
 `cpp/tracer/objects.hpp` provides the scene (`S.obj`, `S.rel`, `S.json(from, to, label)`) and `say()` for the
 program's output; scene updates live inside `T.at(...)…emit();` chains so the code panel shows only the pattern.
+Coding (`tracer/coding/`) has no C++ tracer: each program is written once as a JavaScript twin
+(`programs-*.mjs`) that records steps against line ids marked `@@N` in its Python, C++, JavaScript and Java
+sources; `node tracer/coding/build.mjs` regenerates the traces, and the code panel switches language.
 The robotics labs share `src/robotics/kin/model.js` (rotations, quaternions, DH, Jacobians, pseudo-inverse,
 two-link dynamics, trapezoidal and polynomial profiles); the Jaco2 DH table is the course model used in the
 Jaco2 project.

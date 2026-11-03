@@ -8,13 +8,19 @@ const RANK = { schematic: 1, graph: 2, array: 3, waveform: 4, matrix: 5, table: 
 const EN = { casuale: 'random', 'quasi ordinato': 'nearly sorted', 'invertito (caso peggiore)': 'reversed (worst case)', 'con duplicati': 'with duplicates', 'gia ordinato': 'already sorted' };
 
 // C++ colouring like an editor: comments, strings, keywords, types, numbers, function names
-const KW = new Set('if else for while do return break continue switch case default new delete const static struct class public private protected using namespace template typename auto true false nullptr sizeof typedef enum'.split(' '));
-const TY = new Set('int bool char void double float long short unsigned size_t string vector map set pair queue stack deque std'.split(' '));
+const KW = new Set(('if else for while do return break continue switch case default new delete const static struct class public private protected using namespace template typename auto true false nullptr sizeof typedef enum'
+  + ' def elif in not and or is None True False pass lambda import from as with let var function of this self extends implements interface final').split(' '));
+const TY = new Set('int bool char void double float long short unsigned size_t string vector map set pair queue stack deque std String boolean Integer List Map ArrayList LinkedHashMap str list dict'.split(' '));
+// programs shown in several languages (the coding subject): the code panel gets a language switch
+const LANG = { python: 'Python', cpp: 'C++', javascript: 'JavaScript', java: 'Java' };
+const pickLang = (v, lang) => (v && typeof v === 'object' && (lang in v || '*' in v) ? (lang in v ? v[lang] : v['*']) : v);
+let langPref = 'python'; try { langPref = localStorage.getItem('labs-code-lang') || 'python'; } catch {}
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-function cpp(line) {
+function cpp(line, lang = 'cpp') {
   if (!line) return ' ';
-  return line.replace(/(\/\/.*$)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|(#\s*\w+)|\b(\d+(?:\.\d+)?)\b|([A-Za-z_]\w*)(\s*\()?|([&<>])/g, (m, com, str, pre, num, id, call, ch) => {
-    if (com) return `<i class="c-com">${esc(com)}</i>`; if (str) return `<i class="c-str">${esc(str)}</i>`; if (pre) return `<i class="c-pre">${esc(pre)}</i>`; if (num) return `<i class="c-num">${num}</i>`;
+  if (lang === 'python') line = line.replace(/#(?=[^"']*$)/, '\u0000');   // a Python comment: handled as // below
+  return line.replace(/(\/\/.*$|\u0000.*$)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|(#\s*\w+)|\b(\d+(?:\.\d+)?)\b|([A-Za-z_]\w*)(\s*\()?|([&<>])/g, (m, com, str, pre, num, id, call, ch) => {
+    if (com) return `<i class="c-com">${esc(com.replace('\u0000', '#'))}</i>`; if (str) return `<i class="c-str">${esc(str)}</i>`; if (pre) return `<i class="c-pre">${esc(pre)}</i>`; if (num) return `<i class="c-num">${num}</i>`;
     if (ch) return esc(ch);
     if (KW.has(id)) return `<i class="c-kw">${id}</i>${call || ''}`; if (TY.has(id)) return `<i class="c-ty">${id}</i>${call || ''}`;
     return call ? `<i class="c-fn">${id}</i>${call}` : id;
@@ -49,12 +55,22 @@ export function traceLab(trace, { id, title, group, code = true }) {
       const root = document.createElement('div'); root.className = 'trace'; view.append(root);
       if (!code) root.classList.add('nocode');
       if (trace.view === 'waveform') root.classList.add('wide'); // a timing diagram is long: give it the full width
-      root.innerHTML = `<section class="tcode"><h3>C++ source <span class="fn"></span></h3><pre></pre></section>
+      const multi = !!trace.sources; let lang = multi && trace.sources[langPref] ? langPref : 'cpp';
+      root.innerHTML = `<section class="tcode"><h3><span class="tlang">C++</span> source ${multi ? `<span class="tlangs">${Object.keys(trace.sources).map((l) => `<button data-l="${l}">${LANG[l]}</button>`).join('')}</span>` : ''} <span class="fn"></span></h3><pre></pre></section>
         <section class="tview"><div class="tbadges"></div><div class="tcard tmain"><div class="viewbox tprimary"></div><div class="tlegend"></div></div>
         <div class="tpanels"></div><div class="tcard tvars"></div><div class="tnote"></div></section>`;
       const $ = (s) => root.querySelector(s), pre = $('pre');
-      pre.innerHTML = trace.displaySource.map((l, i) => `<div class="row"><span class="gut">${i + 1}</span><span></span></div>`).join('');
-      [...pre.children].forEach((r, i) => { r.lastChild.innerHTML = cpp(trace.displaySource[i]); });
+      let lineMap = trace.lineMap;
+      function showCode() {
+        let src = trace.displaySource;
+        if (multi) { const S = trace.sources[lang], args = inputs[state.input].args || {}; src = S.lines.map((l) => l.replace(/\{\{(\w+)\}\}/g, (m, k) => (k in args ? args[k] : m))); lineMap = S.map; }
+        $('.tlang').textContent = LANG[lang] || 'C++';
+        root.querySelectorAll('.tlangs button').forEach((b) => b.classList.toggle('on', b.dataset.l === lang));
+        pre.innerHTML = src.map((l, i) => `<div class="row"><span class="gut">${i + 1}</span><span></span></div>`).join('');
+        [...pre.children].forEach((r, i) => { r.lastChild.innerHTML = cpp(src[i], lang); });
+      }
+      root.querySelectorAll('.tlangs button').forEach((b) => b.addEventListener('click', () => { lang = langPref = b.dataset.l; try { localStorage.setItem('labs-code-lang', lang); } catch {} showCode(); shown = -1; ctx.requestUpdate(); }));
+      showCode();
       $('.tbadges').innerHTML = [trace.chapter.replace(/^\d+\s*·\s*/, ''), ...(trace.complexity.time === '?' ? [] : [`time ${trace.complexity.time}`, `space ${trace.complexity.space}`])].map((b) => `<span>${b}</span>`).join('');
       let primary = null, panels = [], shown = -1;
       const steps = () => inputs[state.input].steps;
@@ -69,7 +85,7 @@ export function traceLab(trace, { id, title, group, code = true }) {
         $('.tlegend').innerHTML = (primary?.legend?.() || []).map((e) => `<span><i style="background:${e.color}"></i>${e.label}</span>`).join('');
         shown = -1;
       }
-      const lineIndex = (line) => { const m = trace.lineMap; for (let l = line; l > 0; l--) if (m[l] !== undefined) return m[l]; return -1; };
+      const lineIndex = (line) => { const m = lineMap; for (let l = line; l > 0; l--) if (m[l] !== undefined) return m[l]; return -1; };
       function render(k) {
         const list = steps(), step = list[k], prev = k > 0 ? list[k - 1] : null, dir = k >= shown ? 1 : -1;
         pre.querySelector('.cur')?.classList.remove('cur'); const row = pre.children[lineIndex(step.line)];
@@ -77,12 +93,12 @@ export function traceLab(trace, { id, title, group, code = true }) {
         $('.fn').textContent = step.function ? `· ${step.function}()` : '';
         const pv = prev?.vars || {}, vars = Object.entries(step.vars || {}).map(([k2, v]) => `<span class="var${pv[k2] !== v ? ' changed' : ''}"><b>${k2}</b> = ${v}</span>`), cnt = Object.entries(step.counters || {}).map(([k2, v]) => `<span class="counter">${k2}: ${v}</span>`);
         $('.tvars').innerHTML = `<span class="counter">step ${k + 1} / ${list.length}</span>${vars.join('')}${cnt.join('')}`;
-        $('.tnote').textContent = step.note || '';
-        primary?.render(step, prev, { dir }); for (const p of panels) p.r.render(step, prev, { dir, source: p.source });
+        $('.tnote').textContent = pickLang(step.note, lang) || '';
+        primary?.render(step, prev, { dir, lang }); for (const p of panels) p.r.render(step, prev, { dir, lang, source: p.source });
         shown = k;
       }
       return {
-        changed() { ctx.setDuration(steps().length * STEP); time.stepDt = STEP; mountViews(); },
+        changed() { ctx.setDuration(steps().length * STEP); time.stepDt = STEP; if (multi) showCode(); mountViews(); },
         update() { const n = steps().length, k = Math.max(0, Math.min(n - 1, Math.floor(time.t / STEP + 1e-6))); if (k !== shown) render(k); },
         dispose() { root.remove(); },
       };

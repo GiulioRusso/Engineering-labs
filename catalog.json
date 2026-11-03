@@ -536,6 +536,11 @@
   ]
  },
  {
+  "subject": "coding",
+  "name": "Coding",
+  "trace": "coding"
+ },
+ {
   "subject": "computer-science",
   "name": "Computer science",
   "trace": "algorithms"

@@ -1,0 +1,13 @@
+<section>
+  <h3>Multi-way selection: else if</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the program, with the line just executed highlighted; switch language with the buttons above it (your choice is remembered). Right: the sentence explaining the step, the condition just tested (green true, red false), the call stack with every variable (name, type, value; yellow = just changed), any objects or lists that references point at, and the output so far. Press play, or step with the play bar; the cases at the top right run the same code on other inputs.</div>
+  <p>When there are more than two cases, conditions are chained: <code>if … else if … else if … else</code>. They are tested <b>in order</b>, and the first one that is true wins; the rest are skipped without being tested. The final <code>else</code> catches everything that matched nothing.</p>
+  <p>Because of this, order matters: the thresholds go from the most demanding down. Many languages also have a <code>switch</code> (or Python’s <code>match</code>) for choosing among exact values such as menu options; ranges like these are written with else if.</p>
+  <h4>Across languages</h4>
+  <table><tr><th></th><th>Python</th><th>C++</th><th>JavaScript</th><th>Java</th></tr><tr><td>else if</td><td><code>elif x &gt; 0:</code></td><td><code>} else if (x &gt; 0) {</code></td><td><code>} else if (x &gt; 0) {</code></td><td><code>} else if (x &gt; 0) {</code></td></tr><tr><td>exact values</td><td><code>match x: case 1:</code></td><td><code>switch (x) { case 1: … break; }</code></td><td><code>switch (x) { case 1: … break; }</code></td><td><code>switch (x) { case 1 -&gt; … }</code></td></tr></table>
+  <div class="pitfall"><h4>Common mistake</h4>Writing separate <code>if</code> statements instead of <code>else if</code>. Then a score of 95 passes all three tests and grade is overwritten to "C" at the end. Or putting <code>score &gt;= 60</code> first: everyone who passes gets a C.</div>
+  <div class="try"><h4>Try it</h4>Run the three inputs and count how many conditions each one tests before a branch is taken: 1, 2 and 3.</div>
+</section>
+<section data-case="in0"><p><b>This input:</b> 95: the first condition is true, grade A; nothing else is tested.</p></section>
+<section data-case="in1"><p><b>This input:</b> 80: the first test fails, the second succeeds: B.</p></section>
+<section data-case="in2"><p><b>This input:</b> 40: every condition is false, so the else block gives F.</p></section>

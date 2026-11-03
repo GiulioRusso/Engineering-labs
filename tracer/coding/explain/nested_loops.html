@@ -1,0 +1,11 @@
+<section>
+  <h3>Nested loops</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the program, with the line just executed highlighted; switch language with the buttons above it (your choice is remembered). Right: the sentence explaining the step, the condition just tested (green true, red false), the call stack with every variable (name, type, value; yellow = just changed), any objects or lists that references point at, and the output so far. Press play, or step with the play bar; the cases at the top right run the same code on other inputs.</div>
+  <p>A loop can sit inside another. For every round of the outer loop, the inner loop runs <b>all</b> its rounds from the start. Here 3 rows × 3 columns make the inner body run 9 times; in general the work is the product of the two counts, which is why nested loops over large data get slow quickly.</p>
+  <p>Variables declared inside the outer loop, like <code>line</code>, are fresh for every row. Nested loops are how programs walk through grids, tables, images and every pair of items.</p>
+  <h4>Across languages</h4>
+  <table><tr><th></th><th>Python</th><th>C++</th><th>JavaScript</th><th>Java</th></tr><tr><td>nested</td><td><code>for r in range(3):<br>    for c in range(3):</code></td><td><code>for (int r…) {<br>  for (int c…) {</code></td><td><code>for (let r…) {<br>  for (let c…) {</code></td><td><code>for (int r…) {<br>  for (int c…) {</code></td></tr></table>
+  <div class="pitfall"><h4>Common mistake</h4>Reusing the same variable name, say i, for both loops: the inner loop overwrites the outer counter and the program skips rows or never ends.</div>
+  <div class="try"><h4>Try it</h4>Watch the col variable: it restarts at 1 every time row changes.</div>
+</section>
+<section data-case="in0"><p><b>This input:</b> Print a 3 × 3 multiplication table.</p></section>

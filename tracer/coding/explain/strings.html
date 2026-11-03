@@ -1,0 +1,12 @@
+<section>
+  <h3>Strings</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the program, with the line just executed highlighted; switch language with the buttons above it (your choice is remembered). Right: the sentence explaining the step, the condition just tested (green true, red false), the call stack with every variable (name, type, value; yellow = just changed), any objects or lists that references point at, and the output so far. Press play, or step with the play bar; the cases at the top right run the same code on other inputs.</div>
+  <p>A <b>string</b> is text: a sequence of characters, indexed from 0 like a list, with a length. A loop can visit its characters one by one. Strings come with many built-in operations: find a substring, change case, split into words, replace.</p>
+  <p>In C++ and Java a single character has its own type, <code>char</code>, written in single quotes (<code>'a'</code>); Python and JavaScript have no character type, and a character is just a string of length 1.</p>
+  <h4>Across languages</h4>
+  <table><tr><th></th><th>Python</th><th>C++</th><th>JavaScript</th><th>Java</th></tr><tr><td>length</td><td><code>len(s)</code></td><td><code>s.size()</code></td><td><code>s.length</code></td><td><code>s.length()</code></td></tr><tr><td>character i</td><td><code>s[i]</code></td><td><code>s[i]</code></td><td><code>s[i]</code></td><td><code>s.charAt(i)</code></td></tr><tr><td>contains</td><td><code>"a" in s</code></td><td><code>s.find("a") != npos</code></td><td><code>s.includes("a")</code></td><td><code>s.contains("a")</code></td></tr><tr><td>join</td><td><code>s + "!"</code></td><td><code>s + "!"</code></td><td><code>s + "!"</code></td><td><code>s + "!"</code></td></tr></table>
+  <div class="pitfall"><h4>Common mistake</h4>Comparing strings with <code>==</code> in Java: it compares whether they are the same object, not the same text. Use <code>s.equals(t)</code>.</div>
+  <div class="try"><h4>Try it</h4>Run "sky": the condition is tested three times and is false each time, so count stays 0.</div>
+</section>
+<section data-case="in0"><p><b>This input:</b> "programming" has 3 vowels: o, a, i.</p></section>
+<section data-case="in1"><p><b>This input:</b> "sky" has none.</p></section>

@@ -1,0 +1,12 @@
+<section>
+  <h3>Iteration: the while loop</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the program, with the line just executed highlighted; switch language with the buttons above it (your choice is remembered). Right: the sentence explaining the step, the condition just tested (green true, red false), the call stack with every variable (name, type, value; yellow = just changed), any objects or lists that references point at, and the output so far. Press play, or step with the play bar; the cases at the top right run the same code on other inputs.</div>
+  <p>A <code>while</code> loop repeats as long as its condition is true, checking it <b>before</b> every round. It fits problems where the number of rounds is not known in advance: read until the input ends, retry until it works, divide until nothing is left.</p>
+  <p>Something in the body must eventually make the condition false, here <code>n</code> shrinks by a digit each round; otherwise the loop never ends (an infinite loop). A <code>do … while</code> loop (C++, Java, JavaScript) checks after the body instead, so it always runs at least once.</p>
+  <h4>Across languages</h4>
+  <table><tr><th></th><th>Python</th><th>C++</th><th>JavaScript</th><th>Java</th></tr><tr><td>while</td><td><code>while n &gt; 0:</code></td><td><code>while (n &gt; 0) {</code></td><td><code>while (n &gt; 0) {</code></td><td><code>while (n &gt; 0) {</code></td></tr><tr><td>at least once</td><td><code>while True: … if not c: break</code></td><td><code>do { … } while (c);</code></td><td><code>do { … } while (c);</code></td><td><code>do { … } while (c);</code></td></tr><tr><td>whole-number division</td><td><code>n // 10</code></td><td><code>n / 10  (ints)</code></td><td><code>Math.floor(n / 10)</code></td><td><code>n / 10  (ints)</code></td></tr></table>
+  <div class="pitfall"><h4>Common mistake</h4>Forgetting the update. Without <code>n = n // 10</code> the condition never changes and the program hangs. And check the edge: this program says 0 has 0 digits.</div>
+  <div class="try"><h4>Try it</h4>Switch to JavaScript and look at line 4: without <code>Math.floor</code>, n would become 409.6 and the loop would run about 330 times, until n is too small for a floating-point number and becomes 0.</div>
+</section>
+<section data-case="in0"><p><b>This input:</b> 4096: four rounds.</p></section>
+<section data-case="in1"><p><b>This input:</b> 0: the condition is false at once, and the answer 0 is wrong for the number 0.</p></section>

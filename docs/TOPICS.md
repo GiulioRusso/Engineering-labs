@@ -64,6 +64,26 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [The mixer](web/circuits.html?lab=mixer) | Moving a signal to another frequency. | done |
 | [From the feed to the antenna](web/circuits.html?lab=feed-to-antenna) | Where the circuit stops being a circuit: current on a dipole, the field leaving it. | done |
 
+## Coding
+
+| Topic | What you do | Status |
+|---|---|---|
+| [Sequence and variables](web/coding.html?lab=sequence) | time undefined · space undefined | done |
+| [Types and expressions](web/coding.html?lab=types) | time undefined · space undefined | done |
+| [Selection: if / else](web/coding.html?lab=selection) | time undefined · space undefined | done |
+| [Multi-way selection: else if](web/coding.html?lab=multiway) | time undefined · space undefined | done |
+| [Iteration: the counting loop](web/coding.html?lab=for_loop) | time undefined · space undefined | done |
+| [Iteration: the while loop](web/coding.html?lab=while_loop) | time undefined · space undefined | done |
+| [Nested loops](web/coding.html?lab=nested_loops) | time undefined · space undefined | done |
+| [Loop control: break and continue](web/coding.html?lab=break_continue) | time undefined · space undefined | done |
+| [Arrays and lists](web/coding.html?lab=arrays) | time undefined · space undefined | done |
+| [Strings](web/coding.html?lab=strings) | time undefined · space undefined | done |
+| [Dictionaries and maps](web/coding.html?lab=maps) | time undefined · space undefined | done |
+| [Functions](web/coding.html?lab=functions) | time undefined · space undefined | done |
+| [Scope and parameter passing](web/coding.html?lab=scope) | time undefined · space undefined | done |
+| [Recursion](web/coding.html?lab=recursion) | time undefined · space undefined | done |
+| [Classes and objects](web/coding.html?lab=classes) | time undefined · space undefined | done |
+
 ## Computer science
 
 | Topic | What you do | Status |

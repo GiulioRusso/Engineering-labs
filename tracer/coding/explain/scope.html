@@ -1,0 +1,11 @@
+<section>
+  <h3>Scope and parameter passing</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the program, with the line just executed highlighted; switch language with the buttons above it (your choice is remembered). Right: the sentence explaining the step, the condition just tested (green true, red false), the call stack with every variable (name, type, value; yellow = just changed), any objects or lists that references point at, and the output so far. Press play, or step with the play bar; the cases at the top right run the same code on other inputs.</div>
+  <p>Variables have a <b>scope</b>: the part of the program where they exist. Parameters and locals belong to their call and vanish when it returns; a function cannot see or change the caller’s variables by name.</p>
+  <p>What a function receives is a <b>copy</b>. For a number, it is a copy of the value, so changing <code>n</code> leaves <code>count</code> alone. For a list or an object, what is copied is the <b>reference</b>, the arrow to it: both names point at the same list, and changes made through one are seen through the other. C++ makes this explicit: without <code>&amp;</code> the whole vector is copied.</p>
+  <h4>Across languages</h4>
+  <table><tr><th></th><th>Python</th><th>C++</th><th>JavaScript</th><th>Java</th></tr><tr><td>copy of a number</td><td><code>def f(n):</code></td><td><code>void f(int n)</code></td><td><code>function f(n)</code></td><td><code>void f(int n)</code></td></tr><tr><td>shared list</td><td><code>def f(items):  (always)</code></td><td><code>void f(std::vector&lt;int&gt;&amp; items)</code></td><td><code>function f(items)  (always)</code></td><td><code>void f(List&lt;Integer&gt; items)  (always)</code></td></tr></table>
+  <div class="pitfall"><h4>Common mistake</h4>Expecting a function to change a caller’s number (it can’t: return the new value instead), or not expecting it to change a caller’s list (it can: copy the list first if that matters).</div>
+  <div class="try"><h4>Try it</h4>Watch the Objects card: the list is drawn once, and both data and items point at #1.</div>
+</section>
+<section data-case="in0"><p><b>This input:</b> bump(count, data): count stays 1, data becomes [10, 2].</p></section>
