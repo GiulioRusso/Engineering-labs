@@ -6,13 +6,14 @@ import { fileURLToPath } from 'node:url';
 import { tracer, parseSource, LANGS } from './tracer.mjs';
 import basics from './programs-basics.mjs';
 import data from './programs-data.mjs';
+import { FLOWS } from './flows.mjs';
 
 export const PROGRAMS = [...basics, ...data];
 
 export function traceOf(P) {
   const sources = Object.fromEntries(LANGS.map((l) => [l, parseSource(P.src[l])]));
   const inputs = P.inputs.map((inp) => { const t = tracer(inp.args); P.run(t); return { label: inp.label, args: inp.args, steps: t.steps }; });
-  return { id: P.id, name: P.name, chapter: P.chapter, complexity: { time: '?', space: '?' }, view: 'program', panels: [], displaySource: sources.python.lines, lineMap: sources.python.map, sources, inputs };
+  return { id: P.id, name: P.name, chapter: P.chapter, complexity: { time: '?', space: '?' }, view: 'program', panels: [], flow: FLOWS[P.id] || null, displaySource: sources.python.lines, lineMap: sources.python.map, sources, inputs };
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

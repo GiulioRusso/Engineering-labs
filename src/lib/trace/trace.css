@@ -76,3 +76,26 @@
 .trace .pmap { display: inline-flex; flex-wrap: wrap; gap: 4px; } .trace .pmap span { border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; } .trace .pmap span.hi { border-color: var(--c-compare); background: color-mix(in srgb, var(--c-compare) 28%, transparent); } .trace .pmap i { color: var(--ink-dim); font-style: normal; }
 .trace .pout pre { margin: 0; padding: 8px 10px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; font: 12.5px/1.5 var(--mono); min-height: 2.6em; overflow: auto; flex: none; }
 .trace .pout pre div.new { color: var(--c-sorted); font-weight: 600; }
+/* coding: flowchart beside the memory */
+.trace .prog.withflow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+.trace .pleft { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.trace .pflow { min-width: 0; } .trace .pfbox { display: flex; flex-direction: column; gap: 8px; }
+.trace .fchart { margin: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-2); padding: 4px 6px 6px; }
+.trace .fchart figcaption { font: 600 11px var(--mono); color: var(--ink-dim); padding: 2px 4px; }
+.trace .fchart svg { display: block; margin: 0 auto; height: auto; }
+.trace .fchart text { font: 11.5px var(--mono); fill: var(--ink); text-anchor: middle; }
+.trace .fchart text.fl { fill: var(--ink-dim); text-anchor: start; font-size: 10.5px; }
+.trace .fchart .fe { fill: none; stroke: var(--ink-dim); stroke-width: 1.3; }
+.trace .fchart marker path { fill: var(--ink-dim); }
+.trace .fchart g rect, .trace .fchart g polygon { fill: var(--panel); stroke: var(--ink-dim); stroke-width: 1.3; transition: fill var(--anim-ms), stroke var(--anim-ms); }
+.trace .fchart g line { stroke: var(--ink-dim); stroke-width: 1.3; }
+.trace .fchart .fn-term rect { fill: color-mix(in srgb, var(--c-frontier) 14%, var(--panel)); }
+.trace .fchart .fn-io polygon { fill: color-mix(in srgb, var(--c-visited) 12%, var(--panel)); }
+.trace .fchart .fn-dec polygon { fill: color-mix(in srgb, var(--c-compare) 10%, var(--panel)); }
+.trace .fchart .fn-jump rect { stroke-dasharray: 4 3; }
+.trace .fchart g.on rect, .trace .fchart g.on polygon { fill: color-mix(in srgb, var(--accent) 38%, var(--panel)); stroke: var(--accent); stroke-width: 2.4; }
+.trace .fchart g.on.yes polygon { fill: color-mix(in srgb, var(--c-sorted) 40%, var(--panel)); stroke: var(--c-sorted); }
+.trace .fchart g.on.no polygon { fill: color-mix(in srgb, var(--c-error) 40%, var(--panel)); stroke: var(--c-error); }
+@media (max-width: 1300px) { .trace .prog.withflow { grid-template-columns: 1fr; } }
+.trace.multi { grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr); }
+@media (max-width: 1000px) { .trace.multi { grid-template-columns: 1fr; } }

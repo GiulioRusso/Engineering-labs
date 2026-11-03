@@ -54,6 +54,7 @@ export function traceLab(trace, { id, title, group, code = true }) {
       const { state, time } = ctx, view = ctx.el.stage.parentElement;
       const root = document.createElement('div'); root.className = 'trace'; view.append(root);
       if (!code) root.classList.add('nocode');
+      if (trace.sources) root.classList.add('multi'); // code in several languages, with a flowchart: the view gets more room
       if (trace.view === 'waveform') root.classList.add('wide'); // a timing diagram is long: give it the full width
       const multi = !!trace.sources; let lang = multi && trace.sources[langPref] ? langPref : 'cpp';
       root.innerHTML = `<section class="tcode"><h3><span class="tlang">C++</span> source ${multi ? `<span class="tlangs">${Object.keys(trace.sources).map((l) => `<button data-l="${l}">${LANG[l]}</button>`).join('')}</span>` : ''} <span class="fn"></span></h3><pre></pre></section>

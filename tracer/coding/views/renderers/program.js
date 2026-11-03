@@ -42,10 +42,17 @@
       return scalar(v, type);
     }
 
-    function mount(container, trace, opts) { container.innerHTML = '<div class="prog"><div class="pcond"></div><div class="pmem"></div><div class="pout"><h4>Output</h4><pre></pre></div></div>'; root = container.firstChild; lang = (opts && opts.lang) || lang; }
+    let light = null;
+    function mount(container, trace, opts) {
+      const flow = trace.flow && window.CODEFLOW;
+      container.innerHTML = `<div class="prog${flow ? ' withflow' : ''}"><div class="pleft"><div class="pcond"></div><div class="pmem"></div><div class="pout"><h4>Output</h4><pre></pre></div></div>${flow ? '<div class="pflow"><h4>Flowchart</h4><div class="pfbox"></div></div>' : ''}</div>`;
+      root = container.firstChild; lang = (opts && opts.lang) || lang;
+      light = flow ? window.CODEFLOW.draw(root.querySelector('.pfbox'), trace.flow) : null;
+    }
 
     function render(step, prev, opts) {
       lang = (opts && opts.lang) || lang;
+      if (light) light(step.line, step.cond);
       const ch = new Set(step.changed || []), f = step.focus || {};
       const c = step.cond, ct = c ? pick(c.text, lang) : '';
       root.querySelector('.pcond').innerHTML = c ? `<span class="pc-label">condition</span><code>${esc(ct)}</code><b class="pbool ${c.value}">${(BOOL[lang] || ['false', 'true'])[+c.value]}</b>` : '';
