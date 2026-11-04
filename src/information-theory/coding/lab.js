@@ -1,6 +1,7 @@
 // Channel coding: a repetition code sending every bit n times through a noisy channel and voting, and the
 // Hamming (7,4) code drawn as three overlapping parity circles that locate a flipped bit.
 import { createChart } from '../../lib/viz/chart.js';
+import { thin } from '../../lib/ui/schema.js';
 import { H2 } from '../entropy/model.js';
 import { repBER, repSim, encode, decode, bits4, hamBlockErr, uncodedBlockErr } from './model.js';
 
@@ -39,6 +40,12 @@ export default {
   setup(ctx) {
     const { state, time, hud, plots, stage, scene } = ctx;
     stage.controls.enableRotate = false;
+    // Shannon's model of communication: where this topic sits in the chain (lit), with the bits on the wires
+    const chainSch = ctx.schema({ title: 'Shannon’s communication chain', gap: 40, items: [{ id: 'src', kind: 'box', t: 'source', c: 0 }, { id: 'senc', kind: 'box', t: 'compress', c: 1, label: 'source coder' }, { id: 'cenc', kind: 'box', t: 'add parity', c: 2, label: 'channel coder' },
+      { id: 'ch', kind: 'box', t: 'channel', c: 3 }, { id: 'noise', kind: 'box', t: 'noise', c: 3, r: 1, h: 24 }, { id: 'cdec', kind: 'box', t: 'correct', c: 4, label: 'channel decoder' }, { id: 'sdec', kind: 'box', t: 'expand', c: 5, label: 'source decoder' }, { id: 'dst', kind: 'box', t: 'sink', c: 6 }],
+      wires: [['src', 'senc'], ['senc', 'cenc'], ['cenc', 'ch'], ['ch', 'cdec'], ['cdec', 'sdec'], ['sdec', 'dst'], ['noise', 'ch', { v: true }]],
+      tiles: [{ id: 'a', wire: 1 }, { id: 'b', wire: 2 }, { id: 'c', wire: 3 }, { id: 'd', wire: 4 }] });
+    const bitsTile = (bits, ref) => [{ y: bits.map((b, i) => (ref && b !== ref[i] ? 0 : 2 * b - 1)), color: '--c-B', stems: true }, { y: bits.map((b, i) => (ref && b !== ref[i] ? 2 * b - 1 : 0)), color: '--c-north', stems: true }];
     const sq = createChart(ctx, { box: SQ }), tr = createChart(ctx, { box: TR }), br = createChart(ctx, { box: BR }), charts = [sq, tr, br];
     const pool = Array.from({ length: 40 }, () => { const l = ctx.label('', 'tick'); scene.add(l); return l; }); let nl = 0;
     const text = (t, x, y) => { if (nl >= pool.length) return; const l = pool[nl++]; l.element.textContent = t; l.position.set(sq.mx(x), sq.my(y), 0.02); l.visible = true; };
@@ -66,7 +73,8 @@ export default {
           // rate against error: repetition buys reliability by sending less information per use
           const C = 1 - H2(e); br.range([0, 1.05], [-8, 0]); br.titles('rate (information bits per channel use)', 'log₁₀ BER: Shannon allows any rate left of C (dashed)');
           br.line('r', nsx.map((m) => 1 / m), nsx.map((m) => Math.log10(repBER(m, e) + 1e-12)), { color: '--c-I' }); br.dots('r', nsx.map((m) => 1 / m), nsx.map((m) => Math.log10(repBER(m, e) + 1e-12)), { color: '--c-I', size: 7 }); br.line('C', [C, C], [-8, 0], { color: '--c-v', dashed: true, width: 1.4 }); br.dots('q', [1 / n], [Math.log10(repBER(n, e) + 1e-12)], { color: '--accent', size: 11 });
-          const L = R.long, bad = S.dec.slice(0, k).filter((d, i) => d !== S.msg[i]).length;
+          const L = R.long, bad = S.dec.slice(0, k).filter((d, i) => d !== S.msg[i]).length, m8 = S.msg.slice(0, 8), tx = m8.flatMap((b) => Array(n).fill(b)), rx = S.rx.slice(0, 8).flat();
+          chainSch.update({ lit: ['cenc', 'ch', 'cdec'], text: { cenc: `repeat ×${n}`, cdec: 'majority vote', ch: `flips p = ${fmt(e, 2)}` }, tiles: { a: bitsTile(m8), b: bitsTile(tx), c: bitsTile(rx, tx), d: bitsTile(S.dec.slice(0, 8), m8) } });
           hud.set('a', `${k} bits sent ${n} times each: ${pts.flip[0].length} copies flipped, ${bad} decoded wrong (red)`, bad ? 'bad' : 'good');
           hud.set('b', `majority vote fails only if more than ${Math.floor(n / 2)} of ${n} copies flip: BER ${fmt(repBER(n, e), 3)} vs ${fmt(e, 3)} uncoded, at rate 1/${n}`);
           hud.set('c', `capacity C = ${fmt(C, 3)}: good codes keep a fixed rate below C and still drive errors to zero — repetition gives up rate instead`);
@@ -76,6 +84,7 @@ export default {
           const d = bits4(Math.round(state.msg)), c = encode(d), r = c.slice(), flips = [...new Set([state.f1, state.f2].map(Math.round).filter((f) => f > 0))];
           for (const f of flips) r[f - 1] ^= 1;
           const D = decode(r), ok = D.data.join('') === d.join(''), checks = [0, 1, 2].map((j) => (D.s >> j) & 1);
+          chainSch.update({ lit: ['cenc', 'ch', 'cdec'], text: { cenc: 'Hamming (7,4)', cdec: 'syndrome', ch: `${flips.length} flip${flips.length === 1 ? '' : 's'}` }, tiles: { a: bitsTile(d), b: bitsTile(c), c: bitsTile(r, c), d: bitsTile(D.data, d) } });
           sq.range([-2.2, 2.2], [-2.0, 2.2]);
           VC.forEach(([x, y], j) => { const bad = checks[j]; sq.line(`c${j}${bad ? 'b' : 'g'}`, circ.map((a) => x + VR * Math.cos(a)), circ.map((a) => y + VR * Math.sin(a)), { color: bad ? '--c-north' : '--c-v', width: 2.4 }); sq.hide(`c${j}${bad ? 'g' : 'b'}`); text(`check ${2 ** j}: ${bad ? 'odd ✗' : 'even ✓'}`, x + (j === 2 ? 0 : x > 0 ? 1.0 : -1.0), y + (j === 2 ? -1.3 : 1.25)); });
           for (let i = 1; i <= 7; i++) { const [x, y] = REG[i], fl = flips.includes(i); text(`${NAMES[i - 1]} = ${r[i - 1]}${fl ? ' ⚡' : ''}`, x, y); }

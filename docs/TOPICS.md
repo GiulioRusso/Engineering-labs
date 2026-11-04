@@ -218,6 +218,11 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Pulse-Doppler: range and velocity](web/electronic-warfare.html?lab=pulse-doppler) | Range profile and Doppler spectrum from a burst of pulses; resolution and velocity wrap. | done |
 | [The range–Doppler map](web/electronic-warfare.html?lab=rd-map) | Place three targets and see the radar image, with folding in both range and velocity. | done |
 | [The PRF dilemma](web/electronic-warfare.html?lab=ambiguity) | Reported against true range and velocity: raise the PRF and one folds, lower it and the other does. | done |
+| [Pulsed radar: the blocks](web/electronic-warfare.html?lab=pulsed-radar-arch) | Synchronizer, modulator, magnetron, duplexer, limiter, superhet receiver, detector and display, with the signal at every block. | done |
+| [Coherent pulse-Doppler radar](web/electronic-warfare.html?lab=coherent-radar-arch) | One reference clock, COHO and STALO, chirp generator, TWT, IQ receiver, pulse compression, Doppler FFT, CFAR and tracker. | done |
+| [AESA and T/R modules](web/electronic-warfare.html?lab=aesa-arch) | Inside a transmit/receive module, and how phase shifters line the elements up to form a beam. | done |
+| [ESM receiver](web/electronic-warfare.html?lab=esm-arch) | Intercepting radars: frequency, angle of arrival, pulse descriptor words, deinterleaving and identification. | done |
+| [DRFM jammer](web/electronic-warfare.html?lab=drfm-arch) | Sample the radar pulse, store it, play it back delayed and Doppler-shifted: false targets and range-gate pull-off. | done |
 | [Receiver architectures](web/electronic-warfare.html?lab=receivers) | Follow one pulse through a superheterodyne, a digital-IF and a homodyne receiver, stage by stage. | done |
 | [IQ demodulation](web/electronic-warfare.html?lab=iq-receiver) | RF pulse to I and Q: LO detuning, filter bandwidth and rise time. | done |
 | [Phased-array beamforming](web/electronic-warfare.html?lab=beamforming) | The instantaneous near field beside the far-field pattern: steering, taper, grating lobes. | done |

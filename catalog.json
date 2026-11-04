@@ -758,6 +758,56 @@
     "group": "Doppler"
    },
    {
+    "id": "pulsed-radar-arch",
+    "title": "Pulsed radar: the blocks",
+    "what": "Synchronizer, modulator, magnetron, duplexer, limiter, superhet receiver, detector and display, with the signal at every block.",
+    "cases": [
+     "pulsed"
+    ],
+    "from": "systems",
+    "group": "System architectures"
+   },
+   {
+    "id": "coherent-radar-arch",
+    "title": "Coherent pulse-Doppler radar",
+    "what": "One reference clock, COHO and STALO, chirp generator, TWT, IQ receiver, pulse compression, Doppler FFT, CFAR and tracker.",
+    "cases": [
+     "coherent"
+    ],
+    "from": "systems",
+    "group": "System architectures"
+   },
+   {
+    "id": "aesa-arch",
+    "title": "AESA and T/R modules",
+    "what": "Inside a transmit/receive module, and how phase shifters line the elements up to form a beam.",
+    "cases": [
+     "aesa"
+    ],
+    "from": "systems",
+    "group": "System architectures"
+   },
+   {
+    "id": "esm-arch",
+    "title": "ESM receiver",
+    "what": "Intercepting radars: frequency, angle of arrival, pulse descriptor words, deinterleaving and identification.",
+    "cases": [
+     "esm"
+    ],
+    "from": "systems",
+    "group": "System architectures"
+   },
+   {
+    "id": "drfm-arch",
+    "title": "DRFM jammer",
+    "what": "Sample the radar pulse, store it, play it back delayed and Doppler-shifted: false targets and range-gate pull-off.",
+    "cases": [
+     "drfm"
+    ],
+    "from": "systems",
+    "group": "System architectures"
+   },
+   {
     "id": "receivers",
     "title": "Receiver architectures",
     "what": "Follow one pulse through a superheterodyne, a digital-IF and a homodyne receiver, stage by stage.",

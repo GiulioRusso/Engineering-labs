@@ -48,6 +48,10 @@ export default {
     const cl = new THREE.InstancedMesh(new THREE.SphereGeometry(0.09, 16, 12), new THREE.MeshBasicMaterial(), 4); scene.add(cl);
     const m4 = new THREE.Matrix4();
     let locusKey = '';
+    const loop = ctx.schema({ title: 'unity feedback loop', items: [{ id: 'r', kind: 'node', c: 0 }, { id: 'sum', kind: 'sum', c: 1, signs: { l: '+', b: '−' } }, { id: 'K', kind: 'box', t: 'K', c: 2 }, { id: 'G', kind: 'box', t: 'G(s)', c: 3, label: '' }, { id: 'y', kind: 'node', c: 4 }],
+      wires: [['r', 'sum'], ['sum', 'K'], ['K', 'G'], ['G', 'y'], ['y', 'sum', { loop: true }]],
+      tiles: [{ id: 'r', wire: 0, cap: 'r(t)' }, { id: 'e', wire: 1, cap: 'e = r − y' }, { id: 'u', wire: 2, cap: 'u = K·e' }, { id: 'y', wire: 3, cap: 'y(t)' }] });
+    const thin = (a, n = 70) => Array.from({ length: n }, (_, i) => a[Math.floor(i * (a.length - 1) / (n - 1))]);
 
     return {
       changed(id) { sp.view(state.view3d); if (id === 'view3d') ctx.stage.preset(camOf(state)); },
@@ -70,6 +74,7 @@ export default {
           const t = Array.from(y.t), r = t.map(u);
           hud.set('a', `type ${state.type}, ${state.input} input`); hud.set('b', `steady-state error ${fmt(want)} (formula)`);
           hud.set('chk', Number.isFinite(want) ? `simulated e(${Tt} s) = ${fmt(ef)} ${Math.abs(ef - want) < 0.02 + 0.02 * want ? '✓' : ''}` : `simulated e grows: ${fmt(ef)} at ${Tt} s`, Number.isFinite(want) ? 'good' : 'bad');
+          loop.update({ text: { K: `K = ${fmt(state.K)}`, 'G:label': G.label }, tiles: { r: [{ y: thin(r), color: '--c-ref' }], e: [{ y: thin(Array.from(e.y)), color: '--c-I' }], u: [{ y: thin(Array.from(e.y)).map((v) => v * state.K), color: '--c-F' }], y: [{ y: thin(Array.from(y.y)), color: '--c-B' }] } });
           plots.y.draw({ xlim: [0, Tt], series: [{ x: t, y: r, color: '--c-ref', dash: [4, 3], label: 'reference r' }, { x: t, y: Array.from(y.y), color: '--c-B', label: 'output y' }, { x: t, y: Array.from(e.y), color: '--c-I', label: 'error e = r − y' }] });
         } else {
           const pair = P.filter((p) => p[1] > 1e-6).sort((a, b) => b[0] - a[0])[0], z = pair ? -pair[0] / Math.hypot(...pair) : 1;
@@ -77,6 +82,8 @@ export default {
           hud.set('b', pair ? `dominant pair: ζ = ${fmt(z)}` : 'all poles real: no overshoot');
           const r = step(T, unstable ? 8 : 25, 5e-3), t = Array.from(r.t), y = Array.from(r.y).map((v) => Math.max(-20, Math.min(20, v)));
           hud.set('chk', unstable ? 'step response grows' : `overshoot ${fmt(stepInfo(r).overshoot)} %`, unstable ? 'bad' : 'good');
+          const yt = thin(y), e = yt.map((v) => 1 - v);
+          loop.update({ text: { K: `K = ${fmt(state.K)}`, 'G:label': G.label }, tiles: { r: [{ y: thin(t.map(() => 1)), color: '--c-ref' }], e: [{ y: e, color: '--c-I' }], u: [{ y: e.map((v) => v * state.K), color: '--c-F' }], y: [{ y: yt, color: '--c-B' }] } });
           plots.y.draw({ xlim: [0, t[t.length - 1]], series: [{ x: t, y, color: '--c-B', label: 'closed-loop step response' }] });
         }
       },

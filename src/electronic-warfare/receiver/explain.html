@@ -46,7 +46,7 @@
 <section data-case="homodyne" data-example="dc"><h3>DC offset</h3><p>A constant added to I: in the spectrum, a spike at 0 Hz exactly where the zero-Doppler clutter and slow targets live.</p></section>
 <section data-case="iqdemod">
   <h3>The IQ demodulator, close up</h3>
-  <div class="look"><h4>The four panels</h4>RF pulse at the antenna · its spectrum with the LO marked · I and Q after the low-pass · the envelope \(|I + jQ|^2\).</div>
+  <div class="look"><h4>How to read the schema</h4>Top: the whole demodulator as physical blocks — antenna, band-pass + LNA, a splitter, two mixers fed by the same LO (directly: cos; through a 90° shifter: −sin), two low-pass filters and two ADCs — with the signal drawn <b>before and after every block</b>: the RF echo, the two LO waves, the mixer outputs (a baseband part plus a 2f ripple), I(t) and Q(t) after the low-pass, and their samples. On the right, the IQ plane: z = I + jQ during the pulse (green) and the phasor at its centre (red). In the tiles the carrier is drawn at 10 MHz so its cycles can be seen; the charts below use the real carrier: the spectra before and after the low-pass, and I, Q, |z| in time.</div>
   <p>Multiply \(A\cos(2\pi f_c t + \varphi)\) by \(2\cos 2\pi f_{LO} t\): you get a difference term at \(f_c - f_{LO}\) and a sum term at \(f_c + f_{LO}\). The low-pass keeps the difference. With the LO exactly on frequency the difference is at 0 Hz: I and Q are constant, \(|z| = A\) and \(\angle z = \varphi\).</p>
   <div class="worked"><h4>Worked example</h4>Echo phase 40°: during the pulse \(I = \cos 40° = 0.77\), \(Q = \sin 40° = 0.64\). Detune the LO by 2 MHz and they rotate at exactly 2 MHz.</div>
   <h4>The filter trade-off</h4>

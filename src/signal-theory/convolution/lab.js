@@ -1,6 +1,7 @@
 // Convolution as a sliding area: flip, shift, multiply, integrate — for two rectangles, for any pair of
 // shapes, for short discrete sequences (with the sum written out), and the convolution theorem.
 import { createChart } from '../../lib/viz/chart.js';
+import { thin } from '../../lib/ui/schema.js';
 import { fft } from '../../lib/dsp.js';
 import { SIGS, grid, convAt, conv } from './model.js';
 
@@ -59,8 +60,10 @@ export default {
     stage.controls.enableRotate = false;
     const top = createChart(ctx, { box: TOP }), bot = createChart(ctx, { box: BOT }), tl = createChart(ctx, { box: TL }), tr = createChart(ctx, { box: TR }), bl = createChart(ctx, { box: BL }), br = createChart(ctx, { box: BR });
     const all = [top, bot, tl, tr, bl, br];
+    const sch = ctx.schema({ title: 'convolution as a system', items: [{ id: 'g', kind: 'node', c: 0 }, { id: 'h', kind: 'box', t: '∗ h', c: 1, label: 'impulse response h' }, { id: 'y', kind: 'node', c: 2 }], wires: [['g', 'h'], ['h', 'y']], tiles: [{ id: 'g', wire: 0, cap: 'input g' }, { id: 'h', wire: 1, dx: -78, dy: 62, cap: '' }, { id: 'y', wire: 1, cap: 'y = h ∗ g' }] });
+    const io = (h, g, y, stems = false) => sch.update({ tiles: { h: [{ y: thin(h, 120), color: '--c-B', stems }], g: [{ y: thin(g, 120), color: '--c-I', stems }], y: [{ y: thin(y, 120), color: '--c-E', stems }] } });
     const slide = (hf, gf, ts, ys, t, labelH, labelG) => {
-      const tau = grid(5, 0.01), hv = tau.map(hf), gv = tau.map((u) => gf(t - u)), pr = hv.map((v, i) => v * gv[i]), area = pr.reduce((a, b) => a + b, 0) * 0.01;
+      const tau = grid(5, 0.01), hv = tau.map(hf), gv = tau.map((u) => gf(t - u)), pr = hv.map((v, i) => v * gv[i]), area = pr.reduce((a, b) => a + b, 0) * 0.01; io(hv, tau.map(gf), ys);
       const ymax = Math.max(1.2, ...hv, ...gv) * 1.1;
       top.range([-5, 5], [-0.15 * ymax, ymax]); top.titles('τ (s)', `${labelH}(τ) blue · ${labelG}(t − τ) orange, at t = ${fmt(t)} · overlap green`);
       top.line('h', tau, hv, { color: '--c-B' }); top.line('g', tau, gv, { color: '--c-I' });
@@ -89,7 +92,7 @@ export default {
           hud.set('a', `t = ${fmt(t)} s: area = ${fmt(area)}`); hud.set('b', note); hud.set('c', 'flip g, slide it to t, multiply by h, take the area');
           plots.aux.draw({ xlim: [-5, 5], cursor: t, series: [{ x: ts, y: ys, color: '--c-E', label: `${SIGS[state.h].label} * ${SIGS[state.g].label}` }] });
         } else if (c === 'discrete') {
-          const x = SEQ.x, h = SEQ[state.k], y = conv(x, h), L = y.length, n = state.auto ? Math.floor(L * (tt % 10) / 10) : Math.min(state.n, L - 1), idx = Array.from({ length: L }, (_, i) => i);
+          const x = SEQ.x, h = SEQ[state.k], y = conv(x, h), _io = io(h, x, y, true), L = y.length, n = state.auto ? Math.floor(L * (tt % 10) / 10) : Math.min(state.n, L - 1), idx = Array.from({ length: L }, (_, i) => i);
           tl.range([-1, L], [-2.5, 3.5]); tl.titles('k', 'x[k]'); tl.stems('x', x.map((_, i) => i), x, { color: '--c-B', width: 3 }); tl.dots('xd', x.map((_, i) => i), x, { color: '--c-B', size: 8 });
           const hk = h.map((_, j) => n - j); tr.range([-1, L], [-1.5, 1.5]); tr.titles('k', `h[${n} − k]: the kernel flipped and moved to n = ${n}`); tr.stems('h', hk, h, { color: '--c-I', width: 3 }); tr.dots('hd', hk, h, { color: '--c-I', size: 8 });
           const terms = h.map((v, j) => [n - j, v, x[n - j] ?? 0]).filter(([k]) => k >= 0 && k < x.length), pr = terms.map(([k, v, xv]) => [k, v * xv]);
@@ -101,7 +104,7 @@ export default {
           plots.aux.draw({ xlim: [0, L - 1], cursor: n, series: [{ x: idx, y, color: '--c-E', label: 'y[n]' }] });
         } else {
           // h, g, their spectra, and the spectrum of h * g = product of spectra
-          const N = 1024, d = 0.02, ts = Array.from({ length: N }, (_, i) => (i - N / 2) * d), hv = ts.map(SIGS[state.h].f), gv = ts.map(SIGS[state.g].f), { ys } = outOf(state.h, state.g), yts = grid(5, 0.02);
+          const N = 1024, d = 0.02, ts = Array.from({ length: N }, (_, i) => (i - N / 2) * d), hv = ts.map(SIGS[state.h].f), gv = ts.map(SIGS[state.g].f), { ys } = outOf(state.h, state.g), yts = grid(5, 0.02), _io = io(hv.slice(362, 662), gv.slice(362, 662), ys);
           tl.range([-3, 3], [-0.2, 1.2]); tl.titles('t (s)', 'h (blue) and g (orange)'); tl.line('h', ts, hv, { color: '--c-B' }); tl.line('g', ts, gv, { color: '--c-I' });
           tr.range([-3, 3], [-0.1, Math.max(...ys) * 1.2]); tr.titles('t (s)', '(h * g)(t): computed by sliding'); tr.line('y', yts, ys, { color: '--c-E' });
           const spec = (v) => { const re = Float64Array.from(v), im = new Float64Array(N); fft(re, im); const f = [], m = []; for (let i = 0; i < N; i++) { const k = (i + N / 2) % N; f.push((k < N / 2 ? k : k - N) / (N * d)); m.push(Math.hypot(re[k], im[k]) * d); } return { f, m }; };

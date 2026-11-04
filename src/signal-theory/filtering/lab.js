@@ -2,6 +2,7 @@
 // does to the spectrum; masking the spectrum (brick-wall or Butterworth) and the ringing it costs in time;
 // the Gaussian, which is the same shape in both domains; and windowed-sinc FIR design.
 import { createChart } from '../../lib/viz/chart.js';
+import { thin } from '../../lib/ui/schema.js';
 import { fft, gaussian } from '../../lib/dsp.js';
 import { kernel, convSame, response, mask, applyMask, maskImpulse, fir } from './model.js';
 
@@ -67,9 +68,13 @@ export default {
     const { state, hud, plots, stage } = ctx;
     stage.controls.enableRotate = false;
     const tl = createChart(ctx, { box: TL }), tr = createChart(ctx, { box: TR }), bl = createChart(ctx, { box: BL }), br = createChart(ctx, { box: BR }), all = [tl, tr, bl, br];
+    const BOX = { kernel: '∗ h[n]', mask: '× M(f)', gauss: '∗ Gaussian', fir: '∗ FIR h[n]' };
+    const sch = ctx.schema({ title: 'one filter, two views', items: [{ id: 'x', kind: 'node', c: 0 }, { id: 'h', kind: 'box', t: '∗ h(t)', c: 1, label: 'convolve in time' }, { id: 'y', kind: 'node', c: 2 }, { id: 'X', kind: 'node', c: 0, r: 1 }, { id: 'H', kind: 'box', t: '× H(f)', c: 1, r: 1, label: 'multiply in frequency' }, { id: 'Y', kind: 'node', c: 2, r: 1 }],
+      wires: [['x', 'h'], ['h', 'y'], ['X', 'H'], ['H', 'Y']], tiles: [{ id: 'x', wire: 0, cap: 'x(t)' }, { id: 'y', wire: 1, cap: 'y(t)' }, { id: 'X', wire: 2, cap: '|X(f)| dB' }, { id: 'Y', wire: 3, cap: '|Y(f)| dB' }] });
+    const dbTile = (d) => thin(d.filter((_, i) => i < d.length * 0.6), 90).map((v) => (Math.max(-90, v) + 90) / 47.5 - 1);
     const shared = (x, y, title) => {
       const s = every(ts); tl.range([0, 2], [-2.6, 2.6]); tl.titles('t (s)', title); tl.line('x', s, every(x), { color: '--line', width: 1 }); tl.line('y', s, every(y), { color: '--c-B', width: 2 });
-      const X = specDb(x), Y = specDb(y); bl.range([0, 150], [-90, 5]); bl.titles('f (Hz)', 'spectrum in (grey) and out (blue), dB'); bl.line('X', X.f, X.d, { color: '--c-ref', width: 1.2 }); bl.line('Y', Y.f, Y.d, { color: '--c-B', width: 1.6 });
+      const X = specDb(x), Y = specDb(y); sch.update({ text: { h: BOX[state.case] || '∗ h(t)' }, tiles: { x: [{ y: thin(x.slice(0, 512), 200), color: '--c-ref' }], y: [{ y: thin(y.slice(0, 512), 200), color: '--c-B' }], X: [{ y: dbTile(X.d), color: '--c-ref' }], Y: [{ y: dbTile(Y.d), color: '--c-B' }] } }); bl.range([0, 150], [-90, 5]); bl.titles('f (Hz)', 'spectrum in (grey) and out (blue), dB'); bl.line('X', X.f, X.d, { color: '--c-ref', width: 1.2 }); bl.line('Y', Y.f, Y.d, { color: '--c-B', width: 1.6 });
     };
     return {
       changed() { for (const k of all) { k.show(false); k.show(true); } },

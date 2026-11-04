@@ -71,7 +71,7 @@ export function iq(p) {
   const n = p.n, fs = p.fs, re = new Float64Array(n), im = new Float64Array(n);
   for (let i = 0; i < n; i++) { const t = i / fs; re[i] = (t > p.t0 && t < p.t0 + p.tau ? 1 : 0) * Math.cos(2 * Math.PI * p.fc * t + p.phi); }
   const z = mix({ re, im }, fs, p.fLO, 0, true), y = maskFilter({ re: z.re.map((v) => 2 * v), im: z.im.map((v) => 2 * v) }, fs, lowpass(p.bw, 4));
-  return { rf: re, I: y.re, Q: y.im };
+  return { rf: re, I: y.re, Q: y.im, mI: z.re.map((v) => 2 * v), mQ: z.im.map((v) => 2 * v), loI: Float64Array.from({ length: n }, (_, i) => Math.cos(2 * Math.PI * p.fLO * i / fs)), loQ: Float64Array.from({ length: n }, (_, i) => -Math.sin(2 * Math.PI * p.fLO * i / fs)) };
 }
 // 10–90 % rise time of a step in |z|
 export function riseTime(mag, fs) { const m = Math.max(...mag); let a = -1, b = -1; for (let i = 0; i < mag.length; i++) { if (a < 0 && mag[i] >= 0.1 * m) a = i; if (b < 0 && mag[i] >= 0.9 * m) { b = i; break; } } return (b - a) / fs; }

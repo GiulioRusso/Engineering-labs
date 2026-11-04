@@ -1,6 +1,7 @@
 // Information measured in bits: the surprisal and entropy of a five-symbol source (and of a coin), the
 // Huffman code built merge by merge, and the binary symmetric channel with its capacity.
 import { createChart } from '../../lib/viz/chart.js';
+import { thin } from '../../lib/ui/schema.js';
 import { rng } from '../../lib/random.js';
 import { log2, normalize, entropy, H2, huffman, avgLength, mutualInfo, capacity, pY1 } from './model.js';
 
@@ -41,6 +42,12 @@ export default {
   setup(ctx) {
     const { state, time, hud, plots, stage, scene } = ctx;
     stage.controls.enableRotate = false;
+    // Shannon's model of communication: where this topic sits in the chain (lit), with the bits on the wires
+    const chainSch = ctx.schema({ title: 'Shannon’s communication chain', gap: 40, items: [{ id: 'src', kind: 'box', t: 'source', c: 0 }, { id: 'senc', kind: 'box', t: 'compress', c: 1, label: 'source coder' }, { id: 'cenc', kind: 'box', t: 'add parity', c: 2, label: 'channel coder' },
+      { id: 'ch', kind: 'box', t: 'channel', c: 3 }, { id: 'noise', kind: 'box', t: 'noise', c: 3, r: 1, h: 24 }, { id: 'cdec', kind: 'box', t: 'correct', c: 4, label: 'channel decoder' }, { id: 'sdec', kind: 'box', t: 'expand', c: 5, label: 'source decoder' }, { id: 'dst', kind: 'box', t: 'sink', c: 6 }],
+      wires: [['src', 'senc'], ['senc', 'cenc'], ['cenc', 'ch'], ['ch', 'cdec'], ['cdec', 'sdec'], ['sdec', 'dst'], ['noise', 'ch', { v: true }]],
+      tiles: [{ id: 'a', wire: 1 }, { id: 'b', wire: 2 }, { id: 'c', wire: 3 }, { id: 'd', wire: 4 }] });
+    const bitsTile = (bits, ref) => [{ y: bits.map((b, i) => (ref && b !== ref[i] ? 0 : 2 * b - 1)), color: '--c-B', stems: true }, { y: bits.map((b, i) => (ref && b !== ref[i] ? 2 * b - 1 : 0)), color: '--c-north', stems: true }];
     const sq = createChart(ctx, { box: SQ }), tr = createChart(ctx, { box: TR }), br = createChart(ctx, { box: BR }), charts = [sq, tr, br];
     const pool = Array.from({ length: 30 }, () => { const l = ctx.label('', 'tick'); scene.add(l); return l; }); let nl = 0;
     const text = (t, x, y) => { if (nl >= pool.length) return; const l = pool[nl++]; l.element.textContent = t; l.position.set(sq.mx(x), sq.my(y), 0.02); l.visible = true; };
@@ -52,6 +59,7 @@ export default {
       update() {
         nl = 0; pool.forEach((l) => { l.visible = false; });
         const c = state.case, p = probs(), H = entropy(p);
+        chainSch.update({ lit: c === 'entropy' ? ['src'] : c === 'huffman' ? ['senc', 'sdec'] : ['ch', 'noise'], text: { src: c === 'entropy' ? `H = ${fmt(H, 3)} bits` : 'source', senc: c === 'huffman' ? 'Huffman' : 'compress', cenc: 'add parity', ch: 'channel' }, tiles: c === 'huffman' ? (() => { const { codes } = huffman(p), xs = samples(p).slice(0, 10), bits = xs.flatMap((s) => codes[s].split('').map(Number)); return { a: [{ y: xs.map((s) => s + 1), color: '--c-v', stems: true }], b: bitsTile(bits.slice(0, 24)), c: null, d: null }; })() : c === 'entropy' ? { a: [{ y: samples(p).slice(0, 24).map((s) => s + 1), color: '--c-v', stems: true }], b: null, c: null, d: null } : { a: null, b: null, c: null, d: null } });
         if (c === 'entropy') {
           const S = p.map((q) => -log2(q)), xs = samples(p), k = Math.max(1, Math.floor(Math.min(1, time.t / 9.5) * NS));
           sq.range([0.4, 5.6], [0, 1]); sq.titles('symbol A … E', 'probability p (blue) and surprisal −log₂ p ÷ 8 (orange)');

@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 import { createCurve } from '../../lib/viz/curve.js';
 import { si } from '../../lib/ui/format.js';
+import { thin } from '../../lib/ui/schema.js';
 import { simulate, G } from './model.js';
 
 const D = 10, LW = 1.5, PZ = 0.35, deg = Math.PI / 180; // seconds shown; drawn rod length; pivot height
@@ -56,9 +57,13 @@ export default {
     up.segments([0, -0.2, PZ, 0, -0.2, PZ + LW + 0.3]);
     const dist = createCurve(stage, { max: 3, width: 3, color: '--c-I' }), distL = ctx.label(''); scene.add(distL);
     let R = null;
+    const sch = ctx.schema({ title: 'the PID loop', gap: 34, items: [{ id: 'r', kind: 'node', c: 0 }, { id: 'e', kind: 'sum', c: 1, signs: { l: '+', b: '−' } }, { id: 'sp', kind: 'node', c: 2 }, { id: 'P', kind: 'box', t: 'Kp', c: 3, r: 0 }, { id: 'I', kind: 'box', t: 'Ki ∫', c: 3, r: 1 }, { id: 'D', kind: 'box', t: 'Kd d/dt', c: 3, r: 2 },
+      { id: 'u', kind: 'sum', c: 4 }, { id: 'lim', kind: 'box', t: '±τmax', c: 5, label: 'motor limit' }, { id: 'pend', kind: 'box', t: 'pendulum', c: 6 }, { id: 'th', kind: 'node', c: 7 }],
+      wires: [['r', 'e', { label: 'θ = 0' }], ['e', 'sp'], ['sp', 'P'], ['sp', 'I'], ['sp', 'D'], ['P', 'u'], ['I', 'u', { up: true }], ['D', 'u', { up: true }], ['u', 'lim'], ['lim', 'pend', { label: 'τ' }], ['pend', 'th'], ['th', 'e', { loop: true }]],
+      tiles: [{ id: 'e', wire: 1, cap: 'e' }, { id: 'tau', wire: 9, cap: 'τ' }, { id: 'th', wire: 10, cap: 'θ' }] });
 
     return {
-      changed() { R = simulate(state, D); },
+      changed() { R = simulate(state, D); const k = 20; sch.update({ lit: [...(state.Kp ? ['P'] : []), ...(state.Ki ? ['I'] : []), ...(state.Kd ? ['D'] : []), ...(R.sat.some(Boolean) ? ['lim'] : [])], text: { P: `Kp = ${state.Kp}`, I: `Ki = ${state.Ki} ∫`, D: `Kd = ${state.Kd} d/dt` }, tiles: { e: [{ y: thin(Array.from(R.th).filter((_, i) => i % k === 0).map((v) => -v)), color: '--c-I' }], tau: [{ y: thin(Array.from(R.tau).filter((_, i) => i % k === 0)), color: '--c-F' }], th: [{ y: thin(Array.from(R.th).filter((_, i) => i % k === 0)), color: '--c-B' }] } }); },
       update() {
         const i = Math.min(R.t.length - 1, Math.round(time.t / 1e-3)), th = R.th[i], tau = R.tau[i];
         const tip = [LW * Math.sin(th), -0.2, PZ + LW * Math.cos(th)];

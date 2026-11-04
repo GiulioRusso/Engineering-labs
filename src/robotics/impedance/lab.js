@@ -1,6 +1,7 @@
 // Impedance control: a two-link arm (seen from above) pushes its desired point into a compliant wall; the
 // tip behaves like a mass–spring–damper, so the contact force stays bounded and set by the gains.
 import { createChart } from '../../lib/viz/chart.js';
+import { thin } from '../../lib/ui/schema.js';
 import { drawArm } from '../kin/draw.js';
 import { planar } from '../kin/model.js';
 import { simulate, steadyForce, zeta, ARM, WALL, START } from './model.js';
@@ -39,6 +40,9 @@ export default {
   setup(ctx) {
     const { state, hud, plots, stage, time } = ctx;
     stage.controls.enableRotate = false;
+    const sch = ctx.schema({ title: 'impedance control against a wall', gap: 40, items: [{ id: 'xd', kind: 'node', c: 0 }, { id: 'e', kind: 'sum', c: 1, signs: { l: '+', b: '−' } }, { id: 'imp', kind: 'box', t: 'Md, Kd, Kp', c: 2, label: 'virtual spring–damper' }, { id: 'arm', kind: 'box', t: 'arm', c: 3, label: 'τ = Jᵀ F' },
+      { id: 'x', kind: 'node', c: 4 }, { id: 'wall', kind: 'box', t: 'wall k', c: 4, r: 1, label: 'environment' }],
+      wires: [['xd', 'e'], ['e', 'imp'], ['imp', 'arm', { label: 'F' }], ['arm', 'x'], ['x', 'wall', { v: true }], ['wall', 'arm', { up: true }], ['x', 'e', { loop: true, out: 22 }]], tiles: [{ id: 'x', wire: 3, cap: 'x(t)' }] });
     const sq = createChart(ctx, { box: SQ }), tr = createChart(ctx, { box: TR }), br = createChart(ctx, { box: BR }), charts = [sq, tr, br];
     let cache = {};
     return {
@@ -46,7 +50,8 @@ export default {
       update() {
         const cfg = { Md: state.Md, Kd: state.Kd, Kp: state.Kp, k: state.k, push: state.push, tp: state.tp, wall: state.wall, T };
         const key = JSON.stringify(cfg); if (cache.k !== key) cache = { k: key, R: simulate(cfg) };
-        const R = cache.R, ts = R.map((s) => s.t), t = T * time.t / D, i = Math.min(R.length - 1, Math.round(t / (R[1].t - R[0].t))), s = R[i];
+        const R = cache.R; if (sch.key !== key) { sch.key = key; sch.update({ lit: state.wall ? ['wall'] : [], text: { imp: `Kp = ${state.Kp}`, wall: state.wall ? `wall k = ${state.k}` : 'no wall' }, tiles: { x: [{ y: thin(R.map((r) => r.x[0])), color: '--c-B' }, { y: thin(R.map((r) => r.xd[0])), color: '--c-north' }] } }); }
+        const ts = R.map((s) => s.t), t = T * time.t / D, i = Math.min(R.length - 1, Math.round(t / (R[1].t - R[0].t))), s = R[i];
         sq.range([-0.2, 1.6], [-0.9, 0.9]); sq.titles('x (m)', 'y (m): the arm seen from above, pushing right');
         if (state.wall) sq.line('wall', [WALL + 0.012, WALL + 0.012], [-0.5, 0.5], { color: '--ink-dim', width: 9 }); else sq.hide('wall');
         drawArm(sq, 'arm', planar(ARM.L, s.q).P); sq.dots('xd', [s.xd[0]], [s.xd[1]], { color: '--c-north', size: 10 });

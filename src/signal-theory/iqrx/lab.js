@@ -2,6 +2,7 @@
 // to baseband (sum and difference terms, the low-pass), the residual Δf when the oscillator is off-tune,
 // and whether that residual lands in one DFT bin or leaks.
 import { createChart } from '../../lib/viz/chart.js';
+import { thin } from '../../lib/ui/schema.js';
 import { FS, N, pulse, mix, lpf, spectrum, bins } from './model.js';
 
 const fmt = (v, d = 3) => (Number.isFinite(v) ? String(Number(v.toPrecision(d))) : '∞');
@@ -58,10 +59,15 @@ export default {
     stage.controls.enableRotate = false;
     const tl = createChart(ctx, { box: TL }), tr = createChart(ctx, { box: TR }), bl = createChart(ctx, { box: BL }), br = createChart(ctx, { box: BR }), rows = [0, 1, 2].map((k) => createChart(ctx, { box: ROW(k) }));
     const all = [tl, tr, bl, br, ...rows];
+    const sch = ctx.schema({ title: 'quadrature demodulator', items: [{ id: 'x', kind: 'node', c: 0, dy: 38 }, { id: 'sp', kind: 'node', c: 1, dy: 38 }, { id: 'mI', kind: 'mixer', c: 2 }, { id: 'mQ', kind: 'mixer', c: 2, r: 1 }, { id: 'lo', kind: 'lo', c: 2, dy: 38, dx: 44, label: '' },
+      { id: 'fI', kind: 'filter', type: 'lp', c: 3 }, { id: 'fQ', kind: 'filter', type: 'lp', c: 3, r: 1 }, { id: 'I', kind: 'node', c: 4 }, { id: 'Q', kind: 'node', c: 4, r: 1 }],
+      wires: [['x', 'sp'], ['sp', 'mI'], ['sp', 'mQ'], ['mI', 'fI'], ['mQ', 'fQ'], ['fI', 'I'], ['fQ', 'Q'], ['lo', 'mI', { up: true }], ['lo', 'mQ', { down: true }]],
+      tiles: [{ id: 'x', wire: 0, cap: 'x(t)', dy: -6 }, { id: 'zI', wire: 3, cap: '2x·cos' }, { id: 'zQ', wire: 4, cap: '−2x·sin', dy: 62 }, { id: 'I', wire: 5, cap: 'I(t)' }, { id: 'Q', wire: 6, cap: 'Q(t)', dy: 62 }] });
+    const io = (x, z, y) => sch.update({ tiles: { x: [{ y: x, color: '--c-B' }], zI: [{ y: z.re, color: '--c-I' }], zQ: [{ y: z.im, color: '--c-I' }], I: [{ y: thin(y.re, 150), color: '--c-B' }], Q: [{ y: thin(y.im, 150), color: '--c-v' }] } });
     return {
       changed() { const c = state.case; for (const k of all) k.show(false); (c === 'mixing' ? rows : [tl, tr, bl, br]).forEach((k) => k.show(true)); },
       update() {
-        const c = state.case, x = pulse(state.fc, state.w, state.phi * Math.PI / 180);
+        const c = state.case, x = pulse(state.fc, state.w, state.phi * Math.PI / 180); { const z = mix(x, state.fLO), y = lpf(z, state.cut); io(x, z, y); }
         if (c === 'pulse') {
           const zoom = Math.min(0.5, 4 * state.w), s = ts.map((t, i) => [t, x[i]]).filter(([t]) => Math.abs(t) <= zoom);
           tl.range([-zoom, zoom], [-1.2, 1.2]); tl.titles('t (s)', `x(t): ${state.fc} Hz under a Gaussian envelope (σ = ${state.w * 1000} ms)`); tl.line('x', s.map((q) => q[0]), s.map((q) => q[1]), { color: '--c-B', width: 1.2 }); tl.line('e', s.map((q) => q[0]), s.map((q) => Math.exp(-(q[0] ** 2) / (2 * state.w ** 2))), { color: '--c-I', dashed: true, width: 1.2 });

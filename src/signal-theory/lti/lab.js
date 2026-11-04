@@ -2,6 +2,7 @@
 // any input as a sum of impulses (each answered by a shifted h), poles in the s-plane against the time
 // response, the Bode plot, and the sinusoidal steady state emerging from the transient.
 import { createChart } from '../../lib/viz/chart.js';
+import { thin } from '../../lib/ui/schema.js';
 import { rc, rcImpulse, second, poles, H2, H1, stepInfo } from './model.js';
 
 const fmt = (v, d = 3) => (Number.isFinite(v) ? (Math.abs(v) < 1e-12 ? '0' : String(Number(v.toPrecision(d)))) : '∞');
@@ -70,6 +71,8 @@ export default {
     stage.controls.enableRotate = false;
     const tl = createChart(ctx, { box: TL }), tr = createChart(ctx, { box: TR }), bl = createChart(ctx, { box: BL }), br = createChart(ctx, { box: BR });
     const top = createChart(ctx, { box: TOP }), bot = createChart(ctx, { box: BOT }), plane = createChart(ctx, { box: PLANE }), all = [tl, tr, bl, br, top, bot, plane];
+    const sch = ctx.schema({ title: 'a linear time-invariant system', items: [{ id: 'x', kind: 'node', c: 0 }, { id: 'h', kind: 'box', t: 'LTI: h(t)', c: 1, label: '' }, { id: 'y', kind: 'node', c: 2 }], wires: [['x', 'h'], ['h', 'y']], tiles: [{ id: 'x', wire: 0, cap: 'input x(t)' }, { id: 'y', wire: 1, cap: 'output y = h ∗ x' }] });
+    const io = (x, y) => sch.update({ text: { 'h:label': name() }, tiles: { x: x && [{ y: thin(x, 120), color: '--c-B' }], y: y && [{ y: thin(y, 120), color: '--c-v' }] } });
     const sim = (x) => (state.sys === 'rc' && !['poles', 'steady'].includes(state.case) ? rc(x, dt, state.tau) : second(x, dt, state.zeta, state.wn));
     const hOf = (t) => (state.sys === 'rc' && !['poles', 'steady'].includes(state.case) ? rcImpulse(t, state.tau) : (() => { const z = state.zeta, w = state.wn; if (t < 0) return 0; if (Math.abs(z) < 1) { const wd = w * Math.sqrt(1 - z * z); return w * w / wd * Math.exp(-z * w * t) * Math.sin(wd * t); } if (z === 1) return w * w * t * Math.exp(-w * t); const r = w * Math.sqrt(z * z - 1), p1 = -z * w + r, p2 = -z * w - r; return w * w / (p1 - p2) * (Math.exp(p1 * t) - Math.exp(p2 * t)); })());
     const name = () => (state.sys === 'rc' && !['poles', 'steady'].includes(state.case) ? `RC, τ = ${state.tau} s` : `2nd order, ζ = ${state.zeta}, ωn = ${state.wn} rad/s`);
@@ -82,10 +85,10 @@ export default {
         else { top.show(true); bot.show(true); }
       },
       update() {
-        const c = state.case;
+        const c = state.case; io(null, null);
         if (c === 'linear') {
           const x1 = ts.map((t) => (t >= 1 ? 1 : 0)), x2 = ts.map((t) => Math.sin(2 * t)), x = x1.map((v, i) => state.a * v + state.b * x2[i]);
-          const y1 = sim(x1), y2 = sim(x2), y = sim(x), sup = y1.map((v, i) => state.a * v + state.b * y2[i]), e = y.map((v, i) => Math.abs(v - sup[i]));
+          const y1 = sim(x1), y2 = sim(x2), y = sim(x), sup = y1.map((v, i) => state.a * v + state.b * y2[i]), e = y.map((v, i) => Math.abs(v - sup[i])); io(x, y);
           const s = every(ts), lim = (...a) => Math.max(1.2, ...a.map((q) => Math.max(...q.map(Math.abs)))) * 1.1;
           tl.range([0, T], [-lim(x), lim(x)]); tl.titles('t (s)', `x(t): x₁ step (blue), x₂ sine (orange), a·x₁ + b·x₂ (grey)`); tl.line('x1', s, every(x1), { color: '--c-B', width: 1.2 }); tl.line('x2', s, every(x2), { color: '--c-I', width: 1.2 }); tl.line('x', s, every(x), { color: '--c-ref' });
           tr.range([0, T], [-lim(y1, y2), lim(y1, y2)]); tr.titles('t (s)', 'responses y₁ (blue) and y₂ (orange), separately'); tr.line('y1', s, every(y1), { color: '--c-B' }); tr.line('y2', s, every(y2), { color: '--c-I' });
@@ -94,7 +97,7 @@ export default {
           hud.set('a', name()); hud.set('b', `max difference ${Math.max(...e).toExponential(1)}: superposition holds exactly`, 'good'); hud.set('c', 'linear: scale or add inputs → the outputs scale or add the same way');
           plots.aux.draw({ xlim: [0, T], series: [{ x: s, y: every(y), color: '--c-v', label: 'y for a·x₁ + b·x₂' }] });
         } else if (c === 'invariant') {
-          const p = (t, d) => (t >= d && t < d + 0.6 ? 1 : 0), x0 = ts.map((t) => p(t, 0.5)), xd = ts.map((t) => p(t, 0.5 + state.d)), y0 = sim(x0), yd = sim(xd), s = every(ts);
+          const p = (t, d) => (t >= d && t < d + 0.6 ? 1 : 0), x0 = ts.map((t) => p(t, 0.5)), xd = ts.map((t) => p(t, 0.5 + state.d)), y0 = sim(x0), yd = sim(xd), s = every(ts); io(xd, yd);
           const shifted = ts.map((t) => { const i = Math.round((t - state.d) / dt); return i >= 0 ? y0[i] : 0; });
           top.range([0, T], [-0.2, 1.3]); top.titles('t (s)', `input pulse (blue) and the same pulse ${state.d} s later (orange)`); top.line('a', s, every(x0), { color: '--c-B' }); top.line('b', s, every(xd), { color: '--c-I' });
           const m = Math.max(...y0.map(Math.abs)) * 1.3; bot.range([0, T], [-m, m]); bot.titles('t (s)', 'y(t): blue, response to the late pulse orange, y(t − d) dashed');
@@ -103,7 +106,7 @@ export default {
           hud.set('a', name()); hud.set('b', `delay the input by ${state.d} s → the output is the same, ${state.d} s later (max diff ${err.toExponential(1)})`, 'good'); hud.set('c', 'time-invariant: the system does not care what time it is');
           plots.aux.draw({ xlim: [0, T], series: [{ x: s, y: every(yd), color: '--c-I', label: 'response to the delayed pulse' }] });
         } else if (c === 'impulse') {
-          const w = state.w, x = ts.map((t) => (t >= 0.5 && t < 0.5 + w ? 1 / w : 0)), y = sim(x), h = ts.map((t) => hOf(t - 0.5)), s = every(ts, 2);
+          const w = state.w, x = ts.map((t) => (t >= 0.5 && t < 0.5 + w ? 1 / w : 0)), y = sim(x), h = ts.map((t) => hOf(t - 0.5)), s = every(ts, 2); io(x, y);
           top.range([0, T], [-0.1 * Math.min(1 / w, 30), Math.min(1 / w, 30) * 1.1]); top.titles('t (s)', `x(t): a pulse ${w} s wide and ${fmt(1 / w)} tall — area always 1`); top.line('x', s, every(x, 2), { color: '--c-B' });
           const m = Math.max(...h.map(Math.abs)) * 1.3; bot.range([0, T], [-m, m]); bot.titles('t (s)', 'output (blue) and the impulse response h(t) (dashed)'); bot.line('y', s, every(y, 2), { color: '--c-B' }); bot.line('h', s, every(h, 2), { color: '--c-north', dashed: true, width: 1.6 });
           const err = Math.max(...y.map((v, i) => Math.abs(v - h[i]))) / (m / 1.3);
@@ -115,7 +118,7 @@ export default {
           top.range([0, T], [-0.1, 1.6]); top.titles('t (s)', `x(t) in ${K} slices of ${fmt(W)} s · ${R} added`);
           top.line('x', s, every(ts.map(X), 4), { color: '--c-ref', width: 1.4 });
           const stair = ts.map((t) => { const k = Math.floor(t / W); return k >= 0 && k < R ? X((k + 0.5) * W) : 0; }); top.line('st', s, every(stair, 4), { color: '--c-B' });
-          const xs = ts.map(X), yTrue = sim(xs), parts = []; let sum = new Float64Array(N);
+          const xs = ts.map(X), yTrue = sim(xs), parts = []; let sum = new Float64Array(N); io(xs, yTrue);
           for (let k = 0; k < R; k++) { const a = X((k + 0.5) * W) * W, yk = ts.map((t) => a * hOf(t - (k + 0.5) * W)); parts.push(yk); for (let i = 0; i < N; i++) sum[i] += yk[i]; }
           const m = Math.max(...yTrue.map(Math.abs), ...sum.map(Math.abs)) * 1.2 || 1;
           bot.range([0, T], [-m * 0.6, m]); bot.titles('t (s)', 'slice k → area·h(t − tₖ) orange · sum blue · true dashed');

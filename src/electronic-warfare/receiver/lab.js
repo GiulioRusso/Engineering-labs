@@ -2,7 +2,7 @@
 // (homodyne) chain — block diagram on top, the signal and its spectrum at the selected stage below —
 // and the IQ demodulator itself (LO offset, filter bandwidth, rise time).
 import { createChart } from '../../lib/viz/chart.js';
-import { createCurve } from '../../lib/viz/curve.js';
+import { createBlocks } from '../../lib/viz/blocks.js';
 import { chain, spectrumDb, iq, riseTime } from './model.js';
 
 const MHz = 1e6, us = 1e-6, fmt = (v, d = 3) => (Number.isFinite(v) ? String(Number(v.toPrecision(d))) : '∞');
@@ -78,57 +78,91 @@ export default {
   hud: [{ id: 'a', label: '' }, { id: 'b', label: '' }, { id: 'c', label: '' }],
 
   setup(ctx) {
-    const { scene, state, hud, plots, stage, time } = ctx;
+    const { state, hud, plots, stage, time } = ctx;
     stage.controls.enableRotate = false;
-    const tc = createChart(ctx, { box: [-4.3, -2.4, 4.2, 3.2], xTitle: 'time (µs)' }), sc = createChart(ctx, { box: [0.4, -2.4, 4.1, 3.2], xTitle: 'frequency (MHz)', yTitle: 'spectrum (dB)' });
-    const q4 = [[-4.3, 0.5, 4.1, 2.0], [0.5, 0.5, 4.0, 2.0], [-4.3, -2.35, 4.1, 2.0], [0.5, -2.35, 4.0, 2.0]].map((b) => createChart(ctx, { box: b }));
-    const boxes = createCurve(stage, { max: 200, width: 1.6, color: '--ink-dim' }), sel = createCurve(stage, { max: 8, width: 3, color: '--accent' }), arrows = createCurve(stage, { max: 80, width: 1.4, color: '--ink-dim' }), spark = createCurve(stage, { max: 900, width: 1.2, color: '--c-ref' }), sparkOn = createCurve(stage, { max: 120, width: 2, color: '--c-B' }), tok = createCurve(stage, { max: 20, width: 3, color: '--accent' });
-    const names = []; for (let i = 0; i < 8; i++) { const l = ctx.label('', 'tick'); scene.add(l); names.push(l); }
-    let S = null;
+    // chain cases: block row on top, the selected stage's signal (left) and spectrum (right) below
+    const tc = createChart(ctx, { box: [-4.3, -3.6, 4.2, 3.45], xTitle: 'time (µs)' }), sc = createChart(ctx, { box: [0.4, -3.6, 4.1, 3.45], xTitle: 'frequency (MHz)', yTitle: 'spectrum (dB)' });
+    // IQ case: one schema with the signal before and after every block; spectra and I/Q in time below
+    const q2 = [[-4.3, -3.6, 4.0, 2.3], [0.55, -3.6, 3.8, 2.3]].map((b) => createChart(ctx, { box: b }));
+    const bd = createBlocks(ctx, { labels: 70 });
+    let S = null, SP = null;
 
-    // block diagram with a small trace of the signal inside every block; k = the stage being shown
-    function diagram(list, k, f) {
-      const n = list.length, W = 8.6 / n, y0 = 1.35, h = 0.75, b = [], a = [];
-      names.forEach((l, i) => { l.visible = i < n; if (i < n) { l.element.textContent = SHORT[list[i].name] || list[i].name; l.position.set(-4.3 + W * (i + 0.5), y0 + h * 0.72, 0); } });
-      for (let i = 0; i < n; i++) { const x0 = -4.3 + W * i + 0.08, x1 = x0 + W - 0.16; b.push(x0, y0, 0, x1, y0, 0, x1, y0, 0, x1, y0 + h, 0, x1, y0 + h, 0, x0, y0 + h, 0, x0, y0 + h, 0, x0, y0, 0); if (i) a.push(x0 - 0.16, y0 + h / 2, 0, x0, y0 + h / 2, 0, x0 - 0.05, y0 + h / 2 + 0.05, 0, x0, y0 + h / 2, 0, x0 - 0.05, y0 + h / 2 - 0.05, 0, x0, y0 + h / 2, 0); }
-      boxes.segments(b); arrows.segments(a);
-      const sp = [], so = [];
-      list.forEach((st, i) => { const re = st.x.re, m = re.length, xa = -4.3 + W * i + 0.14, xb = xa + W - 0.28, M = Math.max(1e-9, ...Array.from(re, Math.abs)), P = 40, ya = y0 + 0.24;
-        for (let j = 0; j < P; j++) { const v = (q) => re[Math.min(m - 1, Math.floor(q * m / P))] / M * 0.17; (i === k ? so : sp).push(xa + (xb - xa) * j / P, ya + v(j), 0.004, xa + (xb - xa) * (j + 1) / P, ya + v(j + 1), 0.004); } });
-      spark.segments(sp); sparkOn.segments(so);
-      // the pulse token: moving from the centre of block k toward the next
-      const tx = -4.3 + W * (k + 0.5) + W * f * (k < n - 1 ? 1 : 0) * 0.5, ty = y0 - 0.12, tk = []; for (let i = 0; i < 6; i++) { const p = Math.PI * i / 3, q = Math.PI * (i + 1) / 3; tk.push(tx + 0.07 * Math.cos(p), ty + 0.07 * Math.sin(p), 0.01, tx + 0.07 * Math.cos(q), ty + 0.07 * Math.sin(q), 0.01); } tok.segments(tk);
-      const x0 = -4.3 + W * k + 0.05, x1 = x0 + W - 0.1;
-      sel.set([x0, y0 - 0.04, 0.01, x1, y0 - 0.04, 0.01, x1, y0 + h + 0.04, 0.01, x0, y0 + h + 0.04, 0.01], true);
+    // ---- chain: physical symbol per stage, a mini-spectrum on the wire after it ----
+    const SYM = {
+      'Antenna': ['antenna'], 'RF band-pass': ['filter', { type: 'bp' }], 'LNA': ['amp'], 'Mixer → IF': ['mixer', {}, 'LO'], 'IF band-pass': ['filter', { type: 'bp' }],
+      'IQ demodulator': ['box', { t: 'I/Q', w: 0.5 }, 'LO (IF)'], 'ADC': ['adc'], 'ADC at IF': ['adc'], 'Digital down-conversion': ['mixer', {}, 'NCO e^−jωn'], 'Low-pass + decimate ÷4': ['filter', { type: 'lp' }],
+      'RF filter + LNA': ['amp'], 'IQ mixer (LO = RF)': ['mixer', {}, 'LO = fRF'], 'Low-pass': ['filter', { type: 'lp' }],
+    };
+    const mini = (st) => { const sp = spectrumDb(st.x, st.fs), cplx = st.x.im.some((v) => Math.abs(v) > 1e-9), out = [], K = 90; let lo = 0; while (!cplx && sp.f[lo] < 0) lo++; const n = sp.f.length - lo;
+      for (let j = 0; j < K; j++) { let m = -80; for (let i = lo + Math.floor(j * n / K); i < lo + Math.floor((j + 1) * n / K); i++) m = Math.max(m, sp.dB[i]); out.push(Math.max(-1, (m + 60) / 30 - 1)); } return out; };
+    function chainDiagram(list, k, f) {
+      const n = list.length, W = 8.4 / n, y = 1.55, x = (i) => -4.2 + W * (i + 0.5);
+      bd.begin(); const P = list.map((st, i) => { const [kind, o = {}, lo] = SYM[st.name] || ['box', { t: SHORT[st.name] }]; const p = bd.block(kind, [x(i), y], { ...o, on: i === k, label: kind === 'antenna' ? '' : SHORT[st.name] || st.name, labelAt: lo ? 't' : 'b' });
+        if (lo) { const l = bd.block('lo', [x(i), y - 0.75], { label: lo, labelAt: 'r', on: i === k }); bd.wire(l.t, p.b); } return p; });
+      for (let i = 1; i < n; i++) { const a = list[i - 1].name === 'Antenna' ? [x(i - 1), y - 0.25] : P[i - 1].r; if (list[i - 1].name === 'Antenna') bd.wire([x(i - 1), y - 0.25], [x(i - 1), y - 0.4], [P[i].l[0] - 0.12, y - 0.4], [P[i].l[0] - 0.12, y], P[i].l, { on: i === k }); else bd.wire(a, P[i].l, { on: i === k }); }
+      list.forEach((st, i) => bd.wave([x(i) + (i < n - 1 ? W / 2 : 0), 2.45], SP[i], { w: Math.min(0.82, W - 0.14), h: 0.4, norm: 1, zero: false, color: '--c-E', on: i === k, cap: i === 0 ? 'spectrum' : '' }));
+      if (state.auto && k < n - 1 && f < 1) bd.token([x(k) + W * Math.min(1, f * 1.4), y]);
+      bd.end();
     }
     const params = () => ({ ...BASE, fLO: state.fLO * MHz, bwRF: state.bwRF * MHz, bwIF: state.bwIF * MHz, aImg: state.aImg, aInt: state.aInt, bits: state.bits, fsIF: state.fsIF * MHz, dLO: state.dLO * 1e3, dc: state.dc });
+
+    // ---- the IQ demodulator as one schema. RF, LO and mixer tiles draw the carrier at FC_TILE so its cycles can be
+    // seen; I, Q and the samples come from the real receiver (after the low-pass they do not depend on the carrier) ----
+    const FC_TILE = 10 * MHz, I0 = 800, I1 = 2000, DS = 4, sl = (a) => Array.from(a).slice(I0, I1).filter((_, i) => i % DS === 0);
+    function iqSchema(T, R) {
+      const yI = 2.1, yQ = 0.3, yc = 1.2, xs = { ant: -4.35, lna: -3.4, sp: -2.6, mx: -1.6, lp: 0.15, adc: 1.55, pl: 3.55 };
+      const nm = Math.max(...sl(T.mI).map(Math.abs), ...sl(T.mQ).map(Math.abs), 1e-9), nb = Math.max(...sl(R.I).map(Math.abs), ...sl(R.Q).map(Math.abs), 1e-9), part = (a) => a.slice(0, 110);
+      bd.begin();
+      const ant = bd.block('antenna', [xs.ant, yc + 0.25], {}), lna = bd.block('amp', [xs.lna, yc], { label: 'BPF + LNA' }), sp = bd.block('node', [xs.sp, yc]);
+      const mI = bd.block('mixer', [xs.mx, yI], {}), mQ = bd.block('mixer', [xs.mx, yQ], {}), lo = bd.block('lo', [xs.mx, yc + 0.08], { label: 'LO', labelAt: 'l' }), ph = bd.block('phase', [xs.mx, yc - 0.48], { w: 0.42, h: 0.26 });
+      const fI = bd.block('filter', [xs.lp, yI], { type: 'lp', label: 'low-pass', labelAt: 't' }), fQ = bd.block('filter', [xs.lp, yQ], { type: 'lp', label: 'low-pass' }), aI = bd.block('adc', [xs.adc, yI], {}), aQ = bd.block('adc', [xs.adc, yQ], {});
+      bd.wire(ant.b, lna.l, { arrow: true }); bd.wire(lna.r, sp.c, { arrow: false }); bd.wire(sp.c, [xs.sp, yI], mI.l); bd.wire(sp.c, [xs.sp, yQ], mQ.l);
+      bd.wire(lo.t, mI.b, { label: 'cos', dx: 0.17, dy: 0 }); bd.wire(lo.b, ph.t); bd.wire(ph.b, mQ.t, { label: '−sin', dx: 0.22, dy: 0.02 });
+      bd.wire(mI.r, fI.l); bd.wire(mQ.r, fQ.l); bd.wire(fI.r, aI.l); bd.wire(fQ.r, aQ.l);
+      // the IQ plane: z = I + jQ during the pulse, and the phasor at its centre
+      const pc = [xs.pl, yc], pr = 0.62; bd.frame(pc, 1.36, 1.36); bd.wire([pc[0] - pr, yc], [pc[0] + pr, yc], { dim: true }); bd.wire([pc[0], yc - pr], [pc[0], yc + pr], { dim: true });
+      bd.wire(aI.r, [pc[0] - 0.95, yI], [pc[0] - 0.95, yc + 0.25], [pc[0] - 0.7, yc + 0.25], {}); bd.wire(aQ.r, [pc[0] - 0.95, yQ], [pc[0] - 0.95, yc - 0.25], [pc[0] - 0.7, yc - 0.25], {});
+      bd.text('I', [pc[0] + pr + 0.08, yc]).text('Q', [pc[0], yc + pr + 0.1]).text('z = I + jQ', [pc[0], yc - 0.82]);
+      const zs = sl(R.I).map((v, i) => [pc[0] + pr * 0.85 * v / R.m, yc + pr * 0.85 * sl(R.Q)[i] / R.m]); bd.path(zs, '--c-v');
+      const zc = [pc[0] + pr * 0.85 * R.I[R.mid] / R.m, yc + pr * 0.85 * R.Q[R.mid] / R.m]; bd.path([pc, zc], '--c-north'); bd.token(zc, 0.045);
+      // signal tiles: before and after every block
+      const t = (c, y, o) => bd.wave(c, y, { w: 0.74, h: 0.34, ...o });
+      t([-3.75, yc + 0.62], sl(T.rf), { color: '--c-E', cap: 'RF echo', w: 0.62 });
+      t([-2.15, yI + 0.5], sl(T.rf), { color: '--c-E', w: 0.6, cap: 'RF' }); t([-2.15, yQ - 0.5], sl(T.rf), { color: '--c-E', w: 0.6, cap: 'RF' });
+      t([-0.95, yc + 0.34], part(sl(T.loI)), { color: '--c-ref', w: 0.5, h: 0.26 }); t([-0.95, yc - 0.44], part(sl(T.loQ)), { color: '--c-ref', w: 0.5, h: 0.26 });
+      t([-0.72, yI + 0.5], sl(T.mI), { color: '--c-I', norm: nm, cap: '0 Hz + 2f' }); t([-0.72, yQ - 0.5], sl(T.mQ), { color: '--c-I', norm: nm, cap: '0 Hz + 2f' });
+      t([0.85, yI + 0.5], sl(R.I), { color: '--c-B', norm: nb, cap: 'I(t)' }); t([0.85, yQ - 0.5], sl(R.Q), { color: '--c-B', norm: nb, cap: 'Q(t)' });
+      t([2.35, yI + 0.5], [{ y: sl(R.I).filter((_, i) => i % 12 === 0), color: '--c-B', stems: true }], { norm: nb, cap: 'samples I[n]' }); t([2.35, yQ - 0.5], [{ y: sl(R.Q).filter((_, i) => i % 12 === 0), color: '--c-B', stems: true }], { norm: nb, cap: 'samples Q[n]' });
+      bd.end();
+    }
 
     return {
       changed() {
         const iqc = state.case === 'iqdemod';
-        tc.show(!iqc); sc.show(!iqc); for (const k of q4) k.show(iqc); boxes.object.visible = sel.object.visible = arrows.object.visible = spark.object.visible = sparkOn.object.visible = !iqc; tok.object.visible = !iqc && state.auto; names.forEach((l) => { l.visible = !iqc && l.element.textContent; });
-        if (!iqc) S = chain(state.arch, params());
+        tc.show(!iqc); sc.show(!iqc); for (const k of q2) k.show(iqc);
+        if (!iqc) { S = chain(state.arch, params()); SP = S.map(mini); }
         ctx.setClock(!iqc && state.auto ? 8 : 0);
       },
       update() {
         if (state.case === 'iqdemod') {
           const p = { fs: 1e9, n: 4096, fc: state.fc * MHz, fLO: (state.fc + state.det) * MHz, phi: state.phi * Math.PI / 180, tau: 0.5 * us, t0: 1 * us, bw: state.bw * MHz };
-          const r = iq(p), t = Array.from({ length: p.n }, (_, i) => i / p.fs / us), mag = r.I.map((v, i) => Math.hypot(v, r.Q[i]));
-          const [a, b, c, d] = q4, win = (arr) => arr.slice(800, 2000), tw = win(t);
-          a.range([tw[0], tw[tw.length - 1]], [-1.3, 1.3]); a.titles('time (µs)', `RF voltage (norm.): at the antenna, carrier ${state.fc} MHz`); a.line('rf', tw, win(Array.from(r.rf)), { color: '--c-ref', width: 1.2 });
-          const sp = spectrumDb({ re: r.rf, im: new Float64Array(p.n) }, p.fs), fm = sp.f.map((f) => f / MHz);
-          b.range([0, 2.5 * state.fc], [-60, 2]); b.titles('frequency (MHz)', 'power (dB): the LO (red) sets what lands at 0 Hz'); b.line('s', fm, sp.dB, { color: '--c-E' }); b.stems('lo', [state.fc + state.det], [0], { color: '--c-north', width: 1.6 });
-          c.range([tw[0], tw[tw.length - 1]], [-1.3, 1.3]); c.titles('time (µs)', 'I (blue) and Q (orange) after the low-pass'); c.line('I', tw, win(Array.from(r.I)), { color: '--c-B' }); c.line('Q', tw, win(Array.from(r.Q)), { color: '--c-I' });
-          d.range([tw[0], tw[tw.length - 1]], [0, 1.3]); d.titles('time (µs)', '|I + jQ|² (norm.): the pulse envelope'); d.line('m', tw, win(mag.map((v) => v * v)), { color: '--c-v' });
-          const mid = Math.round((p.t0 + p.tau / 2) * p.fs), rt = riseTime(mag.slice(0, mid), p.fs);
+          const r = iq(p), T = iq({ ...p, fc: FC_TILE, fLO: FC_TILE + state.det * MHz }), mid = Math.round((p.t0 + p.tau / 2) * p.fs), mag = r.I.map((v, i) => Math.hypot(v, r.Q[i]));
+          iqSchema(T, { I: r.I, Q: r.Q, mid, m: Math.max(1, ...mag) });
+          const [a, b] = q2, t = Array.from({ length: p.n }, (_, i) => i / p.fs / us), win = (arr) => Array.from(arr).slice(I0, I1), tw = win(t);
+          const spec = (x) => spectrumDb({ re: Float64Array.from(x), im: new Float64Array(p.n) }, p.fs, 1), fm = spectrumDb({ re: r.rf, im: new Float64Array(p.n) }, p.fs).f.map((f) => f / MHz), ref = spectrumDb({ re: r.mI, im: new Float64Array(p.n) }, p.fs).peak;
+          const db = (x) => { const s = spectrumDb({ re: Float64Array.from(x), im: new Float64Array(p.n) }, p.fs, ref); return s.dB; };
+          a.range([0, 2.4 * state.fc], [-60, 6]); a.titles('frequency (MHz)', 'spectrum (dB): RF, mixer out, after LPF');
+          a.line('rf', fm, db(r.rf), { color: '--c-E', width: 1.4 }); a.line('m', fm, db(r.mI), { color: '--c-I', width: 1.4 }); a.line('i', fm, db(r.I), { color: '--c-B', width: 2 }); a.stems('lo', [state.fc + state.det], [0], { color: '--c-north', width: 1.6 });
+          b.range([tw[0], tw[tw.length - 1]], [-1.3, 1.3]); b.titles('time (µs)', 'voltage: I, Q, |z| after the low-pass'); b.line('I', tw, win(r.I), { color: '--c-B' }); b.line('Q', tw, win(r.Q), { color: '--c-I' }); b.line('m', tw, win(mag), { color: '--c-v', width: 1.4 });
+          const rt = riseTime(mag.slice(0, mid), p.fs);
           hud.set('a', `at the pulse centre: |z| = ${fmt(mag[mid])}, ∠z = ${fmt(Math.atan2(r.Q[mid], r.I[mid]) * 180 / Math.PI)}° (true ${state.phi}°)`);
-          hud.set('b', state.det ? `LO off by ${state.det} MHz: I and Q rotate at ${state.det} MHz` : 'LO on frequency: I and Q are flat during the pulse ✓', state.det ? '' : 'good');
+          hud.set('b', state.det ? `LO off by ${state.det} MHz: z turns at ${state.det} MHz (the green arc in the IQ plane)` : 'LO on frequency: I and Q are flat during the pulse, z is one point ✓', state.det ? '' : 'good');
           hud.set('c', `rise time ${fmt(rt * 1e9)} ns with a ${state.bw} MHz filter${rt > p.tau / 2 ? ' — longer than half the pulse: no flat top ✗' : ''}`, rt > p.tau / 2 ? 'bad' : '');
           const bws = Array.from({ length: 40 }, (_, i) => 1 + i); plots.aux.draw({ xlim: [1, 40], cursor: state.bw, series: [{ x: bws, y: bws.map((w) => 0.48 / w * 1e3), color: '--c-v', label: 'rise time (ns) ≈ 0.48 / bandwidth (MHz)' }] });
           return;
         }
         const seg = 8 / S.length, k = state.auto ? Math.min(S.length - 1, Math.floor(time.t / seg)) : Math.min(state.stage, S.length - 1), f = state.auto ? (time.t % seg) / seg : 1;
-        diagram(S, k, f); const st = S[k], cplx = st.x.im.some((v) => Math.abs(v) > 1e-9);
+        chainDiagram(S, k, f); const st = S[k], cplx = st.x.im.some((v) => Math.abs(v) > 1e-9);
         const n = st.x.re.length, t = Array.from({ length: n }, (_, i) => i / st.fs / us);
         const amp = Math.max(1e-9, ...Array.from(st.x.re, Math.abs), ...Array.from(st.x.im, Math.abs));
         tc.range([0, t[n - 1]], [-amp * 1.15, amp * 1.15]); tc.titles('time (µs)', cplx ? 'voltage (norm.): I blue, Q orange' : 'voltage (norm.): the real signal at this stage');
@@ -139,7 +173,7 @@ export default {
         hud.set('a', `${k + 1}. ${st.name} — sampled at ${fmt(st.fs / MHz)} MS/s`); hud.set('b', NOTE[st.name] || ''); hud.set('c', state.arch === 'homodyne' ? 'no IF: cheap and small, but DC offsets and IQ imbalance land right on the signal' : `IF = |${fmt(BASE.fRF / MHz)} − ${state.fLO}| = ${fmt(Math.abs(BASE.fRF / MHz - state.fLO))} MHz; image at ${fmt(2 * state.fLO - BASE.fRF / MHz)} MHz`);
         plots.aux.draw({ xlim: [0, S.length - 1], cursor: k, series: [{ x: S.map((_, i) => i), y: S.map((s) => 20 * Math.log10(Math.max(1e-6, ...Array.from(s.x.re, Math.abs)))), color: '--c-B', label: 'peak level (dB) stage by stage' }] });
       },
-      theme() { for (const k of [tc, sc, ...q4]) k.theme(); for (const k of [boxes, sel, arrows, spark, sparkOn, tok]) k.theme(); },
+      theme() { for (const k of [tc, sc, ...q2]) k.theme(); bd.theme(); },
     };
   },
 };

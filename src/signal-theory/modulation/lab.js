@@ -2,6 +2,7 @@
 // detector, DSB-SC), FM (instantaneous frequency, Bessel sidebands, Carson's rule), PM against FM, and
 // the three side by side.
 import { createChart } from '../../lib/viz/chart.js';
+import { thin } from '../../lib/ui/schema.js';
 import { fft } from '../../lib/dsp.js';
 import { besselJ, modulate, envelope } from './model.js';
 
@@ -61,13 +62,27 @@ export default {
     const tl = createChart(ctx, { box: TL }), tr = createChart(ctx, { box: TR }), bl = createChart(ctx, { box: BL }), br = createChart(ctx, { box: BR });
     const rows = [0, 1, 2].map((k) => createChart(ctx, { box: ROW(k, 3) })), cl = [0, 1, 2].map((k) => createChart(ctx, { box: ROW(k, 3, -4.3, 5.0) })), cr = [0, 1, 2].map((k) => createChart(ctx, { box: ROW(k, 3, 1.25, 3.3) }));
     const all = [tl, tr, bl, br, ...rows, ...cl, ...cr];
+    const N0 = (id) => ({ id, kind: 'node' });
+    const SCH = {
+      carrier: ctx.schema({ title: 'transmitter', items: [{ ...N0('m'), c: 0 }, { id: 'mx', kind: 'mixer', c: 1, label: 'modulator' }, { id: 'lo', kind: 'lo', c: 1, r: 1, label: 'carrier oscillator', labelAt: 't', dx: 0 }, { id: 'pa', kind: 'amp', c: 2, label: 'power amp' }, { id: 'ant', kind: 'antenna', c: 3 }],
+        wires: [['m', 'mx'], ['lo', 'mx', { v: true }], ['mx', 'pa'], ['pa', 'ant']], tiles: [{ id: 'm', wire: 0, cap: 'message m(t)' }, { id: 's', wire: 2, cap: 's(t)' }, { id: 'c', wire: 1, dx: 42, dy: 38, cap: 'carrier' }] }),
+      am: ctx.schema({ title: 'AM transmitter and envelope receiver', items: [{ ...N0('m'), c: 0 }, { id: 'off', kind: 'box', t: '1 + μ·m', c: 1 }, { id: 'mx', kind: 'mixer', c: 2 }, { id: 'lo', kind: 'lo', c: 2, r: 1, label: 'carrier', labelAt: 't' }, { id: 'det', kind: 'box', t: 'diode |·|', c: 3, label: 'rectifier' }, { id: 'lp', kind: 'filter', type: 'lp', c: 4, label: 'low-pass' }, { ...N0('out'), c: 5 }],
+        wires: [['m', 'off'], ['off', 'mx'], ['lo', 'mx', { v: true }], ['mx', 'det'], ['det', 'lp'], ['lp', 'out']], tiles: [{ id: 'm', wire: 0, cap: 'm(t)' }, { id: 'env', wire: 1, cap: 'envelope' }, { id: 's', wire: 3, cap: 'AM s(t)' }, { id: 'r', wire: 4, cap: '|s(t)|' }, { id: 'o', wire: 5, cap: 'recovered' }] }),
+      fm: ctx.schema({ title: 'FM transmitter and discriminator', items: [{ ...N0('m'), c: 0 }, { id: 'vco', kind: 'box', t: 'VCO', c: 1, label: 'f = fc + Δf·m' }, { id: 'lim', kind: 'box', t: 'limiter', c: 2 }, { id: 'dis', kind: 'box', t: 'discriminator', c: 3, label: 'frequency → volts' }, { ...N0('out'), c: 4 }],
+        wires: [['m', 'vco'], ['vco', 'lim'], ['lim', 'dis'], ['dis', 'out']], tiles: [{ id: 'm', wire: 0, cap: 'm(t)' }, { id: 's', wire: 1, cap: 'FM s(t)' }, { id: 'fi', wire: 3, cap: 'fᵢ(t) − fc' }] }),
+      pm: ctx.schema({ title: 'phase vs frequency modulator', items: [{ ...N0('m'), c: 0, dy: 38 }, { id: 'sp', kind: 'node', c: 1, dy: 38 }, { id: 'pm', kind: 'box', t: 'phase mod.', c: 2, label: 'φ = kp·m' }, { id: 'fm', kind: 'box', t: 'VCO', c: 2, r: 1, label: 'f = fc + Δf·m' }, { ...N0('o1'), c: 3 }, { ...N0('o2'), c: 3, r: 1 }],
+        wires: [['m', 'sp'], ['sp', 'pm'], ['sp', 'fm'], ['pm', 'o1'], ['fm', 'o2']], tiles: [{ id: 'm', wire: 0, cap: 'm(t)' }, { id: 'p', wire: 3, cap: 'PM' }, { id: 'f', wire: 4, cap: 'FM' }] }),
+      compare: ctx.schema({ title: 'one message, three modulators', items: [{ ...N0('m'), c: 0, r: 1 }, { id: 'sp', kind: 'node', c: 1, r: 1 }, { id: 'am', kind: 'box', t: 'AM', c: 2 }, { id: 'fm', kind: 'box', t: 'FM', c: 2, r: 1 }, { id: 'pm', kind: 'box', t: 'PM', c: 2, r: 2 }, { ...N0('a'), c: 3 }, { ...N0('f'), c: 3, r: 1 }, { ...N0('p'), c: 3, r: 2 }],
+        wires: [['m', 'sp'], ['sp', 'am'], ['sp', 'fm'], ['sp', 'pm'], ['am', 'a'], ['fm', 'f'], ['pm', 'p']], tiles: [{ id: 'm', wire: 0, cap: 'm(t)' }, { id: 'a', wire: 4 }, { id: 'f', wire: 5 }, { id: 'p', wire: 6 }] }),
+    };
     const tsel = () => { const n = Math.round(state.span * FS); return { t: ts.slice(0, n), n }; };
     return {
-      changed() { const c = state.case; for (const k of all) k.show(false); (c === 'carrier' ? rows : c === 'compare' ? [...cl, ...cr] : [tl, tr, bl, br]).forEach((k) => k.show(true)); },
+      changed() { const c = state.case; for (const [k, v] of Object.entries(SCH)) v.show(k === c); for (const k of all) k.show(false); (c === 'carrier' ? rows : c === 'compare' ? [...cl, ...cr] : [tl, tr, bl, br]).forEach((k) => k.show(true)); },
       update() {
         const c = state.case, p = { fc: state.fc, fm: state.fm, mu: state.mu, df: state.df, kp: state.kp, msg: state.msg, dsb: state.dsb }, { t, n } = tsel();
         if (c === 'carrier') {
           const A = modulate('am', { ...p, mu: 0.6 }, FS, N);
+          SCH.carrier.update({ tiles: { m: thin(A.m.slice(0, n)), s: [{ y: A.s.slice(0, n), color: '--c-v' }], c: [{ y: t.slice(0, 200).map((v) => Math.cos(2 * Math.PI * state.fc * v)), color: '--c-ref' }] } });
           rows[0].range([0, state.span], [-1.3, 1.3]); rows[0].titles('t (s)', `message m(t), ${state.fm} Hz — baseband`); rows[0].line('m', t, A.m.slice(0, n), { color: '--c-B' });
           rows[1].range([0, state.span], [-1.3, 1.3]); rows[1].titles('t (s)', `carrier cos 2π·${state.fc}·t — ${fmt(state.fc / state.fm)}× faster`); rows[1].line('c', t, t.map((v) => Math.cos(2 * Math.PI * state.fc * v)), { color: '--c-I', width: 1.2 });
           rows[2].range([0, state.span], [-1.8, 1.8]); rows[2].titles('t (s)', 'message carried in the carrier’s amplitude: the envelope is m(t)'); rows[2].line('s', t, A.s.slice(0, n), { color: '--c-v', width: 1.2 }); rows[2].line('e', t, t.map((v, i) => 1 + 0.6 * A.m[i]), { color: '--c-B', dashed: true, width: 1.4 });
@@ -75,6 +90,7 @@ export default {
           plots.aux.draw({ xlim: [1, 1e3], series: [{ x: Array.from({ length: 100 }, (_, i) => 10 ** (i * 0.03)), y: Array.from({ length: 100 }, (_, i) => 3e8 / (4 * 1e6 * 10 ** (i * 0.03))), color: '--c-I', label: 'λ/4 (m) vs frequency (MHz)' }] });
         } else if (c === 'am') {
           const A = modulate('am', p, FS, N), env = A.m.map((v) => (state.dsb ? v : 1 + state.mu * v)), det = envelope(A.s, FS, 3 * state.fm + 5);
+          SCH.am.update({ text: { off: state.dsb ? 'DSB: m' : '1 + μ·m' }, tiles: { m: thin(A.m.slice(0, n)), env: [{ y: thin(env.slice(0, n)), color: '--c-B' }], s: [{ y: A.s.slice(0, n), color: '--c-v' }], r: [{ y: A.s.slice(0, n).map(Math.abs), color: '--c-v' }], o: [{ y: thin(det.slice(0, n)), color: '--c-B' }] } });
           const ym = Math.max(2, ...env.map(Math.abs)) * 1.1; tl.range([0, state.span], [-ym, ym]); tl.titles('t (s)', state.dsb ? 'DSB-SC: m(t)·cos — the phase flips where m < 0' : `AM: [1 + μ m(t)]·cos, μ = ${state.mu}`);
           tl.line('s', t, A.s.slice(0, n), { color: '--c-v', width: 1.1 }); tl.line('e', t, env.slice(0, n), { color: '--c-B', dashed: true, width: 1.4 }); tl.line('e2', t, env.slice(0, n).map((v) => -v), { color: '--c-B', dashed: true, width: 1.4 });
           const S = spec(A.s), W = win(S, state.fc - 6 * state.fm - 10, state.fc + 6 * state.fm + 10);
@@ -89,6 +105,7 @@ export default {
           const mus = Array.from({ length: 51 }, (_, i) => i / 50); plots.aux.draw({ xlim: [0, 1], cursor: Math.min(1, state.mu), series: [{ x: mus, y: mus.map((u) => 100 * (u * u / 4) / (0.5 + u * u / 4)), color: '--c-v', label: 'AM efficiency (%) vs μ: at most 33 %' }] });
         } else if (c === 'fm') {
           const F = modulate('fm', p, FS, N), beta = state.df / state.fm, carson = 2 * (state.df + state.fm);
+          SCH.fm.update({ tiles: { m: thin(F.m.slice(0, n)), s: [{ y: F.s.slice(0, n), color: '--c-v' }], fi: [{ y: thin(F.fi.slice(0, n)).map((v) => v - state.fc), color: '--c-I' }] } });
           tl.range([0, state.span], [-1.4, 1.4]); tl.titles('t (s)', `FM: constant amplitude, the zero crossings bunch and spread`); tl.line('s', t, F.s.slice(0, n), { color: '--c-v', width: 1.1 }); tl.line('m', t, F.m.slice(0, n).map((v) => 1.2 * v), { color: '--c-B', dashed: true, width: 1 });
           tr.range([0, state.span], [state.fc - state.df * 1.5 - 2, state.fc + state.df * 1.5 + 2]); tr.titles('t (s)', `instantaneous frequency fᵢ = fc + Δf·m(t)`); tr.line('fi', t, F.fi.slice(0, n), { color: '--c-I' }); tr.line('fc', [0, state.span], [state.fc, state.fc], { color: '--ink-dim', dashed: true, width: 1 });
           const S = spec(F.s), lo = Math.max(0, state.fc - carson), hi = state.fc + carson, W = win(S, lo, hi);
@@ -105,6 +122,7 @@ export default {
           plots.aux.draw({ xlim: [0, 10], cursor: beta, series: [{ x: bs, y: bs.map((b) => 2 * (b + 1)), color: '--c-north', label: 'Carson bandwidth / fm vs β' }] });
         } else if (c === 'pm') {
           const P = modulate('pm', p, FS, N), F = modulate('fm', p, FS, N);
+          SCH.pm.update({ tiles: { m: thin(P.m.slice(0, n)), p: [{ y: P.s.slice(0, n), color: '--c-v' }], f: [{ y: F.s.slice(0, n), color: '--c-I' }] } });
           tl.range([0, state.span], [-1.4, 1.4]); tl.titles('t (s)', `PM: phase = kp·m(t), kp = ${state.kp} rad`); tl.line('s', t, P.s.slice(0, n), { color: '--c-v', width: 1.1 }); tl.line('m', t, P.m.slice(0, n).map((v) => 1.2 * v), { color: '--c-B', dashed: true, width: 1 });
           tr.range([0, state.span], [-1.4, 1.4]); tr.titles('t (s)', `FM: frequency = fc + Δf·m(t), Δf = ${state.df} Hz`); tr.line('s', t, F.s.slice(0, n), { color: '--c-I', width: 1.1 }); tr.line('m', t, F.m.slice(0, n).map((v) => 1.2 * v), { color: '--c-B', dashed: true, width: 1 });
           const clip = (v) => Math.max(state.fc - 150, Math.min(state.fc + 150, v)), r = Math.max(state.df, state.kp * state.fm) * 1.6 + 5;
@@ -117,6 +135,7 @@ export default {
           const fms = Array.from({ length: 30 }, (_, i) => i + 1); plots.aux.draw({ xlim: [1, 30], cursor: state.fm, series: [{ x: fms, y: fms.map((f) => state.kp * f), color: '--c-v', label: 'PM swing (Hz)' }, { x: [1, 30], y: [state.df, state.df], color: '--c-I', label: 'FM swing (Hz) vs fm (Hz)' }] });
         } else {
           const kinds = [['am', 'AM — amplitude', '--c-B'], ['fm', 'FM — frequency', '--c-I'], ['pm', 'PM — phase', '--c-v']];
+          { const g = (k) => modulate(k, p, FS, N).s.slice(0, n); SCH.compare.update({ tiles: { m: thin(modulate('am', p, FS, N).m.slice(0, n)), a: [{ y: g('am'), color: '--c-B' }], f: [{ y: g('fm'), color: '--c-I' }], p: [{ y: g('pm'), color: '--c-v' }] } }); }
           kinds.forEach(([k, label, col], j) => {
             const M = modulate(k, p, FS, N), ym = k === 'am' ? 1 + state.mu + 0.2 : 1.3;
             cl[j].range([0, state.span], [-ym, ym]); cl[j].titles(j === 2 ? 't (s)' : '', label); cl[j].line('s', t, M.s.slice(0, n), { color: col, width: 1.1 }); cl[j].line('m', t, M.m.slice(0, n).map((v) => (k === 'am' ? 1 + state.mu * v : 1.15 * v)), { color: '--ink-dim', dashed: true, width: 1 });

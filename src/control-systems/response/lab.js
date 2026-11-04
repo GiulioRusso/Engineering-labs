@@ -1,5 +1,6 @@
 // Time response from the poles: drag a pole over the 3D |G(s)| surface; the step response follows.
 import { createKnob } from '../../lib/viz/knob.js';
+import { thin } from '../../lib/ui/schema.js';
 import { createSPlane, SX, SY, height, VIEW3D, camOf } from '../splane.js';
 import { fromRoots, roots, step, simulate, stepInfo, evalTF, cabs } from '../tf.js';
 
@@ -60,6 +61,7 @@ export default {
   setup(ctx) {
     const { scene, state, hud, plots, handles } = ctx;
     const sp = createSPlane(ctx), knob = createKnob(scene, '--accent', 0.11);
+    const sch = ctx.schema({ title: 'input → system → output', items: [{ id: 'u', kind: 'node', c: 0 }, { id: 'G', kind: 'box', t: 'G(s)', c: 1, label: '' }, { id: 'y', kind: 'node', c: 2 }], wires: [['u', 'G'], ['G', 'y']], tiles: [{ id: 'u', wire: 0, cap: 'input' }, { id: 'y', wire: 1, cap: 'output y(t)' }] });
     const knobPos = () => (state.kind === 'first' ? [-1 / state.tau, 0] : state.kind === 'second' ? [-state.zeta * state.wn, state.wn * Math.sqrt(Math.max(0, 1 - state.zeta ** 2))] : [state.ps, state.pw]);
     handles.add({ object: knob.group, axes: 'xy', hint: 'Drag the pole', get: () => knob.get(), set: ([x, y]) => {
       x = Math.max(SX[0] + 0.1, Math.min(SX[1] - 0.1, x)); y = Math.max(0, Math.min(SY[1] - 0.1, y));
@@ -79,6 +81,7 @@ export default {
         const grow = Math.max(...P.map((p) => p[0])), T = unstable ? Math.min(15, Math.max(3, 3 / grow)) : marginal ? 15 : Math.min(30, Math.max(3, 6 / slow)), imp = state.kind === 'poles';
         const r = imp ? simulate({ num: [...G.num, 0], den: G.den }, () => 1, T, 4e-3) : step(G, T, 4e-3);
         const t = Array.from(r.t), y = Array.from(r.y).map((v) => Math.max(-1e3, Math.min(1e3, v)));
+        sch.update({ text: { G: state.kind === 'first' ? 'K / (τs + 1)' : state.kind === 'second' ? 'K ωₙ² / (s² + 2ζωₙs + ωₙ²)' : 'poles you place', 'G:label': P.map(cpx).join(', ') }, tiles: { u: [{ y: imp ? t.map((_, i) => (i < 4 ? 1 : 0)) : t.map(() => 1), color: '--c-ref', stems: imp }].map((o) => (imp ? { ...o, y: thin(o.y, 60) } : { ...o, y: [0, ...thin(o.y, 59)] })), y: [{ y: thin(y), color: '--c-B' }] }, lit: ['G'] });
         const series = [{ x: t, y, color: '--c-B', label: imp ? 'impulse response' : 'step response' }];
         if (!imp) series.push({ x: [0, T], y: [state.K, state.K], color: '--c-ref', dash: [4, 3], label: 'final value K' });
         hud.set('p', P.map(cpx).join(', '));

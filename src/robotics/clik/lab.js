@@ -1,6 +1,7 @@
 // Closed-loop inverse kinematics on a three-link planar arm: the Jaco2 project's square path tracked with
 // the pseudo-inverse, the transpose or damped least squares; and the arm's redundancy used for a second goal.
 import { createChart } from '../../lib/viz/chart.js';
+import { thin } from '../../lib/ui/schema.js';
 import { drawArm } from '../kin/draw.js';
 import { clik, planar, ARM3, STARTS, DEG } from './model.js';
 
@@ -48,6 +49,9 @@ export default {
   setup(ctx) {
     const { state, hud, plots, stage, time } = ctx;
     stage.controls.enableRotate = false;
+    const sch = ctx.schema({ title: 'closed-loop inverse kinematics', gap: 38, items: [{ id: 'xd', kind: 'node', c: 0 }, { id: 'e', kind: 'sum', c: 1, signs: { l: '+', b: '−' } }, { id: 'K', kind: 'box', t: 'K', c: 2 }, { id: 'ff', kind: 'sum', c: 3, signs: { l: '+', t: '+' } },
+      { id: 'J', kind: 'box', t: 'J†(q)', c: 4, label: 'inverse Jacobian' }, { id: 'int', kind: 'int', c: 5, label: 'integrate' }, { id: 'q', kind: 'node', c: 6 }, { id: 'k', kind: 'box', t: 'k(q)', c: 6, r: 1, label: 'forward kinematics' }],
+      wires: [['xd', 'e', { label: 'x_d' }], ['e', 'K', { label: 'e' }], ['K', 'ff'], ['ff', 'J'], ['J', 'int', { label: 'q̇' }], ['int', 'q'], ['q', 'k', { v: true }], ['k', 'e', { up: true }]], tiles: [] });
     const sq = createChart(ctx, { box: SQ }), tr = createChart(ctx, { box: TR }), br = createChart(ctx, { box: BR }), charts = [sq, tr, br];
     let cache = {};
     return {
@@ -55,6 +59,7 @@ export default {
       update() {
         const red = state.case === 'redundancy', cfg = { q0: STARTS[red ? 'comfortable' : state.start], path: state.path, alg: red ? 'pinv' : state.alg, K: state.K, lambda: state.lambda, task: red ? 'pos' : state.task, nul: red ? state.nul : 'none', k0: state.k0 };
         const k = JSON.stringify(cfg); if (cache.k !== k) cache = { k, R: clik(cfg) };
+        if (sch.key !== k) { sch.key = k; sch.update({ text: { K: `K = ${state.K}`, J: cfg.alg === 'pinv' ? 'J†(q)' : cfg.alg === 'transpose' ? 'Jᵀ(q)' : cfg.alg === 'dls' ? 'J*(q) damped' : 'J⁻¹(q)', 'J:label': red && state.nul !== 'none' ? 'J† + null-space motion' : 'inverse Jacobian' } }); }
         const { out, total } = cache.R, ts = out.map((o) => o.t), t = total * time.t / D, i = Math.min(out.length - 1, Math.round(t / 0.01)), o = out[i];
         sq.range([-0.3, 2.1], [-0.6, 1.8]); sq.titles('x (m)', 'y (m)');
         sq.line('pd', out.map((p) => p.pd[0]), out.map((p) => p.pd[1]), { color: '--ink-dim', width: 1.4, dashed: true });

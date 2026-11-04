@@ -21,6 +21,7 @@ import { createPlaybar } from './playbar.js';
 import { createPlot } from './plots.js';
 import { createHud } from './hud.js';
 import { initExplain } from './explain.js';
+import { createSchema } from './schema.js';
 import { cssVar } from './theme.js';
 import { createLegend } from '../viz/legend.js';
 import { onDrag, store } from './drag.js';
@@ -71,6 +72,8 @@ export function mountLab(def, root, { url = {}, onUrl = () => {} } = {}) {
     timings: {},
     requestUpdate() { if (impl && !time.playing) impl.update(0); stage.requestRender(); bar(); },
     setPlaying, load,
+    // a block schema in the dock, left of the plots (shown even when the lab has no plots)
+    schema(spec) { root.querySelector('.lab').classList.remove('no-dock'); return createSchema(q('.dock'), spec); },
     panelSync() { panel?.sync(); writeUrl(); },
     setDuration(D) { time.D = D; if (D && time.t > D) time.t = 0; bar(); },
     // a case with an animation gets a clock of D seconds; D = 0 means nothing evolves in time:

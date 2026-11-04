@@ -2,6 +2,7 @@
 // the closed-loop step response. The 3D view lifts the curve by log ω and adds Bode walls.
 import * as THREE from 'three';
 import { createCurve } from '../../lib/viz/curve.js';
+import { thin } from '../../lib/ui/schema.js';
 import { polymul, evalTF, bode, margins, closedLoop, step, stepInfo, roots, cabs } from '../tf.js';
 
 const W0 = 1e-2, W1 = 1e2, ZK = 0.75; // frequency range (rad/s), height per decade
@@ -103,6 +104,7 @@ export default {
     const bDot = new THREE.Mesh(new THREE.SphereGeometry(0.06, 16, 12), new THREE.MeshBasicMaterial()), pDot = bDot.clone(); pDot.material = new THREE.MeshBasicMaterial(); scene.add(bDot, pDot); bodeObjs.push(bDot, pDot);
     const nyqObjs = [nyq, mir, unit, axes, margin].map((c) => c.object).concat([minus1, ml, sdot]);
     const asym = (w) => { let d = 20 * Math.log10(state.K) - (state.int ? 20 * Math.log10(w) : 0); for (const [on, c, sg] of [[true, state.w1, -1], [state.pole2, state.w2, -1], [state.zero, state.wz, 1]]) if (on) d += sg * Math.max(0, 20 * Math.log10(w / c)); return d; };
+    const sch = ctx.schema({ title: 'a sine through the loop gain', items: [{ id: 'u', kind: 'node', c: 0 }, { id: 'L', kind: 'box', t: 'L(jω)', c: 1, label: '' }, { id: 'y', kind: 'node', c: 2 }], wires: [['u', 'L'], ['L', 'y']], tiles: [{ id: 'u', wire: 0, cap: 'sin ωt' }, { id: 'y', wire: 1, cap: '|L| sin(ωt + ∠L)' }] });
     const map = (g) => { const r = cabs(g), q = squash(r) / (r || 1); return [g[0] * q, g[1] * q]; };
     const curve = (B) => B.w.map((w, i) => [...map([B.re[i], B.im[i]]), ZK * (Math.log10(w) + 2)]);
 
@@ -121,6 +123,7 @@ export default {
         ghost.object.visible = show0; let B0 = null;
         if (show0) { B0 = bode(loop(state, false), W0, W1, 400); ghost.set(curve(B0).flatMap(([x, y, z]) => [x, y, state.view3d ? z : 0.002])); }
         const g = evalTF(L, [0, state.w]), [px, py] = map(g), pz = ZK * (Math.log10(state.w) + 2);
+        { const A = cabs(g), ph = Math.atan2(g[1], g[0]), k = Array.from({ length: 120 }, (_, i) => 6 * Math.PI * i / 119), m = Math.max(1, A); sch.update({ text: { L: `L(j·${fmt(state.w)})`, 'L:label': `× ${fmt(A)}, ${fmt(ph * 180 / Math.PI)}°` }, tiles: { u: [{ y: k.map((x) => Math.sin(x)), color: '--c-ref', norm: m }], y: [{ y: k.map((x) => A * Math.sin(x + ph)), color: '--c-B', norm: m }] } }); }
         dot.position.set(px, py, pz); sdot.position.set(px, py, 0.01); drop.segments([px, py, pz, px, py, 0]);
         // phase margin arc on the unit circle, gain margin segment on the real axis
         const seg = [];

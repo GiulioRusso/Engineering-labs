@@ -1,6 +1,7 @@
 // Robot dynamics and motion control, two links in a vertical plane: the free arm (energy and the changing
 // inertia matrix), PD control with gravity compensation, and computed torque with an imperfect model.
 import { createChart } from '../../lib/viz/chart.js';
+import { thin } from '../../lib/ui/schema.js';
 import { drawArm } from '../kin/draw.js';
 import { planar } from '../kin/model.js';
 import { simulate, pdOffset, ARM2, dyn2 } from './model.js';
@@ -49,6 +50,10 @@ export default {
   setup(ctx) {
     const { state, hud, plots, stage, time } = ctx;
     stage.controls.enableRotate = false;
+    const sch = ctx.schema({ title: 'the control loop', gap: 54, items: [{ id: 'qd', kind: 'node', c: 0 }, { id: 'e', kind: 'sum', c: 1, signs: { l: '+', b: '−' } }, { id: 'pd', kind: 'box', t: 'Kp·e + Kd·ė', c: 2, label: 'PD' }, { id: 'u', kind: 'sum', c: 3, signs: { l: '+', b: '+' } }, { id: 'g', kind: 'box', t: 'g(q)', c: 3, r: 1, label: 'gravity model', h: 24 },
+      { id: 'arm', kind: 'box', t: 'M q̈ + C q̇ + g = τ', c: 4, label: 'the arm (physics)' }, { id: 'q', kind: 'node', c: 5 }],
+      wires: [['qd', 'e'], ['e', 'pd'], ['pd', 'u'], ['g', 'u', { v: true }], ['u', 'arm', { label: 'τ' }], ['arm', 'q'], ['q', 'e', { loop: true }]],
+      tiles: [{ id: 'q', wire: 5, cap: 'q₁, q₂' }] });
     const sq = createChart(ctx, { box: SQ }), tr = createChart(ctx, { box: TR }), br = createChart(ctx, { box: BR }), charts = [sq, tr, br];
     let cache = {};
     const L = ARM2.L, X = (L[0] + L[1]) * 1.1;
@@ -59,6 +64,7 @@ export default {
         const cfg = c === 'free' ? { mode: 'free', q0: [state.a1 * DEG, state.a2 * DEG], damping: state.damping, T } : { mode: c === 'pd' ? 'pd' : state.law, q0: HANG.map((x) => x * DEG), q1: tgt, Kp: state.Kp, Kd: state.Kd, gcomp: c === 'pd' ? state.gcomp : true, err: c === 'ct' ? state.err : 0, T };
         const k = JSON.stringify(cfg); if (cache.k !== k) cache = { k, R: simulate(cfg) };
         const R = cache.R, ts = R.map((s) => s.t), t = T * time.t / D, i = Math.min(R.length - 1, Math.round(t / 0.01)), s = R[i];
+        if (sch.key !== k) { sch.key = k; const ct = c === 'ct' && state.law === 'ct'; sch.update({ lit: c === 'free' ? ['arm'] : ct ? ['pd', 'u', 'g'] : state.gcomp === false ? ['pd'] : ['pd', 'g'], text: { pd: c === 'free' ? 'τ = 0' : ct ? 'M̂(q)(q̈d + Kp e + Kd ė)' : 'Kp·e + Kd·ė', g: ct ? 'Ĉq̇ + ĝ(q)' : c === 'pd' && !state.gcomp ? 'off' : 'g(q)', 'pd:label': c === 'free' ? 'no control' : ct ? 'computed torque' : 'PD' }, tiles: { q: [{ y: thin(R.map((r) => r.q[0])), color: '--c-B' }, { y: thin(R.map((r) => r.q[1])), color: '--c-I' }] } }); }
         sq.range([-X, X], [-X, X]); sq.titles('x (m)', 'y (m): the arm in a vertical plane, gravity down');
         const tips = R.slice(0, i + 1).map((r) => planar(L, r.q).P[2]); sq.line('trail', tips.map((p) => p[0]), tips.map((p) => p[1]), { color: '--c-I', width: 1.4 });
         if (s.ref) drawArm(sq, 'ref', planar(L, s.ref).P, { color: '--line', joints: '--ink-dim', tip: '--c-north', width: 3, jointSize: 6 }); else { sq.hide('refl'); sq.dots('refj', [], []); sq.dots('reft', [], []); }
