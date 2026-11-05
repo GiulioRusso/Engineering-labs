@@ -8,7 +8,7 @@ import { niceStep } from './graph2d.js';
 
 const fmt = (v) => String(Number(v.toPrecision(3)));
 
-export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 1], xTitle = '', yTitle = '', z = 0, xTicks = true, yTicks = true, grid: showGrid = true } = {}) {
+export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 1], xTitle = '', yTitle = '', z = 0, xTicks = true, yTicks = true, grid: showGrid = true, frame: showFrame = true } = {}) {
   const { stage, scene } = ctx, [X0, Y0, W, H] = box, curves = {}, labels = [], points = {}, images = {};
   const frame = createCurve(stage, { max: 8, width: 1.4, color: '--ink-dim' }), grid = createCurve(stage, { max: 60, width: 1, color: '--line' });
   const zero = createCurve(stage, { max: 1, width: 1.2, color: '--ink-dim' });
@@ -19,7 +19,7 @@ export function createChart(ctx, { box = [-4, -2.5, 8, 5], x = [0, 1], y = [-1, 
   let xr = x, yr = y;
   const mx = (v) => X0 + W * (v - xr[0]) / (xr[1] - xr[0]), my = (v) => Y0 + H * (Math.max(yr[0], Math.min(yr[1], v)) - yr[0]) / (yr[1] - yr[0]);
   function axes() {
-    frame.segments([X0, Y0, z, X0 + W, Y0, z, X0, Y0, z, X0, Y0 + H, z]);
+    frame.segments(showFrame ? [X0, Y0, z, X0 + W, Y0, z, X0, Y0, z, X0, Y0 + H, z] : []);
     for (const l of labels) l.visible = false;
     let k = 0; const g = [], put = (t, px, py) => { if (!labels[k]) { labels[k] = ctx.label('', 'tick'); scene.add(labels[k]); } labels[k].element.textContent = t; labels[k].position.set(px, py, z); labels[k].visible = frame.object.visible; k++; };
     const sx = niceStep(xr[1] - xr[0], 6), sy = niceStep(yr[1] - yr[0], 4);

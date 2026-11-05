@@ -28,8 +28,7 @@ Open **`index.html`** in any browser. Catalogue self-contained, runs offline.
 | Subject | Entry | Key Topics |
 |---|---|---|
 | **Maths** | [`web/maths.html`](web/maths.html) | Calculus, Linear Algebra, Differential Equations, Complex Analysis |
-| **Probability & Stats** | [`web/probability.html`](web/probability.html) | Distributions, Bayes, Monte Carlo, Hypothesis Testing |
-| **Statistics** | [`web/statistics.html`](web/statistics.html) | Descriptive Statistics, Correlation, Sampling Distributions, MLE, Bootstrap, t Tests, p-values and Power, Chi-Square, ANOVA, Rank Tests, Regression Inference, Bayesian Updating |
+| **Probability & Stats** | [`web/probability.html`](web/probability.html) | Events, Counting, Bayes, Distributions, Normal Curve and z-Scores, Joint Distributions, CLT, Descriptive Statistics, Least Squares, Sampling, Confidence Intervals, Bootstrap, MLE, t/χ²/ANOVA/Rank Tests, Regression, Bayesian Updating, Markov Chains, Monte Carlo |
 | **Physics** | [`web/physics.html`](web/physics.html) | Mechanics, Oscillations and Waves, Heat, Electromagnetism (all four Maxwell equations), Optics |
 | **Modern Physics** | [`web/modern-physics.html`](web/modern-physics.html) | Special Relativity, Photoelectric Effect, Particle in a Box, Hydrogen Spectrum, Decay |
 | **Flight and Space** | [`web/flight-and-space.html`](web/flight-and-space.html) | Lift and Drag, Standard Atmosphere, Gliding, Breguet Range, Airfoils (Joukowski), Drag Polar, Take-off and Landing, Static Stability, Kepler's Laws, Newton's Cannon, Hohmann vs Bi-elliptic, Plane Changes, Rendezvous (Clohessy–Wiltshire), Patched Conics, Gravity Assist, Rocket Equation, Staging, Gravity Turn, Re-entry |

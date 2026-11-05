@@ -142,7 +142,7 @@ sources; `node tracer/coding/build.mjs` regenerates the traces, and the code pan
 The robotics labs share `src/robotics/kin/model.js` (rotations, quaternions, DH, Jacobians, pseudo-inverse,
 two-link dynamics, trapezoidal and polynomial profiles); the Jaco2 DH table is the course model used in the
 Jaco2 project.
-The statistics labs share `src/statistics/core/model.js` (log-gamma, incomplete gamma and beta, the normal, t,
+The statistics labs share `src/probability/core/model.js` (log-gamma, incomplete gamma and beta, the normal, t,
 χ², F and beta distributions with quantiles, ranks, correlation, least squares) and `core/draw.js` (histogram
 bars, box plots).
 

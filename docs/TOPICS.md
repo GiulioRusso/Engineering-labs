@@ -346,38 +346,37 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Outcomes and events](web/probability.html?lab=events) | Two dice: events as sets of outcomes, the addition rule. | done |
 | [Counting](web/probability.html?lab=counting) | Pascal’s triangle, combinations and the birthday problem. | done |
 | [Conditional probability](web/probability.html?lab=conditional) | Areas of a square and a tree diagram; independence. | done |
+| [Bayes’ theorem](web/probability.html?lab=bayes) | 1000 people and a screening test. | done |
 | [The law of large numbers](web/probability.html?lab=law-large-numbers) | Frequencies settle to the probability, error ∝ 1/√n. | done |
 | [Expected value and variance](web/probability.html?lab=expected-value) | The long-run average of a game, and its spread. | done |
-| [The Galton board](web/probability.html?lab=galton) | Binomial rows of pegs turning into a bell; sums of dice. | done |
 | [Probability distributions](web/probability.html?lab=distributions) | Normal, uniform, exponential, Poisson, binomial: probability as area. | done |
+| [The normal curve and z-scores](web/probability.html?lab=normal-curve) | Shift and squeeze any bell into the standard one: z = (x − μ)/σ, percentiles and the 68–95–99.7 rule. | done |
+| [Two variables: joint, marginal, conditional](web/probability.html?lab=joint-distributions) | A cloud of (X, Y) pairs, its two shadows, a slice through it, and why Var(X + Y) needs the covariance. | done |
+| [The Galton board](web/probability.html?lab=galton) | Binomial rows of pegs turning into a bell; sums of dice. | done |
 | [Sample means and the CLT](web/probability.html?lab=central-limit) | Averages of anything become normal. | done |
-| [Bayes’ theorem](web/probability.html?lab=bayes) | 1000 people and a screening test. | done |
+| [Mean, median and spread](web/probability.html?lab=descriptive-stats) | What one outlier does to the mean, median, standard deviation and IQR. | done |
+| [Histograms and box plots](web/probability.html?lab=histograms-boxplots) | Bin width shapes the picture; the box plot shows five numbers, and can hide two humps. | done |
+| [Correlation](web/probability.html?lab=correlation) | Pearson against Spearman, Anscombe's quartet, and r ≈ 0 with a perfect relation. | done |
+| [Fitting a line: least squares](web/probability.html?lab=line-fit) | Drag a line through the points; the residuals become squares, and the best line has the least total area. | done |
+| [Sampling distributions](web/probability.html?lab=sampling-distribution) | Repeat the sample and the statistic varies: standard error σ/√n, for the mean, median and sd. | done |
+| [Confidence intervals](web/probability.html?lab=confidence-intervals) | How often the interval catches the truth. | done |
+| [The bootstrap](web/probability.html?lab=bootstrap) | Resample your one sample to get a confidence interval without a formula. | done |
+| [Maximum likelihood](web/probability.html?lab=mle) | Slide the parameter to the peak of the likelihood: coin, measurements, waiting times. | done |
+| [Hypothesis tests](web/probability.html?lab=hypothesis-tests) | α, p-value and power. | done |
+| [z and t tests](web/probability.html?lab=z-and-t-tests) | One-sample, two-sample and paired t tests; why small samples need t's fat tails. | done |
+| [p-values, power and p-hacking](web/probability.html?lab=p-values-power) | Hundreds of experiments: p is uniform under H₀, piles up near 0 with an effect; test 20 outcomes and something always 'works'. | done |
+| [Chi-square goodness of fit](web/probability.html?lab=chi-square-gof) | Is this die fair? Observed against expected counts, and Mendel's peas. | done |
+| [Chi-square test of independence](web/probability.html?lab=chi-square-independence) | Does the outcome depend on the treatment? A 2 × 3 table, expected counts and Cramér's V. | done |
+| [ANOVA](web/probability.html?lab=anova) | Several group means at once: variation between groups against within, the F ratio. | done |
+| [Rank tests (Mann–Whitney)](web/probability.html?lab=rank-tests) | One wild value wrecks the t test; ranks do not care. | done |
+| [Regression inference](web/probability.html?lab=regression-inference) | Confidence and prediction bands, the slope test, residual plots and R². | done |
+| [Bayesian updating](web/probability.html?lab=bayesian-update) | Prior × likelihood → posterior, flip by flip; credible against confidence intervals. | done |
+| [Random walks](web/probability.html?lab=random-walk) | Coin-flip walks spread as √n; Monte Carlo π by darts. | done |
+| [Markov chains](web/probability.html?lab=markov-chains) | A walker hopping between states with fixed odds: the long-run share of time in each settles to the stationary distribution. | done |
 | [Monte Carlo: areas and π](web/probability.html?lab=monte-carlo-area) | Random points estimate an area. | done |
 | [How fast Monte Carlo converges](web/probability.html?lab=monte-carlo-error) | Error ∝ 1/√N, whatever the dimension. | done |
 | [Buffon’s needle](web/probability.html?lab=buffon) | Needles on a ruled floor estimate π. | done |
 | [Importance sampling](web/probability.html?lab=importance-sampling) | Sample where the function matters. | done |
-| [Random walks](web/probability.html?lab=random-walk) | Coin-flip walks spread as √n; Monte Carlo π by darts. | done |
-| [Confidence intervals](web/probability.html?lab=confidence-intervals) | How often the interval catches the truth. | done |
-| [Hypothesis tests](web/probability.html?lab=hypothesis-tests) | α, p-value and power. | done |
-
-## Statistics
-
-| Topic | What you do | Status |
-|---|---|---|
-| [Mean, median and spread](web/statistics.html?lab=descriptive-stats) | What one outlier does to the mean, median, standard deviation and IQR. | done |
-| [Histograms and box plots](web/statistics.html?lab=histograms-boxplots) | Bin width shapes the picture; the box plot shows five numbers, and can hide two humps. | done |
-| [Correlation](web/statistics.html?lab=correlation) | Pearson against Spearman, Anscombe's quartet, and r ≈ 0 with a perfect relation. | done |
-| [Sampling distributions](web/statistics.html?lab=sampling-distribution) | Repeat the sample and the statistic varies: standard error σ/√n, for the mean, median and sd. | done |
-| [Maximum likelihood](web/statistics.html?lab=mle) | Slide the parameter to the peak of the likelihood: coin, measurements, waiting times. | done |
-| [The bootstrap](web/statistics.html?lab=bootstrap) | Resample your one sample to get a confidence interval without a formula. | done |
-| [z and t tests](web/statistics.html?lab=z-and-t-tests) | One-sample, two-sample and paired t tests; why small samples need t's fat tails. | done |
-| [p-values, power and p-hacking](web/statistics.html?lab=p-values-power) | Hundreds of experiments: p is uniform under H₀, piles up near 0 with an effect; test 20 outcomes and something always 'works'. | done |
-| [Chi-square goodness of fit](web/statistics.html?lab=chi-square-gof) | Is this die fair? Observed against expected counts, and Mendel's peas. | done |
-| [Chi-square test of independence](web/statistics.html?lab=chi-square-independence) | Does the outcome depend on the treatment? A 2 × 3 table, expected counts and Cramér's V. | done |
-| [ANOVA](web/statistics.html?lab=anova) | Several group means at once: variation between groups against within, the F ratio. | done |
-| [Rank tests (Mann–Whitney)](web/statistics.html?lab=rank-tests) | One wild value wrecks the t test; ranks do not care. | done |
-| [Regression inference](web/statistics.html?lab=regression-inference) | Confidence and prediction bands, the slope test, residual plots and R². | done |
-| [Bayesian updating](web/statistics.html?lab=bayesian-update) | Prior × likelihood → posterior, flip by flip; credible against confidence intervals. | done |
 
 ## Physics
 

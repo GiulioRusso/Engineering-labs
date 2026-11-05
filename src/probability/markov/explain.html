@@ -1,0 +1,18 @@
+<section data-case="markov">
+  <h3>Markov chains</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: three states and the arrows between them. Each arrow is labelled with the chance of taking it at the next step, and it is thicker the more likely it is. The loops are the chances of staying put. The orange dot is a walker that hops once per half second. Top right: the share of hops it has spent in each state so far (bars) against the long-run share (dashed). Bottom right: the exact chance of each state after t steps, from the chosen start. Below: how far that is from the long-run share.</div>
+  <p>A <b>Markov chain</b> moves between states at random, and the chance of where it goes next depends only on where it is now, not on how it got there. Everything is in the <b>transition matrix</b> P: row i holds the chances of going from state i to each state, so each row adds up to 1. The chances after t steps are p₀Pᵗ. For most chains these settle to one <b>stationary distribution</b> π that does not change when you take one more step, π = πP, whatever the start. π is also the share of time a long walk spends in each state. Web page ranking, queues, text generation and genetics all use this idea.</p>
+  <div class="eq">$$P_{ij} = P(X_{t+1}=j \mid X_t = i), \qquad p_{t+1} = p_t\,P, \qquad p_t = p_0\,P^t \to \pi, \qquad \pi = \pi P$$</div>
+  <ol class="steps">
+    <li>Read the row of the current state: those are the odds of the next hop.</li>
+    <li>Push the whole distribution forward one step: multiply the row vector p by P.</li>
+    <li>Repeat. The start is forgotten, and p settles to π.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Weather: sunny today. Tomorrow: 60 % sunny, 30 % cloudy, 10 % rainy, the first row. The day after: 0.6 × 0.6 + 0.3 × 0.3 + 0.1 × 0.2 = 47 % sunny. After 3 steps the chances are within 5 % of the long run, which is 39 % sunny, 36 % cloudy and 25 % rainy, whatever the first day was.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Thinking the chain must make up for its past (it has rained three days, so sun is due). A Markov chain has no memory: only the current state sets the odds.</div>
+  <div class="try"><h4>Try it</h4>Raise "extra chance to stay put": the long-run shares stay the same, but the curves on the bottom right take longer and longer to settle. Stickiness changes how fast the chain forgets, not where it ends up.</div>
+</section>
+<section data-case="markov" data-example="sticky"><h3>Sticky states</h3><p>Each state keeps itself with chance about 95 %. The walker stays in one state for about 20 hops at a time, so after 100 hops the bars can still be far from the long run, and p_t takes about 34 steps to come within 5 % of it.</p></section>
+<section data-case="markov" data-example="cycle"><h3>A cycle never settles</h3><p>Morning → afternoon → night → morning, with no randomness: p_t goes round for ever and never converges. The share of time still settles to a third each. The chain is <i>periodic</i>. Add a small chance to stay put and it converges again.</p></section>
+<section data-case="markov" data-example="absorb"><h3>Absorbing states</h3><p>A gambler wins or loses one step at a time; once broke or once at the target, the game is over (an absorbing state: stay with chance 1). From Playing, ruin and win are each 50 %. Here the long run depends on where you start, and the walker always ends up stuck.</p></section>
+<section data-case="markov" data-example="stay"><h3>Weather that lingers</h3><p>Every state gets an extra 60 % chance to stay put. The long-run shares are unchanged (39 %, 36 %, 25 %), but starting from rain, p_t now needs 8 steps instead of about 3 to forget the start.</p></section>

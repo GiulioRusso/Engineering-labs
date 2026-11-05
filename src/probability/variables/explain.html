@@ -1,0 +1,35 @@
+<section data-case="normal">
+  <h3>The normal curve and z-scores</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the scores of a class as a bell in its own units, shaded up to your score x; the dashed lines sit one and two standard deviations either side of the mean. Bottom: the standard normal bell with the classic bands (green within ±1σ, blue from 1σ to 2σ, grey from 2σ to 3σ) and your z-score as a vertical line. Below: Φ(z), the share of the bell to the left of z, which is your percentile.</div>
+  <p>Heights, exam scores, measurement errors: many quantities pile up in the same bell shape, the <b>normal distribution</b>. Its two numbers are the mean μ (where the peak sits) and the standard deviation σ (how wide it is). Every normal bell is the same curve, only shifted and stretched. Subtract μ and divide by σ and any bell becomes the <b>standard normal</b>, with mean 0 and standard deviation 1. The result z says how many standard deviations a value sits from the mean, and a single table, or curve, Φ(z), then gives the share below it for every normal at once.</p>
+  <div class="eq">$$z = \frac{x-\mu}{\sigma}, \qquad P(X \le x) = \Phi(z), \qquad P(|Z|\le 1) \approx 68\,\%,\; P(|Z|\le 2) \approx 95\,\%,\; P(|Z|\le 3) \approx 99.7\,\%$$</div>
+  <ol class="steps">
+    <li>Subtract the mean: the bell moves so its peak is at 0.</li>
+    <li>Divide by the standard deviation: the bell is squeezed or stretched to width 1. The shaded area does not change.</li>
+    <li>Read Φ(z), the area to the left: the share of values below x.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Exam A has mean 70 and standard deviation 8; you score 82. Then z = (82 − 70)/8 = 1.5 and Φ(1.5) = 93.3 %: you beat 93 % of the class. The top 10 % starts at z = 1.28, which is 70 + 1.28 × 8 = 80.3 points.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Comparing raw scores from different tests. A 75 can be a better result than an 82 when the test was harder or the class more bunched: compare z-scores.</div>
+  <div class="try"><h4>Try it</h4>Keep x one σ above μ while you change σ: the top bell changes width but the shaded share stays at 84 %, and the bottom line stays at z = 1.</div>
+</section>
+<section data-case="normal" data-example="compare"><h3>Two exams: who did better?</h3><p>82 in exam A (mean 70, sd 8) is z = 1.5, the 93rd percentile. 75 in exam B (mean 60, sd 5) is z = 3, the 99.9th. The lower score is the rarer result: only 1 student in 740 does that well in B.</p></section>
+<section data-case="normal" data-example="iq"><h3>IQ 130</h3><p>IQ tests are scaled to mean 100 and standard deviation 15, so 130 is z = 2: above 97.7 % of people, about 1 in 44.</p></section>
+<section data-case="normal" data-example="one"><h3>One σ above the mean</h3><p>z = 1 is always the 84th percentile: half the bell is below the mean, and another 34 % is between the mean and one σ above. Move σ and see the top bell change while the bottom one does not.</p></section>
+
+<section data-case="joint">
+  <h3>Two variables: joint, marginal, conditional</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: 1500 pairs (X, Y), for example a person's height and weight, as a cloud of dots. The dashed ellipses hold 39 % and 86 % of the pairs, and the red line is the mean of Y for each X. Above and to the right of the cloud are its two shadows: the distribution of X alone and of Y alone. The orange dots are a vertical slice of the cloud, the pairs with X close to the chosen value. Top right: Y in that slice against Y alone. Bottom right: the distribution of the sum X + Y.</div>
+  <p>Two random quantities are described together by their <b>joint distribution</b>, here the cloud. Looking at one variable and ignoring the other gives its <b>marginal</b> distribution, the cloud's shadow on one axis. Fixing one and looking at the other gives the <b>conditional</b> distribution, a slice of the cloud. When the two are correlated, the slice is narrower than the shadow and its centre moves with X: knowing X tells you something about Y. The <b>covariance</b> measures how they move together. It also decides how wide a sum is: variables that move together add their swings, and opposite ones cancel them.</p>
+  <div class="eq">$$\text{Cov}(X,Y) = \rho\,\sigma_X\sigma_Y, \qquad E[Y\mid X=x] = \rho\frac{\sigma_Y}{\sigma_X}x, \qquad \text{sd}(Y\mid X) = \sigma_Y\sqrt{1-\rho^2}, \qquad \text{Var}(X+Y) = \sigma_X^2+\sigma_Y^2+2\,\text{Cov}(X,Y)$$</div>
+  <ol class="steps">
+    <li>Project the cloud on each axis: the marginals ignore the other variable entirely.</li>
+    <li>Slice the cloud at one X: what is left is the distribution of Y for that X.</li>
+    <li>Add the two: the spread of the sum depends on the covariance, not only on the two spreads.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>σX = 1, σY = 1.5, ρ = 0.7. At X = 1 the slice has mean 0.7 × 1.5 × 1 = 1.05 and standard deviation 1.5 × √(1 − 0.49) = 1.07, against 1.5 for Y alone. The sum has variance 1 + 2.25 + 2 × 1.05 = 5.35, standard deviation 2.31, against 1.80 if X and Y were independent.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Adding standard deviations, or adding variances of correlated quantities without the covariance term. Two investments that rise and fall together are riskier than their separate risks suggest.</div>
+  <div class="try"><h4>Try it</h4>Slide ρ from 0 to 0.95 with the slice fixed: the orange histogram narrows and walks away from the dashed one. Then take ρ negative and watch the sum on the bottom right become narrower than either variable.</div>
+</section>
+<section data-case="joint" data-example="indep"><h3>Independent</h3><p>ρ = 0: the cloud is an upright ellipse, the red line is flat, and every slice looks like the whole Y shadow. Knowing X tells you nothing about Y.</p></section>
+<section data-case="joint" data-example="strong"><h3>Strong correlation</h3><p>ρ = 0.95: the slice is only √(1 − 0.9) = 31 % as wide as Y alone. A good predictor narrows the uncertainty this much; ρ = 0.5 narrows it by only 13 %.</p></section>
+<section data-case="joint" data-example="hedge"><h3>Negative correlation: hedging</h3><p>ρ = −0.8 with equal spreads: Var(X + Y) = 1 + 1 − 1.6 = 0.4, a standard deviation of 0.63, smaller than either variable alone. This is why a portfolio of assets that move against each other is safer than either asset.</p></section>

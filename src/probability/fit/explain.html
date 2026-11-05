@@ -1,0 +1,18 @@
+<section data-case="lsq">
+  <h3>Fitting a line: least squares</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: twelve points, your line (blue, drag the two round knobs at its ends) and the best line (green dashed). Each red segment is a residual, how far a point lies above or below your line, and each orange square has that residual as its side. Top right: the total area of the squares for every possible line, coloured by slope and intercept: dark is small, and the bright dot is your line. Bottom right: the residuals of your line (stems) and of the best line (dots). Below: the least total area for each slope.</div>
+  <p>Many lines pass close to a cloud of points; which one is best? <b>Least squares</b> picks the line whose residuals have the smallest sum of squares, the least total area of the squares on the left. Squaring makes misses above and below count the same, makes big misses count much more than small ones, and gives a smooth bowl with exactly one bottom. Setting both slopes of the bowl to zero gives the formulas below. The best line always passes through the mean point (x̄, ȳ), and its residuals add up to zero.</p>
+  <div class="eq">$$\text{SSE}(a,b) = \sum_i \big(y_i - a - b\,x_i\big)^2, \qquad \hat b = \frac{\sum (x_i-\bar x)(y_i-\bar y)}{\sum (x_i-\bar x)^2}, \qquad \hat a = \bar y - \hat b\,\bar x$$</div>
+  <ol class="steps">
+    <li>For any line, measure each point's vertical miss (the residual).</li>
+    <li>Square the misses and add them up: one number per line, one height of the bowl.</li>
+    <li>The bottom of the bowl is the best line. Gradient descent reaches it by stepping downhill. The formula jumps straight there.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>The clean data give ŷ = 1.40 + 0.730x with SSE 9.44 and r² = 0.84. A line that starts high and slopes down, y = 6.25 − 0.25x, leaves 103 units of square area, eleven times as much.</div>
+  <div class="pitfall"><h4>Common mistake</h4>Trusting the line without looking at the residuals. Residuals that show a pattern (all positive at the ends, negative in the middle) mean the straight line is the wrong shape, however good r² looks.</div>
+  <div class="try"><h4>Try it</h4>Drag one end of the line up and down: the bright dot slides across the bowl, and the squares grow and shrink. Then tick gradient descent and watch the line roll to the bottom.</div>
+</section>
+<section data-case="lsq" data-example="best"><h3>The best line</h3><p>At the best line the bright and green dots coincide at the bottom of the bowl. No small move of either end reduces the total area: every direction is uphill.</p></section>
+<section data-case="lsq" data-example="descent"><h3>Gradient descent finds it</h3><p>The line starts sloping the wrong way and, step by step, follows the slope of the bowl. The green path on the top right shows the route: first a fast slide down the steep walls, then a slow crawl along the flat valley floor. This is how neural networks are trained, with millions of parameters instead of two.</p></section>
+<section data-case="lsq" data-example="outlier"><h3>One outlier</h3><p>One point 6 units too high owns 61 % of the total square area of the best line. To shrink that one square, the line tilts toward it, and the slope goes from 0.73 to 0.92. Squares make least squares sensitive to outliers. Robust fits use absolute values or down-weight big residuals.</p></section>
+<section data-case="lsq" data-example="curve"><h3>Curved data</h3><p>The best straight line has r² = 0.92, which looks good, but the residuals run +, +, +, then −, −, −, then +, +, +. The points follow a curve, and the straight line misses it the same way every time.</p></section>
