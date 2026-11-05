@@ -41,7 +41,7 @@ Open **`index.html`** in any browser. Catalogue self-contained, runs offline.
 | **Design Patterns** | [`web/design-patterns.html`](web/design-patterns.html) | Creational, Structural and Behavioural Patterns as Running C++ with Object Diagrams |
 | **Signal Theory** | [`web/signal-theory.html`](web/signal-theory.html) | Fourier, Sampling, LTI Systems, Modulation, IQ |
 | **Control Systems** | [`web/control-systems.html`](web/control-systems.html) | PID, Root Locus, Bode/Nyquist, Stability |
-| **Electronic Warfare** | [`web/electronic-warfare.html`](web/electronic-warfare.html) | System architectures (pulsed, coherent, AESA, ESM, DRFM), IQ receiver schema, Pulse Compression, Radar Eq, Jamming, Doppler |
+| **Electronic Warfare** | [`web/electronic-warfare.html`](web/electronic-warfare.html) | System architectures (pulsed, coherent, AESA, ESM, DRFM), IQ receiver schema, Emitter fingerprinting (SEI: Tx, channel and Rx effects, workbench), Pulse Compression, Radar Eq, Jamming, Doppler |
 | **Machine Learning** | [`web/machine-learning.html`](web/machine-learning.html) | k-NN, Trees, Clustering, Linear and Logistic Regression, SVMs, Ensembles, ROC |
 | **Deep Learning** | [`web/deep-learning.html`](web/deep-learning.html) | Neurons, Network Playground, Layers, Backprop, Initialisation, MNIST MLP and CNN |
 | **Numerical Methods** | [`web/numerical-methods.html`](web/numerical-methods.html) | Root Finding, ODE Solvers, Stability, Interpolation, Quadrature |

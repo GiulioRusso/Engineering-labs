@@ -225,6 +225,11 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [DRFM jammer](web/electronic-warfare.html?lab=drfm-arch) | Sample the radar pulse, store it, play it back delayed and Doppler-shifted: false targets and range-gate pull-off. | done |
 | [Receiver architectures](web/electronic-warfare.html?lab=receivers) | Follow one pulse through a superheterodyne, a digital-IF and a homodyne receiver, stage by stage. | done |
 | [IQ demodulation](web/electronic-warfare.html?lab=iq-receiver) | RF pulse to I and Q: LO detuning, filter bandwidth and rise time. | done |
+| [What is an emitter fingerprint](web/electronic-warfare.html?lab=sei-intro) | Two radars of the same model send the same pulse; the hardware makes them differ. | done |
+| [Transmitter imperfections](web/electronic-warfare.html?lab=tx-fingerprint) | Modulator edges, droop and ripple, oscillator offset and phase noise, amplifier AM/AM and AM/PM, output filter. | done |
+| [What the receiver adds](web/electronic-warfare.html?lab=rx-effects) | LO offset, bandwidth, IQ imbalance, DC, ADC bits, clock jitter, sampling phase. | done |
+| [Channel and operating conditions](web/electronic-warfare.html?lab=channel-drift) | SNR, Doppler, multipath, temperature, warm-up, supply voltage. | done |
+| [Fingerprint workbench](web/electronic-warfare.html?lab=fingerprint-workbench) | Every Tx, channel and Rx knob on one pulse, in every representation, with two units of the same model side by side. | done |
 | [Phased-array beamforming](web/electronic-warfare.html?lab=beamforming) | The instantaneous near field beside the far-field pattern: steering, taper, grating lobes. | done |
 | [Maxwell on a grid](web/electronic-warfare.html?lab=fdtd) | Solve E and H step by step (FDTD): walls, slits, standing waves, the Courant limit. | done |
 | [Pointing a beam](web/electronic-warfare.html?lab=pointing) | Gain is borrowed solid angle: fly a receiver through the beam and watch the link close. | done |

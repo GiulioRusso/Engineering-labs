@@ -115,7 +115,8 @@ A case section is written for a student meeting the idea for the first time, wit
 
 Example sections stay short: what this preset shows and why.
 
-Style: short labels, hints as tooltips, start from the basics, one idea per example. Topics carry a
+Style: short labels, hints as tooltips, start from the basics, one idea per example. A control group with
+`fold: true` (or `'open'`) folds, for labs with many knobs. Topics carry a
 `group` in `catalog.json` (sections of the left bar and of the home page). Prefer flat 2D views; offer 3D
 as a View option only where it adds something (`view3d` + `camOf(state)` in the lab definition).
 
@@ -182,7 +183,9 @@ share one small network engine, `src/deep-learning/net/model.js` (dense layers, 
   under H₀, 1 − 0.95²⁰ family-wise rate, E[F] = df₂/(df₂ − 2), Mendel's χ² = 0.47; aerodynamics: Joukowski C_L
   vs the closed form, least drag at equal friction and induced drag, ground roll ∝ W², Cmα = 0 at the neutral
   point; manoeuvres: bi-elliptic crossovers 11.94 and 15.58, Clohessy–Wiltshire drift 6πΔv/n, two-burn
-  rendezvous, Earth–Mars v∞ and Δv.
+  rendezvous, Earth–Mars v∞ and Δv; emitter fingerprinting: RC edge 10–90 % = RC ln 9, first-order rise 0.35/B,
+  droop e^(−PW/τd), a CFO leaves |z| exact and detrends away, Wiener variance 2πβt, Saleh AM/AM–AM/PM, measured
+  IRR = closed form, 6.02 N + 1.76 dB and the jitter limit, plateau SNR as asked.
 - `npm run smoke`: loads every subject page from `file://` in headless Chrome and runs every case and
   every example. Fails on a console error, a network request, a WebGL context loss, a blank scene, or a
   case or example without its explanation; checks that the catalogue links every topic.

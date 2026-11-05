@@ -2,15 +2,16 @@
 // Fails on a console error, an uncaught exception, any network request, a WebGL context loss, a
 // blank scene or a case/example without its explanation; checks that both catalogues link every built animation. Prints frame times.
 // Usage: node tools/smoke.mjs [topic]
-import { readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { PNG } from 'pngjs';
 import { launch } from './browser.mjs';
 
 const web = join(dirname(fileURLToPath(import.meta.url)), '..', 'web');
+const subjects = new Set(JSON.parse(readFileSync(join(web, '..', 'catalog.json'), 'utf8')).map((S) => S.subject));
 const topics = readdirSync(web).filter((f) => f.endsWith('.html') && f !== 'index.html').map((f) => f.slice(0, -5))
-  .filter((t) => !process.argv[2] || t === process.argv[2]);
+  .filter((t) => subjects.has(t) && (!process.argv[2] || t === process.argv[2]));   // only subject pages (not redirect stubs)
 const browser = await launch();
 if (!browser) { console.log('chrome not found: skipping smoke test'); process.exit(0); }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

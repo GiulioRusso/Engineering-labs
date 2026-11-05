@@ -830,6 +830,63 @@
     "group": "Receivers"
    },
    {
+    "id": "sei-intro",
+    "title": "What is an emitter fingerprint",
+    "what": "Two radars of the same model send the same pulse; the hardware makes them differ.",
+    "from": "fingerprint",
+    "cases": [
+     "intro"
+    ],
+    "group": "Emitter fingerprinting"
+   },
+   {
+    "id": "tx-fingerprint",
+    "title": "Transmitter imperfections",
+    "what": "Modulator edges, droop and ripple, oscillator offset and phase noise, amplifier AM/AM and AM/PM, output filter.",
+    "from": "fingerprint",
+    "cases": [
+     "modulator",
+     "oscillator",
+     "amplifier",
+     "txfilter"
+    ],
+    "group": "Emitter fingerprinting"
+   },
+   {
+    "id": "rx-effects",
+    "title": "What the receiver adds",
+    "what": "LO offset, bandwidth, IQ imbalance, DC, ADC bits, clock jitter, sampling phase.",
+    "from": "fingerprint",
+    "cases": [
+     "lo",
+     "rxbw",
+     "iqimb",
+     "adc"
+    ],
+    "group": "Emitter fingerprinting"
+   },
+   {
+    "id": "channel-drift",
+    "title": "Channel and operating conditions",
+    "what": "SNR, Doppler, multipath, temperature, warm-up, supply voltage.",
+    "from": "fingerprint",
+    "cases": [
+     "channel",
+     "drift"
+    ],
+    "group": "Emitter fingerprinting"
+   },
+   {
+    "id": "fingerprint-workbench",
+    "title": "Fingerprint workbench",
+    "what": "Every Tx, channel and Rx knob on one pulse, in every representation, with two units of the same model side by side.",
+    "from": "fingerprint",
+    "cases": [
+     "workbench"
+    ],
+    "group": "Emitter fingerprinting"
+   },
+   {
     "id": "beamforming",
     "title": "Phased-array beamforming",
     "what": "The instantaneous near field beside the far-field pattern: steering, taper, grating lobes.",

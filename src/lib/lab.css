@@ -150,6 +150,9 @@ button, input, select { font: inherit; color: inherit; }
 .view > summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; }
 .view > summary::-webkit-details-marker { display: none; }
 .view > summary::after { content: "▾"; transition: transform .15s; } .view:not([open]) > summary::after { transform: rotate(-90deg); }
+.group.fold > summary { font-size: 13px; font-weight: 650; margin: 14px 0 6px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; }
+.group.fold > summary::-webkit-details-marker { display: none; }
+.group.fold > summary::after { content: "▾"; color: var(--ink-dim); transition: transform .15s; } .group.fold:not([open]) > summary::after { transform: rotate(-90deg); }
 .view .group h3 { color: var(--ink-dim); font-weight: 600; font-size: 12px; margin: 10px 0 2px; }
 .view .item { margin: 2px 0; }
 .item { margin: 4px 0 12px; }

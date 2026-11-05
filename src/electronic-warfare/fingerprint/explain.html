@@ -1,0 +1,224 @@
+<section data-case="intro">
+  <h3>What is an emitter fingerprint</h3>
+  <div class="look"><h4>What you are looking at</h4>Top: the pulse's path as physical blocks, transmitter on the left, receiver on the right, with I (blue) and Q (orange) after every block. The lit block is the stage the plots show (“Signal at”). Below: the amplitude |z|, the phase, I and Q in time, and the spectrum of unit A (blue), unit B (orange) when shown, and the ideal pulse as a thin grey ghost. The shaded bands mark the rise (green), the top (blue) and the fall (orange). Below the plots: how far apart A and B are, in units of the noise, against the SNR.</div>
+  <p>An electronic-support (ESM) receiver describes every pulse it intercepts with a few numbers, a <b>pulse descriptor word</b> (PDW): carrier frequency (RF), pulse width (PW), time of arrival (and from it the repetition interval, PRI), direction of arrival (AoA) and amplitude. These say what <i>type</i> of radar it is. Two radars of the same model, built to the same drawing, produce the same PDW: the same waveform is their <b>intentional modulation</b>. Yet no two transmitters are identical. Their switches, capacitors, oscillators, amplifiers and filters differ within tolerance, and each one adds a small <b>unintentional modulation on the pulse</b> (UMOP). That pattern belongs to the hardware and is the <b>fingerprint</b>. Recognising a single unit from it is <b>specific emitter identification</b> (SEI).</p>
+  <p>Most of the fingerprint sits where the hardware is working hardest. On the <b>edges</b> the modulator switches, the amplifier sweeps through its whole curve, and the filters ring. On the <b>top</b> the supply sags and ripples. Between pulses there is only noise.</p>
+  <div class="eq">$$z(t) = I(t) + jQ(t) = a(t)\,e^{j\varphi(t)}, \qquad a(t) = a_0(t)\,[1+\epsilon_a(t)], \qquad \varphi(t) = \theta(t) + 2\pi\Delta f\,t + \epsilon_\varphi(t)$$</div>
+  <ol class="steps">
+    <li>θ(t) and a₀(t) are the intended waveform: the same for every unit of the model.</li>
+    <li>Δf (an offset) and the slow parts of ε depend on the oscillator, Doppler and the receiver: unreliable as an identity.</li>
+    <li>The fine structure of ε_a and ε_φ on the edges and the top is the unit's own: that is what SEI compares, after removing the level and the linear phase.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Units 1 and 2, same model, 1 µs pulse at 9.4 GHz. Their PDWs agree: PW 1.01 µs for both, RF within 40 kHz of each other, far below an ESM receiver's frequency resolution. Their modulators do not agree: rise 20.8 ns against 19.2 ns, fall 36.7 ns against 29.5 ns, droop 2.8 % against 2.5 %. At 40 dB SNR the normalised amplitudes differ by 1.6 noise σ per sample, visible in a single pulse.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Using the absolute amplitude or the absolute carrier offset as the identity. The amplitude depends on range, and the offset moves with Doppler, the receiver's LO and the unit's temperature. A fingerprint must survive these: it is measured on the normalised shape and the detrended phase.</div>
+  <div class="try"><h4>Try it</h4>Show unit B and drag the tolerance spread to 0: A and B become one curve. Bring it back to 1 and zoom on the falling edge.</div>
+</section>
+<section data-case="intro" data-example="ideal"><h3>Ideal pulse</h3><p>The waveform generator's output, before any hardware: a perfect rectangle with no rise time, flat top or phase error. Change the waveform: a chirp or a Barker code changes θ(t), the intended modulation, but no unit can be told apart by it.</p></section>
+<section data-case="intro" data-example="units"><h3>Two units, same model</h3><p>Units 1 and 2 drawn from the same tolerance spread. On the whole pulse they almost coincide; on the edges and along the top they do not. Change unit B's serial number: every unit is a little different.</p></section>
+<section data-case="intro" data-example="pdw"><h3>Same PDW, different shape</h3><p>The readout shows both PDWs: the same RF within kHz and the same PW within ns. The residual A − B on the rising edge is still well above zero: the PDW cannot tell the units apart, the shape can.</p></section>
+
+<section data-case="modulator">
+  <h3>The pulse modulator: edges, droop, ripple</h3>
+  <div class="look"><h4>What you are looking at</h4>The signal right after the modulator (block 2): the amplitude with its rise, top and fall bands, the phase, I and Q, and the IQ plane. Below: the top of the pulse magnified, |z| minus its level in percent, for unit A and for the nominal unit.</div>
+  <p>A pulsed transmitter is switched on and off by a <b>modulator</b>: a high-voltage switch (thyratron, solid-state stack) that dumps a <b>storage capacitor</b> into the tube or the amplifier. Three things are its fingerprint. <b>The edges</b>: the switch and its driver charge stray capacitances through resistances, a first-order RC rise, or a resonant second-order one that overshoots and rings. <b>Droop</b>: the capacitor discharges during the pulse, so the top sags exponentially. <b>Ripple</b>: what is left of the supply's switching frequency rides on the top as a small AM, with a little PM.</p>
+  <div class="eq">$$a(t) = 1 - e^{-t/RC}, \quad t_{10\text{–}90} = RC\ln 9 \approx 2.2\,RC, \qquad a_\text{top}(t) \propto e^{-t/\tau_d}\,[1 + m\sin(2\pi f_r t)]$$</div>
+  <ul>
+    <li><b>Physical part</b>: the switch and driver (edges), the storage capacitor (droop), the high-voltage supply (ripple).</li>
+    <li><b>What it changes</b>: mostly |z| (edges, top slope, ripple), and the spectrum's width and sidelobes; the phase only a little, until the amplifier turns the edges into phase (AM/PM).</li>
+    <li><b>Typical size (illustrative)</b>: rise and fall 5–100 ns, droop a few %, ripple below 1–2 %.</li>
+    <li><b>Emitter or nuisance</b>: emitter. These are the strongest fingerprints of a pulsed radar.</li>
+  </ul>
+  <div class="worked"><h4>Worked example</h4>A 20 ns rise time means RC = 20 / 2.2 = 9.1 ns. With τd = 30 µs, a 1 µs top sags by 1 − e^(−1/30) = 3.3 %. Make the pulse 3 µs and τd 10 µs: 1 − e^(−0.3) = 26 %.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Reading the rise time after the receiver as the transmitter's. Every filter on the way adds its own rise time (Rx bandwidth case). And fall is not rise mirrored: the switch turns off through a different path, so the two edges carry independent information.</div>
+  <div class="try"><h4>Try it</h4>Switch the edge to second order and lower ζ: the overshoot grows, and the magnified top below shows the ringing dying away along the pulse.</div>
+</section>
+<section data-case="modulator" data-example="slow"><h3>Slow switch: long rise</h3><p>An 80 ns rise (RC = 36 ns): the green band widens and the spectrum narrows. A slow edge carries less high-frequency energy.</p></section>
+<section data-case="modulator" data-example="ring"><h3>Overshoot and ringing</h3><p>A second-order edge with ζ = 0.25 overshoots by about 45 % and rings for several cycles. The ringing frequency and damping are set by the modulator's stray inductance and capacitance: a fingerprint at the very start of the pulse.</p></section>
+<section data-case="modulator" data-example="droop"><h3>Droop over a long pulse</h3><p>A 3 µs pulse with τd = 10 µs: the top falls by 26 % from start to end. The longer the pulse compared with τd, the more the capacitor empties.</p></section>
+<section data-case="modulator" data-example="ripple"><h3>Supply ripple on the top</h3><p>3 % ripple at 4 MHz: four ripples along the top, with sidebands at ±4 MHz in the spectrum. The phase of the ripple at the start of the pulse changes from pulse to pulse unless the supply is synchronised to the PRF.</p></section>
+
+<section data-case="oscillator">
+  <h3>The oscillator: offset, phase noise, chirp linearity</h3>
+  <div class="look"><h4>What you are looking at</h4>The signal after the oscillator and IQ modulator (block 3): the phase (choose wrapped, unwrapped or detrended), the instantaneous frequency, the IQ plane and the amplitude. Below: the phase relative to the intended waveform, before (blue) and after (green) removing the best straight line.</div>
+  <p>The carrier comes from a <b>reference oscillator</b> (a crystal, multiplied up by a synthesizer). Its frequency is never exact: an <b>offset</b> Δf of a few ppm makes the phase grow linearly, and z turns steadily round the IQ plane. Its <b>phase noise</b> makes the phase wander as a random walk. A chirp generated by a ramp or a DDS is not perfectly linear, and a <b>non-linearity</b> bends the frequency ramp. None of this touches |z|: an oscillator changes only the phase.</p>
+  <div class="eq">$$z \to z\,e^{j(2\pi\Delta f\,t + \phi_n(t))}, \qquad \Delta f = \text{ppm}\times 10^{-6} f_c, \qquad \text{Var}[\phi_n(t)] = 2\pi\beta\,t$$</div>
+  <ul>
+    <li><b>Physical part</b>: the crystal reference and synthesizer (offset, phase noise), the chirp generator (non-linearity), and in a digital transmitter the IQ modulator's gain and phase mismatch.</li>
+    <li><b>What it changes</b>: the phase slope (offset), phase wander (noise), the curvature of the instantaneous frequency; |z| only through an IQ-modulator mismatch.</li>
+    <li><b>Typical size (illustrative)</b>: 0.1–10 ppm (1 ppm at 9.4 GHz is 9.4 kHz); linewidth 1 Hz–100 kHz; chirp error under 1 %.</li>
+    <li><b>Emitter or nuisance</b>: the emitter's, but the offset adds to Doppler and to the receiver's own LO offset, so it is weak as an identity. Phase-noise statistics and chirp curvature are better.</li>
+  </ul>
+  <div class="worked"><h4>Worked example</h4>20 ppm at 9.4 GHz = 188 kHz: over a 1 µs pulse the phase turns by 2π × 188 kHz × 1 µs = 1.18 rad = 68°. A 50 kHz linewidth gives an rms phase walk of √(2π × 50 kHz × 1 µs) = 0.56 rad, 32°, by the end of the pulse.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking a frequency offset shows in the amplitude: |z| is exactly the same. And taking the measured offset as the emitter's: Doppler and the receiver's LO add theirs, and a single pulse cannot say whose is whose. Detrending removes all three together.</div>
+  <div class="try"><h4>Try it</h4>Set an offset and switch the phase between unwrapped and detrended: the ramp disappears, and what is left is the fingerprint.</div>
+</section>
+<section data-case="oscillator" data-example="offset"><h3>Offset: phase ramp, flat amplitude</h3><p>20 ppm: the unwrapped phase is a straight ramp of 68° across the pulse, the IQ plane shows an arc, the amplitude has not moved.</p></section>
+<section data-case="oscillator" data-example="pn"><h3>Phase noise wanders</h3><p>A 50 kHz linewidth: the detrended phase is a random walk, different on every pulse. Its <i>statistics</i> (how fast it spreads) are the fingerprint, not its shape.</p></section>
+<section data-case="oscillator" data-example="nl"><h3>Chirp non-linearity</h3><p>A 20 MHz chirp with a 2 % quadratic error: the instantaneous frequency is no longer a straight ramp (compare with the grey ghost). The bend comes from the chirp generator and survives detrending, because detrending removes only straight lines.</p></section>
+
+<section data-case="amplifier">
+  <h3>The power amplifier: compression and AM/PM</h3>
+  <div class="look"><h4>What you are looking at</h4>The signal after the power amplifier (block 4): amplitude, phase, IQ plane and spectrum. Below: the amplifier's two curves, output against drive (AM/AM, blue) and phase added against drive (AM/PM, orange), with the cursor at the present drive.</div>
+  <p>A power amplifier (a TWT, klystron or solid-state stage) is linear only at small drive. Near saturation its gain falls, which is <b>compression</b>, and its phase shift depends on the input level, which is <b>AM/PM conversion</b>. The Saleh model captures both with four numbers. Compression flattens the top: droop and ripple shrink. AM/PM matters most for fingerprinting. On the top the amplitude is almost constant, so the added phase is constant too and nothing shows. On the edges the amplitude sweeps from 0 to full, the phase sweeps with it, and the edges get <b>phase transients</b> whose shape belongs to that amplifier.</p>
+  <div class="eq">$$A(r) = \frac{\alpha_a r}{1+\beta_a r^2}, \qquad \Phi(r) = \frac{\alpha_\varphi r^2}{1+\beta_\varphi r^2}, \qquad z_\text{out} = A(|z|)\,e^{j(\arg z + \Phi(|z|))}$$</div>
+  <ul>
+    <li><b>Physical part</b>: the final amplifier, and its operating point set by the drive and the supply.</li>
+    <li><b>What it changes</b>: |z| on the top (flattened) and on the edges (sharpened); the phase where the amplitude moves; spectral regrowth.</li>
+    <li><b>Typical size (illustrative, Saleh's TWT)</b>: AM/PM of 5° at −15 dB drive, 17° at −6 dB, 22° at saturation.</li>
+    <li><b>Emitter or nuisance</b>: emitter, and one of the most robust fingerprints, since it is tied to the amplitude and needs no absolute reference.</li>
+  </ul>
+  <div class="worked"><h4>Worked example</h4>At −6 dB the output is 0.80 of saturation and the phase added on the top is 16.8°. Across a rising edge it climbs from 0 to 16.8°, mostly in the upper half because Φ grows as r². At −15 dB the edge transient is only 5°.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Looking for AM/PM on the top of the pulse: a constant envelope gives a constant phase, which detrending removes. Look at the edges. Also, past saturation (above 0 dB) the Saleh output <i>falls</i>: more drive gives less power.</div>
+  <div class="try"><h4>Try it</h4>Choose the phase “Detrended” and zoom on the rising edge, then sweep the drive from −20 to 0 dB: the phase kick grows while the top stays flat.</div>
+</section>
+<section data-case="amplifier" data-example="backoff"><h3>Back-off: linear</h3><p>At −15 dB the amplifier is almost linear: the 3 % supply ripple passes through untouched (6 % peak to peak), and the phase barely moves on the edges.</p></section>
+<section data-case="amplifier" data-example="compress"><h3>Driven into compression</h3><p>At saturation the slope of A(r) is zero: the same 3 % ripple comes out at 0.3 % peak to peak, and the top is flat. Compression hides the modulator's fingerprint and imposes the amplifier's.</p></section>
+<section data-case="amplifier" data-example="ampm"><h3>AM/PM: phase kicks on the edges</h3><p>Slow 60 ns edges, drive −3 dB, AM/PM doubled: the detrended phase jumps by tens of degrees during the rise and fall and is flat on top. The phase moves only where the amplitude moves.</p></section>
+
+<section data-case="txfilter">
+  <h3>The transmitter's output filter</h3>
+  <div class="look"><h4>What you are looking at</h4>The signal after the Tx filter (block 5): amplitude, phase, spectrum and instantaneous frequency. Below: the filter's response |H(f)| for unit A.</div>
+  <p>Between the amplifier and the antenna sit a harmonic filter, a circulator and the waveguide. Together they band-limit the pulse: sharp edges come out <b>rounded</b>, and a steep filter makes them <b>ring</b>. Small reflections inside, at a flange, a bend or a mismatched load, add a weak delayed <b>echo</b> of the signal. In frequency that is a ripple of the passband amplitude and group delay. A chirp sweeps across the band, so the ripple appears along the pulse as an amplitude ripple.</p>
+  <div class="eq">$$|H_\text{Butterworth}(f)| = \frac{1}{\sqrt{1+(f/f_c)^{2n}}}, \qquad H_\text{echo}(f) = \frac{1+\epsilon\,e^{-j2\pi f\tau}}{1+\epsilon}$$</div>
+  <ul>
+    <li><b>Physical part</b>: the output filter, circulator, waveguide and their mismatches.</li>
+    <li><b>What it changes</b>: rise and fall (rounded, ringing), sidelobes, the amplitude ripple along a chirp, small phase ripple.</li>
+    <li><b>Typical size (illustrative)</b>: 10–30 % of the carrier wide for a harmonic filter; passband ripple 0.1–1 dB.</li>
+    <li><b>Emitter or nuisance</b>: emitter. But the receiver's filter does the same thing to the edges: see the Rx bandwidth case.</li>
+  </ul>
+  <div class="worked"><h4>Worked example</h4>A 12 MHz, fifth-order filter turns a 3 ns switch edge into a 60 ns rise with a 14 % overshoot. A 1.5 dB passband ripple is an echo of ε = 0.086; on a 40 MHz chirp it ripples the top by about 19 % peak to peak.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Assigning ringing to the modulator when it comes from a steep filter, or the other way round. They look alike; the filter's ringing frequency is tied to its bandwidth and does not change with the drive.</div>
+  <div class="try"><h4>Try it</h4>Narrow the filter step by step and raise the order: watch the overshoot appear on the zoomed edge and the spectrum lose its sidelobes.</div>
+</section>
+<section data-case="txfilter" data-example="narrow"><h3>Narrow filter: ringing</h3><p>The switch is fast (3 ns), so the edge is set entirely by the 12 MHz, fifth-order filter: 60 ns rise and a 14 % overshoot that rings down.</p></section>
+<section data-case="txfilter" data-example="chirp"><h3>Ripple along a chirp</h3><p>A 40 MHz chirp through a filter with 1.5 dB ripple: the amplitude ripples along the pulse because the chirp's frequency, and so the filter's gain, changes with time.</p></section>
+
+<section data-case="lo">
+  <h3>The receiver's LO</h3>
+  <div class="look"><h4>What you are looking at</h4>The signal after the receiver's mixer (block 7): phase, I and Q, the IQ plane and the amplitude. Below: the phase relative to the waveform before and after detrending.</div>
+  <p>The receiver brings the pulse to baseband with its own local oscillator, which is never exactly at the carrier. The difference adds to the transmitter's offset and to Doppler. The result is the same as before: z turns round the IQ plane at the total offset, I and Q oscillate, the unwrapped phase ramps, and |z| does not change. LO phase noise adds the receiver's own wander.</p>
+  <div class="eq">$$z_\text{rx} = z\,e^{j(2\pi(\Delta f_\text{Tx} + f_d + \Delta f_\text{Rx})t + \phi_\text{LO}(t))}, \qquad |z_\text{rx}| = |z|$$</div>
+  <ul>
+    <li><b>Physical part</b>: the receiver's reference and synthesizer.</li>
+    <li><b>What it changes</b>: phase slope and wander; I and Q rotate; |z| untouched.</li>
+    <li><b>Typical size (illustrative)</b>: a wideband ESM receiver can be off by tens to hundreds of kHz.</li>
+    <li><b>Emitter or nuisance</b>: nuisance, removed together with the other offsets by detrending.</li>
+  </ul>
+  <div class="worked"><h4>Worked example</h4>A 300 kHz LO offset turns z by 0.3 turns, 108°, over a 1 µs pulse. Detrended, the phase is the same as with no offset at all.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Measuring a carrier offset and calling it the emitter's: from one pulse, Tx oscillator, Doppler and Rx LO are inseparable.</div>
+  <div class="try"><h4>Try it</h4>Move the LO offset and watch the amplitude panel: nothing changes. Then switch the phase from unwrapped to detrended.</div>
+</section>
+<section data-case="lo" data-example="rotate"><h3>LO offset rotates I/Q</h3><p>300 kHz: I and Q trade places along the pulse, the IQ plane shows an arc, the unwrapped phase is a ramp.</p></section>
+<section data-case="lo" data-example="detrend"><h3>Detrend removes it</h3><p>The same pulse, phase detrended: the ramp is gone and the edges' phase transients are back in view. Whatever their source, offsets only add a straight line.</p></section>
+
+<section data-case="rxbw">
+  <h3>The receiver's bandwidth</h3>
+  <div class="look"><h4>What you are looking at</h4>Units A and B at the ADC, zoomed on the rising edge, with the residual A − B. Below: the rise time of the Rx filter alone against its bandwidth, and the transmitter's edge as a dashed line.</div>
+  <p>The receiver's filter has a rise time of its own, about 0.35/B for a first-order filter and a little more for higher orders. An edge that reaches the ADC is never faster than that. If the receiver is slower than the transmitter's edge, what you measure is the receiver's edge, and the difference between units disappears. Fingerprinting needs a receiver wider than the transmitter's edge bandwidth.</p>
+  <div class="eq">$$t_{10\text{–}90} \approx \frac{0.35}{B}\ \text{(first order)}, \qquad t_\text{seen} \approx \sqrt{t_\text{Tx}^2 + t_\text{Rx}^2}$$</div>
+  <ul>
+    <li><b>Physical part</b>: the IF and baseband filters, and anti-alias filters.</li>
+    <li><b>What it changes</b>: rise and fall, ringing, the spectrum beyond B, and the noise power (a wider receiver lets in more noise).</li>
+    <li><b>Typical size (illustrative)</b>: 1–500 MHz.</li>
+    <li><b>Emitter or nuisance</b>: nuisance, and it can erase the edge fingerprint.</li>
+  </ul>
+  <div class="worked"><h4>Worked example</h4>A transmitter edge of 13 ns. Through a 5 MHz fourth-order receiver it arrives as 77 ns, and A and B differ by only 0.77σ per sample at 40 dB. Through 200 MHz it arrives as 13 ns, and the difference grows to 2.0σ.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Comparing fingerprints taken by different receivers, or with different bandwidth settings: the edge belongs partly to the receiver. A Tx filter and an Rx filter do the same thing to the edge.</div>
+  <div class="try"><h4>Try it</h4>Sweep the bandwidth from 1 to 400 MHz and watch the residual A − B on the edge: it is only there once the receiver is fast enough.</div>
+</section>
+<section data-case="rxbw" data-example="slow"><h3>Rx slower than the Tx edge</h3><p>5 MHz: both units' edges become the receiver's 77 ns edge, and the residual shrinks toward the noise.</p></section>
+<section data-case="rxbw" data-example="wide"><h3>Wide Rx: the edge is back</h3><p>200 MHz: the receiver's rise time is far below the transmitter's, the edges are the units' own, and the residual on the edge stands out again.</p></section>
+
+<section data-case="iqimb">
+  <h3>IQ imbalance and DC offset</h3>
+  <div class="look"><h4>What you are looking at</h4>The signal after the IQ demodulator (block 9): the IQ plane, the amplitude, the spectrum, I and Q. Below: the image rejection against the gain mismatch.</div>
+  <p>A quadrature demodulator needs two identical branches, 90° apart. A small <b>gain</b> or <b>phase</b> mismatch mixes a little of the conjugate signal into the output: z → K₁z + K₂z*. In the spectrum this is an <b>image</b> at the mirror frequency; in the IQ plane a circle becomes an <b>ellipse</b>. With a residual frequency offset the image turns the other way, and |z| ripples at twice the offset. A <b>DC offset</b> (LO leakage) shifts the IQ plane and, with an offset, ripples |z| at the offset itself.</p>
+  <div class="eq">$$z' = K_1 z + K_2 z^*, \quad K_1 = \tfrac{1 + g e^{-j\delta}}{2}, \quad K_2 = \tfrac{1 - g e^{j\delta}}{2}, \qquad \text{IRR} = \frac{|K_1|^2}{|K_2|^2} = \frac{1+2g\cos\delta+g^2}{1-2g\cos\delta+g^2}$$</div>
+  <ul>
+    <li><b>Physical part</b>: the two mixers, the 90° splitter, the two filters and ADCs, and LO leakage (DC).</li>
+    <li><b>What it changes</b>: IQ-plane shape and centre, an image in the spectrum, ripple on |z| when there is an offset.</li>
+    <li><b>Typical size (illustrative)</b>: 0.1–1 dB and 1–5° in analogue receivers, an IRR of 25–40 dB.</li>
+    <li><b>Emitter or nuisance</b>: nuisance here. But a digital transmitter's IQ modulator has exactly the same physics (Tx IQ mismatch), and from one pulse the two cannot be told apart.</li>
+  </ul>
+  <div class="worked"><h4>Worked example</h4>1.5 dB of gain mismatch gives an IRR of 21.3 dB, 8° of phase mismatch 23.1 dB, both together 19.1 dB. With a 2 MHz offset, |z| ripples at 4 MHz by 2|K₂|/|K₁| = 2 × 10^(−19.1/20) = 22 % peak to peak.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Reading the ripple as supply ripple from the transmitter. Its frequency gives it away: twice the residual offset. Change the LO offset and it changes, which a transmitter fingerprint would not do.</div>
+  <div class="try"><h4>Try it</h4>With the ripple example on, move the LO offset: the ripple's frequency follows it at exactly twice the offset.</div>
+</section>
+<section data-case="iqimb" data-example="gain"><h3>Gain mismatch</h3><p>Q is 1.5 dB stronger than I: the circle traced by the offset becomes an ellipse with axes along I and Q, and an image appears 21 dB down.</p></section>
+<section data-case="iqimb" data-example="phase"><h3>Phase mismatch</h3><p>The branches are 98° apart instead of 90°: the ellipse tilts at 45°, the image is 23 dB down.</p></section>
+<section data-case="iqimb" data-example="ripple"><h3>With offset: ripple on |z|</h3><p>A 2 MHz offset: signal and image turn in opposite directions, beat at 4 MHz, and the top of |z| ripples by 22 %.</p></section>
+
+<section data-case="adc">
+  <h3>Sampling and quantisation</h3>
+  <div class="look"><h4>What you are looking at</h4>The ADC output (block 10), with the samples as dots when zoomed: amplitude, I and Q, spectrum and phase. Below: the quantisation SNR against the number of bits, and the jitter limit when jitter is on.</div>
+  <p>The ADC samples at a finite rate, at instants that are a little random (<b>jitter</b>), and rounds every value to one of 2ᴺ levels (<b>quantisation</b>). Quantisation adds a noise floor about 6 dB lower per extra bit. Jitter turns timing error into amplitude error in proportion to how fast the signal moves, so it shows on the edges, never on the flat top. At a modest sample rate there are only a few samples on each edge, and where they fall (the <b>sampling phase</b>) changes the edge you measure.</p>
+  <div class="eq">$$\text{SNR}_q \approx 6.02\,N + 1.76\ \text{dB}, \qquad \text{SNR}_\text{jitter} \approx -20\log_{10}(2\pi f\,\sigma_j)$$</div>
+  <ul>
+    <li><b>Physical part</b>: the ADC and its sampling clock.</li>
+    <li><b>What it changes</b>: a noise floor (bits), noise on fast edges (jitter), where the edge samples fall (rate and phase), clipping (full scale).</li>
+    <li><b>Typical size (illustrative)</b>: 8–14 bits; jitter 0.1–10 ps for good clocks, much more for poor ones; 100 MS/s–5 GS/s.</li>
+    <li><b>Emitter or nuisance</b>: nuisance.</li>
+  </ul>
+  <div class="worked"><h4>Worked example</h4>4 bits give 25.8 dB, 12 bits 74 dB. 100 ps of jitter limits a 250 MHz signal to −20 log₁₀(2π × 250 MHz × 100 ps) = 16 dB. At 100 MS/s a 20 ns edge has only two samples on it: moving them by half a sample changes the measured rise from 18.7 to 22.6 ns.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Measuring rise times with only two or three samples per edge and treating the scatter as a fingerprint. Oversample, or interpolate with care, and keep the sampling clock independent of the PRF.</div>
+  <div class="try"><h4>Try it</h4>Zoom on the rising edge at 100 MS/s and sweep the sampling phase from 0 to 1: the dots slide along the edge.</div>
+</section>
+<section data-case="adc" data-example="bits4"><h3>4 bits</h3><p>Sixteen levels: the top of the pulse is a staircase and the spectrum's floor rises to about −26 dB. The fine fingerprint below that is lost. Lowering the full scale uses the levels better, until the ADC clips.</p></section>
+<section data-case="adc" data-example="jitter"><h3>Jitter on fast edges</h3><p>100 ps of jitter on 3 ns edges through a 250 MHz receiver: the edges are noisy and the top stays clean, because the error is σ_j times the slope.</p></section>
+<section data-case="adc" data-example="phase"><h3>Sampling phase moves the edge samples</h3><p>100 MS/s, one sample every 10 ns: half a sample of shift moves both edge samples and changes the measured rise by 4 ns. That is a measurement artefact, not a fingerprint.</p></section>
+
+<section data-case="channel">
+  <h3>The channel: SNR, Doppler, multipath</h3>
+  <div class="look"><h4>What you are looking at</h4>What reaches the ADC: amplitude, phase, spectrum and IQ plane. Below: how far apart units A and B are in noise σ against the SNR, for one pulse and for N pulses averaged.</div>
+  <p>Between the two antennas the pulse picks up <b>noise</b>, a <b>Doppler</b> shift from the relative motion, and, near the ground or the sea, a delayed <b>second path</b>. Noise hides the small differences between units: what counts is the size of the difference compared with the noise per sample. Doppler adds to the offset, so detrending removes it. A second path adds a delayed, attenuated, phase-shifted copy. The leading edge arrives first, alone, and is clean. The top is the sum of both paths. The trailing edge is overlaid by the echo of the top, so <b>the back edge is the most affected</b>.</p>
+  <div class="eq">$$f_d = \frac{v f_c}{c}\ \text{(one way)}, \qquad z_\text{rx}(t) = z(t) + \rho e^{j\psi} z(t - \tau) + n(t), \qquad d = \frac{\text{rms}(a_A - a_B)}{\sigma}\sqrt N$$</div>
+  <ul>
+    <li><b>Physical part</b>: the propagation path and the receiver's noise.</li>
+    <li><b>What it changes</b>: noise on everything; a phase ramp (Doppler); the level of the top and a tail after the fall (multipath).</li>
+    <li><b>Typical size (illustrative)</b>: SNR 10–40 dB for an intercept; Doppler up to tens of kHz; second paths 10–500 ns late.</li>
+    <li><b>Emitter or nuisance</b>: nuisance.</li>
+  </ul>
+  <div class="worked"><h4>Worked example</h4>600 m/s at 9.4 GHz: f_d = 600 × 9.4 GHz / c = 18.8 kHz, 6.8° over a 1 µs pulse, about what a 2 ppm oscillator offset does. A second path of 0.5 at 100 ns and 120°: the top drops to |1 + 0.5e^(j120°)| = 0.87 once the echo arrives, and the fall stretches to 131 ns.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Using the absolute offset to identify an airborne emitter: Doppler changes it as the geometry changes. And trusting the back edge when there may be multipath: use the leading edge.</div>
+  <div class="try"><h4>Try it</h4>Lower the SNR until the readout says the units are buried, then raise the pulses integrated: each ×4 in N buys a ×2 in separability.</div>
+</section>
+<section data-case="channel" data-example="snr"><h3>Low SNR buries the units</h3><p>8 dB: noise per sample is far above the difference between A and B. Averaging aligned pulses lowers the noise as √N: the readout says how many pulses are needed.</p></section>
+<section data-case="channel" data-example="doppler"><h3>Doppler shifts the CFO</h3><p>600 m/s adds 18.8 kHz to the offset: a slightly steeper phase ramp, |z| unchanged, and detrending removes it with the rest.</p></section>
+<section data-case="channel" data-example="multipath"><h3>Multipath eats the back edge</h3><p>A second path at half amplitude, 100 ns late: the rising edge is untouched, the top changes level 100 ns in, and the falling edge gains a 100 ns tail of echo.</p></section>
+
+<section data-case="drift">
+  <h3>Operating conditions: temperature, warm-up, aging, supply</h3>
+  <div class="look"><h4>What you are looking at</h4>Unit A under the chosen conditions (blue) and the <i>same</i> unit warmed up at 25 °C with nominal supply (orange): phase, amplitude, instantaneous frequency and spectrum. Below: the unit's oscillator offset after switch-on.</div>
+  <p>A unit is not a constant. The crystal's frequency depends on its temperature, so a cold radar drifts as it <b>warms up</b>, and the offset slowly moves with <b>age</b>. Transistor and tube gains fall with temperature, and switching gets slower. A lower <b>supply voltage</b> reduces the amplifier's drive and empties the storage capacitor faster. A fingerprint library built on a warm unit at 25 °C must tolerate all of this, or record it.</p>
+  <div class="eq">$$\Delta f_T = k_T\,(T_i - T_\text{ref})\,f_c, \qquad T_i = T_\text{amb} + \Delta T_w\,(1 - e^{-t/\tau_w}), \qquad \Delta f_\text{age} = k_a\,\text{years}\,f_c$$</div>
+  <ul>
+    <li><b>Physical part</b>: the crystal, the amplifier, the switch, the supply.</li>
+    <li><b>What it changes</b>: offset (phase slope), edge times, drive and so compression and droop.</li>
+    <li><b>Typical size (illustrative coefficients used here)</b>: 0.5 ppm/°C, a 20 °C warm-up with a 10 min time constant, 1 ppm/year, −0.02 dB/°C of gain, +0.3 %/°C on the edges. They are orders of magnitude, not the values of any device.</li>
+    <li><b>Emitter or nuisance</b>: the emitter's own, but a nuisance for identification: they move the same unit.</li>
+  </ul>
+  <div class="worked"><h4>Worked example</h4>Unit 1 just switched on at 25 °C: internal 25 °C, 20 °C below the reference, so −10 ppm on top of its own −1 ppm: −104 kHz at 9.4 GHz. After an hour it is at −10 kHz. On a 45 °C day it settles at 65 °C internal and +84 kHz. A supply at 88 % raises the droop of a 1 µs pulse from 3.3 % to 4.2 %.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Matching a cold-started unit against a warm library entry by its offset. The detrended shape changes far less than the offset does.</div>
+  <div class="try"><h4>Try it</h4>Drag “time since switch-on” from 0 to 60 min: the phase ramp of A converges to B's, and the curve below follows the warm-up.</div>
+</section>
+<section data-case="drift" data-example="cold"><h3>Cold start → warm</h3><p>Just switched on: the oscillator is 10 ppm low and the phase ramps steeply against the warm reference. Over tens of minutes the offset settles.</p></section>
+<section data-case="drift" data-example="hot"><h3>Hot day</h3><p>45 °C ambient: the unit runs 20 °C hotter than the reference, the offset moves by +10 ppm, the edges are 6 % slower and the PA gain 0.4 dB lower.</p></section>
+<section data-case="drift" data-example="sag"><h3>Supply sag</h3><p>88 % supply: 1.1 dB less drive (less compression) and a faster-emptying capacitor: more droop on the top.</p></section>
+
+<section data-case="workbench">
+  <h3>The fingerprint workbench</h3>
+  <div class="look"><h4>What you are looking at</h4>The whole chain as blocks with I and Q on every wire; the lit block is the stage shown below. Six views of the pulse at that stage: I and Q, amplitude, phase, instantaneous frequency, IQ plane and spectrum, for unit A (blue), B (orange) and the ideal pulse (thin grey). Bands: rise (green), top (blue), fall (orange). Below: how far apart A and B are, in noise σ per sample, against the SNR, for 1 and N pulses.</div>
+  <p>Every knob of the other cases is here at once, in the order the hardware applies them. <b>Unit B</b> can be another unit of the same model, the same unit through <b>another receiver</b> (narrower, unbalanced, its own LO), or the same unit at <b>reference conditions</b>. The residual shows A − B or A − nominal directly. The separability readout compares A and B after removing what is no identity: each pulse is normalised to its own top level, and the phase is taken relative to the waveform with the best straight line removed.</p>
+  <div class="eq">$$d = \sqrt{\overline{\left(\tfrac{a_A}{L_A} - \tfrac{a_B}{L_B}\right)^2}} \Big/ \sigma_a, \qquad d_N = d\,\sqrt N\ \text{(N aligned pulses averaged)}$$</div>
+  <ol class="steps">
+    <li>Pick where to look: the stage selector walks the pulse through the chain.</li>
+    <li>Separate what belongs to the emitter (the transmitter's blocks) from what does not (channel, receiver, conditions): every control's tooltip says which.</li>
+    <li>Ask whether the difference survives the noise: d ≥ 1 is visible pulse by pulse; below that, average about 1/d² pulses.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Units 1 and 2 at 40 dB: 1.6σ per sample in amplitude, visible in one pulse. At 25 dB, 0.29σ: averaging 64 pulses raises it by √64 = 8, to 2.3σ.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Calling a difference a fingerprint when it comes from the receiver or the conditions. Take the same unit through two receivers: the receiver alone moves the pulse. A library is only valid for the receiver, and roughly the conditions, it was built with.</div>
+  <div class="try"><h4>Try it</h4>Set B to “Another receiver” and step the stage selector from 1 to 10: A and B are identical through the transmitter and the channel, and part ways from the receiver's LO on.</div>
+</section>
+<section data-case="workbench" data-example="separate"><h3>Separate two units</h3><p>Units 1 and 2 at 40 dB with the residual A − B: the difference sits on the edges and along the top, 1.6σ per sample in amplitude.</p></section>
+<section data-case="workbench" data-example="receivers"><h3>Same unit, two receivers</h3><p>One transmitter, two receivers: the second is narrower (40 % of the bandwidth), has 0.6 dB and 4° more imbalance, a 40 kHz different LO and a little more DC. Its pulse differs from the first, though the emitter is the same: the receiver is part of every measured fingerprint.</p></section>
+<section data-case="workbench" data-example="integrate"><h3>Integrate N pulses</h3><p>At 25 dB one pulse gives 0.29σ, not enough. 64 aligned pulses averaged lower the noise eightfold and lift it to 2.3σ. This is coherent integration: it works because the fingerprint repeats from pulse to pulse and the noise does not.</p></section>

@@ -4,7 +4,7 @@
 //
 // spec = { cases: [{ id, label, controls?, examples?: [{ id, label, set, controls? }] }], onPick(caseId, exampleId), controls: [group], display: [group] }
 //   an example's controls: example.controls, else case.controls, else the ids its `set` changes
-// group = { title, show?(state), items: [item] }
+// group = { title, show?(state), fold?: true | 'open', items: [item] }   fold: a folding group (closed, or open at first)
 // item types:
 //   { id, label, unit, min, max, step?, k = 1, log?, hint?, show? }          slider + number (SI in state, ×k shown)
 //   { id, label, type: 'segmented', options: [[value, text]], hint? }       switch (radio group)
@@ -53,7 +53,7 @@ export function createPanel(root, spec, state, onChange) {
 
   const groups = (list, box) => {
     for (const g of list || []) {
-      const d = html(`<div class="group"><h3>${g.title}</h3></div>`);
+      const d = g.fold ? html(`<details class="group fold"${g.fold === 'open' ? ' open' : ''}><summary>${g.title}</summary></details>`) : html(`<div class="group"><h3>${g.title}</h3></div>`);
       const items = g.items.map((it) => { const [el, vis] = item(it); d.append(el); return vis; });
       box.append(d);
       syncs.push(() => d.classList.toggle('hidden', (g.show && !g.show(state)) || !items.some((v) => v())));
