@@ -10,6 +10,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>x + y = 3, x − y = 1: adding gives 2x = 4, x = 2, then y = 1. det = −1 − 1 = −2 ≠ 0.</div>
   <div class="pitfall"><h4>Common mistakes</h4>Dividing by det without checking it. Thinking a tiny det is "fine": nearly parallel lines make the answer extremely sensitive to small errors in the data.</div>
+  <div class="try"><h4>Try it</h4>Rotate one line until it is almost parallel to the other: a small change of a coefficient now moves the solution a long way.</div>
 </section>
 <section data-case="system" data-example="parallel"><h3>Parallel lines</h3><p>2x + 2y = 2 is the same slope as x + y = 3 with a different offset: no common point, det = 0.</p></section>
 <section data-case="system" data-example="same"><h3>The same line</h3><p>2x + 2y = 6 is x + y = 3 doubled: every point of the line is a solution.</p></section>
@@ -21,6 +22,7 @@
   <div class="eq">$$\det A = a_{11}a_{22} - a_{12}a_{21}, \qquad \det(AB) = \det A\,\det B$$</div>
   <div class="worked"><h4>Worked example</h4>[[2, 1], [1, 2]]: det = 3 — every shape becomes 3 times bigger. A shear [[1, 1.5], [0, 1]] slants the square but keeps det = 1.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking det = 0 means the matrix is zero: it means the columns are parallel, so the plane collapses onto a line and A cannot be undone.</div>
+  <div class="try"><h4>Try it</h4>Make the second column a multiple of the first: the parallelogram flattens and the determinant goes to zero. Swap the two columns and its sign flips.</div>
 </section>
 <section data-case="det" data-example="shear"><h3>A shear</h3><p>The parallelogram leans over but keeps base and height: area 1.</p></section>
 <section data-case="det" data-example="flip"><h3>Swapped columns</h3><p>det = 1 − 4 = −3: area 3, orientation reversed.</p></section>
@@ -36,6 +38,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>[[2, 1], [1, 2]]: λ² − 4λ + 3 = 0 → λ = 3 along (1, 1), λ = 1 along (1, −1). The circle becomes an ellipse with semi-axes 3 and 1 along those lines.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting every matrix to have real eigenvectors: a rotation turns every direction, so its eigenvalues are complex.</div>
+  <div class="try"><h4>Try it</h4>Tick sweep the test vector: it changes direction except along the eigenvectors, where it only stretches. Make the matrix a rotation and no such direction is left.</div>
 </section>
 <section data-case="eigen" data-example="diag"><h3>Diagonal</h3><p>The axes are the eigenvectors, the diagonal entries the eigenvalues.</p></section>
 <section data-case="eigen" data-example="rot"><h3>Rotation</h3><p>Av is always 90° from v: no real eigen-direction (λ = ±j).</p></section>
@@ -47,6 +50,7 @@
   <div class="eq">$$\min_{m,q}\sum_i (y_i - mx_i - q)^2 \;\Rightarrow\; m = \frac{n\sum xy - \sum x\sum y}{n\sum x^2 - (\sum x)^2}, \quad q = \bar y - m\bar x$$</div>
   <div class="worked"><h4>Worked example</h4>Points (0, 1), (1, 3), (2, 5), (3, 7) lie on y = 2x + 1: zero residuals, R² = 1.</div>
   <div class="pitfall"><h4>Common mistake</h4>Trusting the line with outliers: one bad point can tilt it a lot, because its residual is squared.</div>
+  <div class="try"><h4>Try it</h4>Drag one point far from the others: the line tilts toward it, because the squares make big residuals count most.</div>
 </section>
 <section data-case="fit" data-example="outlier"><h3>An outlier</h3><p>Dragging one point far down tilts the whole line toward it.</p></section>
 <section data-case="fit" data-example="perfect"><h3>A perfect line</h3><p>All points on y = 0.75x: every residual is zero.</p></section>

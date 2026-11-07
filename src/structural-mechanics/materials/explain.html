@@ -9,6 +9,7 @@
   <ol class="steps"><li>Elastic: straight line, slope E.</li><li>Yield: the curve bends over (0.2 % offset definition).</li><li>Hardening: stress rises to σ_u at uniform elongation.</li><li>Necking: deformation concentrates, the engineering stress falls, fracture.</li></ol>
   <div class="worked"><h4>Worked example</h4>Mild steel: E = 200 GPa, σ_y = 250 MPa, so yield starts at ε = 250/200 000 = 0.125 %. It stretches to 30 % before breaking and absorbs about 110 MJ/m³.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing stiffness with strength. Steel is three times stiffer than aluminium, but this aluminium alloy yields at a higher stress.</div>
+  <div class="try"><h4>Try it</h4>Switch from steel to cast iron: no yield, no necking, it breaks with almost no plastic strain. Unload steel at 5 % and see the permanent stretch.</div>
 </section>
 <section data-case="tensile" data-example="alu"><h3>Aluminium 6061-T6</h3><p>A third of steel's stiffness, a higher yield stress, little hardening, and only 12 % elongation.</p></section>
 <section data-case="tensile" data-example="brittle"><h3>Cast iron</h3><p>It breaks at 0.2 % strain with no yield and no neck: almost no energy absorbed, no warning before failure.</p></section>
@@ -21,6 +22,7 @@
   <div class="eq">$$\sigma_{1,2}=c\pm R,\quad c=\frac{\sigma_x+\sigma_y}2,\quad R=\sqrt{\Big(\frac{\sigma_x-\sigma_y}2\Big)^2+\tau_{xy}^2},\quad \tan2\theta_p=\frac{2\tau_{xy}}{\sigma_x-\sigma_y}$$</div>
   <div class="worked"><h4>Worked example</h4>σx = 80, σy = −20, τxy = 30 MPa: c = 30, R = √(50² + 30²) = 58.3. σ₁ = 88.3 MPa, σ₂ = −28.3 MPa at θp = ½ atan(60/100) = 15.5°; maximum shear 58.3 MPa at 60.5°.</div>
   <div class="pitfall"><h4>Common mistake</h4>Forgetting the factor 2: 90° on the element is 180° on the circle, so the faces x and y are always at opposite ends of a diameter.</div>
+  <div class="try"><h4>Try it</h4>Turn the element angle θ: the point runs round Mohr's circle at 2θ. Find the angle where the shear is zero: the principal stresses.</div>
 </section>
 <section data-case="mohr" data-example="principal"><h3>Principal angle</h3><p>At θp the orange points sit on the σ axis: no shear, and the normal stresses are the largest and smallest possible.</p></section>
 <section data-case="mohr" data-example="maxshear"><h3>Maximum shear</h3><p>45° from the principal directions the points are at the top and bottom of the circle: τ = R. Ductile metals yield in shear, on these planes.</p></section>
@@ -33,6 +35,7 @@
   <ol class="steps"><li>Effective length factor K: pinned–pinned 1, fixed–free 2, fixed–fixed 0.5.</li><li>Slender columns (λ above λc = √(2π²E/σy) ≈ 126 for this steel) follow Euler.</li><li>Stocky columns yield before they buckle: Johnson's parabola.</li></ol>
   <div class="worked"><h4>Worked example</h4>A 50 mm bar, 3 m long, pinned: I = π·0.05⁴/64 = 3.07·10⁻⁷ m⁴, P_cr = π²·200·10⁹·3.07·10⁻⁷/9 = 67 kN. Its stress is then only 34 MPa, far below yield.</div>
   <div class="pitfall"><h4>Common mistake</h4>Checking only σ = P/A &lt; σy. A slender column fails at a small fraction of the yield stress.</div>
+  <div class="try"><h4>Try it</h4>Switch the ends from pinned to fixed–free: the critical load drops to a quarter. Make the column short and thick: it yields before it buckles.</div>
 </section>
 <section data-case="buckling" data-example="flagpole"><h3>Fixed–free</h3><p>A flagpole behaves like half of a pinned column twice as long: K = 2, a quarter of the critical load.</p></section>
 <section data-case="buckling" data-example="clamped"><h3>Fixed–fixed</h3><p>Clamping both ends halves the effective length: four times the critical load.</p></section>

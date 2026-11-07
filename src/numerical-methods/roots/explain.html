@@ -20,6 +20,7 @@
   <div class="eq">$$x_{k+1}=x_k-f(x_k)\,\frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})},\qquad |e_{k+1}|\approx C\,|e_k|^{1.618}$$</div>
   <div class="worked"><h4>Worked example</h4>From x₀ = 1, x₁ = 3 on x³ − 2x − 5 the errors fall roughly 10⁻¹, 10⁻², 10⁻³, 10⁻⁶, 10⁻⁹, 10⁻¹⁴: the number of digits grows by a factor ≈ 1.6 each step.</div>
   <div class="pitfall"><h4>Common mistake</h4>Assuming fast means safe: far from the root the chord can be nearly flat and throw the next guess far away. Robust solvers (Brent's method) combine secant steps with a bisection bracket.</div>
+  <div class="try"><h4>Try it</h4>Start with x₀ and x₁ close to the root: the number of correct digits grows by about 1.6 times each step. Start far away and watch it wander first.</div>
 </section>
 <section data-case="secant" data-example="close"><h3>Start close</h3><p>Already near the root: the curve is nearly straight between the points and the digits pile up immediately.</p></section>
 <section data-case="secant" data-example="far"><h3>Bad start</h3><p>Between 0 and 0.6 the curve slopes the wrong way: the first chord shoots far left. It recovers, but nothing guaranteed it would.</p></section>
@@ -30,6 +31,7 @@
   <div class="eq">$$e_{k+1}\approx g'(x^*)\,e_k,\qquad g'(\sqrt2)=1-2\sqrt2\,\lambda$$</div>
   <ol class="steps"><li>0 &lt; g′ &lt; 1: monotone staircase.</li><li>−1 &lt; g′ &lt; 0: spiral, alternating sides.</li><li>|g′| &gt; 1: the spiral or staircase goes outward.</li><li>g′ = 0: quadratic convergence (this is Newton's choice λ = 1/f′).</li></ol>
   <div class="pitfall"><h4>Common mistake</h4>Thinking any rearrangement x = g(x) works. x = 2/x has the same fixed point √2 but g′ = −1: it bounces between two values forever.</div>
+  <div class="try"><h4>Try it</h4>Sweep the relaxation λ: when |g′| at the root is below 1 the iterates converge (a staircase or a spiral), above 1 they spiral out.</div>
 </section>
 <section data-case="fixed" data-example="best"><h3>Optimal λ</h3><p>λ = 1/(2√2) makes g′(√2) = 0: the errors square every step, as in Newton's method.</p></section>
 <section data-case="fixed" data-example="slow"><h3>Slow staircase</h3><p>g′ ≈ 0.86: each step removes only 14 % of the error.</p></section>

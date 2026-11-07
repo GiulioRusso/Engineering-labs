@@ -6,6 +6,7 @@
   <ol class="steps"><li>List (or picture) all outcomes, making sure they are equally likely.</li><li>Count those in the event.</li><li>Divide. For "A or B", add the two counts but subtract the green ones, counted twice.</li></ol>
   <div class="worked"><h4>Worked example</h4>"At least one 6": 6 + 6 − 1 = 11 cells (the (6,6) cell is in both rows), so 11/36 ≈ 0.31 — not 2/6.</div>
   <div class="pitfall"><h4>Common mistake</h4>Treating the sums 2…12 as equally likely. They are not: 7 has six outcomes, 2 has one.</div>
+  <div class="try"><h4>Try it</h4>Set event A to 'sum = k' and sweep k from 2 to 12: the number of lit cells rises to 6 at k = 7 and falls again. Then pick two events that share no cell and check that P(A or B) = P(A) + P(B).</div>
 </section>
 <section data-case="space" data-example="seven"><h3>Sum = 7</h3><p>The diagonal of six cells: 6/36 = 1/6, the most likely sum.</p></section>
 <section data-case="space" data-example="six"><h3>At least one 6</h3><p>The last row and column: 11 cells.</p></section>
@@ -17,6 +18,7 @@
   <div class="eq">$$\binom nk=\frac{n!}{k!\,(n-k)!},\qquad P(\text{shared birthday})=1-\frac{365\cdot364\cdots(365-g+1)}{365^g}$$</div>
   <div class="worked"><h4>Worked example</h4>Lottery 6 of 49: C(49, 6) ≈ 14 million tickets. Birthday: with 23 people there are 253 pairs, enough to make a match more likely than not.</div>
   <div class="pitfall"><h4>Common mistake</h4>Counting "at least one" directly. Count the complement ("none") and subtract from 1.</div>
+  <div class="try"><h4>Try it</h4>Raise the people in the room from 2 to 70: the chance of a shared birthday passes 50 % at 23 and is almost certain by 60.</div>
 </section>
 <section data-case="counting" data-example="pascal"><h3>C(10, 5)</h3><p>252 ways to pick 5 of 10 — the middle of row 10.</p></section>
 <section data-case="counting" data-example="bday"><h3>23 people</h3><p>P ≈ 0.507: the famous surprise.</p></section>
@@ -28,6 +30,7 @@
   <ol class="steps"><li>Multiply along a branch of the tree to get a joint probability.</li><li>Add the branches that end in B to get P(B).</li><li>Divide one branch by the total to reverse the condition (Bayes).</li></ol>
   <div class="worked"><h4>Worked example</h4>P(A) = 0.3, P(B|A) = 0.8, P(B|¬A) = 0.1: P(B) = 0.24 + 0.07 = 0.31, P(A|B) = 0.24/0.31 ≈ 0.77.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing P(B | A) with P(A | B) — "most smokers don't get cancer" vs "most lung-cancer patients smoked".</div>
+  <div class="try"><h4>Try it</h4>Make P(B | A) equal to P(B | not A): the two columns have the same split and A tells you nothing about B, so they are independent.</div>
 </section>
 <section data-case="conditional" data-example="indep"><h3>Independent</h3><p>The B parts have the same height in both columns: knowing A changes nothing, and P(A and B) = P(A)·P(B).</p></section>
 <section data-case="conditional" data-example="rare"><h3>Rare A</h3><p>Even with a reliable B, most of the B area lies in "not A": P(A | B) stays low (see Bayes' theorem).</p></section>
@@ -37,6 +40,7 @@
   <p>Probability is what relative frequency settles to in the long run. Early frequencies are wild; as n grows they squeeze toward p, with a typical error that shrinks like 1/√n.</p>
   <div class="eq">$$\frac{S_n}{n}\xrightarrow{n\to\infty}p,\qquad \text{typical error}\approx\sqrt{\frac{p(1-p)}{n}}$$</div>
   <div class="pitfall"><h4>Common mistake</h4>The gambler's fallacy: after five tails, heads is not "due". The frequency converges because later trials swamp the early ones, not because the coin compensates.</div>
+  <div class="try"><h4>Try it</h4>Lower P(success) to 0.05 and watch the running frequency: the swings around p last longer, but the band still narrows as 1/√n.</div>
 </section>
 <section data-case="lln" data-example="rare"><h3>p = 0.05</h3><p>Rare successes: many trials pass before the first one, and the relative error stays large for longer.</p></section>
 <section data-case="expect">
@@ -46,6 +50,7 @@
   <p>The expected value is the long-run average per play. The standard deviation measures how far single outcomes typically land from it.</p>
   <div class="worked"><h4>Worked example</h4>Roulette, €1 on red: E = 1·18/37 − 1·19/37 = −1/37 ≈ −€0.027 per play.</div>
   <div class="pitfall"><h4>Common mistake</h4>Judging a game by its best prize or its most likely outcome. A lottery's top prize is huge, its mean still negative.</div>
+  <div class="try"><h4>Try it</h4>Switch from the fair die to roulette: the running average settles below zero, the house edge. Pick the lottery and see how rare big wins make the average jump.</div>
 </section>
 <section data-case="expect" data-example="roulette"><h3>Roulette</h3><p>The running average sinks toward −0.027.</p></section>
 <section data-case="expect" data-example="lottery"><h3>Lottery</h3><p>The average jumps up at each rare prize and drifts back down.</p></section>

@@ -22,6 +22,7 @@
   <ol class="steps"><li>V_IL: the highest input still read as "low" (slope −1).</li><li>V_IH: the lowest input read as "high".</li><li>V_OL, V_OH: what the gate outputs at those points.</li><li>Any disturbance smaller than the margin is removed by the next gate.</li></ol>
   <div class="worked"><h4>Worked example</h4>Symmetric 3.3 V inverter: V_IL ≈ 1.42 V, V_IH ≈ 1.88 V, V_OH ≈ 3.06 V, V_OL ≈ 0.24 V → both margins ≈ 1.18 V, about 36% of V_DD.</div>
   <div class="pitfall"><h4>Common mistake</h4>Taking V_DD/2 as the margin. The guaranteed band is set by the unity-gain points, and skewed sizing shrinks one side.</div>
+  <div class="try"><h4>Try it</h4>Raise the noise on the input: as long as it stays inside the margins the output is still a clean 0 or 1. Then skew the PMOS/NMOS width and watch one margin shrink.</div>
 </section>
 <section data-case="margins" data-example="loud"><h3>0.9 V of noise</h3><p>The input is badly corrupted, yet after a few gates the blue trace is clean rails again.</p></section>
 <section data-case="margins" data-example="skew"><h3>Skewed gate</h3><p>A weak PMOS moves V_M down: NM_L shrinks, NM_H grows. Low-level noise now gets through more easily.</p></section>
@@ -32,6 +33,7 @@
   <div class="eq">$$R_\text{on}\approx\frac{1}{k\,W\,(V_{DD}-V_{th})},\qquad t_p\approx0.69\,R_\text{on}C_L,\qquad C_L=n\,C_g+C_\text{wire}$$</div>
   <div class="worked"><h4>Worked example</h4>k = 200 µA/V², W = 1, V_DD = 3.3 V: R_on ≈ 1.9 kΩ. Fan-out 2 with 2 fF gates and 1 fF of wire: C_L = 5 fF → t_p ≈ 6.6 ps. Fan-out 8: 17 fF → 22 ps.</div>
   <div class="pitfall"><h4>Common mistake</h4>Simply making every driver huge: a wide transistor has a large gate capacitance and slows down whatever drives it. Real designs use chains of gradually larger buffers.</div>
+  <div class="try"><h4>Try it</h4>Raise the fan-out from 1 to 8 and watch the delay grow; then widen the driver to win it back.</div>
 </section>
 <section data-case="delay" data-example="fanout"><h3>Fan-out 8</h3><p>More than three times the capacitance, more than three times the delay.</p></section>
 <section data-case="delay" data-example="wide"><h3>Wider driver</h3><p>Four times wider: R_on ÷ 4, delay ÷ 4 — for this gate.</p></section>
@@ -42,6 +44,7 @@
   <div class="eq">$$P=\alpha\,C\,V_{DD}^2\,f\;+\;I_\text{leak}V_{DD}$$</div>
   <div class="worked"><h4>Worked example</h4>α = 0.1, C = 100 pF, f = 100 MHz, 3.3 V: 10.9 mW. At 1.2 V: 1.4 mW — 7.6 times less. But the delay rises steeply as V_DD approaches the threshold: you trade speed for energy.</div>
   <div class="pitfall"><h4>Common mistake</h4>Raising the clock without counting: power grows linearly with f, and since faster needs a higher V_DD, roughly with f³. Around 2005 chips hit the heat limit and clocks stopped rising.</div>
+  <div class="try"><h4>Try it</h4>Lower V_DD from 3.3 V to 1.2 V: dynamic power falls with the square. Then set the activity close to 0 and watch leakage take over.</div>
 </section>
 <section data-case="power" data-example="lowv"><h3>1.2 V</h3><p>(1.2/3.3)² = 0.13: same work, an eighth of the power, much slower gates.</p></section>
 <section data-case="power" data-example="leaky"><h3>Leakage</h3><p>When almost nothing switches (α = 0.001), the small but constant leakage current dominates: the "idle" power of modern chips.</p></section>
@@ -52,6 +55,7 @@
   <div class="eq">$$\Delta V(t)\approx\Delta V_0\,e^{t/\tau}\;\Rightarrow\;t_\text{decide}\approx\tau\ln\frac{V_{DD}/2}{\Delta V_0}$$</div>
   <div class="worked"><h4>Worked example</h4>A 1 mV push decides in about 0.24 ns; 1 µV takes about 0.42 ns. A thousand times smaller push, only a fixed amount more time: the logarithm.</div>
   <div class="pitfall"><h4>Common mistake</h4>Assuming a flip-flop always decides in time. If its input changes right at the clock edge, the starting imbalance can be nearly zero and the decision arbitrarily late: metastability, the reason for synchronisers.</div>
+  <div class="try"><h4>Try it</h4>Make the initial imbalance tiny: the latch takes longer and longer to decide. Flip its sign and it falls the other way.</div>
 </section>
 <section data-case="latch" data-example="tiny"><h3>1 µV</h3><p>The traces linger near the middle much longer before diverging.</p></section>
 <section data-case="latch" data-example="neg"><h3>Opposite push</h3><p>Same circuit, opposite sign: it falls the other way and stores the other bit.</p></section>

@@ -10,6 +10,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>Type 0 with K = 5: 1/6 = 17 % error. K = 20: 4.8 %. Add an integrator: 0 %.</div>
   <div class="pitfall"><h4>Common mistake</h4>Raising the gain to kill the error: it also pushes the loop toward instability (see the root locus).</div>
+  <div class="try"><h4>Try it</h4>With a type 0 plant and a step, raise K: the error shrinks but never reaches zero. Switch to type 1 and it vanishes; switch the input to a ramp and a finite lag comes back.</div>
 </section>
 <section data-case="error" data-example="gain"><h3>More gain</h3><p>A type 0 loop always leaves an error: some error is needed to keep pushing. With \(K = 20\) it shrinks to \(1/21\), about 5 %.</p></section>
 <section data-case="error" data-example="t1"><h3>An integrator</h3><p>A type 1 loop integrates the error: as long as any error is left, the push keeps growing. It only stops when \(e = 0\).</p></section>
@@ -23,6 +24,7 @@
   <div class="eq">$$1 + K\,G(s) = 0, \qquad \angle G(s) = 180^\circ\,(2k + 1)$$</div>
   <div class="worked"><h4>Worked example</h4>G = 1/(s(s + 1)(s + 3)): the closed-loop polynomial is s³ + 4s² + 3s + K. The poles from 0 and −1 meet at s = −0.45 when K = 0.63, then leave the real axis (oscillation). Routh: the loop is stable while 4·3 > K, so they cross the jω axis at K = 12, at ω = √3 = 1.73 rad/s. Above 12: unstable.</div>
   <div class="pitfall"><h4>Common mistake</h4>Assuming more gain is always more stable: for three or more poles it eventually destabilises the loop.</div>
+  <div class="try"><h4>Try it</h4>Sweep K from 0.01 to 100 and follow the closed-loop poles along the locus: they meet, split off the real axis, and cross into the right half-plane.</div>
 </section>
 <section data-case="locus" data-example="meet"><h3>The poles meet</h3><p>At \(K \approx 0.63\) the two slow real poles meet at \(s \approx -0.45\) (breakaway) and split into a complex pair: from here on the response overshoots.</p></section>
 <section data-case="locus" data-example="under"><h3>Oscillatory</h3><p>The pair moves up and towards the axis: less damping, more overshoot, but a faster rise.</p></section>

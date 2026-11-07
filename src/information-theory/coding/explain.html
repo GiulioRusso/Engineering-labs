@@ -20,6 +20,7 @@
   <ol class="steps"><li>Position i belongs to the circle j if bit j is set in the binary form of i (5 = 101: circles 1 and 4).</li><li>Parity bits sit at positions 1, 2 and 4, each in only its own circle.</li><li>The receiver recomputes the three checks; read as a binary number they give the syndrome.</li><li>Syndrome 0: accept. Otherwise flip the bit at that position.</li></ol>
   <div class="worked"><h4>Worked example</h4>Data 1011 gives codeword 0110011. Flip position 5: checks 1 and 4 fail, check 2 passes, syndrome 101 = 5, corrected.</div>
   <div class="pitfall"><h4>Common mistake</h4>Trusting the decoder with two errors. Every pair of codewords differs in at least 3 places, so one error can be corrected, but two errors land nearer to a different codeword and get "corrected" into a third error.</div>
+  <div class="try"><h4>Try it</h4>Flip one data bit: the circles that contain it complain and point to it. Add a second flip: the decoder 'corrects' the wrong bit.</div>
 </section>
 <section data-case="hamming" data-example="one"><h3>Flip d₂</h3><p>Position 5 = 101: circles 1 and 4 turn red, circle 2 stays green. Only position 5 sits in exactly those two.</p></section>
 <section data-case="hamming" data-example="parity"><h3>Flip p₄</h3><p>A parity bit can be hit too: only circle 4 complains, and the data are untouched.</p></section>

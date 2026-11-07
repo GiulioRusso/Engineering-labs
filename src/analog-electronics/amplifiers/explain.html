@@ -21,6 +21,7 @@
   <div class="eq">$$A_v=\frac{g_m R}{1+g_m R}\approx1,\qquad R_\text{in}=r_\pi+(\beta+1)R,\qquad R_\text{out}\approx\frac1{g_m}+\frac{R_s}{\beta+1}$$</div>
   <div class="worked"><h4>Worked example</h4>A 10 kΩ source into a 100 Ω speaker directly: 100/10100 = 1%. With a follower (β = 150): R_in ≈ 16 kΩ, so the source keeps 60%, and the follower drives 100 Ω from about 90 Ω: overall about 50% of the signal, 50× more.</div>
   <div class="pitfall"><h4>Common mistake</h4>"Gain 1 means useless." Power gain is huge; most op-amp output stages are followers.</div>
+  <div class="try"><h4>Try it</h4>Drop the load from 100 kΩ to 100 Ω: the output barely moves. Then raise the source resistance and watch how little of it the base sees.</div>
 </section>
 <section data-case="follower" data-example="heavy"><h3>100 Ω load</h3><p>Direct, the source collapses; through the follower most of the signal survives.</p></section>
 <section data-case="follower" data-example="weak"><h3>100 kΩ source</h3><p>Even a feeble source can drive a small load: its resistance appears divided by 151 at the output.</p></section>
@@ -31,6 +32,7 @@
   <div class="eq">$$I_1-I_2=I_\text{tail}\tanh\!\left(\frac{v_1-v_2}{2V_T}\right),\qquad A_{dm}=g_mR_C,\quad A_{cm}\approx\frac{R_C}{2R_\text{tail}},\quad \text{CMRR}=\frac{A_{dm}}{A_{cm}}$$</div>
   <div class="worked"><h4>Worked example</h4>I_tail = 1 mA: each side 0.5 mA, g_m = 19.3 mS, R_C = 5 kΩ → A_dm ≈ 97. A 50 kΩ tail: A_cm = 0.05 → CMRR ≈ 66 dB.</div>
   <div class="pitfall"><h4>Common mistake</h4>Using a plain resistor as the tail. A real current source (a mirror!) has a huge R_tail, and CMRR rises with it.</div>
+  <div class="try"><h4>Try it</h4>Raise the common-mode noise: the output ignores it. Now lower the tail resistance and watch the common mode start to leak through.</div>
 </section>
 <section data-case="diff" data-example="large"><h3>100 mV</h3><p>tanh(100/51.7) ≈ 0.96: almost all the tail current is on one side. The output is a squared-off wave: the pair is a natural limiter.</p></section>
 <section data-case="diff" data-example="poortail"><h3>Weak tail</h3><p>2 kΩ tail: common-mode gain 1.25, CMRR only 38 dB. The noise leaks into each output.</p></section>
@@ -41,6 +43,7 @@
   <div class="eq">$$C_\text{in}=C_\pi+C_\mu(1+|A|),\qquad f_{-3\text{dB}}=\frac1{2\pi R_s C_\text{in}}$$</div>
   <div class="worked"><h4>Worked example</h4>|A| = 200, C_μ = 5 pF: 1005 pF from a 5 pF part. With R_s = 1 kΩ: f₋₃dB ≈ 155 kHz instead of 6.4 MHz.</div>
   <div class="pitfall"><h4>Common mistake</h4>Ignoring a "tiny" feedback capacitance. Cures: low source resistance, a follower in front, or a cascode stage that keeps the collector voltage still.</div>
+  <div class="try"><h4>Try it</h4>Raise the voltage gain |A| and watch the input bandwidth fall: C_μ looks (1 + |A|) times bigger from the input.</div>
 </section>
 <section data-case="miller" data-example="high"><h3>Gain 400</h3><p>Twice the gain, half the bandwidth: the product barely moves.</p></section>
 <section data-case="miller" data-example="lowrs"><h3>Low source resistance</h3><p>50 Ω charges the big C_in 20× faster: the pole moves up by 20×.</p></section>
@@ -52,6 +55,7 @@
   <ol class="steps"><li>Loop gain Aβ: the number that decides everything.</li><li>Error: 1/(1 + Aβ) of the ideal.</li><li>Sensitivity: a change of A is divided by 1 + Aβ.</li><li>Bandwidth: multiplied by 1 + Aβ. Gain × bandwidth stays constant.</li></ol>
   <div class="worked"><h4>Worked example</h4>A₀ = 100 dB = 10⁵, β = 0.1: A_cl = 9.999, error 0.01%. Halve A₀: A_cl changes by 0.02%. Pole 10 Hz → closed-loop bandwidth 100 kHz.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking feedback is free: you pay with gain. And with too much phase lag around the loop it turns positive and oscillates (op-amp stability).</div>
+  <div class="try"><h4>Try it</h4>Change the open-loop gain A by −50 % with the slider: the closed-loop gain hardly moves while β·A stays large. Then lower the open-loop gain to 40 dB and see the error appear.</div>
 </section>
 <section data-case="feedback" data-example="lowgain"><h3>A₀ = 40 dB</h3><p>Loop gain only 10: the closed loop is 9% short of 10 and follows every drift of A.</p></section>
 <section data-case="feedback" data-example="more"><h3>β = 1%</h3><p>Ten times more closed-loop gain, ten times less loop gain and bandwidth.</p></section>
@@ -62,6 +66,7 @@
   <div class="eq">$$A_\text{tot}=A_1\cdot\frac{R_{in,2}}{R_{out,1}+R_{in,2}}\cdot A_2$$</div>
   <div class="worked"><h4>Worked example</h4>1 mA, 4.7 kΩ: R_out1 ≈ 4.3 kΩ, R_in2 = r_π ≈ 3.9 kΩ → only 47% passes. Insert a follower: it sees a big R_in and presents a small R_out, and most of the gain returns.</div>
   <div class="pitfall"><h4>Common mistake</h4>Multiplying datasheet gains without checking impedances. Rule: each stage's R_out should be much smaller than the next stage's R_in.</div>
+  <div class="try"><h4>Try it</h4>Lower the final load to a few hundred ohms, then tick the follower between the stages: the overall gain comes back.</div>
 </section>
 <section data-case="cascade" data-example="buffer"><h3>With a follower</h3><p>Two small losses instead of one big one: the total approaches A₁·A₂.</p></section>
 <section data-case="cascade" data-example="load"><h3>1 kΩ load</h3><p>The last stage's own R_C is now in parallel with 1 kΩ: its gain drops too.</p></section>

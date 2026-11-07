@@ -31,6 +31,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>K = 2, r = 0.5, y₀ = 0.1: growth is almost exponential until y ≈ 0.5, fastest at y = 1, and the curve levels near 2 after about 12 units.</div>
   <div class="pitfall"><h4>Common mistake</h4>Extrapolating early exponential data: the S-curve and the exponential look identical at the start.</div>
+  <div class="try"><h4>Try it</h4>Start below K, then above K: both curves end at K. Raise the growth rate and they get there faster, the same S-shape compressed.</div>
 </section>
 <section data-case="logistic" data-example="above"><h3>Above the capacity</h3><p>Too many: the slope is negative and the population falls back to \(K\). \(K\) is a stable equilibrium.</p></section>
 <section data-case="logistic" data-example="eq"><h3>At equilibrium</h3><p>Starting exactly at \(K\) the slope is 0 forever: the solution is a horizontal line.</p></section>
@@ -42,6 +43,7 @@
   <div class="eq">$$y' = -y + \sin x \;\Rightarrow\; y(x) = \underbrace{C e^{-x}}_{\text{transient}} + \underbrace{\tfrac{1}{\sqrt 2}\sin\!\left(x - \tfrac{\pi}{4}\right)}_{\text{steady state}}$$</div>
   <div class="worked"><h4>Worked example</h4>Two starts 5 apart are 5e^{−3} = 0.25 apart after 3 time units and 0.03 after 5.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking the output copies the input: it is smaller (1/√2) and late (45°).</div>
+  <div class="try"><h4>Try it</h4>Start from very different values: after a while all the curves merge onto the same steady response. The start is forgotten.</div>
 </section>
 <section data-case="forced" data-example="low"><h3>From below</h3><p>A different start, the same steady oscillation after a few units of \(x\): the transient \(Ce^{-x}\) dies out.</p></section>
 <section data-case="forced" data-example="on"><h3>On the steady curve</h3><p>Starting on it, \(C = 0\): there is no transient at all.</p></section>
@@ -57,6 +59,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>A pendulum released from rest at x = 2: starts at (2, 0), passes through (0, −2) a quarter period later, reaches (−2, 0) at half a period.</div>
   <div class="pitfall"><h4>Common mistake</h4>Plain Euler on an undamped oscillator spirals outward: it adds energy at every step. Physics did not change — the method is wrong for this job.</div>
+  <div class="try"><h4>Try it</h4>Set the damping to 0: the trajectory is a closed loop. Raise it a little: a spiral into the origin. Raise it past critical: it slides in without turning.</div>
 </section>
 <section data-case="oscillator" data-example="damped"><h3>Damped</h3><p>Friction drains energy: the circle becomes a spiral into the rest point at the origin.</p></section>
 <section data-case="oscillator" data-example="euler"><h3>Euler gains energy</h3><p>Each Euler step on a circle moves along the tangent, slightly outwards: the energy grows by \(1 + h^2\) per step and the orbit spirals out. Better methods (like RK4, used for the blue curve) avoid this.</p></section>

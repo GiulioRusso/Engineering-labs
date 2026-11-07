@@ -13,6 +13,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>An oven with τ = 10 min set from 20 to 200 °C (K = 180): after 10 min 134 °C, after 40 min 197 °C.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting it to "arrive": an exponential never reaches the final value; engineers use the 2 % settling time.</div>
+  <div class="try"><h4>Try it</h4>Double τ: the response takes twice as long to reach 63 % and 98 %. Change K: only the final value moves.</div>
 </section>
 <section data-case="first" data-example="fast"><h3>Small τ</h3><p>The pole moves left to \(-3.3\): the response is three times faster. A thermometer with a thin bulb, a small RC circuit.</p></section>
 <section data-case="first" data-example="slow"><h3>Large τ</h3><p>A pole near the origin is slow: \(\tau = 3\) s means 12 s to settle.</p></section>
@@ -38,6 +39,7 @@
   <div class="eq">$$p = \sigma \pm j\omega \;\Rightarrow\; e^{\sigma t}\cos\omega t, \qquad \text{stable} \iff \text{all } \operatorname{Re} p < 0$$</div>
   <div class="worked"><h4>Worked example</h4>Poles at −0.5 ± 2j plus one at −4: the −4 term is gone after 1 s; the response is essentially the second-order one. Move it to −0.2 and it becomes the slowest part.</div>
   <div class="pitfall"><h4>Common mistake</h4>Judging stability by whether it oscillates: a pole on the right half-plane is unstable even with no oscillation.</div>
+  <div class="try"><h4>Try it</h4>Drag the pole pair toward the jω axis: the oscillation lasts longer. Cross into the right half-plane and it grows. Tick a third pole and move it close to the others to see it start to dominate.</div>
 </section>
 <section data-case="poles" data-example="axis"><h3>On the jω axis</h3><p>\(\sigma = 0\): the oscillation neither grows nor decays. Marginally stable: any extra push would accumulate.</p></section>
 <section data-case="poles" data-example="rhp"><h3>Right half plane</h3><p>\(\sigma > 0\): the oscillation grows as \(e^{0.3t}\) without limit. An unstable system.</p></section>

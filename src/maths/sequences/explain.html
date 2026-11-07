@@ -24,6 +24,7 @@
   <div class="eq">$$\sum_{n=1}^\infty \frac{1}{n^p} \text{ converges} \iff p > 1, \qquad \sum \frac{1}{n^2} = \frac{\pi^2}{6}, \qquad \sum_{n\le N}\frac1n \approx \ln N + 0.577$$</div>
   <div class="worked"><h4>Worked example</h4>Harmonic series: 200 terms sum to 5.88; a million terms to only 14.4 — but it never stops growing.</div>
   <div class="pitfall"><h4>Common mistake</h4>"The terms go to zero, so it converges": false — the harmonic series is the counter-example.</div>
+  <div class="try"><h4>Try it</h4>Sweep p across 1: above 1 the partial sums level off, at 1 and below they keep climbing, however slowly.</div>
 </section>
 <section data-case="pseries" data-example="harmonic"><h3>The harmonic series</h3><p>\(1 + \tfrac12 + \tfrac13 + \dots\) grows like \(\ln n\): after 200 terms it is only about 5.9, yet it passes every number eventually. Terms going to zero do not guarantee convergence.</p></section>
 <section data-case="pseries" data-example="p4"><h3>p = 4</h3><p>The terms fall so fast that a handful already gives \(\pi^4/90 \approx 1.0823\) to four digits.</p></section>
@@ -36,6 +37,7 @@
   <div class="eq">$$1 - \tfrac12 + \tfrac13 - \cdots = \ln 2, \qquad 1 - \tfrac13 + \tfrac15 - \cdots = \frac{\pi}{4}, \qquad |S - S_N| \le |a_{N+1}|$$</div>
   <div class="worked"><h4>Worked example</h4>Leibniz: to get π to 2 decimals (error 0.005 in π/4 ≈ 0.00125) you need about 400 terms — correct but slow.</div>
   <div class="pitfall"><h4>Common mistake</h4>Rearranging the terms: for conditionally convergent series, reordering can change the sum.</div>
+  <div class="try"><h4>Try it</h4>Lower ε: the number of terms needed grows, while the partial sums keep stepping alternately above and below the limit.</div>
 </section>
 <section data-case="alternating" data-example="leibniz"><h3>π from odd numbers</h3><p>\(4\left(1 - \tfrac13 + \tfrac15 - \dots\right) = \pi\). Beautiful but slow: the error after \(n\) terms is about \(1/n\).</p></section>
 <section data-case="alternating" data-example="tight"><h3>A smaller ε</h3><p>Since the error is below \(1/(n+1)\), staying within 0.01 needs about 100 terms. The ε band shows when the sums stay inside for good.</p></section>
@@ -47,5 +49,6 @@
   <div class="eq">$$\lim_{n\to\infty} a_n = L \iff \forall\varepsilon > 0\ \exists N: n > N \Rightarrow |a_n - L| < \varepsilon, \qquad \left(1 + \frac1n\right)^n \to e$$</div>
   <div class="worked"><h4>Worked example</h4>(1 + 1/n)ⁿ: n = 1 gives 2, n = 10 gives 2.594, n = 100 gives 2.705, n = 1000 gives 2.717; e = 2.71828. The error is about e/(2n).</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking the sequence must reach L: it only has to get as close as you like.</div>
+  <div class="try"><h4>Try it</h4>Shrink the tolerance ε: the band narrows and N, the point after which every term stays inside, moves right.</div>
 </section>
 <section data-case="limit" data-example="eps"><h3>A tighter band</h3><p>A smaller \(\varepsilon\) needs a later \(N\). Here the error is about \(e/2n\), so \(\varepsilon = 0.005\) needs \(n \approx 270\).</p></section>

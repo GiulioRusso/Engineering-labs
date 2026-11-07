@@ -6,6 +6,7 @@
   <ol class="steps"><li>Compute the sample mean x̄.</li><li>Its standard error is σ/√n.</li><li>Go z standard errors each way.</li></ol>
   <div class="worked"><h4>Worked example</h4>σ = 2, n = 10, x̄ = 10.4: 10.4 ± 1.96·0.63 = [9.16, 11.64].</div>
   <div class="pitfall"><h4>Common mistake</h4>"μ is in this interval with probability 95%." μ is fixed; it is either in or not. The 95% is about the method.</div>
+  <div class="try"><h4>Try it</h4>Lower the confidence level to 0.8: the intervals get shorter and about one in five misses the true mean. Raise n: they shrink but keep catching it 80 % of the time.</div>
 </section>
 <section data-case="ci" data-example="c80"><h3>80%</h3><p>Shorter bars, and about one in five misses.</p></section>
 <section data-case="ci" data-example="n100"><h3>n = 100</h3><p>√10 ≈ 3.2 times narrower, still 95% coverage.</p></section>
@@ -16,6 +17,7 @@
   <div class="eq">$$\text{reject }H_0\iff z>z_{1-\alpha},\qquad p=P(Z\ge z_\text{obs}\mid H_0),\qquad \text{power}=1-\Phi(z_{1-\alpha}-d\sqrt n)$$</div>
   <div class="worked"><h4>Worked example</h4>d = 0.4σ, n = 25: the orange curve sits at 2; with α = 0.05 (z > 1.645) the power is 1 − Φ(−0.355) ≈ 0.64.</div>
   <div class="pitfall"><h4>Common mistakes</h4>Reading p as P(H₀ true). Concluding "no effect" from a non-significant result with low power: absence of evidence is not evidence of absence.</div>
+  <div class="try"><h4>Try it</h4>Raise the sample size with a small true effect: the power curve climbs toward 1. Lower α to 0.01: fewer false alarms, but less power.</div>
 </section>
 <section data-case="test" data-example="big"><h3>n = 100</h3><p>The orange curve moves to d√n = 4: almost always detected.</p></section>
 <section data-case="test" data-example="strict"><h3>α = 0.01</h3><p>The threshold moves right: fewer false alarms, but more real effects missed.</p></section>

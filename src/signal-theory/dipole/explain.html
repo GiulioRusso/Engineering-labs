@@ -22,6 +22,7 @@
   <p>Far from the wire, the field is a spherical wave: rings that expand at the speed of light, one ring every half wavelength. Their strength depends on direction through F(θ): maximum broadside, zero along the wire's axis — a charge moving along a line cannot radiate along that line.</p>
   <div class="worked"><h4>Worked example</h4>100 W into a half-wave dipole: at 1 km broadside, |E| ≈ 7√(P·D)/r ≈ 0.09 V/m, |H| = E/377 ≈ 0.24 mA/m.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking E and H are separate waves. In the far field they are locked together: in phase, at right angles, ratio 377 Ω.</div>
+  <div class="try"><h4>Try it</h4>Switch the field term between the bound 1/r² part and the radiated 1/r part: close in the first dominates, beyond about a wavelength only the second remains.</div>
 </section>
 <section data-case="fields" data-example="long"><h3>L = 1.25 λ</h3><p>The rings are no longer uniform in angle: the pattern now has a narrow broadside lobe and weak side lobes.</p></section>
 <section data-case="hertz">
@@ -47,6 +48,7 @@
   <p>The dipole is symmetric around its axis, so the H-plane pattern is always a circle: it radiates equally in every horizontal direction. All the shaping is in the E-plane.</p>
   <div class="worked"><h4>Worked example</h4>Half-wave: a figure-of-eight, half-power beamwidth 78°, D = 1.64 (2.15 dBi). Full wave: 47°, 2.41 (3.8 dBi). 1.5 λ: the main lobes tilt to about 45° off broadside.</div>
   <div class="pitfall"><h4>Common mistake</h4>Calling a dipole omnidirectional without saying in which plane. It is omnidirectional in azimuth only; straight up the wire it radiates nothing.</div>
+  <div class="try"><h4>Try it</h4>Lengthen the dipole from 0.5 λ to λ: the E-plane lobe narrows. Past about 1.25 λ it splits and the lobes tilt.</div>
 </section>
 <section data-case="planes" data-example="one"><h3>L = λ</h3><p>A narrower broadside lobe: the two halves of the current add more coherently broadside.</p></section>
 <section data-case="planes" data-example="tilt"><h3>L = 1.5 λ</h3><p>The opposite-phase middle current cancels broadside: lobes appear at oblique angles.</p></section>
@@ -55,6 +57,7 @@
   <div class="look"><h4>What you are looking at</h4>The radiation pattern as a surface: the distance from the centre in each direction is the radiated field there (in dB above the floor). The orange rod is the wire. Drag to rotate.</div>
   <p>Revolving the E-plane pattern around the wire gives the full 3D pattern: a doughnut for a half-wave dipole, with a hole along the axis.</p>
   <div class="pitfall"><h4>Common mistake</h4>Reading the size of the surface as gain in linear units. Here it is in dB, so weak sidelobes look bigger than they are.</div>
+  <div class="try"><h4>Try it</h4>Lengthen the dipole to 2 λ: the doughnut breaks into a cone of lobes.</div>
 </section>
 <section data-case="pattern3d" data-example="one"><h3>L = λ</h3><p>A flatter doughnut: more of the power goes broadside.</p></section>
 <section data-case="pattern3d" data-example="multi"><h3>L = 2 λ</h3><p>The doughnut splits into cones: four current lobes produce lobes at several elevations.</p></section>
@@ -83,6 +86,7 @@
   <p>Directivity compares the peak intensity with what an isotropic antenna radiating the same total power would give. Narrower beam, higher directivity.</p>
   <div class="worked"><h4>Worked example</h4>Short dipole: 1.5 (1.76 dBi). Half wave: 1.64 (2.15 dBi). 1.25 λ: 3.3 (5.2 dBi). Gain = efficiency × directivity, so a lossless dipole's gain equals these.</div>
   <div class="pitfall"><h4>Common mistake</h4>dBi vs dBd: dBd is relative to a half-wave dipole, so 0 dBd = 2.15 dBi.</div>
+  <div class="try"><h4>Try it</h4>Sweep the length and watch the directivity: it climbs from 1.64 at half a wave to a maximum near 1.25 λ, then falls as the lobes split.</div>
 </section>
 <section data-case="directivity" data-example="max"><h3>The best broadside dipole</h3><p>1.25 λ: the highest directivity before the lobe splits.</p></section>
 <section data-case="nearfar">

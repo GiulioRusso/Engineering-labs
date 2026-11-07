@@ -18,6 +18,7 @@
   <ol class="steps"><li>At the switch the capacitor is empty: all of V is across R, so the current starts at V/R.</li><li>As v_C grows, less is left across R: the current shrinks, and so does the rate of charging.</li><li>After one τ: 63%. After 5τ: over 99% — practically full, current ≈ 0.</li></ol>
   <div class="worked"><h4>Worked example</h4>1 kΩ and 10 µF: τ = 10 ms. With 5 V the initial current is 5 mA; after 10 ms v_C = 3.16 V and i = 1.84 mA.</div>
   <div class="pitfall"><h4>Common mistake</h4>"A capacitor blocks current." It blocks <i>steady</i> current; changing voltages drive plenty through it. And its voltage cannot jump: that would need infinite current.</div>
+  <div class="try"><h4>Try it</h4>Double C, then halve R: the charging curve slows down, then speeds up, always reaching 63 % after one RC.</div>
 </section>
 <section data-case="capacitor" data-example="big"><h3>47 µF</h3><p>τ almost five times longer: same curve shape, stretched in time.</p></section>
 <section data-case="capacitor" data-example="smallr"><h3>220 Ω</h3><p>Faster charging, and a larger initial current V/R.</p></section>
@@ -28,6 +29,7 @@
   <div class="eq">$$v=L\frac{di}{dt},\qquad i(t)=\frac{V}{R}\left(1-e^{-t/\tau}\right),\qquad \tau=\frac LR$$</div>
   <div class="worked"><h4>Worked example</h4>100 mH and 100 Ω: τ = 1 ms, final current 50 mA. At the switch-on the whole 5 V appears across the coil; it fades as the current builds.</div>
   <div class="pitfall"><h4>Common mistake</h4>Opening a switch in series with an inductor: the current wants to continue, di/dt becomes enormous and so does the voltage — the spark you see in relays. Here the source goes to 0 V instead, so the current decays smoothly.</div>
+  <div class="try"><h4>Try it</h4>Raise L and watch the current take longer to rise; the voltage across L jumps at once, the current never does.</div>
 </section>
 <section data-case="inductor" data-example="bigl"><h3>470 mH</h3><p>τ = L/R grows: the current takes longer to reach V/R.</p></section>
 <section data-case="sine">
@@ -49,5 +51,6 @@
   <div class="eq">$$f_0=\frac{1}{2\pi\sqrt{LC}},\qquad \tfrac12Cv^2+\tfrac12Li^2=\text{const}$$</div>
   <div class="worked"><h4>Worked example</h4>100 mH, 10 µF: f₀ = 159 Hz. Starting at 5 V: 125 µJ, all electric; a quarter period later it is all magnetic, with i = 5√(C/L) = 50 mA.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting it to run forever: any resistance turns some energy into heat each cycle — an oscillator needs an amplifier to top it up.</div>
+  <div class="try"><h4>Try it</h4>Add a little series resistance: the energy stops sloshing for ever and dies out, a little each swing.</div>
 </section>
 <section data-case="lc" data-example="lossy"><h3>2 Ω of loss</h3><p>The total-energy bar shrinks a little every cycle; the swings decay exponentially.</p></section>

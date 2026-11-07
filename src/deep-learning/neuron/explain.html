@@ -19,6 +19,7 @@
   <div class="eq">$$L=-\frac1N\sum_i\big[y_i\log p_i+(1-y_i)\log(1-p_i)\big],\qquad \nabla_wL=\frac1N\sum_i(p_i-y_i)\,\mathbf x_i,\qquad w\leftarrow w-\eta\nabla L$$</div>
   <div class="worked"><h4>Worked example</h4>A point with y = 1 and p = 0.3 contributes (0.3 − 1)·x = −0.7x to the gradient: the weights move by +0.7ηx, towards that point.</div>
   <div class="pitfall"><h4>Common mistakes</h4>Too small η: many tiny steps. Too large: the steps overshoot. And on the moons no setting helps: the problem is the shape of the boundary, not the training.</div>
+  <div class="try"><h4>Try it</h4>Raise the learning rate step by step: first faster, then the walk overshoots the valley and bounces. Switch to the moons: no single line can separate them.</div>
 </section>
 <section data-case="descent" data-example="slow"><h3>η = 0.05</h3><p>The path is correct but slow: after 300 steps it is still on the way.</p></section>
 <section data-case="descent" data-example="fast"><h3>η = 3</h3><p>Big steps reach the valley quickly; on this smooth loss they do not blow up.</p></section>
@@ -30,6 +31,7 @@
   <div class="eq">$$h_j=f(\mathbf w_j\cdot\mathbf x+b_j),\qquad p=\sigma\Big(\sum_j v_jh_j+c\Big)$$</div>
   <div class="worked"><h4>Worked example</h4>With 2 hidden units the hidden space is a plane again: watch the two moons get pulled apart in the top-right chart until the orange line separates them.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking more units is always better: 16 units fit these 200 points easily, but with noisy data they also fit the noise (see Generalization).</div>
+  <div class="try"><h4>Try it</h4>Add hidden units from 1 to 16: the boundary bends more and more. Switch tanh to ReLU: the bends become straight pieces.</div>
 </section>
 <section data-case="hidden" data-example="two"><h3>Two units</h3><p>The smallest network that can do it: the hidden plane shows the bending directly.</p></section>
 <section data-case="hidden" data-example="relu"><h3>ReLU</h3><p>ReLU is zero on one side of its line and straight on the other: the boundary is made of straight pieces with corners.</p></section>

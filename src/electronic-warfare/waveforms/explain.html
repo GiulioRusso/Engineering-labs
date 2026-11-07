@@ -11,6 +11,7 @@
   <div class="look"><h4>How to read the four panels</h4>Top left: the pulse itself in time. Top right: its spectrum (how much bandwidth it occupies). Bottom left: the echo as received, buried in noise. Bottom right: the same echo after the <b>matched filter</b> (pulse compression), in dB, centred on the target. The dashed curve is the noise-free compressed pulse.</div>
   <h4>What the matched filter does</h4>
   <p>The receiver slides a copy of the transmitted pulse along the received signal and multiplies-and-adds at every position (a correlation). Where the copy lines up with the echo, everything adds in phase and a peak appears; elsewhere the noise adds randomly. The peak is as tall as the whole pulse's energy and as narrow as \(1/B\).</p>
+  <div class="try"><h4>Try it</h4>Lengthen the plain pulse: more energy, but a fatter triangle. Switch to the chirp and widen its bandwidth: the same long pulse now compresses to a sharp spike.</div>
 </section>
 <section data-case="plain">
   <h3>The plain pulse</h3>
@@ -57,6 +58,7 @@
   <div class="eq">$$f_d = \frac{2v}{\lambda}, \qquad \Delta v = \frac{\lambda}{2T}$$</div>
   <div class="worked"><h4>Worked example</h4>λ = 3 cm, T = 5 ms: \(\Delta v = 0.03/0.01 = 3\) m/s. Aircraft 5 m/s apart: two lines. 1 m/s apart: one line — you need T = 15 ms or more.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting more bandwidth or power to separate them. Only a longer look does. And a long look in one direction is time not spent searching elsewhere.</div>
+  <div class="try"><h4>Try it</h4>Lower the speed difference between the two aircraft: the two Doppler lines merge. Lengthen the burst and they split again: resolution is 1/T.</div>
 </section>
 <section data-case="formation" data-example="merge"><h3>One line</h3><p>1 m/s apart with 3 m/s resolution: the two Doppler lines fuse.</p></section>
 <section data-case="formation" data-example="longer"><h3>Look longer</h3><p>25 ms → 0.6 m/s resolution: the lines split. Nothing about the targets changed, only how long you looked.</p></section>

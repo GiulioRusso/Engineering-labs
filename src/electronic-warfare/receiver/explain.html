@@ -5,6 +5,7 @@
   <h4>Why I and Q?</h4>
   <p>A single real signal at baseband cannot tell \(+f\) from \(-f\): a target closing and a target opening at the same speed would look identical. Two channels in quadrature (cos and −sin) keep the sign. Together they form one complex number \(z = I + jQ = A e^{j\varphi}\) per sample.</p>
   <div class="eq">$$I = \text{LPF}\{s\cdot 2\cos 2\pi f_{LO} t\}, \quad Q = \text{LPF}\{-s\cdot 2\sin 2\pi f_{LO} t\}, \quad s = A\cos(2\pi f_c t + \varphi) \Rightarrow z = A e^{j\varphi}$$</div>
+  <div class="try"><h4>Try it</h4>Tick 'follow the pulse' and watch the spectrum change block by block: the pulse moves from RF to IF to 0 Hz, and the interferer disappears at the first filter.</div>
 </section>
 <section data-case="superhet">
   <h3>The superheterodyne receiver</h3>
@@ -31,6 +32,7 @@
   <ol class="steps"><li>ADC at IF: sample the 70 MHz IF at 100 MS/s. Undersampling is fine for a narrow band: it aliases to 30 MHz (bandpass sampling).</li><li>Digital down-conversion (DDC): multiply by \(e^{-j2\pi f n/f_s}\): the spectrum shifts to 0 Hz and becomes one-sided.</li><li>Digital low-pass and decimation: keep only the baseband, then drop samples you no longer need.</li></ol>
   <div class="worked"><h4>Worked example</h4>70 MHz sampled at 100 MS/s: \(|70 - 100| = 30\) MHz. As long as the IF band (here 20 MHz wide) does not straddle a multiple of \(f_s/2\), sampling it below its frequency loses nothing.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking you must sample above twice the highest frequency. For a band-limited signal you must sample above twice its <b>bandwidth</b> and place it within one Nyquist zone.</div>
+  <div class="try"><h4>Try it</h4>Change the IF sampling rate and watch where the IF lands after sampling (bandpass sampling): it folds to |f_IF − k·f_s|. Then follow it through the digital down-conversion to 0 Hz.</div>
 </section>
 <section data-case="digitalif" data-example="adc"><h3>Bandpass sampling</h3><p>The IF appears at 30 MHz in the sampled spectrum. Change the sampling rate and watch it move — and fold over itself near \(f_s/2\).</p></section>
 <section data-case="digitalif" data-example="ddc"><h3>Digital down-conversion</h3><p>After multiplying by the complex exponential the spectrum is no longer mirror-symmetric: the pulse sits at 0 Hz, its mirror at −60 MHz (removed next).</p></section>
@@ -52,6 +54,7 @@
   <h4>The filter trade-off</h4>
   <p>The low-pass must remove the sum term and the noise, but every filter takes time to respond: rise time ≈ \(0.48/B\) here. A 16 MHz filter rises in 30 ns; a 2 MHz filter in 240 ns. When the rise time approaches the pulse length there is no flat top left to measure, and the amplitude reading collapses.</p>
   <div class="pitfall"><h4>Common mistake</h4>Narrowing the filter "to reduce noise" without checking the pulse: noise goes down as \(\sqrt B\), but so does the pulse's own peak once the filter is too slow.</div>
+  <div class="try"><h4>Try it</h4>Detune the LO by 2 MHz: I and Q start to rotate and the IQ plane draws an arc. Then narrow the low-pass until the pulse loses its flat top.</div>
 </section>
 <section data-case="iqdemod" data-example="detune"><h3>LO detuned</h3><p>I and Q are sines at 2 MHz: the complex value spins. |z| is still right; the phase is not constant any more.</p></section>
 <section data-case="iqdemod" data-example="narrow"><h3>Narrow filter</h3><p>4 MHz: 120 ns edges on a 500 ns pulse. The flat top is shorter but still there.</p></section>

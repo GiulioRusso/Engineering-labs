@@ -22,6 +22,7 @@
   <div class="eq">$$\Delta V \approx \frac{V_\text{peak}}{f\,R\,C} \;\;(\text{half wave}), \qquad \frac{V_\text{peak}}{2fRC}\;\;(\text{full wave})$$</div>
   <div class="worked"><h4>Worked example</h4>10 V peak, 1 kΩ, 100 µF, 50 Hz half-wave: ΔV ≈ 9.3/(50·1000·10⁻⁴) = 1.9 V. With 1000 µF: 0.19 V.</div>
   <div class="pitfall"><h4>Common mistake</h4>Forgetting the diode drops: the DC is about one (half-wave) or two (bridge) diode drops below the AC peak — and the AC peak is √2 times the RMS rating of the transformer.</div>
+  <div class="try"><h4>Try it</h4>Start with no capacitor, then raise it step by step: the bumps fill in and the ripple shrinks. Lower the load resistance and the ripple grows again.</div>
 </section>
 <section data-case="rectifier" data-example="raw"><h3>No capacitor</h3><p>Pure half-sines: one-way, but nowhere near steady.</p></section>
 <section data-case="rectifier" data-example="big"><h3>A big capacitor</h3><p>1000 µF: the output barely droops between peaks.</p></section>
@@ -33,6 +34,7 @@
   <div class="eq">$$I_{R_s} = \frac{V_S - V_Z}{R_s} = I_\text{load} + I_Z \quad (I_Z \ge 0)$$</div>
   <div class="worked"><h4>Worked example</h4>12 V, 220 Ω, 5.1 V Zener: I_Rs = 31 mA. A 1 kΩ load takes 5.1 mA, the Zener 26 mA. Below 5.1/0.031 = 163 Ω the load wants more than 31 mA: the Zener turns off and regulation is lost.</div>
   <div class="pitfall"><h4>Common mistake</h4>Choosing R_s too large: at full load nothing is left for the Zener.</div>
+  <div class="try"><h4>Try it</h4>Lower the load resistance until the output drops below the Zener voltage: the regulator has run out of current.</div>
 </section>
 <section data-case="zener" data-example="heavy"><h3>Too heavy a load</h3><p>150 Ω would need 34 mA at 5.1 V: more than R_s can deliver. The output sags below V_Z.</p></section>
 <section data-case="zener" data-example="low"><h3>Supply too low</h3><p>6 V through 220 Ω cannot lift a 1 kΩ load above 5.1 V: the Zener stays off.</p></section>

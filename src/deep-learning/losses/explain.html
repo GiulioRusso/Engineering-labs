@@ -8,6 +8,7 @@
   <ol class="steps"><li>Squared: the gradient 2r grows with the residual, so one far point pulls as hard as many near ones. Its minimum is the <b>mean</b>.</li><li>Absolute: every point pulls with force ±1, however far. Its minimum is the <b>median</b>: robust to outliers.</li><li>Huber: squared (smooth, precise) near the line, absolute (robust) far from it.</li></ol>
   <div class="worked"><h4>Worked example</h4>An outlier 8 units off contributes 64 to the squared loss — as much as 64 points 1 unit off. The squared fit tilts towards it; the absolute fit hardly moves.</div>
   <div class="pitfall"><h4>Common mistake</h4>Using squared error on data with occasional gross errors (sensor glitches, typos): one bad point ruins the fit.</div>
+  <div class="try"><h4>Try it</h4>Move the outlier far away: the squared loss is pulled hard, the absolute loss barely moves. Huber sits between: lower δ to make it more robust.</div>
 </section>
 <section data-case="regress" data-example="abs"><h3>Absolute error</h3><p>The line follows the other eleven points.</p></section>
 <section data-case="regress" data-example="huber"><h3>Huber</h3><p>Squares only for residuals within δ; beyond, the penalty grows linearly.</p></section>
@@ -19,6 +20,7 @@
   <div class="eq">$$\frac{\partial}{\partial z}(1-p)^2=-2(1-p)\,p(1-p),\qquad \frac{\partial}{\partial z}(-\log p)=p-1$$</div>
   <div class="worked"><h4>Worked example</h4>At z = −6: the squared-error gradient is about −0.005; cross-entropy's is −0.998 — two hundred times stronger.</div>
   <div class="pitfall"><h4>Common mistake</h4>Training a classifier with MSE and blaming the learning rate for the plateau.</div>
+  <div class="try"><h4>Try it</h4>Replay the case (R) and compare the two scores: with squared error z hardly moves at first, because the sigmoid is flat at −6; with cross-entropy it climbs at once.</div>
 </section>
 <section data-case="softmax">
   <h3>Softmax and temperature</h3>
@@ -26,6 +28,7 @@
   <div class="eq">$$p_k=\frac{e^{z_k/T}}{\sum_je^{z_j/T}},\qquad \ell=-\log p_\text{true}$$</div>
   <ol class="steps"><li>Exponentiate (all positive), normalise (sum to 1).</li><li>Only differences between scores matter: adding the same number to all changes nothing.</li><li>T &lt; 1 sharpens towards the largest; T &gt; 1 flattens towards uniform.</li></ol>
   <div class="worked"><h4>Worked example</h4>Scores (2, 1, 0.5, −1) at T = 1: p ≈ (0.57, 0.21, 0.13, 0.03). If class 1 is true, loss = −log 0.57 = 0.56.</div>
+  <div class="try"><h4>Try it</h4>Lower the temperature toward 0.2: the largest score takes all the probability. Raise it to 5: the probabilities spread out evenly.</div>
 </section>
 <section data-case="softmax" data-example="cold"><h3>T = 0.2</h3><p>The biggest score takes nearly all the probability (used in sampling to be conservative).</p></section>
 <section data-case="softmax" data-example="hot"><h3>T = 5</h3><p>All classes nearly equal (used in distillation to show the "dark knowledge" between classes).</p></section>
@@ -36,5 +39,6 @@
   <p>What we actually want is the 0–1 loss — count the mistakes. But it is a step: zero gradient everywhere, nothing to follow. Every practical loss is a smooth stand-in above it.</p>
   <div class="eq">$$\text{hinge}=\max(0,1-m),\quad \text{logistic}=\log_2(1+e^{-m}),\quad \text{exponential}=e^{-m},\quad \text{squared}=(1-m)^2$$</div>
   <div class="pitfall"><h4>Common mistake</h4>Squared loss rises again for m &gt; 1: it penalises points for being too correct. Exponential explodes for m &lt; 0: one mislabelled point dominates.</div>
+  <div class="try"><h4>Try it</h4>Slide the margin m from +2.5 to −2.5: the losses agree for confident correct answers and differ most on the wrong side.</div>
 </section>
 <section data-case="margin" data-example="wrongside"><h3>m = −1</h3><p>A clear mistake: exponential e ≈ 2.7, hinge 2, logistic 1.9 — all pushing back.</p></section>

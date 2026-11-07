@@ -20,6 +20,7 @@
   <div class="eq">$$E_T\approx-\frac{(b-a)h^2}{12}f'',\qquad E_S\approx-\frac{(b-a)h^4}{180}f^{(4)}$$</div>
   <div class="worked"><h4>Worked example</h4>∫₀¹ eˣ dx = 1.718282. Trapezoid with 4 panels: 1.727222 (error 9·10⁻³). Simpson with 4 panels: 1.718319 (error 4·10⁻⁵).</div>
   <div class="pitfall"><h4>Common mistake</h4>Using Simpson with an odd number of panels — it needs pairs.</div>
+  <div class="try"><h4>Try it</h4>Double the panels from 4 to 8 to 16: the trapezoid error falls 4× each time, Simpson's 16×. Then pick the narrow bump and see how many panels it needs.</div>
 </section>
 <section data-case="quad" data-example="simpson"><h3>Simpson</h3><p>The parabolas are almost on top of the curve: the error line has slope −4.</p></section>
 <section data-case="quad" data-example="bump"><h3>A narrow bump</h3><p>With 8 panels the rule barely sees the peak; the panel errors concentrate around it. Doubling n helps, but adaptive rules would refine only the middle.</p></section>
@@ -30,6 +31,7 @@
   <div class="eq">$$\frac{f(x+h)-f(x)}{h}=f'+\frac h2f''+\dots,\qquad\text{round-off}\approx\frac{\varepsilon\,|f|}{h},\quad\varepsilon\approx2.2\cdot10^{-16}$$</div>
   <ol class="steps"><li>Large h: truncation dominates, the error falls as h (forward) or h² (central).</li><li>Small h: round-off dominates, the error grows as 1/h.</li><li>The minimum: h ≈ √ε ≈ 10⁻⁸ (forward), h ≈ ∛ε ≈ 10⁻⁵ (central).</li></ol>
   <div class="pitfall"><h4>Common mistake</h4>Choosing h = 10⁻¹⁵ "to be accurate": the answer has no correct digits at all.</div>
+  <div class="try"><h4>Try it</h4>Lower h from 10⁻¹ toward 10⁻¹⁵: the error first falls, then rises again once round-off dominates. The central scheme reaches its best at a larger h, and is more accurate there.</div>
 </section>
 <section data-case="fdiff" data-example="tiny"><h3>h = 10⁻¹³</h3><p>Only three digits of the difference survive the subtraction: the derivative is wrong in the fourth digit.</p></section>
 <section data-case="fdiff" data-example="central"><h3>Central difference</h3><p>Symmetric around x, the h term cancels: error ∝ h², best near 10⁻⁵ with about 11 correct digits.</p></section>

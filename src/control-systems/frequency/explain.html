@@ -8,6 +8,7 @@
   <div class="eq">$$|G| = \prod|\text{factors}| \Rightarrow 20\log|G| = \sum 20\log|\text{factor}|, \qquad \angle G = \sum\angle\text{factors}$$</div>
   <div class="worked"><h4>Worked example</h4>K/(s/1 + 1): flat at 20 log K, −3 dB and −45° at 1 rad/s, then −20 dB/dec. Add a pole at 10: −40 dB/dec beyond 10, phase toward −180°.</div>
   <div class="pitfall"><h4>Common mistake</h4>Forgetting that gain moves the magnitude curve up or down but never changes the phase.</div>
+  <div class="try"><h4>Try it</h4>Tick the second pole and watch the magnitude slope steepen from −20 to −40 dB per decade, while the phase heads toward −180°. Then move K: the magnitude shifts up and down, the phase does not change.</div>
 </section>
 <section data-case="bode" data-example="pole2"><h3>Two poles</h3><p>Above both corners the slopes add: −40 dB per decade, and the phase heads to −180°.</p></section>
 <section data-case="bode" data-example="int"><h3>An integrator</h3><p>\(1/j\omega\) falls 20 dB per decade at every frequency and adds a constant −90°. Infinite gain at \(\omega = 0\): zero steady-state error to a step.</p></section>
@@ -20,6 +21,7 @@
   <div class="eq">$$\text{GM} = \frac{1}{|G(j\omega_{180})|}, \qquad \text{PM} = 180^\circ + \angle G(j\omega_c)\;\text{ at } |G(j\omega_c)| = 1$$</div>
   <div class="worked"><h4>Worked example</h4>K/(s(s + 1)(s/2 + 1)): crossing at −1 when K = 3 (gain margin of the K = 1 loop: 3 = 9.5 dB). K = 5 encircles −1: unstable.</div>
   <div class="pitfall"><h4>Common mistake</h4>Checking only the gain margin: a loop with a small phase margin rings badly even if GM is large.</div>
+  <div class="try"><h4>Try it</h4>Raise K slowly: the Nyquist curve grows, the gain and phase margins shrink, and once the curve encircles −1 the closed loop is unstable.</div>
 </section>
 <section data-case="nyquist" data-example="small"><h3>Small gain</h3><p>The curve crosses the negative real axis far to the right of −1: large gain and phase margins, a calm, slow loop.</p></section>
 <section data-case="nyquist" data-example="more"><h3>More gain</h3><p>The whole curve grows: it crosses closer to −1, both margins shrink, the step response overshoots more.</p></section>
@@ -32,6 +34,7 @@
   <div class="eq">$$C_\text{lead}(s) = \frac{s/\omega_z + 1}{s/\omega_p + 1},\; \omega_z < \omega_p, \qquad \varphi_{\max} = \arcsin\frac{\omega_p - \omega_z}{\omega_p + \omega_z}$$</div>
   <div class="worked"><h4>Worked example</h4>Zero at 0.8, pole at 8: up to 55° of extra phase at √(0.8·8) = 2.5 rad/s. The phase margin goes from 5° to about 45°.</div>
   <div class="pitfall"><h4>Common mistake</h4>Placing the lead's maximum far from the crossover frequency: it adds phase where it is not needed.</div>
+  <div class="try"><h4>Try it</h4>Choose lead and move its zero just below the crossover: the phase margin grows. Choose lag instead and see it raise the low-frequency gain without moving the crossover.</div>
 </section>
 <section data-case="lead" data-example="none"><h3>Without a compensator</h3><p>\(K = 2.5\) gives a fast loop but only 5° of phase margin: the step response rings for a long time.</p></section>
 <section data-case="lead" data-example="lag"><h3>Lag</h3><p>Ten times the gain (so ten times less ramp error) with a lag at 0.005–0.05 rad/s: at the crossover the lag is invisible, the margins stay near 30°. The price: a slow tail in the step response.</p></section>

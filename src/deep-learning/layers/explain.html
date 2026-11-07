@@ -7,6 +7,7 @@
   <p>Each layer computes a weighted sum z = w·x + b and passes it through an activation. Without it, any stack of layers would collapse into a single linear map: the activation is what lets a network bend the space.</p>
   <ol class="steps"><li><b>Sigmoid, tanh</b>: smooth and bounded, but flat for large |z| — their slope tends to 0 (vanishing gradients).</li><li><b>ReLU</b>: max(0, z). Slope 1 or 0: simple, fast, the default; a unit stuck at z &lt; 0 stops learning ("dead ReLU").</li><li><b>Leaky ReLU, GELU</b>: keep a little slope for z &lt; 0.</li></ol>
   <div class="worked"><h4>Worked example</h4>Ten sigmoid layers each pass back at most 0.25 of the gradient: 0.25¹⁰ ≈ 10⁻⁶. Ten ReLU layers in their active region pass back 1.</div>
+  <div class="try"><h4>Try it</h4>Slide z from −5 to 5 with the sigmoid: the slope (the gradient) is large only near 0. Switch to ReLU: for z < 0 the gradient is exactly zero.</div>
 </section>
 <section data-case="activation" data-example="sig"><h3>Sigmoid at z = 4</h3><p>Output 0.98, slope 0.018: nearly no gradient.</p></section>
 <section data-case="activation" data-example="dead"><h3>ReLU at z = −2</h3><p>Output 0 and slope 0: this unit contributes nothing and receives no update.</p></section>
@@ -16,6 +17,7 @@
   <div class="eq">$$y_j=\sum_iW_{ji}x_i+b_j$$</div>
   <div class="worked"><h4>Worked example</h4>y₁ = 0.5·1 + (−1)·2 + 0.3·(−1) + 2·0.5 + 0.1 = −0.7.</div>
   <div class="pitfall"><h4>Common mistake</h4>Feeding an image to a dense layer flattens it: neighbouring pixels end up far apart in the vector, and the layer has to learn every position separately — 784 × 100 weights for a small MNIST layer.</div>
+  <div class="try"><h4>Try it</h4>Follow the white outline as it walks through W: each output is one row of W times the whole input, plus its bias.</div>
 </section>
 <section data-case="conv">
   <h3>Convolution: one small window, reused everywhere</h3>
@@ -24,6 +26,7 @@
   <ol class="steps"><li>Place the kernel on a patch; multiply cell by cell; add: one output number.</li><li>Slide by the stride s and repeat.</li><li>Padding p adds a border of zeros; dilation d spaces the taps apart.</li></ol>
   <div class="worked"><h4>Worked example</h4>N = 7, k = 3: no padding, stride 1 → 5×5; padding 1 → 7×7; stride 2 → 3×3; dilation 2 → 3×3.</div>
   <div class="pitfall"><h4>Common mistake</h4>Forgetting that the same 9 weights are used at every position: that is what makes convolution cheap and translation-equivariant.</div>
+  <div class="try"><h4>Try it</h4>Raise the stride to 2: the output map halves. Add padding 1: the size comes back. Switch to the blur kernel and watch the edges soften.</div>
 </section>
 <section data-case="conv" data-example="stride"><h3>Stride 2</h3><p>The window jumps two cells at a time: output 3×3.</p></section>
 <section data-case="conv" data-example="pad"><h3>Padding 1</h3><p>A ring of zeros: the kernel can centre on border pixels, the output stays 7×7.</p></section>
@@ -33,6 +36,7 @@
   <h3>Pooling: summarise each window</h3>
   <div class="look"><h4>What you are looking at</h4>A 6×6 feature map and the 3×3 result of 2×2 pooling with stride 2; the current window is outlined.</div>
   <p>Pooling has no parameters. It keeps the strongest (max) or the average response in each window, halving the size. It discards exact position: a feature that moves by one pixel often gives the same output.</p>
+  <div class="try"><h4>Try it</h4>Switch from max to average pooling: the strongest response in each window no longer wins; the mean does.</div>
 </section>
 <section data-case="pool" data-example="avg"><h3>Average pooling</h3><p>Smoother, keeps more of the weak responses; max keeps only the peaks.</p></section>
 <section data-case="channels">
@@ -40,11 +44,13 @@
   <div class="look"><h4>What you are looking at</h4>A 3D view: three input channels stacked as slabs, the 3×3×3 filter block (orange posts, white outlines on each slab), and the single output map it produces. Drag to rotate.</div>
   <p>The step most often misunderstood. With C input channels, one filter is a k × k × C block. It multiplies every cell of all channels at that position and adds everything into <b>one</b> number. F filters give F output maps — the next layer's channels.</p>
   <div class="eq">$$O_{mn}=\sum_{c=1}^{C}\sum_{u,v}K^{(c)}_{uv}X^{(c)}_{m+u,n+v}+b,\qquad \text{parameters}=(k^2C+1)F$$</div>
+  <div class="try"><h4>Try it</h4>Drag to rotate: the filter block reaches through all three slabs, so one filter makes a single output map.</div>
 </section>
 <section data-case="stack">
   <h3>A whole CNN: shapes and parameters</h3>
   <div class="look"><h4>What you are looking at</h4>Each block is a layer's output: height ∝ spatial size, width ∝ channels; underneath, its shape and parameter count.</div>
   <p>Two patterns appear at once: spatial size shrinks while channels grow — the network trades resolution for description. And most parameters usually sit in the final dense layer, not in the convolutions.</p>
   <div class="worked"><h4>Worked example</h4>28×28 input, 8 then 16 filters: conv1 has (9·1 + 1)·8 = 80 parameters, conv2 (9·8 + 1)·16 = 1168, and the dense layer (7·7·16 + 1)·10 = 7850.</div>
+  <div class="try"><h4>Try it</h4>Raise the filters in layer 2: the parameter count grows fast while the image size, set by the pooling, stays the same.</div>
 </section>
 <section data-case="stack" data-example="wide"><h3>More filters</h3><p>32 and 64 filters: the conv layers grow quadratically with the channel counts.</p></section>

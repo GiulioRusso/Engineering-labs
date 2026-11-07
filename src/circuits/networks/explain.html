@@ -6,6 +6,7 @@
   <ol class="steps"><li>Series: one path, so one current I = V/(R1 + R2); the voltage splits in proportion to each R.</li><li>Parallel: each branch sees the full V and takes V/R; the currents add.</li><li>Parallel is always less than the smallest resistor: you added another path.</li></ol>
   <div class="worked"><h4>Worked example</h4>10 V, 100 Ω and 200 Ω. Series: 300 Ω, 33 mA, 3.3 V + 6.7 V. Parallel: 66.7 Ω, 100 mA + 50 mA = 150 mA.</div>
   <div class="pitfall"><h4>Common mistake</h4>Calling two resistors "in series" because they are drawn in a line. Check: is there any junction between them where current could leave? If yes, they are not in series.</div>
+  <div class="try"><h4>Try it</h4>Make R2 much larger than R1 in series: it takes most of the voltage. Tick parallel: now both see the full voltage and the current prefers R1.</div>
 </section>
 <section data-case="sp" data-example="par"><h3>Parallel</h3><p>Watch the dots split at the junction: more go through the smaller resistor, and they rejoin at the bottom.</p></section>
 <section data-case="sp" data-example="big"><h3>Big R2</h3><p>900 Ω out of 1000: R2 takes 90% of the voltage. The bigger resistor gets the bigger share.</p></section>
@@ -16,6 +17,7 @@
   <div class="eq">$$\sum I_\text{in}=\sum I_\text{out}$$</div>
   <div class="worked"><h4>Worked example</h4>10 V across 100, 200, 300 Ω: 100 + 50 + 33 = 183 mA from the source. Open branch 3: 150 mA — the other branches don't change at all.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking a new branch "steals" current from the others. With an ideal source each branch is independent; only the total changes.</div>
+  <div class="try"><h4>Try it</h4>Disconnect branch 3: its current goes to zero, and the others rearrange so the currents into the node still add to zero.</div>
 </section>
 <section data-case="kcl" data-example="open"><h3>Branch 3 open</h3><p>No dots in branch 3; total current drops by exactly its share.</p></section>
 <section data-case="thevenin">
@@ -26,6 +28,7 @@
   <div class="eq">$$V_\text{th}=V\frac{R_2}{R_1+R_2},\qquad R_\text{th}=R_1\parallel R_2,\qquad P_L\ \text{max when}\ R_L=R_\text{th}$$</div>
   <div class="worked"><h4>Worked example</h4>10 V, 100 Ω, 200 Ω: V_th = 6.67 V, R_th = 66.7 Ω. A 470 Ω load gets 5.84 V. Maximum power with 66.7 Ω: 3.33 V, 167 mW.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking maximum power means maximum efficiency: at the match only half the power reaches the load (aux plot).</div>
+  <div class="try"><h4>Try it</h4>Sweep the load and watch the power curve: it peaks exactly when the load equals R_th.</div>
 </section>
 <section data-case="thevenin" data-example="match"><h3>Matched load</h3><p>The dot sits at the top of the power curve.</p></section>
 <section data-case="super">
@@ -34,6 +37,7 @@
   <p>In a linear circuit, every voltage and current is a weighted sum of the sources. So you can solve with one source at a time and add the results. The third and fourth bars are always equal.</p>
   <div class="worked"><h4>Worked example</h4>V1 = 10 V alone: 5.45 V at the middle. V2 = 5 V alone: 1.36 V. Together: 6.82 V = 5.45 + 1.36.</div>
   <div class="pitfall"><h4>Common mistakes</h4>Removing a voltage source by leaving a gap: it must be replaced by a wire (0 V). Adding powers: power is not linear (it goes as V²).</div>
+  <div class="try"><h4>Try it</h4>Switch V2 off, then V1 off: the two partial currents add up to the current with both on.</div>
 </section>
 <section data-case="super" data-example="one"><h3>Only V1</h3><p>V2 is replaced by a wire: R2 now goes to ground, in parallel with R3.</p></section>
 <section data-case="super" data-example="two"><h3>Only V2</h3><p>Now R1 is in parallel with R3.</p></section>
@@ -44,6 +48,7 @@
   <div class="eq">$$\sum_\text{loop}\Delta V=0,\qquad \Delta V_R=IR$$</div>
   <div class="worked"><h4>Worked example</h4>10 V, R1 = 100, R2 = 200, R3 = 300, R4 = 150 Ω: R3 + R4 = 450 Ω in parallel with R2 gives 138 Ω; node 2 sits at 10·138/238 = 5.8 V; node 3 at 5.8·150/450 = 1.9 V.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking current "uses up" voltage in wires: in an ideal wire there is no slope at all.</div>
+  <div class="try"><h4>Try it</h4>Raise R1: its drop in the potential landscape gets longer and steeper, and the others shrink to share what is left.</div>
 </section>
 <section data-case="landscape" data-example="steep"><h3>Big R1</h3><p>R1 takes most of the drop: a long steep ramp, and everything after it sits low.</p></section>
 <section data-case="rlc">
@@ -54,6 +59,7 @@
   <ol class="steps"><li>ζ &lt; 1: complex poles, overshoot and ringing at about ω₀.</li><li>ζ = 1: critically damped, the fastest response with no overshoot.</li><li>ζ &gt; 1: two real poles, a slow creep.</li></ol>
   <div class="worked"><h4>Worked example</h4>L = 10 mH, C = 1 µF: ω₀ = 10 000 rad/s. Critical R = 2√(L/C) = 200 Ω. With 20 Ω, ζ = 0.1: overshoot ≈ 73%.</div>
   <div class="pitfall"><h4>Common mistake</h4>Reading "more R → more oscillation". It is the opposite: R damps.</div>
+  <div class="try"><h4>Try it</h4>Sweep R from small to large: ringing, then the fastest no-overshoot response at critical damping, then a slow crawl.</div>
 </section>
 <section data-case="rlc" data-example="under"><h3>ζ = 0.1</h3><p>Poles close to the imaginary axis: long ringing.</p></section>
 <section data-case="rlc" data-example="crit"><h3>ζ = 1</h3><p>The two poles meet on the real axis.</p></section>

@@ -26,6 +26,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>k = 2 mA/V², V_th = 1 V, V_GS = 2.5 V: V_ov = 1.5 V. At V_DS = 3 V (≥ 1.5): I_D = ½·2·1.5² = 2.25 mA. At V_DS = 0.5 V: I_D = 2(1.5·0.5 − 0.125) = 1.25 mA.</div>
   <div class="pitfall"><h4>Common mistake</h4>"Saturation" means opposite things for the two devices: for a MOSFET it is the flat, amplifying region; for a BJT it is the switched-on, collapsed region.</div>
+  <div class="try"><h4>Try it</h4>Keep V_GS above threshold and sweep V_DS from 0: the current first rises like a resistor, then flattens into a current source.</div>
 </section>
 <section data-case="mosfet" data-example="cutoff"><h3>Below threshold</h3><p>0.8 V on the gate, threshold 1 V: no channel, I_D = 0 whatever V_DS does.</p></section>
 <section data-case="mosfet" data-example="triode"><h3>Triode</h3><p>V_DS = 0.4 V is well below V_ov: the I–V is nearly a straight line through the origin, i.e. a resistor of about 1/(k V_ov).</p></section>
@@ -45,6 +46,7 @@
   <div class="worked"><h4>Worked example</h4>1 mA: BJT 1/0.02585 = 38.7 mS. MOSFET with k = 2 mA/V²: √(2·0.002·0.001) = 2 mS — nearly 20× less for the same current.</div>
   <p>At very small currents the square law gives way to "weak inversion", where the MOSFET becomes exponential too, with g_m ≈ I/(1.5 V_T): it approaches, but never beats, the BJT.</p>
   <div class="pitfall"><h4>Common mistake</h4>Concluding MOSFETs are worse. They draw no gate current, scale down beautifully and can be made huge (larger k) to catch up; every modern chip is CMOS.</div>
+  <div class="try"><h4>Try it</h4>Sweep the current from 10 µA to 20 mA: the BJT's gm keeps rising with I, the MOSFET's only with √I.</div>
 </section>
 <section data-case="gm" data-example="low"><h3>At 10 µA</h3><p>BJT 0.39 mS, MOSFET 0.20 mS: only a factor 2. At low currents a MOSFET's overdrive is small, and g_m = 2I/V_ov gets close to the BJT's I/V_T.</p></section>
 <section data-case="gm" data-example="high"><h3>At 20 mA</h3><p>BJT 774 mS, MOSFET 8.9 mS: almost 90×. The BJT keeps g_m/I = 38.7 V⁻¹; the MOSFET falls to √(2k/I) ≈ 0.45 V⁻¹.</p></section>
@@ -59,6 +61,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>V_B = 2 V, R_E = 1 kΩ: I_E ≈ 1.3 mA. V_CE = 12 − 1.3·(4.7 + 1) = 4.6 V. Warm by 50 K: V_BE drops 0.1 V, I_E rises only to 1.4 mA (+8%). Without R_E the same 0.1 V would multiply the current by e^{0.1/0.0259} ≈ 48.</div>
   <div class="pitfall"><h4>Common mistake</h4>Choosing R_C so large that V_CE falls below 0.2 V: the transistor saturates and the "amplifier" amplifies nothing.</div>
+  <div class="try"><h4>Try it</h4>Warm the transistor by 50 K with R_E at 0, then with R_E at 1 kΩ: with R_E the collector current barely moves.</div>
 </section>
 <section data-case="bias" data-example="hot"><h3>+50 K with R_E</h3><p>The current moves by a few percent: the blue curve stays near 1.</p></section>
 <section data-case="bias" data-example="nore"><h3>No emitter resistor</h3><p>Only V_BE holds the current, and V_BE drops 2 mV/K: the red curve shoots up. In a power stage this is thermal runaway.</p></section>
@@ -70,6 +73,7 @@
   <div class="eq">$$i \approx g_m\, v, \qquad \text{valid while } v \ll V_T\ (\text{BJT})\ \text{or}\ v \ll 2V_{ov}\ (\text{MOS})$$</div>
   <div class="worked"><h4>Worked example</h4>BJT at 1 mA, 10 mV peak: up-swing e^{10/25.85}−1 = +47%, down-swing −32%. The output is lopsided by about 20%. At 1 mV it is under 2%.</div>
   <div class="pitfall"><h4>Common mistake</h4>Applying the small-signal model to large signals. It predicts symmetric outputs that the real circuit never gives.</div>
+  <div class="try"><h4>Try it</h4>Raise the input amplitude from 1 mV to 40 mV: the output sine flattens on one side as the curve stops looking straight.</div>
 </section>
 <section data-case="small" data-example="tiny"><h3>1 mV</h3><p>Blue and dashed lie on top of each other: linear.</p></section>
 <section data-case="small" data-example="big"><h3>40 mV</h3><p>The upward half grows exponentially, the downward half is squashed: strong second harmonic.</p></section>
@@ -81,6 +85,7 @@
   <div class="eq">$$I_\text{ref}=\frac{V_{CC}-V_{BE}}{R},\qquad I_\text{out}\approx I_\text{ref}\,\frac{1+V_\text{out}/V_A}{1+V_{BE}/V_A}\cdot\frac{1}{1+2/\beta}$$</div>
   <div class="worked"><h4>Worked example</h4>5 V, 4.3 kΩ: I_ref ≈ 1 mA. With β = 150 the two base currents steal 1.3%. At V_out = 2.5 V the Early effect adds about 3.6%.</div>
   <div class="pitfall"><h4>Common mistake</h4>Assuming any two transistors match. Discrete parts differ by several mV in V_BE: 18 mV doubles the current. Mirrors work on chips, where neighbours are near-identical.</div>
+  <div class="try"><h4>Try it</h4>Add a few millivolts of V_BE mismatch, then lower β: both pull the output current away from the reference.</div>
 </section>
 <section data-case="mirror" data-example="mismatch"><h3>5 mV mismatch</h3><p>e^{5/25.85} = 1.21: a 21% error from a tiny offset.</p></section>
 <section data-case="mirror" data-example="lowbeta"><h3>β = 20</h3><p>The two base currents (2I/β) come out of I_ref: the copy is 9% short.</p></section>

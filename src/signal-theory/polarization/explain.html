@@ -9,6 +9,7 @@
     <li>Anything else: a flattened helix (elliptical).</li>
   </ol>
   <div class="pitfall"><h4>Common mistake</h4>Thinking a circularly polarized wave "spins" as it travels in some extra way. At a fixed point the field rotates in time; at a fixed time it forms a helix in space — the same thing seen two ways.</div>
+  <div class="try"><h4>Try it</h4>Set equal amplitudes and change δ: 0° gives a line, ±90° a circle, anything between an ellipse.</div>
 </section>
 <section data-case="wave3d" data-example="linear"><h3>Linear</h3><p>δ = 0: all arrows lie in one tilted plane.</p></section>
 <section data-case="wave3d" data-example="right"><h3>Right-hand circular</h3><p>δ = −90°: a helix; looking at the oncoming wave the field turns clockwise.</p></section>
@@ -21,6 +22,7 @@
   <p>Eliminating time from the two components leaves an ellipse: this is what the tip of E draws at one point in space, once per period. Its shape depends only on Ay/Ax and δ.</p>
   <div class="worked"><h4>Worked example</h4>Ax = 1, Ay = 0.6, δ = 45°: an ellipse tilted by 26.5°, with axis ratio b/a = 0.35. Change δ to 0: it collapses to a line at atan 0.6 = 31°.</div>
   <div class="pitfall"><h4>Common mistake</h4>Reading the handedness from the ellipse alone: the same shape is traced either way; only the sign of δ says which.</div>
+  <div class="try"><h4>Try it</h4>Keep δ = 90° and make the amplitudes unequal: an upright ellipse. Change δ and it tilts.</div>
 </section>
 <section data-case="ellipse" data-example="tilt"><h3>Linear, tilted</h3><p>δ = 0: a line at atan(Ay/Ax) = 26.6°.</p></section>
 <section data-case="ellipse" data-example="axes"><h3>Upright ellipse</h3><p>δ = 90° with unequal amplitudes: the axes of the ellipse are x and y themselves.</p></section>
@@ -30,6 +32,7 @@
   <div class="eq">$$\tan 2\psi = \frac{2A_xA_y\cos\delta}{A_x^2 - A_y^2}, \qquad \sin 2\chi = \frac{2A_xA_y\sin\delta}{A_x^2 + A_y^2}$$</div>
   <div class="worked"><h4>Worked example</h4>χ = 0: linear. χ = ±45°: circular. Ax = 1, Ay = 0.7, δ = 60°: ψ ≈ 27°, χ ≈ 27°.</div>
   <div class="pitfall"><h4>Common mistake</h4>Trusting ψ near circular states: when Ax = Ay and δ crosses ±90°, the major and minor axes swap and ψ jumps by 90° — the ellipse barely changes.</div>
+  <div class="try"><h4>Try it</h4>With equal amplitudes, sweep δ through 0: the orientation ψ jumps by 90° as the ellipse passes through a circle.</div>
 </section>
 <section data-case="orient" data-example="swap"><h3>ψ jumps</h3><p>Equal amplitudes: near δ = 90° the ellipse is almost a circle and its "major axis" is ill-defined.</p></section>
 <section data-case="jones">
@@ -44,6 +47,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>Horizontal light through a polarizer at 60°: cos² 60° = 25 % gets through. Through a half-wave plate at 20°: still 100 %, now linear at 40°.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking a wave plate absorbs anything. It only shifts phase between two axes.</div>
+  <div class="try"><h4>Try it</h4>Choose the polarizer and turn its axis: the transmitted power follows cos²θ (Malus). Then use a quarter-wave plate at 45° to make circular light.</div>
 </section>
 <section data-case="jones" data-example="malus"><h3>Malus' law</h3><p>At 60° the polarizer passes cos²60° = 25 % of the power, now polarized along its axis.</p></section>
 <section data-case="jones" data-example="qwp"><h3>Quarter-wave at 45°</h3><p>The input splits equally between the fast and slow axes; a 90° delay between them makes a circle.</p></section>
@@ -55,6 +59,7 @@
   <p>The Stokes parameters are intensities that a detector with a few filters can measure. Normalised by S₀ they place every fully polarized state on a unit sphere at longitude 2ψ and latitude 2χ: the equator holds the linear states, the poles the two circular ones. Partially polarized light sits inside, at a radius equal to its degree of polarization.</p>
   <div class="worked"><h4>Worked example</h4>Horizontal: (1, 0, 0). Vertical: (−1, 0, 0) — opposite points are orthogonal states. Right circular: a pole. Sunlight: the centre.</div>
   <div class="pitfall"><h4>Common mistake</h4>Using a Jones vector for partially polarized light: it cannot represent it. Stokes can.</div>
+  <div class="try"><h4>Try it</h4>Lower the degree of polarization: the point moves inside the sphere. Make the light circular: it sits on a pole.</div>
 </section>
 <section data-case="poincare" data-example="partial"><h3>Partially polarized</h3><p>Degree 0.5: the dot is halfway to the centre.</p></section>
 <section data-case="poincare" data-example="pole"><h3>Circular</h3><p>Ax = Ay, δ = 90°: S₁ = S₂ = 0, S₃ = S₀ — a pole.</p></section>
@@ -64,6 +69,7 @@
   <p>Two counter-rotating vectors of equal length sum to a vector that only grows and shrinks along a fixed line: linear polarization. A phase difference φ between them rotates that line by φ/2. With unequal lengths the sum opens into an ellipse.</p>
   <div class="eq">$$\tan\chi = \frac{a_L - a_R}{a_L + a_R}, \qquad \psi = \varphi/2$$</div>
   <div class="worked"><h4>Worked example</h4>Sugar solutions delay one circular component relative to the other: the plane of linear light rotates as it passes (optical activity). A magnetic field does the same in glass (Faraday rotation).</div>
+  <div class="try"><h4>Try it</h4>Change the phase φ between the two circular waves: the resulting line turns by φ/2.</div>
 </section>
 <section data-case="circular" data-example="rotate"><h3>φ = 120°</h3><p>The resulting line is at 60°.</p></section>
 <section data-case="circular" data-example="ellipse"><h3>Unequal circles</h3><p>0.7 and 0.3: the sum traces an ellipse with axis ratio 0.4/1.0.</p></section>

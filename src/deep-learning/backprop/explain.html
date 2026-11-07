@@ -6,6 +6,7 @@
   <ol class="steps"><li>Forward: compute and store every z and h.</li><li>Output error: δ = p − y (sigmoid with cross-entropy).</li><li>Backward: δ of each hidden unit = δ above × weight × local slope.</li><li>Gradient of a weight = δ of the unit it enters × value it carries.</li><li>Update: w ← w − η ∂L/∂w.</li></ol>
   <div class="worked"><h4>Worked example</h4>p = 0.6, y = 1: δ_out = −0.4. With v₁ = 0.7 and h₁ = 0.5: δ₁ = −0.4 · 0.7 · 0.75 = −0.21. With x₁ = 1: ∂L/∂w₁₁ = −0.21, so w₁₁ grows by 0.21η.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking backprop is a different learning rule. It is only an efficient way to compute the gradient; gradient descent does the learning.</div>
+  <div class="try"><h4>Try it</h4>Set x₁ to 0: the weights it feeds get zero gradient and stop moving. Switch the target from 1 to 0 and watch every gradient change sign.</div>
 </section>
 <section data-case="backprop" data-example="leap"><h3>η = 2.5</h3><p>Same gradients, bigger steps: p jumps towards the target in one or two steps.</p></section>
 <section data-case="backprop" data-example="zero"><h3>x₁ = 0</h3><p>The gradient of a weight is δ × the value it carries: a zero input leaves its weights untouched.</p></section>
@@ -17,6 +18,7 @@
   <div class="eq">$$\mathbf g_B=\frac1B\sum_{i\in\text{batch}}\nabla L_i,\qquad \mathbb E[\mathbf g_B]=\nabla L,\qquad \operatorname{sd}(\mathbf g_B)\propto\frac1{\sqrt B}$$</div>
   <div class="worked"><h4>Worked example</h4>1 000 000 examples, B = 100: 10 000 cheap steps in the time of one full-gradient step, each about 10 times noisier than with B = 10 000.</div>
   <div class="pitfall"><h4>Common mistake</h4>Treating the noise as pure harm. A little noise helps escape flat regions and sharp minima; that is part of why SGD trains deep networks well.</div>
+  <div class="try"><h4>Try it</h4>Set the batch size to 1: the path wobbles from step to step. Raise it to 80: the walk becomes smooth but each step costs the whole data set.</div>
 </section>
 <section data-case="minibatch" data-example="one"><h3>B = 1</h3><p>Every step follows one point: a zig-zag around the green path, but it gets there.</p></section>
 <section data-case="minibatch" data-example="all"><h3>B = 80</h3><p>All the points (drawn with replacement): almost the green path.</p></section>

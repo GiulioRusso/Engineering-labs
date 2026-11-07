@@ -22,6 +22,7 @@
   <div class="eq">$$A_{cl}=\frac{A}{1+A\beta},\qquad \frac{A_{cl}-1/\beta}{1/\beta}=-\frac1{1+A\beta}$$</div>
   <div class="worked"><h4>Worked example</h4>Ideal gain 11 (β = 1/11). A = 10³: error −1.09%. A = 10⁴: −0.11%. A = 10⁵: −0.011%. Each decade of A buys a decade of precision.</div>
   <div class="pitfall"><h4>Common mistake</h4>Forgetting that A falls with frequency (next case): an op-amp with 100 dB at DC may have only 20 dB at 100 kHz, and then the error is 10%.</div>
+  <div class="try"><h4>Try it</h4>Lower the open-loop gain from 120 to 40 dB with a large ideal gain: the closed-loop gain falls short of 1 + R2/R1.</div>
 </section>
 <section data-case="finite" data-example="weak"><h3>A = 40 dB</h3><p>A = 100, Aβ ≈ 9: the gain is 9% low.</p></section>
 <section data-case="finite" data-example="strong"><h3>A = 100 dB</h3><p>Loop gain 9000: the error is about 0.01%. The resistors' tolerance now matters more than the op-amp.</p></section>
@@ -33,6 +34,7 @@
   <div class="eq">$$f_{-3\text{dB}}=\frac{\text{GBW}}{G},\qquad \text{slew-free if } 2\pi f V_\text{out}\le SR,\qquad f_\text{FPBW}=\frac{SR}{2\pi V_\text{out}}$$</div>
   <div class="worked"><h4>Worked example</h4>GBW 1 MHz, G = 10: bandwidth 100 kHz. A 10 V-peak output at 30 kHz needs 2π·30k·10 = 1.9 V/µs; with SR = 0.5 V/µs it is slew-limited even though 30 kHz is well inside the bandwidth.</div>
   <div class="pitfall"><h4>Common mistake</h4>Checking only one limit. Small fast signals hit the bandwidth; big fast signals hit the slew rate first.</div>
+  <div class="try"><h4>Try it</h4>Raise the frequency until the output shrinks (bandwidth), then raise the amplitude instead until the output becomes a triangle (slew rate).</div>
 </section>
 <section data-case="speed" data-example="bw"><h3>Above the bandwidth</h3><p>200 kHz at gain 10 with 1 MHz GBW: the output is reduced and lags, but keeps its sine shape.</p></section>
 <section data-case="speed" data-example="slew"><h3>Slew-limited</h3><p>The output ramps at the maximum rate and turns into a triangle wave, smaller than it should be.</p></section>
@@ -43,6 +45,7 @@
   <div class="eq">$$V_\text{out,err}=V_{os}\left(1+\frac{R_2}{R_1}\right)+I_B R_2$$</div>
   <div class="worked"><h4>Worked example</h4>V_os = 2 mV, gain 101: 202 mV. I_B = 100 nA through R2 = 100 kΩ: 10 mV. Total 212 mV out of nothing. Adding R1‖R2 in the + input makes both bias currents see the same resistance: only their difference (I_os ≈ 10 nA) remains, 1 mV.</div>
   <div class="pitfall"><h4>Common mistake</h4>Measuring a microvolt sensor with a high-gain stage and an ordinary op-amp: the offset swamps the signal. Use precision (low V_os) or chopper op-amps, or AC coupling.</div>
+  <div class="try"><h4>Try it</h4>Raise the noise gain to 1000 with a few millivolts of offset: the output sits volts away from zero. Tick the compensating resistor and watch the bias-current part vanish.</div>
 </section>
 <section data-case="dc" data-example="comp"><h3>Compensated</h3><p>The bias-current bar shrinks tenfold; the offset bar is unchanged.</p></section>
 <section data-case="dc" data-example="g1000"><h3>Gain 1000</h3><p>2 mV × 1000 = 2 V of pure error.</p></section>
@@ -53,6 +56,7 @@
   <div class="eq">$$\text{PM}=180°+\angle A\beta\big|_{|A\beta|=1}\qquad \text{PM}\gtrsim 60° \Rightarrow \text{little overshoot}$$</div>
   <div class="worked"><h4>Worked example</h4>First pole 10 Hz (GBW 1 MHz), second pole 2 MHz, follower (β = 1): the loop crosses 0 dB near 0.8 MHz with about 66° margin. Move the second pole to 0.3 MHz: margin about 30°, the step overshoots by ~40%.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking the follower is the "easiest" configuration. With β = 1 it has the most loop gain and the least margin; many fast op-amps are unstable as followers.</div>
+  <div class="try"><h4>Try it</h4>Lower the second pole toward the gain–bandwidth: the step response starts to ring. Raise the closed-loop gain and it calms down.</div>
 </section>
 <section data-case="stability" data-example="ring"><h3>Ringing</h3><p>Second pole close to the crossover: the step overshoots and rings before settling.</p></section>
 <section data-case="stability" data-example="gain10"><h3>Gain 10</h3><p>β = 0.1 lowers the loop gain by 20 dB: the crossover moves below the second pole and the margin returns.</p></section>
@@ -64,6 +68,7 @@
   <ol class="steps"><li>Choose f₀ = 1/(2πRC) — your corner.</li><li>Choose Q: 0.5 (no overshoot), 0.707 (Butterworth, flattest), larger for a peak.</li><li>Set K = 3 − 1/Q with two resistors around the op-amp.</li></ol>
   <div class="worked"><h4>Worked example</h4>R = 10 kΩ, C = 10 nF: f₀ = 1.59 kHz. K = 1.586: Q = 0.707, exactly −3 dB at f₀. K = 2.5: Q = 2, a +6 dB peak. K = 3: poles on the jω axis — an oscillator.</div>
   <div class="pitfall"><h4>Common mistake</h4>Pushing Q high with this circuit: Q depends on K through 3 − K, so 1% gain error gives a big Q error near K = 3.</div>
+  <div class="try"><h4>Try it</h4>Raise K from 1 toward 3: the response grows a peak at the cut-off. Past about 2.9 it is close to oscillating.</div>
 </section>
 <section data-case="sallen" data-example="bessel"><h3>K = 1</h3><p>A plain follower: Q = 0.5, two real poles, the gentlest response and no overshoot.</p></section>
 <section data-case="sallen" data-example="peak"><h3>K = 2.5</h3><p>The poles move close to the imaginary axis: a resonant peak, and a ringing step response.</p></section>

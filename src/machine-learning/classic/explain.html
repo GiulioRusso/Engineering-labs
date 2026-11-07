@@ -6,6 +6,7 @@
   <ol class="steps"><li>Measure the distance from the query to every training point.</li><li>Keep the k smallest.</li><li>The majority class wins.</li></ol>
   <div class="worked"><h4>Worked example</h4>k = 5, neighbours: 3 yellow and 2 blue → class 1, with p̂ = 0.6.</div>
   <div class="pitfall"><h4>Common mistakes</h4>Judging k on the training points: k = 1 is always 100% right there, because every point is its own nearest neighbour. And forgetting to scale the inputs: a feature in metres and one in millimetres do not weigh the same in a distance.</div>
+  <div class="try"><h4>Try it</h4>Sweep k from 1 to 51: the border goes from islands around every point to a smooth curve. Move the query onto the border and watch the vote split.</div>
 </section>
 <section data-case="knn" data-example="one"><h3>k = 1</h3><p>Islands around every noisy point: perfect on training data, worse on new data. Overfitting.</p></section>
 <section data-case="knn" data-example="many"><h3>k = 41</h3><p>The vote spans a wide area: the border is smooth and ignores single noisy points. Push k much higher and the tips of the moons get outvoted by the other class: underfitting.</p></section>
@@ -17,6 +18,7 @@
   <div class="eq">$$\text{Gini}=2p(1-p),\qquad \text{split}=\arg\min\;\frac{n_L\,\text{Gini}_L+n_R\,\text{Gini}_R}{n}$$</div>
   <div class="worked"><h4>Worked example</h4>A node with 10 points, 5 of each class: Gini = 0.5. A split into (5 blue, 1 yellow) and (0 blue, 4 yellow) gives (6·0.28 + 4·0)/10 = 0.17: a large drop, a good question.</div>
   <div class="pitfall"><h4>Common mistake</h4>Growing the tree until every leaf is pure. It then has a box for every noisy point. Limit the depth, or average many trees (a random forest).</div>
+  <div class="try"><h4>Try it</h4>Raise the maximum depth from 1 to 10: the boxes get smaller and start to wrap single noisy points.</div>
 </section>
 <section data-case="tree" data-example="stump"><h3>A stump</h3><p>One question, two boxes: easy to read, but far too simple for the moons.</p></section>
 <section data-case="tree" data-example="deep"><h3>Depth 10</h3><p>Training accuracy reaches 100%; accuracy on new data drops. The tiny boxes are memorized noise.</p></section>
@@ -29,6 +31,7 @@
   <div class="eq">$$J=\sum_i\big\|\mathbf x_i-\boldsymbol\mu_{c(i)}\big\|^2\quad\text{never increases}$$</div>
   <div class="worked"><h4>Choosing k</h4>J always falls when k grows (k = number of points gives J = 0). Look for the elbow: the k after which adding a cluster gains little.</div>
   <div class="pitfall"><h4>Common mistake</h4>Trusting one run. The result depends on where the centres start; run it several times and keep the lowest J.</div>
+  <div class="try"><h4>Try it</h4>Change the random start: some starts put two centres in one cluster. Set k higher than the real number of groups and see clusters being split.</div>
 </section>
 <section data-case="kmeans" data-example="badstart"><h3>Unlucky start</h3><p>Two centres start in the same group: they split it, and two real groups are merged. A local minimum.</p></section>
 <section data-case="kmeans" data-example="uneven"><h3>Uneven clusters</h3><p>The border sits halfway between the centres, so the big cluster loses points to the small one.</p></section>
@@ -41,6 +44,7 @@
   <ol class="steps"><li>Centre the data.</li><li>Compute the covariance matrix.</li><li>Its eigenvectors are the principal directions, its eigenvalues the variances along them.</li></ol>
   <div class="worked"><h4>Two views of the same thing</h4>At every θ, variance along + left over = total. So the direction with the largest variance is also the one with the smallest error after squashing to 1D.</div>
   <div class="pitfall"><h4>Common mistake</h4>Running PCA on features with different units without standardizing: the feature with the largest numbers wins regardless of its meaning.</div>
+  <div class="try"><h4>Try it</h4>Rotate the cloud and change width/length: the first component follows the long direction, and its share of the variance grows as the cloud thins.</div>
 </section>
 <section data-case="pca" data-example="thin"><h3>Almost a line</h3><p>PC1 keeps over 99% of the variance: one number per point describes it.</p></section>
 <section data-case="pca" data-example="round"><h3>A round cloud</h3><p>The variance is the same in every direction: the blue curve is flat and PC1 is arbitrary.</p></section>

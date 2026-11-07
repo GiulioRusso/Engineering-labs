@@ -13,6 +13,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>diag(1.8, 0.6, 1.2): the cube becomes a box 1.8 × 0.6 × 1.2, volume det = 1.296.</div>
   <div class="pitfall"><h4>Common mistake</h4>Reading the rows as the images of the axes: it is the columns.</div>
+  <div class="try"><h4>Try it</h4>Change a₁₁ alone: the shape stretches along x only. Set a negative value: it flips too.</div>
 </section>
 <section data-case="stretch" data-example="identity"><h3>Identity</h3><p>\(I\) leaves every point where it is: \(\det I = 1\), every vector is an eigenvector with \(\lambda = 1\).</p></section>
 <section data-case="stretch" data-example="uniform"><h3>Uniform scale</h3><p>Every direction is stretched by 1.5, so every vector is an eigenvector. The volume grows by \(1.5^3 = 3.375\).</p></section>
@@ -24,6 +25,7 @@
   <div class="eq">$$R_z(\theta) = \begin{pmatrix}\cos\theta & -\sin\theta & 0\\ \sin\theta & \cos\theta & 0 \\ 0&0&1\end{pmatrix}, \qquad R^{-1} = R^{T}$$</div>
   <div class="worked"><h4>Worked example</h4>90°: (1, 0, 0) → (0, 1, 0), (0, 1, 0) → (−1, 0, 0). Two 90° turns: 180°, the matrix diag(−1, −1, 1).</div>
   <div class="pitfall"><h4>Common mistake</h4>Composing rotations in the wrong order: in 3D, AB ≠ BA.</div>
+  <div class="try"><h4>Try it</h4>Start from the 90° example and change one entry a little: the cube no longer just turns, it deforms too. A rotation needs its columns to stay unit length and at right angles, and then its determinant is 1.</div>
 </section>
 <section data-case="rotation" data-example="r90"><h3>A quarter turn</h3><p>\(x\) goes to \(y\), \(y\) to \(-x\). Two of the eigenvalues are complex, \(\pm i\).</p></section>
 <section data-case="rotation" data-example="r180"><h3>A half turn</h3><p>Now every vector in the \(xy\) plane is flipped: eigenvalue \(-1\), twice. Still \(\det = 1\): turning is not mirroring.</p></section>
@@ -33,6 +35,7 @@
   <p>A shear slides layers parallel to each other, by an amount proportional to their height. Volumes stay the same (det = 1) but angles change. Only one direction is left unchanged.</p>
   <div class="eq">$$\begin{pmatrix}1 & s & 0\\0&1&0\\0&0&1\end{pmatrix}: \; (x, y, z) \mapsto (x + sy,\ y,\ z)$$</div>
   <div class="worked"><h4>Worked example</h4>s = 1: the top-front edge moves one unit sideways; the box becomes a parallelepiped with the same volume.</div>
+  <div class="try"><h4>Try it</h4>Raise one off-diagonal entry: the cube leans over, but its volume (the determinant) does not change.</div>
 </section>
 <section data-case="shear" data-example="small"><h3>Gentle shear</h3><p>The top of the cube moves 0.4 along \(x\). The \(x\) axis is the only eigenvector.</p></section>
 <section data-case="shear" data-example="two"><h3>Along z</h3><p>Higher layers slide diagonally; the floor stays fixed.</p></section>
@@ -42,6 +45,7 @@
   <p>A reflection flips one direction and keeps the others: det = −1 — the cube's orientation is reversed (a right hand becomes a left hand). Reflecting twice gives back the identity.</p>
   <div class="eq">$$\text{diag}(-1, 1, 1): x \mapsto -x, \qquad \det = -1, \qquad A^2 = I$$</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing −I (through the origin) with a mirror: in 3D, −I has det −1 but is a point inversion.</div>
+  <div class="try"><h4>Try it</h4>Make one diagonal entry −1: the cube is mirrored and the determinant changes sign.</div>
 </section>
 <section data-case="reflection" data-example="floor"><h3>Mirror in the floor</h3><p>\(z \to -z\): the cube hangs below the floor.</p></section>
 <section data-case="reflection" data-example="point"><h3>Through the origin</h3><p>\(-I\) flips all three axes: \(\det = (-1)^3 = -1\).</p></section>
@@ -52,6 +56,7 @@
   <div class="eq">$$P^2 = P, \qquad \det P = 0$$</div>
   <div class="worked"><h4>Worked example</h4>Straight onto the floor: (x, y, z) → (x, y, 0), rank 2. Projecting twice is the same as once.</div>
   <div class="pitfall"><h4>Common mistake</h4>Trying to solve Ax = b when det A = 0: there are either no solutions or infinitely many.</div>
+  <div class="try"><h4>Try it</h4>Set the third row to zero: everything lands on the floor and the volume collapses to 0, so there is no way back.</div>
 </section>
 <section data-case="projection" data-example="floor"><h3>Straight down</h3><p>Every point drops to \(z = 0\): the shadow at noon.</p></section>
 <section data-case="projection" data-example="line"><h3>Onto a line</h3><p>Only one column is left: the whole space lands on the \(x\) axis. The rank (dimension of the image) is 1.</p></section>

@@ -9,6 +9,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>a = (1.6, 0.3), b = (0.6, 1.4): a·b = 0.96 + 0.42 = 1.38; |a| = 1.63, |b| = 1.52; cos θ = 0.557, θ = 56°.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting a vector: the dot product is a number.</div>
+  <div class="try"><h4>Try it</h4>Turn b around a: the dot product is largest when they agree, zero at 90°, negative past it.</div>
 </section>
 <section data-case="dot" data-example="perp"><h3>Perpendicular</h3><p>\(\theta = 90°\), \(\cos\theta = 0\): \(\mathbf b\) casts no shadow on \(\mathbf a\), so \(\mathbf a\cdot\mathbf b = 0\). This is the test for perpendicular vectors.</p></section>
 <section data-case="dot" data-example="same"><h3>Same direction</h3><p>\(\theta = 0\), \(\cos\theta = 1\): the dot product is as large as it can be, \(|\mathbf a||\mathbf b|\).</p></section>
@@ -22,6 +23,7 @@
   <div class="eq">$$|\mathbf a\times\mathbf b| = |\mathbf a||\mathbf b|\sin\theta, \qquad \mathbf a\times\mathbf b = -\,\mathbf b\times\mathbf a, \qquad \hat x\times\hat y = \hat z$$</div>
   <div class="worked"><h4>Worked example</h4>a = (1.5, 0, 0), b = (0.6, 1.4, 0): a × b = (0, 0, 2.1), the area of the parallelogram.</div>
   <div class="pitfall"><h4>Common mistake</h4>Swapping the order: it flips the direction.</div>
+  <div class="try"><h4>Try it</h4>Turn b toward a: the cross product shrinks to zero when they are parallel. Swap them and it points the other way.</div>
 </section>
 <section data-case="cross" data-example="axes"><h3>The axes</h3><p>Unit vectors along \(x\) and \(y\): the square they span has area 1 and the cross product is the unit vector along \(z\).</p></section>
 <section data-case="cross" data-example="perp"><h3>At 90°</h3><p>\(\sin\theta = 1\): the parallelogram is a rectangle, the area is largest.</p></section>
@@ -35,6 +37,7 @@
   <div class="eq">$$\mathbf g(\mathbf r) = -\sum_i \frac{G m_i}{|\mathbf r - \mathbf r_i|^2}\,\hat{\mathbf r}_i$$</div>
   <div class="worked"><h4>Worked example</h4>Equal masses: the null point is exactly midway. With masses 10:1 it sits much closer to the small one (distances in ratio √10 ≈ 3.2:1) — like the Earth–Moon L1 point.</div>
   <div class="pitfall"><h4>Common mistake</h4>Adding the strengths instead of the vectors.</div>
+  <div class="try"><h4>Try it</h4>Make one mass much larger: the null point, where the two pulls cancel, moves toward the smaller mass.</div>
 </section>
 <section data-case="gravity" data-example="equal"><h3>Equal masses</h3><p>Midway between them the two pulls are equal and opposite: \(\mathbf g = 0\). A body placed there stays (but any nudge sends it to one side).</p></section>
 <section data-case="gravity" data-example="unequal"><h3>Unequal masses</h3><p>The point where the pulls cancel moves towards the small mass: \(M_1/r_1^2 = M_2/r_2^2\).</p></section>
@@ -47,6 +50,7 @@
   <div class="eq">$$\nabla\cdot\mathbf F = \frac{\partial F_x}{\partial x} + \frac{\partial F_y}{\partial y}$$</div>
   <div class="worked"><h4>Worked example</h4>F = (x, y) (pointing outward, growing with distance): div F = 2 everywhere. The vortex (−y, x): div = 0 — it only circulates.</div>
   <div class="pitfall"><h4>Common mistake</h4>Thinking arrows that point outward always mean div > 0: they also have to grow along the way.</div>
+  <div class="try"><h4>Try it</h4>Switch from the source to the vortex: the arrows still move, but nothing piles up, and the divergence is zero everywhere.</div>
 </section>
 <section data-case="div" data-example="sink"><h3>A sink</h3><p>\(\mathbf F = -(x, y)\): everything flows inwards, \(\nabla\cdot\mathbf F = -2\) everywhere.</p></section>
 <section data-case="div" data-example="vortex"><h3>A vortex</h3><p>\(\mathbf F = (-y, x)\) only goes round: as much flows in as out of any circle, so the divergence is 0.</p></section>
@@ -59,6 +63,7 @@
   <div class="eq">$$(\nabla\times\mathbf F)_z = \frac{\partial F_y}{\partial x} - \frac{\partial F_x}{\partial y}$$</div>
   <div class="worked"><h4>Worked example</h4>F = (−y, x): curl = 1 + 1 = 2 everywhere. F = (y, 0) (shear): curl = −1, though every arrow is horizontal.</div>
   <div class="pitfall"><h4>Common mistake</h4>Judging curl by whether the arrows go round in circles.</div>
+  <div class="try"><h4>Try it</h4>Choose the shear: the arrows are all parallel, yet a small paddle wheel would spin. Curl measures that spin.</div>
 </section>
 <section data-case="curl" data-example="source"><h3>A source</h3><p>Straight out from the centre: nothing goes round, the curl is 0.</p></section>
 <section data-case="curl" data-example="shear"><h3>Shear</h3><p>\(\mathbf F = (y, 0)\): all streamlines are straight, yet the top moves faster than the bottom, so a paddle wheel turns. Curl \(= -1\).</p></section>

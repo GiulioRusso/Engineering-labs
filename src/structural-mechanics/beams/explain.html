@@ -21,6 +21,7 @@
   <div class="eq">$$M(0)=-P\,a,\qquad \delta_{\text{tip}}=\frac{PL^3}{3EI}\ (\text{tip load}),\qquad \delta_{\text{tip}}=\frac{wL^4}{8EI}\ (\text{uniform})$$</div>
   <div class="worked"><h4>Worked example</h4>P = 10 kN at the tip of a 4 m cantilever, EI = 13.3 MN·m²: δ = 10⁴·64/(3·1.33·10⁷) = 16 mm, sixteen times the simply supported beam with the same load.</div>
   <div class="pitfall"><h4>Common mistake</h4>Putting the largest moment at the load. In a cantilever it is always at the wall, where the whole load has the longest lever arm.</div>
+  <div class="try"><h4>Try it</h4>Move the point load from the tip toward the wall: the tip deflection falls fast, yet the tip still moves, because the beam beyond the load stays straight but tilted.</div>
 </section>
 <section data-case="cantilever" data-example="mid"><h3>Load halfway</h3><p>The beam beyond the load carries no moment and stays straight, but it is tilted, so the tip still moves: 5PL³/(48EI).</p></section>
 <section data-case="cantilever" data-example="udl"><h3>Uniform load</h3><p>The moment at the wall is wL²/2, and the tip drops by wL⁴/(8EI).</p></section>
@@ -31,6 +32,7 @@
   <div class="eq">$$\sigma(y)=-\frac{M\,y}{I},\qquad I=\int y^2\,dA,\qquad I_{\text{rect}}=\frac{bh^3}{12}$$</div>
   <div class="worked"><h4>Worked example</h4>An I-beam 100 × 200 mm with 12 mm flanges and an 8 mm web: A = 38.1 cm², I = 2490 cm⁴. A solid rectangle with the same area and depth has I = 1270 cm⁴, so the I-beam is almost twice as stiff for the same steel.</div>
   <div class="pitfall"><h4>Common mistake</h4>Making the flanges thicker instead of the beam deeper. I grows as h³: depth is the cheapest stiffness there is, until the web gets thin enough to buckle.</div>
+  <div class="try"><h4>Try it</h4>Double the depth h of the I-beam: the bending stress roughly halves and the stiffness grows more than 4×, for little more steel.</div>
 </section>
 <section data-case="section" data-example="rect"><h3>Solid rectangle</h3><p>Same area, same depth, but much of the steel sits near the axis where it does little: smaller I, higher stress.</p></section>
 <section data-case="section" data-example="deep"><h3>Twice as deep</h3><p>h from 200 to 400 mm adds only web: 1.4 times the steel, about 5 times the second moment.</p></section>

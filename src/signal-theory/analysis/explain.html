@@ -51,6 +51,7 @@
   <p>I and Q are the coordinates of a rotating arrow. Its length is the amplitude, its angle the phase, and how fast it turns is the frequency. A chirp turns faster and faster: its phase is a parabola, its frequency a straight line.</p>
   <div class="worked"><h4>Worked example</h4>Here fᵢ = −40 + 800t Hz: at 50 ms the arrow is momentarily still (fᵢ = 0), at 150 ms it turns at 80 Hz.</div>
   <div class="pitfall"><h4>Common mistakes</h4>Forgetting to unwrap: atan2 jumps from +π to −π every turn, and a naive derivative gives huge spikes. Trusting the phase where the amplitude is tiny: there noise rotates it at random.</div>
+  <div class="try"><h4>Try it</h4>Add noise: the amplitude stays readable, but the phase and above all the frequency, a derivative, get much noisier.</div>
 </section>
 <section data-case="iq" data-example="noisy"><h3>With noise</h3><p>The amplitude barely changes, but the instantaneous frequency becomes jumpy at the pulse's edges where the arrow is short.</p></section>
 <section data-case="crlb">
@@ -75,6 +76,7 @@
   <div class="eq">$$\hat p(x) = \frac{1}{Nh}\sum_i K\!\left(\frac{x - x_i}{h}\right)$$</div>
   <div class="worked"><h4>Worked example</h4>Levels 0.2, 1.0, 0.6 and 1.0 again: the derivative finds four flat stretches, the density only three peaks — the two 1.0 plateaus merge, as they should.</div>
   <div class="pitfall"><h4>Common mistake</h4>Choosing h too small: noise makes many little peaks. Too large: neighbouring levels merge. h should be comparable to the noise level.</div>
+  <div class="try"><h4>Try it</h4>Raise the noise and lower the smoothing window: false plateaus appear. Widen the window or the KDE bandwidth to remove them.</div>
 </section>
 <section data-case="plateau" data-example="noisy"><h3>More noise</h3><p>A wider smoothing window keeps the derivative usable; edges of plateaus become less sharp.</p></section>
 <section data-case="plateau" data-example="narrow"><h3>A narrow kernel</h3><p>h = 0.015: the density becomes spiky and false levels appear.</p></section>
