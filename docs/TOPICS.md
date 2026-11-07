@@ -165,6 +165,11 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Bode diagram](web/control-systems.html?lab=bode) | Magnitude and phase against frequency; corners, slopes and asymptotes. | done |
 | [Nyquist and stability margins](web/control-systems.html?lab=nyquist) | The frequency response as a curve around −1: gain and phase margins. | done |
 | [Lead and lag compensation](web/control-systems.html?lab=lead-lag) | Add a lead or lag network to the loop: the margins and the step response move. | done |
+| [State space and eigenvalues](web/control-systems.html?lab=state-space) | Position and velocity as one state: the phase plane, its arrow field, and the eigenvalues of A as the poles. | done |
+| [Pole placement](web/control-systems.html?lab=pole-placement) | Feed back the whole state and put the closed-loop poles anywhere, at a price in force. | done |
+| [Observers and the Kalman filter](web/control-systems.html?lab=observers) | Estimating the velocity you cannot measure from a noisy position: observer speed against noise. | done |
+| [Sampling and the z-plane](web/control-systems.html?lab=z-plane) | z = e^{sT}: where sampling sends the poles, and when the samples stop telling the truth. | done |
+| [A controller in a computer](web/control-systems.html?lab=digital-controller) | The same PD loop computed every T seconds: the hold adds delay, and too slow a sample rate destabilises it. | done |
 
 ## Digital electronics
 
@@ -211,6 +216,9 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Range resolution](web/electronic-warfare.html?lab=range-resolution) | Two aircraft, two echoes: when they overlap the radar sees one target. | done |
 | [Pulse trains and RTI](web/electronic-warfare.html?lab=pulse-train) | A moving target draws a tilted track on the range–time intensity map. | done |
 | [Pulses in flight](web/electronic-warfare.html?lab=pulses-in-flight) | Raise the PRF until several pulses are airborne and a distant target is reported close. | done |
+| [The radar equation](web/electronic-warfare.html?lab=radar-equation) | The range equation as a dB budget: every factor, the noise floor, SNR against range. | done |
+| [Detection in noise](web/electronic-warfare.html?lab=detection) | Radar equation, threshold, false alarms and probability of detection on an A-scope. | done |
+| [The PPI scope](web/electronic-warfare.html?lab=ppi) | A rotating beam paints aircraft, ground clutter and rain on a plan display. | done |
 | [The plain pulse](web/electronic-warfare.html?lab=plain-pulse) | Pulse, spectrum, echo and matched filter; then two aircraft in formation split by Doppler. | done |
 | [The LFM chirp](web/electronic-warfare.html?lab=chirp) | Bandwidth without a short pulse; compression, weighting, and range–Doppler coupling on a fighter and tanker. | done |
 | [Phase codes](web/electronic-warfare.html?lab=phase-codes) | Barker-13: compression with a sign switch, and the sidelobe floor that hides a small target. | done |
@@ -218,18 +226,7 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Pulse-Doppler: range and velocity](web/electronic-warfare.html?lab=pulse-doppler) | Range profile and Doppler spectrum from a burst of pulses; resolution and velocity wrap. | done |
 | [The range–Doppler map](web/electronic-warfare.html?lab=rd-map) | Place three targets and see the radar image, with folding in both range and velocity. | done |
 | [The PRF dilemma](web/electronic-warfare.html?lab=ambiguity) | Reported against true range and velocity: raise the PRF and one folds, lower it and the other does. | done |
-| [Pulsed radar: the blocks](web/electronic-warfare.html?lab=pulsed-radar-arch) | Synchronizer, modulator, magnetron, duplexer, limiter, superhet receiver, detector and display, with the signal at every block. | done |
-| [Coherent pulse-Doppler radar](web/electronic-warfare.html?lab=coherent-radar-arch) | One reference clock, COHO and STALO, chirp generator, TWT, IQ receiver, pulse compression, Doppler FFT, CFAR and tracker. | done |
-| [AESA and T/R modules](web/electronic-warfare.html?lab=aesa-arch) | Inside a transmit/receive module, and how phase shifters line the elements up to form a beam. | done |
-| [ESM receiver](web/electronic-warfare.html?lab=esm-arch) | Intercepting radars: frequency, angle of arrival, pulse descriptor words, deinterleaving and identification. | done |
-| [DRFM jammer](web/electronic-warfare.html?lab=drfm-arch) | Sample the radar pulse, store it, play it back delayed and Doppler-shifted: false targets and range-gate pull-off. | done |
-| [Receiver architectures](web/electronic-warfare.html?lab=receivers) | Follow one pulse through a superheterodyne, a digital-IF and a homodyne receiver, stage by stage. | done |
-| [IQ demodulation](web/electronic-warfare.html?lab=iq-receiver) | RF pulse to I and Q: LO detuning, filter bandwidth and rise time. | done |
-| [What is an emitter fingerprint](web/electronic-warfare.html?lab=sei-intro) | Two radars of the same model send the same pulse; the hardware makes them differ. | done |
-| [Transmitter imperfections](web/electronic-warfare.html?lab=tx-fingerprint) | Modulator edges, droop and ripple, oscillator offset and phase noise, amplifier AM/AM and AM/PM, output filter. | done |
-| [What the receiver adds](web/electronic-warfare.html?lab=rx-effects) | LO offset, bandwidth, IQ imbalance, DC, ADC bits, clock jitter, sampling phase. | done |
-| [Channel and operating conditions](web/electronic-warfare.html?lab=channel-drift) | SNR, Doppler, multipath, temperature, warm-up, supply voltage. | done |
-| [Fingerprint workbench](web/electronic-warfare.html?lab=fingerprint-workbench) | Every Tx, channel and Rx knob on one pulse, in every representation, with two units of the same model side by side. | done |
+| [Moving-target indication](web/electronic-warfare.html?lab=mti) | Pulse cancellers remove the ground and reveal blind speeds. | done |
 | [Phased-array beamforming](web/electronic-warfare.html?lab=beamforming) | The instantaneous near field beside the far-field pattern: steering, taper, grating lobes. | done |
 | [Maxwell on a grid](web/electronic-warfare.html?lab=fdtd) | Solve E and H step by step (FDTD): walls, slits, standing waves, the Courant limit. | done |
 | [Pointing a beam](web/electronic-warfare.html?lab=pointing) | Gain is borrowed solid angle: fly a receiver through the beam and watch the link close. | done |
@@ -237,21 +234,33 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Searching a volume](web/electronic-warfare.html?lab=search) | A pencil beam nodding through elevation bars: coverage, gaps and frame time. | done |
 | [Airborne engagement](web/electronic-warfare.html?lab=engagement) | Own ship, sweeping beam, three targets: radial velocity, range–Doppler history and the target’s warning receiver. | done |
 | [Ground clutter](web/electronic-warfare.html?lab=ground-clutter) | Iso-range circles and iso-Doppler hyperbolas on the ground; the footprint and its clutter spectrum. | done |
-| [The radar equation](web/electronic-warfare.html?lab=radar-equation) | The range equation as a dB budget: every factor, the noise floor, SNR against range. | done |
-| [Detection in noise](web/electronic-warfare.html?lab=detection) | Radar equation, threshold, false alarms and probability of detection on an A-scope. | done |
-| [Moving-target indication](web/electronic-warfare.html?lab=mti) | Pulse cancellers remove the ground and reveal blind speeds. | done |
-| [The PPI scope](web/electronic-warfare.html?lab=ppi) | A rotating beam paints aircraft, ground clutter and rain on a plan display. | done |
+| [Pulsed radar: the blocks](web/electronic-warfare.html?lab=pulsed-radar-arch) | Synchronizer, modulator, magnetron, duplexer, limiter, superhet receiver, detector and display, with the signal at every block. | done |
+| [Coherent pulse-Doppler radar](web/electronic-warfare.html?lab=coherent-radar-arch) | One reference clock, COHO and STALO, chirp generator, TWT, IQ receiver, pulse compression, Doppler FFT, CFAR and tracker. | done |
+| [AESA and T/R modules](web/electronic-warfare.html?lab=aesa-arch) | Inside a transmit/receive module, and how phase shifters line the elements up to form a beam. | done |
+| [ESM receiver](web/electronic-warfare.html?lab=esm-arch) | Intercepting radars: frequency, angle of arrival, pulse descriptor words, deinterleaving and identification. | done |
+| [DRFM jammer](web/electronic-warfare.html?lab=drfm-arch) | Sample the radar pulse, store it, play it back delayed and Doppler-shifted: false targets and range-gate pull-off. | done |
+| [Receiver architectures](web/electronic-warfare.html?lab=receivers) | Follow one pulse through a superheterodyne, a digital-IF and a homodyne receiver, stage by stage. | done |
+| [IQ demodulation](web/electronic-warfare.html?lab=iq-receiver) | RF pulse to I and Q: LO detuning, filter bandwidth and rise time. | done |
 | [Jamming and burn-through](web/electronic-warfare.html?lab=jamming) | Self-screening and stand-off jammers: S/J against range and the burn-through point. | done |
+| [What is an emitter fingerprint](web/electronic-warfare.html?lab=sei-intro) | Two radars of the same model send the same pulse; the hardware makes them differ. | done |
+| [Transmitter imperfections](web/electronic-warfare.html?lab=tx-fingerprint) | Modulator edges, droop and ripple, oscillator offset and phase noise, amplifier AM/AM and AM/PM, output filter. | done |
+| [What the receiver adds](web/electronic-warfare.html?lab=rx-effects) | LO offset, bandwidth, IQ imbalance, DC, ADC bits, clock jitter, sampling phase. | done |
+| [Channel and operating conditions](web/electronic-warfare.html?lab=channel-drift) | SNR, Doppler, multipath, temperature, warm-up, supply voltage. | done |
+| [Fingerprint workbench](web/electronic-warfare.html?lab=fingerprint-workbench) | Every Tx, channel and Rx knob on one pulse, in every representation, with two units of the same model side by side. | done |
 
 ## Information theory
 
 | Topic | What you do | Status |
 |---|---|---|
 | [Entropy](web/information-theory.html?lab=entropy) | Surprisal in bits, and why a predictable source carries little information. | done |
+| [Typical sequences and compression](web/information-theory.html?lab=typical-sequences) | Long random sequences almost all have the same surprise, and there are only 2^{nH} of them. | done |
 | [Huffman coding](web/information-theory.html?lab=huffman) | Build the optimal prefix code merge by merge; compare its length with the entropy. | done |
+| [Mutual information](web/information-theory.html?lab=mutual-information) | A joint table and its information diagram: how much the output tells about the input. | done |
 | [Channel capacity](web/information-theory.html?lab=channel-capacity) | The binary symmetric channel: mutual information and Shannon's limit. | done |
 | [The repetition code](web/information-theory.html?lab=repetition-code) | Send every bit n times and vote: reliability bought with rate. | done |
 | [The Hamming (7,4) code](web/information-theory.html?lab=hamming-code) | Three parity circles locate and fix any single flipped bit. | done |
+| [CRC: detecting errors](web/information-theory.html?lab=crc) | Long division over GF(2): the remainder rides along, and any error that is not a multiple of the generator shows. | done |
+| [Convolutional codes and Viterbi](web/information-theory.html?lab=viterbi) | A rate-½ code on its trellis: the decoder keeps one survivor per state and finds the most likely message. | done |
 
 ## Machine learning
 
@@ -319,11 +328,11 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Sequences and series](web/maths.html?lab=sequences) | Partial sums that converge or not: geometric, harmonic, alternating, and the limit. | done |
 | [Differential equations](web/maths.html?lab=differential-equations) | Slope fields and solution curves; Euler steps against the exact solution. | done |
 | [Vectors](web/maths.html?lab=vectors) | Dot and cross product of two arrows you drag in 3D. | done |
+| [Matrices and linear maps](web/maths.html?lab=matrices) | A 3×3 matrix deforms the unit cube: determinant, eigenvectors. | done |
 | [Linear systems](web/maths.html?lab=linear-systems) | Two equations as two lines: one, none or infinitely many solutions. | done |
 | [The determinant](web/maths.html?lab=determinant) | The area a matrix gives to the unit square, with a sign. | done |
 | [Eigenvalues and eigenvectors](web/maths.html?lab=eigenvectors) | The directions a matrix only stretches. | done |
 | [Least squares](web/maths.html?lab=least-squares) | Fitting the best line through data. | done |
-| [Matrices and linear maps](web/maths.html?lab=matrices) | A 3×3 matrix deforms the unit cube: determinant, eigenvectors. | done |
 | [Functions of two variables](web/maths.html?lab=surfaces) | Walk on a surface: gradient, tangent plane, level curves. | done |
 | [Divergence and curl](web/maths.html?lab=vector-calculus) | Tracers in a flow: spreading is divergence, turning is curl. | done |
 | [Double integrals](web/maths.html?lab=double-integrals) | Volume under a surface as a stack of boxes. | done |
@@ -334,9 +343,15 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 
 | Topic | What you do | Status |
 |---|---|---|
+| [Round-off and cancellation](web/numerical-methods.html?lab=round-off) | Sixteen digits, and how one subtraction can lose them all; why the order of a sum matters. | done |
 | [Bisection](web/numerical-methods.html?lab=bisection) | Halve a bracket around a sign change: slow, sure, one bit per step. | done |
 | [The secant method](web/numerical-methods.html?lab=secant-method) | Follow chords to the root: order 1.618 without a derivative. | done |
 | [Fixed-point iteration](web/numerical-methods.html?lab=fixed-point) | x ← g(x) as a cobweb: why |g′| < 1 decides everything. | done |
+| [Gaussian elimination and LU](web/numerical-methods.html?lab=gaussian-elimination) | Row operations one at a time: the multipliers fill L, the matrix becomes U, and why pivoting matters. | done |
+| [Jacobi and Gauss–Seidel](web/numerical-methods.html?lab=iterative-solvers) | Iterates walking to the crossing of two lines; the spectral radius decides how fast, or whether at all. | done |
+| [Conditioning](web/numerical-methods.html?lab=conditioning) | Nearly parallel lines: a small error in b becomes a big error in x, by up to the condition number κ. | done |
+| [Golden-section search](web/numerical-methods.html?lab=golden-section) | Minimising without derivatives: the bracket shrinks by 0.618 per evaluation. | done |
+| [Gradient descent and Newton](web/numerical-methods.html?lab=descent-newton) | Fixed steps, line searches and Newton’s method on a bowl and on Rosenbrock’s banana valley. | done |
 | [Euler, Heun and RK4](web/numerical-methods.html?lab=ode-methods) | Step an oscillator forward: spirals, energy drift and symplectic methods. | done |
 | [Stability and stiffness](web/numerical-methods.html?lab=ode-stability) | Explicit Euler blows up past h = 2/|λ|; implicit Euler never does. | done |
 | [Order of accuracy](web/numerical-methods.html?lab=ode-order) | Error against step size on log axes: slopes 1, 2 and 4. | done |
@@ -387,16 +402,16 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 
 | Topic | What you do | Status |
 |---|---|---|
+| [Adding forces](web/physics.html?lab=forces) | Add forces tip to tail: the resultant, and equilibrium when they cancel. | done |
+| [Newton’s laws and friction](web/physics.html?lab=newtons-laws) | A block on a slope: free-body diagram, static and kinetic friction, a pulley. | done |
 | [Projectile motion](web/physics.html?lab=kinematics) | A thrown ball: launch angle, range, height, and what air drag changes. | done |
 | [Circular motion](web/physics.html?lab=circular-motion) | Uniform motion on a circle: speed, angular speed and centripetal acceleration. | done |
 | [Work and energy](web/physics.html?lab=work-energy) | A bead on a track trades potential for kinetic energy; loop the loop without falling. | done |
 | [Friction turns energy into heat](web/physics.html?lab=friction-energy) | Each swing climbs less high: kinetic + potential + heat stays constant. | done |
 | [Momentum and collisions](web/physics.html?lab=momentum) | Two carts collide: momentum always survives, kinetic energy not always. | done |
+| [Torque](web/physics.html?lab=torque) | Turn a lever: force, lever arm and angle. | done |
 | [Rolling and moment of inertia](web/physics.html?lab=rolling) | Sphere, disc, shell and hoop race down a slope; a falling mass spins a spool. | done |
 | [Angular momentum](web/physics.html?lab=angular-momentum) | A skater pulls in their arms and spins faster: L = Iω stays, the energy does not. | done |
-| [Adding forces](web/physics.html?lab=forces) | Add forces tip to tail: the resultant, and equilibrium when they cancel. | done |
-| [Torque](web/physics.html?lab=torque) | Turn a lever: force, lever arm and angle. | done |
-| [Newton’s laws and friction](web/physics.html?lab=newtons-laws) | A block on a slope: free-body diagram, static and kinetic friction, a pulley. | done |
 | [Buoyancy](web/physics.html?lab=fluids) | A block in a liquid bobs and settles where buoyancy equals weight. | done |
 | [Simple harmonic motion](web/physics.html?lab=oscillations) | A mass on a spring: period, amplitude and energy going back and forth. | done |
 | [Damped oscillations](web/physics.html?lab=damping) | Friction drains the swing: underdamped, critical and overdamped. | done |
@@ -417,13 +432,13 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Dipoles and charge pairs](web/physics.html?lab=dipole) | Superposition: opposite and like charges, dipoles and a quadrupole. | done |
 | [Gauss’s law](web/physics.html?lab=gauss-law) | The flux through a closed surface counts only the charge inside. | done |
 | [Magnetic field of currents](web/physics.html?lab=magnetic-field) | A loop and a solenoid: field lines, B on the axis. | done |
-| [Moving magnet and Lenz’s law](web/physics.html?lab=induction) | Move a magnet through a coil: flux, EMF, Lenz’s law and magnetic braking. | done |
-| [AC induction](web/physics.html?lab=ac-induction) | An alternating current in one coil drives an EMF in another: the transformer idea. | done |
 | [No magnetic charge: Gauss’s law for B](web/physics.html?lab=gauss-magnetism) | Flux of B through any closed surface round a magnet is zero; compare a charge | done |
 | [Ampère’s law](web/physics.html?lab=ampere-law) | ∮B·dl round any loop equals μ₀ times the current through it | done |
-| [Displacement current](web/physics.html?lab=displacement-current) | A charging capacitor: a changing E field makes B like a current | done |
 | [Cyclotron motion](web/physics.html?lab=charged-particle) | A charge in a magnetic field: circles at the cyclotron frequency, helices along B. | done |
 | [E×B drift](web/physics.html?lab=exb-drift) | Add an electric field: drift across both fields, or acceleration along B. | done |
+| [Moving magnet and Lenz’s law](web/physics.html?lab=induction) | Move a magnet through a coil: flux, EMF, Lenz’s law and magnetic braking. | done |
+| [AC induction](web/physics.html?lab=ac-induction) | An alternating current in one coil drives an EMF in another: the transformer idea. | done |
+| [Displacement current](web/physics.html?lab=displacement-current) | A charging capacitor: a changing E field makes B like a current | done |
 | [Electromagnetic waves](web/physics.html?lab=em-wave) | E and B travelling together; reflection and standing waves. | done |
 | [Refraction and total reflection](web/physics.html?lab=geometric-optics) | Snell’s law, the critical angle and total internal reflection. | done |
 | [Thin lenses](web/physics.html?lab=lenses) | Converging and diverging lenses: ray diagrams, image position and magnification. | done |
@@ -439,8 +454,13 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | [Time dilation and the twins](web/modern-physics.html?lab=time-dilation) | A light clock on a moving ship ticks slow; the travelling twin comes back younger. | done |
 | [Spacetime diagrams](web/modern-physics.html?lab=spacetime) | Boosted axes, the light cone, and why simultaneity depends on the observer. | done |
 | [The photoelectric effect](web/modern-physics.html?lab=photoelectric) | Light as photons: K_max = hf − φ, the threshold, four metals. | done |
+| [Compton scattering](web/modern-physics.html?lab=compton) | X-rays bounce off electrons like billiard balls: the wavelength grows by λc(1 − cos θ). | done |
+| [Matter waves: electrons through two slits](web/modern-physics.html?lab=matter-waves) | One electron at a time, the dots build an interference pattern; watch which slit, and it is gone. | done |
+| [The uncertainty principle](web/modern-physics.html?lab=uncertainty) | Squeeze a wave packet in space and its momentum spreads: Δx·Δp ≥ ħ/2. | done |
 | [Particle in a box](web/modern-physics.html?lab=particle-in-a-box) | Allowed energies n²h²/8mL², stationary states, and a superposition that sloshes. | done |
+| [Quantum tunnelling](web/modern-physics.html?lab=tunnelling) | An electron leaks through a barrier it cannot climb, exponentially less with every nanometre. | done |
 | [Hydrogen spectrum](web/modern-physics.html?lab=atomic-spectra) | Bohr levels and the Lyman, Balmer and Paschen series of lines. | done |
+| [Binding energy, fission and fusion](web/modern-physics.html?lab=binding-energy) | The curve of binding energy per nucleon, term by term, and why energy comes from both ends. | done |
 | [Radioactive decay](web/modern-physics.html?lab=radioactive-decay) | Random decays, half-life, the exponential law, and parent–daughter chains. | done |
 
 ## Flight and space
@@ -448,29 +468,29 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 | Topic | What you do | Status |
 |---|---|---|
 | [Lift and drag](web/flight-and-space.html?lab=flight) | Level flight of a light aircraft: angle of attack, lift curve and drag polar. | done |
-| [Turning flight and load factor](web/flight-and-space.html?lab=turns) | Banked turns: load factor, turn radius and a higher stall speed. | done |
-| [The stall](web/flight-and-space.html?lab=stall) | Past the critical angle of attack the flow separates and lift collapses. | done |
 | [How an airfoil lifts](web/flight-and-space.html?lab=airfoil-lift) | Flow and pressure round a Joukowski airfoil: suction on top, camber, the Kutta condition, and no equal transit time. | done |
-| [Drag polar and power curves](web/flight-and-space.html?lab=drag-polar) | Friction against induced drag, the best L/D speed, power needed against power available. | done |
 | [The standard atmosphere](web/flight-and-space.html?lab=standard-atmosphere) | Temperature, pressure, density and the speed of sound with altitude | done |
+| [The stall](web/flight-and-space.html?lab=stall) | Past the critical angle of attack the flow separates and lift collapses. | done |
+| [Drag polar and power curves](web/flight-and-space.html?lab=drag-polar) | Friction against induced drag, the best L/D speed, power needed against power available. | done |
+| [Turning flight and load factor](web/flight-and-space.html?lab=turns) | Banked turns: load factor, turn radius and a higher stall speed. | done |
 | [Gliding and the sink polar](web/flight-and-space.html?lab=gliding) | Best glide, minimum sink, and the speed to fly into a headwind | done |
-| [Range: the Breguet equation](web/flight-and-space.html?lab=range-endurance) | How far a jet flies: speed, L/D, engine and fuel | done |
-| [Take-off and landing](web/flight-and-space.html?lab=takeoff-landing) | The ground roll: thrust, drag and wheel friction; weight, altitude, headwind and runway surface. | done |
 | [Static stability](web/flight-and-space.html?lab=static-stability) | Centre of gravity against neutral point: the pitching-moment slope, trim, and what a gust does. | done |
+| [Take-off and landing](web/flight-and-space.html?lab=takeoff-landing) | The ground roll: thrust, drag and wheel friction; weight, altitude, headwind and runway surface. | done |
+| [Range: the Breguet equation](web/flight-and-space.html?lab=range-endurance) | How far a jet flies: speed, L/D, engine and fuel | done |
 | [Gravitational field](web/flight-and-space.html?lab=gravity-field) | The field of two masses, arrow by arrow. | done |
+| [Newton’s cannon and escape speed](web/flight-and-space.html?lab=newtons-cannon) | Fire faster: fall back, circle, ellipse, escape | done |
 | [Kepler orbits](web/flight-and-space.html?lab=orbits) | Circular and elliptical orbits: speed, period, geostationary and Molniya. | done |
 | [Kepler’s first and second laws](web/flight-and-space.html?lab=kepler-laws) | Ellipses with the Sun at a focus; equal areas in equal times | done |
 | [Kepler’s third law](web/flight-and-space.html?lab=kepler-third) | T² ∝ a³ for the eight planets, and weighing a star | done |
-| [Newton’s cannon and escape speed](web/flight-and-space.html?lab=newtons-cannon) | Fire faster: fall back, circle, ellipse, escape | done |
 | [Inclination and ground tracks](web/flight-and-space.html?lab=ground-tracks) | A tilted orbit over a turning Earth: polar, retrograde, the ISS track. | done |
 | [Earth’s bulge (J2)](web/flight-and-space.html?lab=orbit-perturbations) | The equatorial bulge turns the orbit plane: sun-synchronous orbits. | done |
 | [Orbital transfers](web/flight-and-space.html?lab=orbital-transfers) | Hohmann and bi-elliptic transfers, Δv and the rocket equation. | done |
 | [Hohmann against bi-elliptic](web/flight-and-space.html?lab=hohmann-vs-bielliptic) | When three burns beat two: the 11.94 and 15.58 radius ratios, and the time it costs. | done |
 | [Plane changes](web/flight-and-space.html?lab=plane-change) | Turning an orbit costs 2v sin(Δi/2): do it slow, at apoapsis, and combine it with a burn. | done |
 | [Rendezvous](web/flight-and-space.html?lab=rendezvous) | Relative motion near the ISS (Clohessy–Wiltshire): speed up to fall behind, and a two-burn rendezvous. | done |
+| [Lagrange points](web/flight-and-space.html?lab=lagrange-points) | The rotating two-body potential and its five equilibria. | done |
 | [Gravity assist](web/flight-and-space.html?lab=gravity-assist) | A flyby turns the velocity; seen from the Sun the craft speeds up or slows down | done |
 | [Escape to the planets](web/flight-and-space.html?lab=escape-and-c3) | Patched conics: v∞ from a Hohmann round the Sun, C3, the escape burn and the Oberth effect. | done |
-| [Lagrange points](web/flight-and-space.html?lab=lagrange-points) | The rotating two-body potential and its five equilibria. | done |
 | [The rocket equation](web/flight-and-space.html?lab=rocket-equation) | Δv = Isp g₀ ln(m₀/m_f) during a burn | done |
 | [Staging](web/flight-and-space.html?lab=staging) | Why rockets drop empty stages, and how much payload each choice carries | done |
 | [Launch: gravity turn and losses](web/flight-and-space.html?lab=gravity-turn) | Pitch kick, gravity loss, drag loss and max-Q on the way up | done |
@@ -562,9 +582,13 @@ Each subject is one file, `web/<subject>.html`. Generated from `catalog.json` by
 
 | Topic | What you do | Status |
 |---|---|---|
+| [The tensile test](web/structural-mechanics.html?lab=tensile-test) | Elastic, yield, hardening, necking, fracture — and unloading. | done |
+| [Mohr’s circle](web/structural-mechanics.html?lab=mohr-circle) | Plane stress on a rotating element; principal stresses and maximum shear. | done |
+| [Stress concentration and fatigue](web/structural-mechanics.html?lab=stress-concentration) | The stress triples beside a hole, and a few times the stress can cut the fatigue life by orders of magnitude. | done |
 | [Simply supported beam](web/structural-mechanics.html?lab=simply-supported) | Reactions, shear and moment diagrams, and the deflected shape. | done |
 | [Cantilever](web/structural-mechanics.html?lab=cantilever) | One support, a moment at the wall, the tip droops. | done |
 | [Cross sections](web/structural-mechanics.html?lab=cross-section) | Second moment, the neutral axis, and why beams are shaped like an I. | done |
-| [The tensile test](web/structural-mechanics.html?lab=tensile-test) | Elastic, yield, hardening, necking, fracture — and unloading. | done |
-| [Mohr’s circle](web/structural-mechanics.html?lab=mohr-circle) | Plane stress on a rotating element; principal stresses and maximum shear. | done |
+| [A statically indeterminate beam](web/structural-mechanics.html?lab=propped-cantilever) | One support too many for statics: compatibility finds the reaction, and the beam is stiffer for it. | done |
+| [Torsion of shafts](web/structural-mechanics.html?lab=torsion) | Shear stress grows from zero at the centre to the surface: why tubes carry torque so well. | done |
+| [Trusses: the method of joints](web/structural-mechanics.html?lab=trusses) | Every member only pulls or pushes: forces from equilibrium at each joint, tension and compression in colour. | done |
 | [Buckling of columns](web/structural-mechanics.html?lab=buckling) | Euler's load, end conditions, slenderness and imperfections. | done |

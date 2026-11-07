@@ -1,0 +1,35 @@
+<section data-case="zplane">
+  <h3>Sampling and the z-plane</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the z-plane, with the unit circle, the poles of the sampled system (red) and, dashed, the spiral each pole traces as the sample time T grows from 0. Top right: the same poles in the s-plane; the dashed lines at ±π/T mark how fast an oscillation the samples can still represent. Bottom right: the continuous step response (grey) and the samples taken every T (stems). Below: the size and angle of the z-pole against T.</div>
+  <p>A computer sees a system only at the sampling instants. Between two samples a mode e^{st} is multiplied by e^{sT}: in sampled time the pole s becomes the pole <b>z = e^{sT}</b>. The whole left half of the s-plane folds into the inside of the <b>unit circle</b>, the jω axis onto the circle itself, and the right half-plane outside it. The radius |z| = e^{σT} says how much a mode decays per sample, the angle ωdT how far it turns. Fast sampling crowds every pole near z = 1. Slow sampling can push the angle past π, and then the samples alias: they no longer show the real oscillation.</p>
+  <div class="eq">$$z = e^{sT}, \qquad |z| = e^{\sigma T},\ \ \angle z = \omega_d T, \qquad |z| < 1 \iff \sigma < 0$$</div>
+  <ol class="steps">
+    <li>Find the continuous poles s = σ ± jωd.</li>
+    <li>Map each one: radius e^{σT}, angle ωdT.</li>
+    <li>Stable if inside the circle; at least two samples per period (ωdT < π) to see the oscillation.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>ωn = 2 rad/s, ζ = 0.3: s = −0.6 ± 1.91j. With T = 0.3 s, z has radius e^(−0.18) = 0.84 and angle 0.57 rad: 11 samples per oscillation. With T = 1.65 s the angle reaches π and the pole sits on the negative real axis: the samples just alternate.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Reading stability off the real part of z. In the z-plane the boundary is the circle |z| = 1, not the imaginary axis.</div>
+  <div class="try"><h4>Try it</h4>Raise T slowly: the red poles slide along their spirals toward the origin and the stems spread out. Then make ζ negative and see them leave the circle.</div>
+</section>
+<section data-case="zplane" data-example="fast"><h3>Fast sampling: poles near z = 1</h3><p>T = 0.05 s: e^{sT} ≈ 1 + sT, so the z-poles hug the point 1. The samples trace the continuous curve closely.</p></section>
+<section data-case="zplane" data-example="nyquist"><h3>T = π/ωd: the pole reaches −1</h3><p>Exactly two samples per oscillation period: the z-poles meet on the negative real axis and the sampled response alternates up and down.</p></section>
+<section data-case="zplane" data-example="unstable"><h3>ζ < 0: outside the circle</h3><p>A right-half-plane pole maps outside the unit circle at any sample time: sampling cannot stabilise an unstable system.</p></section>
+
+<section data-case="discrete">
+  <h3>A controller in a computer</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a motor's angle after a step command, with a PD controller in continuous time (grey) and the same controller computed every T seconds (blue). Top right: the control signal, continuous and held constant between samples (a staircase). Bottom right: the overshoot against the sample time. Below: the error in time.</div>
+  <p>A digital controller reads the sensor, computes, and holds its output until the next sample (a <b>zero-order hold</b>). Holding a staircase instead of a smooth signal delays the control by about half a sample on average, and a delay is pure phase lag: about ωT/2 radians at frequency ω. That lag eats the phase margin. A derivative is computed from two samples, which adds its own error. With fast sampling, the loop behaves like the continuous one. As T grows the overshoot rises, and at some point the loop goes unstable.</p>
+  <div class="eq">$$u(t) = u[n]\ \ \text{for}\ nT \le t < (n+1)T, \qquad u[n] = K_p e[n] + K_d\frac{e[n] - e[n-1]}{T}, \qquad \Delta\varphi \approx \frac{\omega T}{2}$$</div>
+  <ol class="steps">
+    <li>Design the controller in continuous time.</li>
+    <li>Choose T 10–30 times faster than the closed-loop bandwidth.</li>
+    <li>Check the extra phase lag ωcT/2 at the crossover against the phase margin.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Kp = 4, Kd = 1 on 1/(s(s + 1)): 16 % overshoot in continuous time. Every 0.02 s: 17 %. Every 0.2 s: 24 %. Every 0.4 s: 43 %. At 0.8 s the loop is unstable.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Treating the sample rate as a software detail. It is part of the loop dynamics: a controller that is fine at 1 kHz can oscillate at 10 Hz.</div>
+  <div class="try"><h4>Try it</h4>Raise the sample time from 0.005 to 1 s and follow the dot on the overshoot curve: it hugs the continuous value at first, then climbs steeply.</div>
+</section>
+<section data-case="discrete" data-example="quick"><h3>T = 0.02 s: like continuous</h3><p>About 100 samples per second against a closed-loop bandwidth near 2 rad/s: the blue and grey curves are almost the same.</p></section>
+<section data-case="discrete" data-example="slow"><h3>T = 0.4 s: more overshoot</h3><p>The staircase is coarse, the hold adds phase lag, and the overshoot is nearly three times the continuous one.</p></section>
+<section data-case="discrete" data-example="tooslow"><h3>T = 0.8 s: unstable</h3><p>The controller reacts so late that it pushes in the wrong direction, and the oscillation grows.</p></section>

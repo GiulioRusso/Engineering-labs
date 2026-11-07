@@ -1,0 +1,70 @@
+<section data-case="typical">
+  <h3>Typical sequences and compression</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: every sequence of n coin flips, grouped by its surprise per flip, −log₂P(sequence)/n, and stacked by probability. Green bars are inside the typical band H ± δ. Top right: the probability of the typical set as n grows. Bottom right: the bits per flip needed to give every typical sequence its own number (green), against the entropy H and against 1 bit per flip. Below: the cumulative distribution of the surprise.</div>
+  <p>A biased coin (say P(1) = 0.2) has 2ⁿ possible sequences of n flips, but they are far from equally likely. The surprise of a sequence, −log₂ of its probability, is a sum of n independent surprises, so by the law of large numbers its average per flip settles on the entropy H. For long sequences almost all the probability sits on <b>typical sequences</b>, whose surprise is close to nH, and each has probability about 2^(−nH). So there are only about 2^(nH) of them. Numbering them takes nH bits instead of n: that is why H bits per symbol are enough, and why no lossless code can do better.</p>
+  <div class="eq">$$-\frac1n\log_2 P(x_1\ldots x_n) \to H, \qquad |T_\delta^{(n)}| \approx 2^{nH}, \qquad P\big(T_\delta^{(n)}\big) \to 1$$</div>
+  <ol class="steps">
+    <li>A sequence with k ones has probability p^k (1 − p)^(n − k); its surprise per flip depends only on k/n.</li>
+    <li>k/n concentrates near p, so the surprise concentrates near H.</li>
+    <li>Give every typical sequence a number (nH bits) and spend a little extra on the rare others.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>P(1) = 0.2: H = 0.722 bit. With δ = 0.05, the typical set holds 30 % of the probability for 10 flips, 47 % for 100, and 99.5 % for 2000 flips, where it has about 2^(0.77·2000) members, against 2^2000 sequences in all.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking the most likely sequence is typical. All zeros is the single most probable sequence here, but its surprise is far below H, and the set of such sequences carries almost no probability.</div>
+  <div class="try"><h4>Try it</h4>Raise n from 10 to 2000 and watch the probability gather into the green band around H, while the bits needed per flip settle near H.</div>
+</section>
+<section data-case="typical" data-example="short"><h3>10 flips: no concentration yet</h3><p>With so few flips the surprise still spreads widely, and the typical band holds under a third of the probability.</p></section>
+<section data-case="typical" data-example="long"><h3>2000 flips: almost all typical</h3><p>99.5 % of the probability is within ±0.05 bit of H. That is the source coding theorem at work.</p></section>
+<section data-case="typical" data-example="fair"><h3>Fair coin: every sequence typical</h3><p>p = ½: every sequence has probability 2⁻ⁿ and surprise exactly 1 bit = H. Nothing can be compressed.</p></section>
+
+<section data-case="mutual">
+  <h3>Mutual information</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the joint probability of sending symbol x and receiving y through a symmetric channel; the diagonal is "received correctly". Top right: the information diagram. H(X) on top, H(Y) in the middle, H(X, Y) at the bottom; the green overlap is the mutual information I(X; Y), the grey part H(X|Y), the orange part H(Y|X). Bottom right: I against the error probability, for this input and for a uniform input. Below: I against the input skew.</div>
+  <p>Before you look at the output, your uncertainty about the input is H(X). After you look, it is H(X|Y), what the noise leaves you not knowing. The difference is the <b>mutual information</b>: how many bits per symbol the output carries about the input. It is symmetric, I(X; Y) = I(Y; X), it is never negative, and it is zero exactly when input and output are independent. Maximised over the input distribution it is the channel's <b>capacity</b>; for a symmetric channel the best input is uniform.</p>
+  <div class="eq">$$I(X;Y) = H(X) - H(X\mid Y) = H(Y) - H(Y\mid X) = H(X) + H(Y) - H(X,Y) = \sum_{x,y}P(x,y)\log_2\frac{P(x,y)}{P(x)P(y)}$$</div>
+  <ol class="steps">
+    <li>Build the joint table: input probability times the chance of each output.</li>
+    <li>Sum rows and columns for the two marginals; compute the three entropies.</li>
+    <li>I is the overlap: H(X) + H(Y) − H(X, Y).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Four symbols, error probability 0.1, uniform input: I = 2 − H_b(0.1) − 0.1·log₂3 = 2 − 0.469 − 0.158 = 1.37 bits per symbol, the capacity. Skew the input (skew 1) and H(X) drops to 0.66 bit, I to 0.42.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Confusing correlation with mutual information. I catches any dependence, not only a linear one, and it is measured in bits, not on a −1 to 1 scale.</div>
+  <div class="try"><h4>Try it</h4>Raise the error probability from 0 to 0.75: the green overlap shrinks from all of H(X) to nothing. Then lower it a little and skew the input.</div>
+</section>
+<section data-case="mutual" data-example="clean"><h3>e = 0: I = H(X)</h3><p>The output is the input: the two entropy bars overlap completely, and H(X|Y) = 0.</p></section>
+<section data-case="mutual" data-example="useless"><h3>e = ¾: nothing gets through</h3><p>With four symbols, e = ¾ makes every output equally likely whatever was sent: X and Y are independent and the overlap vanishes.</p></section>
+<section data-case="mutual" data-example="skew"><h3>Skewed input: less than capacity</h3><p>An input that favours a few symbols carries less uncertainty to begin with, so less can get through: I falls below the capacity of 1.37 bits.</p></section>
+
+<section data-case="crc">
+  <h3>CRC: detecting errors</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the message with r zeros appended, divided by the generator over GF(2). Each "+" row is the generator (addition over GF(2) is XOR) aligned under a leading 1, each "=" row the result of the XOR. At the bottom: the remainder, the codeword sent, what is received, and the receiver's own remainder. Top right: the share of error patterns with 1 to 4 flipped bits that go unnoticed (every pattern checked). Bottom right: the same for bursts of each length.</div>
+  <p>A <b>cyclic redundancy check</b> treats the bits as the coefficients of a polynomial and arithmetic as XOR, with no carries. The sender appends r zeros, divides by a fixed generator polynomial of degree r, and sends the remainder after the data. The codeword is then an exact multiple of the generator. The receiver divides again: a nonzero remainder means an error. An error pattern goes unseen only if it is itself a multiple of the generator. With a good generator that rules out every single error and every burst up to r bits, and lets through only about 2^(−r) of everything else.</p>
+  <div class="eq">$$c(x) = m(x)\,x^r + \big(m(x)\,x^r \bmod g(x)\big), \qquad c(x) \bmod g(x) = 0, \qquad \text{undetected} \iff e(x) \bmod g(x) = 0$$</div>
+  <ol class="steps">
+    <li>Shift: append r zeros to the message.</li>
+    <li>Divide: wherever the leading bit is 1, XOR the generator in; the last r bits are the remainder.</li>
+    <li>Send message + remainder; the receiver's division must give zero.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>The textbook case: 11010011101100 divided by 1011 (x³ + x + 1) leaves 100. For 1101011011 the codeword is 1101011011100. Flipping bits 4, 6 and 7 adds 1011 shifted, a multiple of the generator, and the receiver's remainder is 000: missed. One flip anywhere is always caught.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Expecting a CRC to correct errors. It only detects them (the receiver asks for a resend). And it is not security: anyone can recompute it for a tampered message.</div>
+  <div class="try"><h4>Try it</h4>Flip one bit anywhere: the receiver's remainder is never zero. Then switch to CRC-8 and try three flips: patterns that fooled the 3-bit CRC are now caught.</div>
+</section>
+<section data-case="crc" data-example="one"><h3>One flipped bit: caught</h3><p>A single error is x^k, never a multiple of a generator with more than one term: always detected.</p></section>
+<section data-case="crc" data-example="burst"><h3>A burst of 3: caught</h3><p>Three adjacent flips: a burst no longer than r = 3 cannot be a multiple of a degree-3 generator, so it is detected.</p></section>
+<section data-case="crc" data-example="miss"><h3>Flips that look like the generator: missed</h3><p>Bits 4, 6 and 7 flipped make the error pattern 1011, the generator itself: the received word still divides, and the error slips through. A longer generator makes such coincidences rarer.</p></section>
+
+<section data-case="viterbi">
+  <h3>Convolutional codes and the Viterbi decoder</h3>
+  <div class="look"><h4>What you are looking at</h4>The trellis: the encoder's four states (its last two input bits) as rows, time as columns. Grey lines are every possible branch; blue the survivor kept at each state; green, at the end, the path the decoder chooses. The numbers are path metrics, how many received bits each path disagrees with. Along the top are the received bit pairs (✗ marks a flipped pair); along the bottom, what was sent and what was decoded. Top right: the path metrics as decoding proceeds. Bottom right: bit error rate with and without the code. Below: the best metric so far.</div>
+  <p>A <b>convolutional code</b> does not cut the data into blocks: each input bit, together with the two before it, produces two output bits (rate ½). The encoder is a small state machine, and every possible message is a path through its trellis. The decoder looks for the path whose output is closest to what was received. Trying every message is hopeless, 2ⁿ of them, but the <b>Viterbi algorithm</b> notices that of two paths entering the same state only the cheaper one can ever be part of the best path. It keeps one survivor per state and stage, and the work grows only linearly with the length.</p>
+  <div class="eq">$$v_1 = u_k \oplus u_{k-1} \oplus u_{k-2},\quad v_2 = u_k \oplus u_{k-2}\ \ (\text{generators } 7, 5), \qquad M_{k+1}(s') = \min_{s \to s'}\big(M_k(s) + d_H(\text{branch}, r_k)\big)$$</div>
+  <ol class="steps">
+    <li>For every state at stage k + 1, look at the two branches arriving.</li>
+    <li>Add each branch's disagreement with the received pair to its starting metric; keep the smaller (the survivor).</li>
+    <li>At the end (tail bits bring the encoder back to state 00), trace the survivors back.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>10 message bits plus 2 tail bits give 24 channel bits. Flip bits 3 and 16: the best path ends with metric 2 (it believes in exactly two flips) and decodes perfectly. Flip bits 5, 6 and 8, close together: a wrong path explains the received bits just as cheaply, and two message bits come out wrong. The code's free distance is 5: it can always fix 2 errors that are far enough apart.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Assuming more redundancy always fixes more. Errors that come in clusters defeat short-memory codes; real systems interleave the bits so that a burst becomes scattered single errors.</div>
+  <div class="try"><h4>Try it</h4>Set one flip and move it along the codeword: it is always corrected. Then add a second and a third and bring them closer until the decoded bits start to go wrong.</div>
+</section>
+<section data-case="viterbi" data-example="two"><h3>Two flips far apart: corrected</h3><p>Each flip raises the correct path's metric by 1; every wrong path differs from the right one in at least 5 bits, so it stays more expensive.</p></section>
+<section data-case="viterbi" data-example="close"><h3>Three flips close together: fooled</h3><p>Three errors within a few stages: now a wrong path is just as close to what was received, and the decoder follows it for a while before rejoining.</p></section>

@@ -30,7 +30,7 @@ Open **`index.html`** in any browser. Catalogue self-contained, runs offline.
 | **Maths** | [`web/maths.html`](web/maths.html) | Calculus, Linear Algebra, Differential Equations, Complex Analysis |
 | **Probability & Stats** | [`web/probability.html`](web/probability.html) | Events, Counting, Bayes, Distributions, Normal Curve and z-Scores, Joint Distributions, CLT, Descriptive Statistics, Least Squares, Sampling, Confidence Intervals, Bootstrap, MLE, t/χ²/ANOVA/Rank Tests, Regression, Bayesian Updating, Markov Chains, Monte Carlo |
 | **Physics** | [`web/physics.html`](web/physics.html) | Mechanics, Oscillations and Waves, Heat, Electromagnetism (all four Maxwell equations), Optics |
-| **Modern Physics** | [`web/modern-physics.html`](web/modern-physics.html) | Special Relativity, Photoelectric Effect, Particle in a Box, Hydrogen Spectrum, Decay |
+| **Modern Physics** | [`web/modern-physics.html`](web/modern-physics.html) | Special Relativity, Photoelectric Effect, Compton Scattering, Matter Waves, Uncertainty, Particle in a Box, Tunnelling, Hydrogen Spectrum, Binding Energy, Decay |
 | **Flight and Space** | [`web/flight-and-space.html`](web/flight-and-space.html) | Lift and Drag, Standard Atmosphere, Gliding, Breguet Range, Airfoils (Joukowski), Drag Polar, Take-off and Landing, Static Stability, Kepler's Laws, Newton's Cannon, Hohmann vs Bi-elliptic, Plane Changes, Rendezvous (Clohessy–Wiltshire), Patched Conics, Gravity Assist, Rocket Equation, Staging, Gravity Turn, Re-entry |
 | **Robotics** | [`web/robotics.html`](web/robotics.html) | Rotations and Quaternions, DH and the Kinova Jaco2, Jacobian, CLIK, Redundancy, Trajectories, Dynamics, Computed Torque, Impedance Control |
 | **Circuits** | [`web/circuits.html`](web/circuits.html) | RLC, Phasors, Impedance, AC Power, Filter Design |
@@ -40,13 +40,13 @@ Open **`index.html`** in any browser. Catalogue self-contained, runs offline.
 | **Computer Science** | [`web/computer-science.html`](web/computer-science.html) | Algorithms, Data Structures, CPU Scheduling (Real C++) |
 | **Design Patterns** | [`web/design-patterns.html`](web/design-patterns.html) | Creational, Structural and Behavioural Patterns as Running C++ with Object Diagrams |
 | **Signal Theory** | [`web/signal-theory.html`](web/signal-theory.html) | Fourier, Sampling, LTI Systems, Modulation, IQ |
-| **Control Systems** | [`web/control-systems.html`](web/control-systems.html) | PID, Root Locus, Bode/Nyquist, Stability |
+| **Control Systems** | [`web/control-systems.html`](web/control-systems.html) | PID, Root Locus, Bode/Nyquist, Stability, State Space, Pole Placement, Observers and Kalman, the z-Plane, Digital Control |
 | **Electronic Warfare** | [`web/electronic-warfare.html`](web/electronic-warfare.html) | System architectures (pulsed, coherent, AESA, ESM, DRFM), IQ receiver schema, Emitter fingerprinting (SEI: Tx, channel and Rx effects, workbench), Pulse Compression, Radar Eq, Jamming, Doppler |
 | **Machine Learning** | [`web/machine-learning.html`](web/machine-learning.html) | k-NN, Trees, Clustering, Linear and Logistic Regression, SVMs, Ensembles, ROC |
 | **Deep Learning** | [`web/deep-learning.html`](web/deep-learning.html) | Neurons, Network Playground, Layers, Backprop, Initialisation, MNIST MLP and CNN |
-| **Numerical Methods** | [`web/numerical-methods.html`](web/numerical-methods.html) | Root Finding, ODE Solvers, Stability, Interpolation, Quadrature |
-| **Information Theory** | [`web/information-theory.html`](web/information-theory.html) | Entropy, Huffman Coding, Channel Capacity, Hamming Codes |
-| **Structural Mechanics** | [`web/structural-mechanics.html`](web/structural-mechanics.html) | Beams, Cross Sections, Tensile Test, Mohr's Circle, Buckling |
+| **Numerical Methods** | [`web/numerical-methods.html`](web/numerical-methods.html) | Round-off, Root Finding, Gaussian Elimination and LU, Iterative Solvers, Conditioning, Golden Section, Gradient Descent and Newton, ODE Solvers, Interpolation, Quadrature |
+| **Information Theory** | [`web/information-theory.html`](web/information-theory.html) | Entropy, Typical Sequences, Huffman Coding, Mutual Information, Channel Capacity, Hamming Codes, CRC, Convolutional Codes and Viterbi |
+| **Structural Mechanics** | [`web/structural-mechanics.html`](web/structural-mechanics.html) | Tensile Test, Mohr's Circle, Stress Concentration and Fatigue, Beams, Indeterminate Beams, Torsion, Trusses, Buckling |
 
 Full list: [`docs/TOPICS.md`](docs/TOPICS.md).
 

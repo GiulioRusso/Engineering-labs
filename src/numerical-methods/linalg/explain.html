@@ -1,0 +1,52 @@
+<section data-case="gauss">
+  <h3>Gaussian elimination and LU</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the augmented matrix [A | b], replayed one operation at a time; the row being changed is shaded orange, the pivot green. Top right: L, where every multiplier is stored as it is used. Bottom right: the residual of a system whose first pivot is a tiny ε, solved with (green) and without (orange) partial pivoting. Below: the largest entry in [A | b] after each step.</div>
+  <p>To solve Ax = b, subtract multiples of one equation from the others until the matrix is <b>upper triangular</b>; then solve from the last equation up (<b>back substitution</b>). The multiplier for row i is the entry to remove divided by the <b>pivot</b>, the diagonal entry above it. Recording every multiplier gives a lower-triangular L with A = L·U: the costly part, about ⅔n³ operations, is done once, and each new right-hand side then costs only n². A zero pivot stops the method; a tiny one is worse, because huge multipliers amplify round-off. <b>Partial pivoting</b> fixes both: before each column, swap in the row whose entry is largest in size.</p>
+  <div class="eq">$$m_{ik} = \frac{a_{ik}}{a_{kk}}, \quad R_i \leftarrow R_i - m_{ik}R_k, \qquad PA = LU, \qquad x_i = \frac{1}{u_{ii}}\Big(y_i - \sum_{j>i} u_{ij}x_j\Big)$$</div>
+  <ol class="steps">
+    <li>Pick the pivot (with pivoting: the largest |entry| in the column, swapped up).</li>
+    <li>Clear the column below it with row operations; store each multiplier in L.</li>
+    <li>Repeat on the smaller matrix that is left; then back-substitute.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>2x₁ + x₂ − x₃ = 8, −3x₁ − x₂ + 2x₃ = −11, −2x₁ + x₂ + 2x₃ = −3. With pivoting, the −3 is swapped to the top; three eliminations and three back substitutions give x = (2, 3, −1). With a first pivot ε = 10⁻¹⁵ and no pivoting the multipliers are 10¹⁵ and x₁ comes out 0.777 instead of 0.75.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Computing A⁻¹ to solve Ax = b. It costs three times as much and is less accurate; factorise once and substitute.</div>
+  <div class="try"><h4>Try it</h4>Choose the tiny pivot, untick pivoting, and lower ε: the orange residual climbs as 10⁻¹⁶/ε. Tick pivoting and it drops back to round-off.</div>
+</section>
+<section data-case="gauss" data-example="zero"><h3>Zero pivot: swap rows</h3><p>The first column starts with 0. Partial pivoting swaps the row with the largest entry to the top, and elimination proceeds; the swaps are recorded in P.</p></section>
+<section data-case="gauss" data-example="nopivot"><h3>Zero pivot, no pivoting: stuck</h3><p>Without a swap the first multiplier would be a division by zero: elimination cannot even start, although the system has a unique solution.</p></section>
+<section data-case="gauss" data-example="tiny"><h3>Tiny pivot without pivoting</h3><p>ε = 10⁻¹⁵: the multipliers are about 10¹⁵, the second row's 1 is swamped and lost, and the answer is wrong in the second digit. The matrix is perfectly well conditioned: the method, not the problem, is at fault.</p></section>
+
+<section data-case="iterative">
+  <h3>Jacobi and Gauss–Seidel</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the two equations dx + cy = 1 and cx + dy = 2 as lines; Jacobi's iterates (orange) and Gauss–Seidel's (green, one coordinate at a time) walk from the start toward the crossing. Top right: the log of the error per iteration. Bottom right: the spectral radius of each method against c/d. Below: the x estimates.</div>
+  <p>Large sparse systems are solved by improving a guess again and again. <b>Jacobi</b> solves equation i for xᵢ using the old values of all the others. <b>Gauss–Seidel</b> does the same but uses each new value as soon as it has it. Each step multiplies the error by the iteration matrix; in the long run the error shrinks by its <b>spectral radius</b> ρ per step. Convergence needs ρ < 1, which is guaranteed when the matrix is <b>diagonally dominant</b>. For a 2 × 2 system ρ(GS) = ρ(Jacobi)², so Gauss–Seidel needs half as many steps.</p>
+  <div class="eq">$$x_i^{(k+1)} = \frac{1}{a_{ii}}\Big(b_i - \sum_{j\ne i} a_{ij}x_j^{(\cdot)}\Big), \qquad \|e_{k}\| \approx \rho^k\|e_0\|, \qquad \rho_J = \left|\tfrac{c}{d}\right|,\ \rho_{GS} = \tfrac{c^2}{d^2}$$</div>
+  <ol class="steps">
+    <li>Split A into its diagonal and the rest; the diagonal is what each step inverts.</li>
+    <li>Each sweep multiplies the error by the iteration matrix.</li>
+    <li>Digits gained per step = −log₁₀ ρ.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>d = 3, c = 1: ρ = 1/3 for Jacobi and 1/9 for Gauss–Seidel, about 14 and 8 steps to reach 10⁻⁶. With d = 1.2: ρ = 0.83 and 0.69, 75 and 39 steps.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Expecting an iterative method to work on any matrix. Without diagonal dominance (or symmetry and positive definiteness, for Gauss–Seidel) it may diverge, as it does here once |c| > |d|.</div>
+  <div class="try"><h4>Try it</h4>Lower d toward c and watch both paths take more and more steps; push c past d and they spiral away.</div>
+</section>
+<section data-case="iterative" data-example="dominant"><h3>Strong diagonal: fast</h3><p>d = 4, c = 1: ρ = 0.25 and 0.0625. Gauss–Seidel gains more than a digit per step.</p></section>
+<section data-case="iterative" data-example="weak"><h3>Weak diagonal: slow</h3><p>d = 1.2: the lines are nearly parallel and ρ = 0.83: the iterates creep along the narrow wedge between the lines.</p></section>
+<section data-case="iterative" data-example="diverge"><h3>|c| > |d|: they run away</h3><p>ρ = 1.3: every step multiplies the error by 1.3 (Jacobi) or 1.69 (Gauss–Seidel). The system has a solution; the method cannot reach it.</p></section>
+
+<section data-case="condition">
+  <h3>Conditioning</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: two lines meeting at an angle, each drawn with its band of uncertainty (dashed, the error in b), and 400 solutions with b perturbed inside that band (green). Top right: the condition number κ against the angle. Bottom right: A⁻¹ turning the unit circle of possible errors into an ellipse. Below: how much each trial amplified the relative error, against the worst case κ.</div>
+  <p>Some problems are sensitive by nature, whatever the method. The solution of Ax = b is the crossing of the lines; if the lines are nearly parallel, a small shift of either moves the crossing a long way. The <b>condition number</b> κ = σmax/σmin, the ratio of A's largest and smallest stretch, is the worst-case amplification of a relative error. It belongs to the problem: pivoting or a better algorithm cannot reduce it. As a rule of thumb, κ ≈ 10ᵏ costs about k significant digits.</p>
+  <div class="eq">$$\frac{\|\delta x\|}{\|x\|} \le \kappa(A)\,\frac{\|\delta b\|}{\|b\|}, \qquad \kappa(A) = \|A\|\,\|A^{-1}\| = \frac{\sigma_\text{max}}{\sigma_\text{min}}$$</div>
+  <ol class="steps">
+    <li>A maps the unit circle to an ellipse with axes σmax and σmin; A⁻¹ maps it to one with axes 1/σmin and 1/σmax.</li>
+    <li>An error in b along A's weakest direction is blown up by 1/σmin.</li>
+    <li>κ compares the worst and the best direction.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Two unit-length rows at 90° give κ = 1. At 3° they give κ = cot(1.5°) = 38: a 1 % error in b can become a 38 % error in x.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Judging a solution by its residual. For an ill-conditioned matrix |Ax − b| can be tiny while x is far from the truth.</div>
+  <div class="try"><h4>Try it</h4>Close the angle from 90° to 1° and watch the green cloud stretch along the lines and the ellipse on the right grow long and thin.</div>
+</section>
+<section data-case="condition" data-example="square"><h3>At 90°: κ = 1</h3><p>Perpendicular lines: an error in b moves x by the same amount, in every direction. The cloud is a square, the ellipse a circle.</p></section>
+<section data-case="condition" data-example="thin"><h3>At 3°: κ ≈ 38</h3><p>The same small errors now spread the solutions along a long thin streak: the crossing is badly pinned down along the lines.</p></section>

@@ -1,0 +1,35 @@
+<section data-case="golden">
+  <h3>Golden-section search</h3>
+  <div class="look"><h4>What you are looking at</h4>Top left: the function, the current bracket [a, b] (orange) and the two inner points (green). Bottom right: every bracket so far, stacked downward, each 0.618 times the one above. Top right: the log of the bracket width, a straight line. Below: the centre of the bracket closing on the minimum.</div>
+  <p>To find the minimum of a function of one variable without derivatives, keep a <b>bracket</b> that contains it and two points inside. Compare f at the two points: the minimum cannot lie beyond the worse one, so cut that end away. Placing the inner points at 0.382 and 0.618 of the bracket, the <b>golden ratio</b>, makes the remaining inner point land exactly where the next step needs one, so every step costs a single new evaluation and shrinks the bracket by the same factor 0.618. It works for any <b>unimodal</b> function, even one with a kink.</p>
+  <div class="eq">$$c = b - \varphi(b-a),\quad d = a + \varphi(b-a),\quad \varphi = \tfrac{\sqrt5-1}{2} \approx 0.618,\quad \varphi^2 + \varphi = 1$$</div>
+  <ol class="steps">
+    <li>Evaluate f(c) and f(d).</li>
+    <li>If f(c) < f(d) keep [a, d], else keep [c, b].</li>
+    <li>One old point is reused; evaluate the one new point and repeat.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A bracket of width 3: after 20 evaluations it is 3 × 0.618²⁰ = 2.0·10⁻⁴ wide. Each digit of accuracy costs log(10)/log(1/0.618) ≈ 4.8 evaluations.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Using it on a function with several minima in the bracket: it converges to one of them, not necessarily the lowest.</div>
+  <div class="try"><h4>Try it</h4>Change the function to the kink: the bracket still shrinks by exactly 0.618 per step, since only comparisons of f are used.</div>
+</section>
+<section data-case="golden" data-example="kink"><h3>A kink: no derivative needed</h3><p>|x − 2| + 0.2x has no derivative at its minimum, which would stop Newton's method; golden-section search does not care.</p></section>
+<section data-case="golden" data-example="sine"><h3>−sin x: the top of a hill</h3><p>Minimising −sin x is maximising sin x: the bracket closes on π/2.</p></section>
+
+<section data-case="descent">
+  <h3>Gradient descent and Newton's method</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the contour map of f (dark = low) with the paths of the chosen methods from the start (bright dot). Top right: log f against iteration; bottom right: log |∇f|. Below: each method's distance to the minimum.</div>
+  <p><b>Gradient descent</b> steps against the gradient, downhill, by a fixed fraction η. On an elongated bowl it is caught between two limits: η must be below 2/λmax or it overshoots the steep direction and diverges, yet along the shallow direction it then crawls. <b>Steepest descent with a line search</b> chooses the best step along the gradient each time; it never diverges, but on an elongated bowl it zig-zags at right angles, losing a factor ((κ − 1)/(κ + 1))² per step. <b>Newton's method</b> also uses the curvature (the Hessian H): it jumps to the minimum of the local quadratic model, in one step on a quadratic, and near any minimum it doubles its correct digits every step.</p>
+  <div class="eq">$$x \leftarrow x - \eta\nabla f, \qquad x \leftarrow x - \alpha^*\nabla f\ \ (\alpha^* = \arg\min_\alpha f), \qquad x \leftarrow x - H^{-1}\nabla f$$</div>
+  <ol class="steps">
+    <li>The elongation κ = λmax/λmin of the bowl decides how hard first-order methods find it.</li>
+    <li>A fixed step is stable only for η < 2/λmax.</li>
+    <li>Newton divides out the curvature: every direction looks the same to it.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A bowl with κ = 50 from (2.4, 1.6): the line search loses only a factor (49/51)² = 0.92 per step and is still at f = 5·10⁻⁴ after 40 steps; a fixed step of 0.15 is above 2/50 = 0.04 and diverges; Newton lands on the minimum in one step. On Rosenbrock's valley from (−1.2, 1) Newton reaches the minimum in 5 steps.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Raising the learning rate to go faster: past 2/λmax gradient descent does not go faster, it explodes. And Newton is not free: it needs second derivatives and a linear solve per step, which in many dimensions costs more than many gradient steps.</div>
+  <div class="try"><h4>Try it</h4>With the line search alone, raise κ from 1 to 100: the path turns from one straight step into a long zig-zag across the valley.</div>
+</section>
+<section data-case="descent" data-example="round"><h3>Round bowl (κ = 1)</h3><p>The gradient points straight at the minimum: the line search and Newton arrive in one step, fixed-step descent on a straight line.</p></section>
+<section data-case="descent" data-example="zigzag"><h3>κ = 50: line search zig-zags</h3><p>Each exact step ends where the new gradient is perpendicular to the old one: right-angle turns across a narrow valley, slow progress along it.</p></section>
+<section data-case="descent" data-example="big"><h3>Step too big: gradient descent diverges</h3><p>κ = 10, so the limit is 2/10 = 0.2; η = 0.21 overshoots the steep direction a little more each time and the path flies off.</p></section>
+<section data-case="descent" data-example="banana"><h3>Rosenbrock: Newton follows the valley</h3><p>The curved valley floor defeats steepest descent, which bounces between the walls; Newton's quadratic model bends with the valley and reaches (1, 1) in a handful of steps.</p></section>

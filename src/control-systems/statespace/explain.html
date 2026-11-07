@@ -1,0 +1,53 @@
+<section data-case="model">
+  <h3>State space and eigenvalues</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the phase plane of a mass on a spring with a damper, position across and velocity up. Each grey arrow is the direction the state moves from that point, ẋ = Ax, and the blue curve is the trajectory from the chosen start. Top right: the eigenvalues of A in the s-plane. Bottom right: position (blue) and velocity (orange) in time. Below: the stored energy.</div>
+  <p>A transfer function hides what is going on inside; the <b>state-space</b> form writes it out. The state is the smallest set of numbers that, with the future input, fixes the future: for a mass, its position and velocity. The dynamics become one matrix equation, ẋ = Ax + Bu, y = Cx. The <b>eigenvalues of A</b> are exactly the poles of the transfer function: their real part sets how fast the state decays (or grows), their imaginary part how fast it turns. In the phase plane a pair of complex eigenvalues is a spiral, two real ones a slide along two straight directions (the eigenvectors), and purely imaginary ones a closed orbit.</p>
+  <div class="eq">$$\dot{\mathbf x} = A\mathbf x + B u,\quad y = C\mathbf x, \qquad A = \begin{pmatrix}0 & 1\\ -k/m & -c/m\end{pmatrix},\quad \det(sI - A) = s^2 + \tfrac{c}{m}s + \tfrac{k}{m}$$</div>
+  <ol class="steps">
+    <li>Choose the state: one number per energy store (the spring's x, the mass's v).</li>
+    <li>Write each state's rate of change as a sum of states and inputs: those are the rows of A and B.</li>
+    <li>The eigenvalues of A are the poles; the eigenvectors are the directions that only shrink or grow.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>m = 1 kg, k = 4 N/m, c = 0.4 N·s/m: s² + 0.4s + 4 = 0 gives s = −0.2 ± 1.99j. The state turns at 1.99 rad/s (period 3.2 s) and shrinks as e^(−0.2t), so the energy as e^(−0.4t).</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking the state is unique. Any invertible change of variables gives another valid A with the same eigenvalues: the poles belong to the system, the matrix to your choice of coordinates.</div>
+  <div class="try"><h4>Try it</h4>Lower the damping to 0: the spiral closes into an ellipse and the eigenvalues land on the imaginary axis. Make it negative and the spiral opens outward.</div>
+</section>
+<section data-case="model" data-example="undamped"><h3>No damping: a closed orbit</h3><p>c = 0: the eigenvalues are ±2j, the energy is constant, and the state goes round the same ellipse for ever.</p></section>
+<section data-case="model" data-example="over"><h3>Heavy damping: two real poles</h3><p>c = 5: s = −1 and −4. No spiral: the state first slides fast along one eigenvector, then slowly along the other into the origin.</p></section>
+<section data-case="model" data-example="negative"><h3>Negative damping: it grows</h3><p>c = −0.3 (something pumps energy in, as in a squealing brake): s = 0.15 ± 1.99j, in the right half-plane. The spiral opens out.</p></section>
+
+<section data-case="placement">
+  <h3>Pole placement</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the position after a step command r = 1, open loop (grey, a constant force) and with state feedback (green). Top right: the open-loop poles (grey) and the closed-loop poles you chose (green). Bottom right: the force the feedback asks for. Below: the two feedback gains against the chosen ωn.</div>
+  <p>If you can measure the whole state, feed it all back: u = −Kx + Nr. The closed loop becomes ẋ = (A − BK)x + BNr, and with two gains you can put the two closed-loop poles <b>anywhere you like</b>. That works whenever the system is <b>controllable</b>, when the input can push the state in every direction (directly or through A). The price is force: faster poles need bigger gains, and the position gain grows as ωn².</p>
+  <div class="eq">$$u = -K\mathbf x + N r,\qquad \det(sI - A + BK) = s^2 + 2\zeta\omega_n s + \omega_n^2 \ \Rightarrow\ K = \big[m\omega_n^2 - k,\ \ 2m\zeta\omega_n - c\big],\quad N = m\omega_n^2$$</div>
+  <ol class="steps">
+    <li>Choose where the poles should be: ζ for the overshoot, ωn for the speed.</li>
+    <li>Match the coefficients of the desired characteristic polynomial: one gain per state.</li>
+    <li>Scale the reference with N so that the output settles exactly at r.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>m = 1, k = 4, c = 0.4, poles at ωn = 3 rad/s, ζ = 0.7: K = [9 − 4, 4.2 − 0.4] = [5, 3.8], N = 9. The first instant the feedback pushes with 9 N. Double ωn to 6 rad/s: K = [32, 8], and the push is 36 N, four times as much.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Placing poles very far left to make the system fast, forgetting the actuator. Real motors saturate, and very high gains also amplify sensor noise.</div>
+  <div class="try"><h4>Try it</h4>Slide ωn from 1 to 10 and watch the green step get faster while the force on the bottom right grows with the square.</div>
+</section>
+<section data-case="placement" data-example="fast"><h3>Twice as fast: four times the force</h3><p>ωn = 6 rad/s: the step settles in half the time, and the initial push is 36 N instead of 9.</p></section>
+<section data-case="placement" data-example="critical"><h3>ζ = 1: no overshoot</h3><p>A double real pole at −3: the fastest response that never overshoots.</p></section>
+<section data-case="placement" data-example="ringing"><h3>ζ = 0.2: rings</h3><p>The poles are close to the imaginary axis: about 53 % overshoot and a slowly dying oscillation.</p></section>
+
+<section data-case="observer">
+  <h3>Observers and the Kalman filter</h3>
+  <div class="look"><h4>What you are looking at</h4>The mass is pushed by a known force and by an unknown disturbance; only its position is measured, with noise. Left: the true position (grey), the measurements (dots) and the estimate (green). Top right: the velocity, the true one, the one you get by differencing the measurements (orange, very noisy), and the estimate. Bottom right and below: the estimate's velocity error.</div>
+  <p>State feedback needs the whole state, but sensors often measure only part of it: here the position, not the velocity. Differencing a noisy position divides the noise by the sample time and is useless. An <b>observer</b> runs a copy of the model alongside the plant, feeds it the same known input, and corrects it with the measurement error through a gain L. Its error obeys ė = (A − LC)e: you choose its poles like a controller's. A fast observer corrects quickly but lets the measurement noise through; a slow one is smooth but lags behind the unknown disturbance. The <b>Kalman filter</b> picks L from how noisy the measurement is and how uncertain the model is.</p>
+  <div class="eq">$$\dot{\hat{\mathbf x}} = A\hat{\mathbf x} + Bu + L\,(y - C\hat{\mathbf x}), \qquad \dot{\mathbf e} = (A - LC)\,\mathbf e$$</div>
+  <ol class="steps">
+    <li>Predict with the model: the known input moves the estimate as it moves the plant.</li>
+    <li>Correct with the innovation y − Cx̂, weighted by L.</li>
+    <li>Choose L: by pole placement (speed ωo) or by Kalman (the noise levels).</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>Position noise 2 cm sampled every 5 ms, a disturbance of 1 N rms: differencing gives a velocity error of 5.7 m/s rms. An observer at ωo = 1.5 rad/s is off by 0.54 m/s (it lags the disturbance), at 12 rad/s by 0.12 m/s, at 60 rad/s by 0.46 m/s (it follows the noise). The Kalman filter tuned to the true noise levels gets 0.13 m/s without any trial and error.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Making the observer as fast as possible. Past a point it stops filtering and becomes a noisy differentiator again.</div>
+  <div class="try"><h4>Try it</h4>Sweep the observer speed ωo from 0.5 to 60 rad/s and watch the velocity error: large, then small, then large again.</div>
+</section>
+<section data-case="observer" data-example="slow"><h3>Slow observer: smooth but late</h3><p>ωo = 1.5 rad/s: the estimate is smooth, but the disturbance moves the mass faster than the observer can follow.</p></section>
+<section data-case="observer" data-example="fast"><h3>Fast observer: passes the noise</h3><p>ωo = 60 rad/s: the estimate trusts every measurement, so the position noise reappears, magnified, in the velocity.</p></section>
+<section data-case="observer" data-example="kalman"><h3>Kalman: the noise decides</h3><p>With the filter's assumed disturbance equal to the true one, the gain lands near the best one by itself. Raise the measurement noise and the gain falls (trust the model more); raise the disturbance and it grows (trust the measurement more).</p></section>

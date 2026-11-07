@@ -1,0 +1,67 @@
+<section data-case="slits">
+  <h3>Matter waves: electrons through two slits</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the screen behind two slits; every dot is one electron arriving, and they keep coming as the clock runs. Top right: the counts per strip of the screen (bars) against the pattern a wave would make (line). Bottom right: the electron's de Broglie wavelength against its energy. Below: the pattern with both slits open and unwatched (green) and with a detector that tells which slit each electron took (red).</div>
+  <p>De Broglie proposed that every particle has a wavelength, λ = h/p. For electrons of a few tens of eV it is a fraction of a nanometre, the spacing of atoms in a crystal. Fire electrons at two narrow slits <b>one at a time</b>: each lands at a single point, like a particle. But the points are not where particles would go. They pile up into bright and dark fringes, exactly where a wave passing through both slits would interfere. Try to find out which slit each electron went through and the fringes disappear: the two possibilities no longer interfere.</p>
+  <div class="eq">$$\lambda = \frac{h}{p} = \frac{h}{\sqrt{2m_eE}}, \qquad I(\theta) \propto \cos^2\!\Big(\frac{\pi d\sin\theta}{\lambda}\Big)\,\mathrm{sinc}^2\!\Big(\frac{\pi a\sin\theta}{\lambda}\Big), \qquad \Delta\theta \approx \frac{\lambda}{d}$$</div>
+  <ol class="steps">
+    <li>From the energy, the momentum and the wavelength.</li>
+    <li>The wave through both slits makes fringes λ/d apart, under a single-slit envelope.</li>
+    <li>Each electron is one sample from |ψ|²: individually random, collectively the pattern.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>50 eV electrons: λ = 1.226 nm/√50 = 0.173 nm. Through slits 200 nm apart the fringes are 0.17 nm / 200 nm = 0.87 mrad apart. At 500 eV, λ = 0.055 nm and the fringes are three times closer.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking each electron splits in two, or that many electrons interfere with each other. They arrive one at a time; each one's own wave goes through both slits.</div>
+  <div class="try"><h4>Try it</h4>Let the dots pile up, then tick the detector: the same dots now fall into two plain humps.</div>
+</section>
+<section data-case="slits" data-example="detector"><h3>Watch which slit: no fringes</h3><p>A detector at the slits records each electron's path, and the interference term disappears: the screen shows only the sum of two single-slit patterns.</p></section>
+<section data-case="slits" data-example="fast"><h3>Faster electrons: finer fringes</h3><p>Ten times the energy, √10 times the momentum, √10 times shorter wavelength: the fringes crowd together. This is why electron microscopes resolve far finer detail than light.</p></section>
+
+<section data-case="uncertainty">
+  <h3>The uncertainty principle</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a wave packet ψ(x), its real part (blue) and probability |ψ|² (green), with the position spread Δx marked. Top right: the spread of its wavenumbers, |φ(k)|², the momentum distribution (p = ħk), with Δk marked. Bottom right: the product Δx·Δk against the width, with its minimum ½. Below: Δx and Δk against the width.</div>
+  <p>A wave of a single wavelength stretches over all of space. To make a localised packet you have to add many wavelengths, and the narrower the packet, the wider the spread of wavenumbers you need. Since p = ħk, a particle cannot have both a sharp position and a sharp momentum. The bound is a property of any wave, computed here by Fourier transform: the product of the two spreads can never fall below ½, and only a Gaussian packet with no chirp reaches it.</p>
+  <div class="eq">$$\Delta x\,\Delta k \ge \tfrac12 \quad\Longrightarrow\quad \Delta x\,\Delta p \ge \frac{\hbar}{2}, \qquad \text{Gaussian: } \Delta k = \frac{1}{2\sigma},\ \ \text{chirp } c:\ \Delta x\,\Delta k = \tfrac12\sqrt{1 + 16c^2\sigma^4}$$</div>
+  <ol class="steps">
+    <li>Build ψ(x); its Fourier transform φ(k) says how much of each wavenumber it contains.</li>
+    <li>Measure both widths as standard deviations of |ψ|² and |φ|².</li>
+    <li>Narrow one and the other widens; their product stays at least ½.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>σ = 1: Δx = 1, Δk = 0.5, product 0.5. σ = 0.3: Δk = 1.67, still 0.5. With a chirp c = 0.4 at σ = 1: Δx is unchanged but Δk grows to 0.94, a product of 0.94.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Reading it as a limit of clumsy instruments. It is a statement about the wave itself: a state with both spreads small does not exist.</div>
+  <div class="try"><h4>Try it</h4>Squeeze σ from 4 to 0.2: the packet narrows on the left while its momentum distribution spreads on the right, and the product stays pinned at ½.</div>
+</section>
+<section data-case="uncertainty" data-example="narrow"><h3>Squeeze the packet</h3><p>σ = 0.3: a sharply located particle, with a momentum spread more than three times that of σ = 1.</p></section>
+<section data-case="uncertainty" data-example="chirp"><h3>A chirp: more than the minimum</h3><p>A wavelength that changes along the packet adds wavenumbers without narrowing it: the product rises above ½.</p></section>
+
+<section data-case="tunnel">
+  <h3>Quantum tunnelling</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: an electron wave coming from the left onto a barrier (grey) higher than its energy (orange dashed). The real part of ψ (blue) turns in time; |ψ|² (green) shows where the electron is likely to be. Top right: the transmission against E/V₀. Bottom right: the transmission against the barrier's width, on a log scale. Below: |ψ|² across the barrier.</div>
+  <p>A ball that does not have the energy to climb a hill rolls back. An electron is a wave, and a wave does not stop dead at the barrier: inside it decays exponentially, and if the barrier is thin enough some of it is still there on the other side, where it travels on. The fraction that gets through, the <b>transmission</b>, falls roughly as e^(−2κa), so every extra fraction of a nanometre costs orders of magnitude. Above the barrier the wave passes, but not entirely: part of it still reflects.</p>
+  <div class="eq">$$\kappa = \frac{\sqrt{2m(V_0 - E)}}{\hbar}, \qquad T = \Big[1 + \frac{V_0^2\sinh^2(\kappa a)}{4E(V_0 - E)}\Big]^{-1} \approx 16\frac{E}{V_0}\Big(1-\frac{E}{V_0}\Big)e^{-2\kappa a}$$</div>
+  <ol class="steps">
+    <li>Outside: incoming plus reflected wave on the left, transmitted wave on the right.</li>
+    <li>Inside: growing and decaying exponentials.</li>
+    <li>Match ψ and ψ′ at both edges: four equations give the reflection and transmission.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A 2 eV electron on a 5 eV barrier: κ = 8.9 nm⁻¹. Through 0.5 nm the transmission is 5.4·10⁻⁴; through 1 nm it is 7.5·10⁻⁸, ten thousand times less for twice the width. At 6 eV, above the barrier, 24 % still reflects from a 0.5 nm step.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking the electron "borrows" energy or loses energy inside. The transmitted wave has the same energy as the incoming one; only its amplitude is smaller.</div>
+  <div class="try"><h4>Try it</h4>Widen the barrier step by step and watch the log transmission fall along a straight line on the bottom right.</div>
+</section>
+<section data-case="tunnel" data-example="thick"><h3>Twice as thick</h3><p>1 nm instead of 0.5 nm: the transmission drops from 5·10⁻⁴ to 8·10⁻⁸, because the exponent doubles. The tunnelling current of a scanning tunnelling microscope changes by about ten times for every 0.1 nm of height.</p></section>
+<section data-case="tunnel" data-example="above"><h3>Above the barrier</h3><p>E = 6 eV on 5 eV: classically everything passes. The wave changes wavelength at the edges, and a quarter of it reflects.</p></section>
+
+<section data-case="compton">
+  <h3>Compton scattering</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a photon (orange) hits an electron at rest (green dot); the photon leaves at the angle θ with a longer wavelength (blue), and the electron recoils (green line). The drawn wavelengths are scaled for visibility. Top right: the wavelength shift against the angle. Bottom right: the share of its energy the photon keeps. Below: the electron's recoil angle.</div>
+  <p>Shine X-rays on a block of graphite and the scattered X-rays have a <b>longer wavelength</b>, more so at larger angles, which a classical wave cannot do. Compton explained it by treating light as particles carrying energy E = hc/λ and momentum p = h/λ, and the scattering as an elastic collision with an electron. Conserving energy and momentum gives a shift that depends only on the angle, on the scale of the <b>Compton wavelength</b> h/(mₑc) = 2.43 pm.</p>
+  <div class="eq">$$\lambda' - \lambda = \frac{h}{m_ec}(1 - \cos\theta), \qquad \frac{h}{m_ec} = 2.426\ \text{pm}, \qquad E = \frac{hc}{\lambda},\quad p = \frac{h}{\lambda}$$</div>
+  <ol class="steps">
+    <li>Energy: photon before = photon after + the electron's kinetic energy.</li>
+    <li>Momentum: along and across the incoming direction, both conserved.</li>
+    <li>Eliminate the electron: the shift is λc(1 − cos θ), whatever λ was.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A 10 pm X-ray (124 keV) scattered at 90°: λ′ = 12.43 pm, the photon keeps 99.8 keV and the electron flies off with 24.2 keV at 39°. Green light at 500 nm, even backscattered, shifts by 4.9 pm, one part in 10⁵: invisible.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Expecting the shift to grow with the wavelength. It is the same few picometres for any photon; what changes is how big it is compared with λ.</div>
+  <div class="try"><h4>Try it</h4>Sweep θ from 0 to 180°: the shift climbs from nothing to 2λc = 4.85 pm, and the electron's recoil swings from sideways to straight ahead.</div>
+</section>
+<section data-case="compton" data-example="back"><h3>Backscatter: Δλ = 2λc</h3><p>θ = 180°: the photon bounces straight back, hands the electron the most energy possible, and its wavelength grows by 4.85 pm.</p></section>
+<section data-case="compton" data-example="light"><h3>Visible light: no visible shift</h3><p>At 500 nm the photon carries 2.5 eV; the same picometre shift is a hundred-thousandth of its wavelength. That is why the effect needs X-rays or gamma rays.</p></section>

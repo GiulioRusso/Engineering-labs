@@ -15,6 +15,7 @@
   <ol class="steps"><li>List (or picture) all outcomes, making sure they are equally likely.</li><li>Count those in the event.</li><li>Divide. For "A or B", add the two counts but subtract the green ones, counted twice.</li></ol>
   <div class="worked"><h4>Worked example</h4>"At least one 6": 6 + 6 − 1 = 11 cells (the (6,6) cell is in both rows), so 11/36 ≈ 0.31 — not 2/6.</div>
   <div class="pitfall"><h4>Common mistake</h4>Treating the sums 2…12 as equally likely. They are not: 7 has six outcomes, 2 has one.</div>
+  <div class="try"><h4>Try it</h4>Set event A to 'sum = k' and sweep k from 2 to 12: the number of lit cells rises to 6 at k = 7 and falls again. Then pick two events that share no cell and check that P(A or B) = P(A) + P(B).</div>
 </section>
 <section data-case="space" data-example="seven"><h3>Sum = 7</h3><p>The diagonal of six cells: 6/36 = 1/6, the most likely sum.</p></section>
 <section data-case="space" data-example="six"><h3>At least one 6</h3><p>The last row and column: 11 cells.</p></section>
@@ -26,6 +27,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mrow><mo fence="true">(</mo><mfrac linethickness="0px"><mi>n</mi><mi>k</mi></mfrac><mo fence="true">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><mo stretchy="false">!</mo></mrow><mrow><mi>k</mi><mo stretchy="false">!</mo><mtext> </mtext><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>k</mi><mo stretchy="false">)</mo><mo stretchy="false">!</mo></mrow></mfrac><mo separator="true">,</mo><mspace width="2em"/><mi>P</mi><mo stretchy="false">(</mo><mtext>shared birthday</mtext><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mn>365</mn><mo>⋅</mo><mn>364</mn><mo>⋯</mo><mo stretchy="false">(</mo><mn>365</mn><mo>−</mo><mi>g</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><msup><mn>365</mn><mi>g</mi></msup></mfrac></mrow><annotation encoding="application/x-tex">\binom nk=\frac{n!}{k!\,(n-k)!},\qquad P(\text{shared birthday})=1-\frac{365\cdot364\cdots(365-g+1)}{365^g}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>Lottery 6 of 49: C(49, 6) ≈ 14 million tickets. Birthday: with 23 people there are 253 pairs, enough to make a match more likely than not.</div>
   <div class="pitfall"><h4>Common mistake</h4>Counting "at least one" directly. Count the complement ("none") and subtract from 1.</div>
+  <div class="try"><h4>Try it</h4>Raise the people in the room from 2 to 70: the chance of a shared birthday passes 50 % at 23 and is almost certain by 60.</div>
 </section>
 <section data-case="counting" data-example="pascal"><h3>C(10, 5)</h3><p>252 ways to pick 5 of 10 — the middle of row 10.</p></section>
 <section data-case="counting" data-example="bday"><h3>23 people</h3><p>P ≈ 0.507: the famous surprise.</p></section>
@@ -37,6 +39,7 @@
   <ol class="steps"><li>Multiply along a branch of the tree to get a joint probability.</li><li>Add the branches that end in B to get P(B).</li><li>Divide one branch by the total to reverse the condition (Bayes).</li></ol>
   <div class="worked"><h4>Worked example</h4>P(A) = 0.3, P(B|A) = 0.8, P(B|¬A) = 0.1: P(B) = 0.24 + 0.07 = 0.31, P(A|B) = 0.24/0.31 ≈ 0.77.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing P(B | A) with P(A | B) — "most smokers don't get cancer" vs "most lung-cancer patients smoked".</div>
+  <div class="try"><h4>Try it</h4>Make P(B | A) equal to P(B | not A): the two columns have the same split and A tells you nothing about B, so they are independent.</div>
 </section>
 <section data-case="conditional" data-example="indep"><h3>Independent</h3><p>The B parts have the same height in both columns: knowing A changes nothing, and P(A and B) = P(A)·P(B).</p></section>
 <section data-case="conditional" data-example="rare"><h3>Rare A</h3><p>Even with a reliable B, most of the B area lies in "not A": P(A | B) stays low (see Bayes' theorem).</p></section>
@@ -46,6 +49,7 @@
   <p>Probability is what relative frequency settles to in the long run. Early frequencies are wild; as n grows they squeeze toward p, with a typical error that shrinks like 1/√n.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><msub><mi>S</mi><mi>n</mi></msub><mi>n</mi></mfrac><mover><mo stretchy="true" minsize="3.0em">→</mo><mpadded width="+0.6em" lspace="0.3em"><mrow><mi>n</mi><mo>→</mo><mi mathvariant="normal">∞</mi></mrow></mpadded></mover><mi>p</mi><mo separator="true">,</mo><mspace width="2em"/><mtext>typical error</mtext><mo>≈</mo><msqrt><mfrac><mrow><mi>p</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><mi>n</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\frac{S_n}{n}\xrightarrow{n\to\infty}p,\qquad \text{typical error}\approx\sqrt{\frac{p(1-p)}{n}}</annotation></semantics></math></span></div>
   <div class="pitfall"><h4>Common mistake</h4>The gambler's fallacy: after five tails, heads is not "due". The frequency converges because later trials swamp the early ones, not because the coin compensates.</div>
+  <div class="try"><h4>Try it</h4>Lower P(success) to 0.05 and watch the running frequency: the swings around p last longer, but the band still narrows as 1/√n.</div>
 </section>
 <section data-case="lln" data-example="rare"><h3>p = 0.05</h3><p>Rare successes: many trials pass before the first one, and the relative error stays large for longer.</p></section>
 <section data-case="expect">
@@ -55,6 +59,7 @@
   <p>The expected value is the long-run average per play. The standard deviation measures how far single outcomes typically land from it.</p>
   <div class="worked"><h4>Worked example</h4>Roulette, €1 on red: E = 1·18/37 − 1·19/37 = −1/37 ≈ −€0.027 per play.</div>
   <div class="pitfall"><h4>Common mistake</h4>Judging a game by its best prize or its most likely outcome. A lottery's top prize is huge, its mean still negative.</div>
+  <div class="try"><h4>Try it</h4>Switch from the fair die to roulette: the running average settles below zero, the house edge. Pick the lottery and see how rare big wins make the average jump.</div>
 </section>
 <section data-case="expect" data-example="roulette"><h3>Roulette</h3><p>The running average sinks toward −0.027.</p></section>
 <section data-case="expect" data-example="lottery"><h3>Lottery</h3><p>The average jumps up at each rare prize and drifts back down.</p></section>
@@ -67,6 +72,7 @@
   <ol class="steps"><li>List (or picture) all outcomes, making sure they are equally likely.</li><li>Count those in the event.</li><li>Divide. For "A or B", add the two counts but subtract the green ones, counted twice.</li></ol>
   <div class="worked"><h4>Worked example</h4>"At least one 6": 6 + 6 − 1 = 11 cells (the (6,6) cell is in both rows), so 11/36 ≈ 0.31 — not 2/6.</div>
   <div class="pitfall"><h4>Common mistake</h4>Treating the sums 2…12 as equally likely. They are not: 7 has six outcomes, 2 has one.</div>
+  <div class="try"><h4>Try it</h4>Set event A to 'sum = k' and sweep k from 2 to 12: the number of lit cells rises to 6 at k = 7 and falls again. Then pick two events that share no cell and check that P(A or B) = P(A) + P(B).</div>
 </section>
 <section data-case="space" data-example="seven"><h3>Sum = 7</h3><p>The diagonal of six cells: 6/36 = 1/6, the most likely sum.</p></section>
 <section data-case="space" data-example="six"><h3>At least one 6</h3><p>The last row and column: 11 cells.</p></section>
@@ -78,6 +84,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mrow><mo fence="true">(</mo><mfrac linethickness="0px"><mi>n</mi><mi>k</mi></mfrac><mo fence="true">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><mo stretchy="false">!</mo></mrow><mrow><mi>k</mi><mo stretchy="false">!</mo><mtext> </mtext><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>k</mi><mo stretchy="false">)</mo><mo stretchy="false">!</mo></mrow></mfrac><mo separator="true">,</mo><mspace width="2em"/><mi>P</mi><mo stretchy="false">(</mo><mtext>shared birthday</mtext><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mn>365</mn><mo>⋅</mo><mn>364</mn><mo>⋯</mo><mo stretchy="false">(</mo><mn>365</mn><mo>−</mo><mi>g</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><msup><mn>365</mn><mi>g</mi></msup></mfrac></mrow><annotation encoding="application/x-tex">\binom nk=\frac{n!}{k!\,(n-k)!},\qquad P(\text{shared birthday})=1-\frac{365\cdot364\cdots(365-g+1)}{365^g}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>Lottery 6 of 49: C(49, 6) ≈ 14 million tickets. Birthday: with 23 people there are 253 pairs, enough to make a match more likely than not.</div>
   <div class="pitfall"><h4>Common mistake</h4>Counting "at least one" directly. Count the complement ("none") and subtract from 1.</div>
+  <div class="try"><h4>Try it</h4>Raise the people in the room from 2 to 70: the chance of a shared birthday passes 50 % at 23 and is almost certain by 60.</div>
 </section>
 <section data-case="counting" data-example="pascal"><h3>C(10, 5)</h3><p>252 ways to pick 5 of 10 — the middle of row 10.</p></section>
 <section data-case="counting" data-example="bday"><h3>23 people</h3><p>P ≈ 0.507: the famous surprise.</p></section>
@@ -89,6 +96,7 @@
   <ol class="steps"><li>Multiply along a branch of the tree to get a joint probability.</li><li>Add the branches that end in B to get P(B).</li><li>Divide one branch by the total to reverse the condition (Bayes).</li></ol>
   <div class="worked"><h4>Worked example</h4>P(A) = 0.3, P(B|A) = 0.8, P(B|¬A) = 0.1: P(B) = 0.24 + 0.07 = 0.31, P(A|B) = 0.24/0.31 ≈ 0.77.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing P(B | A) with P(A | B) — "most smokers don't get cancer" vs "most lung-cancer patients smoked".</div>
+  <div class="try"><h4>Try it</h4>Make P(B | A) equal to P(B | not A): the two columns have the same split and A tells you nothing about B, so they are independent.</div>
 </section>
 <section data-case="conditional" data-example="indep"><h3>Independent</h3><p>The B parts have the same height in both columns: knowing A changes nothing, and P(A and B) = P(A)·P(B).</p></section>
 <section data-case="conditional" data-example="rare"><h3>Rare A</h3><p>Even with a reliable B, most of the B area lies in "not A": P(A | B) stays low (see Bayes' theorem).</p></section>
@@ -98,6 +106,7 @@
   <p>Probability is what relative frequency settles to in the long run. Early frequencies are wild; as n grows they squeeze toward p, with a typical error that shrinks like 1/√n.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><msub><mi>S</mi><mi>n</mi></msub><mi>n</mi></mfrac><mover><mo stretchy="true" minsize="3.0em">→</mo><mpadded width="+0.6em" lspace="0.3em"><mrow><mi>n</mi><mo>→</mo><mi mathvariant="normal">∞</mi></mrow></mpadded></mover><mi>p</mi><mo separator="true">,</mo><mspace width="2em"/><mtext>typical error</mtext><mo>≈</mo><msqrt><mfrac><mrow><mi>p</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><mi>n</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\frac{S_n}{n}\xrightarrow{n\to\infty}p,\qquad \text{typical error}\approx\sqrt{\frac{p(1-p)}{n}}</annotation></semantics></math></span></div>
   <div class="pitfall"><h4>Common mistake</h4>The gambler's fallacy: after five tails, heads is not "due". The frequency converges because later trials swamp the early ones, not because the coin compensates.</div>
+  <div class="try"><h4>Try it</h4>Lower P(success) to 0.05 and watch the running frequency: the swings around p last longer, but the band still narrows as 1/√n.</div>
 </section>
 <section data-case="lln" data-example="rare"><h3>p = 0.05</h3><p>Rare successes: many trials pass before the first one, and the relative error stays large for longer.</p></section>
 <section data-case="expect">
@@ -107,6 +116,7 @@
   <p>The expected value is the long-run average per play. The standard deviation measures how far single outcomes typically land from it.</p>
   <div class="worked"><h4>Worked example</h4>Roulette, €1 on red: E = 1·18/37 − 1·19/37 = −1/37 ≈ −€0.027 per play.</div>
   <div class="pitfall"><h4>Common mistake</h4>Judging a game by its best prize or its most likely outcome. A lottery's top prize is huge, its mean still negative.</div>
+  <div class="try"><h4>Try it</h4>Switch from the fair die to roulette: the running average settles below zero, the house edge. Pick the lottery and see how rare big wins make the average jump.</div>
 </section>
 <section data-case="expect" data-example="roulette"><h3>Roulette</h3><p>The running average sinks toward −0.027.</p></section>
 <section data-case="expect" data-example="lottery"><h3>Lottery</h3><p>The average jumps up at each rare prize and drifts back down.</p></section>
@@ -119,6 +129,7 @@
   <ol class="steps"><li>List (or picture) all outcomes, making sure they are equally likely.</li><li>Count those in the event.</li><li>Divide. For "A or B", add the two counts but subtract the green ones, counted twice.</li></ol>
   <div class="worked"><h4>Worked example</h4>"At least one 6": 6 + 6 − 1 = 11 cells (the (6,6) cell is in both rows), so 11/36 ≈ 0.31 — not 2/6.</div>
   <div class="pitfall"><h4>Common mistake</h4>Treating the sums 2…12 as equally likely. They are not: 7 has six outcomes, 2 has one.</div>
+  <div class="try"><h4>Try it</h4>Set event A to 'sum = k' and sweep k from 2 to 12: the number of lit cells rises to 6 at k = 7 and falls again. Then pick two events that share no cell and check that P(A or B) = P(A) + P(B).</div>
 </section>
 <section data-case="space" data-example="seven"><h3>Sum = 7</h3><p>The diagonal of six cells: 6/36 = 1/6, the most likely sum.</p></section>
 <section data-case="space" data-example="six"><h3>At least one 6</h3><p>The last row and column: 11 cells.</p></section>
@@ -130,6 +141,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mrow><mo fence="true">(</mo><mfrac linethickness="0px"><mi>n</mi><mi>k</mi></mfrac><mo fence="true">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><mo stretchy="false">!</mo></mrow><mrow><mi>k</mi><mo stretchy="false">!</mo><mtext> </mtext><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>k</mi><mo stretchy="false">)</mo><mo stretchy="false">!</mo></mrow></mfrac><mo separator="true">,</mo><mspace width="2em"/><mi>P</mi><mo stretchy="false">(</mo><mtext>shared birthday</mtext><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mn>365</mn><mo>⋅</mo><mn>364</mn><mo>⋯</mo><mo stretchy="false">(</mo><mn>365</mn><mo>−</mo><mi>g</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><msup><mn>365</mn><mi>g</mi></msup></mfrac></mrow><annotation encoding="application/x-tex">\binom nk=\frac{n!}{k!\,(n-k)!},\qquad P(\text{shared birthday})=1-\frac{365\cdot364\cdots(365-g+1)}{365^g}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>Lottery 6 of 49: C(49, 6) ≈ 14 million tickets. Birthday: with 23 people there are 253 pairs, enough to make a match more likely than not.</div>
   <div class="pitfall"><h4>Common mistake</h4>Counting "at least one" directly. Count the complement ("none") and subtract from 1.</div>
+  <div class="try"><h4>Try it</h4>Raise the people in the room from 2 to 70: the chance of a shared birthday passes 50 % at 23 and is almost certain by 60.</div>
 </section>
 <section data-case="counting" data-example="pascal"><h3>C(10, 5)</h3><p>252 ways to pick 5 of 10 — the middle of row 10.</p></section>
 <section data-case="counting" data-example="bday"><h3>23 people</h3><p>P ≈ 0.507: the famous surprise.</p></section>
@@ -141,6 +153,7 @@
   <ol class="steps"><li>Multiply along a branch of the tree to get a joint probability.</li><li>Add the branches that end in B to get P(B).</li><li>Divide one branch by the total to reverse the condition (Bayes).</li></ol>
   <div class="worked"><h4>Worked example</h4>P(A) = 0.3, P(B|A) = 0.8, P(B|¬A) = 0.1: P(B) = 0.24 + 0.07 = 0.31, P(A|B) = 0.24/0.31 ≈ 0.77.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing P(B | A) with P(A | B) — "most smokers don't get cancer" vs "most lung-cancer patients smoked".</div>
+  <div class="try"><h4>Try it</h4>Make P(B | A) equal to P(B | not A): the two columns have the same split and A tells you nothing about B, so they are independent.</div>
 </section>
 <section data-case="conditional" data-example="indep"><h3>Independent</h3><p>The B parts have the same height in both columns: knowing A changes nothing, and P(A and B) = P(A)·P(B).</p></section>
 <section data-case="conditional" data-example="rare"><h3>Rare A</h3><p>Even with a reliable B, most of the B area lies in "not A": P(A | B) stays low (see Bayes' theorem).</p></section>
@@ -150,6 +163,7 @@
   <p>Probability is what relative frequency settles to in the long run. Early frequencies are wild; as n grows they squeeze toward p, with a typical error that shrinks like 1/√n.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><msub><mi>S</mi><mi>n</mi></msub><mi>n</mi></mfrac><mover><mo stretchy="true" minsize="3.0em">→</mo><mpadded width="+0.6em" lspace="0.3em"><mrow><mi>n</mi><mo>→</mo><mi mathvariant="normal">∞</mi></mrow></mpadded></mover><mi>p</mi><mo separator="true">,</mo><mspace width="2em"/><mtext>typical error</mtext><mo>≈</mo><msqrt><mfrac><mrow><mi>p</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><mi>n</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\frac{S_n}{n}\xrightarrow{n\to\infty}p,\qquad \text{typical error}\approx\sqrt{\frac{p(1-p)}{n}}</annotation></semantics></math></span></div>
   <div class="pitfall"><h4>Common mistake</h4>The gambler's fallacy: after five tails, heads is not "due". The frequency converges because later trials swamp the early ones, not because the coin compensates.</div>
+  <div class="try"><h4>Try it</h4>Lower P(success) to 0.05 and watch the running frequency: the swings around p last longer, but the band still narrows as 1/√n.</div>
 </section>
 <section data-case="lln" data-example="rare"><h3>p = 0.05</h3><p>Rare successes: many trials pass before the first one, and the relative error stays large for longer.</p></section>
 <section data-case="expect">
@@ -159,6 +173,7 @@
   <p>The expected value is the long-run average per play. The standard deviation measures how far single outcomes typically land from it.</p>
   <div class="worked"><h4>Worked example</h4>Roulette, €1 on red: E = 1·18/37 − 1·19/37 = −1/37 ≈ −€0.027 per play.</div>
   <div class="pitfall"><h4>Common mistake</h4>Judging a game by its best prize or its most likely outcome. A lottery's top prize is huge, its mean still negative.</div>
+  <div class="try"><h4>Try it</h4>Switch from the fair die to roulette: the running average settles below zero, the house edge. Pick the lottery and see how rare big wins make the average jump.</div>
 </section>
 <section data-case="expect" data-example="roulette"><h3>Roulette</h3><p>The running average sinks toward −0.027.</p></section>
 <section data-case="expect" data-example="lottery"><h3>Lottery</h3><p>The average jumps up at each rare prize and drifts back down.</p></section>
@@ -176,6 +191,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>Heights normal with μ = 175 cm, σ = 7 cm: P(168 ≤ h ≤ 182) = 68 %; taller than 189 cm (2σ): 2.3 %. Calls arriving at λ = 4 per minute: P(exactly 4) = 19.5 %, P(0) = 1.8 %.</div>
   <div class="pitfall"><h4>Common mistake</h4>Reading the height of a continuous curve as a probability: it is a density (it can be bigger than 1); only areas are probabilities.</div>
+  <div class="try"><h4>Try it</h4>Choose the normal and set From and To to ±2σ: the shaded area is 95 %. Switch to the exponential and see the long right tail.</div>
 </section>
 <section data-case="dist" data-example="two"><h3>Two standard deviations</h3><p>95.4 % of a normal population lies within μ ± 2σ.</p></section>
 <section data-case="dist" data-example="exp"><h3>Waiting times</h3><p>Rate 0.5 per minute: mean wait 2 minutes; P(wait ≤ 2) = 1 − e^{−1} = 63 %.</p></section>
@@ -193,6 +209,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>Prevalence 1 %, sensitivity 99 %, specificity 95 %: 10 ill → 10 positive; 990 healthy → 50 false positives. P(ill | +) = 10/60 = 17 %.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing P(+ | ill) (the test's sensitivity) with P(ill | +) (what the patient wants to know).</div>
+  <div class="try"><h4>Try it</h4>Lower the prevalence to 0.1 %: even with a 99 % test most positives are false. Raise the specificity to 99.9 % and they become true.</div>
 </section>
 <section data-case="bayes" data-example="common"><h3>A common disease</h3><p>At 20 % prevalence the same test is right about 83 % of the time it says positive.</p></section>
 <section data-case="bayes" data-example="better"><h3>Better specificity</h3><p>Cutting false alarms to 0.1 % lifts P(ill | +) to about 91 % even for a 1 % disease.</p></section>
@@ -203,6 +220,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>X</mi><mo>ˉ</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mo>∑</mo><msub><mi>X</mi><mi>i</mi></msub><mtext>  </mtext><mo>≈</mo><mtext>  </mtext><mi mathvariant="script">N</mi><mtext> ⁣</mtext><mrow><mo fence="true">(</mo><mi>μ</mi><mo separator="true">,</mo><mtext> </mtext><mfrac><mi>σ</mi><msqrt><mi>n</mi></msqrt></mfrac><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\bar X = \frac{1}{n}\sum X_i \;\approx\; \mathcal N\!\left(\mu,\ \frac{\sigma}{\sqrt n}\right)</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>A poll of 1000 people with an opinion split 50/50: σ of one answer is 0.5, of the average 0.5/√1000 = 1.6 %: the result is within ±3.2 % 95 % of the time.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting the error to fall like 1/n: it falls like 1/√n — four times the sample for half the error.</div>
+  <div class="try"><h4>Try it</h4>Raise the sample size n from 1 to 50: the histogram of means turns from the skewed parent into a narrow bell, as wide as σ/√n.</div>
 </section>
 <section data-case="clt" data-example="one"><h3>n = 1</h3><p>One value at a time: the histogram is just the skewed parent.</p></section>
 <section data-case="clt" data-example="big"><h3>n = 50</h3><p>Averages of 50: a narrow bell around 1, spread 0.14.</p></section>
@@ -213,6 +231,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mo stretchy="false">[</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false">]</mo><mo>=</mo><mi>n</mi><mo stretchy="false">(</mo><mn>2</mn><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="2em"/><mtext>sd</mtext><mo stretchy="false">(</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><msqrt><mrow><mi>n</mi><mtext> </mtext><mi>p</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false">)</mo></mrow></msqrt><mtext>  </mtext><mo stretchy="false">(</mo><mo>=</mo><msqrt><mi>n</mi></msqrt><mtext> for </mtext><mi>p</mi><mo>=</mo><mstyle scriptlevel="0" displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">E[S_n] = n(2p - 1), \qquad \text{sd}(S_n) = 2\sqrt{n\,p(1 - p)} \;(= \sqrt n \text{ for } p = \tfrac12)</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>100 fair steps: typically about 10 away from the start. 400 steps: about 20, not 40.</div>
   <div class="pitfall"><h4>Common mistake</h4>"After many heads, tails is due": the coin has no memory, and the walk does not return to the start on its own.</div>
+  <div class="try"><h4>Try it</h4>Quadruple the steps: the spread of the walkers only doubles. Make the coin unfair and the whole crowd drifts.</div>
 </section>
 <section data-case="walk" data-example="long"><h3>Four times longer</h3><p>The cloud of walkers is only twice as wide.</p></section>
 <section data-case="walk" data-example="drift"><h3>A biased coin</h3><p>p = 0.6: the crowd drifts 0.2 per step, while still spreading as √n around the drift.</p></section>
@@ -223,6 +242,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>π</mi><mo>≈</mo><mn>4</mn><mtext> </mtext><mfrac><msub><mi>N</mi><mtext>inside</mtext></msub><mi>N</mi></mfrac><mo separator="true">,</mo><mspace width="2em"/><mtext>error</mtext><mo>∼</mo><mfrac><mn>1.64</mn><msqrt><mi>N</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\pi \approx 4\,\frac{N_\text{inside}}{N}, \qquad \text{error} \sim \frac{1.64}{\sqrt N}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>4000 darts: error typically ±0.026, so π ≈ 3.14 ± 0.03. One more correct digit needs 100 times the darts.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting the estimate to improve at every dart: it wanders, and only its typical error shrinks.</div>
+  <div class="try"><h4>Try it</h4>Let the darts fall and watch the estimate: it wanders toward π, and 100 times more darts give about one more correct digit.</div>
 </section>
 </template>
 <template id="explain-law-large-numbers"><section data-case="space">
@@ -233,6 +253,7 @@
   <ol class="steps"><li>List (or picture) all outcomes, making sure they are equally likely.</li><li>Count those in the event.</li><li>Divide. For "A or B", add the two counts but subtract the green ones, counted twice.</li></ol>
   <div class="worked"><h4>Worked example</h4>"At least one 6": 6 + 6 − 1 = 11 cells (the (6,6) cell is in both rows), so 11/36 ≈ 0.31 — not 2/6.</div>
   <div class="pitfall"><h4>Common mistake</h4>Treating the sums 2…12 as equally likely. They are not: 7 has six outcomes, 2 has one.</div>
+  <div class="try"><h4>Try it</h4>Set event A to 'sum = k' and sweep k from 2 to 12: the number of lit cells rises to 6 at k = 7 and falls again. Then pick two events that share no cell and check that P(A or B) = P(A) + P(B).</div>
 </section>
 <section data-case="space" data-example="seven"><h3>Sum = 7</h3><p>The diagonal of six cells: 6/36 = 1/6, the most likely sum.</p></section>
 <section data-case="space" data-example="six"><h3>At least one 6</h3><p>The last row and column: 11 cells.</p></section>
@@ -244,6 +265,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mrow><mo fence="true">(</mo><mfrac linethickness="0px"><mi>n</mi><mi>k</mi></mfrac><mo fence="true">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><mo stretchy="false">!</mo></mrow><mrow><mi>k</mi><mo stretchy="false">!</mo><mtext> </mtext><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>k</mi><mo stretchy="false">)</mo><mo stretchy="false">!</mo></mrow></mfrac><mo separator="true">,</mo><mspace width="2em"/><mi>P</mi><mo stretchy="false">(</mo><mtext>shared birthday</mtext><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mn>365</mn><mo>⋅</mo><mn>364</mn><mo>⋯</mo><mo stretchy="false">(</mo><mn>365</mn><mo>−</mo><mi>g</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><msup><mn>365</mn><mi>g</mi></msup></mfrac></mrow><annotation encoding="application/x-tex">\binom nk=\frac{n!}{k!\,(n-k)!},\qquad P(\text{shared birthday})=1-\frac{365\cdot364\cdots(365-g+1)}{365^g}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>Lottery 6 of 49: C(49, 6) ≈ 14 million tickets. Birthday: with 23 people there are 253 pairs, enough to make a match more likely than not.</div>
   <div class="pitfall"><h4>Common mistake</h4>Counting "at least one" directly. Count the complement ("none") and subtract from 1.</div>
+  <div class="try"><h4>Try it</h4>Raise the people in the room from 2 to 70: the chance of a shared birthday passes 50 % at 23 and is almost certain by 60.</div>
 </section>
 <section data-case="counting" data-example="pascal"><h3>C(10, 5)</h3><p>252 ways to pick 5 of 10 — the middle of row 10.</p></section>
 <section data-case="counting" data-example="bday"><h3>23 people</h3><p>P ≈ 0.507: the famous surprise.</p></section>
@@ -255,6 +277,7 @@
   <ol class="steps"><li>Multiply along a branch of the tree to get a joint probability.</li><li>Add the branches that end in B to get P(B).</li><li>Divide one branch by the total to reverse the condition (Bayes).</li></ol>
   <div class="worked"><h4>Worked example</h4>P(A) = 0.3, P(B|A) = 0.8, P(B|¬A) = 0.1: P(B) = 0.24 + 0.07 = 0.31, P(A|B) = 0.24/0.31 ≈ 0.77.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing P(B | A) with P(A | B) — "most smokers don't get cancer" vs "most lung-cancer patients smoked".</div>
+  <div class="try"><h4>Try it</h4>Make P(B | A) equal to P(B | not A): the two columns have the same split and A tells you nothing about B, so they are independent.</div>
 </section>
 <section data-case="conditional" data-example="indep"><h3>Independent</h3><p>The B parts have the same height in both columns: knowing A changes nothing, and P(A and B) = P(A)·P(B).</p></section>
 <section data-case="conditional" data-example="rare"><h3>Rare A</h3><p>Even with a reliable B, most of the B area lies in "not A": P(A | B) stays low (see Bayes' theorem).</p></section>
@@ -264,6 +287,7 @@
   <p>Probability is what relative frequency settles to in the long run. Early frequencies are wild; as n grows they squeeze toward p, with a typical error that shrinks like 1/√n.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><msub><mi>S</mi><mi>n</mi></msub><mi>n</mi></mfrac><mover><mo stretchy="true" minsize="3.0em">→</mo><mpadded width="+0.6em" lspace="0.3em"><mrow><mi>n</mi><mo>→</mo><mi mathvariant="normal">∞</mi></mrow></mpadded></mover><mi>p</mi><mo separator="true">,</mo><mspace width="2em"/><mtext>typical error</mtext><mo>≈</mo><msqrt><mfrac><mrow><mi>p</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><mi>n</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\frac{S_n}{n}\xrightarrow{n\to\infty}p,\qquad \text{typical error}\approx\sqrt{\frac{p(1-p)}{n}}</annotation></semantics></math></span></div>
   <div class="pitfall"><h4>Common mistake</h4>The gambler's fallacy: after five tails, heads is not "due". The frequency converges because later trials swamp the early ones, not because the coin compensates.</div>
+  <div class="try"><h4>Try it</h4>Lower P(success) to 0.05 and watch the running frequency: the swings around p last longer, but the band still narrows as 1/√n.</div>
 </section>
 <section data-case="lln" data-example="rare"><h3>p = 0.05</h3><p>Rare successes: many trials pass before the first one, and the relative error stays large for longer.</p></section>
 <section data-case="expect">
@@ -273,6 +297,7 @@
   <p>The expected value is the long-run average per play. The standard deviation measures how far single outcomes typically land from it.</p>
   <div class="worked"><h4>Worked example</h4>Roulette, €1 on red: E = 1·18/37 − 1·19/37 = −1/37 ≈ −€0.027 per play.</div>
   <div class="pitfall"><h4>Common mistake</h4>Judging a game by its best prize or its most likely outcome. A lottery's top prize is huge, its mean still negative.</div>
+  <div class="try"><h4>Try it</h4>Switch from the fair die to roulette: the running average settles below zero, the house edge. Pick the lottery and see how rare big wins make the average jump.</div>
 </section>
 <section data-case="expect" data-example="roulette"><h3>Roulette</h3><p>The running average sinks toward −0.027.</p></section>
 <section data-case="expect" data-example="lottery"><h3>Lottery</h3><p>The average jumps up at each rare prize and drifts back down.</p></section>
@@ -285,6 +310,7 @@
   <ol class="steps"><li>List (or picture) all outcomes, making sure they are equally likely.</li><li>Count those in the event.</li><li>Divide. For "A or B", add the two counts but subtract the green ones, counted twice.</li></ol>
   <div class="worked"><h4>Worked example</h4>"At least one 6": 6 + 6 − 1 = 11 cells (the (6,6) cell is in both rows), so 11/36 ≈ 0.31 — not 2/6.</div>
   <div class="pitfall"><h4>Common mistake</h4>Treating the sums 2…12 as equally likely. They are not: 7 has six outcomes, 2 has one.</div>
+  <div class="try"><h4>Try it</h4>Set event A to 'sum = k' and sweep k from 2 to 12: the number of lit cells rises to 6 at k = 7 and falls again. Then pick two events that share no cell and check that P(A or B) = P(A) + P(B).</div>
 </section>
 <section data-case="space" data-example="seven"><h3>Sum = 7</h3><p>The diagonal of six cells: 6/36 = 1/6, the most likely sum.</p></section>
 <section data-case="space" data-example="six"><h3>At least one 6</h3><p>The last row and column: 11 cells.</p></section>
@@ -296,6 +322,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mrow><mo fence="true">(</mo><mfrac linethickness="0px"><mi>n</mi><mi>k</mi></mfrac><mo fence="true">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><mo stretchy="false">!</mo></mrow><mrow><mi>k</mi><mo stretchy="false">!</mo><mtext> </mtext><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>k</mi><mo stretchy="false">)</mo><mo stretchy="false">!</mo></mrow></mfrac><mo separator="true">,</mo><mspace width="2em"/><mi>P</mi><mo stretchy="false">(</mo><mtext>shared birthday</mtext><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mn>365</mn><mo>⋅</mo><mn>364</mn><mo>⋯</mo><mo stretchy="false">(</mo><mn>365</mn><mo>−</mo><mi>g</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><msup><mn>365</mn><mi>g</mi></msup></mfrac></mrow><annotation encoding="application/x-tex">\binom nk=\frac{n!}{k!\,(n-k)!},\qquad P(\text{shared birthday})=1-\frac{365\cdot364\cdots(365-g+1)}{365^g}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>Lottery 6 of 49: C(49, 6) ≈ 14 million tickets. Birthday: with 23 people there are 253 pairs, enough to make a match more likely than not.</div>
   <div class="pitfall"><h4>Common mistake</h4>Counting "at least one" directly. Count the complement ("none") and subtract from 1.</div>
+  <div class="try"><h4>Try it</h4>Raise the people in the room from 2 to 70: the chance of a shared birthday passes 50 % at 23 and is almost certain by 60.</div>
 </section>
 <section data-case="counting" data-example="pascal"><h3>C(10, 5)</h3><p>252 ways to pick 5 of 10 — the middle of row 10.</p></section>
 <section data-case="counting" data-example="bday"><h3>23 people</h3><p>P ≈ 0.507: the famous surprise.</p></section>
@@ -307,6 +334,7 @@
   <ol class="steps"><li>Multiply along a branch of the tree to get a joint probability.</li><li>Add the branches that end in B to get P(B).</li><li>Divide one branch by the total to reverse the condition (Bayes).</li></ol>
   <div class="worked"><h4>Worked example</h4>P(A) = 0.3, P(B|A) = 0.8, P(B|¬A) = 0.1: P(B) = 0.24 + 0.07 = 0.31, P(A|B) = 0.24/0.31 ≈ 0.77.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing P(B | A) with P(A | B) — "most smokers don't get cancer" vs "most lung-cancer patients smoked".</div>
+  <div class="try"><h4>Try it</h4>Make P(B | A) equal to P(B | not A): the two columns have the same split and A tells you nothing about B, so they are independent.</div>
 </section>
 <section data-case="conditional" data-example="indep"><h3>Independent</h3><p>The B parts have the same height in both columns: knowing A changes nothing, and P(A and B) = P(A)·P(B).</p></section>
 <section data-case="conditional" data-example="rare"><h3>Rare A</h3><p>Even with a reliable B, most of the B area lies in "not A": P(A | B) stays low (see Bayes' theorem).</p></section>
@@ -316,6 +344,7 @@
   <p>Probability is what relative frequency settles to in the long run. Early frequencies are wild; as n grows they squeeze toward p, with a typical error that shrinks like 1/√n.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><msub><mi>S</mi><mi>n</mi></msub><mi>n</mi></mfrac><mover><mo stretchy="true" minsize="3.0em">→</mo><mpadded width="+0.6em" lspace="0.3em"><mrow><mi>n</mi><mo>→</mo><mi mathvariant="normal">∞</mi></mrow></mpadded></mover><mi>p</mi><mo separator="true">,</mo><mspace width="2em"/><mtext>typical error</mtext><mo>≈</mo><msqrt><mfrac><mrow><mi>p</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><mi>n</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\frac{S_n}{n}\xrightarrow{n\to\infty}p,\qquad \text{typical error}\approx\sqrt{\frac{p(1-p)}{n}}</annotation></semantics></math></span></div>
   <div class="pitfall"><h4>Common mistake</h4>The gambler's fallacy: after five tails, heads is not "due". The frequency converges because later trials swamp the early ones, not because the coin compensates.</div>
+  <div class="try"><h4>Try it</h4>Lower P(success) to 0.05 and watch the running frequency: the swings around p last longer, but the band still narrows as 1/√n.</div>
 </section>
 <section data-case="lln" data-example="rare"><h3>p = 0.05</h3><p>Rare successes: many trials pass before the first one, and the relative error stays large for longer.</p></section>
 <section data-case="expect">
@@ -325,6 +354,7 @@
   <p>The expected value is the long-run average per play. The standard deviation measures how far single outcomes typically land from it.</p>
   <div class="worked"><h4>Worked example</h4>Roulette, €1 on red: E = 1·18/37 − 1·19/37 = −1/37 ≈ −€0.027 per play.</div>
   <div class="pitfall"><h4>Common mistake</h4>Judging a game by its best prize or its most likely outcome. A lottery's top prize is huge, its mean still negative.</div>
+  <div class="try"><h4>Try it</h4>Switch from the fair die to roulette: the running average settles below zero, the house edge. Pick the lottery and see how rare big wins make the average jump.</div>
 </section>
 <section data-case="expect" data-example="roulette"><h3>Roulette</h3><p>The running average sinks toward −0.027.</p></section>
 <section data-case="expect" data-example="lottery"><h3>Lottery</h3><p>The average jumps up at each rare prize and drifts back down.</p></section>
@@ -342,6 +372,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>Heights normal with μ = 175 cm, σ = 7 cm: P(168 ≤ h ≤ 182) = 68 %; taller than 189 cm (2σ): 2.3 %. Calls arriving at λ = 4 per minute: P(exactly 4) = 19.5 %, P(0) = 1.8 %.</div>
   <div class="pitfall"><h4>Common mistake</h4>Reading the height of a continuous curve as a probability: it is a density (it can be bigger than 1); only areas are probabilities.</div>
+  <div class="try"><h4>Try it</h4>Choose the normal and set From and To to ±2σ: the shaded area is 95 %. Switch to the exponential and see the long right tail.</div>
 </section>
 <section data-case="dist" data-example="two"><h3>Two standard deviations</h3><p>95.4 % of a normal population lies within μ ± 2σ.</p></section>
 <section data-case="dist" data-example="exp"><h3>Waiting times</h3><p>Rate 0.5 per minute: mean wait 2 minutes; P(wait ≤ 2) = 1 − e^{−1} = 63 %.</p></section>
@@ -359,6 +390,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>Prevalence 1 %, sensitivity 99 %, specificity 95 %: 10 ill → 10 positive; 990 healthy → 50 false positives. P(ill | +) = 10/60 = 17 %.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing P(+ | ill) (the test's sensitivity) with P(ill | +) (what the patient wants to know).</div>
+  <div class="try"><h4>Try it</h4>Lower the prevalence to 0.1 %: even with a 99 % test most positives are false. Raise the specificity to 99.9 % and they become true.</div>
 </section>
 <section data-case="bayes" data-example="common"><h3>A common disease</h3><p>At 20 % prevalence the same test is right about 83 % of the time it says positive.</p></section>
 <section data-case="bayes" data-example="better"><h3>Better specificity</h3><p>Cutting false alarms to 0.1 % lifts P(ill | +) to about 91 % even for a 1 % disease.</p></section>
@@ -369,6 +401,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>X</mi><mo>ˉ</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mo>∑</mo><msub><mi>X</mi><mi>i</mi></msub><mtext>  </mtext><mo>≈</mo><mtext>  </mtext><mi mathvariant="script">N</mi><mtext> ⁣</mtext><mrow><mo fence="true">(</mo><mi>μ</mi><mo separator="true">,</mo><mtext> </mtext><mfrac><mi>σ</mi><msqrt><mi>n</mi></msqrt></mfrac><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\bar X = \frac{1}{n}\sum X_i \;\approx\; \mathcal N\!\left(\mu,\ \frac{\sigma}{\sqrt n}\right)</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>A poll of 1000 people with an opinion split 50/50: σ of one answer is 0.5, of the average 0.5/√1000 = 1.6 %: the result is within ±3.2 % 95 % of the time.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting the error to fall like 1/n: it falls like 1/√n — four times the sample for half the error.</div>
+  <div class="try"><h4>Try it</h4>Raise the sample size n from 1 to 50: the histogram of means turns from the skewed parent into a narrow bell, as wide as σ/√n.</div>
 </section>
 <section data-case="clt" data-example="one"><h3>n = 1</h3><p>One value at a time: the histogram is just the skewed parent.</p></section>
 <section data-case="clt" data-example="big"><h3>n = 50</h3><p>Averages of 50: a narrow bell around 1, spread 0.14.</p></section>
@@ -379,6 +412,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mo stretchy="false">[</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false">]</mo><mo>=</mo><mi>n</mi><mo stretchy="false">(</mo><mn>2</mn><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="2em"/><mtext>sd</mtext><mo stretchy="false">(</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><msqrt><mrow><mi>n</mi><mtext> </mtext><mi>p</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false">)</mo></mrow></msqrt><mtext>  </mtext><mo stretchy="false">(</mo><mo>=</mo><msqrt><mi>n</mi></msqrt><mtext> for </mtext><mi>p</mi><mo>=</mo><mstyle scriptlevel="0" displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">E[S_n] = n(2p - 1), \qquad \text{sd}(S_n) = 2\sqrt{n\,p(1 - p)} \;(= \sqrt n \text{ for } p = \tfrac12)</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>100 fair steps: typically about 10 away from the start. 400 steps: about 20, not 40.</div>
   <div class="pitfall"><h4>Common mistake</h4>"After many heads, tails is due": the coin has no memory, and the walk does not return to the start on its own.</div>
+  <div class="try"><h4>Try it</h4>Quadruple the steps: the spread of the walkers only doubles. Make the coin unfair and the whole crowd drifts.</div>
 </section>
 <section data-case="walk" data-example="long"><h3>Four times longer</h3><p>The cloud of walkers is only twice as wide.</p></section>
 <section data-case="walk" data-example="drift"><h3>A biased coin</h3><p>p = 0.6: the crowd drifts 0.2 per step, while still spreading as √n around the drift.</p></section>
@@ -389,6 +423,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>π</mi><mo>≈</mo><mn>4</mn><mtext> </mtext><mfrac><msub><mi>N</mi><mtext>inside</mtext></msub><mi>N</mi></mfrac><mo separator="true">,</mo><mspace width="2em"/><mtext>error</mtext><mo>∼</mo><mfrac><mn>1.64</mn><msqrt><mi>N</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\pi \approx 4\,\frac{N_\text{inside}}{N}, \qquad \text{error} \sim \frac{1.64}{\sqrt N}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>4000 darts: error typically ±0.026, so π ≈ 3.14 ± 0.03. One more correct digit needs 100 times the darts.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting the estimate to improve at every dart: it wanders, and only its typical error shrinks.</div>
+  <div class="try"><h4>Try it</h4>Let the darts fall and watch the estimate: it wanders toward π, and 100 times more darts give about one more correct digit.</div>
 </section>
 </template>
 <template id="explain-normal-curve"><section data-case="normal">
@@ -488,6 +523,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>μ</mi><mo>=</mo><mn>3.5</mn><mtext> </mtext><mi>k</mi><mo separator="true">,</mo><mspace width="2em"/><mi>σ</mi><mo>=</mo><msqrt><mrow><mstyle scriptlevel="0" displaystyle="false"><mfrac><mn>35</mn><mn>12</mn></mfrac></mstyle><mi>k</mi></mrow></msqrt><mo>≈</mo><mn>1.71</mn><msqrt><mi>k</mi></msqrt></mrow><annotation encoding="application/x-tex">\mu = 3.5\,k, \qquad \sigma = \sqrt{\tfrac{35}{12}k} \approx 1.71\sqrt k</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>Ten dice: mean 35, σ = 5.4; about 68 % of throws land between 30 and 40.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting the spread to grow like k: it grows like √k, so relative to the mean the sum gets more predictable.</div>
+  <div class="try"><h4>Try it</h4>Raise the number of dice from 1 to 10: the flat distribution of one die becomes a triangle with two, and a bell soon after.</div>
 </section>
 <section data-case="dice" data-example="one"><h3>One die</h3><p>A uniform distribution: six equal bars, nothing bell-shaped.</p></section>
 <section data-case="dice" data-example="three"><h3>Three dice</h3><p>Already a smooth hump: 10 and 11 are the most likely sums (27 ways each out of 216).</p></section>
@@ -507,6 +543,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>Heights normal with μ = 175 cm, σ = 7 cm: P(168 ≤ h ≤ 182) = 68 %; taller than 189 cm (2σ): 2.3 %. Calls arriving at λ = 4 per minute: P(exactly 4) = 19.5 %, P(0) = 1.8 %.</div>
   <div class="pitfall"><h4>Common mistake</h4>Reading the height of a continuous curve as a probability: it is a density (it can be bigger than 1); only areas are probabilities.</div>
+  <div class="try"><h4>Try it</h4>Choose the normal and set From and To to ±2σ: the shaded area is 95 %. Switch to the exponential and see the long right tail.</div>
 </section>
 <section data-case="dist" data-example="two"><h3>Two standard deviations</h3><p>95.4 % of a normal population lies within μ ± 2σ.</p></section>
 <section data-case="dist" data-example="exp"><h3>Waiting times</h3><p>Rate 0.5 per minute: mean wait 2 minutes; P(wait ≤ 2) = 1 − e^{−1} = 63 %.</p></section>
@@ -524,6 +561,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>Prevalence 1 %, sensitivity 99 %, specificity 95 %: 10 ill → 10 positive; 990 healthy → 50 false positives. P(ill | +) = 10/60 = 17 %.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing P(+ | ill) (the test's sensitivity) with P(ill | +) (what the patient wants to know).</div>
+  <div class="try"><h4>Try it</h4>Lower the prevalence to 0.1 %: even with a 99 % test most positives are false. Raise the specificity to 99.9 % and they become true.</div>
 </section>
 <section data-case="bayes" data-example="common"><h3>A common disease</h3><p>At 20 % prevalence the same test is right about 83 % of the time it says positive.</p></section>
 <section data-case="bayes" data-example="better"><h3>Better specificity</h3><p>Cutting false alarms to 0.1 % lifts P(ill | +) to about 91 % even for a 1 % disease.</p></section>
@@ -534,6 +572,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>X</mi><mo>ˉ</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mo>∑</mo><msub><mi>X</mi><mi>i</mi></msub><mtext>  </mtext><mo>≈</mo><mtext>  </mtext><mi mathvariant="script">N</mi><mtext> ⁣</mtext><mrow><mo fence="true">(</mo><mi>μ</mi><mo separator="true">,</mo><mtext> </mtext><mfrac><mi>σ</mi><msqrt><mi>n</mi></msqrt></mfrac><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\bar X = \frac{1}{n}\sum X_i \;\approx\; \mathcal N\!\left(\mu,\ \frac{\sigma}{\sqrt n}\right)</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>A poll of 1000 people with an opinion split 50/50: σ of one answer is 0.5, of the average 0.5/√1000 = 1.6 %: the result is within ±3.2 % 95 % of the time.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting the error to fall like 1/n: it falls like 1/√n — four times the sample for half the error.</div>
+  <div class="try"><h4>Try it</h4>Raise the sample size n from 1 to 50: the histogram of means turns from the skewed parent into a narrow bell, as wide as σ/√n.</div>
 </section>
 <section data-case="clt" data-example="one"><h3>n = 1</h3><p>One value at a time: the histogram is just the skewed parent.</p></section>
 <section data-case="clt" data-example="big"><h3>n = 50</h3><p>Averages of 50: a narrow bell around 1, spread 0.14.</p></section>
@@ -544,6 +583,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mo stretchy="false">[</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false">]</mo><mo>=</mo><mi>n</mi><mo stretchy="false">(</mo><mn>2</mn><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="2em"/><mtext>sd</mtext><mo stretchy="false">(</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><msqrt><mrow><mi>n</mi><mtext> </mtext><mi>p</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false">)</mo></mrow></msqrt><mtext>  </mtext><mo stretchy="false">(</mo><mo>=</mo><msqrt><mi>n</mi></msqrt><mtext> for </mtext><mi>p</mi><mo>=</mo><mstyle scriptlevel="0" displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">E[S_n] = n(2p - 1), \qquad \text{sd}(S_n) = 2\sqrt{n\,p(1 - p)} \;(= \sqrt n \text{ for } p = \tfrac12)</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>100 fair steps: typically about 10 away from the start. 400 steps: about 20, not 40.</div>
   <div class="pitfall"><h4>Common mistake</h4>"After many heads, tails is due": the coin has no memory, and the walk does not return to the start on its own.</div>
+  <div class="try"><h4>Try it</h4>Quadruple the steps: the spread of the walkers only doubles. Make the coin unfair and the whole crowd drifts.</div>
 </section>
 <section data-case="walk" data-example="long"><h3>Four times longer</h3><p>The cloud of walkers is only twice as wide.</p></section>
 <section data-case="walk" data-example="drift"><h3>A biased coin</h3><p>p = 0.6: the crowd drifts 0.2 per step, while still spreading as √n around the drift.</p></section>
@@ -554,6 +594,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>π</mi><mo>≈</mo><mn>4</mn><mtext> </mtext><mfrac><msub><mi>N</mi><mtext>inside</mtext></msub><mi>N</mi></mfrac><mo separator="true">,</mo><mspace width="2em"/><mtext>error</mtext><mo>∼</mo><mfrac><mn>1.64</mn><msqrt><mi>N</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\pi \approx 4\,\frac{N_\text{inside}}{N}, \qquad \text{error} \sim \frac{1.64}{\sqrt N}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>4000 darts: error typically ±0.026, so π ≈ 3.14 ± 0.03. One more correct digit needs 100 times the darts.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting the estimate to improve at every dart: it wanders, and only its typical error shrinks.</div>
+  <div class="try"><h4>Try it</h4>Let the darts fall and watch the estimate: it wanders toward π, and 100 times more darts give about one more correct digit.</div>
 </section>
 </template>
 <template id="explain-descriptive-stats"><section data-case="summary">
@@ -825,6 +866,7 @@
   <ol class="steps"><li>Compute the sample mean x̄.</li><li>Its standard error is σ/√n.</li><li>Go z standard errors each way.</li></ol>
   <div class="worked"><h4>Worked example</h4>σ = 2, n = 10, x̄ = 10.4: 10.4 ± 1.96·0.63 = [9.16, 11.64].</div>
   <div class="pitfall"><h4>Common mistake</h4>"μ is in this interval with probability 95%." μ is fixed; it is either in or not. The 95% is about the method.</div>
+  <div class="try"><h4>Try it</h4>Lower the confidence level to 0.8: the intervals get shorter and about one in five misses the true mean. Raise n: they shrink but keep catching it 80 % of the time.</div>
 </section>
 <section data-case="ci" data-example="c80"><h3>80%</h3><p>Shorter bars, and about one in five misses.</p></section>
 <section data-case="ci" data-example="n100"><h3>n = 100</h3><p>√10 ≈ 3.2 times narrower, still 95% coverage.</p></section>
@@ -835,6 +877,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>reject </mtext><msub><mi>H</mi><mn>0</mn></msub><mtext>  </mtext><mo>⟺</mo><mtext>  </mtext><mi>z</mi><mo>&gt;</mo><msub><mi>z</mi><mrow><mn>1</mn><mo>−</mo><mi>α</mi></mrow></msub><mo separator="true">,</mo><mspace width="2em"/><mi>p</mi><mo>=</mo><mi>P</mi><mo stretchy="false">(</mo><mi>Z</mi><mo>≥</mo><msub><mi>z</mi><mtext>obs</mtext></msub><mo>∣</mo><msub><mi>H</mi><mn>0</mn></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="2em"/><mtext>power</mtext><mo>=</mo><mn>1</mn><mo>−</mo><mi mathvariant="normal">Φ</mi><mo stretchy="false">(</mo><msub><mi>z</mi><mrow><mn>1</mn><mo>−</mo><mi>α</mi></mrow></msub><mo>−</mo><mi>d</mi><msqrt><mi>n</mi></msqrt><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{reject }H_0\iff z&gt;z_{1-\alpha},\qquad p=P(Z\ge z_\text{obs}\mid H_0),\qquad \text{power}=1-\Phi(z_{1-\alpha}-d\sqrt n)</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>d = 0.4σ, n = 25: the orange curve sits at 2; with α = 0.05 (z > 1.645) the power is 1 − Φ(−0.355) ≈ 0.64.</div>
   <div class="pitfall"><h4>Common mistakes</h4>Reading p as P(H₀ true). Concluding "no effect" from a non-significant result with low power: absence of evidence is not evidence of absence.</div>
+  <div class="try"><h4>Try it</h4>Raise the sample size with a small true effect: the power curve climbs toward 1. Lower α to 0.01: fewer false alarms, but less power.</div>
 </section>
 <section data-case="test" data-example="big"><h3>n = 100</h3><p>The orange curve moves to d√n = 4: almost always detected.</p></section>
 <section data-case="test" data-example="strict"><h3>α = 0.01</h3><p>The threshold moves right: fewer false alarms, but more real effects missed.</p></section>
@@ -965,6 +1008,7 @@
   <ol class="steps"><li>Compute the sample mean x̄.</li><li>Its standard error is σ/√n.</li><li>Go z standard errors each way.</li></ol>
   <div class="worked"><h4>Worked example</h4>σ = 2, n = 10, x̄ = 10.4: 10.4 ± 1.96·0.63 = [9.16, 11.64].</div>
   <div class="pitfall"><h4>Common mistake</h4>"μ is in this interval with probability 95%." μ is fixed; it is either in or not. The 95% is about the method.</div>
+  <div class="try"><h4>Try it</h4>Lower the confidence level to 0.8: the intervals get shorter and about one in five misses the true mean. Raise n: they shrink but keep catching it 80 % of the time.</div>
 </section>
 <section data-case="ci" data-example="c80"><h3>80%</h3><p>Shorter bars, and about one in five misses.</p></section>
 <section data-case="ci" data-example="n100"><h3>n = 100</h3><p>√10 ≈ 3.2 times narrower, still 95% coverage.</p></section>
@@ -975,6 +1019,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>reject </mtext><msub><mi>H</mi><mn>0</mn></msub><mtext>  </mtext><mo>⟺</mo><mtext>  </mtext><mi>z</mi><mo>&gt;</mo><msub><mi>z</mi><mrow><mn>1</mn><mo>−</mo><mi>α</mi></mrow></msub><mo separator="true">,</mo><mspace width="2em"/><mi>p</mi><mo>=</mo><mi>P</mi><mo stretchy="false">(</mo><mi>Z</mi><mo>≥</mo><msub><mi>z</mi><mtext>obs</mtext></msub><mo>∣</mo><msub><mi>H</mi><mn>0</mn></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="2em"/><mtext>power</mtext><mo>=</mo><mn>1</mn><mo>−</mo><mi mathvariant="normal">Φ</mi><mo stretchy="false">(</mo><msub><mi>z</mi><mrow><mn>1</mn><mo>−</mo><mi>α</mi></mrow></msub><mo>−</mo><mi>d</mi><msqrt><mi>n</mi></msqrt><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{reject }H_0\iff z&gt;z_{1-\alpha},\qquad p=P(Z\ge z_\text{obs}\mid H_0),\qquad \text{power}=1-\Phi(z_{1-\alpha}-d\sqrt n)</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>d = 0.4σ, n = 25: the orange curve sits at 2; with α = 0.05 (z > 1.645) the power is 1 − Φ(−0.355) ≈ 0.64.</div>
   <div class="pitfall"><h4>Common mistakes</h4>Reading p as P(H₀ true). Concluding "no effect" from a non-significant result with low power: absence of evidence is not evidence of absence.</div>
+  <div class="try"><h4>Try it</h4>Raise the sample size with a small true effect: the power curve climbs toward 1. Lower α to 0.01: fewer false alarms, but less power.</div>
 </section>
 <section data-case="test" data-example="big"><h3>n = 100</h3><p>The orange curve moves to d√n = 4: almost always detected.</p></section>
 <section data-case="test" data-example="strict"><h3>α = 0.01</h3><p>The threshold moves right: fewer false alarms, but more real effects missed.</p></section>
@@ -1464,6 +1509,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>Heights normal with μ = 175 cm, σ = 7 cm: P(168 ≤ h ≤ 182) = 68 %; taller than 189 cm (2σ): 2.3 %. Calls arriving at λ = 4 per minute: P(exactly 4) = 19.5 %, P(0) = 1.8 %.</div>
   <div class="pitfall"><h4>Common mistake</h4>Reading the height of a continuous curve as a probability: it is a density (it can be bigger than 1); only areas are probabilities.</div>
+  <div class="try"><h4>Try it</h4>Choose the normal and set From and To to ±2σ: the shaded area is 95 %. Switch to the exponential and see the long right tail.</div>
 </section>
 <section data-case="dist" data-example="two"><h3>Two standard deviations</h3><p>95.4 % of a normal population lies within μ ± 2σ.</p></section>
 <section data-case="dist" data-example="exp"><h3>Waiting times</h3><p>Rate 0.5 per minute: mean wait 2 minutes; P(wait ≤ 2) = 1 − e^{−1} = 63 %.</p></section>
@@ -1481,6 +1527,7 @@
   </ol>
   <div class="worked"><h4>Worked example</h4>Prevalence 1 %, sensitivity 99 %, specificity 95 %: 10 ill → 10 positive; 990 healthy → 50 false positives. P(ill | +) = 10/60 = 17 %.</div>
   <div class="pitfall"><h4>Common mistake</h4>Confusing P(+ | ill) (the test's sensitivity) with P(ill | +) (what the patient wants to know).</div>
+  <div class="try"><h4>Try it</h4>Lower the prevalence to 0.1 %: even with a 99 % test most positives are false. Raise the specificity to 99.9 % and they become true.</div>
 </section>
 <section data-case="bayes" data-example="common"><h3>A common disease</h3><p>At 20 % prevalence the same test is right about 83 % of the time it says positive.</p></section>
 <section data-case="bayes" data-example="better"><h3>Better specificity</h3><p>Cutting false alarms to 0.1 % lifts P(ill | +) to about 91 % even for a 1 % disease.</p></section>
@@ -1491,6 +1538,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>X</mi><mo>ˉ</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mo>∑</mo><msub><mi>X</mi><mi>i</mi></msub><mtext>  </mtext><mo>≈</mo><mtext>  </mtext><mi mathvariant="script">N</mi><mtext> ⁣</mtext><mrow><mo fence="true">(</mo><mi>μ</mi><mo separator="true">,</mo><mtext> </mtext><mfrac><mi>σ</mi><msqrt><mi>n</mi></msqrt></mfrac><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\bar X = \frac{1}{n}\sum X_i \;\approx\; \mathcal N\!\left(\mu,\ \frac{\sigma}{\sqrt n}\right)</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>A poll of 1000 people with an opinion split 50/50: σ of one answer is 0.5, of the average 0.5/√1000 = 1.6 %: the result is within ±3.2 % 95 % of the time.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting the error to fall like 1/n: it falls like 1/√n — four times the sample for half the error.</div>
+  <div class="try"><h4>Try it</h4>Raise the sample size n from 1 to 50: the histogram of means turns from the skewed parent into a narrow bell, as wide as σ/√n.</div>
 </section>
 <section data-case="clt" data-example="one"><h3>n = 1</h3><p>One value at a time: the histogram is just the skewed parent.</p></section>
 <section data-case="clt" data-example="big"><h3>n = 50</h3><p>Averages of 50: a narrow bell around 1, spread 0.14.</p></section>
@@ -1501,6 +1549,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mo stretchy="false">[</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false">]</mo><mo>=</mo><mi>n</mi><mo stretchy="false">(</mo><mn>2</mn><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="2em"/><mtext>sd</mtext><mo stretchy="false">(</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><msqrt><mrow><mi>n</mi><mtext> </mtext><mi>p</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false">)</mo></mrow></msqrt><mtext>  </mtext><mo stretchy="false">(</mo><mo>=</mo><msqrt><mi>n</mi></msqrt><mtext> for </mtext><mi>p</mi><mo>=</mo><mstyle scriptlevel="0" displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">E[S_n] = n(2p - 1), \qquad \text{sd}(S_n) = 2\sqrt{n\,p(1 - p)} \;(= \sqrt n \text{ for } p = \tfrac12)</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>100 fair steps: typically about 10 away from the start. 400 steps: about 20, not 40.</div>
   <div class="pitfall"><h4>Common mistake</h4>"After many heads, tails is due": the coin has no memory, and the walk does not return to the start on its own.</div>
+  <div class="try"><h4>Try it</h4>Quadruple the steps: the spread of the walkers only doubles. Make the coin unfair and the whole crowd drifts.</div>
 </section>
 <section data-case="walk" data-example="long"><h3>Four times longer</h3><p>The cloud of walkers is only twice as wide.</p></section>
 <section data-case="walk" data-example="drift"><h3>A biased coin</h3><p>p = 0.6: the crowd drifts 0.2 per step, while still spreading as √n around the drift.</p></section>
@@ -1511,6 +1560,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>π</mi><mo>≈</mo><mn>4</mn><mtext> </mtext><mfrac><msub><mi>N</mi><mtext>inside</mtext></msub><mi>N</mi></mfrac><mo separator="true">,</mo><mspace width="2em"/><mtext>error</mtext><mo>∼</mo><mfrac><mn>1.64</mn><msqrt><mi>N</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\pi \approx 4\,\frac{N_\text{inside}}{N}, \qquad \text{error} \sim \frac{1.64}{\sqrt N}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>4000 darts: error typically ±0.026, so π ≈ 3.14 ± 0.03. One more correct digit needs 100 times the darts.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting the estimate to improve at every dart: it wanders, and only its typical error shrinks.</div>
+  <div class="try"><h4>Try it</h4>Let the darts fall and watch the estimate: it wanders toward π, and 100 times more darts give about one more correct digit.</div>
 </section>
 </template>
 <template id="explain-markov-chains"><section data-case="markov">
@@ -1542,6 +1592,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>A</mi><mo>^</mo></mover><mo>=</mo><mfrac><mrow><mi mathvariant="normal">#</mi><mtext>hits</mtext></mrow><mi>N</mi></mfrac><mo separator="true">,</mo><mspace width="2em"/><mtext>standard error</mtext><mo>=</mo><msqrt><mfrac><mrow><mi>A</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>A</mi><mo stretchy="false">)</mo></mrow><mi>N</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\hat A=\frac{\#\text{hits}}{N},\qquad \text{standard error}=\sqrt{\frac{A(1-A)}{N}}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>1000 points: the standard error on π is 4·√(0.785·0.215/1000) ≈ 0.05 — typically two correct digits.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting one more correct digit per ten times the points: it takes a hundred times.</div>
+  <div class="try"><h4>Try it</h4>Raise the number of points: the estimate settles on the true area, but the error only shrinks as 1/√N.</div>
 </section>
 <section data-case="hitmiss" data-example="bell"><h3>e^(−x²)</h3><p>This integral has no closed form; Monte Carlo does not care.</p></section>
 <section data-case="error">
@@ -1550,6 +1601,7 @@
   <p>The sample mean of f at random points estimates its integral. Each estimate is random; their spread is σ_f/√n — the central limit theorem at work.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>I</mi><mo>^</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="2em"/><mi mathvariant="normal">sd</mi><mo>⁡</mo><mo stretchy="false">(</mo><mover accent="true"><mi>I</mi><mo>^</mo></mover><mo stretchy="false">)</mo><mo>=</mo><mfrac><msub><mi>σ</mi><mi>f</mi></msub><msqrt><mi>n</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\hat I=\frac1n\sum_{i=1}^nf(x_i),\qquad \operatorname{sd}(\hat I)=\frac{\sigma_f}{\sqrt n}</annotation></semantics></math></span></div>
   <p>Slow in one dimension (a simple grid beats it), but the rate is the same in any dimension — which is why Monte Carlo rules physics simulations, finance and rendering.</p>
+  <div class="try"><h4>Try it</h4>Raise the points per estimate 100×: the spread of the estimates narrows only 10×.</div>
 </section>
 <section data-case="error" data-example="small"><h3>n = 10</h3><p>A wide histogram: single estimates can be far off.</p></section>
 <section data-case="error" data-example="big"><h3>n = 1000</h3><p>100× the points: the histogram is 10× narrower.</p></section>
@@ -1558,6 +1610,7 @@
   <div class="look"><h4>What you are looking at</h4>Left: needles dropped at random on a floor ruled with lines 1 apart (the latest 400 shown; orange = crossing a line). Top right: the estimate of π as needles accumulate. Bottom right: the probability of crossing for each angle.</div>
   <p>A needle of length l ≤ 1 crosses a line with probability depending on its angle; averaging over all angles brings in π:</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mtext>cross</mtext><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mn>2</mn><mi>l</mi></mrow><mrow><mi>π</mi><mi>d</mi></mrow></mfrac><mspace width="1em"/><mo>⇒</mo><mspace width="1em"/><mi>π</mi><mo>≈</mo><mfrac><mrow><mn>2</mn><mi>l</mi><mtext> </mtext><mi>N</mi></mrow><mrow><mi>d</mi><mo>⋅</mo><mi mathvariant="normal">#</mi><mtext>crossings</mtext></mrow></mfrac></mrow><annotation encoding="application/x-tex">P(\text{cross})=\frac{2l}{\pi d}\quad\Rightarrow\quad \pi\approx\frac{2l\,N}{d\cdot\#\text{crossings}}</annotation></semantics></math></span></div>
+  <div class="try"><h4>Try it</h4>Shorten the needle: fewer crossings, so the estimate of π gets noisier for the same number of throws.</div>
 </section>
 <section data-case="buffon" data-example="short"><h3>Shorter needles</h3><p>Fewer crossings: each one carries more weight, the estimate is noisier.</p></section>
 <section data-case="importance">
@@ -1566,6 +1619,7 @@
   <p>Uniform points mostly land where g ≈ 0 and waste effort. Drawing points from a density q that follows g, and weighting each by g/q, keeps the estimate unbiased while cutting its spread.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>∫</mo><mi>g</mi><mtext> </mtext><mi>d</mi><mi>x</mi><mo>=</mo><msub><mi mathvariant="double-struck">E</mi><mi>q</mi></msub><mtext> ⁣</mtext><mrow><mo fence="true">[</mo><mfrac><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow><mrow><mi>q</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow></mfrac><mo fence="true">]</mo></mrow><mo>≈</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mo>∑</mo><mfrac><mrow><mi>g</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><mrow><mi>q</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow></mfrac><mo separator="true">,</mo><mspace width="1em"/><msub><mi>x</mi><mi>i</mi></msub><mo>∼</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">\int g\,dx=\mathbb E_q\!\left[\frac{g(X)}{q(X)}\right]\approx\frac1n\sum\frac{g(x_i)}{q(x_i)},\quad x_i\sim q</annotation></semantics></math></span></div>
   <div class="pitfall"><h4>Common mistake</h4>A proposal narrower than the target, or in the wrong place: rare points get enormous weights and the variance explodes.</div>
+  <div class="try"><h4>Try it</h4>Move the proposal's centre away from where the integrand is large: the estimates scatter much more. Make it too narrow and rare huge weights appear.</div>
 </section>
 <section data-case="importance" data-example="off"><h3>Wrong place</h3><p>q puts its points away from the peak: the few that hit it get huge weights.</p></section>
 <section data-case="importance" data-example="narrow"><h3>Too narrow</h3><p>The tails of the peak are almost never sampled: occasional huge weights.</p></section>
@@ -1580,6 +1634,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>A</mi><mo>^</mo></mover><mo>=</mo><mfrac><mrow><mi mathvariant="normal">#</mi><mtext>hits</mtext></mrow><mi>N</mi></mfrac><mo separator="true">,</mo><mspace width="2em"/><mtext>standard error</mtext><mo>=</mo><msqrt><mfrac><mrow><mi>A</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>A</mi><mo stretchy="false">)</mo></mrow><mi>N</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\hat A=\frac{\#\text{hits}}{N},\qquad \text{standard error}=\sqrt{\frac{A(1-A)}{N}}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>1000 points: the standard error on π is 4·√(0.785·0.215/1000) ≈ 0.05 — typically two correct digits.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting one more correct digit per ten times the points: it takes a hundred times.</div>
+  <div class="try"><h4>Try it</h4>Raise the number of points: the estimate settles on the true area, but the error only shrinks as 1/√N.</div>
 </section>
 <section data-case="hitmiss" data-example="bell"><h3>e^(−x²)</h3><p>This integral has no closed form; Monte Carlo does not care.</p></section>
 <section data-case="error">
@@ -1588,6 +1643,7 @@
   <p>The sample mean of f at random points estimates its integral. Each estimate is random; their spread is σ_f/√n — the central limit theorem at work.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>I</mi><mo>^</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="2em"/><mi mathvariant="normal">sd</mi><mo>⁡</mo><mo stretchy="false">(</mo><mover accent="true"><mi>I</mi><mo>^</mo></mover><mo stretchy="false">)</mo><mo>=</mo><mfrac><msub><mi>σ</mi><mi>f</mi></msub><msqrt><mi>n</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\hat I=\frac1n\sum_{i=1}^nf(x_i),\qquad \operatorname{sd}(\hat I)=\frac{\sigma_f}{\sqrt n}</annotation></semantics></math></span></div>
   <p>Slow in one dimension (a simple grid beats it), but the rate is the same in any dimension — which is why Monte Carlo rules physics simulations, finance and rendering.</p>
+  <div class="try"><h4>Try it</h4>Raise the points per estimate 100×: the spread of the estimates narrows only 10×.</div>
 </section>
 <section data-case="error" data-example="small"><h3>n = 10</h3><p>A wide histogram: single estimates can be far off.</p></section>
 <section data-case="error" data-example="big"><h3>n = 1000</h3><p>100× the points: the histogram is 10× narrower.</p></section>
@@ -1596,6 +1652,7 @@
   <div class="look"><h4>What you are looking at</h4>Left: needles dropped at random on a floor ruled with lines 1 apart (the latest 400 shown; orange = crossing a line). Top right: the estimate of π as needles accumulate. Bottom right: the probability of crossing for each angle.</div>
   <p>A needle of length l ≤ 1 crosses a line with probability depending on its angle; averaging over all angles brings in π:</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mtext>cross</mtext><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mn>2</mn><mi>l</mi></mrow><mrow><mi>π</mi><mi>d</mi></mrow></mfrac><mspace width="1em"/><mo>⇒</mo><mspace width="1em"/><mi>π</mi><mo>≈</mo><mfrac><mrow><mn>2</mn><mi>l</mi><mtext> </mtext><mi>N</mi></mrow><mrow><mi>d</mi><mo>⋅</mo><mi mathvariant="normal">#</mi><mtext>crossings</mtext></mrow></mfrac></mrow><annotation encoding="application/x-tex">P(\text{cross})=\frac{2l}{\pi d}\quad\Rightarrow\quad \pi\approx\frac{2l\,N}{d\cdot\#\text{crossings}}</annotation></semantics></math></span></div>
+  <div class="try"><h4>Try it</h4>Shorten the needle: fewer crossings, so the estimate of π gets noisier for the same number of throws.</div>
 </section>
 <section data-case="buffon" data-example="short"><h3>Shorter needles</h3><p>Fewer crossings: each one carries more weight, the estimate is noisier.</p></section>
 <section data-case="importance">
@@ -1604,6 +1661,7 @@
   <p>Uniform points mostly land where g ≈ 0 and waste effort. Drawing points from a density q that follows g, and weighting each by g/q, keeps the estimate unbiased while cutting its spread.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>∫</mo><mi>g</mi><mtext> </mtext><mi>d</mi><mi>x</mi><mo>=</mo><msub><mi mathvariant="double-struck">E</mi><mi>q</mi></msub><mtext> ⁣</mtext><mrow><mo fence="true">[</mo><mfrac><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow><mrow><mi>q</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow></mfrac><mo fence="true">]</mo></mrow><mo>≈</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mo>∑</mo><mfrac><mrow><mi>g</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><mrow><mi>q</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow></mfrac><mo separator="true">,</mo><mspace width="1em"/><msub><mi>x</mi><mi>i</mi></msub><mo>∼</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">\int g\,dx=\mathbb E_q\!\left[\frac{g(X)}{q(X)}\right]\approx\frac1n\sum\frac{g(x_i)}{q(x_i)},\quad x_i\sim q</annotation></semantics></math></span></div>
   <div class="pitfall"><h4>Common mistake</h4>A proposal narrower than the target, or in the wrong place: rare points get enormous weights and the variance explodes.</div>
+  <div class="try"><h4>Try it</h4>Move the proposal's centre away from where the integrand is large: the estimates scatter much more. Make it too narrow and rare huge weights appear.</div>
 </section>
 <section data-case="importance" data-example="off"><h3>Wrong place</h3><p>q puts its points away from the peak: the few that hit it get huge weights.</p></section>
 <section data-case="importance" data-example="narrow"><h3>Too narrow</h3><p>The tails of the peak are almost never sampled: occasional huge weights.</p></section>
@@ -1618,6 +1676,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>A</mi><mo>^</mo></mover><mo>=</mo><mfrac><mrow><mi mathvariant="normal">#</mi><mtext>hits</mtext></mrow><mi>N</mi></mfrac><mo separator="true">,</mo><mspace width="2em"/><mtext>standard error</mtext><mo>=</mo><msqrt><mfrac><mrow><mi>A</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>A</mi><mo stretchy="false">)</mo></mrow><mi>N</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\hat A=\frac{\#\text{hits}}{N},\qquad \text{standard error}=\sqrt{\frac{A(1-A)}{N}}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>1000 points: the standard error on π is 4·√(0.785·0.215/1000) ≈ 0.05 — typically two correct digits.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting one more correct digit per ten times the points: it takes a hundred times.</div>
+  <div class="try"><h4>Try it</h4>Raise the number of points: the estimate settles on the true area, but the error only shrinks as 1/√N.</div>
 </section>
 <section data-case="hitmiss" data-example="bell"><h3>e^(−x²)</h3><p>This integral has no closed form; Monte Carlo does not care.</p></section>
 <section data-case="error">
@@ -1626,6 +1685,7 @@
   <p>The sample mean of f at random points estimates its integral. Each estimate is random; their spread is σ_f/√n — the central limit theorem at work.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>I</mi><mo>^</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="2em"/><mi mathvariant="normal">sd</mi><mo>⁡</mo><mo stretchy="false">(</mo><mover accent="true"><mi>I</mi><mo>^</mo></mover><mo stretchy="false">)</mo><mo>=</mo><mfrac><msub><mi>σ</mi><mi>f</mi></msub><msqrt><mi>n</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\hat I=\frac1n\sum_{i=1}^nf(x_i),\qquad \operatorname{sd}(\hat I)=\frac{\sigma_f}{\sqrt n}</annotation></semantics></math></span></div>
   <p>Slow in one dimension (a simple grid beats it), but the rate is the same in any dimension — which is why Monte Carlo rules physics simulations, finance and rendering.</p>
+  <div class="try"><h4>Try it</h4>Raise the points per estimate 100×: the spread of the estimates narrows only 10×.</div>
 </section>
 <section data-case="error" data-example="small"><h3>n = 10</h3><p>A wide histogram: single estimates can be far off.</p></section>
 <section data-case="error" data-example="big"><h3>n = 1000</h3><p>100× the points: the histogram is 10× narrower.</p></section>
@@ -1634,6 +1694,7 @@
   <div class="look"><h4>What you are looking at</h4>Left: needles dropped at random on a floor ruled with lines 1 apart (the latest 400 shown; orange = crossing a line). Top right: the estimate of π as needles accumulate. Bottom right: the probability of crossing for each angle.</div>
   <p>A needle of length l ≤ 1 crosses a line with probability depending on its angle; averaging over all angles brings in π:</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mtext>cross</mtext><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mn>2</mn><mi>l</mi></mrow><mrow><mi>π</mi><mi>d</mi></mrow></mfrac><mspace width="1em"/><mo>⇒</mo><mspace width="1em"/><mi>π</mi><mo>≈</mo><mfrac><mrow><mn>2</mn><mi>l</mi><mtext> </mtext><mi>N</mi></mrow><mrow><mi>d</mi><mo>⋅</mo><mi mathvariant="normal">#</mi><mtext>crossings</mtext></mrow></mfrac></mrow><annotation encoding="application/x-tex">P(\text{cross})=\frac{2l}{\pi d}\quad\Rightarrow\quad \pi\approx\frac{2l\,N}{d\cdot\#\text{crossings}}</annotation></semantics></math></span></div>
+  <div class="try"><h4>Try it</h4>Shorten the needle: fewer crossings, so the estimate of π gets noisier for the same number of throws.</div>
 </section>
 <section data-case="buffon" data-example="short"><h3>Shorter needles</h3><p>Fewer crossings: each one carries more weight, the estimate is noisier.</p></section>
 <section data-case="importance">
@@ -1642,6 +1703,7 @@
   <p>Uniform points mostly land where g ≈ 0 and waste effort. Drawing points from a density q that follows g, and weighting each by g/q, keeps the estimate unbiased while cutting its spread.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>∫</mo><mi>g</mi><mtext> </mtext><mi>d</mi><mi>x</mi><mo>=</mo><msub><mi mathvariant="double-struck">E</mi><mi>q</mi></msub><mtext> ⁣</mtext><mrow><mo fence="true">[</mo><mfrac><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow><mrow><mi>q</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow></mfrac><mo fence="true">]</mo></mrow><mo>≈</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mo>∑</mo><mfrac><mrow><mi>g</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><mrow><mi>q</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow></mfrac><mo separator="true">,</mo><mspace width="1em"/><msub><mi>x</mi><mi>i</mi></msub><mo>∼</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">\int g\,dx=\mathbb E_q\!\left[\frac{g(X)}{q(X)}\right]\approx\frac1n\sum\frac{g(x_i)}{q(x_i)},\quad x_i\sim q</annotation></semantics></math></span></div>
   <div class="pitfall"><h4>Common mistake</h4>A proposal narrower than the target, or in the wrong place: rare points get enormous weights and the variance explodes.</div>
+  <div class="try"><h4>Try it</h4>Move the proposal's centre away from where the integrand is large: the estimates scatter much more. Make it too narrow and rare huge weights appear.</div>
 </section>
 <section data-case="importance" data-example="off"><h3>Wrong place</h3><p>q puts its points away from the peak: the few that hit it get huge weights.</p></section>
 <section data-case="importance" data-example="narrow"><h3>Too narrow</h3><p>The tails of the peak are almost never sampled: occasional huge weights.</p></section>
@@ -1656,6 +1718,7 @@
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>A</mi><mo>^</mo></mover><mo>=</mo><mfrac><mrow><mi mathvariant="normal">#</mi><mtext>hits</mtext></mrow><mi>N</mi></mfrac><mo separator="true">,</mo><mspace width="2em"/><mtext>standard error</mtext><mo>=</mo><msqrt><mfrac><mrow><mi>A</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>A</mi><mo stretchy="false">)</mo></mrow><mi>N</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\hat A=\frac{\#\text{hits}}{N},\qquad \text{standard error}=\sqrt{\frac{A(1-A)}{N}}</annotation></semantics></math></span></div>
   <div class="worked"><h4>Worked example</h4>1000 points: the standard error on π is 4·√(0.785·0.215/1000) ≈ 0.05 — typically two correct digits.</div>
   <div class="pitfall"><h4>Common mistake</h4>Expecting one more correct digit per ten times the points: it takes a hundred times.</div>
+  <div class="try"><h4>Try it</h4>Raise the number of points: the estimate settles on the true area, but the error only shrinks as 1/√N.</div>
 </section>
 <section data-case="hitmiss" data-example="bell"><h3>e^(−x²)</h3><p>This integral has no closed form; Monte Carlo does not care.</p></section>
 <section data-case="error">
@@ -1664,6 +1727,7 @@
   <p>The sample mean of f at random points estimates its integral. Each estimate is random; their spread is σ_f/√n — the central limit theorem at work.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mi>I</mi><mo>^</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="2em"/><mi mathvariant="normal">sd</mi><mo>⁡</mo><mo stretchy="false">(</mo><mover accent="true"><mi>I</mi><mo>^</mo></mover><mo stretchy="false">)</mo><mo>=</mo><mfrac><msub><mi>σ</mi><mi>f</mi></msub><msqrt><mi>n</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\hat I=\frac1n\sum_{i=1}^nf(x_i),\qquad \operatorname{sd}(\hat I)=\frac{\sigma_f}{\sqrt n}</annotation></semantics></math></span></div>
   <p>Slow in one dimension (a simple grid beats it), but the rate is the same in any dimension — which is why Monte Carlo rules physics simulations, finance and rendering.</p>
+  <div class="try"><h4>Try it</h4>Raise the points per estimate 100×: the spread of the estimates narrows only 10×.</div>
 </section>
 <section data-case="error" data-example="small"><h3>n = 10</h3><p>A wide histogram: single estimates can be far off.</p></section>
 <section data-case="error" data-example="big"><h3>n = 1000</h3><p>100× the points: the histogram is 10× narrower.</p></section>
@@ -1672,6 +1736,7 @@
   <div class="look"><h4>What you are looking at</h4>Left: needles dropped at random on a floor ruled with lines 1 apart (the latest 400 shown; orange = crossing a line). Top right: the estimate of π as needles accumulate. Bottom right: the probability of crossing for each angle.</div>
   <p>A needle of length l ≤ 1 crosses a line with probability depending on its angle; averaging over all angles brings in π:</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mtext>cross</mtext><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mn>2</mn><mi>l</mi></mrow><mrow><mi>π</mi><mi>d</mi></mrow></mfrac><mspace width="1em"/><mo>⇒</mo><mspace width="1em"/><mi>π</mi><mo>≈</mo><mfrac><mrow><mn>2</mn><mi>l</mi><mtext> </mtext><mi>N</mi></mrow><mrow><mi>d</mi><mo>⋅</mo><mi mathvariant="normal">#</mi><mtext>crossings</mtext></mrow></mfrac></mrow><annotation encoding="application/x-tex">P(\text{cross})=\frac{2l}{\pi d}\quad\Rightarrow\quad \pi\approx\frac{2l\,N}{d\cdot\#\text{crossings}}</annotation></semantics></math></span></div>
+  <div class="try"><h4>Try it</h4>Shorten the needle: fewer crossings, so the estimate of π gets noisier for the same number of throws.</div>
 </section>
 <section data-case="buffon" data-example="short"><h3>Shorter needles</h3><p>Fewer crossings: each one carries more weight, the estimate is noisier.</p></section>
 <section data-case="importance">
@@ -1680,6 +1745,7 @@
   <p>Uniform points mostly land where g ≈ 0 and waste effort. Drawing points from a density q that follows g, and weighting each by g/q, keeps the estimate unbiased while cutting its spread.</p>
   <div class="eq"><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>∫</mo><mi>g</mi><mtext> </mtext><mi>d</mi><mi>x</mi><mo>=</mo><msub><mi mathvariant="double-struck">E</mi><mi>q</mi></msub><mtext> ⁣</mtext><mrow><mo fence="true">[</mo><mfrac><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow><mrow><mi>q</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow></mfrac><mo fence="true">]</mo></mrow><mo>≈</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mo>∑</mo><mfrac><mrow><mi>g</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><mrow><mi>q</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow></mfrac><mo separator="true">,</mo><mspace width="1em"/><msub><mi>x</mi><mi>i</mi></msub><mo>∼</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">\int g\,dx=\mathbb E_q\!\left[\frac{g(X)}{q(X)}\right]\approx\frac1n\sum\frac{g(x_i)}{q(x_i)},\quad x_i\sim q</annotation></semantics></math></span></div>
   <div class="pitfall"><h4>Common mistake</h4>A proposal narrower than the target, or in the wrong place: rare points get enormous weights and the variance explodes.</div>
+  <div class="try"><h4>Try it</h4>Move the proposal's centre away from where the integrand is large: the estimates scatter much more. Make it too narrow and rare huge weights appear.</div>
 </section>
 <section data-case="importance" data-example="off"><h3>Wrong place</h3><p>q puts its points away from the peak: the few that hit it get huge weights.</p></section>
 <section data-case="importance" data-example="narrow"><h3>Too narrow</h3><p>The tails of the peak are almost never sampled: occasional huge weights.</p></section>

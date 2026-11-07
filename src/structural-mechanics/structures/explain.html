@@ -1,0 +1,67 @@
+<section data-case="truss">
+  <h3>Trusses: the method of joints</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: a bridge truss, pinned on the left and on a roller on the right, with a load on one bottom joint. Each member is coloured by its force, blue for tension, red for compression, grey for none, with the thickness growing with the force and the value in kN beside it. Top right: every member's force as a bar. Bottom right: the influence line, the force in the middle bottom-chord member as the load moves along the span. Below: the two reactions against the load position.</div>
+  <p>A truss is a frame of straight members joined at pins, loaded only at the joints. A member then carries force only along its own length: it is either stretched (tension) or squeezed (compression). At each joint the member forces and any load or reaction must balance, in x and in y. That gives two equations per joint. If the number of members plus the three support reactions equals twice the number of joints, the truss is <b>statically determinate</b>: the equations fix every force, whatever the members are made of.</p>
+  <div class="eq">$$\sum_{\text{members at } j} f_k\,\hat{\mathbf e}_k + \mathbf F_j = \mathbf 0 \quad\text{at every joint}, \qquad m + 3 = 2j\ \text{(determinate)}$$</div>
+  <ol class="steps">
+    <li>Find the reactions from the whole truss (moments about one support).</li>
+    <li>Start at a joint with at most two unknown members and solve its two equations.</li>
+    <li>Move to the next joint; or cut the truss (method of sections) to get one member directly.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>An 8 m Pratt truss, 2 m high, 10 kN at midspan. Each support takes 5 kN. The bottom chord carries 5 kN of tension, the top chord 10 kN of compression, the end diagonals −7.07 kN = −5√2. The middle vertical carries nothing: the top joint above it has only horizontal members besides it, so nothing can balance a force in it.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Assuming a member with zero force is useless. It braces the compressed members against buckling and carries load when the load moves.</div>
+  <div class="try"><h4>Try it</h4>Switch from Pratt to Howe with the same load: the diagonals turn from tension (blue) to compression (red) and the verticals do the opposite.</div>
+</section>
+<section data-case="truss" data-example="howe"><h3>Howe: the diagonals swap sign</h3><p>The diagonals now lean the other way: they are squeezed and the verticals pulled. Pratt trusses suit steel (long members in tension do not buckle); Howe trusses suited timber diagonals and iron rods.</p></section>
+<section data-case="truss" data-example="edge"><h3>Load near a support</h3><p>The near support takes three quarters of the load, and the members near it carry most of the force. The influence line on the right shows how the middle member's force changes as the load moves.</p></section>
+<section data-case="truss" data-example="warren"><h3>Warren: no verticals</h3><p>Only triangles of equal diagonals, alternately in tension and compression: fewer members, and a classic layout for bridges and roof girders.</p></section>
+
+<section data-case="torsion">
+  <h3>Torsion of shafts</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the cross-section of a shaft carrying a torque, coloured by the shear stress (bright = high). Top right: the shear stress across a diameter. Bottom right: for a tube with the same amount of material, the largest stress (orange) and the twist (blue) relative to a solid shaft, against how hollow the tube is. Below: the angle of twist against the shaft length.</div>
+  <p>Twist a round shaft and each cross-section turns a little relative to the next. The shear strain, and so the shear stress, grows in proportion to the distance from the axis: zero at the centre, largest at the surface. The material near the centre does almost nothing. A <b>tube</b> puts the material where the stress is useful. With the same weight it is both stronger and stiffer, which is why drive shafts and bicycle frames are hollow.</p>
+  <div class="eq">$$\tau(r) = \frac{T\,r}{J}, \qquad J = \frac{\pi}{2}(r_o^4 - r_i^4), \qquad \varphi = \frac{T L}{G J}$$</div>
+  <ol class="steps">
+    <li>The polar second moment J measures how far the material sits from the axis.</li>
+    <li>The largest stress is at the outer surface: T r₀ / J.</li>
+    <li>The twist per length is T / (GJ): G is the material, J the shape.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>500 N·m on a solid steel shaft of 20 mm radius: τmax = 39.8 MPa, a twist of 1.4° per metre. A tube of 28 mm outer and 19.6 mm inner radius has the same area, so the same weight, yet τmax is 19.1 MPa and the twist 0.49°, half and a third.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Making the wall very thin to save weight. Below a few per cent of the radius a tube in torsion fails by buckling of its wall, not by the stress computed here.</div>
+  <div class="try"><h4>Try it</h4>Raise the inner ÷ outer radius and watch the bottom-right dot: with the material held constant, both curves fall steeply as the tube opens up.</div>
+</section>
+<section data-case="torsion" data-example="hollow"><h3>Hollow tube, same mass</h3><p>A 28 mm tube with a 19.6 mm bore uses exactly the steel of a 20 mm solid shaft and carries the torque at half the stress.</p></section>
+<section data-case="torsion" data-example="alu"><h3>Aluminium: three times the twist</h3><p>Aluminium's shear modulus is a third of steel's: for the same shaft the stress is the same, the twist three times larger.</p></section>
+
+<section data-case="hole">
+  <h3>Stress concentration and fatigue</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the stress σxx in a wide plate pulled left and right, around a circular hole; bright is high. Top right: the stress concentration factor of an elliptical hole against its shape. Bottom right: an S–N curve, the stress amplitude a steel can take for a given number of cycles (illustrative values), with the remote stress (green) and the stress at the hole (red). Below: the stress along the section through the hole.</div>
+  <p>Load has to flow around a hole, and it crowds at its sides: beside a circular hole the stress is <b>three times</b> the remote stress, whatever the hole's size. An elliptical hole across the load is worse, Kt = 1 + 2a/b, and a crack is the limiting case. A part that survives a static load can still fail under millions of smaller ones. That is <b>fatigue</b>: the stress amplitude a material can take falls with the number of cycles, down to an endurance limit for steels. Because life depends steeply on stress, tripling the local stress can cut the life from infinite to a few thousand cycles. Cracks start at holes, corners and scratches.</p>
+  <div class="eq">$$K_t = \frac{\sigma_\text{max}}{\sigma_\text{nominal}} = 3\ \text{(circle)},\quad 1 + \frac{2a}{b}\ \text{(ellipse)}, \qquad \sigma_a = \sigma_f'\,(2N)^b\ \ \text{(Basquin)}$$</div>
+  <ol class="steps">
+    <li>Find the nominal stress the part would have without the feature.</li>
+    <li>Multiply by Kt for the peak at the feature.</li>
+    <li>Read the fatigue life at that peak from the S–N curve.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>A 100 MPa amplitude in a plain plate is below the 250 MPa endurance limit: infinite life. Drill a round hole and the edge sees 300 MPa: about 10⁵ cycles. A slit five times wider than long across the load gives Kt = 11 and the part fails almost at once.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Thinking a small hole is harmless because little material is removed. Kt does not depend on the hole's size, only on its shape.</div>
+  <div class="try"><h4>Try it</h4>Widen the hole across the load step by step and watch the red dot climb the S–N curve while the green one stays put.</div>
+</section>
+<section data-case="hole" data-example="crack"><h3>A slit across the load</h3><p>a/b = 5: Kt = 11. This is why a crack keeps growing: its tip concentrates the stress more and more as it lengthens. Drilling a round hole at a crack tip lowers Kt and can stop it.</p></section>
+<section data-case="hole" data-example="safe"><h3>Below the endurance limit</h3><p>70 MPa remote, 210 MPa at the hole: even the peak stays under the 250 MPa endurance limit, and the part lasts indefinitely.</p></section>
+
+<section data-case="propped">
+  <h3>A statically indeterminate beam</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the deflection of a 4 m beam clamped at the left and resting on a roller at the right (green), against the same beam simply supported (blue) and as a free cantilever (grey, divided by 10). Top right: the bending moment, propped and simply supported. Bottom right: the shear force of the propped beam. Below: the roller reaction per unit load, against where a point load sits.</div>
+  <p>A clamp gives three reactions (two forces and a moment) and a roller one more: four unknowns, but statics in the plane gives only three equations. The structure is <b>statically indeterminate</b>. The missing equation comes from geometry, <b>compatibility</b>: the beam cannot move at the roller. Remove the roller, compute how far the tip would drop under the load, and find the roller force that pushes it exactly back. The extra support makes the beam stiffer and spreads the moment between the wall and the span.</p>
+  <div class="eq">$$\delta_\text{load}(L) + R\,\delta_\text{unit}(L) = 0, \qquad \text{uniform } w:\ R = \tfrac38 wL,\ \ M_\text{wall} = -\tfrac{wL^2}{8}, \qquad \text{point at midspan: } R = \tfrac{5}{16}P$$</div>
+  <ol class="steps">
+    <li>Choose one redundant reaction (the roller) and remove it: a cantilever.</li>
+    <li>Compute the tip deflection under the load, and under a unit force at the tip.</li>
+    <li>Superpose: the roller force cancels the deflection; then statics gives the rest.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>10 kN/m over 4 m: the roller takes 3/8 × 40 = 15 kN, the wall 25 kN and a moment of 20 kN·m. The largest moment equals the simply supported beam's 20 kN·m but sits at the wall, and the deflection is 0.69 mm instead of 1.67 mm.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Forgetting that indeterminate structures react to settlement and temperature: if the roller sinks a few millimetres, the forces change even with no new load.</div>
+  <div class="try"><h4>Try it</h4>Switch to a point load and slide it along the beam: the roller's share follows the curve below, from almost nothing near the wall to all of it at the roller.</div>
+</section>
+<section data-case="propped" data-example="point"><h3>A point load at midspan</h3><p>R = 5P/16: the roller takes less than half, because the clamp also resists rotation and draws load toward the wall.</p></section>

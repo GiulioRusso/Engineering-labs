@@ -11,7 +11,7 @@
     "cases": [
      "iv"
     ],
-    "group": "Diodes"
+    "group": "1 · Diodes"
    },
    {
     "id": "rectifiers",
@@ -21,7 +21,7 @@
     "cases": [
      "rectifier"
     ],
-    "group": "Diodes"
+    "group": "1 · Diodes"
    },
    {
     "id": "zener",
@@ -31,7 +31,7 @@
     "cases": [
      "zener"
     ],
-    "group": "Diodes"
+    "group": "1 · Diodes"
    },
    {
     "id": "bjt",
@@ -41,7 +41,7 @@
     "cases": [
      "bjt"
     ],
-    "group": "Transistors"
+    "group": "2 · Transistors"
    },
    {
     "id": "mosfet",
@@ -52,7 +52,7 @@
      "mosfet",
      "surface"
     ],
-    "group": "Transistors"
+    "group": "2 · Transistors"
    },
    {
     "id": "transconductance",
@@ -62,7 +62,7 @@
     "cases": [
      "gm"
     ],
-    "group": "Transistors"
+    "group": "2 · Transistors"
    },
    {
     "id": "bias-point",
@@ -72,7 +72,7 @@
     "cases": [
      "bias"
     ],
-    "group": "Transistors"
+    "group": "2 · Transistors"
    },
    {
     "id": "small-signal",
@@ -82,7 +82,7 @@
     "cases": [
      "small"
     ],
-    "group": "Transistors"
+    "group": "2 · Transistors"
    },
    {
     "id": "current-mirror",
@@ -92,7 +92,7 @@
     "cases": [
      "mirror"
     ],
-    "group": "Transistors"
+    "group": "2 · Transistors"
    },
    {
     "id": "common-emitter",
@@ -102,7 +102,7 @@
     "cases": [
      "ce"
     ],
-    "group": "Amplifiers"
+    "group": "3 · Amplifiers"
    },
    {
     "id": "emitter-follower",
@@ -112,7 +112,7 @@
     "cases": [
      "follower"
     ],
-    "group": "Amplifiers"
+    "group": "3 · Amplifiers"
    },
    {
     "id": "differential-pair",
@@ -122,7 +122,7 @@
     "cases": [
      "diff"
     ],
-    "group": "Amplifiers"
+    "group": "3 · Amplifiers"
    },
    {
     "id": "miller-effect",
@@ -132,7 +132,7 @@
     "cases": [
      "miller"
     ],
-    "group": "Amplifiers"
+    "group": "3 · Amplifiers"
    },
    {
     "id": "negative-feedback",
@@ -142,7 +142,7 @@
     "cases": [
      "feedback"
     ],
-    "group": "Amplifiers"
+    "group": "3 · Amplifiers"
    },
    {
     "id": "cascading",
@@ -152,7 +152,7 @@
     "cases": [
      "cascade"
     ],
-    "group": "Amplifiers"
+    "group": "3 · Amplifiers"
    },
    {
     "id": "virtual-short",
@@ -162,7 +162,7 @@
     "cases": [
      "ideal"
     ],
-    "group": "Op-amps"
+    "group": "4 · Op-amps"
    },
    {
     "id": "finite-gain",
@@ -172,7 +172,7 @@
     "cases": [
      "finite"
     ],
-    "group": "Op-amps"
+    "group": "4 · Op-amps"
    },
    {
     "id": "bandwidth-slew",
@@ -182,7 +182,7 @@
     "cases": [
      "speed"
     ],
-    "group": "Op-amps"
+    "group": "4 · Op-amps"
    },
    {
     "id": "offset-bias",
@@ -192,7 +192,7 @@
     "cases": [
      "dc"
     ],
-    "group": "Op-amps"
+    "group": "4 · Op-amps"
    },
    {
     "id": "stability",
@@ -202,7 +202,7 @@
     "cases": [
      "stability"
     ],
-    "group": "Op-amps"
+    "group": "4 · Op-amps"
    },
    {
     "id": "sallen-key",
@@ -212,7 +212,7 @@
     "cases": [
      "sallen"
     ],
-    "group": "Op-amps"
+    "group": "4 · Op-amps"
    },
    {
     "id": "cmos-inverter",
@@ -222,7 +222,7 @@
     "cases": [
      "inverter"
     ],
-    "group": "CMOS logic"
+    "group": "5 · CMOS logic"
    },
    {
     "id": "noise-margins",
@@ -232,7 +232,7 @@
     "cases": [
      "margins"
     ],
-    "group": "CMOS logic"
+    "group": "5 · CMOS logic"
    },
    {
     "id": "gate-delay",
@@ -242,7 +242,7 @@
     "cases": [
      "delay"
     ],
-    "group": "CMOS logic"
+    "group": "5 · CMOS logic"
    },
    {
     "id": "cmos-power",
@@ -252,7 +252,7 @@
     "cases": [
      "power"
     ],
-    "group": "CMOS logic"
+    "group": "5 · CMOS logic"
    },
    {
     "id": "latch",
@@ -262,7 +262,7 @@
     "cases": [
      "latch"
     ],
-    "group": "CMOS logic"
+    "group": "5 · CMOS logic"
    }
   ]
  },
@@ -278,7 +278,7 @@
     "cases": [
      "resistor"
     ],
-    "group": "Components"
+    "group": "1 · Components"
    },
    {
     "id": "capacitor",
@@ -288,7 +288,7 @@
     "cases": [
      "capacitor"
     ],
-    "group": "Components"
+    "group": "1 · Components"
    },
    {
     "id": "inductor",
@@ -298,7 +298,7 @@
     "cases": [
      "inductor"
     ],
-    "group": "Components"
+    "group": "1 · Components"
    },
    {
     "id": "diode",
@@ -308,7 +308,7 @@
     "cases": [
      "iv"
     ],
-    "group": "Components"
+    "group": "1 · Components"
    },
    {
     "id": "sine-phase",
@@ -318,7 +318,7 @@
     "cases": [
      "sine"
     ],
-    "group": "Components"
+    "group": "1 · Components"
    },
    {
     "id": "lc-energy",
@@ -328,7 +328,7 @@
     "cases": [
      "lc"
     ],
-    "group": "Components"
+    "group": "1 · Components"
    },
    {
     "id": "series-parallel",
@@ -338,7 +338,7 @@
     "cases": [
      "sp"
     ],
-    "group": "Networks"
+    "group": "2 · Networks"
    },
    {
     "id": "kcl",
@@ -348,7 +348,7 @@
     "cases": [
      "kcl"
     ],
-    "group": "Networks"
+    "group": "2 · Networks"
    },
    {
     "id": "thevenin",
@@ -358,7 +358,7 @@
     "cases": [
      "thevenin"
     ],
-    "group": "Networks"
+    "group": "2 · Networks"
    },
    {
     "id": "superposition",
@@ -368,7 +368,7 @@
     "cases": [
      "super"
     ],
-    "group": "Networks"
+    "group": "2 · Networks"
    },
    {
     "id": "circuit-landscape",
@@ -378,7 +378,7 @@
     "cases": [
      "landscape"
     ],
-    "group": "Networks"
+    "group": "2 · Networks"
    },
    {
     "id": "rlc-step",
@@ -388,7 +388,7 @@
     "cases": [
      "rlc"
     ],
-    "group": "Networks"
+    "group": "2 · Networks"
    },
    {
     "id": "phasors",
@@ -398,7 +398,7 @@
     "cases": [
      "phasor"
     ],
-    "group": "AC circuits"
+    "group": "3 · AC circuits"
    },
    {
     "id": "rlc-phasors",
@@ -408,7 +408,7 @@
     "cases": [
      "helix"
     ],
-    "group": "AC circuits"
+    "group": "3 · AC circuits"
    },
    {
     "id": "impedance",
@@ -418,7 +418,7 @@
     "cases": [
      "impedance"
     ],
-    "group": "AC circuits"
+    "group": "3 · AC circuits"
    },
    {
     "id": "series-resonance",
@@ -428,7 +428,7 @@
     "cases": [
      "resonance"
     ],
-    "group": "AC circuits"
+    "group": "3 · AC circuits"
    },
    {
     "id": "parallel-tank",
@@ -438,7 +438,7 @@
     "cases": [
      "tank"
     ],
-    "group": "AC circuits"
+    "group": "3 · AC circuits"
    },
    {
     "id": "ac-power",
@@ -448,7 +448,7 @@
     "cases": [
      "power"
     ],
-    "group": "AC circuits"
+    "group": "3 · AC circuits"
    },
    {
     "id": "rc-filter",
@@ -458,7 +458,7 @@
     "cases": [
      "filter"
     ],
-    "group": "AC circuits"
+    "group": "3 · AC circuits"
    },
    {
     "id": "selectivity",
@@ -468,7 +468,7 @@
     "cases": [
      "select"
     ],
-    "group": "Radio circuits"
+    "group": "4 · Radio circuits"
    },
    {
     "id": "lc-ladder",
@@ -478,7 +478,7 @@
     "cases": [
      "ladder"
     ],
-    "group": "Radio circuits"
+    "group": "4 · Radio circuits"
    },
    {
     "id": "matching",
@@ -488,7 +488,7 @@
     "cases": [
      "match"
     ],
-    "group": "Radio circuits"
+    "group": "4 · Radio circuits"
    },
    {
     "id": "transmission-line",
@@ -499,7 +499,7 @@
      "tem",
      "smith"
     ],
-    "group": "Radio circuits"
+    "group": "4 · Radio circuits"
    },
    {
     "id": "envelope-detector",
@@ -509,7 +509,7 @@
     "cases": [
      "envelope"
     ],
-    "group": "Radio circuits"
+    "group": "4 · Radio circuits"
    },
    {
     "id": "mixer",
@@ -519,7 +519,7 @@
     "cases": [
      "mixer"
     ],
-    "group": "Radio circuits"
+    "group": "4 · Radio circuits"
    },
    {
     "id": "feed-to-antenna",
@@ -531,7 +531,7 @@
      "hertz",
      "impedance"
     ],
-    "group": "Radio circuits"
+    "group": "4 · Radio circuits"
    }
   ]
  },
@@ -563,7 +563,7 @@
      "first",
      "second"
     ],
-    "group": "Time domain"
+    "group": "1 · Time domain"
    },
    {
     "id": "poles",
@@ -573,7 +573,7 @@
     "cases": [
      "poles"
     ],
-    "group": "Time domain"
+    "group": "1 · Time domain"
    },
    {
     "id": "steady-state-error",
@@ -583,7 +583,7 @@
     "cases": [
      "error"
     ],
-    "group": "Feedback"
+    "group": "2 · Feedback"
    },
    {
     "id": "root-locus",
@@ -593,14 +593,14 @@
     "cases": [
      "locus"
     ],
-    "group": "Feedback"
+    "group": "2 · Feedback"
    },
    {
     "id": "pid",
     "title": "PID control",
     "what": "A motor holds a rod upright: tune Kp, Ki, Kd, then push it, load it and add sensor noise.",
     "from": "pid-pendulum",
-    "group": "Feedback"
+    "group": "2 · Feedback"
    },
    {
     "id": "bode",
@@ -610,7 +610,7 @@
     "cases": [
      "bode"
     ],
-    "group": "Frequency domain"
+    "group": "3 · Frequency domain"
    },
    {
     "id": "nyquist",
@@ -620,7 +620,7 @@
     "cases": [
      "nyquist"
     ],
-    "group": "Frequency domain"
+    "group": "3 · Frequency domain"
    },
    {
     "id": "lead-lag",
@@ -630,7 +630,57 @@
     "cases": [
      "lead"
     ],
-    "group": "Frequency domain"
+    "group": "3 · Frequency domain"
+   },
+   {
+    "id": "state-space",
+    "title": "State space and eigenvalues",
+    "what": "Position and velocity as one state: the phase plane, its arrow field, and the eigenvalues of A as the poles.",
+    "from": "statespace",
+    "cases": [
+     "model"
+    ],
+    "group": "4 · State space"
+   },
+   {
+    "id": "pole-placement",
+    "title": "Pole placement",
+    "what": "Feed back the whole state and put the closed-loop poles anywhere, at a price in force.",
+    "from": "statespace",
+    "cases": [
+     "placement"
+    ],
+    "group": "4 · State space"
+   },
+   {
+    "id": "observers",
+    "title": "Observers and the Kalman filter",
+    "what": "Estimating the velocity you cannot measure from a noisy position: observer speed against noise.",
+    "from": "statespace",
+    "cases": [
+     "observer"
+    ],
+    "group": "4 · State space"
+   },
+   {
+    "id": "z-plane",
+    "title": "Sampling and the z-plane",
+    "what": "z = e^{sT}: where sampling sends the poles, and when the samples stop telling the truth.",
+    "from": "digital",
+    "cases": [
+     "zplane"
+    ],
+    "group": "5 · Digital control"
+   },
+   {
+    "id": "digital-controller",
+    "title": "A controller in a computer",
+    "what": "The same PD loop computed every T seconds: the hold adds delay, and too slow a sample rate destabilises it.",
+    "from": "digital",
+    "cases": [
+     "discrete"
+    ],
+    "group": "5 · Digital control"
    }
   ]
  },
@@ -652,7 +702,7 @@
     "cases": [
      "echo"
     ],
-    "group": "Pulses and range"
+    "group": "1 · Pulses and range"
    },
    {
     "id": "range-resolution",
@@ -662,7 +712,7 @@
     "cases": [
      "resolution"
     ],
-    "group": "Pulses and range"
+    "group": "1 · Pulses and range"
    },
    {
     "id": "pulse-train",
@@ -672,7 +722,7 @@
     "cases": [
      "train"
     ],
-    "group": "Pulses and range"
+    "group": "1 · Pulses and range"
    },
    {
     "id": "pulses-in-flight",
@@ -682,7 +732,37 @@
     "cases": [
      "measure"
     ],
-    "group": "Pulses and range"
+    "group": "1 · Pulses and range"
+   },
+   {
+    "id": "radar-equation",
+    "title": "The radar equation",
+    "what": "The range equation as a dB budget: every factor, the noise floor, SNR against range.",
+    "from": "radar",
+    "cases": [
+     "budget"
+    ],
+    "group": "2 · Radar basics"
+   },
+   {
+    "id": "detection",
+    "title": "Detection in noise",
+    "what": "Radar equation, threshold, false alarms and probability of detection on an A-scope.",
+    "from": "radar",
+    "cases": [
+     "detect"
+    ],
+    "group": "2 · Radar basics"
+   },
+   {
+    "id": "ppi",
+    "title": "The PPI scope",
+    "what": "A rotating beam paints aircraft, ground clutter and rain on a plan display.",
+    "from": "radar",
+    "cases": [
+     "ppi"
+    ],
+    "group": "2 · Radar basics"
    },
    {
     "id": "plain-pulse",
@@ -693,7 +773,7 @@
      "plain",
      "formation"
     ],
-    "group": "Waveforms"
+    "group": "3 · Waveforms"
    },
    {
     "id": "chirp",
@@ -704,7 +784,7 @@
      "chirp",
      "refuel"
     ],
-    "group": "Waveforms"
+    "group": "3 · Waveforms"
    },
    {
     "id": "phase-codes",
@@ -715,7 +795,7 @@
      "barker",
      "masking"
     ],
-    "group": "Waveforms"
+    "group": "3 · Waveforms"
    },
    {
     "id": "doppler-effect",
@@ -725,7 +805,7 @@
     "cases": [
      "wavefronts"
     ],
-    "group": "Doppler"
+    "group": "4 · Doppler"
    },
    {
     "id": "pulse-doppler",
@@ -735,7 +815,7 @@
     "cases": [
      "dashboard"
     ],
-    "group": "Doppler"
+    "group": "4 · Doppler"
    },
    {
     "id": "rd-map",
@@ -745,7 +825,7 @@
     "cases": [
      "rdmap"
     ],
-    "group": "Doppler"
+    "group": "4 · Doppler"
    },
    {
     "id": "ambiguity",
@@ -755,7 +835,87 @@
     "cases": [
      "ambiguity"
     ],
-    "group": "Doppler"
+    "group": "4 · Doppler"
+   },
+   {
+    "id": "mti",
+    "title": "Moving-target indication",
+    "what": "Pulse cancellers remove the ground and reveal blind speeds.",
+    "from": "radar",
+    "cases": [
+     "mti"
+    ],
+    "group": "4 · Doppler"
+   },
+   {
+    "id": "beamforming",
+    "title": "Phased-array beamforming",
+    "what": "The instantaneous near field beside the far-field pattern: steering, taper, grating lobes.",
+    "from": "beams",
+    "cases": [
+     "array"
+    ],
+    "group": "5 · Antennas and beams"
+   },
+   {
+    "id": "fdtd",
+    "title": "Maxwell on a grid",
+    "what": "Solve E and H step by step (FDTD): walls, slits, standing waves, the Courant limit.",
+    "from": "beams",
+    "cases": [
+     "fdtd"
+    ],
+    "group": "5 · Antennas and beams"
+   },
+   {
+    "id": "pointing",
+    "title": "Pointing a beam",
+    "what": "Gain is borrowed solid angle: fly a receiver through the beam and watch the link close.",
+    "from": "beams",
+    "cases": [
+     "pointing"
+    ],
+    "group": "5 · Antennas and beams"
+   },
+   {
+    "id": "lobing",
+    "title": "Lobing and angle tracking",
+    "what": "Two squinted beams, the Δ/Σ error signal and a loop that follows a weaving target.",
+    "from": "beams",
+    "cases": [
+     "lobing"
+    ],
+    "group": "5 · Antennas and beams"
+   },
+   {
+    "id": "search",
+    "title": "Searching a volume",
+    "what": "A pencil beam nodding through elevation bars: coverage, gaps and frame time.",
+    "from": "beams",
+    "cases": [
+     "nodding"
+    ],
+    "group": "5 · Antennas and beams"
+   },
+   {
+    "id": "engagement",
+    "title": "Airborne engagement",
+    "what": "Own ship, sweeping beam, three targets: radial velocity, range–Doppler history and the target’s warning receiver.",
+    "from": "airborne",
+    "cases": [
+     "engage"
+    ],
+    "group": "6 · Airborne radar"
+   },
+   {
+    "id": "ground-clutter",
+    "title": "Ground clutter",
+    "what": "Iso-range circles and iso-Doppler hyperbolas on the ground; the footprint and its clutter spectrum.",
+    "from": "airborne",
+    "cases": [
+     "clutter"
+    ],
+    "group": "6 · Airborne radar"
    },
    {
     "id": "pulsed-radar-arch",
@@ -765,7 +925,7 @@
      "pulsed"
     ],
     "from": "systems",
-    "group": "System architectures"
+    "group": "7 · System architectures"
    },
    {
     "id": "coherent-radar-arch",
@@ -775,7 +935,7 @@
      "coherent"
     ],
     "from": "systems",
-    "group": "System architectures"
+    "group": "7 · System architectures"
    },
    {
     "id": "aesa-arch",
@@ -785,7 +945,7 @@
      "aesa"
     ],
     "from": "systems",
-    "group": "System architectures"
+    "group": "7 · System architectures"
    },
    {
     "id": "esm-arch",
@@ -795,7 +955,7 @@
      "esm"
     ],
     "from": "systems",
-    "group": "System architectures"
+    "group": "7 · System architectures"
    },
    {
     "id": "drfm-arch",
@@ -805,7 +965,7 @@
      "drfm"
     ],
     "from": "systems",
-    "group": "System architectures"
+    "group": "7 · System architectures"
    },
    {
     "id": "receivers",
@@ -817,7 +977,7 @@
      "digitalif",
      "homodyne"
     ],
-    "group": "Receivers"
+    "group": "8 · Receivers"
    },
    {
     "id": "iq-receiver",
@@ -827,7 +987,17 @@
     "cases": [
      "iqdemod"
     ],
-    "group": "Receivers"
+    "group": "8 · Receivers"
+   },
+   {
+    "id": "jamming",
+    "title": "Jamming and burn-through",
+    "what": "Self-screening and stand-off jammers: S/J against range and the burn-through point.",
+    "from": "radar",
+    "cases": [
+     "jam"
+    ],
+    "group": "9 · Electronic attack"
    },
    {
     "id": "sei-intro",
@@ -837,7 +1007,7 @@
     "cases": [
      "intro"
     ],
-    "group": "Emitter fingerprinting"
+    "group": "10 · Emitter fingerprinting"
    },
    {
     "id": "tx-fingerprint",
@@ -850,7 +1020,7 @@
      "amplifier",
      "txfilter"
     ],
-    "group": "Emitter fingerprinting"
+    "group": "10 · Emitter fingerprinting"
    },
    {
     "id": "rx-effects",
@@ -863,7 +1033,7 @@
      "iqimb",
      "adc"
     ],
-    "group": "Emitter fingerprinting"
+    "group": "10 · Emitter fingerprinting"
    },
    {
     "id": "channel-drift",
@@ -874,7 +1044,7 @@
      "channel",
      "drift"
     ],
-    "group": "Emitter fingerprinting"
+    "group": "10 · Emitter fingerprinting"
    },
    {
     "id": "fingerprint-workbench",
@@ -884,127 +1054,7 @@
     "cases": [
      "workbench"
     ],
-    "group": "Emitter fingerprinting"
-   },
-   {
-    "id": "beamforming",
-    "title": "Phased-array beamforming",
-    "what": "The instantaneous near field beside the far-field pattern: steering, taper, grating lobes.",
-    "from": "beams",
-    "cases": [
-     "array"
-    ],
-    "group": "Antennas and beams"
-   },
-   {
-    "id": "fdtd",
-    "title": "Maxwell on a grid",
-    "what": "Solve E and H step by step (FDTD): walls, slits, standing waves, the Courant limit.",
-    "from": "beams",
-    "cases": [
-     "fdtd"
-    ],
-    "group": "Antennas and beams"
-   },
-   {
-    "id": "pointing",
-    "title": "Pointing a beam",
-    "what": "Gain is borrowed solid angle: fly a receiver through the beam and watch the link close.",
-    "from": "beams",
-    "cases": [
-     "pointing"
-    ],
-    "group": "Antennas and beams"
-   },
-   {
-    "id": "lobing",
-    "title": "Lobing and angle tracking",
-    "what": "Two squinted beams, the Δ/Σ error signal and a loop that follows a weaving target.",
-    "from": "beams",
-    "cases": [
-     "lobing"
-    ],
-    "group": "Antennas and beams"
-   },
-   {
-    "id": "search",
-    "title": "Searching a volume",
-    "what": "A pencil beam nodding through elevation bars: coverage, gaps and frame time.",
-    "from": "beams",
-    "cases": [
-     "nodding"
-    ],
-    "group": "Antennas and beams"
-   },
-   {
-    "id": "engagement",
-    "title": "Airborne engagement",
-    "what": "Own ship, sweeping beam, three targets: radial velocity, range–Doppler history and the target’s warning receiver.",
-    "from": "airborne",
-    "cases": [
-     "engage"
-    ],
-    "group": "Airborne radar"
-   },
-   {
-    "id": "ground-clutter",
-    "title": "Ground clutter",
-    "what": "Iso-range circles and iso-Doppler hyperbolas on the ground; the footprint and its clutter spectrum.",
-    "from": "airborne",
-    "cases": [
-     "clutter"
-    ],
-    "group": "Airborne radar"
-   },
-   {
-    "id": "radar-equation",
-    "title": "The radar equation",
-    "what": "The range equation as a dB budget: every factor, the noise floor, SNR against range.",
-    "from": "radar",
-    "cases": [
-     "budget"
-    ],
-    "group": "Radar"
-   },
-   {
-    "id": "detection",
-    "title": "Detection in noise",
-    "what": "Radar equation, threshold, false alarms and probability of detection on an A-scope.",
-    "from": "radar",
-    "cases": [
-     "detect"
-    ],
-    "group": "Radar"
-   },
-   {
-    "id": "mti",
-    "title": "Moving-target indication",
-    "what": "Pulse cancellers remove the ground and reveal blind speeds.",
-    "from": "radar",
-    "cases": [
-     "mti"
-    ],
-    "group": "Radar"
-   },
-   {
-    "id": "ppi",
-    "title": "The PPI scope",
-    "what": "A rotating beam paints aircraft, ground clutter and rain on a plan display.",
-    "from": "radar",
-    "cases": [
-     "ppi"
-    ],
-    "group": "Radar"
-   },
-   {
-    "id": "jamming",
-    "title": "Jamming and burn-through",
-    "what": "Self-screening and stand-off jammers: S/J against range and the burn-through point.",
-    "from": "radar",
-    "cases": [
-     "jam"
-    ],
-    "group": "Electronic attack"
+    "group": "10 · Emitter fingerprinting"
    }
   ]
  },
@@ -1020,7 +1070,17 @@
     "cases": [
      "entropy"
     ],
-    "group": "Information"
+    "group": "1 · Information"
+   },
+   {
+    "id": "typical-sequences",
+    "title": "Typical sequences and compression",
+    "what": "Long random sequences almost all have the same surprise, and there are only 2^{nH} of them.",
+    "from": "codes",
+    "cases": [
+     "typical"
+    ],
+    "group": "1 · Information"
    },
    {
     "id": "huffman",
@@ -1030,7 +1090,17 @@
     "cases": [
      "huffman"
     ],
-    "group": "Information"
+    "group": "1 · Information"
+   },
+   {
+    "id": "mutual-information",
+    "title": "Mutual information",
+    "what": "A joint table and its information diagram: how much the output tells about the input.",
+    "from": "codes",
+    "cases": [
+     "mutual"
+    ],
+    "group": "2 · Channels"
    },
    {
     "id": "channel-capacity",
@@ -1040,7 +1110,7 @@
     "cases": [
      "channel"
     ],
-    "group": "Channels"
+    "group": "2 · Channels"
    },
    {
     "id": "repetition-code",
@@ -1050,7 +1120,7 @@
     "cases": [
      "repetition"
     ],
-    "group": "Channels"
+    "group": "3 · Codes"
    },
    {
     "id": "hamming-code",
@@ -1060,7 +1130,27 @@
     "cases": [
      "hamming"
     ],
-    "group": "Channels"
+    "group": "3 · Codes"
+   },
+   {
+    "id": "crc",
+    "title": "CRC: detecting errors",
+    "what": "Long division over GF(2): the remainder rides along, and any error that is not a multiple of the generator shows.",
+    "from": "codes",
+    "cases": [
+     "crc"
+    ],
+    "group": "3 · Codes"
+   },
+   {
+    "id": "viterbi",
+    "title": "Convolutional codes and Viterbi",
+    "what": "A rate-½ code on its trellis: the decoder keeps one survivor per state and finds the most likely message.",
+    "from": "codes",
+    "cases": [
+     "viterbi"
+    ],
+    "group": "3 · Codes"
    }
   ]
  },
@@ -1442,7 +1532,7 @@
     "title": "Functions",
     "what": "Lines, parabolas, exponentials and logarithms: drag the graph, read the equation.",
     "from": "function-explorer",
-    "group": "Functions"
+    "group": "1 · Functions"
    },
    {
     "id": "graph-transformations",
@@ -1452,7 +1542,7 @@
     "cases": [
      "shift"
     ],
-    "group": "Functions"
+    "group": "1 · Functions"
    },
    {
     "id": "composition-inverse",
@@ -1463,7 +1553,7 @@
      "compose",
      "inverse"
     ],
-    "group": "Functions"
+    "group": "1 · Functions"
    },
    {
     "id": "polynomials",
@@ -1474,14 +1564,14 @@
      "polynomial",
      "rational"
     ],
-    "group": "Functions"
+    "group": "1 · Functions"
    },
    {
     "id": "trigonometry",
     "title": "Trigonometry",
     "what": "A point on the unit circle: sine, cosine, tangent and the waves they make.",
     "from": "unit-circle",
-    "group": "Trigonometry"
+    "group": "2 · Trigonometry"
    },
    {
     "id": "triangles",
@@ -1492,7 +1582,7 @@
      "right",
      "solve"
     ],
-    "group": "Trigonometry"
+    "group": "2 · Trigonometry"
    },
    {
     "id": "parametric-polar",
@@ -1503,7 +1593,7 @@
      "lissajous",
      "polar"
     ],
-    "group": "Trigonometry"
+    "group": "2 · Trigonometry"
    },
    {
     "id": "conics",
@@ -1515,14 +1605,14 @@
      "focus",
      "reflect"
     ],
-    "group": "Trigonometry"
+    "group": "2 · Trigonometry"
    },
    {
     "id": "complex-numbers",
     "title": "Complex numbers",
     "what": "Sums, products, powers and roots as arrows in the plane.",
     "from": "complex-plane",
-    "group": "Complex numbers"
+    "group": "3 · Complex numbers"
    },
    {
     "id": "euler-formula",
@@ -1532,7 +1622,7 @@
     "cases": [
      "euler"
     ],
-    "group": "Complex numbers"
+    "group": "3 · Complex numbers"
    },
    {
     "id": "complex-functions",
@@ -1543,7 +1633,7 @@
      "domain",
      "mapping"
     ],
-    "group": "Complex numbers"
+    "group": "3 · Complex numbers"
    },
    {
     "id": "limits",
@@ -1553,13 +1643,13 @@
     "cases": [
      "limit"
     ],
-    "group": "Calculus"
+    "group": "4 · Calculus"
    },
    {
     "id": "calculus",
     "title": "Calculus",
     "what": "Derivative as a limit of slopes, integral as a limit of sums, Taylor polynomials.",
-    "group": "Calculus"
+    "group": "4 · Calculus"
    },
    {
     "id": "curve-sketching",
@@ -1569,7 +1659,7 @@
     "cases": [
      "sketch"
     ],
-    "group": "Calculus"
+    "group": "4 · Calculus"
    },
    {
     "id": "newton",
@@ -1579,7 +1669,7 @@
     "cases": [
      "newton"
     ],
-    "group": "Calculus"
+    "group": "4 · Calculus"
    },
    {
     "id": "integral-applications",
@@ -1590,19 +1680,19 @@
      "area",
      "revolve"
     ],
-    "group": "Calculus"
+    "group": "4 · Calculus"
    },
    {
     "id": "sequences",
     "title": "Sequences and series",
     "what": "Partial sums that converge or not: geometric, harmonic, alternating, and the limit.",
-    "group": "Calculus"
+    "group": "4 · Calculus"
    },
    {
     "id": "differential-equations",
     "title": "Differential equations",
     "what": "Slope fields and solution curves; Euler steps against the exact solution.",
-    "group": "Calculus"
+    "group": "4 · Calculus"
    },
    {
     "id": "vectors",
@@ -1613,7 +1703,14 @@
      "dot",
      "cross"
     ],
-    "group": "Linear algebra"
+    "group": "5 · Linear algebra"
+   },
+   {
+    "id": "matrices",
+    "title": "Matrices and linear maps",
+    "what": "A 3×3 matrix deforms the unit cube: determinant, eigenvectors.",
+    "from": "linear-maps",
+    "group": "5 · Linear algebra"
    },
    {
     "id": "linear-systems",
@@ -1623,7 +1720,7 @@
     "cases": [
      "system"
     ],
-    "group": "Linear algebra"
+    "group": "5 · Linear algebra"
    },
    {
     "id": "determinant",
@@ -1633,7 +1730,7 @@
     "cases": [
      "det"
     ],
-    "group": "Linear algebra"
+    "group": "5 · Linear algebra"
    },
    {
     "id": "eigenvectors",
@@ -1643,7 +1740,7 @@
     "cases": [
      "eigen"
     ],
-    "group": "Linear algebra"
+    "group": "5 · Linear algebra"
    },
    {
     "id": "least-squares",
@@ -1653,21 +1750,14 @@
     "cases": [
      "fit"
     ],
-    "group": "Linear algebra"
-   },
-   {
-    "id": "matrices",
-    "title": "Matrices and linear maps",
-    "what": "A 3×3 matrix deforms the unit cube: determinant, eigenvectors.",
-    "from": "linear-maps",
-    "group": "Linear algebra"
+    "group": "5 · Linear algebra"
    },
    {
     "id": "surfaces",
     "title": "Functions of two variables",
     "what": "Walk on a surface: gradient, tangent plane, level curves.",
     "from": "surfaces-gradient",
-    "group": "Multivariable calculus"
+    "group": "6 · Multivariable calculus"
    },
    {
     "id": "vector-calculus",
@@ -1678,7 +1768,7 @@
      "div",
      "curl"
     ],
-    "group": "Multivariable calculus"
+    "group": "6 · Multivariable calculus"
    },
    {
     "id": "double-integrals",
@@ -1688,7 +1778,7 @@
     "cases": [
      "double"
     ],
-    "group": "Multivariable calculus"
+    "group": "6 · Multivariable calculus"
    },
    {
     "id": "lagrange",
@@ -1698,7 +1788,7 @@
     "cases": [
      "lagrange"
     ],
-    "group": "Multivariable calculus"
+    "group": "6 · Multivariable calculus"
    },
    {
     "id": "line-integrals",
@@ -1708,7 +1798,7 @@
     "cases": [
      "line"
     ],
-    "group": "Multivariable calculus"
+    "group": "6 · Multivariable calculus"
    }
   ]
  },
@@ -1717,6 +1807,17 @@
   "name": "Numerical methods",
   "topics": [
    {
+    "id": "round-off",
+    "title": "Round-off and cancellation",
+    "what": "Sixteen digits, and how one subtraction can lose them all; why the order of a sum matters.",
+    "from": "float",
+    "cases": [
+     "cancel",
+     "sum"
+    ],
+    "group": "1 · Numbers and error"
+   },
+   {
     "id": "bisection",
     "title": "Bisection",
     "what": "Halve a bracket around a sign change: slow, sure, one bit per step.",
@@ -1724,7 +1825,7 @@
     "cases": [
      "bisect"
     ],
-    "group": "Roots of equations"
+    "group": "2 · Roots of equations"
    },
    {
     "id": "secant-method",
@@ -1734,7 +1835,7 @@
     "cases": [
      "secant"
     ],
-    "group": "Roots of equations"
+    "group": "2 · Roots of equations"
    },
    {
     "id": "fixed-point",
@@ -1744,7 +1845,57 @@
     "cases": [
      "fixed"
     ],
-    "group": "Roots of equations"
+    "group": "2 · Roots of equations"
+   },
+   {
+    "id": "gaussian-elimination",
+    "title": "Gaussian elimination and LU",
+    "what": "Row operations one at a time: the multipliers fill L, the matrix becomes U, and why pivoting matters.",
+    "from": "linalg",
+    "cases": [
+     "gauss"
+    ],
+    "group": "3 · Linear systems"
+   },
+   {
+    "id": "iterative-solvers",
+    "title": "Jacobi and Gauss–Seidel",
+    "what": "Iterates walking to the crossing of two lines; the spectral radius decides how fast, or whether at all.",
+    "from": "linalg",
+    "cases": [
+     "iterative"
+    ],
+    "group": "3 · Linear systems"
+   },
+   {
+    "id": "conditioning",
+    "title": "Conditioning",
+    "what": "Nearly parallel lines: a small error in b becomes a big error in x, by up to the condition number κ.",
+    "from": "linalg",
+    "cases": [
+     "condition"
+    ],
+    "group": "3 · Linear systems"
+   },
+   {
+    "id": "golden-section",
+    "title": "Golden-section search",
+    "what": "Minimising without derivatives: the bracket shrinks by 0.618 per evaluation.",
+    "from": "optim",
+    "cases": [
+     "golden"
+    ],
+    "group": "4 · Optimisation"
+   },
+   {
+    "id": "descent-newton",
+    "title": "Gradient descent and Newton",
+    "what": "Fixed steps, line searches and Newton’s method on a bowl and on Rosenbrock’s banana valley.",
+    "from": "optim",
+    "cases": [
+     "descent"
+    ],
+    "group": "4 · Optimisation"
    },
    {
     "id": "ode-methods",
@@ -1754,7 +1905,7 @@
     "cases": [
      "euler"
     ],
-    "group": "Differential equations"
+    "group": "5 · Differential equations"
    },
    {
     "id": "ode-stability",
@@ -1764,7 +1915,7 @@
     "cases": [
      "stability"
     ],
-    "group": "Differential equations"
+    "group": "5 · Differential equations"
    },
    {
     "id": "ode-order",
@@ -1774,7 +1925,7 @@
     "cases": [
      "order"
     ],
-    "group": "Differential equations"
+    "group": "5 · Differential equations"
    },
    {
     "id": "interpolation",
@@ -1784,7 +1935,7 @@
     "cases": [
      "runge"
     ],
-    "group": "Approximation"
+    "group": "6 · Approximation"
    },
    {
     "id": "quadrature",
@@ -1794,7 +1945,7 @@
     "cases": [
      "quad"
     ],
-    "group": "Approximation"
+    "group": "6 · Approximation"
    },
    {
     "id": "finite-differences",
@@ -1804,7 +1955,7 @@
     "cases": [
      "fdiff"
     ],
-    "group": "Approximation"
+    "group": "6 · Approximation"
    }
   ]
  },
@@ -2174,78 +2325,6 @@
   },
   "topics": [
    {
-    "id": "kinematics",
-    "title": "Projectile motion",
-    "what": "A thrown ball: launch angle, range, height, and what air drag changes.",
-    "from": "motion-energy",
-    "cases": [
-     "projectile"
-    ],
-    "group": "Mechanics"
-   },
-   {
-    "id": "circular-motion",
-    "title": "Circular motion",
-    "what": "Uniform motion on a circle: speed, angular speed and centripetal acceleration.",
-    "from": "motion-energy",
-    "cases": [
-     "circular"
-    ],
-    "group": "Mechanics"
-   },
-   {
-    "id": "work-energy",
-    "title": "Work and energy",
-    "what": "A bead on a track trades potential for kinetic energy; loop the loop without falling.",
-    "from": "energy-track",
-    "cases": [
-     "ramp",
-     "loop"
-    ],
-    "group": "Mechanics"
-   },
-   {
-    "id": "friction-energy",
-    "title": "Friction turns energy into heat",
-    "what": "Each swing climbs less high: kinetic + potential + heat stays constant.",
-    "from": "energy-track",
-    "cases": [
-     "friction"
-    ],
-    "group": "Mechanics"
-   },
-   {
-    "id": "momentum",
-    "title": "Momentum and collisions",
-    "what": "Two carts collide: momentum always survives, kinetic energy not always.",
-    "from": "motion-energy",
-    "cases": [
-     "collision"
-    ],
-    "group": "Mechanics"
-   },
-   {
-    "id": "rolling",
-    "title": "Rolling and moment of inertia",
-    "what": "Sphere, disc, shell and hoop race down a slope; a falling mass spins a spool.",
-    "from": "rotation",
-    "cases": [
-     "rolling",
-     "spool"
-    ],
-    "group": "Mechanics"
-   },
-   {
-    "id": "angular-momentum",
-    "title": "Angular momentum",
-    "what": "A skater pulls in their arms and spins faster: L = Iω stays, the energy does not.",
-    "from": "rotation",
-    "cases": [
-     "spin"
-    ],
-    "group": "Mechanics"
-   },
-   {
     "id": "forces",
     "title": "Adding forces",
     "what": "Add forces tip to tail: the resultant, and equilibrium when they cancel.",
@@ -2253,17 +2332,7 @@
     "cases": [
      "sum"
     ],
-    "group": "Mechanics"
-   },
-   {
-    "id": "torque",
-    "title": "Torque",
-    "what": "Turn a lever: force, lever arm and angle.",
-    "from": "forces-torque",
-    "cases": [
-     "torque"
-    ],
-    "group": "Mechanics"
+    "group": "1 · Mechanics"
    },
    {
     "id": "newtons-laws",
@@ -2274,7 +2343,89 @@
      "incline",
      "pulley"
     ],
-    "group": "Mechanics"
+    "group": "1 · Mechanics"
+   },
+   {
+    "id": "kinematics",
+    "title": "Projectile motion",
+    "what": "A thrown ball: launch angle, range, height, and what air drag changes.",
+    "from": "motion-energy",
+    "cases": [
+     "projectile"
+    ],
+    "group": "1 · Mechanics"
+   },
+   {
+    "id": "circular-motion",
+    "title": "Circular motion",
+    "what": "Uniform motion on a circle: speed, angular speed and centripetal acceleration.",
+    "from": "motion-energy",
+    "cases": [
+     "circular"
+    ],
+    "group": "1 · Mechanics"
+   },
+   {
+    "id": "work-energy",
+    "title": "Work and energy",
+    "what": "A bead on a track trades potential for kinetic energy; loop the loop without falling.",
+    "from": "energy-track",
+    "cases": [
+     "ramp",
+     "loop"
+    ],
+    "group": "1 · Mechanics"
+   },
+   {
+    "id": "friction-energy",
+    "title": "Friction turns energy into heat",
+    "what": "Each swing climbs less high: kinetic + potential + heat stays constant.",
+    "from": "energy-track",
+    "cases": [
+     "friction"
+    ],
+    "group": "1 · Mechanics"
+   },
+   {
+    "id": "momentum",
+    "title": "Momentum and collisions",
+    "what": "Two carts collide: momentum always survives, kinetic energy not always.",
+    "from": "motion-energy",
+    "cases": [
+     "collision"
+    ],
+    "group": "1 · Mechanics"
+   },
+   {
+    "id": "torque",
+    "title": "Torque",
+    "what": "Turn a lever: force, lever arm and angle.",
+    "from": "forces-torque",
+    "cases": [
+     "torque"
+    ],
+    "group": "1 · Mechanics"
+   },
+   {
+    "id": "rolling",
+    "title": "Rolling and moment of inertia",
+    "what": "Sphere, disc, shell and hoop race down a slope; a falling mass spins a spool.",
+    "from": "rotation",
+    "cases": [
+     "rolling",
+     "spool"
+    ],
+    "group": "1 · Mechanics"
+   },
+   {
+    "id": "angular-momentum",
+    "title": "Angular momentum",
+    "what": "A skater pulls in their arms and spins faster: L = Iω stays, the energy does not.",
+    "from": "rotation",
+    "cases": [
+     "spin"
+    ],
+    "group": "1 · Mechanics"
    },
    {
     "id": "fluids",
@@ -2284,7 +2435,7 @@
     "cases": [
      "buoyancy"
     ],
-    "group": "Mechanics"
+    "group": "1 · Mechanics"
    },
    {
     "id": "oscillations",
@@ -2294,7 +2445,7 @@
     "cases": [
      "spring"
     ],
-    "group": "Waves and oscillations"
+    "group": "2 · Waves and oscillations"
    },
    {
     "id": "damping",
@@ -2304,7 +2455,7 @@
     "cases": [
      "damped"
     ],
-    "group": "Waves and oscillations"
+    "group": "2 · Waves and oscillations"
    },
    {
     "id": "resonance",
@@ -2314,7 +2465,7 @@
     "cases": [
      "driven"
     ],
-    "group": "Waves and oscillations"
+    "group": "2 · Waves and oscillations"
    },
    {
     "id": "pendulum",
@@ -2324,7 +2475,7 @@
     "cases": [
      "pendulum"
     ],
-    "group": "Waves and oscillations"
+    "group": "2 · Waves and oscillations"
    },
    {
     "id": "coupled-oscillators",
@@ -2334,7 +2485,7 @@
     "cases": [
      "two"
     ],
-    "group": "Waves and oscillations"
+    "group": "2 · Waves and oscillations"
    },
    {
     "id": "normal-modes",
@@ -2344,7 +2495,7 @@
     "cases": [
      "chain"
     ],
-    "group": "Waves and oscillations"
+    "group": "2 · Waves and oscillations"
    },
    {
     "id": "waves",
@@ -2354,7 +2505,7 @@
     "cases": [
      "travel"
     ],
-    "group": "Waves and oscillations"
+    "group": "2 · Waves and oscillations"
    },
    {
     "id": "wave-superposition",
@@ -2364,7 +2515,7 @@
     "cases": [
      "super"
     ],
-    "group": "Waves and oscillations"
+    "group": "2 · Waves and oscillations"
    },
    {
     "id": "standing-waves",
@@ -2374,7 +2525,7 @@
     "cases": [
      "standing"
     ],
-    "group": "Waves and oscillations"
+    "group": "2 · Waves and oscillations"
    },
    {
     "id": "doppler",
@@ -2384,7 +2535,7 @@
     "cases": [
      "doppler"
     ],
-    "group": "Waves and oscillations"
+    "group": "2 · Waves and oscillations"
    },
    {
     "id": "thermodynamics",
@@ -2394,7 +2545,7 @@
     "cases": [
      "gas"
     ],
-    "group": "Heat"
+    "group": "3 · Heat"
    },
    {
     "id": "gas-processes",
@@ -2405,7 +2556,7 @@
      "isothermal",
      "adiabatic"
     ],
-    "group": "Heat"
+    "group": "3 · Heat"
    },
    {
     "id": "heat-engines",
@@ -2416,7 +2567,7 @@
      "carnot",
      "otto"
     ],
-    "group": "Heat"
+    "group": "3 · Heat"
    },
    {
     "id": "entropy-ts",
@@ -2426,7 +2577,7 @@
     "cases": [
      "ts"
     ],
-    "group": "Heat"
+    "group": "3 · Heat"
    },
    {
     "id": "heat-conduction",
@@ -2438,7 +2589,7 @@
      "pulse",
      "composite"
     ],
-    "group": "Heat"
+    "group": "3 · Heat"
    },
    {
     "id": "electrostatics",
@@ -2448,7 +2599,7 @@
     "cases": [
      "charges"
     ],
-    "group": "Electromagnetism"
+    "group": "4 · Electromagnetism"
    },
    {
     "id": "dipole",
@@ -2459,7 +2610,7 @@
      "pair",
      "many"
     ],
-    "group": "Electromagnetism"
+    "group": "4 · Electromagnetism"
    },
    {
     "id": "gauss-law",
@@ -2469,7 +2620,7 @@
     "cases": [
      "gauss"
     ],
-    "group": "Electromagnetism"
+    "group": "4 · Electromagnetism"
    },
    {
     "id": "magnetic-field",
@@ -2479,28 +2630,7 @@
     "cases": [
      "field"
     ],
-    "group": "Electromagnetism"
-   },
-   {
-    "id": "induction",
-    "title": "Moving magnet and Lenz’s law",
-    "what": "Move a magnet through a coil: flux, EMF, Lenz’s law and magnetic braking.",
-    "from": "coil-induction",
-    "cases": [
-     "magnet",
-     "ac"
-    ],
-    "group": "Electromagnetism"
-   },
-   {
-    "id": "ac-induction",
-    "title": "AC induction",
-    "what": "An alternating current in one coil drives an EMF in another: the transformer idea.",
-    "from": "coil-induction",
-    "cases": [
-     "ac"
-    ],
-    "group": "Electromagnetism"
+    "group": "4 · Electromagnetism"
    },
    {
     "id": "gauss-magnetism",
@@ -2510,7 +2640,7 @@
     "cases": [
      "gauss-b"
     ],
-    "group": "Electromagnetism"
+    "group": "4 · Electromagnetism"
    },
    {
     "id": "ampere-law",
@@ -2520,17 +2650,7 @@
     "cases": [
      "ampere"
     ],
-    "group": "Electromagnetism"
-   },
-   {
-    "id": "displacement-current",
-    "title": "Displacement current",
-    "what": "A charging capacitor: a changing E field makes B like a current",
-    "from": "maxwell",
-    "cases": [
-     "displacement"
-    ],
-    "group": "Electromagnetism"
+    "group": "4 · Electromagnetism"
    },
    {
     "id": "charged-particle",
@@ -2541,7 +2661,7 @@
      "particle",
      "helix"
     ],
-    "group": "Electromagnetism"
+    "group": "4 · Electromagnetism"
    },
    {
     "id": "exb-drift",
@@ -2552,13 +2672,44 @@
      "drift",
      "parallel"
     ],
-    "group": "Electromagnetism"
+    "group": "4 · Electromagnetism"
+   },
+   {
+    "id": "induction",
+    "title": "Moving magnet and Lenz’s law",
+    "what": "Move a magnet through a coil: flux, EMF, Lenz’s law and magnetic braking.",
+    "from": "coil-induction",
+    "cases": [
+     "magnet",
+     "ac"
+    ],
+    "group": "4 · Electromagnetism"
+   },
+   {
+    "id": "ac-induction",
+    "title": "AC induction",
+    "what": "An alternating current in one coil drives an EMF in another: the transformer idea.",
+    "from": "coil-induction",
+    "cases": [
+     "ac"
+    ],
+    "group": "4 · Electromagnetism"
+   },
+   {
+    "id": "displacement-current",
+    "title": "Displacement current",
+    "what": "A charging capacitor: a changing E field makes B like a current",
+    "from": "maxwell",
+    "cases": [
+     "displacement"
+    ],
+    "group": "4 · Electromagnetism"
    },
    {
     "id": "em-wave",
     "title": "Electromagnetic waves",
     "what": "E and B travelling together; reflection and standing waves.",
-    "group": "Electromagnetism"
+    "group": "4 · Electromagnetism"
    },
    {
     "id": "geometric-optics",
@@ -2568,7 +2719,7 @@
     "cases": [
      "snell"
     ],
-    "group": "Optics"
+    "group": "5 · Optics"
    },
    {
     "id": "lenses",
@@ -2578,7 +2729,7 @@
     "cases": [
      "lens"
     ],
-    "group": "Optics"
+    "group": "5 · Optics"
    },
    {
     "id": "mirrors",
@@ -2588,7 +2739,7 @@
     "cases": [
      "mirror"
     ],
-    "group": "Optics"
+    "group": "5 · Optics"
    },
    {
     "id": "interference",
@@ -2598,7 +2749,7 @@
     "cases": [
      "slits"
     ],
-    "group": "Optics"
+    "group": "5 · Optics"
    },
    {
     "id": "diffraction",
@@ -2609,7 +2760,7 @@
      "single",
      "phasor"
     ],
-    "group": "Optics"
+    "group": "5 · Optics"
    },
    {
     "id": "grating",
@@ -2619,7 +2770,7 @@
     "cases": [
      "grating"
     ],
-    "group": "Optics"
+    "group": "5 · Optics"
    }
   ]
  },
@@ -2636,7 +2787,7 @@
      "clock",
      "twins"
     ],
-    "group": "Relativity"
+    "group": "1 · Relativity"
    },
    {
     "id": "spacetime",
@@ -2646,7 +2797,7 @@
     "cases": [
      "minkowski"
     ],
-    "group": "Relativity"
+    "group": "1 · Relativity"
    },
    {
     "id": "photoelectric",
@@ -2656,7 +2807,37 @@
     "cases": [
      "photo"
     ],
-    "group": "Quantum"
+    "group": "2 · Quantum"
+   },
+   {
+    "id": "compton",
+    "title": "Compton scattering",
+    "what": "X-rays bounce off electrons like billiard balls: the wavelength grows by λc(1 − cos θ).",
+    "from": "waves",
+    "cases": [
+     "compton"
+    ],
+    "group": "2 · Quantum"
+   },
+   {
+    "id": "matter-waves",
+    "title": "Matter waves: electrons through two slits",
+    "what": "One electron at a time, the dots build an interference pattern; watch which slit, and it is gone.",
+    "from": "waves",
+    "cases": [
+     "slits"
+    ],
+    "group": "2 · Quantum"
+   },
+   {
+    "id": "uncertainty",
+    "title": "The uncertainty principle",
+    "what": "Squeeze a wave packet in space and its momentum spreads: Δx·Δp ≥ ħ/2.",
+    "from": "waves",
+    "cases": [
+     "uncertainty"
+    ],
+    "group": "2 · Quantum"
    },
    {
     "id": "particle-in-a-box",
@@ -2666,7 +2847,17 @@
     "cases": [
      "box"
     ],
-    "group": "Quantum"
+    "group": "2 · Quantum"
+   },
+   {
+    "id": "tunnelling",
+    "title": "Quantum tunnelling",
+    "what": "An electron leaks through a barrier it cannot climb, exponentially less with every nanometre.",
+    "from": "waves",
+    "cases": [
+     "tunnel"
+    ],
+    "group": "2 · Quantum"
    },
    {
     "id": "atomic-spectra",
@@ -2676,7 +2867,17 @@
     "cases": [
      "bohr"
     ],
-    "group": "Quantum"
+    "group": "2 · Quantum"
+   },
+   {
+    "id": "binding-energy",
+    "title": "Binding energy, fission and fusion",
+    "what": "The curve of binding energy per nucleon, term by term, and why energy comes from both ends.",
+    "from": "binding",
+    "cases": [
+     "binding"
+    ],
+    "group": "3 · Nuclear"
    },
    {
     "id": "radioactive-decay",
@@ -2687,7 +2888,7 @@
      "decay",
      "chain"
     ],
-    "group": "Nuclear"
+    "group": "3 · Nuclear"
    }
   ]
  },
@@ -2703,27 +2904,7 @@
     "cases": [
      "flight"
     ],
-    "group": "Flight"
-   },
-   {
-    "id": "turns",
-    "title": "Turning flight and load factor",
-    "what": "Banked turns: load factor, turn radius and a higher stall speed.",
-    "from": "flight-envelope",
-    "cases": [
-     "turn"
-    ],
-    "group": "Flight"
-   },
-   {
-    "id": "stall",
-    "title": "The stall",
-    "what": "Past the critical angle of attack the flow separates and lift collapses.",
-    "from": "flight-envelope",
-    "cases": [
-     "stall"
-    ],
-    "group": "Flight"
+    "group": "1 · Flight"
    },
    {
     "id": "airfoil-lift",
@@ -2733,17 +2914,7 @@
     "cases": [
      "airfoil"
     ],
-    "group": "Flight"
-   },
-   {
-    "id": "drag-polar",
-    "title": "Drag polar and power curves",
-    "what": "Friction against induced drag, the best L/D speed, power needed against power available.",
-    "from": "aero",
-    "cases": [
-     "polar"
-    ],
-    "group": "Flight"
+    "group": "1 · Flight"
    },
    {
     "id": "standard-atmosphere",
@@ -2753,7 +2924,37 @@
     "cases": [
      "atmosphere"
     ],
-    "group": "Flight"
+    "group": "1 · Flight"
+   },
+   {
+    "id": "stall",
+    "title": "The stall",
+    "what": "Past the critical angle of attack the flow separates and lift collapses.",
+    "from": "flight-envelope",
+    "cases": [
+     "stall"
+    ],
+    "group": "1 · Flight"
+   },
+   {
+    "id": "drag-polar",
+    "title": "Drag polar and power curves",
+    "what": "Friction against induced drag, the best L/D speed, power needed against power available.",
+    "from": "aero",
+    "cases": [
+     "polar"
+    ],
+    "group": "1 · Flight"
+   },
+   {
+    "id": "turns",
+    "title": "Turning flight and load factor",
+    "what": "Banked turns: load factor, turn radius and a higher stall speed.",
+    "from": "flight-envelope",
+    "cases": [
+     "turn"
+    ],
+    "group": "1 · Flight"
    },
    {
     "id": "gliding",
@@ -2763,27 +2964,7 @@
     "cases": [
      "glide"
     ],
-    "group": "Flight"
-   },
-   {
-    "id": "range-endurance",
-    "title": "Range: the Breguet equation",
-    "what": "How far a jet flies: speed, L/D, engine and fuel",
-    "from": "cruise",
-    "cases": [
-     "range"
-    ],
-    "group": "Flight"
-   },
-   {
-    "id": "takeoff-landing",
-    "title": "Take-off and landing",
-    "what": "The ground roll: thrust, drag and wheel friction; weight, altitude, headwind and runway surface.",
-    "from": "aero",
-    "cases": [
-     "takeoff"
-    ],
-    "group": "Flight"
+    "group": "1 · Flight"
    },
    {
     "id": "static-stability",
@@ -2793,7 +2974,27 @@
     "cases": [
      "stability"
     ],
-    "group": "Flight"
+    "group": "1 · Flight"
+   },
+   {
+    "id": "takeoff-landing",
+    "title": "Take-off and landing",
+    "what": "The ground roll: thrust, drag and wheel friction; weight, altitude, headwind and runway surface.",
+    "from": "aero",
+    "cases": [
+     "takeoff"
+    ],
+    "group": "1 · Flight"
+   },
+   {
+    "id": "range-endurance",
+    "title": "Range: the Breguet equation",
+    "what": "How far a jet flies: speed, L/D, engine and fuel",
+    "from": "cruise",
+    "cases": [
+     "range"
+    ],
+    "group": "1 · Flight"
    },
    {
     "id": "gravity-field",
@@ -2803,37 +3004,7 @@
     "cases": [
      "gravity"
     ],
-    "group": "Orbits"
-   },
-   {
-    "id": "orbits",
-    "title": "Kepler orbits",
-    "what": "Circular and elliptical orbits: speed, period, geostationary and Molniya.",
-    "from": "orbits",
-    "cases": [
-     "orbit"
-    ],
-    "group": "Orbits"
-   },
-   {
-    "id": "kepler-laws",
-    "title": "Kepler’s first and second laws",
-    "what": "Ellipses with the Sun at a focus; equal areas in equal times",
-    "from": "kepler",
-    "cases": [
-     "areas"
-    ],
-    "group": "Orbits"
-   },
-   {
-    "id": "kepler-third",
-    "title": "Kepler’s third law",
-    "what": "T² ∝ a³ for the eight planets, and weighing a star",
-    "from": "kepler",
-    "cases": [
-     "third"
-    ],
-    "group": "Orbits"
+    "group": "2 · Orbits"
    },
    {
     "id": "newtons-cannon",
@@ -2843,7 +3014,37 @@
     "cases": [
      "cannon"
     ],
-    "group": "Orbits"
+    "group": "2 · Orbits"
+   },
+   {
+    "id": "orbits",
+    "title": "Kepler orbits",
+    "what": "Circular and elliptical orbits: speed, period, geostationary and Molniya.",
+    "from": "orbits",
+    "cases": [
+     "orbit"
+    ],
+    "group": "2 · Orbits"
+   },
+   {
+    "id": "kepler-laws",
+    "title": "Kepler’s first and second laws",
+    "what": "Ellipses with the Sun at a focus; equal areas in equal times",
+    "from": "kepler",
+    "cases": [
+     "areas"
+    ],
+    "group": "2 · Orbits"
+   },
+   {
+    "id": "kepler-third",
+    "title": "Kepler’s third law",
+    "what": "T² ∝ a³ for the eight planets, and weighing a star",
+    "from": "kepler",
+    "cases": [
+     "third"
+    ],
+    "group": "2 · Orbits"
    },
    {
     "id": "ground-tracks",
@@ -2853,7 +3054,7 @@
     "cases": [
      "inclined"
     ],
-    "group": "Orbits"
+    "group": "2 · Orbits"
    },
    {
     "id": "orbit-perturbations",
@@ -2863,13 +3064,13 @@
     "cases": [
      "j2"
     ],
-    "group": "Orbits"
+    "group": "2 · Orbits"
    },
    {
     "id": "orbital-transfers",
     "title": "Orbital transfers",
     "what": "Hohmann and bi-elliptic transfers, Δv and the rocket equation.",
-    "group": "Orbits"
+    "group": "2 · Orbits"
    },
    {
     "id": "hohmann-vs-bielliptic",
@@ -2879,7 +3080,7 @@
     "cases": [
      "bielliptic"
     ],
-    "group": "Orbits"
+    "group": "2 · Orbits"
    },
    {
     "id": "plane-change",
@@ -2889,7 +3090,7 @@
     "cases": [
      "plane"
     ],
-    "group": "Orbits"
+    "group": "2 · Orbits"
    },
    {
     "id": "rendezvous",
@@ -2899,14 +3100,20 @@
     "cases": [
      "rendezvous"
     ],
-    "group": "Orbits"
+    "group": "2 · Orbits"
+   },
+   {
+    "id": "lagrange-points",
+    "title": "Lagrange points",
+    "what": "The rotating two-body potential and its five equilibria.",
+    "group": "2 · Orbits"
    },
    {
     "id": "gravity-assist",
     "title": "Gravity assist",
     "what": "A flyby turns the velocity; seen from the Sun the craft speeds up or slows down",
     "from": "gravity-assist",
-    "group": "Orbits"
+    "group": "2 · Orbits"
    },
    {
     "id": "escape-and-c3",
@@ -2916,13 +3123,7 @@
     "cases": [
      "escape"
     ],
-    "group": "Orbits"
-   },
-   {
-    "id": "lagrange-points",
-    "title": "Lagrange points",
-    "what": "The rotating two-body potential and its five equilibria.",
-    "group": "Orbits"
+    "group": "2 · Orbits"
    },
    {
     "id": "rocket-equation",
@@ -2932,7 +3133,7 @@
     "cases": [
      "equation"
     ],
-    "group": "Rockets"
+    "group": "3 · Rockets"
    },
    {
     "id": "staging",
@@ -2942,7 +3143,7 @@
     "cases": [
      "staging"
     ],
-    "group": "Rockets"
+    "group": "3 · Rockets"
    },
    {
     "id": "gravity-turn",
@@ -2952,14 +3153,14 @@
     "cases": [
      "ascent"
     ],
-    "group": "Rockets"
+    "group": "3 · Rockets"
    },
    {
     "id": "reentry",
     "title": "Atmospheric entry",
     "what": "Deceleration, heating and the entry corridor, with or without lift",
     "from": "reentry",
-    "group": "Rockets"
+    "group": "3 · Rockets"
    }
   ]
  },
@@ -3172,7 +3373,7 @@
      "sinc",
      "exp"
     ],
-    "group": "Signals"
+    "group": "1 · Signals"
    },
    {
     "id": "chirp-signal",
@@ -3182,7 +3383,7 @@
     "cases": [
      "chirp"
     ],
-    "group": "Signals"
+    "group": "1 · Signals"
    },
    {
     "id": "time-bandwidth",
@@ -3192,7 +3393,7 @@
     "cases": [
      "tbp"
     ],
-    "group": "Signals"
+    "group": "1 · Signals"
    },
    {
     "id": "fourier-series",
@@ -3203,7 +3404,7 @@
      "series",
      "project"
     ],
-    "group": "Fourier"
+    "group": "2 · Fourier"
    },
    {
     "id": "gibbs",
@@ -3213,7 +3414,7 @@
     "cases": [
      "gibbs"
     ],
-    "group": "Fourier"
+    "group": "2 · Fourier"
    },
    {
     "id": "fourier-transform",
@@ -3224,7 +3425,7 @@
      "transform",
      "uncert"
     ],
-    "group": "Fourier"
+    "group": "2 · Fourier"
    },
    {
     "id": "leakage",
@@ -3234,7 +3435,7 @@
     "cases": [
      "leakage"
     ],
-    "group": "Fourier"
+    "group": "2 · Fourier"
    },
    {
     "id": "dft-correlation",
@@ -3244,7 +3445,7 @@
     "cases": [
      "correlate"
     ],
-    "group": "DFT and FFT"
+    "group": "3 · DFT and FFT"
    },
    {
     "id": "dft-winding",
@@ -3255,7 +3456,7 @@
      "wind",
      "bins"
     ],
-    "group": "DFT and FFT"
+    "group": "3 · DFT and FFT"
    },
    {
     "id": "dft-vs-transform",
@@ -3265,7 +3466,7 @@
     "cases": [
      "bridge"
     ],
-    "group": "DFT and FFT"
+    "group": "3 · DFT and FFT"
    },
    {
     "id": "fft",
@@ -3275,7 +3476,7 @@
     "cases": [
      "fft"
     ],
-    "group": "DFT and FFT"
+    "group": "3 · DFT and FFT"
    },
    {
     "id": "sampling",
@@ -3286,7 +3487,7 @@
      "tone",
      "rebuild"
     ],
-    "group": "Sampling"
+    "group": "4 · Sampling"
    },
    {
     "id": "aliasing",
@@ -3297,7 +3498,7 @@
      "alias",
      "wheel"
     ],
-    "group": "Sampling"
+    "group": "4 · Sampling"
    },
    {
     "id": "replicas",
@@ -3307,7 +3508,7 @@
     "cases": [
      "replicas"
     ],
-    "group": "Sampling"
+    "group": "4 · Sampling"
    },
    {
     "id": "convolution",
@@ -3319,7 +3520,7 @@
      "pairs",
      "discrete"
     ],
-    "group": "Systems"
+    "group": "5 · Systems"
    },
    {
     "id": "convolution-theorem",
@@ -3329,7 +3530,7 @@
     "cases": [
      "theorem"
     ],
-    "group": "Systems"
+    "group": "5 · Systems"
    },
    {
     "id": "lti-properties",
@@ -3340,7 +3541,7 @@
      "linear",
      "invariant"
     ],
-    "group": "Systems"
+    "group": "5 · Systems"
    },
    {
     "id": "impulse-response",
@@ -3351,7 +3552,7 @@
      "impulse",
      "decompose"
     ],
-    "group": "Systems"
+    "group": "5 · Systems"
    },
    {
     "id": "poles",
@@ -3361,7 +3562,7 @@
     "cases": [
      "poles"
     ],
-    "group": "Systems"
+    "group": "5 · Systems"
    },
    {
     "id": "frequency-response",
@@ -3372,7 +3573,7 @@
      "bode",
      "steady"
     ],
-    "group": "Systems"
+    "group": "5 · Systems"
    },
    {
     "id": "filtering",
@@ -3384,7 +3585,7 @@
      "mask",
      "gauss"
     ],
-    "group": "Filtering"
+    "group": "6 · Filtering"
    },
    {
     "id": "fir-design",
@@ -3394,7 +3595,7 @@
     "cases": [
      "fir"
     ],
-    "group": "Filtering"
+    "group": "6 · Filtering"
    },
    {
     "id": "fft-bins",
@@ -3405,7 +3606,7 @@
      "bins",
      "window"
     ],
-    "group": "Spectral analysis"
+    "group": "7 · Spectral analysis"
    },
    {
     "id": "resampling",
@@ -3416,7 +3617,7 @@
      "shift",
      "resample"
     ],
-    "group": "Spectral analysis"
+    "group": "7 · Spectral analysis"
    },
    {
     "id": "iq-phase",
@@ -3426,7 +3627,7 @@
     "cases": [
      "iq"
     ],
-    "group": "Spectral analysis"
+    "group": "7 · Spectral analysis"
    },
    {
     "id": "crlb",
@@ -3436,7 +3637,7 @@
     "cases": [
      "crlb"
     ],
-    "group": "Spectral analysis"
+    "group": "7 · Spectral analysis"
    },
    {
     "id": "plateaus",
@@ -3446,7 +3647,7 @@
     "cases": [
      "plateau"
     ],
-    "group": "Spectral analysis"
+    "group": "7 · Spectral analysis"
    },
    {
     "id": "why-carrier",
@@ -3456,7 +3657,7 @@
     "cases": [
      "carrier"
     ],
-    "group": "Communications"
+    "group": "8 · Communications"
    },
    {
     "id": "am",
@@ -3466,7 +3667,7 @@
     "cases": [
      "am"
     ],
-    "group": "Communications"
+    "group": "8 · Communications"
    },
    {
     "id": "fm",
@@ -3477,7 +3678,7 @@
      "fm",
      "pm"
     ],
-    "group": "Communications"
+    "group": "8 · Communications"
    },
    {
     "id": "am-fm-pm",
@@ -3487,7 +3688,7 @@
     "cases": [
      "compare"
     ],
-    "group": "Communications"
+    "group": "8 · Communications"
    },
    {
     "id": "psk",
@@ -3498,7 +3699,7 @@
      "bpsk",
      "qpsk"
     ],
-    "group": "Digital communications"
+    "group": "9 · Digital communications"
    },
    {
     "id": "qam",
@@ -3508,7 +3709,7 @@
     "cases": [
      "qam"
     ],
-    "group": "Digital communications"
+    "group": "9 · Digital communications"
    },
    {
     "id": "ber",
@@ -3518,7 +3719,7 @@
     "cases": [
      "ber"
     ],
-    "group": "Digital communications"
+    "group": "9 · Digital communications"
    },
    {
     "id": "eye-diagram",
@@ -3528,7 +3729,7 @@
     "cases": [
      "eye"
     ],
-    "group": "Digital communications"
+    "group": "9 · Digital communications"
    },
    {
     "id": "shannon",
@@ -3538,7 +3739,7 @@
     "cases": [
      "shannon"
     ],
-    "group": "Digital communications"
+    "group": "9 · Digital communications"
    },
    {
     "id": "iq-demodulation",
@@ -3549,7 +3750,7 @@
      "pulse",
      "mixing"
     ],
-    "group": "Receivers"
+    "group": "10 · Receivers"
    },
    {
     "id": "residual-df",
@@ -3560,7 +3761,7 @@
      "residual",
      "bins"
     ],
-    "group": "Receivers"
+    "group": "10 · Receivers"
    },
    {
     "id": "link-budget",
@@ -3571,7 +3772,7 @@
      "friis",
      "tworay"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "yagi-patch",
@@ -3582,7 +3783,7 @@
      "yagi",
      "patch"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "vivaldi",
@@ -3597,7 +3798,7 @@
      "band",
      "array"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "dipole-current",
@@ -3609,7 +3810,7 @@
      "fields",
      "hertz"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "dipole-pattern",
@@ -3621,7 +3822,7 @@
      "pattern3d",
      "sweep"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "dipole-impedance",
@@ -3632,7 +3833,7 @@
      "impedance",
      "directivity"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "near-far-field",
@@ -3642,7 +3843,7 @@
     "cases": [
      "nearfar"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "array-steering",
@@ -3654,7 +3855,7 @@
      "spacing",
      "squint"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "array-lobes",
@@ -3667,7 +3868,7 @@
      "scan",
      "planar"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "array-weights",
@@ -3678,7 +3879,7 @@
      "taper",
      "nulls"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "polarization",
@@ -3690,7 +3891,7 @@
      "ellipse",
      "orient"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "jones-stokes",
@@ -3702,7 +3903,7 @@
      "poincare",
      "circular"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "transmission-lines",
@@ -3713,7 +3914,7 @@
      "tem",
      "smith"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "waveguides",
@@ -3725,7 +3926,7 @@
      "mode",
      "dispersion"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    },
    {
     "id": "optical-guide",
@@ -3735,7 +3936,7 @@
     "cases": [
      "fibre"
     ],
-    "group": "Antennas and propagation"
+    "group": "11 · Antennas and propagation"
    }
   ]
  },
@@ -3744,36 +3945,6 @@
   "name": "Structural mechanics",
   "topics": [
    {
-    "id": "simply-supported",
-    "title": "Simply supported beam",
-    "what": "Reactions, shear and moment diagrams, and the deflected shape.",
-    "from": "beams",
-    "cases": [
-     "simply"
-    ],
-    "group": "Beams"
-   },
-   {
-    "id": "cantilever",
-    "title": "Cantilever",
-    "what": "One support, a moment at the wall, the tip droops.",
-    "from": "beams",
-    "cases": [
-     "cantilever"
-    ],
-    "group": "Beams"
-   },
-   {
-    "id": "cross-section",
-    "title": "Cross sections",
-    "what": "Second moment, the neutral axis, and why beams are shaped like an I.",
-    "from": "beams",
-    "cases": [
-     "section"
-    ],
-    "group": "Beams"
-   },
-   {
     "id": "tensile-test",
     "title": "The tensile test",
     "what": "Elastic, yield, hardening, necking, fracture — and unloading.",
@@ -3781,7 +3952,7 @@
     "cases": [
      "tensile"
     ],
-    "group": "Materials"
+    "group": "1 · Materials"
    },
    {
     "id": "mohr-circle",
@@ -3791,7 +3962,77 @@
     "cases": [
      "mohr"
     ],
-    "group": "Materials"
+    "group": "1 · Materials"
+   },
+   {
+    "id": "stress-concentration",
+    "title": "Stress concentration and fatigue",
+    "what": "The stress triples beside a hole, and a few times the stress can cut the fatigue life by orders of magnitude.",
+    "from": "structures",
+    "cases": [
+     "hole"
+    ],
+    "group": "1 · Materials"
+   },
+   {
+    "id": "simply-supported",
+    "title": "Simply supported beam",
+    "what": "Reactions, shear and moment diagrams, and the deflected shape.",
+    "from": "beams",
+    "cases": [
+     "simply"
+    ],
+    "group": "2 · Beams"
+   },
+   {
+    "id": "cantilever",
+    "title": "Cantilever",
+    "what": "One support, a moment at the wall, the tip droops.",
+    "from": "beams",
+    "cases": [
+     "cantilever"
+    ],
+    "group": "2 · Beams"
+   },
+   {
+    "id": "cross-section",
+    "title": "Cross sections",
+    "what": "Second moment, the neutral axis, and why beams are shaped like an I.",
+    "from": "beams",
+    "cases": [
+     "section"
+    ],
+    "group": "2 · Beams"
+   },
+   {
+    "id": "propped-cantilever",
+    "title": "A statically indeterminate beam",
+    "what": "One support too many for statics: compatibility finds the reaction, and the beam is stiffer for it.",
+    "from": "structures",
+    "cases": [
+     "propped"
+    ],
+    "group": "2 · Beams"
+   },
+   {
+    "id": "torsion",
+    "title": "Torsion of shafts",
+    "what": "Shear stress grows from zero at the centre to the surface: why tubes carry torque so well.",
+    "from": "structures",
+    "cases": [
+     "torsion"
+    ],
+    "group": "3 · Shafts and trusses"
+   },
+   {
+    "id": "trusses",
+    "title": "Trusses: the method of joints",
+    "what": "Every member only pulls or pushes: forces from equilibrium at each joint, tension and compression in colour.",
+    "from": "structures",
+    "cases": [
+     "truss"
+    ],
+    "group": "3 · Shafts and trusses"
    },
    {
     "id": "buckling",
@@ -3801,7 +4042,7 @@
     "cases": [
      "buckling"
     ],
-    "group": "Stability"
+    "group": "4 · Stability"
    }
   ]
  }

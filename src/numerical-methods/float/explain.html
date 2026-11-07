@@ -1,0 +1,34 @@
+<section data-case="cancel">
+  <h3>Round-off and cancellation</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: one quantity computed two ways over a wide range of inputs (log scale), with the formula as written (orange) and an algebraically equal rewrite (green). Top right: the relative error of the naive form, against machine epsilon (dashed). Bottom right: how many correct digits each form keeps at the chosen input. Below: the naive form's correct digits across the whole range.</div>
+  <p>A computer stores a real number with about 16 significant decimal digits (float64): every value is rounded to the nearest representable number, with a relative error up to <b>machine epsilon</b> ε = 2⁻⁵² ≈ 2.2·10⁻¹⁶. That is plenty, until you <b>subtract two nearly equal numbers</b>. Their leading digits cancel, and what is left is made of the digits that were already rounded: the relative error is multiplied by the size of the numbers over the size of their difference. This is <b>catastrophic cancellation</b>. The cure is not more precision but algebra: rewrite the formula so the subtraction never happens.</p>
+  <div class="eq">$$\text{fl}(x) = x(1+\delta),\ |\delta| \le \varepsilon, \qquad \frac{|\Delta(a-b)|}{|a-b|} \approx \varepsilon\,\frac{|a|}{|a-b|}, \qquad 1-\cos x = 2\sin^2\tfrac{x}{2}$$</div>
+  <ol class="steps">
+    <li>Spot a subtraction of two quantities that become equal in the limit you care about.</li>
+    <li>Estimate the damage: digits lost ≈ log₁₀(|a| / |a − b|).</li>
+    <li>Rewrite: a trigonometric identity, multiplying by the conjugate, or using the product of the roots.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>At x = 10⁻⁴, 1 − cos x = 5·10⁻⁹ is computed from two numbers near 1, so about 8 of the 16 digits cancel: the naive (1 − cos x)/x² gives 0.49999999696, the stable 2 sin²(x/2)/x² gives 0.49999999958, an error of 5·10⁻⁹. At x = 10⁻⁸, cos x rounds to exactly 1 and the naive answer is 0 instead of ½.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Blaming the computer and switching to higher precision. Quadruple precision only delays the problem to a smaller x; the rewrite removes it for every x.</div>
+  <div class="try"><h4>Try it</h4>Slide the input toward the trouble end and watch the correct digits of the naive form fall about one per decade, while the stable form keeps all of them.</div>
+</section>
+<section data-case="cancel" data-example="tiny"><h3>x = 10⁻⁸: the naive answer is 0</h3><p>cos(10⁻⁸) = 1 − 5·10⁻¹⁷, closer to 1 than the spacing of float64 numbers there: it rounds to 1, and 1 − 1 = 0. Every digit is lost.</p></section>
+<section data-case="cancel" data-example="sqrt"><h3>√(x² + 1) − x at x = 10⁸</h3><p>x² + 1 rounds to x², so the difference is exactly 0. Multiplying and dividing by the conjugate gives 1/(√(x² + 1) + x) = 5·10⁻⁹, correct to every digit.</p></section>
+<section data-case="cancel" data-example="quad"><h3>The quadratic formula fails</h3><p>For x² + 10⁶x + 1 = 0 the small root is −b + √(b² − 4) over 2, two nearly equal numbers: the naive result is off in the sixth digit (relative error 7.6·10⁻⁶). Compute the large root first, then the small one as c/(a·x₁) = −2/(b + √(b² − 4)).</p></section>
+
+<section data-case="sum">
+  <h3>The order of a sum</h3>
+  <div class="look"><h4>What you are looking at</h4>Left: the error of Σ 1/k² in float32 (7 digits) against the number of terms, added forward (largest first, orange), backward (smallest first, blue), and with Kahan's compensated summation (green). Top right: the forward running sum against the exact one; the red dashed line marks where forward stops changing. Bottom right: the correct digits of each method. Below: the partial sums.</div>
+  <p>Adding a small number to a large one rounds the result to the large one's spacing: the small number's low digits are lost. Add many small terms to a large running sum and they can be lost <b>entirely</b>: the sum stalls. The cure is again in how you compute, not in the precision. Add the <b>small terms first</b>, so they build up before they meet the big ones, or use <b>Kahan summation</b>, which carries the lost low part of each addition into the next one.</p>
+  <div class="eq">$$S \oplus t = S \quad\text{when}\quad |t| < \tfrac12\,\text{ulp}(S) \approx \tfrac12\,\varepsilon_{32}|S|, \qquad \varepsilon_{32} = 2^{-23} \approx 1.2\cdot 10^{-7}$$</div>
+  <ol class="steps">
+    <li>Forward: S grows to about 1.64; terms 1/k² fall below half its spacing near k ≈ 3200 and stop counting.</li>
+    <li>Backward: tiny terms add to each other first, at their own scale, and arrive as one sizeable number.</li>
+    <li>Kahan: after each addition compute what was rounded away, c = (t − S) − y, and subtract it from the next term.</li>
+  </ol>
+  <div class="worked"><h4>Worked example</h4>10⁶ terms in float32: forward gives 1.6447253, backward 1.6449330, Kahan 1.6449331; the exact partial sum is 1.6449331. Forward has kept only 3–4 correct digits, the other two about 7.</div>
+  <div class="pitfall"><h4>Common mistakes</h4>Assuming addition is associative. In floating point (a + b) + c and a + (b + c) can differ, which is why parallel sums, done in a different order, may not match a serial one bit for bit.</div>
+  <div class="try"><h4>Try it</h4>Slide the number of terms past about 3000: the orange running sum flattens while the exact one keeps rising, and the forward error stops improving.</div>
+</section>
+<section data-case="sum" data-example="small"><h3>1000 terms: all agree</h3><p>Before the stall point every term still counts, and the three methods agree to about 7 digits.</p></section>
+<section data-case="sum" data-example="big"><h3>10⁶ terms: forward has stalled</h3><p>Forward stopped changing near k ≈ 3200: the last million terms changed nothing. Backward and Kahan used them all.</p></section>
